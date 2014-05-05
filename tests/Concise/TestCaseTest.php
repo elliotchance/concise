@@ -20,4 +20,10 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub();
 		$this->assertEquals(2, $testCase->countConciseTests());
 	}
+
+	public function testIsConciseTestIsTrueIfMethodStartsWithAnUnderscore()
+	{
+		$testCase = new TestCase();
+		$this->assertTrue($testCase->isConciseTest('_a'));
+	}
 }
