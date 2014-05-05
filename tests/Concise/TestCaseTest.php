@@ -2,10 +2,22 @@
 
 namespace Concise;
 
-class TestCaseTest extends \PHPUnit_Framework_TestCase
+class TestCaseStub extends TestCase
+{
+	function a() {}
+	function b() {}
+}
+
+class TestCaseTest extends TestCase
 {
 	public function testExtendsTestCase()
 	{
 		$this->assertInstanceOf('\Concise\TestCase', new TestCase());
+	}
+
+	public function testCountAllTests()
+	{
+		$testCase = new TestCaseStub();
+		$this->assertEquals(2, $testCase->countConciseTests());
 	}
 }
