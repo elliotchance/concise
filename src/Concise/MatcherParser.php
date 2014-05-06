@@ -21,4 +21,9 @@ class MatcherParser
 		}
 		return true;
 	}
+
+	public function registerMatcher(Matcher\AbstractMatcher $matcher)
+	{
+		return true;
+	}
 }

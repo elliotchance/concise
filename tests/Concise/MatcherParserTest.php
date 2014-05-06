@@ -4,23 +4,31 @@ namespace Concise;
 
 class MatcherParserTest extends TestCase
 {
+	public function setUp()
+	{
+		parent::setUp();
+		$this->parser = new MatcherParser();
+	}
+
 	public function testMatcherParserCanResolveMatcherForSyntax()
 	{
-		$parser = new MatcherParser();
-		$matcher = $parser->compile('a equals b');
+		$matcher = $this->parser->compile('a equals b');
 		$this->assertInstanceOf('\Concise\Matcher\EqualTo', $matcher);
 	}
 
 	public function testTranslateAssertionIntoSyntax()
 	{
-		$parser = new MatcherParser();
-		$syntax = $parser->translateAssertionToSyntax('a equals b');
+		$syntax = $this->parser->translateAssertionToSyntax('a equals b');
 		$this->assertEquals('? equals ?', $syntax);
 	}
 
 	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
 	{
-		$parser = new MatcherParser();
-		$this->assertFalse($parser->matcherIsRegistered('\No\Such\Class'));
+		$this->assertFalse($this->parser->matcherIsRegistered('\No\Such\Class'));
+	}
+
+	public function testRegisteringANewMatcherReturnsTrue()
+	{
+		$this->assertTrue($this->parser->registerMatcher(new Matcher\EqualTo()));
 	}
 }
