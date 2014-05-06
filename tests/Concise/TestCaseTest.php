@@ -58,4 +58,10 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCase();
 		$this->assertEquals(1, $testCase->countAssertionsForMethod('test_a'));
 	}
+
+	public function testCountAssertionsForTestReturnsZeroIfItIsNotAValidMethodName()
+	{
+		$testCase = new TestCase();
+		$this->assertEquals(0, $testCase->countAssertionsForMethod('a'));
+	}
 }

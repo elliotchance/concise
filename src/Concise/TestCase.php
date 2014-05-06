@@ -29,6 +29,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function countAssertionsForMethod($method)
 	{
+		if(!$this->isConciseTest($method)) {
+			return 0;
+		}
 		return 1;
 	}
 }
