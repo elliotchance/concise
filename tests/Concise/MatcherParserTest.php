@@ -10,10 +10,10 @@ class MatcherParserTest extends TestCase
 		$this->parser = new MatcherParser($this);
 	}
 
-	public function testMatcherParserCanResolveMatcherForSyntax()
+	public function testCompileReturnsAssertion()
 	{
 		$matcher = $this->parser->compile('a equals b');
-		$this->assertInstanceOf('\Concise\Matcher\EqualTo', $matcher);
+		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
 
 	public function testTranslateAssertionIntoSyntax()
@@ -68,14 +68,14 @@ class MatcherParserTest extends TestCase
 	{
 		$this->a = 123;
 		$this->b = '456';
-		$matcher = $this->parser->compile('a equals b');
+		$assertion = $this->parser->compile('a equals b');
 		$expected = array('parser', 'a', 'b');
-		$this->assertEquals($expected, array_keys($matcher->getData()));
+		$this->assertEquals($expected, array_keys($assertion->getData()));
 	}
 
 	public function testDataIsAnEmptyArrayIsNotInitialised()
 	{
-		$matcher = $this->parser->compile('a equals b');
-		$this->assertEquals(array('parser'), array_keys($matcher->getData()));
+		$assertion = $this->parser->compile('a equals b');
+		$this->assertEquals(array('parser'), array_keys($assertion->getData()));
 	}
 }

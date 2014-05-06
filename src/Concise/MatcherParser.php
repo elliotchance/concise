@@ -21,11 +21,14 @@ class MatcherParser
 		$this->testCase = $testCase;
 	}
 
+	/**
+	 * @return \Concise\Assertion
+	 */
 	public function compile($string)
 	{
 		$matcher = new \Concise\Matcher\EqualTo();
-		$matcher->setData($this->testCase->getData());
-		return $matcher;
+		$assertion = new Assertion($string, $matcher, $this->testCase->getData());
+		return $assertion;
 	}
 
 	public function translateAssertionToSyntax($assertion)

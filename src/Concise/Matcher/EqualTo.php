@@ -8,4 +8,9 @@ class EqualTo extends AbstractMatcher
 	{
 		return true;
 	}
+
+	public function match(array $data = array())
+	{
+		return true;
+	}
 }
