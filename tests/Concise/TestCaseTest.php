@@ -32,4 +32,14 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCase();
 		$this->assertFalse($testCase->isConciseTest('a'));
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage $method can not be blank.
+	 */
+	public function testIsConciseTestThrowsInvalidArgumentExceptionIfTheMethodIsBlank()
+	{
+		$testCase = new TestCase();
+		$this->assertFalse($testCase->isConciseTest(''));
+	}
 }
