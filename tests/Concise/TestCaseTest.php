@@ -5,7 +5,7 @@ namespace Concise;
 class TestCaseStub extends TestCase
 {
 	function test_a() {}
-	function test_b() { return 'a'; }
+	function test_b() { return 'my assertion'; }
 	function test_c() { return array('a', 'b'); }
 	function b() {}
 }
@@ -109,5 +109,11 @@ class TestCaseTest extends TestCase
 	{
 		$testCase = new TestCaseStub();
 		$this->assertEquals(array('a'), $testCase->getAssertionsForMethod('test_a'));
+	}
+
+	public function testGetAssertionsForMethodThatReturnsAStringWillReturnThat()
+	{
+		$testCase = new TestCaseStub();
+		$this->assertEquals(array('my assertion'), $testCase->getAssertionsForMethod('test_b'));
 	}
 }

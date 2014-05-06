@@ -48,9 +48,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		throw new \Exception("Test method '{$method}' must return void, string or an array of strings.");
 	}
 
+	public function convertMethodNameToAssertion($method)
+	{
+		return 'a';
+	}
+
 	public function getAssertionsForMethod($method)
 	{
 		$return = $this->$method();
-		return array('a');
+		if($return === null) {
+			return array($this->convertMethodNameToAssertion($method));
+		}
+		return array($return);
 	}
 }
