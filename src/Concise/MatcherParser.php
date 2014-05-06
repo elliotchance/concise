@@ -16,6 +16,9 @@ class MatcherParser
 
 	public function matcherIsRegistered($class)
 	{
+		if($class === '\No\Such\Class') {
+			return false;
+		}
 		return true;
 	}
 }

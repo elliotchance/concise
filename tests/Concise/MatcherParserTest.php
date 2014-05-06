@@ -17,4 +17,10 @@ class MatcherParserTest extends TestCase
 		$syntax = $parser->translateAssertionToSyntax('a equals b');
 		$this->assertEquals('? equals ?', $syntax);
 	}
+
+	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
+	{
+		$parser = new MatcherParser();
+		$this->assertFalse($parser->matcherIsRegistered('\No\Such\Class'));
+	}
 }
