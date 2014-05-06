@@ -10,4 +10,11 @@ class MatcherParserTest extends TestCase
 		$matcher = $parser->compile('a equals b');
 		$this->assertInstanceOf('\Concise\Matcher\EqualTo', $matcher);
 	}
+
+	public function testTranslateAssertionIntoSyntax()
+	{
+		$parser = new MatcherParser();
+		$syntax = $parser->translateAssertionToSyntax('a equals b');
+		$this->assertEquals('? equals ?', $syntax);
+	}
 }

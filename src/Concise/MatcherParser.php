@@ -8,4 +8,9 @@ class MatcherParser
 	{
 		return new \Concise\Matcher\EqualTo();
 	}
+
+	public function translateAssertionToSyntax($assertion)
+	{
+		return '? equals ?';
+	}
 }
