@@ -12,9 +12,20 @@ class EqualToTest extends TestCase
 		$this->matcher = new EqualTo();
 	}
 
-	public function testWillRespondToCorrectSyntax()
+	public function syntaxProvider()
 	{
-		$this->assertTrue($this->matcher->matchesSyntax('? equals ?'));
+		return array(
+			array('? equals ?'),
+			array('? is equal to ?')
+		);
+	}
+
+	/**
+	 * @dataProvider syntaxProvider
+	 */
+	public function testWillRespondToCorrectSyntax($syntax)
+	{
+		$this->assertTrue($this->matcher->matchesSyntax($syntax));
 	}
 
 	public function testExtendsAbstractMatcher()
