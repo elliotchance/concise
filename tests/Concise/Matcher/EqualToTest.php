@@ -17,4 +17,10 @@ class EqualToTest extends TestCase
 		$matcher = new EqualTo();
 		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $matcher);
 	}
+
+	public function testParserKnowsAboutMatcher()
+	{
+		$parser = new \Concise\MatcherParser();
+		$this->assertTrue($parser->matcherIsRegistered(get_class($this)));
+	}
 }

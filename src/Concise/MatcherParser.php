@@ -13,4 +13,9 @@ class MatcherParser
 	{
 		return '? equals ?';
 	}
+
+	public function matcherIsRegistered($class)
+	{
+		return true;
+	}
 }
