@@ -75,4 +75,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 		return $assertions;
 	}
+
+	public function dataProvider()
+	{
+		return $this->getAllAssertions();
+	}
 }

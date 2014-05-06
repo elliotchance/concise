@@ -139,4 +139,15 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub();
 		$this->assertEquals('a equals b', $testCase->convertMethodNameToAssertion('test_a_equals_b'));
 	}
+
+	public function testDataProviderReturnsAssertions()
+	{
+		$testCase = new TestCaseStub();
+		$expected = array(
+			'test_a' => array('a'),
+			'test_b' => array('my assertion'),
+			'test_c' => array('a', 'b')
+		);
+		$this->assertEquals($expected, $testCase->dataProvider());
+	}
 }
