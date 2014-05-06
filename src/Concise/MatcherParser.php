@@ -6,6 +6,13 @@ class MatcherParser
 {
 	protected $matchers = array();
 
+	protected $keywords = array(
+		'equal',
+		'equals',
+		'is',
+		'to'
+	);
+
 	public function compile($string)
 	{
 		return new \Concise\Matcher\EqualTo();
@@ -13,7 +20,17 @@ class MatcherParser
 
 	public function translateAssertionToSyntax($assertion)
 	{
-		return '? equals ?';
+		$words = explode(" ", $assertion);
+		$syntax = array();
+		foreach($words as $word) {
+			if(in_array($word, $this->keywords)) {
+				$syntax[] = $word;
+			}
+			else {
+				$syntax[] = '?';
+			}
+		}
+		return implode(' ', $syntax);
 	}
 
 	public function matcherIsRegistered($class)

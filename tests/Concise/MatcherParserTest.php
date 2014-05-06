@@ -38,4 +38,10 @@ class MatcherParserTest extends TestCase
 		$this->parser->registerMatcher($matcher);
 		$this->assertFalse($this->parser->registerMatcher($matcher));
 	}
+
+	public function testTranslateAssertionIntoSyntaxWillReplaceAnyNonKeywordsWithPlaceholder()
+	{
+		$syntax = $this->parser->translateAssertionToSyntax('a is equal to b');
+		$this->assertEquals('? is equal to ?', $syntax);
+	}
 }
