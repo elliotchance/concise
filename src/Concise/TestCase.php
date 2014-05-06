@@ -6,7 +6,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
 {
 	public function countConciseTests()
 	{
-		return 2;
+		$class = new \ReflectionClass(get_class($this));
+		$count = 0;
+		foreach($class->getMethods() as $method) {
+			if($this->isConciseTest($method->getName())) {
+				++$count;
+			}
+		}
+		return $count;
 	}
 
 	public function isConciseTest($method)
@@ -17,6 +24,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		if($method == '') {
 			throw new \InvalidArgumentException('$method can not be blank.');
 		}
-		return $method[0] === '_';
+		return substr($method, 0, 5) === 'test_';
 	}
 }

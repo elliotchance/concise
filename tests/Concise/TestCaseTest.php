@@ -4,7 +4,7 @@ namespace Concise;
 
 class TestCaseStub extends TestCase
 {
-	function a() {}
+	function test_a() {}
 	function b() {}
 }
 
@@ -18,16 +18,16 @@ class TestCaseTest extends TestCase
 	public function testCountAllTests()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(2, $testCase->countConciseTests());
+		$this->assertEquals(1, $testCase->countConciseTests());
 	}
 
-	public function testIsConciseTestIsTrueIfMethodStartsWithAnUnderscore()
+	public function testIsConciseTestIsTrueIfMethodStartsWithTestUnderscore()
 	{
 		$testCase = new TestCase();
-		$this->assertTrue($testCase->isConciseTest('_a'));
+		$this->assertTrue($testCase->isConciseTest('test_a'));
 	}
 
-	public function testIsConciseTestIsFalseIfMethodDoesNotStartWithAnUnderscore()
+	public function testIsConciseTestIsFalseIfMethodDoesNotStartWithTestUnderscore()
 	{
 		$testCase = new TestCase();
 		$this->assertFalse($testCase->isConciseTest('a'));
