@@ -24,7 +24,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		if($method == '') {
 			throw new \InvalidArgumentException('$method can not be blank.');
 		}
-		return substr($method, 0, 5) === 'test_';
+		return substr($method, 0, 6) === '_test_';
 	}
 
 	public function countAssertionsForMethod($method)
@@ -49,7 +49,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function convertMethodNameToAssertion($method)
 	{
-		$method = substr($method, 5);
+		$method = substr($method, 6);
 		return str_replace('_', ' ', $method);
 	}
 
@@ -80,9 +80,24 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function dataProvider()
 	{
-		return $this->getAllAssertions();
+		$assertions = $this->getAllAssertions();
+		$r = array();
+		foreach($assertions as $method => $assertion) {
+			foreach($assertion as $a) {
+				$r["$method: $a"] = array($this->getData());
+			}
+		}
+
+		if(count($r) === 0) {
+			return array(array('true'));
+		}
+
+		return $r;
 	}
 
+	/**
+	 * @dataProvider dataProvider
+	 */
 	public function test()
 	{
 		$this->assertTrue(true);
@@ -105,5 +120,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function getData()
 	{
 		return $this->data;
+	}
+
+	protected function getStub($class, array $methods)
+	{
+		$stub = $this->getMock($class, array_keys($methods));
+		foreach($methods as $method => $returnValue) {
+			$stub->expects($this->any())
+			     ->method($method)
+			     ->will($this->returnValue($returnValue));
+		}
+		return $stub;
 	}
 }

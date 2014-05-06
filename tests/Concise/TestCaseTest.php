@@ -4,16 +4,16 @@ namespace Concise;
 
 class TestCaseStub extends TestCase
 {
-	function test_a() {}
-	function test_b() { return 'my assertion'; }
-	function test_c() { return array('a', 'b'); }
+	function _test_a() {}
+	function _test_b() { return 'my assertion'; }
+	function _test_c() { return array('a', 'b'); }
 	function b() {}
 }
 
 class TestCaseStub2 extends TestCase
 {
-	function test_a() { return 123; }
-	function test_b() { return array(123, 'abc'); }
+	function _test_a() { return 123; }
+	function _test_b() { return array(123, 'abc'); }
 }
 
 class TestCaseTest extends TestCase
@@ -32,7 +32,7 @@ class TestCaseTest extends TestCase
 	public function testIsConciseTestIsTrueIfMethodStartsWithTestUnderscore()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertTrue($testCase->isConciseTest('test_a'));
+		$this->assertTrue($testCase->isConciseTest('_test_a'));
 	}
 
 	public function testIsConciseTestIsFalseIfMethodDoesNotStartWithTestUnderscore()
@@ -64,7 +64,7 @@ class TestCaseTest extends TestCase
 	public function testCountAssertionsForTestReturnsOneIfThereIsNoReturnValue()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(1, $testCase->countAssertionsForMethod('test_a'));
+		$this->assertEquals(1, $testCase->countAssertionsForMethod('_test_a'));
 	}
 
 	public function testCountAssertionsForTestReturnsZeroIfItIsNotAValidMethodName()
@@ -76,60 +76,60 @@ class TestCaseTest extends TestCase
 	public function testCountAssertionsForTestReturnsOneIfTheReturnValueIsAString()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(1, $testCase->countAssertionsForMethod('test_b'));
+		$this->assertEquals(1, $testCase->countAssertionsForMethod('_test_b'));
 	}
 
 	public function testCountAssertionsForTestReturnsArraySizeIfTheReturnValueIsAnArray()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(2, $testCase->countAssertionsForMethod('test_c'));
+		$this->assertEquals(2, $testCase->countAssertionsForMethod('_test_c'));
 	}
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Test method 'test_a' must return void, string or an array of strings.
+	 * @expectedExceptionMessage Test method '_test_a' must return void, string or an array of strings.
 	 */
 	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsNotValid()
 	{
 		$testCase = new TestCaseStub2();
-		$this->assertFalse($testCase->countAssertionsForMethod('test_a'));
+		$this->assertFalse($testCase->countAssertionsForMethod('_test_a'));
 	}
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Test method 'test_b' returns an array that must contain only strings.
+	 * @expectedExceptionMessage Test method '_test_b' returns an array that must contain only strings.
 	 */
 	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsAnArrayOfNotAllStrings()
 	{
 		$testCase = new TestCaseStub2();
-		$this->assertFalse($testCase->countAssertionsForMethod('test_b'));
+		$this->assertFalse($testCase->countAssertionsForMethod('_test_b'));
 	}
 
 	public function testGetAssertionsForMethodThatDoesNotReturnAValueUsesTheMethodName()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(array('a'), $testCase->getAssertionsForMethod('test_a'));
+		$this->assertEquals(array('a'), $testCase->getAssertionsForMethod('_test_a'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAStringWillReturnThat()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(array('my assertion'), $testCase->getAssertionsForMethod('test_b'));
+		$this->assertEquals(array('my assertion'), $testCase->getAssertionsForMethod('_test_b'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAnArrayWillReturnThat()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(array('a', 'b'), $testCase->getAssertionsForMethod('test_c'));
+		$this->assertEquals(array('a', 'b'), $testCase->getAssertionsForMethod('_test_c'));
 	}
 
 	public function testGetAllAssertions()
 	{
 		$testCase = new TestCaseStub();
 		$expected = array(
-			'test_a' => array('a'),
-			'test_b' => array('my assertion'),
-			'test_c' => array('a', 'b')
+			'_test_a' => array('a'),
+			'_test_b' => array('my assertion'),
+			'_test_c' => array('a', 'b')
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
 	}
@@ -137,18 +137,19 @@ class TestCaseTest extends TestCase
 	public function testConvertMethodNameToAssertionReplacesUnderscoresWithSpaces()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals('a equals b', $testCase->convertMethodNameToAssertion('test_a_equals_b'));
+		$this->assertEquals('a equals b', $testCase->convertMethodNameToAssertion('_test_a_equals_b'));
 	}
 
 	public function testDataProviderReturnsAssertions()
 	{
 		$testCase = new TestCaseStub();
 		$expected = array(
-			'test_a' => array('a'),
-			'test_b' => array('my assertion'),
-			'test_c' => array('a', 'b')
+			'_test_a: a',
+			'_test_b: my assertion',
+			'_test_c: a',
+			'_test_c: b'
 		);
-		$this->assertEquals($expected, $testCase->dataProvider());
+		$this->assertEquals($expected, array_keys($testCase->dataProvider()));
 	}
 
 	public function testCanSetAttribute()
@@ -164,5 +165,13 @@ class TestCaseTest extends TestCase
 	public function testGetAttributeThatDoesNotExistThrowsException()
 	{
 		$this->noSuchAttribute;
+	}
+
+	public function testDataProviderWillAlwaysContainAtLeastOneItem()
+	{
+		$stub = $this->getStub('\Concise\TestCase', array(
+			'getAllAssertions' => array()
+		));
+		$this->assertCount(1, $stub->dataProvider());
 	}
 }

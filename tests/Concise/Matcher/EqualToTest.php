@@ -45,4 +45,10 @@ class EqualToTest extends TestCase
 		$parser->registerMatcher($this->matcher);
 		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
 	}
+
+	public function _test_a_equals_b()
+	{
+		$this->a = 123;
+		$this->b = 456;
+	}
 }
