@@ -45,6 +45,11 @@ class MatcherParserTest extends TestCase
 		$this->assertEquals('? is equal to ?', $syntax);
 	}
 
+	public function testKeywordsReturnsArray()
+	{
+		$this->assertTrue(is_array($this->parser->getKeywords()));
+	}
+
 	public function testKeywordsAreUnique()
 	{
 		$keywords = $this->parser->getKeywords();
