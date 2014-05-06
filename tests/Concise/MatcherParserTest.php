@@ -93,4 +93,13 @@ class MatcherParserTest extends TestCase
 		$result = $this->parser->getDataForPlaceholders(array('b', 'a'), $data);
 		$this->assertEquals(array('abc', 123), $result);
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage No such attribute 'foo'.
+	 */
+	public function testGetDataForPlaceholdersThrowsExceptionIfThereIsNoSuchAttribute()
+	{
+		$this->parser->getDataForPlaceholders(array('foo'), array());
+	}
 }
