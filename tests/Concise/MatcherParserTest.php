@@ -63,4 +63,16 @@ class MatcherParserTest extends TestCase
 		sort($sortedKeywords);
 		$this->assertEquals($keywords, $sortedKeywords);
 	}
+
+	public function testCanExtractDataFromAssertion()
+	{
+		$this->a = 123;
+		$this->b = '456';
+		$matcher = $this->parser->compile('a equals b');
+		$expected = array(
+			'a' => 123,
+			'b' => '456'
+		);
+		$this->assertEquals($expected, $matcher->getData());
+	}
 }
