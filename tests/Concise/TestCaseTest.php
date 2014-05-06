@@ -42,4 +42,14 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCase();
 		$this->assertFalse($testCase->isConciseTest(''));
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage $method must be a string.
+	 */
+	public function testIsConciseTestThrowsInvalidArgumentExceptionIfTheMethodIsNotAString()
+	{
+		$testCase = new TestCase();
+		$this->assertFalse($testCase->isConciseTest(123));
+	}
 }
