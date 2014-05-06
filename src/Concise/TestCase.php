@@ -9,8 +9,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$class = new \ReflectionClass(get_class($this));
 		$count = 0;
 		foreach($class->getMethods() as $method) {
-			if($this->isConciseTest($method->getName())) {
-				++$count;
+			$methodName = $method->getName();
+			if($this->isConciseTest($methodName)) {
+				$count += $this->countAssertionsForMethod($methodName);
 			}
 		}
 		return $count;
@@ -31,6 +32,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		if(!$this->isConciseTest($method)) {
 			return 0;
+		}
+		$return = $this->$method();
+		if(is_array($return)) {
+			return count($return);
 		}
 		return 1;
 	}
