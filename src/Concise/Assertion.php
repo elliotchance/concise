@@ -32,4 +32,12 @@ class Assertion
 	{
 		return $this->matcher;
 	}
+
+	public function run(\PHPUnit_Framework_TestCase $testCase)
+	{
+		$parser = new MatcherParser($testCase);
+		$placeholders = $parser->getPlaceholders($this->getAssertion());
+		$data = $parser->getDataForPlaceholders($placeholders, $this->getData());
+		$testCase->assertTrue($this->getMatcher()->match($data));
+	}
 }

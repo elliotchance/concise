@@ -2,15 +2,15 @@
 
 namespace Concise\Matcher;
 
-class EqualTo extends AbstractMatcher
+class True extends AbstractMatcher
 {
 	public function matchesSyntax($syntax)
 	{
-		return true;
+		return $syntax === 'true';
 	}
 
 	public function match(array $data = array())
 	{
-		return $data[0] == $data[1];
+		return true;
 	}
 }

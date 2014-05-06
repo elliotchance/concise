@@ -10,7 +10,8 @@ class MatcherParser
 		'equal',
 		'equals',
 		'is',
-		'to'
+		'to',
+		'true'
 	);
 
 	/** @var \Concise\TestCase */
@@ -64,5 +65,30 @@ class MatcherParser
 	public function getKeywords()
 	{
 		return $this->keywords;
+	}
+
+	public function getPlaceholders($assertion)
+	{
+		$words = explode(" ", $assertion);
+		$placeholders = array();
+		foreach($words as $word) {
+			if(!in_array($word, $this->keywords)) {
+				$placeholders[] = $word;
+			}
+		}
+		return $placeholders;
+	}
+
+	public function getDataForPlaceholders(array $placeholders, array $data)
+	{
+		$result = array();
+		foreach($placeholders as $placeholder) {
+			if(!array_key_exists($placeholder, $data)) {
+				// TEST
+				throw new \Exception("No such attribute '$placeholder'.");
+			}
+			$result[] = $data[$placeholder];
+		}
+		return $result;
 	}
 }

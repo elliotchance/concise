@@ -81,15 +81,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function dataProvider()
 	{
 		$assertions = $this->getAllAssertions();
+		$parser = new MatcherParser($this);
 		$r = array();
 		foreach($assertions as $method => $assertion) {
 			foreach($assertion as $a) {
-				$r["$method: $a"] = array($this->getData());
+				$r["$method: $a"] = array($parser->compile($a));
 			}
 		}
 
 		if(count($r) === 0) {
-			return array(array('true'));
+			return array(
+				// TODO this should be replace by $parser->compile('true')
+				array(new Assertion('true', new Matcher\True(), array()))
+			);
 		}
 
 		return $r;
@@ -98,9 +102,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider dataProvider
 	 */
-	public function test()
+	public function test($assertion)
 	{
-		$this->assertTrue(true);
+		$assertion->run($this);
 	}
 
 	public function __get($name)

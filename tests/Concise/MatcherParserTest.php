@@ -78,4 +78,19 @@ class MatcherParserTest extends TestCase
 		$assertion = $this->parser->compile('a equals b');
 		$this->assertEquals(array('parser'), array_keys($assertion->getData()));
 	}
+
+	public function testCanGetPlaceholdersForSyntax()
+	{
+		$this->assertEquals(array('b', 'a'), $this->parser->getPlaceholders('b equals a'));
+	}
+
+	public function testCanGetDataForPlaceholders()
+	{
+		$data = array(
+			'a' => 123,
+			'b' => 'abc'
+		);
+		$result = $this->parser->getDataForPlaceholders(array('b', 'a'), $data);
+		$this->assertEquals(array('abc', 123), $result);
+	}
 }
