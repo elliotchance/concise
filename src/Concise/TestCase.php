@@ -59,6 +59,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		if($return === null) {
 			return array($this->convertMethodNameToAssertion($method));
 		}
+		if(is_array($return)) {
+			return $return;
+		}
 		return array($return);
 	}
 }
