@@ -34,9 +34,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			return 0;
 		}
 		$return = $this->$method();
+		if($return === null || is_string($return)) {
+			return 1;
+		}
 		if(is_array($return)) {
 			return count($return);
 		}
-		return 1;
+		throw new \Exception("Test method '{$method}' must return void, string or an array of strings.");
 	}
 }

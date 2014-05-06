@@ -10,6 +10,11 @@ class TestCaseStub extends TestCase
 	function b() {}
 }
 
+class TestCaseStub2 extends TestCase
+{
+	function test_a() { return 123; }
+}
+
 class TestCaseTest extends TestCase
 {
 	public function testExtendsTestCase()
@@ -77,5 +82,15 @@ class TestCaseTest extends TestCase
 	{
 		$testCase = new TestCaseStub();
 		$this->assertEquals(2, $testCase->countAssertionsForMethod('test_c'));
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Test method 'test_a' must return void, string or an array of strings.
+	 */
+	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsNotValid()
+	{
+		$testCase = new TestCaseStub2();
+		$this->assertFalse($testCase->countAssertionsForMethod('test_a'));
 	}
 }
