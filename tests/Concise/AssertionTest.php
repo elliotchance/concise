@@ -53,7 +53,22 @@ class AssertionTest extends TestCase
 		     ->will($this->returnValue('oh no'));
 		$stub->expects($this->once())
 		     ->method('fail')
+		     ->with('oh no');
+
+		$stub->run();
+	}
+
+	public function testWillSucceedIfTheAssertionMessageIsNull()
+	{
+		$stub = $this->getMock('\Concise\Assertion',
+			array('executeAssertion', 'success'),
+			array('true', new Matcher\True())
+		);
+		$stub->expects($this->once())
+		     ->method('executeAssertion')
 		     ->will($this->returnValue(null));
+		$stub->expects($this->once())
+		     ->method('success');
 
 		$stub->run();
 	}
