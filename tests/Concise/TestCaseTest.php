@@ -122,4 +122,15 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub();
 		$this->assertEquals(array('a', 'b'), $testCase->getAssertionsForMethod('test_c'));
 	}
+
+	public function testGetAllAssertions()
+	{
+		$testCase = new TestCaseStub();
+		$expected = array(
+			'test_a' => array('a'),
+			'test_b' => array('my assertion'),
+			'test_c' => array('a', 'b')
+		);
+		$this->assertEquals($expected, $testCase->getAllAssertions());
+	}
 }

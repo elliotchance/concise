@@ -6,13 +6,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 {
 	public function countConciseTests()
 	{
-		$class = new \ReflectionClass(get_class($this));
+		$assertions = $this->getAllAssertions();
 		$count = 0;
-		foreach($class->getMethods() as $method) {
-			$methodName = $method->getName();
-			if($this->isConciseTest($methodName)) {
-				$count += $this->countAssertionsForMethod($methodName);
-			}
+		foreach($assertions as $a) {
+			$count += count($a);
 		}
 		return $count;
 	}
@@ -63,5 +60,18 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			return $return;
 		}
 		return array($return);
+	}
+
+	public function getAllAssertions()
+	{
+		$class = new \ReflectionClass(get_class($this));
+		$assertions = array();
+		foreach($class->getMethods() as $method) {
+			$methodName = $method->getName();
+			if($this->isConciseTest($methodName)) {
+				$assertions[$methodName] = $this->getAssertionsForMethod($methodName);
+			}
+		}
+		return $assertions;
 	}
 }
