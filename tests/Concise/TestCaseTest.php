@@ -133,4 +133,10 @@ class TestCaseTest extends TestCase
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
 	}
+
+	public function testConvertMethodNameToAssertionReplacesUnderscoresWithSpaces()
+	{
+		$testCase = new TestCaseStub();
+		$this->assertEquals('a equals b', $testCase->convertMethodNameToAssertion('test_a_equals_b'));
+	}
 }

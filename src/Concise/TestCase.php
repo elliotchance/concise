@@ -47,7 +47,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function convertMethodNameToAssertion($method)
 	{
-		return 'a';
+		$method = substr($method, 5);
+		return str_replace('_', ' ', $method);
 	}
 
 	public function getAssertionsForMethod($method)
