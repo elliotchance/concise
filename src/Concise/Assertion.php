@@ -40,4 +40,13 @@ class Assertion
 		$data = $parser->getDataForPlaceholders($placeholders, $this->getData());
 		$testCase->assertTrue($this->getMatcher()->match($data));
 	}
+
+	public function __toString()
+	{
+		$r = "";
+		foreach($this->getData() as $k => $v) {
+			$r .= "\n  $k = $v";
+		}
+		return "$r\n";
+	}
 }
