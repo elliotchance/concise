@@ -47,4 +47,9 @@ class MatcherParser
 		$this->matchers[$matcherClass] = $matcher;
 		return true;
 	}
+
+	public function getKeywords()
+	{
+		return $this->keywords;
+	}
 }
