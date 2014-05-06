@@ -85,4 +85,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertTrue(true);
 	}
+
+	public function __get($name)
+	{
+		if(!isset($this->$name)) {
+			throw new \Exception("No such attribute '{$name}'.");
+		}
+		return $this->$name;
+	}
 }

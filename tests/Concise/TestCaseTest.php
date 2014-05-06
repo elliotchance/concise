@@ -156,4 +156,13 @@ class TestCaseTest extends TestCase
 		$this->myAttribute = 123;
 		$this->assertSame(123, $this->myAttribute);
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
+	 */
+	public function testGetAttributeThatDoesNotExistThrowsException()
+	{
+		$this->noSuchAttribute;
+	}
 }
