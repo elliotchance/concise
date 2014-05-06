@@ -18,10 +18,7 @@ class MatcherParser
 
 	public function matcherIsRegistered($class)
 	{
-		if($class === '\No\Such\Class') {
-			return false;
-		}
-		return true;
+		return array_key_exists($class, $this->matchers);
 	}
 
 	public function registerMatcher(Matcher\AbstractMatcher $matcher)

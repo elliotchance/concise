@@ -6,21 +6,32 @@ use \Concise\TestCase;
 
 class EqualToTest extends TestCase
 {
+	public function setUp()
+	{
+		parent::setUp();
+		$this->matcher = new EqualTo();
+	}
+
 	public function testWillRespondToCorrectSyntax()
 	{
-		$matcher = new EqualTo();
-		$this->assertTrue($matcher->matchesSyntax('? equals ?'));
+		$this->assertTrue($this->matcher->matchesSyntax('? equals ?'));
 	}
 
 	public function testExtendsAbstractMatcher()
 	{
-		$matcher = new EqualTo();
-		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $matcher);
+		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $this->matcher);
+	}
+
+	public function testCanRegisterMatcher()
+	{
+		$parser = new \Concise\MatcherParser();
+		$this->assertTrue($parser->registerMatcher($this->matcher));
 	}
 
 	public function testParserKnowsAboutMatcher()
 	{
 		$parser = new \Concise\MatcherParser();
-		$this->assertTrue($parser->matcherIsRegistered(get_class($this)));
+		$parser->registerMatcher($this->matcher);
+		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
 	}
 }
