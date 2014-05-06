@@ -11,6 +11,9 @@ class EqualTo extends AbstractMatcher
 
 	public function match(array $data = array())
 	{
-		return $data[0] == $data[1];
+		if($data[0] == $data[1]) {
+			return AbstractMatcher::SUCCESS;
+		}
+		return 'bad';
 	}
 }

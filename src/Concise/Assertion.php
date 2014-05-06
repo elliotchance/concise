@@ -11,11 +11,18 @@ class Assertion
 
 	protected $data = array();
 
+	protected $testCase;
+
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
+	}
+
+	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
+	{
+		$this->testCase = $testCase;
 	}
 	
 	public function getAssertion()
@@ -33,12 +40,33 @@ class Assertion
 		return $this->matcher;
 	}
 
-	public function run(\PHPUnit_Framework_TestCase $testCase)
+	protected function executeAssertion()
 	{
-		$parser = new MatcherParser($testCase);
+		$parser = new MatcherParser($this->testCase);
 		$placeholders = $parser->getPlaceholders($this->getAssertion());
 		$data = $parser->getDataForPlaceholders($placeholders, $this->getData());
-		$testCase->assertTrue($this->getMatcher()->match($data));
+		return $this->getMatcher()->match($data);
+	}
+
+	public function fail($reason)
+	{
+		$this->testCase->fail($reason);
+	}
+
+	public function success()
+	{
+		$this->testCase->assertTrue(true);
+	}
+
+	public function run()
+	{
+		$result = $this->executeAssertion();
+		if(Matcher\AbstractMatcher::SUCCESS !== $result) {
+			$this->fail($result);
+		}
+		else {
+			$this->success();
+		}
 	}
 
 	public function __toString()

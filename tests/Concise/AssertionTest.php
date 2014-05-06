@@ -41,4 +41,20 @@ class AssertionTest extends TestCase
 		$expected = "\n  a = 123\n  b = abc\n  c = xyz\n";
 		$this->assertEquals($expected, (string) $assertion);
 	}
+
+	public function testWillFailIfTheAssertionMessageIsNotEmpty()
+	{
+		$stub = $this->getMock('\Concise\Assertion',
+			array('executeAssertion', 'fail'),
+			array('true', new Matcher\True())
+		);
+		$stub->expects($this->once())
+		     ->method('executeAssertion')
+		     ->will($this->returnValue('oh no'));
+		$stub->expects($this->once())
+		     ->method('fail')
+		     ->will($this->returnValue(null));
+
+		$stub->run();
+	}
 }

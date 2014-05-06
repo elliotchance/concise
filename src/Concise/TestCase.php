@@ -104,7 +104,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	public function test($assertion)
 	{
-		$assertion->run($this);
+		$assertion->setTestCase($this);
+		$assertion->run();
 	}
 
 	public function __get($name)
@@ -126,9 +127,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $this->data;
 	}
 
-	protected function getStub($class, array $methods)
+	protected function getStub($class, array $methods, array $constructorArgs = array())
 	{
-		$stub = $this->getMock($class, array_keys($methods));
+		$stub = $this->getMock($class, array_keys($methods), $constructorArgs);
 		foreach($methods as $method => $returnValue) {
 			$stub->expects($this->any())
 			     ->method($method)

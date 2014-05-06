@@ -11,6 +11,6 @@ class True extends AbstractMatcher
 
 	public function match(array $data = array())
 	{
-		return true;
+		return AbstractMatcher::SUCCESS;
 	}
 }

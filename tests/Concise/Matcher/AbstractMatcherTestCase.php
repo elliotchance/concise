@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class AbstractMatcher extends TestCase
+class AbstractMatcherTestCase extends TestCase
 {
 	public function testExtendsAbstractMatcher()
 	{

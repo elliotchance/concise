@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class EqualToTest extends TestCase
+class EqualToTest extends AbstractMatcherTestCase
 {
 	public function setUp()
 	{
@@ -26,5 +26,11 @@ class EqualToTest extends TestCase
 	public function testWillRespondToCorrectSyntax($syntax)
 	{
 		$this->assertTrue($this->matcher->matchesSyntax($syntax));
+	}
+
+	public function _test_a_equals_b()
+	{
+		$this->a = 123;
+		$this->b = 123;
 	}
 }
