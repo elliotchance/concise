@@ -13,6 +13,7 @@ class TestCaseStub extends TestCase
 class TestCaseStub2 extends TestCase
 {
 	function test_a() { return 123; }
+	function test_b() { return array(123, 'abc'); }
 }
 
 class TestCaseTest extends TestCase
@@ -92,5 +93,15 @@ class TestCaseTest extends TestCase
 	{
 		$testCase = new TestCaseStub2();
 		$this->assertFalse($testCase->countAssertionsForMethod('test_a'));
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Test method 'test_b' returns an array that must contain only strings.
+	 */
+	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsAnArrayOfNotAllStrings()
+	{
+		$testCase = new TestCaseStub2();
+		$this->assertFalse($testCase->countAssertionsForMethod('test_b'));
 	}
 }

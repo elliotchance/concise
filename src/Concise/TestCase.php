@@ -38,6 +38,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			return 1;
 		}
 		if(is_array($return)) {
+			foreach($return as $r) {
+				if(!is_string($r)) {
+					throw new \Exception("Test method '{$method}' returns an array that must contain only strings.");
+				}
+			}
 			return count($return);
 		}
 		throw new \Exception("Test method '{$method}' must return void, string or an array of strings.");
