@@ -78,20 +78,27 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $assertions;
 	}
 
+	public function getDataForMethod($method)
+	{
+		$this->$method();
+		return $this->getData();
+	}
+
 	public function dataProvider()
 	{
 		$assertions = $this->getAllAssertions();
-		$parser = new MatcherParser($this);
+		$parser = new MatcherParser();
 		$r = array();
 		foreach($assertions as $method => $assertion) {
+			$data = $this->getDataForMethod($method);
 			foreach($assertion as $a) {
-				$r["$method: $a"] = array($parser->compile($a));
+				$r["$method: $a"] = array($parser->compile($a, $data));
 			}
 		}
 
 		if(count($r) === 0) {
 			return array(
-				// TODO this should be replace by $parser->compile('true')
+				// TODO this should be replaced with $parser->compile('true')
 				array(new Assertion('true', new Matcher\True(), array()))
 			);
 		}

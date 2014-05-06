@@ -7,12 +7,12 @@ class MatcherParserTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->parser = new MatcherParser($this);
+		$this->parser = new MatcherParser();
 	}
 
 	public function testCompileReturnsAssertion()
 	{
-		$matcher = $this->parser->compile('a equals b');
+		$matcher = $this->parser->compile('a equals b', $this->getData());
 		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
 
@@ -62,21 +62,6 @@ class MatcherParserTest extends TestCase
 		$sortedKeywords = $this->parser->getKeywords();
 		sort($sortedKeywords);
 		$this->assertEquals($keywords, $sortedKeywords);
-	}
-
-	public function testCanExtractDataFromAssertion()
-	{
-		$this->a = 123;
-		$this->b = '456';
-		$assertion = $this->parser->compile('a equals b');
-		$expected = array('parser', 'a', 'b');
-		$this->assertEquals($expected, array_keys($assertion->getData()));
-	}
-
-	public function testDataIsAnEmptyArrayIsNotInitialised()
-	{
-		$assertion = $this->parser->compile('a equals b');
-		$this->assertEquals(array('parser'), array_keys($assertion->getData()));
 	}
 
 	public function testCanGetPlaceholdersForSyntax()

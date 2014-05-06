@@ -174,4 +174,17 @@ class TestCaseTest extends TestCase
 		));
 		$this->assertCount(1, $stub->dataProvider());
 	}
+
+	public function testCanExtractDataFromTest()
+	{
+		$this->a = 123;
+		$this->b = '456';
+		$expected = array('a', 'b');
+		$this->assertEquals($expected, array_keys($this->getData()));
+	}
+
+	public function testDataIsAnEmptyArrayIsNotInitialised()
+	{
+		$this->assertEquals(array(), array_keys($this->getData()));
+	}
 }

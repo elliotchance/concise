@@ -11,6 +11,7 @@ class Assertion
 
 	protected $data = array();
 
+	/** @var \PHPUnit_Framework_TestCase */
 	protected $testCase;
 
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
@@ -42,7 +43,7 @@ class Assertion
 
 	protected function executeAssertion()
 	{
-		$parser = new MatcherParser($this->testCase);
+		$parser = new MatcherParser();
 		$placeholders = $parser->getPlaceholders($this->getAssertion());
 		$data = $parser->getDataForPlaceholders($placeholders, $this->getData());
 		return $this->getMatcher()->match($data);

@@ -14,21 +14,14 @@ class MatcherParser
 		'true'
 	);
 
-	/** @var \Concise\TestCase */
-	protected $testCase;
-
-	public function __construct(TestCase $testCase)
-	{
-		$this->testCase = $testCase;
-	}
-
 	/**
+	 * @param array $data The data from the test case.
 	 * @return \Concise\Assertion
 	 */
-	public function compile($string)
+	public function compile($string, array $data)
 	{
 		$matcher = new \Concise\Matcher\EqualTo();
-		$assertion = new Assertion($string, $matcher, $this->testCase->getData());
+		$assertion = new Assertion($string, $matcher, $data);
 		return $assertion;
 	}
 
@@ -84,7 +77,6 @@ class MatcherParser
 		$result = array();
 		foreach($placeholders as $placeholder) {
 			if(!array_key_exists($placeholder, $data)) {
-				// TEST
 				throw new \Exception("No such attribute '$placeholder'.");
 			}
 			$result[] = $data[$placeholder];
