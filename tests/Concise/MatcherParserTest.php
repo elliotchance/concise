@@ -31,4 +31,11 @@ class MatcherParserTest extends TestCase
 	{
 		$this->assertTrue($this->parser->registerMatcher(new Matcher\EqualTo()));
 	}
+
+	public function testRegisteringAnExistingMatcherReturnsFalse()
+	{
+		$matcher = new Matcher\EqualTo();
+		$this->parser->registerMatcher($matcher);
+		$this->assertFalse($this->parser->registerMatcher($matcher));
+	}
 }
