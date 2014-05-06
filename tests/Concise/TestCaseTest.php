@@ -26,4 +26,10 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCase();
 		$this->assertTrue($testCase->isConciseTest('_a'));
 	}
+
+	public function testIsConciseTestIsFalseIfMethodDoesNotStartWithAnUnderscore()
+	{
+		$testCase = new TestCase();
+		$this->assertFalse($testCase->isConciseTest('a'));
+	}
 }

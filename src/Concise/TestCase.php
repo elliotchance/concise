@@ -9,8 +9,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return 2;
 	}
 
-	public function isConciseTest()
+	public function isConciseTest($method)
 	{
-		return true;
+		return $method[0] === '_';
 	}
 }
