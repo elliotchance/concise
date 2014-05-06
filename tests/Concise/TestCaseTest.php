@@ -52,4 +52,10 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCase();
 		$this->assertFalse($testCase->isConciseTest(123));
 	}
+
+	public function testCountAssertionsForTestReturnsOneIfThereIsNoReturnValue()
+	{
+		$testCase = new TestCase();
+		$this->assertEquals(1, $testCase->countAssertionsForMethod('test_a'));
+	}
 }

@@ -26,4 +26,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 		return substr($method, 0, 5) === 'test_';
 	}
+
+	public function countAssertionsForMethod($method)
+	{
+		return 1;
+	}
 }
