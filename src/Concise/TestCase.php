@@ -4,6 +4,8 @@ namespace Concise;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+	protected $data = array();
+
 	public function countConciseTests()
 	{
 		$assertions = $this->getAllAssertions();
@@ -92,5 +94,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			throw new \Exception("No such attribute '{$name}'.");
 		}
 		return $this->$name;
+	}
+
+	public function __set($name, $value)
+	{
+		$this->$name = $value;
+		$this->data[$name] = $value;
+	}
+
+	public function getData()
+	{
+		return $this->data;
 	}
 }

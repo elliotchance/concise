@@ -7,7 +7,7 @@ class MatcherParserTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->parser = new MatcherParser();
+		$this->parser = new MatcherParser($this);
 	}
 
 	public function testMatcherParserCanResolveMatcherForSyntax()
@@ -69,10 +69,13 @@ class MatcherParserTest extends TestCase
 		$this->a = 123;
 		$this->b = '456';
 		$matcher = $this->parser->compile('a equals b');
-		$expected = array(
-			'a' => 123,
-			'b' => '456'
-		);
-		$this->assertEquals($expected, $matcher->getData());
+		$expected = array('parser', 'a', 'b');
+		$this->assertEquals($expected, array_keys($matcher->getData()));
+	}
+
+	public function testDataIsAnEmptyArrayIsNotInitialised()
+	{
+		$matcher = $this->parser->compile('a equals b');
+		$this->assertEquals(array('parser'), array_keys($matcher->getData()));
 	}
 }

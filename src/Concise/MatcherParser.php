@@ -13,9 +13,19 @@ class MatcherParser
 		'to'
 	);
 
+	/** @var \Concise\TestCase */
+	protected $testCase;
+
+	public function __construct(TestCase $testCase)
+	{
+		$this->testCase = $testCase;
+	}
+
 	public function compile($string)
 	{
-		return new \Concise\Matcher\EqualTo();
+		$matcher = new \Concise\Matcher\EqualTo();
+		$matcher->setData($this->testCase->getData());
+		return $matcher;
 	}
 
 	public function translateAssertionToSyntax($assertion)
