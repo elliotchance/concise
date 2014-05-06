@@ -150,4 +150,10 @@ class TestCaseTest extends TestCase
 		);
 		$this->assertEquals($expected, $testCase->dataProvider());
 	}
+
+	public function testCanSetAttribute()
+	{
+		$this->myAttribute = 123;
+		$this->assertSame(123, $this->myAttribute);
+	}
 }
