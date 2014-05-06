@@ -104,4 +104,10 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub2();
 		$this->assertFalse($testCase->countAssertionsForMethod('test_b'));
 	}
+
+	public function testGetAssertionsForMethodThatDoesNotReturnAValueUsesTheMethodName()
+	{
+		$testCase = new TestCaseStub();
+		$this->assertEquals(array('a'), $testCase->getAssertionsForMethod('test_a'));
+	}
 }
