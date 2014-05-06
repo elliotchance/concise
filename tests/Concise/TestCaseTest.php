@@ -5,6 +5,7 @@ namespace Concise;
 class TestCaseStub extends TestCase
 {
 	function test_a() {}
+	function test_b() { return 'a'; }
 	function b() {}
 }
 
@@ -18,7 +19,7 @@ class TestCaseTest extends TestCase
 	public function testCountAllTests()
 	{
 		$testCase = new TestCaseStub();
-		$this->assertEquals(1, $testCase->countConciseTests());
+		$this->assertEquals(2, $testCase->countConciseTests());
 	}
 
 	public function testIsConciseTestIsTrueIfMethodStartsWithTestUnderscore()
@@ -63,5 +64,11 @@ class TestCaseTest extends TestCase
 	{
 		$testCase = new TestCase();
 		$this->assertEquals(0, $testCase->countAssertionsForMethod('a'));
+	}
+
+	public function testCountAssertionsForTestReturnsOneIfTheReturnValueIsAString()
+	{
+		$testCase = new TestCase();
+		$this->assertEquals(1, $testCase->countAssertionsForMethod('test_b'));
 	}
 }
