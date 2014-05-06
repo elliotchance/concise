@@ -50,4 +50,12 @@ class MatcherParserTest extends TestCase
 		$keywords = $this->parser->getKeywords();
 		$this->assertCount(count($keywords), array_unique($keywords));
 	}
+
+	public function testKeywordsAreSorted()
+	{
+		$keywords = $this->parser->getKeywords();
+		$sortedKeywords = $this->parser->getKeywords();
+		sort($sortedKeywords);
+		$this->assertEquals($keywords, $sortedKeywords);
+	}
 }
