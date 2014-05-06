@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class EqualTo
+class EqualTo extends AbstractMatcher
 {
 	public function matchesSyntax($syntax)
 	{

@@ -11,4 +11,10 @@ class EqualToTest extends TestCase
 		$matcher = new EqualTo();
 		$this->assertTrue($matcher->matchesSyntax('? equals ?'));
 	}
+
+	public function testExtendsAbstractMatcher()
+	{
+		$matcher = new EqualTo();
+		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $matcher);
+	}
 }
