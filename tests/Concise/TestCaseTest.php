@@ -110,32 +110,49 @@ class TestCaseTest extends TestCase
 		$this->assertFalse($testCase->countAssertionsForMethod('_test_b'));
 	}
 
+	protected function assertAssertions(array $expected, array $actual)
+	{
+		$this->assertEquals(count($expected), count($actual));
+		$right = array();
+		foreach($actual as $a) {
+			$right[] = $a->getAssertion();
+		}
+		$this->assertEquals($expected, $right);
+	}
+
 	public function testGetAssertionsForMethodThatDoesNotReturnAValueUsesTheMethodName()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(array('a equals b'), $testCase->getAssertionsForMethod('_test_a_equals_b'));
+		$this->assertAssertions(array('a equals b'), $testCase->getAssertionsForMethod('_test_a_equals_b'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAStringWillReturnThat()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(array('b equals a'), $testCase->getAssertionsForMethod('_test_b'));
+		$this->assertAssertions(array('b equals a'), $testCase->getAssertionsForMethod('_test_b'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAnArrayWillReturnThat()
 	{
 		$testCase = new TestCaseStub1();
 		$expected = array('c equals d', 'd equals c');
-		$this->assertEquals($expected, $testCase->getAssertionsForMethod('_test_c'));
+		$this->assertAssertions($expected, $testCase->getAssertionsForMethod('_test_c'));
 	}
 
 	public function testGetAllAssertions()
 	{
 		$testCase = new TestCaseStub1();
 		$expected = array(
-			'_test_a_equals_b' => array('a equals b'),
-			'_test_b' => array('b equals a'),
-			'_test_c' => array('c equals d', 'd equals c')
+			'_test_a_equals_b' => array(
+				new Assertion('a equals b', new Matcher\EqualTo())
+			),
+			'_test_b' => array(
+				new Assertion('b equals a', new Matcher\EqualTo())
+			),
+			'_test_c' => array(
+				new Assertion('c equals d', new Matcher\EqualTo()),
+				new Assertion('d equals c', new Matcher\EqualTo())
+			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
 	}

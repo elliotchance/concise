@@ -58,12 +58,20 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		// @test each test data is cleared out between tests
 		$return = $this->$method();
 		if($return === null) {
-			return array($this->convertMethodNameToAssertion($method));
+			$assertions = array($this->convertMethodNameToAssertion($method));
 		}
-		if(is_array($return)) {
-			return $return;
+		else if(is_array($return)) {
+			$assertions = $return;
 		}
-		return array($return);
+		else {
+			$assertions = array($return);
+		}
+
+		$r = array();
+		foreach($assertions as $a) {
+			$r[] = $this->getMatcherParserInstance()->compile($a, $this->getData());
+		}
+		return $r;
 	}
 
 	public function getAllAssertions()
@@ -79,13 +87,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $assertions;
 	}
 
-	// @test
-	public function getDataForMethod($method)
-	{
-		$this->$method();
-		return $this->getData();
-	}
-
 	protected function getMatcherParserInstance()
 	{
 		return MatcherParser::getInstance();
@@ -94,12 +95,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function dataProvider()
 	{
 		$assertions = $this->getAllAssertions();
-		$parser = $this->getMatcherParserInstance();
 		$r = array();
 		foreach($assertions as $method => $assertion) {
-			$data = $this->getDataForMethod($method);
 			foreach($assertion as $a) {
-				$r["$method: $a"] = array($parser->compile($a, $data));
+				$r["$method: " . $a->getAssertion()] = array($a);
 			}
 		}
 
