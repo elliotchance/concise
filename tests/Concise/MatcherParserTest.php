@@ -108,4 +108,13 @@ class MatcherParserTest extends TestCase
 	{
 		$this->assertSame(MatcherParser::getInstance(), MatcherParser::getInstance());
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage No such matcher for syntax 'something'.
+	 */
+	public function testGetMatcherForSyntaxThrowsExceptionIfNoMatchersAreFound()
+	{
+		$this->parser->getMatcherForSyntax('something');
+	}
 }

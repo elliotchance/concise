@@ -24,7 +24,6 @@ class MatcherParser
 				$found[] = $matcher;
 			}
 		}
-		// @test is there are none found
 		if(count($found) === 0) {
 			throw new \Exception("No such matcher for syntax '$syntax'.");
 		}
