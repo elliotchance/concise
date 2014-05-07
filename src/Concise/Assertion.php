@@ -53,11 +53,7 @@ class Assertion
 				$result['arguments'][$i] = $data[$arg->getName()];
 			}
 		}
-
-		/*$parser = new MatcherParser();
-		$placeholders = $parser->getPlaceholders($this->getAssertion());
-		$data = $parser->getDataForPlaceholders($placeholders, $data);*/
-		return $this->getMatcher()->match($result['arguments']);
+		return $this->getMatcher()->match($result['syntax'], $result['arguments']);
 	}
 
 	public function fail($reason)

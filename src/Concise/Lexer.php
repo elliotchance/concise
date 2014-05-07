@@ -27,6 +27,7 @@ class Lexer
 		'equal',
 		'equals',
 		'is',
+		'not',
 		'null',
 		'to',
 		'true'

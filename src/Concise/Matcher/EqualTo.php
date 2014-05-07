@@ -9,7 +9,7 @@ class EqualTo extends AbstractMatcher
 		return in_array($syntax, array('? equals ?', '? is equal to ?'));
 	}
 
-	public function match(array $data = array())
+	public function match($syntax, array $data = array())
 	{
 		if($data[0] == $data[1]) {
 			return AbstractMatcher::SUCCESS;

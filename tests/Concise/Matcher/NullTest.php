@@ -31,8 +31,10 @@ class NullTest extends AbstractMatcherTestCase
 	public function _test_comparisons()
 	{
 		$this->x = null;
+		$this->y = 'a';
 		return array(
-			'x is null'
+			'x is null',
+			'y is not null'
 		);
 	}
 }

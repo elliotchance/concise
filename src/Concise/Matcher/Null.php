@@ -9,12 +9,12 @@ class Null extends AbstractMatcher
 		return in_array($syntax, array('? is null', '? is not null'));
 	}
 
-	public function match(array $data = array())
+	public function match($syntax, array $data = array())
 	{
-		if(null === $data[0]) {
-			return AbstractMatcher::SUCCESS;
+		// @test messages returned have no tests
+		if('? is null' === $syntax) {
+			return (null === $data[0]) ? AbstractMatcher::SUCCESS : 'expected null';
 		}
-		// @todo fix this and write a test
-		return 'bad';
+		return (null !== $data[0]) ? AbstractMatcher::SUCCESS : 'expected not null';
 	}
 }

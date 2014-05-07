@@ -9,7 +9,7 @@ class True extends AbstractMatcher
 		return $syntax === 'true';
 	}
 
-	public function match(array $data = array())
+	public function match($syntax, array $data = array())
 	{
 		return AbstractMatcher::SUCCESS;
 	}
