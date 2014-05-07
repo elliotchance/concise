@@ -2,6 +2,14 @@
 
 namespace Concise;
 
+class MatcherParserStub extends MatcherParser
+{
+	public function registerMatchers()
+	{
+		return parent::registerMatchers();
+	}
+}
+
 class MatcherParserTest extends TestCase
 {
 	public function setUp()
@@ -116,5 +124,16 @@ class MatcherParserTest extends TestCase
 	public function testGetMatcherForSyntaxThrowsExceptionIfNoMatchersAreFound()
 	{
 		$this->parser->getMatcherForSyntax('something');
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage registerMatchers() can only be called once.
+	 */
+	public function testRegisterMatchersCanOnlyBeCalledOnce()
+	{
+		$parser = new MatcherParserStub();
+		$parser->registerMatchers();
+		$parser->registerMatchers();
 	}
 }
