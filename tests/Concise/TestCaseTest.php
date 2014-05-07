@@ -4,10 +4,15 @@ namespace Concise;
 
 class TestCaseStub1 extends TestCase
 {
-	function _test_a() {}
-	function _test_b() { return 'my assertion'; }
-	function _test_c() { return array('a', 'b'); }
+	function _test_a_equals_b() {}
+	function _test_b() { return 'b equals a'; }
+	function _test_c() { return array('c equals d', 'd equals c'); }
 	function b() {}
+	function getMatcherParserInstance() {
+		$matcherParser = new MatcherParser();
+		$matcherParser->registerMatcher(new Matcher\EqualTo());
+		return $matcherParser;
+	}
 }
 
 class TestCaseStub2 extends TestCase
@@ -32,7 +37,7 @@ class TestCaseTest extends TestCase
 	public function testIsConciseTestIsTrueIfMethodStartsWithTestUnderscore()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertTrue($testCase->isConciseTest('_test_a'));
+		$this->assertTrue($testCase->isConciseTest('_test_a_equals_b'));
 	}
 
 	public function testIsConciseTestIsFalseIfMethodDoesNotStartWithTestUnderscore()
@@ -64,7 +69,7 @@ class TestCaseTest extends TestCase
 	public function testCountAssertionsForTestReturnsOneIfThereIsNoReturnValue()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(1, $testCase->countAssertionsForMethod('_test_a'));
+		$this->assertEquals(1, $testCase->countAssertionsForMethod('_test_a_equals_b'));
 	}
 
 	public function testCountAssertionsForTestReturnsZeroIfItIsNotAValidMethodName()
@@ -108,28 +113,29 @@ class TestCaseTest extends TestCase
 	public function testGetAssertionsForMethodThatDoesNotReturnAValueUsesTheMethodName()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(array('a'), $testCase->getAssertionsForMethod('_test_a'));
+		$this->assertEquals(array('a equals b'), $testCase->getAssertionsForMethod('_test_a_equals_b'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAStringWillReturnThat()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(array('my assertion'), $testCase->getAssertionsForMethod('_test_b'));
+		$this->assertEquals(array('b equals a'), $testCase->getAssertionsForMethod('_test_b'));
 	}
 
 	public function testGetAssertionsForMethodThatReturnsAnArrayWillReturnThat()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertEquals(array('a', 'b'), $testCase->getAssertionsForMethod('_test_c'));
+		$expected = array('c equals d', 'd equals c');
+		$this->assertEquals($expected, $testCase->getAssertionsForMethod('_test_c'));
 	}
 
 	public function testGetAllAssertions()
 	{
 		$testCase = new TestCaseStub1();
 		$expected = array(
-			'_test_a' => array('a'),
-			'_test_b' => array('my assertion'),
-			'_test_c' => array('a', 'b')
+			'_test_a_equals_b' => array('a equals b'),
+			'_test_b' => array('b equals a'),
+			'_test_c' => array('c equals d', 'd equals c')
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
 	}
@@ -144,10 +150,10 @@ class TestCaseTest extends TestCase
 	{
 		$testCase = new TestCaseStub1();
 		$expected = array(
-			'_test_a: a',
-			'_test_b: my assertion',
-			'_test_c: a',
-			'_test_c: b'
+			'_test_a_equals_b: a equals b',
+			'_test_b: b equals a',
+			'_test_c: c equals d',
+			'_test_c: d equals c'
 		);
 		$this->assertEquals($expected, array_keys($testCase->dataProvider()));
 	}

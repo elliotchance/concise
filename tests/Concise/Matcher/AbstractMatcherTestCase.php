@@ -19,8 +19,7 @@ class AbstractMatcherTestCase extends TestCase
 
 	public function testParserKnowsAboutMatcher()
 	{
-		$parser = new \Concise\MatcherParser();
-		$parser->registerMatcher($this->matcher);
+		$parser = \Concise\MatcherParser::getInstance();
 		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
 	}
 }

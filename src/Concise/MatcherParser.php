@@ -6,6 +6,8 @@ class MatcherParser
 {
 	protected $matchers = array();
 
+	protected static $instance = null;
+
 	protected $keywords = array(
 		'equal',
 		'equals',
@@ -14,13 +16,32 @@ class MatcherParser
 		'true'
 	);
 
+	public function getMatcherForSyntax($syntax)
+	{
+		$found = array();
+		foreach($this->matchers as $matcher) {
+			if($matcher->matchesSyntax($syntax)) {
+				$found[] = $matcher;
+			}
+		}
+		// @test is there are none found
+		if(count($found) === 0) {
+			throw new \Exception("No such matcher for syntax '$syntax'.");
+		}
+		if(count($found) > 1) {
+			throw new \Exception("Ambiguous syntax for '$syntax'.");
+		}
+		return $found[0];
+	}
+
 	/**
 	 * @param array $data The data from the test case.
 	 * @return \Concise\Assertion
 	 */
-	public function compile($string, array $data)
+	public function compile($string, array $data = array())
 	{
-		$matcher = new \Concise\Matcher\EqualTo();
+		$syntax = $this->translateAssertionToSyntax($string);
+		$matcher = $this->getMatcherForSyntax($syntax);
 		$assertion = new Assertion($string, $matcher, $data);
 		return $assertion;
 	}
@@ -40,18 +61,19 @@ class MatcherParser
 		return implode(' ', $syntax);
 	}
 
-	public function matcherIsRegistered($class)
+	public function matcherIsRegistered($matcherClass)
 	{
-		return array_key_exists($class, $this->matchers);
+		foreach($this->matchers as $matcher) {
+			if(get_class($matcher) === $matcherClass) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public function registerMatcher(Matcher\AbstractMatcher $matcher)
 	{
-		$matcherClass = get_class($matcher);
-		if(array_key_exists($matcherClass, $this->matchers)) {
-			return false;
-		}
-		$this->matchers[$matcherClass] = $matcher;
+		$this->matchers[] = $matcher;
 		return true;
 	}
 
@@ -82,5 +104,21 @@ class MatcherParser
 			$result[] = $data[$placeholder];
 		}
 		return $result;
+	}
+
+	public function getInstance()
+	{
+		if(null === self::$instance) {
+			self::$instance = new MatcherParser();
+			self::$instance->registerMatchers();
+		}
+		return self::$instance;
+	}
+
+	protected function registerMatchers()
+	{
+		// @test register matchers can only be called once
+		$this->registerMatcher(new Matcher\EqualTo());
+		$this->registerMatcher(new Matcher\True());
 	}
 }

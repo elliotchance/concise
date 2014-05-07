@@ -84,10 +84,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $this->getData();
 	}
 
+	protected function getMatcherParserInstance()
+	{
+		return MatcherParser::getInstance();
+	}
+
 	public function dataProvider()
 	{
 		$assertions = $this->getAllAssertions();
-		$parser = new MatcherParser();
+		$parser = $this->getMatcherParserInstance();
 		$r = array();
 		foreach($assertions as $method => $assertion) {
 			$data = $this->getDataForMethod($method);
