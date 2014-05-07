@@ -8,7 +8,11 @@ class Lexer
 	{
 		return array(
 			'tokens' => array('a', 'equals', 'b'),
-			'syntax' => '? equals ?'
+			'syntax' => '? equals ?',
+			'arguments' => array(
+				'a' => new Attribute(),
+				'b' => new Attribute()
+			)
 		);
 	}
 }

@@ -11,10 +11,21 @@ class LexerTest extends TestCase
 		$this->assertEquals(array('a', 'equals', 'b'), $result['tokens']);
 	}
 
-	public function testLexerWillReturnSyntaxTokensForString()
+	public function testLexerWillReturnSyntaxForString()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('a equals b');
 		$this->assertEquals('? equals ?', $result['syntax']);
+	}
+
+	public function testLexerWillReturnArgumentsForString()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('a equals b');
+		$expected = array(
+			'a' => new Attribute(),
+			'b' => new Attribute(),
+		);
+		$this->assertEquals($expected, $result['arguments']);
 	}
 }
