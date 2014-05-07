@@ -8,4 +8,9 @@ class LexerTest extends TestCase
 	{
 		$this->assertEquals(Lexer::TOKEN_KEYWORD, Lexer::getTokenType('equals'));
 	}
+
+	public function testReadAttributeToken()
+	{
+		$this->assertEquals(Lexer::TOKEN_ATTRIBUTE, Lexer::getTokenType('z'));
+	}
 }

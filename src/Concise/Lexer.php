@@ -6,7 +6,9 @@ class Lexer
 {
 	const TOKEN_KEYWORD = 1;
 
-	protected function isKeyword($token)
+	const TOKEN_ATTRIBUTE = 2;
+
+	protected static function isKeyword($token)
 	{
 		$parser = new MatcherParser();
 		$keywords = $parser->getKeywords();
@@ -15,7 +17,10 @@ class Lexer
 
 	public static function getTokenType($token)
 	{
-		return self::TOKEN_KEYWORD;
+		if(self::isKeyword($token)) {
+			return self::TOKEN_KEYWORD;
+		}
+		return self::TOKEN_ATTRIBUTE;
 	}
 
 	protected function getTokens($string)
