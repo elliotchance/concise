@@ -14,6 +14,12 @@ class Lexer
 
 	const TOKEN_STRING = 5;
 
+	// @test TOKEN_STRING with spaces
+
+	// @test TOKEN_STRING with escaped quotes
+
+	// @test TOKEN_STRING with escaped characters
+
 	// @test TOKEN_ have unique values
 
 	protected static function isKeyword($token)
@@ -57,6 +63,7 @@ class Lexer
 				case self::TOKEN_KEYWORD:
 					break;
 				case self::TOKEN_INTEGER:
+				case self::TOKEN_FLOAT:
 					$attributes[] = $token * 1;
 					break;
 				case self::TOKEN_ATTRIBUTE:
