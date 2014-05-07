@@ -4,13 +4,20 @@ namespace Concise;
 
 class LexerTest extends TestCase
 {
-	public function testReadKeywordToken()
+	public function tokenData()
 	{
-		$this->assertEquals(Lexer::TOKEN_KEYWORD, Lexer::getTokenType('equals'));
+		return array(
+			'keyword' => array(Lexer::TOKEN_KEYWORD, 'equals'),
+			'attribute' => array(Lexer::TOKEN_ATTRIBUTE, 'z'),
+			'integer' => array(Lexer::TOKEN_INTEGER, '123')
+		);
 	}
 
-	public function testReadAttributeToken()
+	/**
+	 * @dataProvider tokenData
+	 */
+	public function testReadKeywordToken($expectedToken, $token)
 	{
-		$this->assertEquals(Lexer::TOKEN_ATTRIBUTE, Lexer::getTokenType('z'));
+		$this->assertEquals($expectedToken, Lexer::getTokenType($token));
 	}
 }

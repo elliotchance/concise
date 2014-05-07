@@ -8,6 +8,8 @@ class Lexer
 
 	const TOKEN_ATTRIBUTE = 2;
 
+	const TOKEN_INTEGER = 3;
+
 	protected static function isKeyword($token)
 	{
 		$parser = new MatcherParser();
@@ -19,6 +21,9 @@ class Lexer
 	{
 		if(self::isKeyword($token)) {
 			return self::TOKEN_KEYWORD;
+		}
+		if(preg_match('/^[0-9]+$/', $token)) {
+			return self::TOKEN_INTEGER;
 		}
 		return self::TOKEN_ATTRIBUTE;
 	}
