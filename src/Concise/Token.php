@@ -15,4 +15,9 @@ class Token
 	{
 		return $this->type;
 	}
+
+	public function getValue()
+	{
+		return null;
+	}
 }
