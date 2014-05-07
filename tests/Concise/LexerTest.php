@@ -51,5 +51,10 @@ class LexerTest extends TestCase
 		$this->assertEquals($keywords, $sortedKeywords);
 	}
 
-	// @test ignore empty tokens
+	public function testLexerIgnoresBlankTokens()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse(' not not  not   not ');
+		$this->assertCount(4, $result['tokens']);
+	}
 }

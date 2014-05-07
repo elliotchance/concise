@@ -57,10 +57,14 @@ class Lexer
 
 	protected function getTokens($string)
 	{
-		if($string == '') {
-			return array();
+		$raw = explode(' ', $string);
+		$r = array();
+		foreach($raw as $token) {
+			if('' != $token) {
+				$r[] = $token;
+			}
 		}
-		return explode(' ', $string);
+		return $r;
 	}
 
 	protected function getAttributes($string)
