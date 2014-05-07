@@ -6,6 +6,9 @@ class Lexer
 {
 	public function parse($string)
 	{
-		return array('some', 'tokens');
+		return array(
+			'tokens' => array('a', 'equals', 'b'),
+			'syntax' => '? equals ?'
+		);
 	}
 }
