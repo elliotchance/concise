@@ -47,25 +47,6 @@ class MatcherParserTest extends TestCase
 		$this->assertEquals('? is equal to ?', $syntax);
 	}
 
-	public function testKeywordsReturnsArray()
-	{
-		$this->assertTrue(is_array($this->parser->getKeywords()));
-	}
-
-	public function testKeywordsAreUnique()
-	{
-		$keywords = $this->parser->getKeywords();
-		$this->assertCount(count($keywords), array_unique($keywords));
-	}
-
-	public function testKeywordsAreSorted()
-	{
-		$keywords = $this->parser->getKeywords();
-		$sortedKeywords = $this->parser->getKeywords();
-		sort($sortedKeywords);
-		$this->assertEquals($keywords, $sortedKeywords);
-	}
-
 	public function testCanGetPlaceholdersForSyntax()
 	{
 		$this->assertEquals(array('b', 'a'), $this->parser->getPlaceholders('b equals a'));

@@ -8,14 +8,6 @@ class MatcherParser
 
 	protected static $instance = null;
 
-	protected $keywords = array(
-		'equal',
-		'equals',
-		'is',
-		'to',
-		'true'
-	);
-
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();
@@ -68,17 +60,12 @@ class MatcherParser
 		return true;
 	}
 
-	public function getKeywords()
-	{
-		return $this->keywords;
-	}
-
 	public function getPlaceholders($assertion)
 	{
 		$words = explode(" ", $assertion);
 		$placeholders = array();
 		foreach($words as $word) {
-			if(!in_array($word, $this->keywords)) {
+			if(!in_array($word, Lexer::getKeywords())) {
 				$placeholders[] = $word;
 			}
 		}

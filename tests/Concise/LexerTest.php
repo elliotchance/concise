@@ -32,5 +32,24 @@ class LexerTest extends TestCase
 		$this->assertCount(0, $result['tokens']);
 	}
 
+	public function testKeywordsReturnsArray()
+	{
+		$this->assertTrue(is_array(Lexer::getKeywords()));
+	}
+
+	public function testKeywordsAreUnique()
+	{
+		$keywords = Lexer::getKeywords();
+		$this->assertCount(count($keywords), array_unique($keywords));
+	}
+
+	public function testKeywordsAreSorted()
+	{
+		$keywords = Lexer::getKeywords();
+		$sortedKeywords = Lexer::getKeywords();
+		sort($sortedKeywords);
+		$this->assertEquals($keywords, $sortedKeywords);
+	}
+
 	// @test ignore empty tokens
 }

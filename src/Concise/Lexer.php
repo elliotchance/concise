@@ -22,11 +22,17 @@ class Lexer
 
 	// @test TOKEN_ have unique values
 
+	protected static $keywords = array(
+		'equal',
+		'equals',
+		'is',
+		'to',
+		'true'
+	);
+
 	protected static function isKeyword($token)
 	{
-		$parser = new MatcherParser();
-		$keywords = $parser->getKeywords();
-		return in_array($token, $keywords);
+		return in_array($token, self::$keywords);
 	}
 
 	public static function getTokenType($token)
@@ -100,5 +106,10 @@ class Lexer
 			'syntax' => $this->getSyntax($string),
 			'arguments' => $this->getAttributes($string)
 		);
+	}
+
+	public static function getKeywords()
+	{
+		return self::$keywords;
 	}
 }
