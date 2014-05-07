@@ -41,13 +41,16 @@ class Lexer
 		$tokens = $this->getTokens($string);
 		$attributes = array();
 		foreach($tokens as $token) {
-			if(!$this->isKeyword($token)) {
-				if(preg_match('/^[0-9]+$/', $token)) {
+			switch(self::getTokenType($token)) {
+				case self::TOKEN_KEYWORD:
+					break;
+				case self::TOKEN_INTEGER:
 					$attributes[] = $token * 1;
-				}
-				else {
+					break;
+				case self::TOKEN_ATTRIBUTE:
+				default:
 					$attributes[] = new Attribute();
-				}
+					break;
 			}
 		}
 		return $attributes;
