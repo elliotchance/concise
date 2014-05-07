@@ -35,7 +35,8 @@ class NullTest extends AbstractMatcherTestCase
 		return array(
 			'x is null',
 			'y is not null',
-			'"null" is not null'
+			'"null" is not null',
+			'"" is not null',
 		);
 	}
 }
