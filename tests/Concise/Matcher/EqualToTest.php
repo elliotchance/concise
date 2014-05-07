@@ -28,14 +28,18 @@ class EqualToTest extends AbstractMatcherTestCase
 		$this->assertTrue($this->matcher->matchesSyntax($syntax));
 	}
 
-	public function _test_a_equals_b()
+	public function _test_comparisons()
 	{
-		$this->a = 123;
-		$this->b = 123;
+		return array(
+			'123 equals 123',
+			'123 equals 123.0',
+			'123 equals "123"'
+		);
 	}
 
-	public function _test_123_equals_b()
-	{
-		$this->b = 123;
-	}
+	// @test can name assertions with an assoc array when returning from method
+
+	// @test warn if attributes are set and not used
+
+	// @test must must setup and tear down when generating the data source for test
 }

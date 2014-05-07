@@ -193,4 +193,8 @@ class TestCaseTest extends TestCase
 	{
 		$this->assertEquals(array(), array_keys($this->getData()));
 	}
+
+	// @test cannot assign test attribute if its a keyword
+
+	// @test better descriptions of failures, search for 'bad'
 }
