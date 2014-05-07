@@ -100,6 +100,7 @@ class MatcherParser
 
 		$this->registerMatcher(new Matcher\EqualTo());
 		$this->registerMatcher(new Matcher\True());
+		$this->registerMatcher(new Matcher\Null());
 	}
 
 	public function getMatchers()

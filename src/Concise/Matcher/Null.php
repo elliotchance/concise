@@ -2,16 +2,16 @@
 
 namespace Concise\Matcher;
 
-class EqualTo extends AbstractMatcher
+class Null extends AbstractMatcher
 {
 	public function matchesSyntax($syntax)
 	{
-		return in_array($syntax, array('? equals ?', '? is equal to ?'));
+		return in_array($syntax, array('? is null', '? is not null'));
 	}
 
 	public function match(array $data = array())
 	{
-		if($data[0] == $data[1]) {
+		if(null === $data[0]) {
 			return AbstractMatcher::SUCCESS;
 		}
 		// @todo fix this and write a test

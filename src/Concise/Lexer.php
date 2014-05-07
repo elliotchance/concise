@@ -22,10 +22,12 @@ class Lexer
 
 	// @test TOKEN_ have unique values
 
+	// @test keywords should be generated automatically from matchers
 	protected static $keywords = array(
 		'equal',
 		'equals',
 		'is',
+		'null',
 		'to',
 		'true'
 	);
