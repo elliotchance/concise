@@ -57,4 +57,11 @@ class LexerTest extends TestCase
 		$result = $lexer->parse(' not not  not   not ');
 		$this->assertCount(4, $result['tokens']);
 	}
+
+	public function testTokensHaveUniqueValues()
+	{
+		$class = new \ReflectionClass('\Concise\Lexer');
+		$constants = $class->getConstants();
+		$this->assertEquals(count($constants), count(array_unique($constants)));
+	}
 }
