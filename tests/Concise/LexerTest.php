@@ -70,13 +70,14 @@ class LexerTest extends TestCase
 		return array(
 			array('"not abc"', 'not abc'),
 			array("'not abc'", 'not abc'),
+			array("'not \"abc'", 'not "abc'),
 		);
 	}
 
 	/**
 	 * @dataProvider stringData
 	 */
-	public function testTokenizerAllowsDoubleQuotedStringsWithSpaces($string, $expected)
+	public function testTokenizerUnderstandsStrings($string, $expected)
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($string);
