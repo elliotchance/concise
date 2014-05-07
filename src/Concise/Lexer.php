@@ -30,6 +30,9 @@ class Lexer
 
 	protected function getTokens($string)
 	{
+		if($string == '') {
+			return array();
+		}
 		return explode(' ', $string);
 	}
 

@@ -20,4 +20,11 @@ class LexerTest extends TestCase
 	{
 		$this->assertEquals($expectedToken, Lexer::getTokenType($token));
 	}
+
+	public function testTokensReturnsAnArrayWithABlankString()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('');
+		$this->assertCount(0, $result['tokens']);
+	}
 }
