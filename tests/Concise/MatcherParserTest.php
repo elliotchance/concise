@@ -136,4 +136,11 @@ class MatcherParserTest extends TestCase
 		$parser->registerMatchers();
 		$parser->registerMatchers();
 	}
+
+	public function testRegisterMatchersMustRegisterAtLeastOneMatcher()
+	{
+		$parser = new MatcherParserStub();
+		$parser->registerMatchers();
+		$this->assertGreaterThan(0, $parser->getMatchers());
+	}
 }

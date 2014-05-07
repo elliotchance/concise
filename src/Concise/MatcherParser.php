@@ -116,12 +116,16 @@ class MatcherParser
 
 	protected function registerMatchers()
 	{
-		// @test registerMatchersMustRegisterAtLeastOneMatcher
 		if(count($this->matchers) > 0) {
 			throw new \Exception("registerMatchers() can only be called once.");
 		}
 
 		$this->registerMatcher(new Matcher\EqualTo());
 		$this->registerMatcher(new Matcher\True());
+	}
+
+	public function getMatchers()
+	{
+		return $this->matchers;
 	}
 }
