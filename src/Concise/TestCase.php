@@ -135,7 +135,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$this->data[$name] = $value;
 	}
 
-	// @test
 	public function __unset($name)
 	{
 		unset($this->data[$name]);

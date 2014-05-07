@@ -211,6 +211,13 @@ class TestCaseTest extends TestCase
 		$this->assertEquals(array(), array_keys($this->getData()));
 	}
 
+	public function testCanUnsetProperty()
+	{
+		$this->myUniqueProperty = 123;
+		unset($this->myUniqueProperty);
+		$this->assertFalse(isset($this->myUniqueProperty));
+	}
+
 	// @test cannot assign test attribute if its a keyword
 
 	// @test better descriptions of failures, search for 'bad'
