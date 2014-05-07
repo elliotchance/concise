@@ -31,17 +31,11 @@ class MatcherParser
 	 */
 	public function compile($string, array $data = array())
 	{
-		$syntax = $this->translateAssertionToSyntax($string);
-		$matcher = $this->getMatcherForSyntax($syntax);
+		$lexer = new Lexer();
+		$result = $lexer->parse($string);
+		$matcher = $this->getMatcherForSyntax($result['syntax']);
 		$assertion = new Assertion($string, $matcher, $data);
 		return $assertion;
-	}
-
-	public function translateAssertionToSyntax($assertion)
-	{
-		$lexer = new Lexer();
-		$result = $lexer->parse($assertion);
-		return $result['syntax'];
 	}
 
 	public function matcherIsRegistered($matcherClass)

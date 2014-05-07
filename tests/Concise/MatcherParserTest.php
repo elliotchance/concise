@@ -25,12 +25,6 @@ class MatcherParserTest extends TestCase
 		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
 
-	public function testTranslateAssertionIntoSyntax()
-	{
-		$syntax = $this->parser->translateAssertionToSyntax('a equals b');
-		$this->assertEquals('? equals ?', $syntax);
-	}
-
 	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
 	{
 		$this->assertFalse($this->parser->matcherIsRegistered('\No\Such\Class'));
@@ -39,12 +33,6 @@ class MatcherParserTest extends TestCase
 	public function testRegisteringANewMatcherReturnsTrue()
 	{
 		$this->assertTrue($this->parser->registerMatcher(new Matcher\EqualTo()));
-	}
-
-	public function testTranslateAssertionIntoSyntaxWillReplaceAnyNonKeywordsWithPlaceholder()
-	{
-		$syntax = $this->parser->translateAssertionToSyntax('a is equal to b');
-		$this->assertEquals('? is equal to ?', $syntax);
 	}
 
 	public function testCanGetPlaceholdersForSyntax()
