@@ -34,7 +34,8 @@ class NullTest extends AbstractMatcherTestCase
 		$this->y = 'a';
 		return array(
 			'x is null',
-			'y is not null'
+			'y is not null',
+			'"null" is not null'
 		);
 	}
 }
