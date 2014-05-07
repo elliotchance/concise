@@ -11,7 +11,11 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedTokens()
 	{
-		return array('a', 'equals', 'b');
+		return array(
+			new Token(Lexer::TOKEN_ATTRIBUTE, 'a'),
+			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
+			new Token(Lexer::TOKEN_ATTRIBUTE, 'b'),
+		);
 	}
 
 	protected function expectedSyntax()

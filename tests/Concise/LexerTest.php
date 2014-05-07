@@ -68,8 +68,8 @@ class LexerTest extends TestCase
 	public function stringData()
 	{
 		return array(
-			array('"not abc"', array('"not abc"')),
-			array("'not abc'", array('"not abc"')),
+			array('"not abc"', 'not abc'),
+			array("'not abc'", 'not abc'),
 		);
 	}
 
@@ -80,6 +80,6 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($string);
-		$this->assertEquals($expected, $result['tokens']);
+		$this->assertEquals(array(new Token(Lexer::TOKEN_STRING, $expected)), $result['tokens']);
 	}
 }

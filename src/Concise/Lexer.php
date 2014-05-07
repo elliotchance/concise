@@ -57,7 +57,7 @@ class Lexer
 		for($i = $startIndex + 1; $i < strlen($string) && $string[$i] != $container; ++$i) {
 			$t .= $string[$i];
 		}
-		return "\"$t\"";
+		return $t;
 	}
 
 	protected function getTokens($string)
@@ -69,11 +69,13 @@ class Lexer
 			$ch = $string[$i];
 			if($ch == '"' || $ch == "'") {
 				$t = $this->consumeString($string, $ch, $i);
-				$i += strlen($t) - 1;
+				$r[] = new Token(Lexer::TOKEN_STRING, $t);
+				$i += strlen($t) + 1;
+				$t = '';
 			}
 			else if($ch == ' ') {
 				if($t != '') {
-					$r[] = $t;
+					$r[] = new Token(self::getTokenType($t), $t);
 				}
 				$t = '';
 			}
@@ -82,7 +84,7 @@ class Lexer
 			}
 		}
 		if($t != '') {
-			$r[] = $t;
+			$r[] = new Token(self::getTokenType($t), $t);
 		}
 		return $r;
 	}
@@ -92,19 +94,19 @@ class Lexer
 		$tokens = $this->getTokens($string);
 		$attributes = array();
 		foreach($tokens as $token) {
-			switch(self::getTokenType($token)) {
+			switch($token->getType()) {
 				case self::TOKEN_KEYWORD:
 					break;
 				case self::TOKEN_INTEGER:
 				case self::TOKEN_FLOAT:
-					$attributes[] = $token * 1;
+					$attributes[] = $token->getValue() * 1;
 					break;
 				case self::TOKEN_STRING:
-					$attributes[] = substr($token, 1, strlen($token) - 2);
+					$attributes[] = $token->getValue();
 					break;
 				case self::TOKEN_ATTRIBUTE:
 				default:
-					$attributes[] = new Attribute($token);
+					$attributes[] = new Attribute($token->getValue());
 					break;
 			}
 		}
@@ -116,11 +118,11 @@ class Lexer
 		$tokens = $this->getTokens($string);
 		$syntax = array();
 		foreach($tokens as $token) {
-			if(self::getTokenType($token) !== self::TOKEN_KEYWORD) {
+			if($token->getType() !== self::TOKEN_KEYWORD) {
 				$syntax[] = '?';
 			}
 			else {
-				$syntax[] = $token;
+				$syntax[] = $token->getValue();
 			}
 		}
 		return implode(' ', $syntax);

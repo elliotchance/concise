@@ -11,7 +11,11 @@ class LexerStringTest extends LexerTestCase
 
 	protected function expectedTokens()
 	{
-		return array('"abc"', 'equals', 'b');
+		return array(
+			new Token(Lexer::TOKEN_STRING, 'abc'),
+			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
+			new Token(Lexer::TOKEN_ATTRIBUTE, 'b'),
+		);
 	}
 
 	protected function expectedSyntax()
