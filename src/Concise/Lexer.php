@@ -4,11 +4,18 @@ namespace Concise;
 
 class Lexer
 {
+	const TOKEN_KEYWORD = 1;
+
 	protected function isKeyword($token)
 	{
 		$parser = new MatcherParser();
 		$keywords = $parser->getKeywords();
 		return in_array($token, $keywords);
+	}
+
+	public static function getTokenType($token)
+	{
+		return self::TOKEN_KEYWORD;
 	}
 
 	protected function getTokens($string)
