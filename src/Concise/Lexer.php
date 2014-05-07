@@ -66,6 +66,9 @@ class Lexer
 				case self::TOKEN_FLOAT:
 					$attributes[] = $token * 1;
 					break;
+				case self::TOKEN_STRING:
+					$attributes[] = substr($token, 1, strlen($token) - 2);
+					break;
 				case self::TOKEN_ATTRIBUTE:
 				default:
 					$attributes[] = new Attribute();
