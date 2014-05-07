@@ -10,5 +10,9 @@ class AttributeTest extends TestCase
 		$this->assertEquals('abc', $attribute->getName());
 	}
 
-	// @test casting to string is the same as getName()
+	public function testCastingToStringIsTheSameAsGetName()
+	{
+		$attribute = new Attribute('abc');
+		$this->assertEquals('abc', (string) $attribute);
+	}
 }
