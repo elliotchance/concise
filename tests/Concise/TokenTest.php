@@ -15,4 +15,10 @@ class TokenTest extends TestCase
 		$attribute = new Token(Lexer::TOKEN_STRING);
 		$this->assertNull($attribute->getValue());
 	}
+
+	public function testValueCanBeProvidedThroughConstructor()
+	{
+		$attribute = new Token(Lexer::TOKEN_STRING, 'abc');
+		$this->assertEquals('abc', $attribute->getValue());
+	}
 }

@@ -6,9 +6,12 @@ class Token
 {
 	protected $type;
 
-	public function __construct($type)
+	protected $value;
+
+	public function __construct($type, $value = null)
 	{
 		$this->type = $type;
+		$this->value = $value;
 	}
 
 	public function getType()
@@ -18,6 +21,6 @@ class Token
 
 	public function getValue()
 	{
-		return null;
+		return $this->value;
 	}
 }
