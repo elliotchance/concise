@@ -42,4 +42,6 @@ class EqualToTest extends AbstractMatcherTestCase
 	// @test warn if attributes are set and not used
 
 	// @test must must setup and tear down when generating the data source for test
+
+	// @test TOKEN_INTEGER and TOKEN_FLOAT need to support negative numbers and scientific notation
 }
