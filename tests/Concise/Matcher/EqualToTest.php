@@ -33,4 +33,9 @@ class EqualToTest extends AbstractMatcherTestCase
 		$this->a = 123;
 		$this->b = 123;
 	}
+
+	public function _test_123_equals_b()
+	{
+		$this->b = 123;
+	}
 }

@@ -55,6 +55,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function getAssertionsForMethod($method)
 	{
+		// @test each test data is cleared out between tests
 		$return = $this->$method();
 		if($return === null) {
 			return array($this->convertMethodNameToAssertion($method));
@@ -78,6 +79,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $assertions;
 	}
 
+	// @test
 	public function getDataForMethod($method)
 	{
 		$this->$method();
@@ -134,9 +136,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$this->data[$name] = $value;
 	}
 
+	// @test
+	public function __unset($name)
+	{
+		unset($this->data[$name]);
+	}
+
 	public function getData()
 	{
-		return $this->data;
+		$data = array();
+		foreach($this->data as $k => $v) {
+			$data[$k] = $this->$k;
+		}
+		return $data;
 	}
 
 	protected function getStub($class, array $methods, array $constructorArgs = array())

@@ -77,7 +77,7 @@ class Lexer
 					break;
 				case self::TOKEN_ATTRIBUTE:
 				default:
-					$attributes[] = new Attribute();
+					$attributes[] = new Attribute($token);
 					break;
 			}
 		}

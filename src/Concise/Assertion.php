@@ -43,10 +43,21 @@ class Assertion
 
 	protected function executeAssertion()
 	{
-		$parser = new MatcherParser();
+		$lexer = new Lexer();
+		$result = $lexer->parse($this->getAssertion());
+
+		$data = $this->getData();
+		for($i = 0; $i < count($result['arguments']); ++$i) {
+			$arg = $result['arguments'][$i];
+			if($arg instanceof Attribute) {
+				$result['arguments'][$i] = $data[$arg->getName()];
+			}
+		}
+
+		/*$parser = new MatcherParser();
 		$placeholders = $parser->getPlaceholders($this->getAssertion());
-		$data = $parser->getDataForPlaceholders($placeholders, $this->getData());
-		return $this->getMatcher()->match($data);
+		$data = $parser->getDataForPlaceholders($placeholders, $data);*/
+		return $this->getMatcher()->match($result['arguments']);
 	}
 
 	public function fail($reason)

@@ -21,6 +21,6 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Attribute(), new Attribute());
+		return array(new Attribute('a'), new Attribute('b'));
 	}
 }

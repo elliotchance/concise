@@ -66,14 +66,19 @@ class MatcherParser
 		return $placeholders;
 	}
 
+	protected function getDataForPlaceholder($placeholder, array $data)
+	{
+		if(!array_key_exists($placeholder, $data)) {
+			throw new \Exception("No such attribute '$placeholder'.");
+		}
+		return $data[$placeholder];
+	}
+
 	public function getDataForPlaceholders(array $placeholders, array $data)
 	{
 		$result = array();
 		foreach($placeholders as $placeholder) {
-			if(!array_key_exists($placeholder, $data)) {
-				throw new \Exception("No such attribute '$placeholder'.");
-			}
-			$result[] = $data[$placeholder];
+			$result[] = $this->getDataForPlaceholder($placeholder, $data);
 		}
 		return $result;
 	}

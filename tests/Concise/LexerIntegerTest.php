@@ -21,6 +21,6 @@ class LexerIntegerTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(123, new Attribute());
+		return array(123, new Attribute('b'));
 	}
 }
