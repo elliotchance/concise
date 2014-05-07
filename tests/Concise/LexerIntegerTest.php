@@ -2,16 +2,16 @@
 
 namespace Concise;
 
-class LexerAttributeTest extends LexerTestCase
+class LexerIntegerTest extends LexerTestCase
 {
 	protected function assertion()
 	{
-		return 'a equals b';
+		return '123 equals b';
 	}
 
 	protected function expectedTokens()
 	{
-		return array('a', 'equals', 'b');
+		return array(123, 'equals', 'b');
 	}
 
 	protected function expectedSyntax()
@@ -21,6 +21,6 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Attribute(), new Attribute());
+		return array(123, new Attribute());
 	}
 }
