@@ -12,7 +12,8 @@ class LexerTest extends TestCase
 			'integer' => array(Lexer::TOKEN_INTEGER, '123'),
 			'float1' => array(Lexer::TOKEN_FLOAT, '1.23'),
 			'float2' => array(Lexer::TOKEN_FLOAT, '.23'),
-			'string1' => array(Lexer::TOKEN_STRING, '"abc"')
+			'string1' => array(Lexer::TOKEN_STRING, '"abc"'),
+			'string2' => array(Lexer::TOKEN_STRING, "'abc'")
 		);
 	}
 
