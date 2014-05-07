@@ -51,6 +51,15 @@ class Lexer
 		return self::TOKEN_ATTRIBUTE;
 	}
 
+	protected function consumeString($string, $container, $startIndex)
+	{
+		$t = '';
+		for($i = $startIndex + 1; $i < strlen($string) && $string[$i] != $container; ++$i) {
+			$t .= $string[$i];
+		}
+		return "\"$t\"";
+	}
+
 	protected function getTokens($string)
 	{
 		// @test quotes string that is not closed
@@ -58,12 +67,9 @@ class Lexer
 		$t = '';
 		for($i = 0; $i < strlen($string); ++$i) {
 			$ch = $string[$i];
-			if($ch == '"') {
-				++$i;
-				for(; $i < strlen($string) && $string[$i] != '"'; ++$i) {
-					$t .= $string[$i];
-				}
-				$t = "\"$t\"";
+			if($ch == '"' || $ch == "'") {
+				$t = $this->consumeString($string, $ch, $i);
+				$i += strlen($t) - 1;
 			}
 			else if($ch == ' ') {
 				if($t != '') {

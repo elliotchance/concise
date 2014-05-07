@@ -65,10 +65,17 @@ class LexerTest extends TestCase
 		$this->assertEquals(count($constants), count(array_unique($constants)));
 	}
 
-	public function testTokenizerAllowsStringsWithSpaces()
+	public function testTokenizerAllowsDoubleQuotedStringsWithSpaces()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('"not abc"');
+		$this->assertEquals(array('"not abc"'), $result['tokens']);
+	}
+
+	public function testTokenizerAllowsSingleQuotedStringsWithSpaces()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse("'not abc'");
 		$this->assertEquals(array('"not abc"'), $result['tokens']);
 	}
 }
