@@ -105,7 +105,7 @@ class MatcherParser
 		return $result;
 	}
 
-	public function getInstance()
+	public static function getInstance()
 	{
 		if(null === self::$instance) {
 			self::$instance = new MatcherParser();
