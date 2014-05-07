@@ -64,4 +64,11 @@ class LexerTest extends TestCase
 		$constants = $class->getConstants();
 		$this->assertEquals(count($constants), count(array_unique($constants)));
 	}
+
+	public function testTokenizerAllowsStringsWithSpaces()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('"not abc"');
+		$this->assertEquals(array('"not abc"'), $result['tokens']);
+	}
 }

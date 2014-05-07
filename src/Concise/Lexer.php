@@ -14,8 +14,6 @@ class Lexer
 
 	const TOKEN_STRING = 5;
 
-	// @test TOKEN_STRING with spaces
-
 	// @test TOKEN_STRING with escaped quotes
 
 	// @test TOKEN_STRING with escaped characters
@@ -55,12 +53,30 @@ class Lexer
 
 	protected function getTokens($string)
 	{
-		$raw = explode(' ', $string);
+		// @test quotes string that is not closed
 		$r = array();
-		foreach($raw as $token) {
-			if('' != $token) {
-				$r[] = $token;
+		$t = '';
+		for($i = 0; $i < strlen($string); ++$i) {
+			$ch = $string[$i];
+			if($ch == '"') {
+				++$i;
+				for(; $i < strlen($string) && $string[$i] != '"'; ++$i) {
+					$t .= $string[$i];
+				}
+				$t = "\"$t\"";
 			}
+			else if($ch == ' ') {
+				if($t != '') {
+					$r[] = $t;
+				}
+				$t = '';
+			}
+			else {
+				$t .= $ch;
+			}
+		}
+		if($t != '') {
+			$r[] = $t;
 		}
 		return $r;
 	}
