@@ -4,9 +4,12 @@ namespace Concise\Matcher;
 
 class Null extends AbstractMatcher
 {
-	public function matchesSyntax($syntax)
+	public function supportedSyntaxes()
 	{
-		return in_array($syntax, array('? is null', '? is not null'));
+		return array(
+			'? is null',
+			'? is not null'
+		);
 	}
 
 	public function match($syntax, array $data = array())

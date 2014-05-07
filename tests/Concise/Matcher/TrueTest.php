@@ -11,9 +11,4 @@ class TrueTest extends AbstractMatcherTestCase
 		parent::setUp();
 		$this->matcher = new True();
 	}
-
-	public function testWillRespondToCorrectSyntax()
-	{
-		$this->assertTrue($this->matcher->matchesSyntax('true'));
-	}
 }

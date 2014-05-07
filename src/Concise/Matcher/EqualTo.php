@@ -4,9 +4,12 @@ namespace Concise\Matcher;
 
 class EqualTo extends AbstractMatcher
 {
-	public function matchesSyntax($syntax)
+	public function supportedSyntaxes()
 	{
-		return in_array($syntax, array('? equals ?', '? is equal to ?'));
+		return array(
+			'? equals ?',
+			'? is equal to ?'
+		);
 	}
 
 	public function match($syntax, array $data = array())

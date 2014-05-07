@@ -12,7 +12,8 @@ class MatcherParser
 	{
 		$found = array();
 		foreach($this->matchers as $matcher) {
-			if($matcher->matchesSyntax($syntax)) {
+			$syntaxes = $matcher->supportedSyntaxes();
+			if(in_array($syntax, $syntaxes)) {
 				$found[] = $matcher;
 			}
 		}

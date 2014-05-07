@@ -67,13 +67,13 @@ class MatcherParserTest extends TestCase
 	{
 		$matcher1 = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
 		$matcher1->expects($this->once())
-		         ->method('matchesSyntax')
-		         ->will($this->returnValue(true));
+		         ->method('supportedSyntaxes')
+		         ->will($this->returnValue(array('something')));
 
 		$matcher2 = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
 		$matcher2->expects($this->once())
-		         ->method('matchesSyntax')
-		         ->will($this->returnValue(true));
+		         ->method('supportedSyntaxes')
+		         ->will($this->returnValue(array('something')));
 
 		$this->parser->registerMatcher($matcher1);
 		$this->parser->registerMatcher($matcher2);

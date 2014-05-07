@@ -22,4 +22,10 @@ class AbstractMatcherTestCase extends TestCase
 		$parser = \Concise\MatcherParser::getInstance();
 		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
 	}
+
+	public function testSupportedSyntaxesAreUnique()
+	{
+		$syntaxes = $this->matcher->supportedSyntaxes();
+		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
+	}
 }

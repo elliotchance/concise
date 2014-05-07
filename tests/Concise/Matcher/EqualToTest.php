@@ -12,22 +12,6 @@ class EqualToTest extends AbstractMatcherTestCase
 		$this->matcher = new EqualTo();
 	}
 
-	public function syntaxProvider()
-	{
-		return array(
-			array('? equals ?'),
-			array('? is equal to ?')
-		);
-	}
-
-	/**
-	 * @dataProvider syntaxProvider
-	 */
-	public function testWillRespondToCorrectSyntax($syntax)
-	{
-		$this->assertTrue($this->matcher->matchesSyntax($syntax));
-	}
-
 	public function _test_comparisons()
 	{
 		return array(

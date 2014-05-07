@@ -8,5 +8,8 @@ abstract class AbstractMatcher
 
 	public abstract function match($syntax, array $data = array());
 
-	public abstract function matchesSyntax($syntax);
+	/**
+	 * @return array of syntaxes this matcher can understand.
+	 */
+	public abstract function supportedSyntaxes();
 }

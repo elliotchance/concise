@@ -4,9 +4,11 @@ namespace Concise\Matcher;
 
 class True extends AbstractMatcher
 {
-	public function matchesSyntax($syntax)
+	public function supportedSyntaxes()
 	{
-		return $syntax === 'true';
+		return array(
+			'true'
+		);
 	}
 
 	public function match($syntax, array $data = array())
