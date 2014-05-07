@@ -35,30 +35,6 @@ class MatcherParserTest extends TestCase
 		$this->assertTrue($this->parser->registerMatcher(new Matcher\EqualTo()));
 	}
 
-	public function testCanGetPlaceholdersForSyntax()
-	{
-		$this->assertEquals(array('b', 'a'), $this->parser->getPlaceholders('b equals a'));
-	}
-
-	public function testCanGetDataForPlaceholders()
-	{
-		$data = array(
-			'a' => 123,
-			'b' => 'abc'
-		);
-		$result = $this->parser->getDataForPlaceholders(array('b', 'a'), $data);
-		$this->assertEquals(array('abc', 123), $result);
-	}
-
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage No such attribute 'foo'.
-	 */
-	public function testGetDataForPlaceholdersThrowsExceptionIfThereIsNoSuchAttribute()
-	{
-		$this->parser->getDataForPlaceholders(array('foo'), array());
-	}
-
 	/**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage Ambiguous syntax for 'something'.

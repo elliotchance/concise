@@ -55,35 +55,6 @@ class MatcherParser
 		return true;
 	}
 
-	public function getPlaceholders($assertion)
-	{
-		$words = explode(" ", $assertion);
-		$placeholders = array();
-		foreach($words as $word) {
-			if(!in_array($word, Lexer::getKeywords())) {
-				$placeholders[] = $word;
-			}
-		}
-		return $placeholders;
-	}
-
-	protected function getDataForPlaceholder($placeholder, array $data)
-	{
-		if(!array_key_exists($placeholder, $data)) {
-			throw new \Exception("No such attribute '$placeholder'.");
-		}
-		return $data[$placeholder];
-	}
-
-	public function getDataForPlaceholders(array $placeholders, array $data)
-	{
-		$result = array();
-		foreach($placeholders as $placeholder) {
-			$result[] = $this->getDataForPlaceholder($placeholder, $data);
-		}
-		return $result;
-	}
-
 	public static function getInstance()
 	{
 		if(null === self::$instance) {
