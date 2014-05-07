@@ -47,17 +47,9 @@ class MatcherParser
 
 	public function translateAssertionToSyntax($assertion)
 	{
-		$words = explode(" ", $assertion);
-		$syntax = array();
-		foreach($words as $word) {
-			if(in_array($word, $this->keywords)) {
-				$syntax[] = $word;
-			}
-			else {
-				$syntax[] = '?';
-			}
-		}
-		return implode(' ', $syntax);
+		$lexer = new Lexer();
+		$result = $lexer->parse($assertion);
+		return $result['syntax'];
 	}
 
 	public function matcherIsRegistered($matcherClass)

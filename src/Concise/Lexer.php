@@ -78,11 +78,26 @@ class Lexer
 		return $attributes;
 	}
 
+	protected function getSyntax($string)
+	{
+		$tokens = $this->getTokens($string);
+		$syntax = array();
+		foreach($tokens as $token) {
+			if(self::getTokenType($token) !== self::TOKEN_KEYWORD) {
+				$syntax[] = '?';
+			}
+			else {
+				$syntax[] = $token;
+			}
+		}
+		return implode(' ', $syntax);
+	}
+
 	public function parse($string)
 	{
 		return array(
 			'tokens' => $this->getTokens($string),
-			'syntax' => '? equals ?',
+			'syntax' => $this->getSyntax($string),
 			'arguments' => $this->getAttributes($string)
 		);
 	}
