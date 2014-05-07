@@ -10,6 +10,10 @@ class Lexer
 
 	const TOKEN_INTEGER = 3;
 
+	const TOKEN_FLOAT = 4;
+
+	// @test TOKEN_ have unique values
+
 	protected static function isKeyword($token)
 	{
 		$parser = new MatcherParser();
@@ -21,6 +25,9 @@ class Lexer
 	{
 		if(self::isKeyword($token)) {
 			return self::TOKEN_KEYWORD;
+		}
+		if(preg_match('/^[0-9]*\.[0-9]+$/', $token)) {
+			return self::TOKEN_FLOAT;
 		}
 		if(preg_match('/^[0-9]+$/', $token)) {
 			return self::TOKEN_INTEGER;
