@@ -112,4 +112,12 @@ class MatcherParserTest extends TestCase
 		$keywords = MatcherParser::getInstance()->getKeywords();
 		$this->assertNotContains('?', $keywords);
 	}
+
+	public function testGetAllKeywordsAreSorted()
+	{
+		$keywords1 = MatcherParser::getInstance()->getKeywords();
+		$keywords2 = MatcherParser::getInstance()->getKeywords();
+		sort($keywords2);
+		$this->assertEquals($keywords1, $keywords2);
+	}
 }

@@ -14,17 +14,6 @@ class Lexer
 
 	const TOKEN_STRING = 5;
 
-	// @test keywords should be generated automatically from matchers
-	protected static $keywords = array(
-		'equal',
-		'equals',
-		'is',
-		'not',
-		'null',
-		'to',
-		'true'
-	);
-
 	protected static function convertEscapedCharacter($ch)
 	{
 		// @test \cx : "control-x", where x is any character
@@ -54,7 +43,7 @@ class Lexer
 
 	protected static function isKeyword($token)
 	{
-		return in_array($token, self::$keywords);
+		return in_array($token, self::getKeywords());
 	}
 
 	public static function getTokenType($token)
@@ -169,6 +158,6 @@ class Lexer
 
 	public static function getKeywords()
 	{
-		return self::$keywords;
+		return MatcherParser::getInstance()->getKeywords();
 	}
 }

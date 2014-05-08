@@ -82,6 +82,7 @@ class MatcherParser
 
 	public function getKeywords()
 	{
+		// @test keywords are only generated once
 		$r = array();
 		foreach($this->getMatchers() as $matcher) {
 			foreach($matcher->supportedSyntaxes() as $syntax) {
@@ -92,6 +93,8 @@ class MatcherParser
 				}
 			}
 		}
-		return array_unique($r);
+		$r = array_unique($r);
+		sort($r);
+		return $r;
 	}
 }

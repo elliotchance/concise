@@ -90,4 +90,9 @@ class LexerTest extends TestCase
 		$result = $lexer->parse($string);
 		$this->assertEquals(array(new Token(Lexer::TOKEN_STRING, $expected)), $result['tokens']);
 	}
+
+	public function testLexerUsesKeywordsFromMatcherParser()
+	{
+		$this->assertEquals(Lexer::getKeywords(), MatcherParser::getInstance()->getKeywords());
+	}
 }
