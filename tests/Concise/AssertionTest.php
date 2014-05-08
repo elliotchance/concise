@@ -46,7 +46,7 @@ class AssertionTest extends TestCase
 	{
 		$stub = $this->getMock('\Concise\Assertion',
 			array('executeAssertion', 'fail'),
-			array('true', new Matcher\True())
+			array('true', new Matcher\Boolean())
 		);
 		$stub->expects($this->once())
 		     ->method('executeAssertion')
@@ -62,7 +62,7 @@ class AssertionTest extends TestCase
 	{
 		$stub = $this->getMock('\Concise\Assertion',
 			array('executeAssertion', 'success'),
-			array('true', new Matcher\True())
+			array('true', new Matcher\Boolean())
 		);
 		$stub->expects($this->once())
 		     ->method('executeAssertion')

@@ -103,9 +103,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 
 		if(count($r) === 0) {
+			$parser = MatcherParser::getInstance();
 			return array(
-				// TODO this should be replaced with $parser->compile('true')
-				array(new Assertion('true', new Matcher\True(), array()))
+				array($parser->compile('true'))
 			);
 		}
 
