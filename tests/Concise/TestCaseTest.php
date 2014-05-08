@@ -224,7 +224,14 @@ class TestCaseTest extends TestCase
 		$this->assertFalse(isset($this->myUniqueProperty));
 	}
 
-	// @test cannot assign test attribute if its a keyword
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage You cannot assign an attribute with the keyword 'not'.
+	 */
+	public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
+	{
+		$this->not = 123;
+	}
 
 	// @test better descriptions of failures, search for 'bad'
 }

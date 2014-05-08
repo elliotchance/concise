@@ -131,6 +131,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function __set($name, $value)
 	{
+		$parser = MatcherParser::getInstance();
+		if(in_array($name, $parser->getKeywords())) {
+			throw new \Exception("You cannot assign an attribute with the keyword '$name'.");
+		}
 		$this->$name = $value;
 		$this->data[$name] = $value;
 	}
