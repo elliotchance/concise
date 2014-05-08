@@ -57,8 +57,7 @@ class Lexer
 		if(preg_match('/^[0-9]+$/', $token)) {
 			return self::TOKEN_INTEGER;
 		}
-		// @test match newlines
-		if(preg_match('/^".*"/', $token) || preg_match("/^'.*'/", $token)) {
+		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token)) {
 			return self::TOKEN_STRING;
 		}
 		return self::TOKEN_ATTRIBUTE;
