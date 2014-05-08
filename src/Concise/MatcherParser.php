@@ -8,6 +8,8 @@ class MatcherParser
 
 	protected static $instance = null;
 
+	protected $keywords = array();
+
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();
@@ -80,9 +82,8 @@ class MatcherParser
 		return $this->matchers;
 	}
 
-	public function getKeywords()
+	protected function getRawKeywords()
 	{
-		// @test keywords are only generated once
 		$r = array();
 		foreach($this->getMatchers() as $matcher) {
 			foreach($matcher->supportedSyntaxes() as $syntax) {
@@ -96,5 +97,13 @@ class MatcherParser
 		$r = array_unique($r);
 		sort($r);
 		return $r;
+	}
+
+	public function getKeywords()
+	{
+		if(0 === count($this->keywords)) {
+			$this->keywords = $this->getRawKeywords();
+		}
+		return $this->keywords;
 	}
 }

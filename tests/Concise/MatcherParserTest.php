@@ -120,4 +120,15 @@ class MatcherParserTest extends TestCase
 		sort($keywords2);
 		$this->assertEquals($keywords1, $keywords2);
 	}
+
+	public function testGetKeywordsAreOnlyGeneratedOnce()
+	{
+		$parser = $this->getMock('\Concise\MatcherParser', array('getRawKeywords'));
+		$parser->expects($this->once())
+		       ->method('getRawKeywords')
+		       ->will($this->returnValue(array('a')));
+
+		$parser->getKeywords();
+		$parser->getKeywords();
+	}
 }
