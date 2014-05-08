@@ -108,4 +108,14 @@ class LexerTest extends TestCase
 	{
 		$this->assertEquals(Lexer::getKeywords(), MatcherParser::getInstance()->getKeywords());
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Quoted string is not closed.
+	 */
+	public function testLexerThrowsExceptionIfQuotedStringIsNotClosed()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('"abc');
+	}
 }

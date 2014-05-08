@@ -66,7 +66,10 @@ class Lexer
 	protected function consumeString($string, $container, &$startIndex)
 	{
 		$t = '';
-		for($i = $startIndex + 1; $i < strlen($string) && $string[$i] != $container; ++$i) {
+		for($i = $startIndex + 1; $string[$i] != $container; ++$i) {
+			if($i == strlen($string) - 1) {
+				throw new \Exception("Quoted string is not closed.");
+			}
 			if($string[$i] === "\\") {
 				++$i;
 				$t .= self::convertEscapedCharacter($string[$i]);
@@ -81,7 +84,6 @@ class Lexer
 
 	protected function getTokens($string)
 	{
-		// @test quotes string that is not closed
 		$r = array();
 		$t = '';
 		for($i = 0; $i < strlen($string); ++$i) {
