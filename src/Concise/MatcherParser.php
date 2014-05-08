@@ -88,6 +88,6 @@ class MatcherParser
 				$r = array_merge($r, explode(' ', $syntax));
 			}
 		}
-		return $r;
+		return array_unique($r);
 	}
 }

@@ -100,4 +100,10 @@ class MatcherParserTest extends TestCase
 		$keywords = MatcherParser::getInstance()->getKeywords();
 		$this->assertContains('not', $keywords);
 	}
+
+	public function testGetAllKeywordsContainsOnlyUniqueWords()
+	{
+		$keywords = MatcherParser::getInstance()->getKeywords();
+		$this->assertEquals(count($keywords), count(array_unique($keywords)));
+	}
 }
