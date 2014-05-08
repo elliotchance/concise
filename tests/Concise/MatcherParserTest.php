@@ -88,4 +88,10 @@ class MatcherParserTest extends TestCase
 		$parser->registerMatchers();
 		$this->assertGreaterThan(0, $parser->getMatchers());
 	}
+
+	public function testGetAllKeywordsReturnsAnArray()
+	{
+		$keywords = $this->parser->getKeywords();
+		$this->assertTrue(is_array($keywords));
+	}
 }

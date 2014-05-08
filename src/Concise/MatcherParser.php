@@ -79,4 +79,9 @@ class MatcherParser
 	{
 		return $this->matchers;
 	}
+
+	public function getKeywords()
+	{
+		return array();
+	}
 }
