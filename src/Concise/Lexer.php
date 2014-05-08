@@ -34,6 +34,9 @@ class Lexer
 		if($ch === 'n') {
 			return "\n";
 		}
+		if($ch === 'r') {
+			return "\r";
+		}
 	}
 
 	protected static function isKeyword($token)
