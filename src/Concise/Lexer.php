@@ -51,10 +51,10 @@ class Lexer
 		if(self::isKeyword($token)) {
 			return self::TOKEN_KEYWORD;
 		}
-		if(preg_match('/^[0-9]*\.[0-9]+$/', $token)) {
+		if(preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $token)) {
 			return self::TOKEN_FLOAT;
 		}
-		if(preg_match('/^[0-9]+$/', $token)) {
+		if(preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $token)) {
 			return self::TOKEN_INTEGER;
 		}
 		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token)) {
