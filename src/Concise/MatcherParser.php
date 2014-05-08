@@ -82,6 +82,12 @@ class MatcherParser
 
 	public function getKeywords()
 	{
-		return array();
+		$r = array();
+		foreach($this->getMatchers() as $matcher) {
+			foreach($matcher->supportedSyntaxes() as $syntax) {
+				$r = array_merge($r, explode(' ', $syntax));
+			}
+		}
+		return $r;
 	}
 }

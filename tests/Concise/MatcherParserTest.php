@@ -91,7 +91,13 @@ class MatcherParserTest extends TestCase
 
 	public function testGetAllKeywordsReturnsAnArray()
 	{
-		$keywords = $this->parser->getKeywords();
+		$keywords = MatcherParser::getInstance()->getKeywords();
 		$this->assertTrue(is_array($keywords));
+	}
+
+	public function testGetAllKeywordsContainsKeywordsFromMatchers()
+	{
+		$keywords = MatcherParser::getInstance()->getKeywords();
+		$this->assertContains('not', $keywords);
 	}
 }
