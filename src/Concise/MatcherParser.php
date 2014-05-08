@@ -85,7 +85,11 @@ class MatcherParser
 		$r = array();
 		foreach($this->getMatchers() as $matcher) {
 			foreach($matcher->supportedSyntaxes() as $syntax) {
-				$r = array_merge($r, explode(' ', $syntax));
+				foreach(explode(' ', $syntax) as $word) {
+					if($word !== '?') {
+						$r[] = $word;
+					}
+				}
 			}
 		}
 		return array_unique($r);

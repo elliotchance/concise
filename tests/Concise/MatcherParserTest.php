@@ -106,4 +106,10 @@ class MatcherParserTest extends TestCase
 		$keywords = MatcherParser::getInstance()->getKeywords();
 		$this->assertEquals(count($keywords), count(array_unique($keywords)));
 	}
+
+	public function testGetAllKeywordsDoesNotContainPlaceholders()
+	{
+		$keywords = MatcherParser::getInstance()->getKeywords();
+		$this->assertNotContains('?', $keywords);
+	}
 }
