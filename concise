@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+
+$parser = \Concise\MatcherParser::getInstance();
+$syntaxes = $parser->getAllSyntaxes();
+foreach($syntaxes as $syntax) {
+	echo "$syntax\n";
+}

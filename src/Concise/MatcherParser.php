@@ -106,4 +106,17 @@ class MatcherParser
 		}
 		return $this->keywords;
 	}
+
+	// @test
+	public function getAllSyntaxes()
+	{
+		$r = array();
+		foreach($this->getMatchers() as $matcher) {
+			foreach($matcher->supportedSyntaxes() as $syntax) {
+				$r[] = $syntax;
+			}
+		}
+		sort($r);
+		return $r;
+	}
 }
