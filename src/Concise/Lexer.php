@@ -29,6 +29,13 @@ class Lexer
 		'true'
 	);
 
+	protected static function convertEscapedCharacter($ch)
+	{
+		if($ch === 'n') {
+			return "\n";
+		}
+	}
+
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::$keywords);
@@ -45,18 +52,26 @@ class Lexer
 		if(preg_match('/^[0-9]+$/', $token)) {
 			return self::TOKEN_INTEGER;
 		}
+		// @test match newlines
 		if(preg_match('/^".*"/', $token) || preg_match("/^'.*'/", $token)) {
 			return self::TOKEN_STRING;
 		}
 		return self::TOKEN_ATTRIBUTE;
 	}
 
-	protected function consumeString($string, $container, $startIndex)
+	protected function consumeString($string, $container, &$startIndex)
 	{
 		$t = '';
 		for($i = $startIndex + 1; $i < strlen($string) && $string[$i] != $container; ++$i) {
-			$t .= $string[$i];
+			if($string[$i] === "\\") {
+				++$i;
+				$t .= self::convertEscapedCharacter($string[$i]);
+			}
+			else {
+				$t .= $string[$i];
+			}
 		}
+		$startIndex = $i;
 		return $t;
 	}
 
@@ -67,23 +82,22 @@ class Lexer
 		$t = '';
 		for($i = 0; $i < strlen($string); ++$i) {
 			$ch = $string[$i];
-			if($ch == '"' || $ch == "'") {
+			if($ch === '"' || $ch === "'") {
 				$t = $this->consumeString($string, $ch, $i);
 				$r[] = new Token(Lexer::TOKEN_STRING, $t);
-				$i += strlen($t) + 1;
 				$t = '';
 			}
-			else if($ch == ' ') {
-				if($t != '') {
+			else if($ch === ' ') {
+				if($t !== '') {
 					$r[] = new Token(self::getTokenType($t), $t);
+					$t = '';
 				}
-				$t = '';
 			}
 			else {
 				$t .= $ch;
 			}
 		}
-		if($t != '') {
+		if($t !== '') {
 			$r[] = new Token(self::getTokenType($t), $t);
 		}
 		return $r;

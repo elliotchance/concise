@@ -72,6 +72,7 @@ class LexerTest extends TestCase
 			array("'not abc'", 'not abc'),
 			array("'not \"abc'", 'not "abc'),
 			array('"not \'abc"', "not 'abc"),
+			array("'a\\nb'", "a\nb"),
 		);
 	}
 
