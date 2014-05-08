@@ -28,4 +28,12 @@ class AbstractMatcherTestCase extends TestCase
 		$syntaxes = $this->matcher->supportedSyntaxes();
 		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
 	}
+
+	/**
+	 * @dataProvider failedMessages
+	 */
+	public function testFailedMessages($syntax, $args, $message)
+	{
+		$this->assertEquals($message, $this->matcher->match($syntax, $args));
+	}
 }

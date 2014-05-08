@@ -21,6 +21,13 @@ class EqualToTest extends AbstractMatcherTestCase
 		);
 	}
 
+	public function failedMessages()
+	{
+		return array(
+			array('? equals ?', array(false, true), 'bad')
+		);
+	}
+
 	// @test can name assertions with an assoc array when returning from method
 
 	// @test warn if attributes are set and not used
