@@ -22,4 +22,21 @@ class BooleanTest extends AbstractMatcherTestCase
 			'b is false'
 		);
 	}
+
+	public function failedMessages()
+	{
+		return array(
+			array('false', array(), 'Failed'),
+			array('? is true', array(false), 'Value is not true.'),
+			array('? is false', array(true), 'Value is not false.'),
+		);
+	}
+
+	/**
+	 * @dataProvider failedMessages
+	 */
+	public function testFailedMessageForFalse($syntax, $args, $message)
+	{
+		$this->assertEquals($message, $this->matcher->match($syntax, $args));
+	}
 }
