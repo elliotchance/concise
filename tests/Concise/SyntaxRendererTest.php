@@ -24,6 +24,8 @@ class SyntaxRendererTest extends TestCase
 			'true' => array(true, 'true'),
 			'false' => array(false, 'false'),
 			'integer' => array(123, '123'),
+			'float1' => array(1.23, '1.23'),
+			'float2' => array(1.0, '1.0'),
 		);
 	}
 
