@@ -15,7 +15,7 @@ class SyntaxRendererTest extends TestCase
 	public function testCanSubstituteValuesFromArrayIntoPlaceholders()
 	{
 		$data = array(1, '2', 3.1);
-		$this->assertEquals('1 is 2 bla 3.1', $this->renderer->render('? is ? bla ?', $data));
+		$this->assertEquals('1 is "2" bla 3.1', $this->renderer->render('? is ? bla ?', $data));
 	}
 
 	public function singlePlaceholders()
@@ -26,6 +26,7 @@ class SyntaxRendererTest extends TestCase
 			'integer' => array(123, '123'),
 			'float1' => array(1.23, '1.23'),
 			'float2' => array(1.0, '1.0'),
+			'string' => array('abc', '"abc"'),
 		);
 	}
 

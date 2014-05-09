@@ -15,6 +15,9 @@ class SyntaxRenderer
 
 	public function renderValue($value)
 	{
+		if(is_string($value)) {
+			return "\"$value\"";
+		}
 		if(true === $value) {
 			return 'true';
 		}
