@@ -28,7 +28,7 @@ class BooleanTest extends AbstractMatcherTestCase
 		return array(
 			array('false', array(), 'false'),
 			array('? is true', array(false), ' is true'),
-			array('? is false', array(true), '1 is false'),
+			array('? is false', array(true), 'true is false'),
 		);
 	}
 }

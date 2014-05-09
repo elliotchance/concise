@@ -19,9 +19,7 @@ abstract class AbstractMatcher
 	 */
 	public function renderFailureMessage($syntax, array $data = array())
 	{
-		// @test
-		return preg_replace_callback('/\?/', function($match) use(&$data) {
-    		return array_shift($data);
-		}, $syntax);
+		$renderer = new \Concise\SyntaxRenderer();
+		return $renderer->render($syntax, $data);
 	}
 }

@@ -24,7 +24,7 @@ class EqualsTest extends AbstractMatcherTestCase
 	public function failedMessages()
 	{
 		return array(
-			array('? equals ?', array(false, true), ' equals 1')
+			array('? equals ?', array(false, true), ' equals true')
 		);
 	}
 
