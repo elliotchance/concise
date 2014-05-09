@@ -6,32 +6,32 @@ class AssertionTest extends TestCase
 {
 	public function testCreatingAssertionRequiresTheAssertionString()
 	{
-		$assertion = new Assertion('? equals ?', new Matcher\EqualTo());
+		$assertion = new Assertion('? equals ?', new Matcher\Equals());
 		$this->assertEquals('? equals ?', $assertion->getAssertion());
 	}
 
 	public function testCreatingAssertionWithoutProvidingDataIsAnEmptyArray()
 	{
-		$assertion = new Assertion('? equals ?', new Matcher\EqualTo());
+		$assertion = new Assertion('? equals ?', new Matcher\Equals());
 		$this->assertEquals(array(), $assertion->getData());
 	}
 
 	public function testSettingDataWhenCreatingAssertion()
 	{
-		$assertion = new Assertion('? equals ?', new Matcher\EqualTo(), array('abc', 'def'));
+		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array('abc', 'def'));
 		$this->assertEquals(array('abc', 'def'), $assertion->getData());
 	}
 
 	public function testCreatingAssertionRequiresTheMatcher()
 	{
-		$matcher = new Matcher\EqualTo();
+		$matcher = new Matcher\Equals();
 		$assertion = new Assertion('? equals ?', $matcher);
 		$this->assertSame($matcher, $assertion->getMatcher());
 	}
 
 	public function testToStringRenderedData()
 	{
-		$matcher = new Matcher\EqualTo();
+		$matcher = new Matcher\Equals();
 		$data = array(
 			'a' => 123,
 			'b' => 'abc',
@@ -58,7 +58,7 @@ class AssertionTest extends TestCase
 		$stub->run();
 	}
 
-	public function testWillSucceedIfTheAssertionMessageIsNull()
+	public function testWillSucceedIfTheAssertionResultIsTrue()
 	{
 		$stub = $this->getMock('\Concise\Assertion',
 			array('executeAssertion', 'success'),
@@ -66,7 +66,7 @@ class AssertionTest extends TestCase
 		);
 		$stub->expects($this->once())
 		     ->method('executeAssertion')
-		     ->will($this->returnValue(null));
+		     ->will($this->returnValue(true));
 		$stub->expects($this->once())
 		     ->method('success');
 

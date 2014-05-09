@@ -34,6 +34,6 @@ class AbstractMatcherTestCase extends TestCase
 	 */
 	public function testFailedMessages($syntax, $args, $message)
 	{
-		$this->assertEquals($message, $this->matcher->match($syntax, $args));
+		$this->assertEquals($message, $this->matcher->renderFailureMessage($syntax, $args));
 	}
 }

@@ -15,8 +15,8 @@ class Null extends AbstractMatcher
 	public function match($syntax, array $data = array())
 	{
 		if('? is null' === $syntax) {
-			return (null === $data[0]) ? AbstractMatcher::SUCCESS : 'expected null';
+			return (null === $data[0]);
 		}
-		return (null !== $data[0]) ? AbstractMatcher::SUCCESS : 'expected not null';
+		return (null !== $data[0]);
 	}
 }

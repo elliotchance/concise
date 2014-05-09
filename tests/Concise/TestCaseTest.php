@@ -10,7 +10,7 @@ class TestCaseStub1 extends TestCase
 	function b() {}
 	function getMatcherParserInstance() {
 		$matcherParser = new MatcherParser();
-		$matcherParser->registerMatcher(new Matcher\EqualTo());
+		$matcherParser->registerMatcher(new Matcher\Equals());
 		return $matcherParser;
 	}
 }
@@ -144,14 +144,14 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub1();
 		$expected = array(
 			'_test_a_equals_b' => array(
-				new Assertion('a equals b', new Matcher\EqualTo())
+				new Assertion('a equals b', new Matcher\Equals())
 			),
 			'_test_b' => array(
-				new Assertion('b equals a', new Matcher\EqualTo())
+				new Assertion('b equals a', new Matcher\Equals())
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\EqualTo()),
-				new Assertion('d equals c', new Matcher\EqualTo())
+				new Assertion('c equals d', new Matcher\Equals()),
+				new Assertion('d equals c', new Matcher\Equals())
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());

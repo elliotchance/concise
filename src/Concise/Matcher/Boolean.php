@@ -17,16 +17,16 @@ class Boolean extends AbstractMatcher
 	public function match($syntax, array $data = array())
 	{
 		if($syntax === 'true') {
-			return AbstractMatcher::SUCCESS;
+			return true;
 		}
 		if($syntax === 'false') {
-			return "Failed";
+			return false;
 		}
 		if($syntax === '? is true') {
-			return ($data[0] === true ? AbstractMatcher::SUCCESS : 'Value is not true.');
+			return ($data[0] === true);
 		}
 		if($syntax === '? is false') {
-			return ($data[0] === false ? AbstractMatcher::SUCCESS : 'Value is not false.');
+			return ($data[0] === false);
 		}
 	}
 }

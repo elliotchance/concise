@@ -41,6 +41,9 @@ class Assertion
 		return $this->matcher;
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function executeAssertion()
 	{
 		$lexer = new Lexer();
@@ -53,11 +56,18 @@ class Assertion
 				$result['arguments'][$i] = $data[$arg->getName()];
 			}
 		}
-		return $this->getMatcher()->match($result['syntax'], $result['arguments']);
+
+		if(true === $this->getMatcher()->match($result['syntax'], $result['arguments'])) {
+			return true;
+		}
+		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
 	}
 
 	public function fail($reason)
 	{
+		if(!is_object($this->testCase)) {
+			throw new \Exception();
+		}
 		$this->testCase->fail($reason);
 	}
 
@@ -69,11 +79,11 @@ class Assertion
 	public function run()
 	{
 		$result = $this->executeAssertion();
-		if(Matcher\AbstractMatcher::SUCCESS !== $result) {
-			$this->fail($result);
+		if(true === $result) {
+			$this->success();
 		}
 		else {
-			$this->success();
+			$this->fail($result);
 		}
 	}
 

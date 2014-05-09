@@ -4,12 +4,12 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class EqualToTest extends AbstractMatcherTestCase
+class EqualsTest extends AbstractMatcherTestCase
 {
 	public function setUp()
 	{
 		parent::setUp();
-		$this->matcher = new EqualTo();
+		$this->matcher = new Equals();
 	}
 
 	public function _test_comparisons()
@@ -24,7 +24,7 @@ class EqualToTest extends AbstractMatcherTestCase
 	public function failedMessages()
 	{
 		return array(
-			array('? equals ?', array(false, true), 'bad')
+			array('? equals ?', array(false, true), ' equals 1')
 		);
 	}
 

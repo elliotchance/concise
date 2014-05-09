@@ -72,7 +72,7 @@ class MatcherParser
 			throw new \Exception("registerMatchers() can only be called once.");
 		}
 
-		$this->registerMatcher(new Matcher\EqualTo());
+		$this->registerMatcher(new Matcher\Equals());
 		$this->registerMatcher(new Matcher\Boolean());
 		$this->registerMatcher(new Matcher\Null());
 	}

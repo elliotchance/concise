@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class EqualTo extends AbstractMatcher
+class Equals extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
@@ -14,10 +14,6 @@ class EqualTo extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		if($data[0] == $data[1]) {
-			return AbstractMatcher::SUCCESS;
-		}
-		// @todo fix this and write a test
-		return 'bad';
+		return ($data[0] == $data[1]);
 	}
 }

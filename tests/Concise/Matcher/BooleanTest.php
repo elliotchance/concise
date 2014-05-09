@@ -26,9 +26,9 @@ class BooleanTest extends AbstractMatcherTestCase
 	public function failedMessages()
 	{
 		return array(
-			array('false', array(), 'Failed'),
-			array('? is true', array(false), 'Value is not true.'),
-			array('? is false', array(true), 'Value is not false.'),
+			array('false', array(), 'false'),
+			array('? is true', array(false), ' is true'),
+			array('? is false', array(true), '1 is false'),
 		);
 	}
 }

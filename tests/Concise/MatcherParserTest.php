@@ -20,7 +20,7 @@ class MatcherParserTest extends TestCase
 
 	public function testCompileReturnsAssertion()
 	{
-		$this->parser->registerMatcher(new Matcher\EqualTo());
+		$this->parser->registerMatcher(new Matcher\Equals());
 		$matcher = $this->parser->compile('a equals b', $this->getData());
 		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
@@ -32,7 +32,7 @@ class MatcherParserTest extends TestCase
 
 	public function testRegisteringANewMatcherReturnsTrue()
 	{
-		$this->assertTrue($this->parser->registerMatcher(new Matcher\EqualTo()));
+		$this->assertTrue($this->parser->registerMatcher(new Matcher\Equals()));
 	}
 
 	/**
