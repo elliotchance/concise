@@ -75,6 +75,7 @@ class MatcherParser
 		$this->registerMatcher(new Matcher\Equals());
 		$this->registerMatcher(new Matcher\Boolean());
 		$this->registerMatcher(new Matcher\Null());
+		$this->registerMatcher(new Matcher\NotEquals());
 	}
 
 	public function getMatchers()
