@@ -22,13 +22,4 @@ class BooleanTest extends AbstractMatcherTestCase
 			'b is false'
 		);
 	}
-
-	public function failedMessages()
-	{
-		return array(
-			array('false', array(), 'false'),
-			array('? is true', array(false), ' is true'),
-			array('? is false', array(true), 'true is false'),
-		);
-	}
 }

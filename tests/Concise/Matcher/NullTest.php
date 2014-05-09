@@ -23,12 +23,4 @@ class NullTest extends AbstractMatcherTestCase
 			'"" is not null',
 		);
 	}
-
-	public function failedMessages()
-	{
-		return array(
-			array('? is null', array(false), ' is null'),
-			array('? is not null', array(null), ' is not null'),
-		);
-	}
 }

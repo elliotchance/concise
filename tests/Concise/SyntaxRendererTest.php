@@ -21,7 +21,8 @@ class SyntaxRendererTest extends TestCase
 	public function singlePlaceholders()
 	{
 		return array(
-			array(true, 'true')
+			array(true, 'true'),
+			array(false, 'false')
 		);
 	}
 

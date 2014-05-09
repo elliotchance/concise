@@ -18,6 +18,9 @@ class SyntaxRenderer
 		if(true === $value) {
 			return 'true';
 		}
+		if(false === $value) {
+			return 'false';
+		}
 		return $value;
 	}
 }
