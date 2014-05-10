@@ -131,4 +131,17 @@ class MatcherParserTest extends TestCase
 		$parser->getKeywords();
 		$parser->getKeywords();
 	}
+
+	protected function assertArrayContains($needles,  $haystack)
+	{
+		foreach($needles as $needle) {
+			$this->assertContains($needle, $haystack);
+		}
+	}
+
+	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
+	{
+		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
+		$this->assertArrayContains(array('? is null', '? is equal to ?'), $syntaxes);
+	}
 }
