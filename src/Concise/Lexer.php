@@ -14,33 +14,6 @@ class Lexer
 
 	const TOKEN_STRING = 5;
 
-	protected static function convertEscapedCharacter($ch)
-	{
-		// @test \cx : "control-x", where x is any character
-		// @test \p{xx} : a character with the xx property, see unicode properties for more info
-		// @test \P{xx} : a character without the xx property, see unicode properties for more info
-		// @test \xhh : character with hex code hh
-		// @test \ddd : character with octal code ddd, or backreference
-		if($ch === 'a') {
-			return "\a";
-		}
-		if($ch === 'e') {
-			return "\e";
-		}
-		if($ch === 'f') {
-			return "\f";
-		}
-		if($ch === 'n') {
-			return "\n";
-		}
-		if($ch === 'r') {
-			return "\r";
-		}
-		if($ch === 't') {
-			return "\t";
-		}
-	}
-
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
@@ -72,7 +45,8 @@ class Lexer
 			}
 			if($string[$i] === "\\") {
 				++$i;
-				$t .= self::convertEscapedCharacter($string[$i]);
+				$converter = new CharacterConverter();
+				$t .= $converter->convertEscapedCharacter($string[$i]);
 			}
 			else {
 				$t .= $string[$i];
