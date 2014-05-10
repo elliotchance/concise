@@ -14,6 +14,11 @@ class CharacterConverterTest extends TestCase
 			array("n", "\n"),
 			array("r", "\r"),
 			array("t", "\t"),
+			array("'", "'"),
+			array("\\", "\\"),
+			array("0", "0"),
+			array("w", "w"),
+			array("\"", "\""),
 		);
 	}
 
