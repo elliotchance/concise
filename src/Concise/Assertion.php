@@ -14,6 +14,8 @@ class Assertion
 	/** @var \PHPUnit_Framework_TestCase */
 	protected $testCase;
 
+	protected $description;
+
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
@@ -94,5 +96,15 @@ class Assertion
 			$r .= "\n  $k = $v";
 		}
 		return "$r\n";
+	}
+
+	public function setDescription($description)
+	{
+		$this->description = $description;
+	}
+
+	public function getDescription()
+	{
+		return $this->description;
 	}
 }

@@ -72,4 +72,11 @@ class AssertionTest extends TestCase
 
 		$stub->run();
 	}
+
+	public function testCanSetDescriptiveString()
+	{
+		$assertion = new Assertion('? equals ?', new Matcher\Equals());
+		$assertion->setDescription('my description');
+		$this->assertEquals('my description', $assertion->getDescription());
+	}
 }

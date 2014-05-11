@@ -4,11 +4,34 @@ namespace Concise;
 
 class TestCaseStub1 extends TestCase
 {
-	function _test_a_equals_b() {}
-	function _test_b() { return 'b equals a'; }
-	function _test_c() { return array('c equals d', 'd equals c'); }
-	function b() {}
-	function getMatcherParserInstance() {
+	function _test_a_equals_b()
+	{
+	}
+
+	function _test_b()
+	{
+		return 'b equals a';
+	}
+
+	function _test_c()
+	{
+		return array('c equals d', 'd equals c');
+	}
+
+	/*function _test_d()
+	{
+		return array(
+			'my assertion' => 'c equals d',
+			'something else' => 'd equals c',
+		);
+	}*/
+
+	function b()
+	{
+	}
+
+	function getMatcherParserInstance()
+	{
 		$matcherParser = new MatcherParser();
 		$matcherParser->registerMatcher(new Matcher\Equals());
 		return $matcherParser;
@@ -17,8 +40,15 @@ class TestCaseStub1 extends TestCase
 
 class TestCaseStub2 extends TestCase
 {
-	function _test_a() { return 123; }
-	function _test_b() { return array(123, 'abc'); }
+	function _test_a()
+	{
+		return 123;
+	}
+
+	function _test_b()
+	{
+		return array(123, 'abc');
+	}
 }
 
 class TestCaseTest extends TestCase
