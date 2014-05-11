@@ -53,7 +53,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function getAssertionsForMethod($method)
 	{
-		// @test each test data is cleared out between tests
 		$return = $this->$method();
 		if($return === null) {
 			$assertions = array($this->convertMethodNameToAssertion($method));
