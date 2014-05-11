@@ -139,19 +139,32 @@ class TestCaseTest extends TestCase
 		$this->assertAssertions($expected, $testCase->getAssertionsForMethod('_test_c'));
 	}
 
+	protected function getPHPUnitProperties()
+	{
+		return array(
+			'backupGlobals' => null,
+			'backupGlobalsBlacklist' => array(),
+			'backupStaticAttributes' => null,
+			'backupStaticAttributesBlacklist' => array(),
+			'runTestInSeparateProcess' => null,
+			'preserveGlobalState' => true,
+		);
+	}
+
 	public function testGetAllAssertions()
 	{
+		$phpunitProperties = $this->getPHPUnitProperties();
 		$testCase = new TestCaseStub1();
 		$expected = array(
 			'_test_a_equals_b' => array(
-				new Assertion('a equals b', new Matcher\Equals())
+				new Assertion('a equals b', new Matcher\Equals(), $phpunitProperties),
 			),
 			'_test_b' => array(
-				new Assertion('b equals a', new Matcher\Equals())
+				new Assertion('b equals a', new Matcher\Equals(), $phpunitProperties),
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\Equals()),
-				new Assertion('d equals c', new Matcher\Equals())
+				new Assertion('c equals d', new Matcher\Equals(), $phpunitProperties),
+				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
@@ -202,13 +215,8 @@ class TestCaseTest extends TestCase
 	{
 		$this->a = 123;
 		$this->b = '456';
-		$expected = array('a', 'b');
-		$this->assertEquals($expected, array_keys($this->getData()));
-	}
-
-	public function testDataIsAnEmptyArrayIsNotInitialised()
-	{
-		$this->assertEquals(array(), array_keys($this->getData()));
+		$expected = array('mySpecialAttribute') + array_keys($this->getPHPUnitProperties()) + array('a', 'b');
+		$this->assertEquals(sort($expected), sort(array_keys($this->getData())));
 	}
 
 	public function testCanUnsetProperty()
@@ -233,5 +241,10 @@ class TestCaseTest extends TestCase
 		$this->not = 123;
 	}
 
-	// @test better descriptions of failures, search for 'bad'
+	protected $mySpecialAttribute = 123;
+
+	public function testDataIncludesExplicitInstanceVariables()
+	{
+		$this->assertTrue(array_key_exists('mySpecialAttribute', $this->getData()));
+	}
 }

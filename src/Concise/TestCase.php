@@ -4,8 +4,6 @@ namespace Concise;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-	protected $data = array();
-
 	public function countConciseTests()
 	{
 		$assertions = $this->getAllAssertions();
@@ -136,21 +134,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			throw new \Exception("You cannot assign an attribute with the keyword '$name'.");
 		}
 		$this->$name = $value;
-		$this->data[$name] = $value;
-	}
-
-	public function __unset($name)
-	{
-		unset($this->data[$name]);
 	}
 
 	public function getData()
 	{
-		$data = array();
-		foreach($this->data as $k => $v) {
-			$data[$k] = $this->$k;
-		}
-		return $data;
+		return get_object_vars($this);
 	}
 
 	protected function getStub($class, array $methods, array $constructorArgs = array())

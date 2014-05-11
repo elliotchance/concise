@@ -108,7 +108,6 @@ class MatcherParser
 		return $this->keywords;
 	}
 
-	// @test
 	public function getAllSyntaxes()
 	{
 		$r = array();
