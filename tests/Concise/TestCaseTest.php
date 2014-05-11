@@ -215,8 +215,8 @@ class TestCaseTest extends TestCase
 	{
 		$this->a = 123;
 		$this->b = '456';
-		$expected = array('mySpecialAttribute') + array_keys($this->getPHPUnitProperties()) + array('a', 'b');
-		$this->assertEquals(sort($expected), sort(array_keys($this->getData())));
+		$data = $this->getData();
+		$this->assertSame($data['a'], 123);
 	}
 
 	public function testCanUnsetProperty()
