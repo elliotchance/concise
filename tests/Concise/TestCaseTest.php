@@ -247,4 +247,15 @@ class TestCaseTest extends TestCase
 	{
 		$this->assertTrue(array_key_exists('mySpecialAttribute', $this->getData()));
 	}
+
+	public function testIssetWorksWithAttributes()
+	{
+		$this->a = 123;
+		$this->assertTrue(isset($this->a));
+	}
+
+	public function testDataIsResetBetweenTests()
+	{
+		$this->assertFalse(isset($this->a));
+	}
 }
