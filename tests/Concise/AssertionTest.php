@@ -77,7 +77,7 @@ class AssertionTest extends TestCase
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
 		$assertion->setDescription('my description');
-		$this->assertEquals('my description', $assertion->getDescription());
+		$this->assertEquals('my description (? equals ?)', $assertion->getDescription());
 	}
 
 	public function testDescriptionReturnsAssertionIfNotSet()

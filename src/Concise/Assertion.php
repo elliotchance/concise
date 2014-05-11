@@ -108,6 +108,6 @@ class Assertion
 		if('' === $this->description) {
 			return $this->getAssertion();
 		}
-		return $this->description;
+		return $this->description . " (" . $this->getAssertion() . ")";
 	}
 }

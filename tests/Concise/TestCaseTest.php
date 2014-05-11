@@ -18,14 +18,6 @@ class TestCaseStub1 extends TestCase
 		return array('c equals d', 'd equals c');
 	}
 
-	/*function _test_d()
-	{
-		return array(
-			'my assertion' => 'c equals d',
-			'something else' => 'd equals c',
-		);
-	}*/
-
 	function b()
 	{
 	}
