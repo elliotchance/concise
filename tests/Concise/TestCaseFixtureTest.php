@@ -35,10 +35,15 @@ class TestCaseFixtureTest extends TestCase
 		// +3 for setUp & tearDown
 		return array(
 			'1 equals 1',
-			'2 equals 2',
+			'2 equals 3',
 			'3 equals 3'
 		);
 	}
+
+	protected function onNotSuccessfulTest(\Exception $e)
+    {
+    	$this->assertEquals('2 equals 3', $e->getMessage());
+    }
 
 	public static function tearDownAfterClass()
 	{
