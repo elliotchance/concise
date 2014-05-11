@@ -79,4 +79,10 @@ class AssertionTest extends TestCase
 		$assertion->setDescription('my description');
 		$this->assertEquals('my description', $assertion->getDescription());
 	}
+
+	public function testDescriptionReturnsAssertionIfNotSet()
+	{
+		$assertion = new Assertion('? equals ?', new Matcher\Equals());
+		$this->assertEquals('? equals ?', $assertion->getDescription());
+	}
 }

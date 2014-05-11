@@ -14,7 +14,7 @@ class Assertion
 	/** @var \PHPUnit_Framework_TestCase */
 	protected $testCase;
 
-	protected $description;
+	protected $description = '';
 
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
@@ -105,6 +105,9 @@ class Assertion
 
 	public function getDescription()
 	{
+		if('' === $this->description) {
+			return $this->getAssertion();
+		}
 		return $this->description;
 	}
 }
