@@ -111,4 +111,10 @@ class AssertionTest extends TestCase
 
 		$assertion->run();
 	}
+
+	public function testShouldUseFixturesDefaultsToTrue()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean());
+		$this->assertSame(true, $assertion->shouldRunFixtures());
+	}
 }
