@@ -117,4 +117,11 @@ class AssertionTest extends TestCase
 		$assertion = new Assertion('true', new Matcher\Boolean());
 		$this->assertSame(true, $assertion->shouldRunFixtures());
 	}
+
+	public function testCanChangeStatusOfFixturesAfterConstructor()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion->setShouldRunFixtures(false);
+		$this->assertSame(false, $assertion->shouldRunFixtures());
+	}
 }

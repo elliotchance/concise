@@ -16,6 +16,8 @@ class Assertion
 
 	protected $description = '';
 
+	protected $shouldRunFixtures = true;
+
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
@@ -119,6 +121,11 @@ class Assertion
 
 	public function shouldRunFixtures()
 	{
-		return true;
+		return $this->shouldRunFixtures;
+	}
+
+	public function setShouldRunFixtures($shouldRunFixtures)
+	{
+		$this->shouldRunFixtures = $shouldRunFixtures;
 	}
 }
