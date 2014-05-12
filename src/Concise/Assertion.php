@@ -83,7 +83,7 @@ class Assertion
 
 	public function run()
 	{
-		if(null !== $this->testCase) {
+		if($this->shouldRunFixtures() && null !== $this->testCase) {
 			$this->testCase->prepare();
 		}
 		$result = $this->executeAssertion();

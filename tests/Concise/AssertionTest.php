@@ -130,4 +130,17 @@ class AssertionTest extends TestCase
 		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), false);
 		$this->assertSame(false, $assertion->shouldRunFixtures());
 	}
+
+	public function testPrepareIsNotCalledIfFixturesAreSetNotToBeRun()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false);
+
+		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
+		$testCase->expects($this->never())
+		         ->method('prepare')
+		         ->will($this->returnValue(null));
+		$assertion->setTestCase($testCase);
+
+		$assertion->run();
+	}
 }
