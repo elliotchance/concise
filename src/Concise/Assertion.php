@@ -16,13 +16,14 @@ class Assertion
 
 	protected $description = '';
 
-	protected $shouldRunFixtures = true;
+	protected $shouldRunFixtures;
 
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunFixtures = true)
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
+		$this->shouldRunFixtures = $shouldRunFixtures;
 	}
 
 	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)

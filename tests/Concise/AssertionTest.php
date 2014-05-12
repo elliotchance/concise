@@ -124,4 +124,10 @@ class AssertionTest extends TestCase
 		$assertion->setShouldRunFixtures(false);
 		$this->assertSame(false, $assertion->shouldRunFixtures());
 	}
+
+	public function testCanSetShouldRunFixturesInConstructor()
+	{
+		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), false);
+		$this->assertSame(false, $assertion->shouldRunFixtures());
+	}
 }

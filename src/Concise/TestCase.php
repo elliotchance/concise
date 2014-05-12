@@ -70,8 +70,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		$assertions = $this->getRawAssertionsForMethod($method);
 		$r = array();
+		$shouldRunFixtures = true;
 		foreach($assertions as $a) {
-			$r[] = $this->getMatcherParserInstance()->compile($a, $this->getData());
+			$assertion = $this->getMatcherParserInstance()->compile($a, $this->getData());
+			$assertion->setShouldRunFixtures($shouldRunFixtures);
+			$r[] = $assertion;
+			$shouldRunFixtures = false;
 		}
 		return $r;
 	}

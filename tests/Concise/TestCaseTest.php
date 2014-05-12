@@ -186,7 +186,7 @@ class TestCaseTest extends TestCase
 			),
 			'_test_c' => array(
 				new Assertion('c equals d', new Matcher\Equals(), $phpunitProperties),
-				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties),
+				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties, false),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
@@ -292,5 +292,18 @@ class TestCaseTest extends TestCase
 
 		$assertions = $testCase->getAssertionsForMethod('abc');
 		$this->assertSame(true, $assertions[0]->shouldRunFixtures());
+	}
+
+	public function testGetAssertionsForMethodWillSetAllAssertionsAfterTheFirstToNotUseFixtures()
+	{
+		$testCase = $this->getStub('\Concise\TestCase', array(
+			'getRawAssertionsForMethod' => array(
+				'a equals b',
+				'true'
+			)
+		));
+
+		$assertions = $testCase->getAssertionsForMethod('abc');
+		$this->assertSame(false, $assertions[1]->shouldRunFixtures());
 	}
 }
