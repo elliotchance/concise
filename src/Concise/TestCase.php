@@ -4,6 +4,8 @@ namespace Concise;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+	protected $fixtureNeedsToBeRun = true;
+
 	public function countConciseTests()
 	{
 		$assertions = $this->getAllAssertions();
@@ -171,7 +173,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		parent::setup();
-		$this->prepare();
+		if($this->fixtureNeedsToBeRun) {
+			$this->prepare();
+			$this->fixtureNeedsToBeRun = false;
+		}
 	}
 
 	public function tearDown()

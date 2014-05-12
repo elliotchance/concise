@@ -170,6 +170,7 @@ class TestCaseTest extends TestCase
 			'backupStaticAttributesBlacklist' => array(),
 			'runTestInSeparateProcess' => null,
 			'preserveGlobalState' => true,
+			'fixtureNeedsToBeRun' => true
 		);
 	}
 
@@ -323,5 +324,15 @@ class TestCaseTest extends TestCase
 		         ->method('finalize')
 		         ->will($this->returnValue(null));
 		$testCase->tearDown();
+	}
+
+	public function testPrepareIsOnlyCalledOncePerPhysicalTest()
+	{
+		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
+		$testCase->expects($this->once())
+		         ->method('prepare')
+		         ->will($this->returnValue(null));
+		$testCase->setUp();
+		$testCase->setUp();
 	}
 }
