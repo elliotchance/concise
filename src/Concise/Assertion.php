@@ -12,7 +12,7 @@ class Assertion
 	protected $data = array();
 
 	/** @var \PHPUnit_Framework_TestCase */
-	protected $testCase;
+	protected $testCase = null;
 
 	protected $description = '';
 
@@ -80,6 +80,9 @@ class Assertion
 
 	public function run()
 	{
+		if(null !== $this->testCase) {
+			$this->testCase->prepare();
+		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
 			$this->success();

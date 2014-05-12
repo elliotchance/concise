@@ -85,4 +85,17 @@ class AssertionTest extends TestCase
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
 		$this->assertEquals('? equals ?', $assertion->getDescription());
 	}
+
+	public function testPrepareIsCalledAsPartOfTheAssertion()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean());
+
+		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
+		$testCase->expects($this->once())
+		         ->method('prepare')
+		         ->will($this->returnValue(null));
+		$assertion->setTestCase($testCase);
+
+		$assertion->run();
+	}
 }
