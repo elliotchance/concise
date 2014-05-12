@@ -315,4 +315,13 @@ class TestCaseTest extends TestCase
 		         ->will($this->returnValue(null));
 		$testCase->setUp();
 	}
+
+	public function testFinalizeIsCalledByTearDown()
+	{
+		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
+		$testCase->expects($this->once())
+		         ->method('finalize')
+		         ->will($this->returnValue(null));
+		$testCase->tearDown();
+	}
 }

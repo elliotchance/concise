@@ -173,4 +173,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		parent::setup();
 		$this->prepare();
 	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+		$this->finalize();
+	}
 }
