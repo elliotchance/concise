@@ -93,7 +93,7 @@ class Assertion
 		else {
 			$this->fail($result);
 		}
-		if(null !== $this->testCase) {
+		if($this->shouldRunFixtures() && null !== $this->testCase) {
 			$this->testCase->finalize();
 		}
 	}

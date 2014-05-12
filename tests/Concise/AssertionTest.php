@@ -143,4 +143,17 @@ class AssertionTest extends TestCase
 
 		$assertion->run();
 	}
+
+	public function testFinalizeIsNotCalledIfFixturesAreSetNotToBeRun()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false);
+
+		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
+		$testCase->expects($this->never())
+		         ->method('finalize')
+		         ->will($this->returnValue(null));
+		$assertion->setTestCase($testCase);
+
+		$assertion->run();
+	}
 }
