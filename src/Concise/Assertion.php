@@ -90,6 +90,9 @@ class Assertion
 		else {
 			$this->fail($result);
 		}
+		if(null !== $this->testCase) {
+			$this->testCase->finalize();
+		}
 	}
 
 	public function __toString()

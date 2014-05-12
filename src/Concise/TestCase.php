@@ -154,4 +154,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function prepare()
 	{
 	}
+
+	public function finalize()
+	{
+	}
 }

@@ -98,4 +98,17 @@ class AssertionTest extends TestCase
 
 		$assertion->run();
 	}
+
+	public function testFinalizeIsCalledAsPartOfTheAssertion()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean());
+
+		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
+		$testCase->expects($this->once())
+		         ->method('finalize')
+		         ->will($this->returnValue(null));
+		$assertion->setTestCase($testCase);
+
+		$assertion->run();
+	}
 }
