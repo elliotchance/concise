@@ -167,4 +167,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	public function finalize()
 	{
 	}
+
+	public function setUp()
+	{
+		parent::setup();
+		$this->prepare();
+	}
 }

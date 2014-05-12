@@ -22,6 +22,4 @@ class EqualsTest extends AbstractMatcherTestCase
 	}
 
 	// @test warn if attributes are set and not used
-
-	// @test must must setup and tear down when generating the data source for test
 }

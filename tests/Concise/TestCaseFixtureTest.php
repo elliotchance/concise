@@ -6,6 +6,8 @@ class TestCaseFixtureTest extends TestCase
 {
 	protected static $setUpCount = 0;
 	protected static $tearDownCount = 0;
+	protected static $prepareCount = 0;
+	protected static $finalizeCount = 0;
 
 	public function setUp()
 	{
@@ -13,10 +15,22 @@ class TestCaseFixtureTest extends TestCase
 		++self::$setUpCount;
 	}
 
+	public function prepare()
+	{
+		parent::prepare();
+		++self::$prepareCount;
+	}
+
 	public function tearDown()
 	{
 		parent::tearDown();
 		++self::$tearDownCount;
+	}
+
+	public function finalize()
+	{
+		parent::finalize();
+		++self::$finalizeCount;
 	}
 
 	public function _test_1_equals_1()
@@ -54,5 +68,13 @@ class TestCaseFixtureTest extends TestCase
 		if(self::$tearDownCount !== $expectedCount) {
 			throw new \Exception("Expected tearDownCount to be $expectedCount, but was " . self::$tearDownCount);
 		}
+
+		/*$expectedCount = 3;
+		if(self::$prepareCount !== $expectedCount) {
+			throw new \Exception("Expected prepareCount to be $expectedCount, but was " . self::$prepareCount);
+		}
+		if(self::$finalizeCount !== $expectedCount) {
+			throw new \Exception("Expected finalizeCount to be $expectedCount, but was " . self::$finalizeCount);
+		}*/
 	}
 }

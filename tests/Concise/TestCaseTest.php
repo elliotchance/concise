@@ -306,4 +306,13 @@ class TestCaseTest extends TestCase
 		$assertions = $testCase->getAssertionsForMethod('abc');
 		$this->assertSame(false, $assertions[1]->shouldRunFixtures());
 	}
+
+	public function testPrepareIsCalledBySetup()
+	{
+		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
+		$testCase->expects($this->once())
+		         ->method('prepare')
+		         ->will($this->returnValue(null));
+		$testCase->setUp();
+	}
 }
