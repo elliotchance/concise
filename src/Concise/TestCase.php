@@ -51,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return str_replace('_', ' ', $method);
 	}
 
-	public function getAssertionsForMethod($method)
+	protected function getRawAssertionsForMethod($method)
 	{
 		$return = $this->$method();
 		if($return === null) {
@@ -63,7 +63,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		else {
 			$assertions = array($return);
 		}
+		return $assertions;
+	}
 
+	public function getAssertionsForMethod($method)
+	{
+		$assertions = $this->getRawAssertionsForMethod($method);
 		$r = array();
 		foreach($assertions as $a) {
 			$r[] = $this->getMatcherParserInstance()->compile($a, $this->getData());

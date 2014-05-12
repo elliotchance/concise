@@ -280,4 +280,17 @@ class TestCaseTest extends TestCase
 	{
 		$this->assertFalse(isset($this->a));
 	}
+
+	public function testGetAssertionsForMethodWillSetFirstToTrueForTheFirstAssertion()
+	{
+		$testCase = $this->getStub('\Concise\TestCase', array(
+			'getRawAssertionsForMethod' => array(
+				'a equals b',
+				'true'
+			)
+		));
+
+		$assertions = $testCase->getAssertionsForMethod('abc');
+		$this->assertSame(true, $assertions[0]->shouldRunFixtures());
+	}
 }

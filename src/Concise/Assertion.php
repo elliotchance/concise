@@ -116,4 +116,9 @@ class Assertion
 		}
 		return $this->description . " (" . $this->getAssertion() . ")";
 	}
+
+	public function shouldRunFixtures()
+	{
+		return true;
+	}
 }
