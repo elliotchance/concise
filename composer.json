@@ -1,6 +1,7 @@
 {
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-0": {
