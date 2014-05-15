@@ -4,12 +4,12 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class IsObjectTest extends AbstractMatcherTestCase
+class IsAnObjectTest extends AbstractMatcherTestCase
 {
 	public function setUp()
 	{
 		parent::setUp();
-		$this->matcher = new IsObject();
+		$this->matcher = new IsAnObject();
 	}
 
 	public function _test_a_is_an_object()

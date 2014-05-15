@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsObject extends AbstractMatcher
+class IsAnObject extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
