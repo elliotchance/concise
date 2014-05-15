@@ -8,4 +8,4 @@ install:
   - composer install
 
 after_script:
-  - php scripts/coveralls -v
+  - php vendor/bin/coveralls -v
