@@ -293,10 +293,7 @@ class TestCaseTest extends TestCase
 		);
 	}
 
-	/**
-	 * @dataProvider expectedFixtureStatuses
-	 */
-	public function testGetAssertionsForMethodWillSetFixtureStatuses($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
+	protected function getAssertionsForFixtureTests()
 	{
 		$testCase = $this->getStub('\Concise\TestCase', array(
 			'getRawAssertionsForMethod' => array(
@@ -305,9 +302,24 @@ class TestCaseTest extends TestCase
 				'true',
 			)
 		));
+		return $testCase->getAssertionsForMethod('abc');
+	}
 
-		$assertions = $testCase->getAssertionsForMethod('abc');
+	/**
+	 * @dataProvider expectedFixtureStatuses
+	 */
+	public function testGetAssertionsForMethodWillSetPrepareStatus($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
+	{
+		$assertions = $this->getAssertionsForFixtureTests();
 		$this->assertSame($shouldRunPrepare, $assertions[$assertionIndex]->shouldRunPrepare());
+	}
+
+	/**
+	 * @dataProvider expectedFixtureStatuses
+	 */
+	public function testGetAssertionsForMethodWillSetFinalizeStatus($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
+	{
+		$assertions = $this->getAssertionsForFixtureTests();
 		$this->assertSame($shouldRunFinalize, $assertions[$assertionIndex]->shouldRunFinalize());
 	}
 
