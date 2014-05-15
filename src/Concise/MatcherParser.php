@@ -78,6 +78,7 @@ class MatcherParser
 		$this->registerMatcher(new Matcher\NotEquals());
 		$this->registerMatcher(new Matcher\IsAnObject());
 		$this->registerMatcher(new Matcher\IsAnArray());
+		$this->registerMatcher(new Matcher\IsAnInteger());
 	}
 
 	public function getMatchers()
