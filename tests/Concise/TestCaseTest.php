@@ -75,7 +75,7 @@ class TestCaseTest extends TestCase
 	public function testIsConciseTestThrowsInvalidArgumentExceptionIfTheMethodIsBlank()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertFalse($testCase->isConciseTest(''));
+		$testCase->isConciseTest('');
 	}
 
 	/**
@@ -85,7 +85,7 @@ class TestCaseTest extends TestCase
 	public function testIsConciseTestThrowsInvalidArgumentExceptionIfTheMethodIsNotAString()
 	{
 		$testCase = new TestCaseStub1();
-		$this->assertFalse($testCase->isConciseTest(123));
+		$testCase->isConciseTest(123);
 	}
 
 	public function testCountAssertionsForTestReturnsOneIfThereIsNoReturnValue()
@@ -119,7 +119,7 @@ class TestCaseTest extends TestCase
 	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsNotValid()
 	{
 		$testCase = new TestCaseStub2();
-		$this->assertFalse($testCase->countAssertionsForMethod('_test_a'));
+		$testCase->countAssertionsForMethod('_test_a');
 	}
 
 	/**
@@ -129,7 +129,7 @@ class TestCaseTest extends TestCase
 	public function testCountAssertionsForTestThrowsExceptionIfReturnValueIsAnArrayOfNotAllStrings()
 	{
 		$testCase = new TestCaseStub2();
-		$this->assertFalse($testCase->countAssertionsForMethod('_test_b'));
+		$testCase->countAssertionsForMethod('_test_b');
 	}
 
 	protected function assertAssertions(array $expected, array $actual)
@@ -170,7 +170,9 @@ class TestCaseTest extends TestCase
 			'backupStaticAttributesBlacklist' => array(),
 			'runTestInSeparateProcess' => null,
 			'preserveGlobalState' => true,
-			'fixtureNeedsToBeRun' => true
+			'setUpNeedsToBeRun' => true,
+			'tearDownNeedsToBeRun' => true,
+			'currentAssertion' => null,
 		);
 	}
 
@@ -180,14 +182,14 @@ class TestCaseTest extends TestCase
 		$testCase = new TestCaseStub1();
 		$expected = array(
 			'_test_a_equals_b' => array(
-				new Assertion('a equals b', new Matcher\Equals(), $phpunitProperties),
+				new Assertion('a equals b', new Matcher\Equals(), $phpunitProperties, true, true),
 			),
 			'_test_b' => array(
-				new Assertion('b equals a', new Matcher\Equals(), $phpunitProperties),
+				new Assertion('b equals a', new Matcher\Equals(), $phpunitProperties, true, true),
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\Equals(), $phpunitProperties),
-				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties, false),
+				new Assertion('c equals d', new Matcher\Equals(), $phpunitProperties, true, false),
+				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties, false, true),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
@@ -282,30 +284,31 @@ class TestCaseTest extends TestCase
 		$this->assertFalse(isset($this->a));
 	}
 
-	public function testGetAssertionsForMethodWillSetFirstToTrueForTheFirstAssertion()
+	public function expectedFixtureStatuses()
 	{
-		$testCase = $this->getStub('\Concise\TestCase', array(
-			'getRawAssertionsForMethod' => array(
-				'a equals b',
-				'true'
-			)
-		));
-
-		$assertions = $testCase->getAssertionsForMethod('abc');
-		$this->assertSame(true, $assertions[0]->shouldRunFixtures());
+		return array(
+			array(0, true, false),
+			array(1, false, false),
+			array(2, false, true),
+		);
 	}
 
-	public function testGetAssertionsForMethodWillSetAllAssertionsAfterTheFirstToNotUseFixtures()
+	/**
+	 * @dataProvider expectedFixtureStatuses
+	 */
+	public function testGetAssertionsForMethodWillSetFixtureStatuses($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
 	{
 		$testCase = $this->getStub('\Concise\TestCase', array(
 			'getRawAssertionsForMethod' => array(
 				'a equals b',
-				'true'
+				'false',
+				'true',
 			)
 		));
 
 		$assertions = $testCase->getAssertionsForMethod('abc');
-		$this->assertSame(false, $assertions[1]->shouldRunFixtures());
+		$this->assertSame($shouldRunPrepare, $assertions[$assertionIndex]->shouldRunPrepare());
+		$this->assertSame($shouldRunFinalize, $assertions[$assertionIndex]->shouldRunFinalize());
 	}
 
 	public function testPrepareIsCalledBySetup()
@@ -324,15 +327,5 @@ class TestCaseTest extends TestCase
 		         ->method('finalize')
 		         ->will($this->returnValue(null));
 		$testCase->tearDown();
-	}
-
-	public function testPrepareIsOnlyCalledOncePerPhysicalTest()
-	{
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->once())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$testCase->setUp();
-		$testCase->setUp();
 	}
 }

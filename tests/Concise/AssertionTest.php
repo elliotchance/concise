@@ -38,7 +38,7 @@ class AssertionTest extends TestCase
 			'c' => 'xyz'
 		);
 		$assertion = new Assertion('a equals b', $matcher, $data);
-		$expected = "\n  a = 123\n  b = abc\n  c = xyz\n";
+		$expected = "\n  a = 123\n  b = 'abc'\n  c = 'xyz'\n";
 		$this->assertEquals($expected, (string) $assertion);
 	}
 
@@ -88,7 +88,7 @@ class AssertionTest extends TestCase
 
 	public function testPrepareIsCalledAsPartOfTheAssertion()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\Boolean(), array(), true, false);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
 		$testCase->expects($this->once())
@@ -101,7 +101,7 @@ class AssertionTest extends TestCase
 
 	public function testFinalizeIsCalledAsPartOfTheAssertion()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false, true);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
 		$testCase->expects($this->once())
@@ -112,23 +112,42 @@ class AssertionTest extends TestCase
 		$assertion->run();
 	}
 
-	public function testShouldUseFixturesDefaultsToTrue()
+	public function testShouldUsePrepareDefaultsToFalse()
 	{
 		$assertion = new Assertion('true', new Matcher\Boolean());
-		$this->assertSame(true, $assertion->shouldRunFixtures());
+		$this->assertSame(false, $assertion->shouldRunPrepare());
 	}
 
-	public function testCanChangeStatusOfFixturesAfterConstructor()
+	public function testShouldUseFinalizeDefaultsToFalse()
 	{
 		$assertion = new Assertion('true', new Matcher\Boolean());
-		$assertion->setShouldRunFixtures(false);
-		$this->assertSame(false, $assertion->shouldRunFixtures());
+		$this->assertSame(false, $assertion->shouldRunFinalize());
 	}
 
-	public function testCanSetShouldRunFixturesInConstructor()
+	public function testCanChangeStatusOfPrepareAfterConstructor()
 	{
-		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), false);
-		$this->assertSame(false, $assertion->shouldRunFixtures());
+		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion->setShouldRunPrepare(true);
+		$this->assertSame(true, $assertion->shouldRunPrepare());
+	}
+
+	public function testCanChangeStatusOfFinalizeAfterConstructor()
+	{
+		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion->setShouldRunFinalize(true);
+		$this->assertSame(true, $assertion->shouldRunFinalize());
+	}
+
+	public function testCanSetShouldRunPrepareInConstructor()
+	{
+		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), true);
+		$this->assertSame(true, $assertion->shouldRunPrepare());
+	}
+
+	public function testCanSetShouldRunFinalizeInConstructor()
+	{
+		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), true, true);
+		$this->assertSame(true, $assertion->shouldRunFinalize());
 	}
 
 	public function testPrepareIsNotCalledIfFixturesAreSetNotToBeRun()

@@ -4,52 +4,51 @@ namespace Concise;
 
 class TestCaseFixtureTest extends TestCase
 {
-	protected static $setUpCount = 0;
-	protected static $tearDownCount = 0;
-	protected static $prepareCount = 0;
-	protected static $finalizeCount = 0;
+	protected static $fixtureLog = array();
+
+	protected function addFixtureLog($method)
+	{
+		self::$fixtureLog[] = "$method " . $this->getName();
+	}
 
 	public function setUp()
 	{
 		parent::setUp();
-		++self::$setUpCount;
+		$this->addFixtureLog('setUp');
 	}
 
 	public function prepare()
 	{
 		parent::prepare();
-		++self::$prepareCount;
+		$this->addFixtureLog('prepare');
 	}
 
 	public function tearDown()
 	{
 		parent::tearDown();
-		++self::$tearDownCount;
+		$this->addFixtureLog('tearDown');
 	}
 
 	public function finalize()
 	{
 		parent::finalize();
-		++self::$finalizeCount;
+		$this->addFixtureLog('finalize');
 	}
 
 	public function _test_1_equals_1()
 	{
-		// +1 for setUp & tearDown
 	}
 
 	public function testNothing()
 	{
-		// +1 for setUp & tearDown
 		$this->assertTrue(true);
 	}
 
 	public function _test_a_few_things()
 	{
-		// +3 for setUp & tearDown
 		return array(
 			'1 equals 1',
-			'2 equals 3',
+			'2 equals 2',
 			'3 equals 3'
 		);
 	}
@@ -61,20 +60,27 @@ class TestCaseFixtureTest extends TestCase
 
 	public static function tearDownAfterClass()
 	{
-		$expectedCount = 5;
-		if(self::$setUpCount !== $expectedCount) {
-			throw new \Exception("Expected setUpCount to be $expectedCount, but was " . self::$setUpCount);
+		$expected = array(
+			'prepare testNothing',
+            'setUp testNothing',
+            'finalize testNothing',
+            'tearDown testNothing',
+            'setUp test with data set "_test_1_equals_1: 1 equals 1"',
+            'prepare test with data set "_test_1_equals_1: 1 equals 1"',
+            'finalize test with data set "_test_1_equals_1: 1 equals 1"',
+            'tearDown test with data set "_test_1_equals_1: 1 equals 1"',
+            'setUp test with data set "_test_a_few_things: 1 equals 1"',
+            'prepare test with data set "_test_a_few_things: 1 equals 1"',
+            'tearDown test with data set "_test_a_few_things: 1 equals 1"',
+            'setUp test with data set "_test_a_few_things: 2 equals 2"',
+            'tearDown test with data set "_test_a_few_things: 2 equals 2"',
+            'setUp test with data set "_test_a_few_things: 3 equals 3"',
+            'finalize test with data set "_test_a_few_things: 3 equals 3"',
+            'tearDown test with data set "_test_a_few_things: 3 equals 3"',
+		);
+		if(self::$fixtureLog !== $expected) {
+			var_dump(self::$fixtureLog, $expected);
+			throw new \Exception("Fixture log did not pass.");
 		}
-		if(self::$tearDownCount !== $expectedCount) {
-			throw new \Exception("Expected tearDownCount to be $expectedCount, but was " . self::$tearDownCount);
-		}
-
-		/*$expectedCount = 3;
-		if(self::$prepareCount !== $expectedCount) {
-			throw new \Exception("Expected prepareCount to be $expectedCount, but was " . self::$prepareCount);
-		}
-		if(self::$finalizeCount !== $expectedCount) {
-			throw new \Exception("Expected finalizeCount to be $expectedCount, but was " . self::$finalizeCount);
-		}*/
 	}
 }

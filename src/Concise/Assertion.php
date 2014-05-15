@@ -16,14 +16,17 @@ class Assertion
 
 	protected $description = '';
 
-	protected $shouldRunFixtures;
+	protected $shouldRunPrepare;
 
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunFixtures = true)
+	protected $shouldRunFinalize;
+
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false, $shouldRunFinalize = false)
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
-		$this->shouldRunFixtures = $shouldRunFixtures;
+		$this->shouldRunPrepare = $shouldRunPrepare;
+		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 
 	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
@@ -83,8 +86,11 @@ class Assertion
 
 	public function run()
 	{
-		if($this->shouldRunFixtures() && null !== $this->testCase) {
+		if($this->shouldRunPrepare()) {
 			$this->testCase->prepare();
+		}
+		if(null !== $this->testCase) {
+			$this->testCase->setCurrentAssertion($this);
 		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
@@ -93,7 +99,7 @@ class Assertion
 		else {
 			$this->fail($result);
 		}
-		if($this->shouldRunFixtures() && null !== $this->testCase) {
+		if($this->shouldRunFinalize()) {
 			$this->testCase->finalize();
 		}
 	}
@@ -102,7 +108,7 @@ class Assertion
 	{
 		$r = "";
 		foreach($this->getData() as $k => $v) {
-			$r .= "\n  $k = $v";
+			$r .= "\n  $k = " . var_export($v, true);
 		}
 		return "$r\n";
 	}
@@ -120,13 +126,24 @@ class Assertion
 		return $this->description . " (" . $this->getAssertion() . ")";
 	}
 
-	public function shouldRunFixtures()
+	// @test all below
+	public function shouldRunPrepare()
 	{
-		return $this->shouldRunFixtures;
+		return $this->shouldRunPrepare;
 	}
 
-	public function setShouldRunFixtures($shouldRunFixtures)
+	public function shouldRunFinalize()
 	{
-		$this->shouldRunFixtures = $shouldRunFixtures;
+		return $this->shouldRunFinalize;
+	}
+
+	public function setShouldRunPrepare($shouldRunPrepare)
+	{
+		$this->shouldRunPrepare = $shouldRunPrepare;
+	}
+
+	public function setShouldRunFinalize($shouldRunFinalize)
+	{
+		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 }

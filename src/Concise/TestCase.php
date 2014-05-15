@@ -4,7 +4,18 @@ namespace Concise;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-	protected $fixtureNeedsToBeRun = true;
+	protected $setUpNeedsToBeRun = true;
+	protected $tearDownNeedsToBeRun = true;
+
+	/** @var \Concise\Assertion */
+	protected $currentAssertion = null;
+
+	protected static $lastTestName;
+
+	public function setCurrentAssertion($setCurrentAssertion)
+	{
+		$this->currentAssertion = $setCurrentAssertion;
+	}
 
 	public function countConciseTests()
 	{
@@ -27,12 +38,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return substr($method, 0, 6) === '_test_';
 	}
 
+	public function runMethod($method)
+	{
+		return $this->$method();
+	}
+
 	public function countAssertionsForMethod($method)
 	{
 		if(!$this->isConciseTest($method)) {
 			return 0;
 		}
-		$return = $this->$method();
+		$return = $this->runMethod($method);
 		if($return === null || is_string($return)) {
 			return 1;
 		}
@@ -55,7 +71,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	protected function getRawAssertionsForMethod($method)
 	{
-		$return = $this->$method();
+		$return = $this->runMethod($method);
 		if($return === null) {
 			$assertions = array($this->convertMethodNameToAssertion($method));
 		}
@@ -72,13 +88,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		$assertions = $this->getRawAssertionsForMethod($method);
 		$r = array();
-		$shouldRunFixtures = true;
 		foreach($assertions as $a) {
-			$assertion = $this->getMatcherParserInstance()->compile($a, $this->getData());
-			$assertion->setShouldRunFixtures($shouldRunFixtures);
-			$r[] = $assertion;
-			$shouldRunFixtures = false;
+			$r[] = $this->getMatcherParserInstance()->compile($a, $this->getData());
 		}
+		$r[0]->setShouldRunPrepare(true);
+		$r[count($r) - 1]->setShouldRunFinalize(true);
 		return $r;
 	}
 
@@ -170,18 +184,31 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 	}
 
+	protected function getRealTestName()
+	{
+		$name = substr($this->getName(), 20);
+		$pos = strpos($name, ':');
+		return substr($name, 0, $pos);
+	}
+
+	protected function shouldRunFixtures()
+	{
+		return substr($this->getName(), 0, 5) !== 'test ';
+	}
+
 	public function setUp()
 	{
 		parent::setup();
-		if($this->fixtureNeedsToBeRun) {
+		if($this->shouldRunFixtures()) {
 			$this->prepare();
-			$this->fixtureNeedsToBeRun = false;
 		}
 	}
 
 	public function tearDown()
 	{
 		parent::tearDown();
-		$this->finalize();
+		if($this->shouldRunFixtures()) {
+			$this->finalize();
+		}
 	}
 }
