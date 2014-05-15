@@ -8,11 +8,16 @@ class IsObject extends AbstractMatcher
 	{
 		return array(
 			'? is an object',
+			'? is not an object',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return is_object($data[0]);
+		$object = is_object($data[0]);
+		if('? is an object' === $syntax) {
+			return $object;
+		}
+		return !$object;
 	}
 }
