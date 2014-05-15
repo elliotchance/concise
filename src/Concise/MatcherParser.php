@@ -79,6 +79,7 @@ class MatcherParser
 		$this->registerMatcher(new Matcher\IsAnObject());
 		$this->registerMatcher(new Matcher\IsAnArray());
 		$this->registerMatcher(new Matcher\IsAnInteger());
+		$this->registerMatcher(new Matcher\IsAString());
 	}
 
 	public function getMatchers()

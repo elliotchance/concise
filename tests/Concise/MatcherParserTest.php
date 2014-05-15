@@ -21,7 +21,7 @@ class MatcherParserTest extends TestCase
 	public function testCompileReturnsAssertion()
 	{
 		$this->parser->registerMatcher(new Matcher\Equals());
-		$matcher = $this->parser->compile('a equals b', $this->getData());
+		$matcher = $this->parser->compile('x equals y', $this->getData());
 		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
 

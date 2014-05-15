@@ -6,13 +6,13 @@ class LexerAttributeTest extends LexerTestCase
 {
 	protected function assertion()
 	{
-		return 'a equals b';
+		return 'x equals b';
 	}
 
 	protected function expectedTokens()
 	{
 		return array(
-			new Token(Lexer::TOKEN_ATTRIBUTE, 'a'),
+			new Token(Lexer::TOKEN_ATTRIBUTE, 'x'),
 			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
 			new Token(Lexer::TOKEN_ATTRIBUTE, 'b'),
 		);
@@ -25,6 +25,6 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Attribute('a'), new Attribute('b'));
+		return array(new Attribute('x'), new Attribute('b'));
 	}
 }

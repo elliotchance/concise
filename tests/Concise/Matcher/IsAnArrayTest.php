@@ -12,13 +12,13 @@ class IsAnArrayTest extends AbstractMatcherTestCase
 		$this->matcher = new IsAnArray();
 	}
 
-	public function _test_a_is_an_array()
+	public function _test_x_is_an_array()
 	{
-		$this->a = array();
+		$this->x = array();
 	}
 
-	public function _test_a_is_not_an_array()
+	public function _test_x_is_not_an_array()
 	{
-		$this->a = 123;
+		$this->x = 123;
 	}
 }

@@ -12,13 +12,13 @@ class IsAnObjectTest extends AbstractMatcherTestCase
 		$this->matcher = new IsAnObject();
 	}
 
-	public function _test_a_is_an_object()
+	public function _test_x_is_an_object()
 	{
-		$this->a = new \stdClass();
+		$this->x = new \stdClass();
 	}
 
-	public function _test_a_is_not_an_object()
+	public function _test_x_is_not_an_object()
 	{
-		$this->a = 123;
+		$this->x = 123;
 	}
 }
