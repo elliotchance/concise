@@ -16,6 +16,8 @@ class Lexer
 
 	const TOKEN_STRING = 5;
 
+	const TOKEN_CODE = 6;
+
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
@@ -35,15 +37,18 @@ class Lexer
 		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token)) {
 			return self::TOKEN_STRING;
 		}
+		if(preg_match('/^\{.*\}/ms', $token)) {
+			return self::TOKEN_CODE;
+		}
 		return self::TOKEN_ATTRIBUTE;
 	}
 
-	protected function consumeString($string, $container, &$startIndex)
+	protected function consumeUntilToken($string, $until, &$startIndex)
 	{
 		$t = '';
-		for($i = $startIndex + 1; $string[$i] != $container; ++$i) {
+		for($i = $startIndex + 1; $string[$i] != $until; ++$i) {
 			if($i == strlen($string) - 1) {
-				throw new \Exception("Quoted string is not closed.");
+				throw new \Exception("Expected $until before end of string.");
 			}
 			if($string[$i] === "\\") {
 				++$i;
@@ -58,6 +63,16 @@ class Lexer
 		return $t;
 	}
 
+	protected function consumeString($string, $container, &$startIndex)
+	{
+		return $this->consumeUntilToken($string, $container, $startIndex);
+	}
+
+	protected function consumeCode($string, &$startIndex)
+	{
+		return $this->consumeUntilToken($string, '}', $startIndex);
+	}
+
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -67,6 +82,11 @@ class Lexer
 			if($ch === '"' || $ch === "'") {
 				$t = $this->consumeString($string, $ch, $i);
 				$r[] = new Token(Lexer::TOKEN_STRING, $t);
+				$t = '';
+			}
+			else if($ch === '{') {
+				$t = $this->consumeCode($string, $i);
+				$r[] = new Token(Lexer::TOKEN_CODE, $t);
 				$t = '';
 			}
 			else if($ch === ' ') {

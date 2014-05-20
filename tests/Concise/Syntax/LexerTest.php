@@ -29,6 +29,8 @@ class LexerTest extends TestCase
 			'string2' => array(Lexer::TOKEN_STRING, "'abc'"),
 			'string3' => array(Lexer::TOKEN_STRING, '"a\nbc"'),
 			'string4' => array(Lexer::TOKEN_STRING, "'a\nbc'"),
+			'code1' => array(Lexer::TOKEN_CODE, "{abc}"),
+			'code2' => array(Lexer::TOKEN_CODE, "{ab\nc}"),
 		);
 	}
 
@@ -108,11 +110,21 @@ class LexerTest extends TestCase
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Quoted string is not closed.
+	 * @expectedExceptionMessage Expected " before end of string.
 	 */
-	public function testLexerThrowsExceptionIfQuotedStringIsNotClosed()
+	public function testLexerThrowsExceptionIfDoubleQuotedStringIsNotClosed()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('"abc');
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Expected ' before end of string.
+	 */
+	public function testLexerThrowsExceptionIfSingleQuotedStringIsNotClosed()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse("'abc");
 	}
 }
