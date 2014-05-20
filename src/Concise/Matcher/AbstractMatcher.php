@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use \Concise\Syntax\SyntaxRenderer;
+
 abstract class AbstractMatcher
 {
 	/**
@@ -19,7 +21,7 @@ abstract class AbstractMatcher
 	 */
 	public function renderFailureMessage($syntax, array $data = array())
 	{
-		$renderer = new \Concise\SyntaxRenderer();
+		$renderer = new SyntaxRenderer();
 		return $renderer->render($syntax, $data);
 	}
 }

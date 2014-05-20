@@ -2,7 +2,9 @@
 
 namespace Concise;
 
-use Concise\Syntax\Lexer;
+use \Concise\Syntax\Lexer;
+use \Concise\Syntax\Attribute;
+use \Concise\Syntax\Code;
 
 class Assertion
 {
@@ -64,6 +66,9 @@ class Assertion
 			$arg = $result['arguments'][$i];
 			if($arg instanceof Attribute) {
 				$result['arguments'][$i] = $data[$arg->getName()];
+			}
+			else if($arg instanceof Code) {
+				$result['arguments'][$i] = eval('return ' . $arg->getCode() . ';');
 			}
 		}
 
@@ -128,7 +133,6 @@ class Assertion
 		return $this->description . " (" . $this->getAssertion() . ")";
 	}
 
-	// @test all below
 	public function shouldRunPrepare()
 	{
 		return $this->shouldRunPrepare;

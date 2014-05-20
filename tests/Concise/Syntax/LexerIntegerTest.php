@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Attribute;
+use \Concise\Syntax\Attribute;
 
 class LexerIntegerTest extends LexerTestCase
 {

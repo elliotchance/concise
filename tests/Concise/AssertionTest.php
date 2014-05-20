@@ -2,6 +2,9 @@
 
 namespace Concise;
 
+use \Concise\Syntax\Code;
+use \Concise\Syntax\MatcherParser;
+
 class AssertionTest extends TestCase
 {
 	public function testCreatingAssertionRequiresTheAssertionString()
@@ -173,6 +176,14 @@ class AssertionTest extends TestCase
 		         ->will($this->returnValue(null));
 		$assertion->setTestCase($testCase);
 
+		$assertion->run();
+	}
+
+	public function testAssertionWillEvaluateCodeBlocks()
+	{
+		$parser = MatcherParser::getInstance();
+		$assertion = $parser->compile('{1 + 2} equals 3');
+		$assertion->setTestCase($this);
 		$assertion->run();
 	}
 }

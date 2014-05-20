@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Attribute;
+use \Concise\Syntax\Attribute;
 
 class Lexer
 {
@@ -120,10 +120,14 @@ class Lexer
 				case self::TOKEN_STRING:
 					$attributes[] = $token->getValue();
 					break;
+				case self::TOKEN_CODE:
+					$attributes[] = new Code($token->getValue());
+					break;
 				case self::TOKEN_ATTRIBUTE:
 				default:
 					$attributes[] = new Attribute($token->getValue());
 					break;
+				// @test default: throws exception
 			}
 		}
 		return $attributes;
