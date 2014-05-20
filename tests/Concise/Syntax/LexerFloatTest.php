@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
 
 class LexerFloatTest extends LexerTestCase
 {

@@ -3,6 +3,7 @@
 namespace Concise\Matcher;
 
 use \Concise\TestCase;
+use \Concise\Syntax\MatcherParser;
 
 class AbstractMatcherTestCase extends TestCase
 {
@@ -13,13 +14,13 @@ class AbstractMatcherTestCase extends TestCase
 
 	public function testCanRegisterMatcher()
 	{
-		$parser = new \Concise\MatcherParser();
+		$parser = new MatcherParser();
 		$this->assertTrue($parser->registerMatcher($this->matcher));
 	}
 
 	public function testParserKnowsAboutMatcher()
 	{
-		$parser = \Concise\MatcherParser::getInstance();
+		$parser = MatcherParser::getInstance();
 		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
 	}
 

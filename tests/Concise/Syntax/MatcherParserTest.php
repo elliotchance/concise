@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
+
+use \Concise\TestCase;
 
 class MatcherParserStub extends MatcherParser
 {
@@ -20,7 +22,7 @@ class MatcherParserTest extends TestCase
 
 	public function testCompileReturnsAssertion()
 	{
-		$this->parser->registerMatcher(new Matcher\Equals());
+		$this->parser->registerMatcher(new \Concise\Matcher\Equals());
 		$matcher = $this->parser->compile('x equals y', $this->getData());
 		$this->assertInstanceOf('\Concise\Assertion', $matcher);
 	}
@@ -32,7 +34,7 @@ class MatcherParserTest extends TestCase
 
 	public function testRegisteringANewMatcherReturnsTrue()
 	{
-		$this->assertTrue($this->parser->registerMatcher(new Matcher\Equals()));
+		$this->assertTrue($this->parser->registerMatcher(new \Concise\Matcher\Equals()));
 	}
 
 	/**
@@ -123,7 +125,7 @@ class MatcherParserTest extends TestCase
 
 	public function testGetKeywordsAreOnlyGeneratedOnce()
 	{
-		$parser = $this->getMock('\Concise\MatcherParser', array('getRawKeywords'));
+		$parser = $this->getMock('\Concise\Syntax\MatcherParser', array('getRawKeywords'));
 		$parser->expects($this->once())
 		       ->method('getRawKeywords')
 		       ->will($this->returnValue(array('a')));

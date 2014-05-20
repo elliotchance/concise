@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
+
+use \Concise\Assertion;
 
 class MatcherParser
 {
@@ -51,7 +53,7 @@ class MatcherParser
 		return false;
 	}
 
-	public function registerMatcher(Matcher\AbstractMatcher $matcher)
+	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
 		$this->matchers[] = $matcher;
 		return true;
@@ -72,14 +74,14 @@ class MatcherParser
 			throw new \Exception("registerMatchers() can only be called once.");
 		}
 
-		$this->registerMatcher(new Matcher\Equals());
-		$this->registerMatcher(new Matcher\Boolean());
-		$this->registerMatcher(new Matcher\Null());
-		$this->registerMatcher(new Matcher\NotEquals());
-		$this->registerMatcher(new Matcher\IsAnObject());
-		$this->registerMatcher(new Matcher\IsAnArray());
-		$this->registerMatcher(new Matcher\IsAnInteger());
-		$this->registerMatcher(new Matcher\IsAString());
+		$this->registerMatcher(new \Concise\Matcher\Equals());
+		$this->registerMatcher(new \Concise\Matcher\Boolean());
+		$this->registerMatcher(new \Concise\Matcher\Null());
+		$this->registerMatcher(new \Concise\Matcher\NotEquals());
+		$this->registerMatcher(new \Concise\Matcher\IsAnObject());
+		$this->registerMatcher(new \Concise\Matcher\IsAnArray());
+		$this->registerMatcher(new \Concise\Matcher\IsAnInteger());
+		$this->registerMatcher(new \Concise\Matcher\IsAString());
 	}
 
 	public function getMatchers()

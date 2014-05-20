@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
+
+use \Concise\TestCase;
 
 class CharacterConverterTest extends TestCase
 {

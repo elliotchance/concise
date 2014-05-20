@@ -2,6 +2,8 @@
 
 namespace Concise;
 
+use Concise\Syntax\Lexer;
+
 class Assertion
 {
 	/** @var \Concise\Matcher\AbstractMatcher */

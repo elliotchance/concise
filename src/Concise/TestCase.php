@@ -2,6 +2,8 @@
 
 namespace Concise;
 
+use Concise\Syntax\MatcherParser;
+
 class TestCase extends \PHPUnit_Framework_TestCase
 {
 	protected $setUpNeedsToBeRun = true;

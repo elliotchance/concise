@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
+
+use \Concise\TestCase;
 
 class LexerTest extends TestCase
 {
@@ -73,7 +75,7 @@ class LexerTest extends TestCase
 
 	public function testTokensHaveUniqueValues()
 	{
-		$class = new \ReflectionClass('\Concise\Lexer');
+		$class = new \ReflectionClass('\Concise\Syntax\Lexer');
 		$constants = $class->getConstants();
 		$this->assertEquals(count($constants), count(array_unique($constants)));
 	}

@@ -2,6 +2,8 @@
 
 namespace Concise;
 
+use \Concise\Syntax\MatcherParser;
+
 class TestCaseStub1 extends TestCase
 {
 	function _test_x_equals_b()

@@ -1,18 +1,20 @@
 <?php
 
-namespace Concise;
+namespace Concise\Syntax;
 
-class LexerAttributeTest extends LexerTestCase
+use \Concise\Attribute;
+
+class LexerIntegerTest extends LexerTestCase
 {
 	protected function assertion()
 	{
-		return 'x equals b';
+		return '123 equals b';
 	}
 
 	protected function expectedTokens()
 	{
 		return array(
-			new Token(Lexer::TOKEN_ATTRIBUTE, 'x'),
+			new Token(Lexer::TOKEN_INTEGER, 123),
 			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
 			new Token(Lexer::TOKEN_ATTRIBUTE, 'b'),
 		);
@@ -25,6 +27,6 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Attribute('x'), new Attribute('b'));
+		return array(123, new Attribute('b'));
 	}
 }
