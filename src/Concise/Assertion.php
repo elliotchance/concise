@@ -53,6 +53,16 @@ class Assertion
 		return $this->matcher;
 	}
 
+	protected function evalCode($code)
+	{
+		$lastError = error_get_last();
+		$r = @eval("return $code;");
+		if($lastError != error_get_last()) {
+			throw new \Exception("Could not compile code block '$code'");
+		}
+		return $r;
+	}
+
 	/**
 	 * @return bool
 	 */
@@ -68,10 +78,7 @@ class Assertion
 				$result['arguments'][$i] = $data[$arg->getName()];
 			}
 			else if($arg instanceof Code) {
-				$result['arguments'][$i] = @eval('return ' . $arg->getCode() . ';');
-				if(false === $result['arguments'][$i]) {
-					throw new \Exception("Could not compile code block '{$arg->getCode()}'");
-				}
+				$result['arguments'][$i] = $this->evalCode($arg->getCode());
 			}
 		}
 

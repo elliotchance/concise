@@ -179,12 +179,17 @@ class AssertionTest extends TestCase
 		$assertion->run();
 	}
 
-	public function testAssertionWillEvaluateCodeBlocks()
+	protected function compileAndRunAssertion($theAssertion)
 	{
 		$parser = MatcherParser::getInstance();
-		$assertion = $parser->compile('{1 + 2} equals 3');
+		$assertion = $parser->compile($theAssertion);
 		$assertion->setTestCase($this);
 		$assertion->run();
+	}
+
+	public function testAssertionWillEvaluateCodeBlocks()
+	{
+		$this->compileAndRunAssertion('{1 + 2} equals 3');
 	}
 
 	/**
@@ -193,9 +198,11 @@ class AssertionTest extends TestCase
 	 */
 	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
 	{
-		$parser = MatcherParser::getInstance();
-		$assertion = $parser->compile('{1 + } equals 3');
-		$assertion->setTestCase($this);
-		$assertion->run();
+		$this->compileAndRunAssertion('{1 + } equals 3');
+	}
+
+	public function testAssertionWillNotThrowExceptionIfCodeBlockReturnsFalse()
+	{
+		$this->compileAndRunAssertion('{false} equals {false}');
 	}
 }
