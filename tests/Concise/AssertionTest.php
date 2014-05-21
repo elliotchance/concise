@@ -194,7 +194,7 @@ class AssertionTest extends TestCase
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Could not compile code block '1 + ': parse error
+	 * @expectedExceptionMessage Could not compile code block '1 + ':
 	 */
 	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
 	{
