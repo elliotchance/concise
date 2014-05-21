@@ -6,7 +6,6 @@ use \Concise\TestCase;
 
 class AttributeTest extends TestCase
 {
-	// @test when method returns empty array
 	public function _test_attribute()
 	{
 		$this->attribute = new Attribute('abc');

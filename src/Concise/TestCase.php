@@ -83,6 +83,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		else {
 			$assertions = array($return);
 		}
+		if(0 == count($assertions)) {
+			throw new \Exception("There must be at least one assertion returned from the test '$method'.");
+		}
 		return $assertions;
 	}
 
@@ -106,6 +109,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$methodName = $method->getName();
 			if($this->isConciseTest($methodName)) {
 				$assertions[$methodName] = $this->getAssertionsForMethod($methodName);
+
 			}
 		}
 		return $assertions;

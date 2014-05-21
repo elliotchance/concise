@@ -342,4 +342,16 @@ class TestCaseTest extends TestCase
 		         ->will($this->returnValue(null));
 		$testCase->tearDown();
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage There must be at least one assertion returned from the test 'myTest'.
+	 */
+	public function testWillThrowExceptionIfTestMethodReturnsEmptyArray()
+	{
+		$testCase = $this->getStub('\Concise\TestCase', array(
+			'runMethod' => array()
+		));
+		$testCase->getRawAssertionsForMethod('myTest');
+	}
 }
