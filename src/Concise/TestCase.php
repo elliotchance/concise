@@ -217,4 +217,20 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$this->finalize();
 		}
 	}
+
+	protected function assertionsForDataSet($assertionSyntax, $dataSet)
+	{
+		// @test dataSet does not show up as an attribute when test fails
+		$this->dataSet = $dataSet;
+		$assertions = array();
+		$parts = explode('?', $assertionSyntax);
+		for($i = 0; $i < count($dataSet); ++$i) {
+			$assertion = $parts[0];
+			for($j = 1; $j < count($parts); ++$j) {
+				$assertion .= '$self->dataSet[' . $i . '][' . ($j - 1) . ']' . $parts[$j];
+			}
+			$assertions[] = $assertion;
+		}
+		return $assertions;
+	}
 }

@@ -24,12 +24,13 @@ class CharacterConverterTest extends TestCase
 		);
 	}
 
-	/**
-	 * @dataProvider stringData
-	 */
-	public function testConvertingCharacterToEscapedCharacter($ch, $expected)
+	public function _test_converting_character_to_escape_character()
 	{
-		$converter = new CharacterConverter();
-		$this->assertEquals($expected, $converter->convertEscapedCharacter($ch));
+		// @test ? placeholder does not have to be wrapped in {}
+		$this->converter = new CharacterConverter();
+		return $this->assertionsForDataSet(
+			'{$self->converter->convertEscapedCharacter(?)} equals {?}',
+			$this->stringData()
+		);
 	}
 }
