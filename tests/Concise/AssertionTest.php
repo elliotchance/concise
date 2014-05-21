@@ -205,4 +205,10 @@ class AssertionTest extends TestCase
 	{
 		$this->compileAndRunAssertion('{false} equals {false}');
 	}
+
+	public function testAssertionCodeCanUseAttributes()
+	{
+		$this->x = 123;
+		$this->compileAndRunAssertion('{$self->x} equals 123');
+	}
 }

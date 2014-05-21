@@ -55,6 +55,7 @@ class Assertion
 
 	protected function evalCode($code)
 	{
+		$self = (object) $this->testCase->getData();
 		$lastError = error_get_last();
 		$r = @eval("return $code;");
 		if($lastError != error_get_last()) {
