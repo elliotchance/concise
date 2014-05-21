@@ -186,4 +186,16 @@ class AssertionTest extends TestCase
 		$assertion->setTestCase($this);
 		$assertion->run();
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Could not compile code block '1 + '
+	 */
+	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
+	{
+		$parser = MatcherParser::getInstance();
+		$assertion = $parser->compile('{1 + } equals 3');
+		$assertion->setTestCase($this);
+		$assertion->run();
+	}
 }

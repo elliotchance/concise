@@ -68,7 +68,10 @@ class Assertion
 				$result['arguments'][$i] = $data[$arg->getName()];
 			}
 			else if($arg instanceof Code) {
-				$result['arguments'][$i] = eval('return ' . $arg->getCode() . ';');
+				$result['arguments'][$i] = @eval('return ' . $arg->getCode() . ';');
+				if(false === $result['arguments'][$i]) {
+					throw new \Exception("Could not compile code block '{$arg->getCode()}'");
+				}
 			}
 		}
 
