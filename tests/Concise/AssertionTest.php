@@ -194,7 +194,7 @@ class AssertionTest extends TestCase
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Could not compile code block '1 + '
+	 * @expectedExceptionMessage Could not compile code block '1 + ': parse error
 	 */
 	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
 	{
@@ -206,9 +206,9 @@ class AssertionTest extends TestCase
 		$this->compileAndRunAssertion('{false} equals {false}');
 	}
 
-	public function testAssertionCodeCanUseAttributes()
+	public function _test_assertion_code_can_use_attributes()
 	{
 		$this->x = 123;
-		$this->compileAndRunAssertion('{$self->x} equals 123');
+		return '{$self->x} equals 123';
 	}
 }

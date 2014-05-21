@@ -6,15 +6,13 @@ use \Concise\TestCase;
 
 class AttributeTest extends TestCase
 {
-	public function testAttributeNameIsSetInConstructor()
+	// @test when method returns empty array
+	public function _test_attribute()
 	{
-		$attribute = new Attribute('abc');
-		$this->assertEquals('abc', $attribute->getName());
-	}
-
-	public function testCastingToStringIsTheSameAsGetName()
-	{
-		$attribute = new Attribute('abc');
-		$this->assertEquals('abc', (string) $attribute);
+		$this->attribute = new Attribute('abc');
+		return array(
+			'attribute name is set in constructor' => '{$self->attribute->getName()} equals "abc"',
+			'casting to string is the same as get name' => '{(string) $self->attribute} equals "abc"',
+		);
 	}
 }

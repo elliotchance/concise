@@ -55,11 +55,13 @@ class Assertion
 
 	protected function evalCode($code)
 	{
-		$self = (object) $this->testCase->getData();
+		$self = (object) $this->getData();
 		$lastError = error_get_last();
-		$r = @eval("return $code;");
+		$r = false;
+		@eval("\$r = $code;");
 		if($lastError != error_get_last()) {
-			throw new \Exception("Could not compile code block '$code'");
+			$error = error_get_last();
+			throw new \Exception("Could not compile code block '$code': {$error['message']}");
 		}
 		return $r;
 	}
