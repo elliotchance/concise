@@ -3,7 +3,7 @@
 
 require_once 'vendor/autoload.php';
 
-$parser = \Concise\MatcherParser::getInstance();
+$parser = \Concise\Syntax\MatcherParser::getInstance();
 $syntaxes = $parser->getAllSyntaxes();
 foreach($syntaxes as $syntax) {
 	echo "$syntax\n";
