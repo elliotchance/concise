@@ -19,7 +19,9 @@ class StringStartsWithTest extends AbstractMatcherTestCase
 			'123 starts with "12"',
 			'"123" starts with 12',
 			'"abc" starts with "ab"',
-			'"abc" does not start with "c"'
+			'"abc" starts with "abc"',
+			'"abc" does not start with "c"',
+			'"abc" does not start with "abcd"'
 		);
 	}
 }
