@@ -82,6 +82,7 @@ class MatcherParser
 		$this->registerMatcher(new \Concise\Matcher\IsAnArray());
 		$this->registerMatcher(new \Concise\Matcher\IsAnInteger());
 		$this->registerMatcher(new \Concise\Matcher\IsAString());
+		$this->registerMatcher(new \Concise\Matcher\StringStartsWith());
 	}
 
 	public function getMatchers()
