@@ -4,6 +4,7 @@ namespace Concise;
 
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
+use \Concise\Matcher\Boolean;
 
 class AssertionTest extends TestCase
 {
@@ -198,6 +199,7 @@ class AssertionTest extends TestCase
 	 */
 	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
 	{
+	
 		$this->compileAndRunAssertion('{1 + } equals 3');
 	}
 
@@ -214,6 +216,21 @@ class AssertionTest extends TestCase
 
 	public function testDoNotShowPHPUnitPropertiesOnError()
 	{
-		$this->assertEquals(array(), $this->getData());
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => self::getPHPUnitProperties()
+		), array('true', new Boolean()));
+		$this->assertEquals("\n", (string) $assertion);
 	}
+
+	public function testDoNotShowDataSetOnError()
+	{
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => array(
+				'__dataSet' => array()
+			)
+		), array('true', new Boolean()));
+		$this->assertEquals("\n", (string) $assertion);
+	}
+
+	// @test that no atributes are rendered as a blank string
 }

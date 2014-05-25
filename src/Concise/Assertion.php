@@ -123,9 +123,14 @@ class Assertion
 
 	public function __toString()
 	{
+		$excludeKeys = array_keys(TestCase::getPHPUnitProperties());
+		$excludeKeys[] = '__dataSet';
+		
 		$r = "";
 		foreach($this->getData() as $k => $v) {
-			$r .= "\n  $k = " . var_export($v, true);
+			if(!in_array($k, $excludeKeys)) {
+				$r .= "\n  $k = " . var_export($v, true);
+			}
 		}
 		return "$r\n";
 	}

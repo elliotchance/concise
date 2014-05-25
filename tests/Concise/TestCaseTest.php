@@ -166,16 +166,17 @@ class TestCaseTest extends TestCase
 	public function testGetAllAssertions()
 	{
 		$testCase = new TestCaseStub1();
+		$expectedAttributes = self::getPHPUnitProperties();
 		$expected = array(
 			'_test_x_equals_b' => array(
-				new Assertion('x equals b', new Matcher\Equals(), array(), true, true),
+				new Assertion('x equals b', new Matcher\Equals(), $expectedAttributes, true, true),
 			),
 			'_test_b' => array(
-				new Assertion('b equals x', new Matcher\Equals(), array(), true, true),
+				new Assertion('b equals x', new Matcher\Equals(), $expectedAttributes, true, true),
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\Equals(), array(), true, false),
-				new Assertion('d equals c', new Matcher\Equals(), array(), false, true),
+				new Assertion('c equals d', new Matcher\Equals(), $expectedAttributes, true, false),
+				new Assertion('d equals c', new Matcher\Equals(), $expectedAttributes, false, true),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());

@@ -157,13 +157,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function getData()
 	{
-		$attributes = array();
-		foreach(get_object_vars($this) as $k => $v) {
-			if(!in_array($k, array_keys(self::getPHPUnitProperties()))) {
-				$attributes[$k] = $v;
-			}
-		}
-		return $attributes;
+		return get_object_vars($this);
 	}
 
 	protected function getStub($class, array $methods, array $constructorArgs = array())
@@ -216,13 +210,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	protected function assertionsForDataSet($assertionSyntax, $dataSet)
 	{
 		// @test dataSet does not show up as an attribute when test fails
-		$this->dataSet = $dataSet;
+		$this->__dataSet = $dataSet;
 		$assertions = array();
 		$parts = explode('?', $assertionSyntax);
 		for($i = 0; $i < count($dataSet); ++$i) {
 			$assertion = $parts[0];
 			for($j = 1; $j < count($parts); ++$j) {
-				$assertion .= '$self->dataSet[' . $i . '][' . ($j - 1) . ']' . $parts[$j];
+				$assertion .= '$self->__dataSet[' . $i . '][' . ($j - 1) . ']' . $parts[$j];
 			}
 			$assertions[] = $assertion;
 		}
