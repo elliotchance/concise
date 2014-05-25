@@ -8,6 +8,7 @@ class Throws extends AbstractMatcher
 	{
 		return array(
 			'? throws ?',
+			'? does not throw ?',
 		);
 	}
 
@@ -24,6 +25,9 @@ class Throws extends AbstractMatcher
 			$r = (get_class($exception) === $data[1]) || is_subclass_of($exception, $data[1]);
 		}
 		
+		if('? does not throw ?' === $syntax) {
+			$r = !$r;
+		}
 		return $r;
 	}
 }

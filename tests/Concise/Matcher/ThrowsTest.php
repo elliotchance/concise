@@ -8,6 +8,10 @@ class MyCustomException extends \Exception
 {
 }
 
+class MyOtherException extends \Exception
+{
+}
+
 class ThrowsTest extends AbstractMatcherTestCase
 {
 	public function prepare()
@@ -21,9 +25,13 @@ class ThrowsTest extends AbstractMatcherTestCase
 		$this->doesThrow = function() {
 			throw new MyCustomException();
 		};
+		$this->doesThrowOther = function() {
+			throw new MyOtherException();
+		};
 		return array(
 			'doesThrow throws \Concise\Matcher\MyCustomException',
 			'doesThrow throws \Exception',
+			'doesThrow does not throw \Concise\Matcher\MyOtherException',
 		);
 	}
 
