@@ -21,7 +21,7 @@ class Throws extends AbstractMatcher
 			$data[0]();
 		}
 		catch(\Exception $exception) {
-			$r = (get_class($exception) === $data[1]);
+			$r = (get_class($exception) === $data[1]) || is_subclass_of($exception, $data[1]);
 		}
 		
 		return $r;

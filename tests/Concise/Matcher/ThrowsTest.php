@@ -23,6 +23,7 @@ class ThrowsTest extends AbstractMatcherTestCase
 		};
 		return array(
 			'doesThrow throws \Concise\Matcher\MyCustomException',
+			'doesThrow throws \Exception',
 		);
 	}
 
