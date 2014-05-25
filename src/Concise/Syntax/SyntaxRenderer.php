@@ -15,6 +15,9 @@ class SyntaxRenderer
 
 	public function renderValue($value)
 	{
+		if(is_callable($value)) {
+			return "function";
+		}
 		if(is_string($value)) {
 			return "\"$value\"";
 		}
