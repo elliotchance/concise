@@ -8,7 +8,7 @@ class LexerCodeTest extends LexerTestCase
 {
 	protected function assertion()
 	{
-		return '{1 + 2} equals b';
+		return '`1 + 2` equals b';
 	}
 
 	protected function expectedTokens()
