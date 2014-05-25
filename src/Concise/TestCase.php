@@ -157,7 +157,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function getData()
 	{
-		return get_object_vars($this);
+		$attributes = array();
+		foreach(get_object_vars($this) as $k => $v) {
+			if(!in_array($k, array_keys(self::getPHPUnitProperties()))) {
+				$attributes[$k] = $v;
+			}
+		}
+		return $attributes;
 	}
 
 	protected function getStub($class, array $methods, array $constructorArgs = array())
@@ -221,5 +227,21 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$assertions[] = $assertion;
 		}
 		return $assertions;
+	}
+
+	/**
+	 * These attributes are provided by the base PHPUnit classes.
+	 * @return array
+	 */
+	public static function getPHPUnitProperties()
+	{
+		return array(
+			'backupGlobals' => null,
+			'backupGlobalsBlacklist' => array(),
+			'backupStaticAttributes' => null,
+			'backupStaticAttributesBlacklist' => array(),
+			'runTestInSeparateProcess' => null,
+			'preserveGlobalState' => true,
+		);
 	}
 }

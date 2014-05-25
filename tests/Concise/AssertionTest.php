@@ -212,8 +212,8 @@ class AssertionTest extends TestCase
 		return '{$self->x} equals 123';
 	}
 
-	/*public function testDoNotShowAttributeOnError()
+	public function testDoNotShowPHPUnitPropertiesOnError()
 	{
-
-	}*/
+		$this->assertEquals(array(), $this->getData());
+	}
 }
