@@ -26,10 +26,9 @@ class CharacterConverterTest extends TestCase
 
 	public function _test_converting_character_to_escape_character()
 	{
-		// @test ? placeholder does not have to be wrapped in {}
 		$this->converter = new CharacterConverter();
 		return $this->assertionsForDataSet(
-			'{$self->converter->convertEscapedCharacter(?)} equals {?}',
+			'`$self->converter->convertEscapedCharacter(?)` equals `?`',
 			$this->stringData()
 		);
 	}

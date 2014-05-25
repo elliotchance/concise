@@ -10,8 +10,8 @@ class AttributeTest extends TestCase
 	{
 		$this->attribute = new Attribute('abc');
 		return array(
-			'attribute name is set in constructor' => '{$self->attribute->getName()} equals "abc"',
-			'casting to string is the same as get name' => '{(string) $self->attribute} equals "abc"',
+			'attribute name is set in constructor' => '`$self->attribute->getName()` equals "abc"',
+			'casting to string is the same as get name' => '`(string) $self->attribute` equals "abc"',
 		);
 	}
 }

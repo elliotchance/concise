@@ -37,7 +37,7 @@ class Lexer
 		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token)) {
 			return self::TOKEN_STRING;
 		}
-		if(preg_match('/^\{.*\}/ms', $token)) {
+		if(preg_match('/^`.*`/ms', $token)) {
 			return self::TOKEN_CODE;
 		}
 		return self::TOKEN_ATTRIBUTE;
@@ -70,7 +70,7 @@ class Lexer
 
 	protected function consumeCode($string, &$startIndex)
 	{
-		return $this->consumeUntilToken($string, '}', $startIndex);
+		return $this->consumeUntilToken($string, '`', $startIndex);
 	}
 
 	protected function getTokens($string)
@@ -84,7 +84,7 @@ class Lexer
 				$r[] = new Token(Lexer::TOKEN_STRING, $t);
 				$t = '';
 			}
-			else if($ch === '{') {
+			else if($ch === '`') {
 				$t = $this->consumeCode($string, $i);
 				$r[] = new Token(Lexer::TOKEN_CODE, $t);
 				$t = '';
