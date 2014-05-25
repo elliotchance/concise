@@ -132,7 +132,11 @@ class Assertion
 				$r .= "\n  $k = " . var_export($v, true);
 			}
 		}
-		return "$r\n";
+
+		if('' !== $r) {
+			$r = "$r\n";
+		}
+		return $r;
 	}
 
 	public function setDescription($description)

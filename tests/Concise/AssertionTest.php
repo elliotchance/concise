@@ -219,7 +219,7 @@ class AssertionTest extends TestCase
 		$assertion = $this->getStub('\Concise\Assertion', array(
 			'getData' => self::getPHPUnitProperties()
 		), array('true', new Boolean()));
-		$this->assertEquals("\n", (string) $assertion);
+		$this->assertEquals("", (string) $assertion);
 	}
 
 	public function testDoNotShowDataSetOnError()
@@ -229,8 +229,14 @@ class AssertionTest extends TestCase
 				'__dataSet' => array()
 			)
 		), array('true', new Boolean()));
-		$this->assertEquals("\n", (string) $assertion);
+		$this->assertEquals("", (string) $assertion);
 	}
 
-	// @test that no atributes are rendered as a blank string
+	public function testNoAttributesRendersAsAnEmptyString()
+	{
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => array()
+		), array('true', new Boolean()));
+		$this->assertEquals("", (string) $assertion);
+	}
 }
