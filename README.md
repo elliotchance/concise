@@ -59,7 +59,7 @@ public function _test_my_calculator()
 public function _test_my_calculator()
 {
 	$this->calc = new Calculator();
-	return '{$self->calc->add(3, 5)} equals 8';
+	return '`$self->calc->add(3, 5)` equals 8';
 }
 ```
 
@@ -142,11 +142,11 @@ class AdditionTest extends TestCase
 			array(3, 5, 8),
 		);
 		return $this->assertionsForDataSet(
-		    '{$self->calc->add(?, ?)} equals {?}',
+		    '`$self->calc->add(?, ?)` equals `?`',
 			$cases
 		);
 	}
 }
 ```
 
-**Note: The placeholder `?` must be inside a `{}` block, even if it is by itself.**
+**Note: The placeholder `?` must be inside a backtick block, even if it is by itself.**
