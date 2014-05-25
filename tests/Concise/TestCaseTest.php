@@ -163,35 +163,20 @@ class TestCaseTest extends TestCase
 		$this->assertAssertions($expected, $testCase->getAssertionsForMethod('_test_c'));
 	}
 
-	protected function getPHPUnitProperties()
-	{
-		return array(
-			'backupGlobals' => null,
-			'backupGlobalsBlacklist' => array(),
-			'backupStaticAttributes' => null,
-			'backupStaticAttributesBlacklist' => array(),
-			'runTestInSeparateProcess' => null,
-			'preserveGlobalState' => true,
-			'setUpNeedsToBeRun' => true,
-			'tearDownNeedsToBeRun' => true,
-			'currentAssertion' => null,
-		);
-	}
-
 	public function testGetAllAssertions()
 	{
-		$phpunitProperties = $this->getPHPUnitProperties();
 		$testCase = new TestCaseStub1();
+		$expectedAttributes = self::getPHPUnitProperties();
 		$expected = array(
 			'_test_x_equals_b' => array(
-				new Assertion('x equals b', new Matcher\Equals(), $phpunitProperties, true, true),
+				new Assertion('x equals b', new Matcher\Equals(), $expectedAttributes, true, true),
 			),
 			'_test_b' => array(
-				new Assertion('b equals x', new Matcher\Equals(), $phpunitProperties, true, true),
+				new Assertion('b equals x', new Matcher\Equals(), $expectedAttributes, true, true),
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\Equals(), $phpunitProperties, true, false),
-				new Assertion('d equals c', new Matcher\Equals(), $phpunitProperties, false, true),
+				new Assertion('c equals d', new Matcher\Equals(), $expectedAttributes, true, false),
+				new Assertion('d equals c', new Matcher\Equals(), $expectedAttributes, false, true),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
