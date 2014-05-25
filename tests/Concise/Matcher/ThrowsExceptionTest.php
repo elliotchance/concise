@@ -17,8 +17,11 @@ class ThrowsExceptionTest extends AbstractMatcherTestCase
 		$this->doesThrow = function() {
 			throw new \Exception();
 		};
+		$this->noThrow = function() {
+		};
 		return array(
 			'doesThrow throws exception',
+			'noThrow does not throw exception',
 		);
 	}
 
