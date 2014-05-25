@@ -14,7 +14,9 @@ class StringStartsWith extends AbstractMatcher
 
 	protected function performMatch(array $data = array())
 	{
-		return substr($data[0], 0, strlen($data[1])) == $data[1];
+		$haystack = (string) $data[0];
+		$needle = (string) $data[1];
+		return substr($haystack, 0, strlen($needle)) == $needle;
 	}
 
 	public function match($syntax, array $data = array())

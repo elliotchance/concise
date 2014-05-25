@@ -12,16 +12,25 @@ class StringStartsWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringStartsWith();
 	}
 
+	protected function createStdClassThatCanBeCastToString($value)
+	{
+		$mock = $this->getMock('\stdClass', array('__toString'));
+		$mock->expects($this->any())
+		     ->method('__toString')
+		     ->will($this->returnValue($value));
+		return $mock;
+	}
+
 	public function _test_comparisons()
 	{
+		$this->obj = $this->createStdClassThatCanBeCastToString('foo');
 		return array(
-			'123 starts with 12',
-			'123 starts with "12"',
-			'"123" starts with 12',
-			'"abc" starts with "ab"',
-			'"abc" starts with "abc"',
-			'"abc" does not start with "c"',
-			'"abc" does not start with "abcd"'
+			'number substring'                          => '123 starts with 12',
+			'basic string'                              => '"abc" starts with "ab"',
+			'strings are equal'                         => '"abc" starts with "abc"',
+			'string does not start with another string' => '"abc" does not start with "c"',
+			'needle longer than haystack'               => '"abc" does not start with "abcd"',
+			'objects will be converted to strings'      => 'obj starts with "f"'
 		);
 	}
 }
