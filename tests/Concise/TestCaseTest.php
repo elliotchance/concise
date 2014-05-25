@@ -172,7 +172,6 @@ class TestCaseTest extends TestCase
 			'backupStaticAttributesBlacklist' => array(),
 			'runTestInSeparateProcess' => null,
 			'preserveGlobalState' => true,
-			'currentAssertion' => null,
 		);
 	}
 

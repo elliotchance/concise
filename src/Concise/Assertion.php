@@ -109,9 +109,6 @@ class Assertion
 		if($this->shouldRunPrepare()) {
 			$this->testCase->prepare();
 		}
-		if(null !== $this->testCase) {
-			$this->testCase->setCurrentAssertion($this);
-		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
 			$this->success();

@@ -6,15 +6,7 @@ use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-	/** @var \Concise\Assertion */
-	protected $currentAssertion = null;
-
 	protected static $lastTestName;
-
-	public function setCurrentAssertion($setCurrentAssertion)
-	{
-		$this->currentAssertion = $setCurrentAssertion;
-	}
 
 	public function countConciseTests()
 	{
