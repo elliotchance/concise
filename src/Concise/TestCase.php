@@ -6,18 +6,7 @@ use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-	protected $setUpNeedsToBeRun = true;
-	protected $tearDownNeedsToBeRun = true;
-
-	/** @var \Concise\Assertion */
-	protected $currentAssertion = null;
-
 	protected static $lastTestName;
-
-	public function setCurrentAssertion($setCurrentAssertion)
-	{
-		$this->currentAssertion = $setCurrentAssertion;
-	}
 
 	public function countConciseTests()
 	{
@@ -221,16 +210,32 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	protected function assertionsForDataSet($assertionSyntax, $dataSet)
 	{
 		// @test dataSet does not show up as an attribute when test fails
-		$this->dataSet = $dataSet;
+		$this->__dataSet = $dataSet;
 		$assertions = array();
 		$parts = explode('?', $assertionSyntax);
 		for($i = 0; $i < count($dataSet); ++$i) {
 			$assertion = $parts[0];
 			for($j = 1; $j < count($parts); ++$j) {
-				$assertion .= '$self->dataSet[' . $i . '][' . ($j - 1) . ']' . $parts[$j];
+				$assertion .= '$self->__dataSet[' . $i . '][' . ($j - 1) . ']' . $parts[$j];
 			}
 			$assertions[] = $assertion;
 		}
 		return $assertions;
+	}
+
+	/**
+	 * These attributes are provided by the base PHPUnit classes.
+	 * @return array
+	 */
+	public static function getPHPUnitProperties()
+	{
+		return array(
+			'backupGlobals' => null,
+			'backupGlobalsBlacklist' => array(),
+			'backupStaticAttributes' => null,
+			'backupStaticAttributesBlacklist' => array(),
+			'runTestInSeparateProcess' => null,
+			'preserveGlobalState' => true,
+		);
 	}
 }

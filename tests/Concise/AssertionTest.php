@@ -4,6 +4,7 @@ namespace Concise;
 
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
+use \Concise\Matcher\Boolean;
 
 class AssertionTest extends TestCase
 {
@@ -189,7 +190,7 @@ class AssertionTest extends TestCase
 
 	public function testAssertionWillEvaluateCodeBlocks()
 	{
-		$this->compileAndRunAssertion('{1 + 2} equals 3');
+		$this->compileAndRunAssertion('`1 + 2` equals 3');
 	}
 
 	/**
@@ -198,17 +199,43 @@ class AssertionTest extends TestCase
 	 */
 	public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
 	{
-		$this->compileAndRunAssertion('{1 + } equals 3');
+		$this->compileAndRunAssertion('`1 + ` equals 3');
 	}
 
 	public function testAssertionWillNotThrowExceptionIfCodeBlockReturnsFalse()
 	{
-		$this->compileAndRunAssertion('{false} equals {false}');
+		$this->compileAndRunAssertion('`false` equals `false`');
 	}
 
 	public function _test_assertion_code_can_use_attributes()
 	{
 		$this->x = 123;
-		return '{$self->x} equals 123';
+		return '`$self->x` equals 123';
+	}
+
+	public function testDoNotShowPHPUnitPropertiesOnError()
+	{
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => self::getPHPUnitProperties()
+		), array('true', new Boolean()));
+		$this->assertEquals("", (string) $assertion);
+	}
+
+	public function testDoNotShowDataSetOnError()
+	{
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => array(
+				'__dataSet' => array()
+			)
+		), array('true', new Boolean()));
+		$this->assertEquals("", (string) $assertion);
+	}
+
+	public function testNoAttributesRendersAsAnEmptyString()
+	{
+		$assertion = $this->getStub('\Concise\Assertion', array(
+			'getData' => array()
+		), array('true', new Boolean()));
+		$this->assertEquals("", (string) $assertion);
 	}
 }
