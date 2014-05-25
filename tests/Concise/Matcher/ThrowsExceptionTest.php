@@ -21,4 +21,13 @@ class ThrowsExceptionTest extends AbstractMatcherTestCase
 			'doesThrow throws exception',
 		);
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExcatpionMessage The attribute to test for exception must be callable (an anonymous function)
+	 */
+	public function testMatcherWillOnlyAcceptCallable()
+	{
+		$this->matcher->match('', array(123));
+	}
 }
