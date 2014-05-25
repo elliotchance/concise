@@ -211,4 +211,9 @@ class AssertionTest extends TestCase
 		$this->x = 123;
 		return '{$self->x} equals 123';
 	}
+
+	/*public function testDoNotShowAttributeOnError()
+	{
+
+	}*/
 }

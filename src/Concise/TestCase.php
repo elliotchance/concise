@@ -6,9 +6,6 @@ use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-	protected $setUpNeedsToBeRun = true;
-	protected $tearDownNeedsToBeRun = true;
-
 	/** @var \Concise\Assertion */
 	protected $currentAssertion = null;
 

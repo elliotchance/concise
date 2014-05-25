@@ -172,8 +172,6 @@ class TestCaseTest extends TestCase
 			'backupStaticAttributesBlacklist' => array(),
 			'runTestInSeparateProcess' => null,
 			'preserveGlobalState' => true,
-			'setUpNeedsToBeRun' => true,
-			'tearDownNeedsToBeRun' => true,
 			'currentAssertion' => null,
 		);
 	}
