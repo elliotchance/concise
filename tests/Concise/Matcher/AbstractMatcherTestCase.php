@@ -29,4 +29,13 @@ class AbstractMatcherTestCase extends TestCase
 		$syntaxes = $this->matcher->supportedSyntaxes();
 		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
 	}
+
+	protected function createStdClassThatCanBeCastToString($value)
+	{
+		$mock = $this->getMock('\stdClass', array('__toString'));
+		$mock->expects($this->any())
+		     ->method('__toString')
+		     ->will($this->returnValue($value));
+		return $mock;
+	}
 }

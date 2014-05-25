@@ -12,15 +12,6 @@ class StringStartsWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringStartsWith();
 	}
 
-	protected function createStdClassThatCanBeCastToString($value)
-	{
-		$mock = $this->getMock('\stdClass', array('__toString'));
-		$mock->expects($this->any())
-		     ->method('__toString')
-		     ->will($this->returnValue($value));
-		return $mock;
-	}
-
 	public function _test_comparisons()
 	{
 		$this->obj = $this->createStdClassThatCanBeCastToString('foo');
