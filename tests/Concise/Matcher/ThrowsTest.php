@@ -38,7 +38,8 @@ class ThrowsTest extends AbstractMatcherTestCase
 	public function expectFailures()
 	{
 		return array(
-			array(function() {}, '\Exception')
+			array(function() {}, '\Exception'),
+			array(function() {}, '\Concise\Matcher\MyException'),
 		);
 	}
 
