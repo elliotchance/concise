@@ -47,10 +47,29 @@ class ThrowsTest extends AbstractMatcherTestCase
 		);
 	}
 
+	public function exceptionTestMessages()
+	{
+		$expectException = 'Exception';
+		$expectMyException = 'Concise\Matcher\MyException';
+		$expectOtherException = 'Concise\Matcher\OtherException';
+		$throwNothing = function() {};
+		$throwException = function() { throw new \Exception(); };
+		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
+		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
+
+		return array(
+			array($throwNothing,        $expectException,      "Expected $expectException to be thrown, but nothing was thrown."),
+			array($throwNothing,        $expectMyException,    "Expected $expectMyException to be thrown, but nothing was thrown."),
+			array($throwException,      $expectMyException,    "Expected $expectMyException to be thrown, but $expectException was thrown."),
+			array($throwMyException,    $expectOtherException, "Expected $expectOtherException to be thrown, but $expectMyException was thrown."),
+			array($throwOtherException, $expectMyException,    "Expected $expectMyException to be thrown, but $expectOtherException was thrown."),
+		);
+	}
+
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testExpectFailures(callable $method, $expectedException, $expectToThrow)
+	public function testThrows(callable $method, $expectedException, $expectToThrow)
 	{
 		$didThrow = true;
 		try {
@@ -60,6 +79,35 @@ class ThrowsTest extends AbstractMatcherTestCase
 		catch(DidNotMatchException $e) {
 		}
 		$this->assertSame($expectToThrow, $didThrow);
+	}
+
+	/**
+	 * @dataProvider exceptionTests
+	 */
+	public function testDoesNotThrow(callable $method, $expectedException, $expectToThrow)
+	{
+		$didThrow = true;
+		try {
+			$this->matcher->match('? does not throw ?', array($method, $expectedException));
+			$didThrow = false;
+		}
+		catch(DidNotMatchException $e) {
+		}
+		$this->assertSame($expectToThrow, !$didThrow);
+	}
+
+	/**
+	 * @dataProvider exceptionTestMessages
+	 */
+	public function testThrowsMessages(callable $method, $expectedException, $failureMessage)
+	{
+		try {
+			$this->matcher->match('? throws ?', array($method, $expectedException));
+			$this->fail("Exception was not thrown.");
+		}
+		catch(DidNotMatchException $e) {
+			$this->assertEquals($failureMessage, $e->getMessage());
+		}
 	}
 
 	/**

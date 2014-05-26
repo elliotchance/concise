@@ -33,20 +33,18 @@ class Throws extends AbstractMatcher
 			throw new DidNotMatchException("Expected {$data[1]} to be thrown, but nothing was thrown.");
 		}
 
-		if('? does not throw ?' === $syntax) {
-			try {
-				$data[0]();
-			}
-			catch(\Exception $exception) {
-				$exceptionClass = get_class($exception);
-				$matchesOrIsSubclassOf = ($exceptionClass === $data[1]) || is_subclass_of($exception, $data[1]);
-				if($matchesOrIsSubclassOf) {
-					throw new DidNotMatchException("Expected {$data[1]} to be thrown, but $exceptionClass was thrown.");
-				}
+		try {
+			$data[0]();
+			return true;
+		}
+		catch(\Exception $exception) {
+			$exceptionClass = get_class($exception);
+			$matchesOrIsSubclassOf = ($exceptionClass === $data[1]) || is_subclass_of($exception, $data[1]);
+			if($matchesOrIsSubclassOf) {
+				throw new DidNotMatchException("Expected {$data[1]} to be thrown, but $exceptionClass was thrown.");
 			}
 			return true;
 		}
-
-		return true;
+		throw new DidNotMatchException("Expected {$data[1]} to be thrown, but nothing was thrown.");
 	}
 }
