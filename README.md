@@ -1,6 +1,8 @@
 concise
 =======
 
+[![Build Status](https://travis-ci.org/elliotchance/concise.svg?branch=master)](https://travis-ci.org/elliotchance/concise) [![Coverage Status](https://img.shields.io/coveralls/elliotchance/concise.svg)](https://coveralls.io/r/elliotchance/concise?branch=master)
+
 Concise is unit test framework for using plain English and minimal code, built on PHPUnit.
 
 Simple Example
