@@ -14,48 +14,52 @@ class OtherException extends \Exception
 
 class ThrowsTest extends AbstractMatcherTestCase
 {
+
 	public function prepare()
 	{
 		parent::prepare();
 		$this->matcher = new Throws();
 	}
 
-	public function _test_comparisons()
+	public function exceptionTests()
 	{
-		$this->doesThrow = function() {
-			throw new MyException();
-		};
-		$this->doesThrowOther = function() {
-			throw new OtherException();
-		};
-		return array(
-			'doesThrow throws \Exception',
-			'doesThrow throws \Concise\Matcher\MyException',
-			'doesThrow does not throw \Concise\Matcher\OtherException',
-		);
-	}
+		$expectException = 'Exception';
+		$expectMyException = 'Concise\Matcher\MyException';
+		$expectOtherException = 'Concise\Matcher\OtherException';
+		$throwNothing = function() {};
+		$throwException = function() { throw new \Exception(); };
+		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
+		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
+		$FAIL = true;
+		$PASS = false;
 
-	public function expectFailures()
-	{
 		return array(
-			array(function() {}, '\Exception'),
-			array(function() {}, '\Concise\Matcher\MyException'),
+			array($throwNothing,        $expectException,      $FAIL),
+			array($throwNothing,        $expectMyException,    $FAIL),
+			array($throwException,      $expectException,      $PASS),
+			array($throwException,      $expectMyException,    $FAIL),
+			array($throwMyException,    $expectException,      $PASS),
+			array($throwMyException,    $expectMyException,    $PASS),
+			array($throwMyException,    $expectOtherException, $FAIL),
+			array($throwOtherException, $expectException,      $PASS),
+			array($throwOtherException, $expectMyException,    $FAIL),
+			array($throwOtherException, $expectOtherException, $PASS),
 		);
 	}
 
 	/**
-	 * @dataProvider expectFailures
+	 * @dataProvider exceptionTests
 	 */
-	public function testExpectFailures(callable $method, $expectedException)
+	public function testExpectFailures(callable $method, $expectedException, $expectToThrow)
 	{
+		$didThrow = true;
 		try {
 			$this->matcher->match('? throws ?', array($method, $expectedException));
+			$didThrow = false;
 		}
 		catch(DidNotMatchException $e) {
-			$this->assertTrue(true);
-			return;
 		}
-		$this->fail("Exception not thrown.");
+		$this->assertSame($expectToThrow, $didThrow);
 	}
 
 	/**
