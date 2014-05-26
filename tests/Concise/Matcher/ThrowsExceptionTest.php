@@ -26,7 +26,7 @@ class ThrowsExceptionTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testThrows(callable $method, $expectSuccess)
+	public function testThrows(\Closure $method, $expectSuccess)
 	{
 		$success = false;
 		try {
@@ -41,7 +41,7 @@ class ThrowsExceptionTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testDoesNotThrow(callable $method, $expectSuccess)
+	public function testDoesNotThrow(\Closure $method, $expectSuccess)
 	{
 		$success = false;
 		try {

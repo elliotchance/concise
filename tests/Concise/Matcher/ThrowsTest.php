@@ -88,7 +88,7 @@ class ThrowsTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testThrows(callable $method, $expectedException, $expectToThrow)
+	public function testThrows(\Closure $method, $expectedException, $expectToThrow)
 	{
 		$didThrow = true;
 		try {
@@ -103,7 +103,7 @@ class ThrowsTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testDoesNotThrow(callable $method, $expectedException, $expectToThrow)
+	public function testDoesNotThrow(\Closure $method, $expectedException, $expectToThrow)
 	{
 		$didThrow = true;
 		try {
@@ -118,7 +118,7 @@ class ThrowsTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionThrowsTestMessages
 	 */
-	public function testThrowsMessages(callable $method, $expectedException, $failureMessage)
+	public function testThrowsMessages(\Closure $method, $expectedException, $failureMessage)
 	{
 		try {
 			$this->matcher->match('? throws ?', array($method, $expectedException));
@@ -132,7 +132,7 @@ class ThrowsTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider exceptionDoesNotThrowTestMessages
 	 */
-	public function testDoesNotThrowMessages(callable $method, $expectedException, $failureMessage)
+	public function testDoesNotThrowMessages(\Closure $method, $expectedException, $failureMessage)
 	{
 		try {
 			$this->matcher->match('? does not throw ?', array($method, $expectedException));
