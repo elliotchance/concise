@@ -17,17 +17,23 @@ class ThrowsException extends AbstractMatcher
 		if(!is_callable($data[0])) {
 			throw new DidNotMatchException("The attribute to test for exception must be callable (an anonymous function)");
 		}
-		$r = false;
+
+		if('? throws exception' === $syntax) {
+			try {
+				$data[0]();
+			}
+			catch(\Exception $exception) {
+				return true;
+			}
+			throw new DidNotMatchException("Expected exception to be thrown.");
+		}
+
 		try {
 			$data[0]();
+			return true;
 		}
 		catch(\Exception $exception) {
-			$r = true;
+			throw new DidNotMatchException("Expected exception not to be thrown.");
 		}
-		
-		if('? does not throw exception' === $syntax) {
-			$r = !$r;
-		}
-		return $r;
 	}
 }
