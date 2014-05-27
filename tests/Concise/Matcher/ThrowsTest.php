@@ -12,7 +12,7 @@ class OtherException extends \Exception
 {
 }
 
-class ThrowsTest extends AbstractMatcherTestCase
+class ThrowsTest extends AbstractExceptionTestCase
 {
 
 	public function prepare()
@@ -142,13 +142,5 @@ class ThrowsTest extends AbstractMatcherTestCase
 			$this->assertEquals($failureMessage, $e->getMessage());
 		}
 	}
-
-	/**
-	 * @expectedException \Exception
-	 * @expectedExcatpionMessage The attribute to test for exception must be callable (an anonymous function)
-	 */
-	public function testMatcherWillOnlyAcceptCallable()
-	{
-		$this->matcher->match('', array(123));
-	}
+	
 }

@@ -12,6 +12,11 @@ class Throws extends AbstractMatcher
 		);
 	}
 
+	protected function isKindOfClass(\Exception $exception, $expectedClass)
+	{
+		return (get_class($exception) === $expectedClass) || is_subclass_of($exception, $expectedClass);
+	}
+
 	public function match($syntax, array $data = array())
 	{
 		if(!is_callable($data[0])) {
@@ -23,11 +28,10 @@ class Throws extends AbstractMatcher
 				$data[0]();
 			}
 			catch(\Exception $exception) {
-				$exceptionClass = get_class($exception);
-				$matchesOrIsSubclassOf = ($exceptionClass === $data[1]) || is_subclass_of($exception, $data[1]);
-				if($matchesOrIsSubclassOf) {
+				if($this->isKindOfClass($exception, $data[1])) {
 					return true;
 				}
+				$exceptionClass = get_class($exception);
 				throw new DidNotMatchException("Expected {$data[1]} to be thrown, but $exceptionClass was thrown.");
 			}
 			throw new DidNotMatchException("Expected {$data[1]} to be thrown, but nothing was thrown.");
@@ -38,9 +42,8 @@ class Throws extends AbstractMatcher
 			return true;
 		}
 		catch(\Exception $exception) {
-			$exceptionClass = get_class($exception);
-			$matchesOrIsSubclassOf = ($exceptionClass === $data[1]) || is_subclass_of($exception, $data[1]);
-			if($matchesOrIsSubclassOf) {
+			if($this->isKindOfClass($exception, $data[1])) {
+				$exceptionClass = get_class($exception);
 				throw new DidNotMatchException("Expected {$data[1]} not to be thrown, but $exceptionClass was thrown.");
 			}
 			return true;

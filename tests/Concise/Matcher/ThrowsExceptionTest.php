@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class ThrowsExceptionTest extends AbstractMatcherTestCase
+class ThrowsExceptionTest extends AbstractExceptionTestCase
 {
 	public function prepare()
 	{
@@ -73,13 +73,5 @@ class ThrowsExceptionTest extends AbstractMatcherTestCase
 			$this->assertEquals("Expected exception not to be thrown.", $e->getMessage());
 		}
 	}
-
-	/**
-	 * @expectedException \Exception
-	 * @expectedExcatpionMessage The attribute to test for exception must be callable (an anonymous function)
-	 */
-	public function testMatcherWillOnlyAcceptCallable()
-	{
-		$this->matcher->match('', array(123));
-	}
+	
 }
