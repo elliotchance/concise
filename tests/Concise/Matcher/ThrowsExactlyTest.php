@@ -4,13 +4,13 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class ThrowsTest extends AbstractExceptionTestCase
+class ThrowsExactlyTest extends AbstractExceptionTestCase
 {
 
 	public function prepare()
 	{
 		parent::prepare();
-		$this->matcher = new Throws();
+		$this->matcher = new ThrowsExactly();
 	}
 
 	public function exceptionTests()
@@ -30,16 +30,15 @@ class ThrowsTest extends AbstractExceptionTestCase
 			array($throwNothing,        $expectMyException,    $FAIL),
 			array($throwException,      $expectException,      $PASS),
 			array($throwException,      $expectMyException,    $FAIL),
-			array($throwMyException,    $expectException,      $PASS),
+			array($throwMyException,    $expectException,      $FAIL),
 			array($throwMyException,    $expectMyException,    $PASS),
 			array($throwMyException,    $expectOtherException, $FAIL),
-			array($throwOtherException, $expectException,      $PASS),
+			array($throwOtherException, $expectException,      $FAIL),
 			array($throwOtherException, $expectMyException,    $FAIL),
-			array($throwOtherException, $expectOtherException, $PASS),
 		);
 	}
 
-	public function exceptionThrowsTestMessages()
+	public function exceptionThrowsExactlyTestMessages()
 	{
 		$expectException = 'Exception';
 		$expectMyException = 'Concise\Matcher\MyException';
@@ -50,15 +49,17 @@ class ThrowsTest extends AbstractExceptionTestCase
 		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
 
 		return array(
-			array($throwNothing,        $expectException,      "Expected $expectException to be thrown, but nothing was thrown."),
-			array($throwNothing,        $expectMyException,    "Expected $expectMyException to be thrown, but nothing was thrown."),
-			array($throwException,      $expectMyException,    "Expected $expectMyException to be thrown, but $expectException was thrown."),
-			array($throwMyException,    $expectOtherException, "Expected $expectOtherException to be thrown, but $expectMyException was thrown."),
-			array($throwOtherException, $expectMyException,    "Expected $expectMyException to be thrown, but $expectOtherException was thrown."),
+			array($throwNothing,        $expectException,      "Expected exactly $expectException to be thrown, but nothing was thrown."),
+			array($throwNothing,        $expectMyException,    "Expected exactly $expectMyException to be thrown, but nothing was thrown."),
+			array($throwException,      $expectMyException,    "Expected exactly $expectMyException to be thrown, but $expectException was thrown."),
+			array($throwMyException,    $expectException,      "Expected exactly $expectException to be thrown, but $expectMyException was thrown."),
+			array($throwMyException,    $expectOtherException, "Expected exactly $expectOtherException to be thrown, but $expectMyException was thrown."),
+			array($throwOtherException, $expectException,      "Expected exactly $expectException to be thrown, but $expectOtherException was thrown."),
+			array($throwOtherException, $expectMyException,    "Expected exactly $expectMyException to be thrown, but $expectOtherException was thrown."),
 		);
 	}
 
-	public function exceptionDoesNotThrowTestMessages()
+	public function exceptionThrowsAnythingExceptTestMessages()
 	{
 		$expectException = 'Exception';
 		$expectMyException = 'Concise\Matcher\MyException';
@@ -69,22 +70,19 @@ class ThrowsTest extends AbstractExceptionTestCase
 		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
 
 		return array(
-			array($throwException,      $expectException,      "Expected $expectException not to be thrown, but $expectException was thrown."),
-			array($throwMyException,    $expectException,      "Expected $expectException not to be thrown, but $expectMyException was thrown."),
-			array($throwMyException,    $expectMyException,    "Expected $expectMyException not to be thrown, but $expectMyException was thrown."),
-			array($throwOtherException, $expectException,      "Expected $expectException not to be thrown, but $expectOtherException was thrown."),
-			array($throwOtherException, $expectOtherException, "Expected $expectOtherException not to be thrown, but $expectOtherException was thrown."),
+			array($throwException,   $expectException,   "Expected any exception except $expectException not to be thrown, but $expectException was thrown."),
+			array($throwMyException, $expectMyException, "Expected any exception except $expectMyException not to be thrown, but $expectMyException was thrown."),
 		);
 	}
 
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testThrows(\Closure $method, $expectedException, $expectToThrow)
+	public function testThrowsExactly(\Closure $method, $expectedException, $expectToThrow)
 	{
 		$didThrow = true;
 		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
+			$this->matcher->match('? throws exactly ?', array($method, $expectedException));
 			$didThrow = false;
 		}
 		catch(DidNotMatchException $e) {
@@ -95,11 +93,11 @@ class ThrowsTest extends AbstractExceptionTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testDoesNotThrow(\Closure $method, $expectedException, $expectToThrow)
+	public function testThrowsAnythingExcept(\Closure $method, $expectedException, $expectToThrow)
 	{
 		$didThrow = true;
 		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
+			$this->matcher->match('? throws anything except ?', array($method, $expectedException));
 			$didThrow = false;
 		}
 		catch(DidNotMatchException $e) {
@@ -108,12 +106,12 @@ class ThrowsTest extends AbstractExceptionTestCase
 	}
 
 	/**
-	 * @dataProvider exceptionThrowsTestMessages
+	 * @dataProvider exceptionThrowsExactlyTestMessages
 	 */
-	public function testThrowsMessages(\Closure $method, $expectedException, $failureMessage)
+	public function testThrowsExactlyMessages(\Closure $method, $expectedException, $failureMessage)
 	{
 		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
+			$this->matcher->match('? throws exactly ?', array($method, $expectedException));
 			$this->fail("Exception was not thrown.");
 		}
 		catch(DidNotMatchException $e) {
@@ -122,17 +120,17 @@ class ThrowsTest extends AbstractExceptionTestCase
 	}
 
 	/**
-	 * @dataProvider exceptionDoesNotThrowTestMessages
+	 * @dataProvider exceptionThrowsAnythingExceptTestMessages
 	 */
-	public function testDoesNotThrowMessages(\Closure $method, $expectedException, $failureMessage)
+	/*public function testThrowsAnythingExceptMessages(\Closure $method, $expectedException, $failureMessage)
 	{
 		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
+			$this->matcher->match('? throws anything except ?', array($method, $expectedException));
 			$this->fail("Exception was not thrown.");
 		}
 		catch(DidNotMatchException $e) {
 			$this->assertEquals($failureMessage, $e->getMessage());
 		}
-	}
+	}*/
 	
 }
