@@ -38,4 +38,31 @@ class AbstractMatcherTestCase extends TestCase
 		     ->will($this->returnValue($value));
 		return $mock;
 	}
+
+	protected function assertMatcherFailureMessage($syntax, array $args, $failureMessage)
+	{
+		try {
+			$this->matcher->match($syntax, $args);
+			$this->fail("Expected assertion to fail.");
+		}
+		catch(DidNotMatchException $e) {
+			$this->assertSame($failureMessage, $e->getMessage());
+		}
+	}
+
+	protected function assertMatcherFailure($syntax, array $args)
+	{
+		try {
+			$result = $this->matcher->match($syntax, $args);
+			$this->assertFalse($result);
+		}
+		catch(DidNotMatchException $e) {
+			$this->assertTrue(true);
+		}
+	}
+
+	protected function assertMatcherSuccess($syntax, array $args)
+	{
+		$this->assertTrue($this->matcher->match($syntax, $args));
+	}
 }

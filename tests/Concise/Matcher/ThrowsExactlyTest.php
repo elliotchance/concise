@@ -80,14 +80,12 @@ class ThrowsExactlyTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsExactly(\Closure $method, $expectedException, $expectToThrow)
 	{
-		$didThrow = true;
-		try {
-			$this->matcher->match('? throws exactly ?', array($method, $expectedException));
-			$didThrow = false;
+		if($expectToThrow) {
+			$this->assertMatcherFailure('? throws exactly ?', array($method, $expectedException));
 		}
-		catch(DidNotMatchException $e) {
+		else {
+			$this->assertMatcherSuccess('? throws exactly ?', array($method, $expectedException));
 		}
-		$this->assertSame($expectToThrow, $didThrow);
 	}
 
 	/**
@@ -110,13 +108,7 @@ class ThrowsExactlyTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsExactlyMessages(\Closure $method, $expectedException, $failureMessage)
 	{
-		try {
-			$this->matcher->match('? throws exactly ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
+		$this->assertMatcherFailureMessage('? throws exactly ?', array($method, $expectedException), $failureMessage);
 	}
 
 	/**
@@ -124,13 +116,7 @@ class ThrowsExactlyTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsAnythingExceptMessages(\Closure $method, $expectedException, $failureMessage)
 	{
-		try {
-			$this->matcher->match('? throws anything except ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
+		$this->assertMatcherFailureMessage('? throws anything except ?', array($method, $expectedException), $failureMessage);
 	}
 	
 }

@@ -82,14 +82,12 @@ class ThrowsTest extends AbstractExceptionTestCase
 	 */
 	public function testThrows(\Closure $method, $expectedException, $expectToThrow)
 	{
-		$didThrow = true;
-		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
-			$didThrow = false;
+		if($expectToThrow) {
+			$this->assertMatcherFailure('? throws ?', array($method, $expectedException));
 		}
-		catch(DidNotMatchException $e) {
+		else {
+			$this->assertMatcherSuccess('? throws ?', array($method, $expectedException));
 		}
-		$this->assertSame($expectToThrow, $didThrow);
 	}
 
 	/**
@@ -97,14 +95,12 @@ class ThrowsTest extends AbstractExceptionTestCase
 	 */
 	public function testDoesNotThrow(\Closure $method, $expectedException, $expectToThrow)
 	{
-		$didThrow = true;
-		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
-			$didThrow = false;
+		if($expectToThrow) {
+			$this->assertMatcherSuccess('? does not throw ?', array($method, $expectedException));
 		}
-		catch(DidNotMatchException $e) {
+		else {
+			$this->assertMatcherFailure('? does not throw ?', array($method, $expectedException));
 		}
-		$this->assertSame($expectToThrow, !$didThrow);
 	}
 
 	/**
@@ -112,13 +108,7 @@ class ThrowsTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsMessages(\Closure $method, $expectedException, $failureMessage)
 	{
-		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
+		$this->assertMatcherFailureMessage('? throws ?', array($method, $expectedException), $failureMessage);
 	}
 
 	/**
@@ -126,13 +116,7 @@ class ThrowsTest extends AbstractExceptionTestCase
 	 */
 	public function testDoesNotThrowMessages(\Closure $method, $expectedException, $failureMessage)
 	{
-		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
+		$this->assertMatcherFailureMessage('? does not throw ?', array($method, $expectedException), $failureMessage);
 	}
 	
 }
