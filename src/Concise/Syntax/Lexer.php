@@ -34,7 +34,7 @@ class Lexer
 		if(preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $token)) {
 			return self::TOKEN_INTEGER;
 		}
-		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token)) {
+		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token) || "\\" === substr($token, 0, 1)) {
 			return self::TOKEN_STRING;
 		}
 		if(preg_match('/^`.*`/ms', $token)) {
@@ -43,14 +43,18 @@ class Lexer
 		return self::TOKEN_ATTRIBUTE;
 	}
 
-	protected function consumeUntilToken($string, $until, &$startIndex)
+	protected function consumeUntilToken($string, $until, &$startIndex, $mustConsumeUntil = true)
 	{
 		$t = '';
 		for($i = $startIndex + 1; $string[$i] != $until; ++$i) {
 			if($i == strlen($string) - 1) {
-				throw new \Exception("Expected $until before end of string.");
+				if($mustConsumeUntil) {
+					throw new \Exception("Expected $until before end of string.");
+				}
+				$t .= $string[$i];
+				break;
 			}
-			if($string[$i] === "\\") {
+			if(($until === "'" || $until === '"') && $string[$i] === "\\") {
 				++$i;
 				$converter = new CharacterConverter();
 				$t .= $converter->convertEscapedCharacter($string[$i]);
@@ -68,6 +72,11 @@ class Lexer
 		return $this->consumeUntilToken($string, $container, $startIndex);
 	}
 
+	protected function consumeClassname($string, &$startIndex)
+	{
+		return $this->consumeUntilToken($string, ' ', $startIndex, false);
+	}
+
 	protected function consumeCode($string, &$startIndex)
 	{
 		return $this->consumeUntilToken($string, '`', $startIndex);
@@ -81,6 +90,11 @@ class Lexer
 			$ch = $string[$i];
 			if($ch === '"' || $ch === "'") {
 				$t = $this->consumeString($string, $ch, $i);
+				$r[] = new Token(Lexer::TOKEN_STRING, $t);
+				$t = '';
+			}
+			else if($ch === "\\") {
+				$t = $this->consumeClassname($string, $i);
 				$r[] = new Token(Lexer::TOKEN_STRING, $t);
 				$t = '';
 			}
