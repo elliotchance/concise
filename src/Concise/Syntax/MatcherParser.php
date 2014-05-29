@@ -68,22 +68,24 @@ class MatcherParser
 		return self::$instance;
 	}
 
+	protected function autoloadAllMatchers()
+	{
+		foreach(scandir(__DIR__ . "/../Matcher") as $file) {
+			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php'))) {
+				continue;
+			}
+			$class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
+			$this->registerMatcher(new $class());
+		}
+	}
+
 	protected function registerMatchers()
 	{
 		if(count($this->matchers) > 0) {
 			throw new \Exception("registerMatchers() can only be called once.");
 		}
 
-		$this->registerMatcher(new \Concise\Matcher\Equals());
-		$this->registerMatcher(new \Concise\Matcher\Boolean());
-		$this->registerMatcher(new \Concise\Matcher\Null());
-		$this->registerMatcher(new \Concise\Matcher\NotEquals());
-		$this->registerMatcher(new \Concise\Matcher\IsAnObject());
-		$this->registerMatcher(new \Concise\Matcher\IsAnArray());
-		$this->registerMatcher(new \Concise\Matcher\IsAnInteger());
-		$this->registerMatcher(new \Concise\Matcher\IsAString());
-		$this->registerMatcher(new \Concise\Matcher\StringStartsWith());
-		$this->registerMatcher(new \Concise\Matcher\StringEndsWith());
+		$this->autoloadAllMatchers();
 	}
 
 	public function getMatchers()

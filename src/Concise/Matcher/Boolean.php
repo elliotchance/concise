@@ -19,14 +19,12 @@ class Boolean extends AbstractMatcher
 		if($syntax === 'true') {
 			return true;
 		}
-		if($syntax === 'false') {
-			return false;
-		}
 		if($syntax === '? is true') {
 			return ($data[0] === true);
 		}
 		if($syntax === '? is false') {
 			return ($data[0] === false);
 		}
+		return false;
 	}
 }
