@@ -77,4 +77,9 @@ class ConvertToStringTest extends \Concise\TestCase
 		));
 		$this->assertSame($this->converter->convertToString($object), 'xyz');
 	}
+
+	public function testWillExpandScientificNotationToAbsoluteValue()
+	{
+		$this->assertSame($this->converter->convertToString(1.23e5), '123000');
+	}
 }
