@@ -10,7 +10,7 @@ class ConvertToString
 			throw new \Exception("Cannot convert boolean to string.");
 		}
 		if(is_callable($value)) {
-			return $value();
+			return $this->convertToString($value());
 		}
 		return (string) $value;
 	}

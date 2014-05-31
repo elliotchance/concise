@@ -44,4 +44,13 @@ class ConvertToStringTest extends \Concise\TestCase
 			return 'abc';
 		}), 'abc');
 	}
+
+	public function testWillAlwaysReturnAStringEvenIfItHasToRecurse()
+	{
+		$this->assertSame($this->converter->convertToString(function () {
+			return function() {
+				return 123;
+			};
+		}), '123');
+	}
 }
