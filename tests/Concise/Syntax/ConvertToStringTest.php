@@ -69,4 +69,12 @@ class ConvertToStringTest extends \Concise\TestCase
 			throw new \Exception('hi');
 		}), 'hi');
 	}
+
+	public function testWillRenderAnObjectAsAString()
+	{
+		$object = $this->getStub('\stdClass', array(
+			'__toString' => 'xyz'
+		));
+		$this->assertSame($this->converter->convertToString($object), 'xyz');
+	}
 }
