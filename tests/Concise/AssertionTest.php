@@ -92,7 +92,7 @@ class AssertionTest extends TestCase
 
 	public function testPrepareIsCalledAsPartOfTheAssertion()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean(), array(), true, false);
+		$assertion = new Assertion('true', new Matcher\True(), array(), true, false);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
 		$testCase->expects($this->once())
@@ -105,7 +105,7 @@ class AssertionTest extends TestCase
 
 	public function testFinalizeIsCalledAsPartOfTheAssertion()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false, true);
+		$assertion = new Assertion('true', new Matcher\True(), array(), false, true);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
 		$testCase->expects($this->once())
@@ -118,26 +118,26 @@ class AssertionTest extends TestCase
 
 	public function testShouldUsePrepareDefaultsToFalse()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\True());
 		$this->assertSame(false, $assertion->shouldRunPrepare());
 	}
 
 	public function testShouldUseFinalizeDefaultsToFalse()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\True());
 		$this->assertSame(false, $assertion->shouldRunFinalize());
 	}
 
 	public function testCanChangeStatusOfPrepareAfterConstructor()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\True());
 		$assertion->setShouldRunPrepare(true);
 		$this->assertSame(true, $assertion->shouldRunPrepare());
 	}
 
 	public function testCanChangeStatusOfFinalizeAfterConstructor()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean());
+		$assertion = new Assertion('true', new Matcher\True());
 		$assertion->setShouldRunFinalize(true);
 		$this->assertSame(true, $assertion->shouldRunFinalize());
 	}
@@ -156,7 +156,7 @@ class AssertionTest extends TestCase
 
 	public function testPrepareIsNotCalledIfFixturesAreSetNotToBeRun()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false);
+		$assertion = new Assertion('true', new Matcher\True(), array(), false);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
 		$testCase->expects($this->never())
@@ -169,7 +169,7 @@ class AssertionTest extends TestCase
 
 	public function testFinalizeIsNotCalledIfFixturesAreSetNotToBeRun()
 	{
-		$assertion = new Assertion('true', new Matcher\Boolean(), array(), false);
+		$assertion = new Assertion('true', new Matcher\True(), array(), false);
 
 		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
 		$testCase->expects($this->never())
