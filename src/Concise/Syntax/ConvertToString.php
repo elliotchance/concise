@@ -6,7 +6,7 @@ class ConvertToString
 {
 	public function convertToString($value)
 	{
-		if($value === true) {
+		if(is_bool($value)) {
 			throw new \Exception("Cannot convert boolean to string.");
 		}
 		return $value;

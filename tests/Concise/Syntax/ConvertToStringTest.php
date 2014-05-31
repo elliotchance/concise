@@ -23,4 +23,13 @@ class ConvertToStringTest extends \Concise\TestCase
 	{
 		$this->assertSame($this->converter->convertToString('hello'), 'hello');
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Cannot convert boolean to string.
+	 */
+	public function testWillThrowExceptionIfABooleanFalseValueIsUsed()
+	{
+		$this->converter->convertToString(false);
+	}
 }
