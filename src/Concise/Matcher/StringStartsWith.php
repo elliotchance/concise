@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use \Concise\Services\ConvertToString;
+
 class StringStartsWith extends AbstractMatcher
 {
 	public function supportedSyntaxes()
@@ -12,16 +14,13 @@ class StringStartsWith extends AbstractMatcher
 		);
 	}
 
-	protected function performMatch(array $data = array())
-	{
-		$haystack = (string) $data[0];
-		$needle = (string) $data[1];
-		return substr($haystack, 0, strlen($needle)) == $needle;
-	}
-
 	public function match($syntax, array $data = array())
 	{
-		$match = $this->performMatch($data);
+		$converter = new ConvertToString();
+		$haystack = $converter->convertToString($data[0]);
+		$needle = $converter->convertToString($data[1]);
+
+		$match = (substr($haystack, 0, strlen($needle)) === $needle);
 		if($syntax === '? does not start with ?') {
 			$match = !$match;
 		}
