@@ -20,7 +20,7 @@ class Comparer
 
 	protected function normalize($value)
 	{
-		if(!is_bool($value) && !is_null($value)) {
+		if(!is_resource($value) && !is_bool($value) && !is_null($value)) {
 			$value = $this->convertToString->convertToString($value);
 		}
 		return $value;

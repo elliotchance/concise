@@ -62,4 +62,9 @@ class ComparerTest extends \Concise\TestCase
 	{
 		$this->assertFalse($this->comparer->compare(false, ''));
 	}
+
+	public function testResourcesAreSupported()
+	{
+		$this->assertFalse($this->comparer->compare(fopen('.', 'r'), null));
+	}
 }
