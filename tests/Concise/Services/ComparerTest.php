@@ -9,11 +9,17 @@ class ComparerTest extends \Concise\TestCase
 	{
 		$convertToStringMock = $this->getMock('\Concise\Services\ConvertToString');
 		$convertToStringMock->expects($this->exactly(2))
-		                    ->method('convertToString')
-		                    ->will($this->returnValue(true));
+		                    ->method('convertToString');
 
 		$this->comparer = new Comparer();
 		$this->comparer->setConvertToString($convertToStringMock);
-		$this->assertTrue($this->comparer->compare("abc", "abc"));
+
+		$this->comparer->compare("abc", "abc");
+	}
+
+	public function testBooleansAreSupported()
+	{
+		$this->comparer = new Comparer();
+		$this->assertTrue($this->comparer->compare(true, true));
 	}
 }

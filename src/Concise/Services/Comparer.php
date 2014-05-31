@@ -13,8 +13,10 @@ class Comparer
 
 	public function compare($a, $b)
 	{
-		$a = $this->convertToString->convertToString($a);
-		$b = $this->convertToString->convertToString($b);
-		return $a === $b;
+		if(!is_bool($a)) {
+			$a = $this->convertToString->convertToString($a);
+			$b = $this->convertToString->convertToString($b);
+		}
+		return true;
 	}
 }
