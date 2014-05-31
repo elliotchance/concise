@@ -53,4 +53,13 @@ class ConvertToStringTest extends \Concise\TestCase
 			};
 		}), '123');
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Cannot convert NULL to string.
+	 */
+	public function testWillThrowExceptionIfANullValueIsUsed()
+	{
+		$this->converter->convertToString(null);
+	}
 }
