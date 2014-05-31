@@ -83,14 +83,11 @@ class ConvertToStringTest extends \Concise\TestCase
 		$this->assertSame($this->converter->convertToString(1.23e5), '123000');
 	}
 
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Object of class stdClass could not be converted to string
-	 */
-	public function testWillThrowExceptionIfAnObjectThatCanNotBeConvertedToAString()
+	public function testWillReturnAJsonStringForAnObjectIfIsCannotBeConvertedToAString()
 	{
 		$object = new \stdClass();
-		$this->converter->convertToString($object);
+		$object->abc = 123;
+		$this->assertSame($this->converter->convertToString($object), '{"abc":123}');
 	}
 
 	public function testWillReturnAJsonStringForAnArray()
