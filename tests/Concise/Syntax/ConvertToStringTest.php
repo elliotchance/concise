@@ -2,15 +2,25 @@
 
 namespace Concise\Syntax;
 
-class ConvertToStringTest extends \PHPUnit_Framework_TestCase
+class ConvertToStringTest extends \Concise\TestCase
 {
+	public function prepare()
+	{
+		parent::prepare();
+		$this->converter = new ConvertToString();
+	}
+
 	/**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage Cannot convert boolean to string.
 	 */
 	public function testWillThrowExceptionIfABooleanTrueValueIsUsed()
 	{
-		$converter = new ConvertToString();
-		$converter->convertToString(true);
+		$this->converter->convertToString(true);
+	}
+
+	public function testWillReturnTheExactStringUsed()
+	{
+		$this->assertSame($this->converter->convertToString('hello'), 'hello');
 	}
 }

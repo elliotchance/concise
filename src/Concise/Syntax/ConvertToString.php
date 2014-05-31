@@ -6,6 +6,9 @@ class ConvertToString
 {
 	public function convertToString($value)
 	{
-		throw new \Exception("Cannot convert boolean to string.");
+		if($value === true) {
+			throw new \Exception("Cannot convert boolean to string.");
+		}
+		return $value;
 	}
 }
