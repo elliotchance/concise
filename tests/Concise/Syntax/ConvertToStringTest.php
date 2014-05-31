@@ -33,8 +33,15 @@ class ConvertToStringTest extends \Concise\TestCase
 		$this->converter->convertToString(false);
 	}
 
-	public function testWillConvertAnIntegerToAString()
+	public function testWillConvertANumberToAString()
 	{
 		$this->assertSame($this->converter->convertToString(123), '123');
+	}
+
+	public function testWillReturnTheMethodsReturnValueIfItIsCallable()
+	{
+		$this->assertSame($this->converter->convertToString(function () {
+			return 'abc';
+		}), 'abc');
 	}
 }
