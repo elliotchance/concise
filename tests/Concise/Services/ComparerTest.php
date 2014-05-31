@@ -36,25 +36,24 @@ class ComparerTest extends \Concise\TestCase
 		$this->assertFalse($this->comparer->compare(true, false));
 	}
 
-	public function testOnlyFirstArgumentNeedsToFallBackToConvertToString()
+	protected function getConvertToStringMockThatExpects($value)
 	{
 		$convertToStringMock = $this->getMock('\Concise\Services\ConvertToString');
 		$convertToStringMock->expects($this->once())
 		                    ->method('convertToString')
-		                    ->with('abc');
-		$this->comparer->setConvertToString($convertToStringMock);
+		                    ->with($value);
+		return $convertToStringMock;
+	}
 
+	public function testOnlyFirstArgumentNeedsToFallBackToConvertToString()
+	{
+		$this->comparer->setConvertToString($this->getConvertToStringMockThatExpects('abc'));
 		$this->comparer->compare("abc", true);
 	}
 
 	public function testOnlySecondArgumentNeedsToFallBackToConvertToString()
 	{
-		$convertToStringMock = $this->getMock('\Concise\Services\ConvertToString');
-		$convertToStringMock->expects($this->once())
-		                    ->method('convertToString')
-		                    ->with('def');
-		$this->comparer->setConvertToString($convertToStringMock);
-
+		$this->comparer->setConvertToString($this->getConvertToStringMockThatExpects('def'));
 		$this->comparer->compare(null, "def");
 	}
 
