@@ -2,11 +2,18 @@
 
 namespace Concise\Services;
 
+use \Concise\Services\ConvertToString;
+
 class Comparer
 {
 	protected $convertToString;
 
-	public function setConvertToString(\Concise\Services\ConvertToString $convertToString)
+	public function __construct()
+	{
+		$this->convertToString = new ConvertToString;
+	}
+
+	public function setConvertToString(ConvertToString $convertToString)
 	{
 		$this->convertToString = $convertToString;
 	}
@@ -23,6 +30,6 @@ class Comparer
 	{
 		$a = $this->normalize($a);
 		$b = $this->normalize($b);
-		return $a == $b;
+		return $a === $b;
 	}
 }

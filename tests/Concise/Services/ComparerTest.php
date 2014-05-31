@@ -57,4 +57,9 @@ class ComparerTest extends \Concise\TestCase
 
 		$this->comparer->compare(null, "def");
 	}
+
+	public function testComparisonsAreExact()
+	{
+		$this->assertFalse($this->comparer->compare(false, ''));
+	}
 }
