@@ -92,4 +92,9 @@ class ConvertToStringTest extends \Concise\TestCase
 		$object = new \stdClass();
 		$this->converter->convertToString($object);
 	}
+
+	public function testWillReturnAJsonStringForAnArray()
+	{
+		$this->assertSame($this->converter->convertToString(array(1, 'abc')), '[1,"abc"]');
+	}
 }

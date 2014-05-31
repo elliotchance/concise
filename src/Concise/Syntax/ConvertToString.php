@@ -17,6 +17,9 @@ class ConvertToString
 				return $e->getMessage();
 			}
 		}
+		if(is_array($value)) {
+			return json_encode($value);
+		}
 		return (string) $value;
 	}
 }
