@@ -11,12 +11,18 @@ class Comparer
 		$this->convertToString = $convertToString;
 	}
 
+	protected function normalize($value)
+	{
+		if(!is_bool($value) && !is_null($value)) {
+			$value = $this->convertToString->convertToString($value);
+		}
+		return $value;
+	}
+
 	public function compare($a, $b)
 	{
-		if(!is_bool($a) && !is_null($a)) {
-			$a = $this->convertToString->convertToString($a);
-			$b = $this->convertToString->convertToString($b);
-		}
+		$a = $this->normalize($a);
+		$b = $this->normalize($b);
 		return $a == $b;
 	}
 }
