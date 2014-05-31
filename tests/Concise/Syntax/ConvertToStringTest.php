@@ -97,4 +97,13 @@ class ConvertToStringTest extends \Concise\TestCase
 	{
 		$this->assertSame($this->converter->convertToString(array(1, 'abc')), '[1,"abc"]');
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Cannot convert resource to string.
+	 */
+	public function testWillThrowExceptionIfAResourceValueIsUsed()
+	{
+		$this->converter->convertToString(fopen('.', 'r'));
+	}
 }

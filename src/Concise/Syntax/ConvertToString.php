@@ -6,7 +6,7 @@ class ConvertToString
 {
 	public function convertToString($value)
 	{
-		if(is_null($value) || is_bool($value)) {
+		if(is_null($value) || is_bool($value) || is_resource($value)) {
 			throw new \Exception("Cannot convert " . gettype($value) . " to string.");
 		}
 		if(is_callable($value)) {
