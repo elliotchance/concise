@@ -3,6 +3,7 @@
 namespace Concise\Matcher;
 
 use \Concise\Syntax\SyntaxRenderer;
+use \Concise\Services\Comparer;
 
 abstract class AbstractMatcher
 {
@@ -23,5 +24,10 @@ abstract class AbstractMatcher
 	{
 		$renderer = new SyntaxRenderer();
 		return $renderer->render($syntax, $data);
+	}
+
+	protected function getComparer()
+	{
+		return new Comparer();
 	}
 }
