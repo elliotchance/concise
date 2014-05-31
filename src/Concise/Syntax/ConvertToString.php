@@ -10,7 +10,12 @@ class ConvertToString
 			throw new \Exception("Cannot convert " . gettype($value) . " to string.");
 		}
 		if(is_callable($value)) {
-			return $this->convertToString($value());
+			try {
+				return $this->convertToString($value());
+			}
+			catch(\Exception $e) {
+				return $e->getMessage();
+			}
 		}
 		return (string) $value;
 	}

@@ -62,4 +62,11 @@ class ConvertToStringTest extends \Concise\TestCase
 	{
 		$this->converter->convertToString(null);
 	}
+
+	public function testWillReturnTheExceptionMessageIfTheCallableValueThrowsAnException()
+	{
+		$this->assertSame($this->converter->convertToString(function () {
+			throw new \Exception('hi');
+		}), 'hi');
+	}
 }
