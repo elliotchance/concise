@@ -2,17 +2,17 @@
 
 namespace Concise\Matcher;
 
-class Boolean extends AbstractMatcher
+class IsTrue extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is false'
+			'? is true',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return $this->getComparer()->compare($data[0], false);
+		return $this->getComparer()->compare($data[0], true);
 	}
 }
