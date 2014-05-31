@@ -30,4 +30,9 @@ class ComparerTest extends \Concise\TestCase
 	{
 		$this->assertTrue($this->comparer->compare(null, null));
 	}
+
+	public function testFailureReturnsFalse()
+	{
+		$this->assertFalse($this->comparer->compare(true, false));
+	}
 }

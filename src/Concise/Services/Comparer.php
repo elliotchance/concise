@@ -17,6 +17,6 @@ class Comparer
 			$a = $this->convertToString->convertToString($a);
 			$b = $this->convertToString->convertToString($b);
 		}
-		return true;
+		return $a == $b;
 	}
 }
