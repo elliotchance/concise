@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class Boolean extends AbstractMatcher
+class IsFalse extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{

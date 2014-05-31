@@ -4,7 +4,7 @@ namespace Concise;
 
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
-use \Concise\Matcher\Boolean;
+use \Concise\Matcher\True;
 
 class AssertionTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AssertionTest extends TestCase
 	{
 		$stub = $this->getMock('\Concise\Assertion',
 			array('executeAssertion', 'fail'),
-			array('true', new Matcher\Boolean())
+			array('true', new Matcher\True())
 		);
 		$stub->expects($this->once())
 		     ->method('executeAssertion')
@@ -66,7 +66,7 @@ class AssertionTest extends TestCase
 	{
 		$stub = $this->getMock('\Concise\Assertion',
 			array('executeAssertion', 'success'),
-			array('true', new Matcher\Boolean())
+			array('true', new Matcher\True())
 		);
 		$stub->expects($this->once())
 		     ->method('executeAssertion')
@@ -217,7 +217,7 @@ class AssertionTest extends TestCase
 	{
 		$assertion = $this->getStub('\Concise\Assertion', array(
 			'getData' => self::getPHPUnitProperties()
-		), array('true', new Boolean()));
+		), array('true', new True()));
 		$this->assertEquals("", (string) $assertion);
 	}
 
@@ -227,7 +227,7 @@ class AssertionTest extends TestCase
 			'getData' => array(
 				'__dataSet' => array()
 			)
-		), array('true', new Boolean()));
+		), array('true', new True()));
 		$this->assertEquals("", (string) $assertion);
 	}
 
@@ -235,7 +235,7 @@ class AssertionTest extends TestCase
 	{
 		$assertion = $this->getStub('\Concise\Assertion', array(
 			'getData' => array()
-		), array('true', new Boolean()));
+		), array('true', new True()));
 		$this->assertEquals("", (string) $assertion);
 	}
 }
