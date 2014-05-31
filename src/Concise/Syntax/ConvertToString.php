@@ -9,6 +9,6 @@ class ConvertToString
 		if(is_bool($value)) {
 			throw new \Exception("Cannot convert boolean to string.");
 		}
-		return $value;
+		return (string) $value;
 	}
 }
