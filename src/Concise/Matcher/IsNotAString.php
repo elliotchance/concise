@@ -2,17 +2,17 @@
 
 namespace Concise\Matcher;
 
-class IsAString extends AbstractMatcher
+class IsNotAString extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is a string',
+			'? is not a string',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return is_string($data[0]);
+		return !is_string($data[0]);
 	}
 }

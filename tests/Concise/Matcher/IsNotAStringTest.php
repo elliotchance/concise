@@ -4,18 +4,18 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class IsAStringTest extends AbstractMatcherTestCase
+class IsNotAStringTest extends AbstractMatcherTestCase
 {
 	public function setUp()
 	{
 		parent::setUp();
-		$this->matcher = new IsAString();
+		$this->matcher = new IsNotAString();
 	}
 
 	public function _test_comparisons()
 	{
 		return array(
-			'"123" is a string',
+			'123 is not a string',
 		);
 	}
 }
