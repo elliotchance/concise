@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use \Concise\Syntax\ConvertToString;
+
 class Equals extends AbstractMatcher
 {
 	public function supportedSyntaxes()

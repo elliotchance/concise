@@ -17,10 +17,7 @@ class ConvertToString
 				return $e->getMessage();
 			}
 		}
-		if(is_array($value)) {
-			return json_encode($value);
-		}
-		if(is_object($value) && !method_exists($value, '__toString')) {
+		if(is_array($value) || (is_object($value) && !method_exists($value, '__toString'))) {
 			return json_encode($value);
 		}
 		return (string) $value;
