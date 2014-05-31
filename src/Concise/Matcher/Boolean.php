@@ -7,7 +7,6 @@ class Boolean extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'false',
 			'? is true',
 			'? is false'
 		);
@@ -18,9 +17,6 @@ class Boolean extends AbstractMatcher
 		if($syntax === '? is true') {
 			return $this->getComparer()->compare($data[0], true);
 		}
-		if($syntax === '? is false') {
-			return $this->getComparer()->compare($data[0], false);
-		}
-		return false;
+		return $this->getComparer()->compare($data[0], false);
 	}
 }

@@ -50,7 +50,7 @@ class AbstractMatcherTestCase extends TestCase
 		}
 	}
 
-	protected function assertMatcherFailure($syntax, array $args)
+	protected function assertMatcherFailure($syntax, array $args = array())
 	{
 		try {
 			$result = $this->matcher->match($syntax, $args);
@@ -61,7 +61,7 @@ class AbstractMatcherTestCase extends TestCase
 		}
 	}
 
-	protected function assertMatcherSuccess($syntax, array $args)
+	protected function assertMatcherSuccess($syntax, array $args = array())
 	{
 		$this->assertTrue($this->matcher->match($syntax, $args));
 	}
