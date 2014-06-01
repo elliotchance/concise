@@ -41,4 +41,9 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assertSame('true', $this->renderer->render(true));
 	}
+
+	public function testFalseValueRendersAsFalse()
+	{
+		$this->assertSame('false', $this->renderer->render(false));
+	}
 }
