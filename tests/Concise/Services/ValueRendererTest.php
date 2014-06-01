@@ -15,4 +15,10 @@ class ValueRendererTest extends \PHPUnit_Framework_TestCase
 		$renderer = new ValueRenderer();
 		$this->assertSame('1.23', $renderer->render(1.23));
 	}
+
+	public function testStringValueRendersWithDoubleQuotes()
+	{
+		$renderer = new ValueRenderer();
+		$this->assertSame('"abc"', $renderer->render("abc"));
+	}
 }
