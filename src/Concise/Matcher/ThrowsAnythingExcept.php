@@ -2,12 +2,12 @@
 
 namespace Concise\Matcher;
 
-class ThrowsExactly extends AbstractMatcher
+class ThrowsAnythingExcept extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? throws exactly ?',
+			'? anything except ?',
 		);
 	}
 
@@ -22,11 +22,11 @@ class ThrowsExactly extends AbstractMatcher
 		}
 		catch(\Exception $exception) {
 			$exceptionClass = get_class($exception);
-			if($exceptionClass !== $data[1]) {
-				throw new DidNotMatchException("Expected exactly {$data[1]} to be thrown, but $exceptionClass was thrown.");
+			if($exceptionClass === $data[1]) {
+				throw new DidNotMatchException("Expected any exception except {$data[1]} to be thrown, but $exceptionClass was thrown.");
 			}
-			return true;
+			return false;
 		}
-		throw new DidNotMatchException("Expected exactly {$data[1]} to be thrown, but nothing was thrown.");
+		return true;
 	}
 }
