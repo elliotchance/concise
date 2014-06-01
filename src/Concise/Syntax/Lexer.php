@@ -19,6 +19,8 @@ class Lexer
 
 	const TOKEN_CODE = 6;
 
+	const TOKEN_ARRAY = 7;
+
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
@@ -40,6 +42,9 @@ class Lexer
 		}
 		if(preg_match('/^`.*`/ms', $token)) {
 			return self::TOKEN_CODE;
+		}
+		if(preg_match('/^\[/ms', $token)) {
+			return self::TOKEN_ARRAY;
 		}
 		return self::TOKEN_ATTRIBUTE;
 	}
