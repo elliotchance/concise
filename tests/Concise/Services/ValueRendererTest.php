@@ -36,4 +36,9 @@ class ValueRendererTest extends \Concise\TestCase
 		$obj->a = 123;
 		$this->assertSame('{"a":123}', $this->renderer->render($obj));
 	}
+
+	public function testTrueValueRendersAsTrue()
+	{
+		$this->assertSame('true', $this->renderer->render(true));
+	}
 }
