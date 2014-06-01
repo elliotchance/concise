@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsNotAnArray extends AbstractMatcher
+class IsNotAnArray extends IsAnArray
 {
 	public function supportedSyntaxes()
 	{
@@ -13,6 +13,6 @@ class IsNotAnArray extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return !is_array($data[0]);
+		return !parent::match($syntax, $data);
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsNotAnObject extends AbstractMatcher
+class IsNotAnObject extends IsAnObject
 {
 	public function supportedSyntaxes()
 	{
@@ -13,6 +13,6 @@ class IsNotAnObject extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return !is_object($data[0]);
+		return !parent::match($syntax, $data);
 	}
 }

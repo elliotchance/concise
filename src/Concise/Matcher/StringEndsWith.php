@@ -10,7 +10,6 @@ class StringEndsWith extends AbstractMatcher
 	{
 		return array(
 			'? ends with ?',
-			'? does not end with ?',
 		);
 	}
 
@@ -20,11 +19,6 @@ class StringEndsWith extends AbstractMatcher
 		$haystack = $converter->convertToString($data[0]);
 		$needle = $converter->convertToString($data[1]);
 
-		$match = (substr($haystack, strlen($haystack) - strlen($needle)) === $needle);
-
-		if($syntax === '? does not end with ?') {
-			$match = !$match;
-		}
-		return $match;
+		return ((substr($haystack, strlen($haystack) - strlen($needle)) === $needle));
 	}
 }

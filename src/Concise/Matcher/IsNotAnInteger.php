@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsNotAnInteger extends AbstractMatcher
+class IsNotAnInteger extends IsAnInteger
 {
 	public function supportedSyntaxes()
 	{
@@ -14,6 +14,6 @@ class IsNotAnInteger extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return !is_int($data[0]);
+		return !parent::match($syntax, $data);
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsNotAString extends AbstractMatcher
+class IsNotAString extends IsAString
 {
 	public function supportedSyntaxes()
 	{
@@ -13,6 +13,6 @@ class IsNotAString extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return !is_string($data[0]);
+		return !parent::match($syntax, $data);
 	}
 }

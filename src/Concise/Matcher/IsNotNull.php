@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsNotNull extends AbstractMatcher
+class IsNotNull extends IsNull
 {
 	public function supportedSyntaxes()
 	{
@@ -13,6 +13,6 @@ class IsNotNull extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return !is_null($data[0]);
+		return !parent::match($syntax, $data);
 	}
 }

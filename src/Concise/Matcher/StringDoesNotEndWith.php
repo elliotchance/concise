@@ -2,14 +2,14 @@
 
 namespace Concise\Matcher;
 
-class NotEquals extends Equals
+use \Concise\Services\ConvertToString;
+
+class StringDoesNotEndWith extends StringEndsWith
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? not equals ?',
-			'? is not equal to ?',
-			'? does not equal ?',
+			'? does not end with ?',
 		);
 	}
 
