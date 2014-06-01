@@ -88,6 +88,19 @@ class Lexer
 		return $this->consumeUntilToken($string, '`', $startIndex);
 	}
 
+	protected function consumeArray($string, &$startIndex)
+	{
+		for($i = 2; $startIndex + $i <= strlen($string); ++$i) {
+			$json = substr($string, $startIndex, $i);
+			$value = json_decode($json, true);
+			if(null !== $value) {
+				$startIndex += $i;
+				return $value;
+			}
+		}
+		throw new \Exception("Invalid array.");
+	}
+
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -107,6 +120,11 @@ class Lexer
 			else if($ch === '`') {
 				$t = $this->consumeCode($string, $i);
 				$r[] = new Token(Lexer::TOKEN_CODE, $t);
+				$t = '';
+			}
+			else if($ch === '[') {
+				$t = $this->consumeArray($string, $i);
+				$r[] = new Token(Lexer::TOKEN_ARRAY, $t);
 				$t = '';
 			}
 			else if($ch === ' ') {
@@ -138,6 +156,7 @@ class Lexer
 					$attributes[] = $token->getValue() * 1;
 					break;
 				case self::TOKEN_STRING:
+				case self::TOKEN_ARRAY:
 					$attributes[] = $token->getValue();
 					break;
 				case self::TOKEN_CODE:
