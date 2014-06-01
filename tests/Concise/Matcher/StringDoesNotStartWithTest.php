@@ -6,9 +6,9 @@ use \Concise\TestCase;
 
 class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 {
-	public function setUp()
+	public function prepare()
 	{
-		parent::setUp();
+		parent::prepare();
 		$this->matcher = new StringDoesNotStartWith();
 	}
 
