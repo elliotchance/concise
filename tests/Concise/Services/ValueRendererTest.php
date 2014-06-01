@@ -29,4 +29,11 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assertSame('[123,"abc"]', $this->renderer->render(array(123, "abc")));
 	}
+
+	public function testObjectValueRendersAsJson()
+	{
+		$obj = new \stdClass();
+		$obj->a = 123;
+		$this->assertSame('{"a":123}', $this->renderer->render($obj));
+	}
 }
