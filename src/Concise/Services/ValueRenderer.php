@@ -6,6 +6,6 @@ class ValueRenderer
 {
 	public function render($value)
 	{
-		return '123';
+		return (string) $value;
 	}
 }
