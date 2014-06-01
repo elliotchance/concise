@@ -2,12 +2,12 @@
 
 namespace Concise\Matcher;
 
-class ThrowsException extends AbstractMatcher
+class DoesNotThrowException extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? throws exception',
+			'? does not throw exception',
 		);
 	}
 
@@ -19,10 +19,10 @@ class ThrowsException extends AbstractMatcher
 
 		try {
 			$data[0]();
-		}
-		catch(\Exception $exception) {
 			return true;
 		}
-		throw new DidNotMatchException("Expected exception to be thrown.");
+		catch(\Exception $exception) {
+			throw new DidNotMatchException("Expected exception not to be thrown.");
+		}
 	}
 }

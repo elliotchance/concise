@@ -4,12 +4,12 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class ThrowsExceptionTest extends AbstractExceptionTestCase
+class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 {
 	public function prepare()
 	{
 		parent::prepare();
-		$this->matcher = new ThrowsException();
+		$this->matcher = new DoesNotThrowException();
 	}
 
 	public function exceptionTests()
@@ -26,26 +26,25 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
 	/**
 	 * @dataProvider exceptionTests
 	 */
-	public function testThrows(\Closure $method, $expectSuccess)
+	public function testDoesNotThrow(\Closure $method, $expectSuccess)
 	{
 		$success = false;
 		try {
-			$this->matcher->match('? throws exception', array($method));
-			$success = true;
+			$success = $this->matcher->match('? does not throw exception', array($method));
 		}
 		catch(DidNotMatchException $e) {
 		}
-		$this->assertSame($expectSuccess, $success);
+		$this->assertSame($expectSuccess, !$success);
 	}
 
-	public function testThrowsMessage()
+	public function testDoesNotThrowMessage()
 	{
 		try {
-			$this->matcher->match('? throws exception', array(function() {}));
+			$this->matcher->match('? does not throw exception', array(function() { throw new \Exception(); }));
 			$this->fail("Exception was not thrown.");
 		}
 		catch(DidNotMatchException $e) {
-			$this->assertEquals("Expected exception to be thrown.", $e->getMessage());
+			$this->assertEquals("Expected exception not to be thrown.", $e->getMessage());
 		}
 	}
 	
