@@ -2,7 +2,7 @@
 
 namespace Concise\Services;
 
-use \Concise\Services\ConvertToString;
+use \Concise\Services\ToStringConverter;
 
 class Comparer
 {
@@ -10,10 +10,10 @@ class Comparer
 
 	public function __construct()
 	{
-		$this->convertToString = new ConvertToString;
+		$this->convertToString = new ToStringConverter;
 	}
 
-	public function setConvertToString(ConvertToString $convertToString)
+	public function setConvertToString(ToStringConverter $convertToString)
 	{
 		$this->convertToString = $convertToString;
 	}

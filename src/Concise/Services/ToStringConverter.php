@@ -2,7 +2,7 @@
 
 namespace Concise\Services;
 
-class ConvertToString
+class ToStringConverter
 {
 	public function convertToString($value)
 	{

@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Services\ConvertToString;
+use \Concise\Services\ToStringConverter;
 
 class StringEndsWith extends AbstractMatcher
 {
@@ -15,7 +15,7 @@ class StringEndsWith extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		$converter = new ConvertToString();
+		$converter = new ToStringConverter();
 		$haystack = $converter->convertToString($data[0]);
 		$needle = $converter->convertToString($data[1]);
 

@@ -13,7 +13,7 @@ class ComparerTest extends \Concise\TestCase
 	// @test getMock wont behave correctly unless inside a running test
 	public function testAllNonspecificComparisonsUseConvertToString()
 	{
-		$convertToStringMock = $this->getMock('\Concise\Services\ConvertToString');
+		$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
 		$convertToStringMock->expects($this->exactly(2))
 		                    ->method('convertToString');
 		$this->comparer->setConvertToString($convertToStringMock);
@@ -38,7 +38,7 @@ class ComparerTest extends \Concise\TestCase
 
 	protected function getConvertToStringMockThatExpects($value)
 	{
-		$convertToStringMock = $this->getMock('\Concise\Services\ConvertToString');
+		$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
 		$convertToStringMock->expects($this->once())
 		                    ->method('convertToString')
 		                    ->with($value);

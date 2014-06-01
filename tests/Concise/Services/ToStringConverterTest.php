@@ -2,12 +2,12 @@
 
 namespace Concise\Services;
 
-class ConvertToStringTest extends \Concise\TestCase
+class ToStringConverterTest extends \Concise\TestCase
 {
 	public function prepare()
 	{
 		parent::prepare();
-		$this->converter = new ConvertToString();
+		$this->converter = new ToStringConverter();
 	}
 
 	/**
