@@ -129,4 +129,14 @@ class LexerTest extends TestCase
 		$lexer = new Lexer();
 		$result = $lexer->parse("'abc");
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Invalid array.
+	 */
+	public function testLexerThrowsExceptionIfArrayIsNotValid()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('[abc');
+	}
 }
