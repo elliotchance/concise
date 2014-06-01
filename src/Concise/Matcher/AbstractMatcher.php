@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Syntax\SyntaxRenderer;
+use \Concise\Services\SyntaxRenderer;
 use \Concise\Services\Comparer;
 
 abstract class AbstractMatcher
