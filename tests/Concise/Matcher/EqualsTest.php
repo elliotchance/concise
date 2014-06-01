@@ -20,6 +20,4 @@ class EqualsTest extends AbstractMatcherTestCase
 			'123 equals "123"'
 		);
 	}
-
-	// @test warn if attributes are set and not used
 }

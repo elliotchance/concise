@@ -8,7 +8,6 @@ class ThrowsException extends AbstractMatcher
 	{
 		return array(
 			'? throws exception',
-			'? does not throw exception',
 		);
 	}
 
@@ -18,22 +17,12 @@ class ThrowsException extends AbstractMatcher
 			throw new DidNotMatchException("The attribute to test for exception must be callable (an anonymous function)");
 		}
 
-		if('? throws exception' === $syntax) {
-			try {
-				$data[0]();
-			}
-			catch(\Exception $exception) {
-				return true;
-			}
-			throw new DidNotMatchException("Expected exception to be thrown.");
-		}
-
 		try {
 			$data[0]();
-			return true;
 		}
 		catch(\Exception $exception) {
-			throw new DidNotMatchException("Expected exception not to be thrown.");
+			return true;
 		}
+		throw new DidNotMatchException("Expected exception to be thrown.");
 	}
 }

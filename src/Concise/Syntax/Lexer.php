@@ -3,6 +3,7 @@
 namespace Concise\Syntax;
 
 use \Concise\Syntax\Attribute;
+use \Concise\Services\CharacterConverter;
 
 class Lexer
 {

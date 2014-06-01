@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class NotEquals extends AbstractMatcher
+class NotEquals extends Equals
 {
 	public function supportedSyntaxes()
 	{
@@ -15,6 +15,6 @@ class NotEquals extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return ($data[0] != $data[1]);
+		return !parent::match($syntax, $data);
 	}
 }

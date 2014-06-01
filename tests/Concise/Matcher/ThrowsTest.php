@@ -58,53 +58,17 @@ class ThrowsTest extends AbstractExceptionTestCase
 		);
 	}
 
-	public function exceptionDoesNotThrowTestMessages()
-	{
-		$expectException = 'Exception';
-		$expectMyException = 'Concise\Matcher\MyException';
-		$expectOtherException = 'Concise\Matcher\OtherException';
-		$throwNothing = function() {};
-		$throwException = function() { throw new \Exception(); };
-		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
-		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
-
-		return array(
-			array($throwException,      $expectException,      "Expected $expectException not to be thrown, but $expectException was thrown."),
-			array($throwMyException,    $expectException,      "Expected $expectException not to be thrown, but $expectMyException was thrown."),
-			array($throwMyException,    $expectMyException,    "Expected $expectMyException not to be thrown, but $expectMyException was thrown."),
-			array($throwOtherException, $expectException,      "Expected $expectException not to be thrown, but $expectOtherException was thrown."),
-			array($throwOtherException, $expectOtherException, "Expected $expectOtherException not to be thrown, but $expectOtherException was thrown."),
-		);
-	}
-
 	/**
 	 * @dataProvider exceptionTests
 	 */
 	public function testThrows(\Closure $method, $expectedException, $expectToThrow)
 	{
-		$didThrow = true;
-		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
-			$didThrow = false;
+		if($expectToThrow) {
+			$this->assertMatcherFailure('? throws ?', array($method, $expectedException));
 		}
-		catch(DidNotMatchException $e) {
+		else {
+			$this->assertMatcherSuccess('? throws ?', array($method, $expectedException));
 		}
-		$this->assertSame($expectToThrow, $didThrow);
-	}
-
-	/**
-	 * @dataProvider exceptionTests
-	 */
-	public function testDoesNotThrow(\Closure $method, $expectedException, $expectToThrow)
-	{
-		$didThrow = true;
-		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
-			$didThrow = false;
-		}
-		catch(DidNotMatchException $e) {
-		}
-		$this->assertSame($expectToThrow, !$didThrow);
 	}
 
 	/**
@@ -112,27 +76,7 @@ class ThrowsTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsMessages(\Closure $method, $expectedException, $failureMessage)
 	{
-		try {
-			$this->matcher->match('? throws ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
-	}
-
-	/**
-	 * @dataProvider exceptionDoesNotThrowTestMessages
-	 */
-	public function testDoesNotThrowMessages(\Closure $method, $expectedException, $failureMessage)
-	{
-		try {
-			$this->matcher->match('? does not throw ?', array($method, $expectedException));
-			$this->fail("Exception was not thrown.");
-		}
-		catch(DidNotMatchException $e) {
-			$this->assertEquals($failureMessage, $e->getMessage());
-		}
+		$this->assertMatcherFailureMessage('? throws ?', array($method, $expectedException), $failureMessage);
 	}
 	
 }

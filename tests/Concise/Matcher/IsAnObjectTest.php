@@ -16,9 +16,4 @@ class IsAnObjectTest extends AbstractMatcherTestCase
 	{
 		$this->x = new \stdClass();
 	}
-
-	public function _test_x_is_not_an_object()
-	{
-		$this->x = 123;
-	}
 }

@@ -15,7 +15,6 @@ class IsAStringTest extends AbstractMatcherTestCase
 	public function _test_comparisons()
 	{
 		return array(
-			'123 is not a string',
 			'"123" is a string',
 		);
 	}

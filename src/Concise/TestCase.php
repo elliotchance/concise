@@ -162,6 +162,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	protected function getStub($class, array $methods, array $constructorArgs = array())
 	{
+		// @test force class to exist
+		// @test force class to be fully qualified
 		$stub = $this->getMock($class, array_keys($methods), $constructorArgs);
 		foreach($methods as $method => $returnValue) {
 			$stub->expects($this->any())
@@ -210,6 +212,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	protected function assertionsForDataSet($assertionSyntax, $dataSet)
 	{
 		// @test dataSet does not show up as an attribute when test fails
+		// @test $dataSet with assoc array is not supported
 		$this->__dataSet = $dataSet;
 		$assertions = array();
 		$parts = explode('?', $assertionSyntax);

@@ -4,12 +4,12 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 
-class NullTest extends AbstractMatcherTestCase
+class IsNotNullTest extends AbstractMatcherTestCase
 {
-	public function setUp()
+	public function prepare()
 	{
-		parent::setUp();
-		$this->matcher = new Null();
+		parent::prepare();
+		$this->matcher = new IsNotNull();
 	}
 
 	public function _test_comparisons()
@@ -17,7 +17,6 @@ class NullTest extends AbstractMatcherTestCase
 		$this->x = null;
 		$this->y = 'a';
 		return array(
-			'x is null',
 			'y is not null',
 			'"null" is not null',
 			'"" is not null',

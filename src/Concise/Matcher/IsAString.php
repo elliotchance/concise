@@ -8,16 +8,11 @@ class IsAString extends AbstractMatcher
 	{
 		return array(
 			'? is a string',
-			'? is not a string',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		$test = is_string($data[0]);
-		if('? is a string' === $syntax) {
-			return $test;
-		}
-		return !$test;
+		return is_string($data[0]);
 	}
 }

@@ -16,9 +16,4 @@ class IsAnArrayTest extends AbstractMatcherTestCase
 	{
 		$this->x = array();
 	}
-
-	public function _test_x_is_not_an_array()
-	{
-		$this->x = 123;
-	}
 }
