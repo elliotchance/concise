@@ -1,0 +1,32 @@
+<?php
+
+namespace Concise\Syntax;
+
+use \Concise\Syntax\Attribute;
+
+class LexerClassnameTest extends LexerTestCase
+{
+	protected function assertion()
+	{
+		return 'x equals \My\Class';
+	}
+
+	protected function expectedTokens()
+	{
+		return array(
+			new Token(Lexer::TOKEN_ATTRIBUTE, 'x'),
+			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
+			new Token(Lexer::TOKEN_STRING, 'My\Class'),
+		);
+	}
+
+	protected function expectedSyntax()
+	{
+		return '? equals ?';
+	}
+
+	protected function expectedArguments()
+	{
+		return array(new Attribute('x'), 'My\Class');
+	}
+}
