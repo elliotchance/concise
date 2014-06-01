@@ -46,4 +46,9 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assertSame('false', $this->renderer->render(false));
 	}
+
+	public function testNullRendersAsNull()
+	{
+		$this->assertSame('null', $this->renderer->render(null));
+	}
 }
