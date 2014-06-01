@@ -10,7 +10,6 @@ class StringStartsWith extends AbstractMatcher
 	{
 		return array(
 			'? starts with ?',
-			'? does not start with ?'
 		);
 	}
 
@@ -20,10 +19,6 @@ class StringStartsWith extends AbstractMatcher
 		$haystack = $converter->convertToString($data[0]);
 		$needle = $converter->convertToString($data[1]);
 
-		$match = (substr($haystack, 0, strlen($needle)) === $needle);
-		if($syntax === '? does not start with ?') {
-			$match = !$match;
-		}
-		return $match;
+		return ((substr($haystack, 0, strlen($needle)) === $needle));
 	}
 }
