@@ -42,7 +42,7 @@ class AssertionTest extends TestCase
 			'c' => 'xyz'
 		);
 		$assertion = new Assertion('a equals b', $matcher, $data);
-		$expected = "\n  a = 123\n  b = 'abc'\n  c = 'xyz'\n";
+		$expected = "\n  a = 123\n  b = \"abc\"\n  c = \"xyz\"\n";
 		$this->assertEquals($expected, (string) $assertion);
 	}
 
