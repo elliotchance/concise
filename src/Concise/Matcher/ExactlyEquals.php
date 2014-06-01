@@ -7,6 +7,7 @@ class ExactlyEquals extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
+			'? is exactly equal to ?',
 			'? exactly equals ?',
 			'? is the same as ?',
 		);
