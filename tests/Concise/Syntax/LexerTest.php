@@ -32,6 +32,7 @@ class LexerTest extends TestCase
 			'string5' => array(Lexer::TOKEN_STRING, "\MyClass"),
 			'code1' => array(Lexer::TOKEN_CODE, "`abc`"),
 			'code2' => array(Lexer::TOKEN_CODE, "`ab\nc`"),
+			'regexp1' => array(Lexer::TOKEN_REGEXP, "/abc/"),
 		);
 	}
 

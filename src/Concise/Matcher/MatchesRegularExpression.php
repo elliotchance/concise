@@ -18,7 +18,6 @@ class MatchesRegularExpression extends AbstractMatcher
 		$converter = new ToStringConverter();
 		$subject = $converter->convertToString($data[0]);
 		$pattern = $converter->convertToString($data[1]);
-		//var_dump('/' . $pattern . '/', $subject, preg_match('/' . $pattern . '/', $subject));
 		return preg_match('/' . $pattern . '/', $subject) === 1;
 	}
 }

@@ -19,6 +19,8 @@ class Lexer
 
 	const TOKEN_CODE = 6;
 
+	const TOKEN_REGEXP = 7;
+
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
@@ -40,6 +42,9 @@ class Lexer
 		}
 		if(preg_match('/^`.*`/ms', $token)) {
 			return self::TOKEN_CODE;
+		}
+		if(preg_match('|^/|ms', $token)) {
+			return self::TOKEN_REGEXP;
 		}
 		return self::TOKEN_ATTRIBUTE;
 	}
@@ -83,6 +88,11 @@ class Lexer
 		return $this->consumeUntilToken($string, '`', $startIndex);
 	}
 
+	protected function consumeRegexp($string, &$startIndex)
+	{
+		return $this->consumeUntilToken($string, '/', $startIndex);
+	}
+
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -102,6 +112,11 @@ class Lexer
 			else if($ch === '`') {
 				$t = $this->consumeCode($string, $i);
 				$r[] = new Token(Lexer::TOKEN_CODE, $t);
+				$t = '';
+			}
+			else if($ch === '/') {
+				$t = $this->consumeRegexp($string, $i);
+				$r[] = new Token(Lexer::TOKEN_REGEXP, $t);
 				$t = '';
 			}
 			else if($ch === ' ') {
