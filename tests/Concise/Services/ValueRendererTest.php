@@ -2,23 +2,31 @@
 
 namespace Concise\Services;
 
-class ValueRendererTest extends \PHPUnit_Framework_TestCase
+class ValueRendererTest extends \Concise\TestCase
 {
+	public function prepare()
+	{
+		parent::prepare();
+		$this->renderer = new ValueRenderer();
+	}
+
 	public function testIntegerValueRendersWithoutModification()
 	{
-		$renderer = new ValueRenderer();
-		$this->assertSame('123', $renderer->render(123));
+		$this->assertSame('123', $this->renderer->render(123));
 	}
 
 	public function testFloatingPointValueRendersWithoutModification()
 	{
-		$renderer = new ValueRenderer();
-		$this->assertSame('1.23', $renderer->render(1.23));
+		$this->assertSame('1.23', $this->renderer->render(1.23));
 	}
 
 	public function testStringValueRendersWithDoubleQuotes()
 	{
-		$renderer = new ValueRenderer();
-		$this->assertSame('"abc"', $renderer->render("abc"));
+		$this->assertSame('"abc"', $this->renderer->render("abc"));
+	}
+
+	public function testArrayValueRendersAsJson()
+	{
+		$this->assertSame('[123,"abc"]', $this->renderer->render(array(123, "abc")));
 	}
 }
