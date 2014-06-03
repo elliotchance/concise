@@ -2,51 +2,13 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Syntax\Attribute;
 use \Concise\Services\CharacterConverter;
 
 class Lexer
 {
-	const TOKEN_KEYWORD = 1;
-
-	const TOKEN_ATTRIBUTE = 2;
-
-	const TOKEN_INTEGER = 3;
-
-	const TOKEN_FLOAT = 4;
-
-	const TOKEN_STRING = 5;
-
-	const TOKEN_CODE = 6;
-
-	const TOKEN_REGEXP = 7;
-
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
-	}
-
-	public static function getTokenType($token)
-	{
-		if(self::isKeyword($token)) {
-			return self::TOKEN_KEYWORD;
-		}
-		if(preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $token)) {
-			return self::TOKEN_FLOAT;
-		}
-		if(preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $token)) {
-			return self::TOKEN_INTEGER;
-		}
-		if(preg_match('/^".*"/ms', $token) || preg_match("/^'.*'/ms", $token) || "\\" === substr($token, 0, 1)) {
-			return self::TOKEN_STRING;
-		}
-		if(preg_match('/^`.*`/ms', $token)) {
-			return self::TOKEN_CODE;
-		}
-		if(preg_match('|^/|ms', $token)) {
-			return self::TOKEN_REGEXP;
-		}
-		return self::TOKEN_ATTRIBUTE;
 	}
 
 	protected function consumeUntilToken($string, $until, &$startIndex, $mustConsumeUntil = true)
@@ -93,6 +55,18 @@ class Lexer
 		return $this->consumeUntilToken($string, '/', $startIndex);
 	}
 
+	protected function translateValue($t)
+	{
+		if(self::isKeyword($t)) {
+			return new Token\Keyword($t);
+		}
+		if(preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $t) ||
+			preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $t)) {
+			return new Token\Value($t * 1);
+		}
+		return new Token\Attribute($t);
+	}
+
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -101,27 +75,27 @@ class Lexer
 			$ch = $string[$i];
 			if($ch === '"' || $ch === "'") {
 				$t = $this->consumeString($string, $ch, $i);
-				$r[] = new Token(Lexer::TOKEN_STRING, $t);
+				$r[] = new Token\Value($t);
 				$t = '';
 			}
 			else if($ch === "\\") {
 				$t = $this->consumeClassname($string, $i);
-				$r[] = new Token(Lexer::TOKEN_STRING, $t);
+				$r[] = new Token\Value($t);
 				$t = '';
 			}
 			else if($ch === '`') {
 				$t = $this->consumeCode($string, $i);
-				$r[] = new Token(Lexer::TOKEN_CODE, $t);
+				$r[] = new Token\Code($t);
 				$t = '';
 			}
 			else if($ch === '/') {
 				$t = $this->consumeRegexp($string, $i);
-				$r[] = new Token(Lexer::TOKEN_REGEXP, $t);
+				$r[] = new Token\Regexp($t);
 				$t = '';
 			}
 			else if($ch === ' ') {
 				if($t !== '') {
-					$r[] = new Token(self::getTokenType($t), $t);
+					$r[] = $this->translateValue($t);
 					$t = '';
 				}
 			}
@@ -130,7 +104,7 @@ class Lexer
 			}
 		}
 		if($t !== '') {
-			$r[] = new Token(self::getTokenType($t), $t);
+			$r[] = $this->translateValue($t);
 		}
 		return $r;
 	}
@@ -140,24 +114,14 @@ class Lexer
 		$tokens = $this->getTokens($string);
 		$attributes = array();
 		foreach($tokens as $token) {
-			switch($token->getType()) {
-				case self::TOKEN_KEYWORD:
-					break;
-				case self::TOKEN_INTEGER:
-				case self::TOKEN_FLOAT:
-					$attributes[] = $token->getValue() * 1;
-					break;
-				case self::TOKEN_STRING:
-					$attributes[] = $token->getValue();
-					break;
-				case self::TOKEN_CODE:
-					$attributes[] = new Code($token->getValue());
-					break;
-				case self::TOKEN_ATTRIBUTE:
-				default:
-					$attributes[] = new Attribute($token->getValue());
-					break;
-				// @test default: throws exception
+			if($token instanceof Token\Keyword) {
+				continue;
+			}
+			if($token instanceof Token\Value) {
+				$attributes[] = $token->getValue();
+			}
+			else {
+				$attributes[] = $token;
 			}
 		}
 		return $attributes;
@@ -168,7 +132,7 @@ class Lexer
 		$tokens = $this->getTokens($string);
 		$syntax = array();
 		foreach($tokens as $token) {
-			if($token->getType() !== self::TOKEN_KEYWORD) {
+			if(!($token instanceof Token\Keyword)) {
 				$syntax[] = '?';
 			}
 			else {

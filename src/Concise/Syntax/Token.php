@@ -4,23 +4,20 @@ namespace Concise\Syntax;
 
 class Token
 {
-	protected $type;
-
 	protected $value;
 
-	public function __construct($type, $value = null)
+	public function __construct($value = null)
 	{
-		$this->type = $type;
 		$this->value = $value;
-	}
-
-	public function getType()
-	{
-		return $this->type;
 	}
 
 	public function getValue()
 	{
 		return $this->value;
+	}
+
+	public function __toString()
+	{
+		return $this->getValue();
 	}
 }
