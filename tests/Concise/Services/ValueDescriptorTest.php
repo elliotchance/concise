@@ -34,4 +34,9 @@ class ValueDescriptorTest extends \Concise\TestCase
 	{
 		$this->assertSame('Concise\Services\ValueDescriptorTest', $this->descriptor->describe($this));
 	}
+
+	public function testDescriptionOfResource()
+	{
+		$this->assertSame('resource', $this->descriptor->describe(fopen('.', 'r')));
+	}
 }
