@@ -19,4 +19,9 @@ class ValueDescriptorTest extends \Concise\TestCase
 	{
 		$this->assertSame('integer', $this->descriptor->describe(123));
 	}
+
+	public function testDescriptionOfDouble()
+	{
+		$this->assertSame('double', $this->descriptor->describe(1.23));
+	}
 }
