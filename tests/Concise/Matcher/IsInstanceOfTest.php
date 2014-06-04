@@ -18,4 +18,12 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 			'x instance of \Concise\Matcher\AbstractMatcherTestCase'
 		);
 	}
+
+	public function testFailure()
+	{
+		$this->assertMatcherFailure('? is instance of ?', array(
+			new \stdClass(),
+			'\Concise\Matcher\IsInstanceOfTest'
+		));
+	}
 }
