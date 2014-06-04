@@ -29,4 +29,9 @@ class ValueDescriptorTest extends \Concise\TestCase
 	{
 		$this->assertSame('array', $this->descriptor->describe(array()));
 	}
+
+	public function testDescriptionOfObject()
+	{
+		$this->assertSame('Concise\Services\ValueDescriptorTest', $this->descriptor->describe($this));
+	}
 }
