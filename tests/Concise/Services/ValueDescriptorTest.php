@@ -24,4 +24,9 @@ class ValueDescriptorTest extends \Concise\TestCase
 	{
 		$this->assertSame('double', $this->descriptor->describe(1.23));
 	}
+
+	public function testDescriptionOfArray()
+	{
+		$this->assertSame('array', $this->descriptor->describe(array()));
+	}
 }
