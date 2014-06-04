@@ -13,6 +13,9 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 	public function _test_comparisons()
 	{
 		$this->x = new self();
-		return 'x is an instance of \Concise\Matcher\IsInstanceOfTest';
+		return array(
+			'x is an instance of \Concise\Matcher\IsInstanceOfTest',
+			'x instance of \Concise\Matcher\AbstractMatcherTestCase'
+		);
 	}
 }
