@@ -32,6 +32,7 @@ class LexerTest extends TestCase
 			'string5' => array(Lexer::TOKEN_STRING, "\MyClass"),
 			'code1' => array(Lexer::TOKEN_CODE, "`abc`"),
 			'code2' => array(Lexer::TOKEN_CODE, "`ab\nc`"),
+			'array' => array(Lexer::TOKEN_ARRAY, "[]"),
 		);
 	}
 
@@ -127,5 +128,15 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse("'abc");
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Invalid array.
+	 */
+	public function testLexerThrowsExceptionIfArrayIsNotValid()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('[abc');
 	}
 }
