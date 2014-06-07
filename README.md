@@ -71,7 +71,6 @@ Matchers
 
 <!-- start matchers -->
 
-* `? anything except ?`
 * `? does not end with ?`
 * `? does not equal ?`
 * `? does not exactly equal ?`
@@ -112,6 +111,7 @@ Matchers
 * `? not equals ?`
 * `? starts with ?`
 * `? throws ?`
+* `? throws anything except ?`
 * `? throws exactly ?`
 * `? throws exception`
 * `false`

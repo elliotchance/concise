@@ -7,7 +7,7 @@ class ThrowsAnythingExcept extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? anything except ?',
+			'? throws anything except ?',
 		);
 	}
 
