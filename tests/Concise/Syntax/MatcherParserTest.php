@@ -147,6 +147,9 @@ class MatcherParserTest extends TestCase
 	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
 	{
 		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$this->assertArrayContains(array('? is null', '? is equal to ?'), $syntaxes);
+		$this->assertArrayContains(array(
+			'? is null'       => null,
+			'? is equal to ?' => null
+		), $syntaxes);
 	}
 }

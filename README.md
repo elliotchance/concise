@@ -69,6 +69,7 @@ public function _test_my_calculator()
 Matchers
 --------
 
+<!-- start matchers -->
 * `? anything except ?`
 * `? does not end with ?`
 * `? does not equal ?`
@@ -113,7 +114,8 @@ Matchers
 * `? throws exactly ?`
 * `? throws exception`
 * `false`
-* `true`
+* `true` - Always pass.
+<!-- end matchers -->
 
 
 ### Adding Custom Matchers

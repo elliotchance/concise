@@ -129,15 +129,11 @@ class MatcherParser
 	public function getAllSyntaxes()
 	{
 		$r = array();
+		$service = new MatcherSyntaxAndDescription();
 		foreach($this->getMatchers() as $matcher) {
-			$service = new MatcherSyntaxAndDescription();
-			$syntaxes = $service->process($matcher->supportedSyntaxes());
-
-			foreach(array_keys($syntaxes) as $syntax) {
-				$r[] = $syntax;
-			}
+			$r += $service->process($matcher->supportedSyntaxes());
 		}
-		sort($r);
+		ksort($r);
 		return $r;
 	}
 }

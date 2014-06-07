@@ -7,7 +7,7 @@ class True extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'true',
+			'true' => 'Always pass.',
 		);
 	}
 
