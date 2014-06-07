@@ -62,7 +62,9 @@ class TestCaseFixtureTest extends TestCase
 	{
 		$expected = array(
 			'prepare ',
+            'setUp ',
             'prepare ',
+            'setUp ',
 			'prepare testNothing',
             'setUp testNothing',
             'finalize testNothing',
