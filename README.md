@@ -69,27 +69,52 @@ public function _test_my_calculator()
 Matchers
 --------
 
+* `? anything except ?`
+* `? does not end with ?`
 * `? does not equal ?`
+* `? does not exactly equal ?`
+* `? does not match regex ?`
+* `? does not match regular expression ?`
+* `? does not start with ?`
+* `? does not throw ?`
+* `? does not throw exception`
+* `? doesnt match regex ?`
+* `? doesnt match regular expression ?`
+* `? ends with ?`
 * `? equals ?`
+* `? exactly equals ?`
+* `? instance of ?`
 * `? is a string`
 * `? is an array`
+* `? is an instance of ?`
 * `? is an int`
 * `? is an integer`
 * `? is an object`
 * `? is equal to ?`
+* `? is exactly equal to ?`
 * `? is false`
+* `? is instance of ?`
 * `? is not a string`
 * `? is not an array`
 * `? is not an int`
 * `? is not an integer`
 * `? is not an object`
 * `? is not equal to ?`
+* `? is not exactly equal to ?`
 * `? is not null`
+* `? is not the same as ?`
 * `? is null`
+* `? is the same as ?`
 * `? is true`
+* `? matches regular expression ?`
 * `? not equals ?`
+* `? starts with ?`
+* `? throws ?`
+* `? throws exactly ?`
+* `? throws exception`
 * `false`
 * `true`
+
 
 ### Adding Custom Matchers
 
