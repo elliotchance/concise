@@ -69,7 +69,7 @@ class Assertion
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean|string
 	 */
 	protected function executeAssertion()
 	{
@@ -93,6 +93,9 @@ class Assertion
 		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
 	}
 
+	/**
+	 * @param boolean|string $reason
+	 */
 	public function fail($reason)
 	{
 		if(!is_object($this->testCase)) {
@@ -143,6 +146,9 @@ class Assertion
 		return $r;
 	}
 
+	/**
+	 * @param string $description
+	 */
 	public function setDescription($description)
 	{
 		$this->description = $description;
@@ -166,11 +172,17 @@ class Assertion
 		return $this->shouldRunFinalize;
 	}
 
+	/**
+	 * @param boolean $shouldRunPrepare
+	 */
 	public function setShouldRunPrepare($shouldRunPrepare)
 	{
 		$this->shouldRunPrepare = $shouldRunPrepare;
 	}
 
+	/**
+	 * @param boolean $shouldRunFinalize
+	 */
 	public function setShouldRunFinalize($shouldRunFinalize)
 	{
 		$this->shouldRunFinalize = $shouldRunFinalize;

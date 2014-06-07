@@ -6,6 +6,9 @@ class TestCaseFixtureTest extends TestCase
 {
 	protected static $fixtureLog = array();
 
+	/**
+	 * @param string $method
+	 */
 	protected function addFixtureLog($method)
 	{
 		self::$fixtureLog[] = "$method " . $this->getName();
