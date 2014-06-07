@@ -2,19 +2,19 @@
 
 namespace Concise\Syntax;
 
-class LexerStringTest extends LexerTestCase
+class LexerRegexpTest extends LexerTestCase
 {
 	protected function assertion()
 	{
-		return '"abc" equals b';
+		return 'x equals /\\a/';
 	}
 
 	protected function expectedTokens()
 	{
 		return array(
-			new Token\Value('abc'),
+			new Token\Attribute('x'),
 			new Token\Keyword('equals'),
-			new Token\Attribute('b'),
+			new Token\Regexp('\\a'),
 		);
 	}
 
@@ -25,6 +25,6 @@ class LexerStringTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array('abc', new Token\Attribute('b'));
+		return array(new Token\Attribute('x'), new Token\Regexp('\\a'));
 	}
 }

@@ -3,8 +3,6 @@
 namespace Concise;
 
 use \Concise\Syntax\Lexer;
-use \Concise\Syntax\Attribute;
-use \Concise\Syntax\Code;
 use \Concise\Services\ValueRenderer;
 use \Concise\Services\ValueDescriptor;
 
@@ -79,11 +77,11 @@ class Assertion
 		$data = $this->getData();
 		for($i = 0; $i < count($result['arguments']); ++$i) {
 			$arg = $result['arguments'][$i];
-			if($arg instanceof Attribute) {
-				$result['arguments'][$i] = $data[$arg->getName()];
+			if($arg instanceof \Concise\Syntax\Token\Attribute) {
+				$result['arguments'][$i] = $data[(string) $arg];
 			}
-			else if($arg instanceof Code) {
-				$result['arguments'][$i] = $this->evalCode($arg->getCode());
+			else if($arg instanceof \Concise\Syntax\Token\Code) {
+				$result['arguments'][$i] = $this->evalCode((string) $arg);
 			}
 		}
 

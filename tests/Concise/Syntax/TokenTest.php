@@ -6,21 +6,21 @@ use \Concise\TestCase;
 
 class TokenTest extends TestCase
 {
-	public function testTypeIsRequiredByConstructor()
-	{
-		$attribute = new Token(Lexer::TOKEN_STRING);
-		$this->assertEquals(Lexer::TOKEN_STRING, $attribute->getType());
-	}
-
 	public function testDefaultValueIsNull()
 	{
-		$attribute = new Token(Lexer::TOKEN_STRING);
+		$attribute = new Token();
 		$this->assertNull($attribute->getValue());
 	}
 
 	public function testValueCanBeProvidedThroughConstructor()
 	{
-		$attribute = new Token(Lexer::TOKEN_STRING, 'abc');
+		$attribute = new Token\Value('abc');
 		$this->assertEquals('abc', $attribute->getValue());
+	}
+
+	public function testRenderAsStringUsesValue()
+	{
+		$attribute = new Token\Value('abc');
+		$this->assertEquals('abc', (string) $attribute);
 	}
 }

@@ -14,9 +14,9 @@ class LexerArrayTest extends LexerTestCase
 	protected function expectedTokens()
 	{
 		return array(
-			new Token(Lexer::TOKEN_ARRAY, array()),
-			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
-			new Token(Lexer::TOKEN_ARRAY, array(123, "abc")),
+			new Token\Value(array()),
+			new Token\Keyword('equals'),
+			new Token\Value(array(123, "abc")),
 		);
 	}
 

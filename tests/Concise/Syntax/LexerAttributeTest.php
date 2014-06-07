@@ -2,8 +2,6 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Syntax\Attribute;
-
 class LexerAttributeTest extends LexerTestCase
 {
 	protected function assertion()
@@ -14,9 +12,9 @@ class LexerAttributeTest extends LexerTestCase
 	protected function expectedTokens()
 	{
 		return array(
-			new Token(Lexer::TOKEN_ATTRIBUTE, 'x'),
-			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
-			new Token(Lexer::TOKEN_ATTRIBUTE, 'b'),
+			new Token\Attribute('x'),
+			new Token\Keyword('equals'),
+			new Token\Attribute('b'),
 		);
 	}
 
@@ -27,6 +25,6 @@ class LexerAttributeTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Attribute('x'), new Attribute('b'));
+		return array(new Token\Attribute('x'), new Token\Attribute('b'));
 	}
 }

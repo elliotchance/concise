@@ -12,9 +12,9 @@ class LexerFloatTest extends LexerTestCase
 	protected function expectedTokens()
 	{
 		return array(
-			new Token(Lexer::TOKEN_FLOAT, 1.23),
-			new Token(Lexer::TOKEN_KEYWORD, 'equals'),
-			new Token(Lexer::TOKEN_FLOAT, 0.45),
+			new Token\Value(1.23),
+			new Token\Keyword('equals'),
+			new Token\Value(0.45),
 		);
 	}
 

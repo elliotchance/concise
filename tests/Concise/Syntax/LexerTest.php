@@ -9,39 +9,42 @@ class LexerTest extends TestCase
 	public function tokenData()
 	{
 		return array(
-			'keyword' => array(Lexer::TOKEN_KEYWORD, 'equals'),
-			'attribute' => array(Lexer::TOKEN_ATTRIBUTE, 'z'),
-			'integer1' => array(Lexer::TOKEN_INTEGER, '123'),
-			'integer2' => array(Lexer::TOKEN_INTEGER, '-123'),
-			'integer3' => array(Lexer::TOKEN_INTEGER, '-123e10'),
-			'integer4' => array(Lexer::TOKEN_INTEGER, '-123e-10'),
-			'integer5' => array(Lexer::TOKEN_INTEGER, '-123E10'),
-			'integer6' => array(Lexer::TOKEN_INTEGER, '-123E+10'),
-			'float1' => array(Lexer::TOKEN_FLOAT, '1.23'),
-			'float2' => array(Lexer::TOKEN_FLOAT, '.23'),
-			'float3' => array(Lexer::TOKEN_FLOAT, '-1.23'),
-			'float4' => array(Lexer::TOKEN_FLOAT, '-.23'),
-			'float5' => array(Lexer::TOKEN_FLOAT, '1.23e2'),
-			'float6' => array(Lexer::TOKEN_FLOAT, '1.23E2'),
-			'float7' => array(Lexer::TOKEN_FLOAT, '1.23e+2'),
-			'float8' => array(Lexer::TOKEN_FLOAT, '1.23E-2'),
-			'string1' => array(Lexer::TOKEN_STRING, '"abc"'),
-			'string2' => array(Lexer::TOKEN_STRING, "'abc'"),
-			'string3' => array(Lexer::TOKEN_STRING, '"a\nbc"'),
-			'string4' => array(Lexer::TOKEN_STRING, "'a\nbc'"),
-			'string5' => array(Lexer::TOKEN_STRING, "\MyClass"),
-			'code1' => array(Lexer::TOKEN_CODE, "`abc`"),
-			'code2' => array(Lexer::TOKEN_CODE, "`ab\nc`"),
-			'array' => array(Lexer::TOKEN_ARRAY, "[]"),
+			'keyword' => array('equals', new Token\Keyword('equals')),
+			'attribute' => array('z',    new Token\Attribute('z')),
+			'integer1' => array('123',   new Token\Value('123')),
+			'integer2' => array('-123', new Token\Value('-123')),
+			'integer3' => array('-123e10', new Token\Value('-123e10')),
+			'integer4' => array('-123e-10', new Token\Value('-123e-10')),
+			'integer5' => array('-123E10', new Token\Value('-123E10')),
+			'integer6' => array('-123E+10', new Token\Value('-123E+10')),
+			'float1' => array('1.23', new Token\Value('1.23')),
+			'float2' => array('.23', new Token\Value('.23')),
+			'float3' => array('-1.23', new Token\Value('-1.23')),
+			'float4' => array('-.23', new Token\Value('-.23')),
+			'float5' => array('1.23e2', new Token\Value('1.23e2')),
+			'float6' => array('1.23E2', new Token\Value('1.23E2')),
+			'float7' => array('1.23e+2', new Token\Value('1.23e+2')),
+			'float8' => array('1.23E-2', new Token\Value('1.23E-2')),
+			'string1' => array('"abc"', new Token\Value('abc')),
+			'string2' => array("'abc'", new Token\Value("abc")),
+			'string3' => array('"a\nbc"', new Token\Value("a\nbc")),
+			'string4' => array("'a\nbc'", new Token\Value("a\nbc")),
+			'string5' => array("\MyClass", new Token\Value("MyClass")),
+			'code1' => array("`abc`", new Token\Code("abc")),
+			'code2' => array("`ab\nc`", new Token\Code("ab\nc")),
+			'regexp1' => array("/abc/", new Token\Regexp("abc")),
+			'array' => array("[]", new Token\Value(array())),
 		);
 	}
 
 	/**
 	 * @dataProvider tokenData
 	 */
-	public function testReadKeywordToken($expectedToken, $token)
+	public function testReadKeywordToken($string, $expectedToken)
 	{
-		$this->assertEquals($expectedToken, Lexer::getTokenType($token));
+		$lexer = new Lexer();
+		$result = $lexer->parse($string);
+		$this->assertEquals($expectedToken, $result['tokens'][0]);
 	}
 
 	public function testTokensReturnsAnArrayWithABlankString()
@@ -102,7 +105,7 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($string);
-		$this->assertEquals(array(new Token(Lexer::TOKEN_STRING, $expected)), $result['tokens']);
+		$this->assertEquals(array(new Token\Value($expected)), $result['tokens']);
 	}
 
 	public function testLexerUsesKeywordsFromMatcherParser()
