@@ -61,6 +61,10 @@ class TestCaseFixtureTest extends TestCase
 	public static function tearDownAfterClass()
 	{
 		$expected = array(
+			'prepare ',
+            'setUp ',
+            'prepare ',
+            'setUp ',
 			'prepare testNothing',
             'setUp testNothing',
             'finalize testNothing',
