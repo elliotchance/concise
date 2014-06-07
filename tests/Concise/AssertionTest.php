@@ -180,6 +180,9 @@ class AssertionTest extends TestCase
 		$assertion->run();
 	}
 
+	/**
+	 * @param string $theAssertion
+	 */
 	protected function compileAndRunAssertion($theAssertion)
 	{
 		$parser = MatcherParser::getInstance();

@@ -8,6 +8,7 @@ use \Concise\Services\Comparer;
 abstract class AbstractMatcher
 {
 	/**
+	 * @param string $syntax
 	 * @return bool
 	 */
 	public abstract function match($syntax, array $data = array());
@@ -18,6 +19,7 @@ abstract class AbstractMatcher
 	public abstract function supportedSyntaxes();
 
 	/**
+	 * @param string $syntax
 	 * @return string
 	 */
 	public function renderFailureMessage($syntax, array $data = array())

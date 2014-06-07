@@ -134,6 +134,9 @@ class MatcherParserTest extends TestCase
 		$parser->getKeywords();
 	}
 
+	/**
+	 * @param string[] $needles
+	 */
 	protected function assertArrayContains($needles,  $haystack)
 	{
 		foreach($needles as $needle) {

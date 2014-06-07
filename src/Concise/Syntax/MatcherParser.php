@@ -12,6 +12,9 @@ class MatcherParser
 
 	protected $keywords = array();
 
+	/**
+	 * @param string $syntax
+	 */
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();

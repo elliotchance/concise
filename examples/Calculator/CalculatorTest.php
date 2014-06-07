@@ -2,6 +2,10 @@
 
 class Calculator
 {
+    /**
+     * @param integer $a
+     * @param integer $b
+     */
     public function add($a, $b)
     {
         return $a + $b;

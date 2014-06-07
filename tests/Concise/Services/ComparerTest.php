@@ -35,6 +35,9 @@ class ComparerTest extends \Concise\TestCase
 		$this->assertFalse($this->comparer->compare(true, false));
 	}
 
+	/**
+	 * @param string $value
+	 */
 	protected function getConvertToStringMockThatExpects($value)
 	{
 		$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
