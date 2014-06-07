@@ -6,6 +6,9 @@ class TestCaseFixtureTest extends TestCase
 {
 	protected static $fixtureLog = array();
 
+	/**
+	 * @param string $method
+	 */
 	protected function addFixtureLog($method)
 	{
 		self::$fixtureLog[] = "$method " . $this->getName();
@@ -61,6 +64,10 @@ class TestCaseFixtureTest extends TestCase
 	public static function tearDownAfterClass()
 	{
 		$expected = array(
+			'prepare ',
+            'setUp ',
+            'prepare ',
+            'setUp ',
 			'prepare testNothing',
             'setUp testNothing',
             'finalize testNothing',

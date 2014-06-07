@@ -6,6 +6,7 @@ use \Concise\Services\CharacterConverter;
 
 class Lexer
 {
+
 	protected static function isKeyword($token)
 	{
 		return in_array($token, self::getKeywords());
@@ -67,6 +68,19 @@ class Lexer
 		return new Token\Attribute($t);
 	}
 
+	protected function consumeArray($string, &$startIndex)
+	{
+		for($i = 2; $startIndex + $i <= strlen($string); ++$i) {
+			$json = substr($string, $startIndex, $i);
+			$value = json_decode($json, true);
+			if(null !== $value) {
+				$startIndex += $i;
+				return $value;
+			}
+		}
+		throw new \Exception("Invalid array.");
+	}
+
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -91,6 +105,11 @@ class Lexer
 			else if($ch === '/') {
 				$t = $this->consumeRegexp($string, $i);
 				$r[] = new Token\Regexp($t);
+				$t = '';
+			}
+			else if($ch === '[') {
+				$t = $this->consumeArray($string, $i);
+				$r[] = new Token\Value($t);
 				$t = '';
 			}
 			else if($ch === ' ') {

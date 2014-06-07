@@ -11,6 +11,9 @@ class Throws extends AbstractMatcher
 		);
 	}
 
+	/**
+	 * @param callable $expectedClass
+	 */
 	protected function isKindOfClass(\Exception $exception, $expectedClass)
 	{
 		return (get_class($exception) === $expectedClass) || is_subclass_of($exception, $expectedClass);

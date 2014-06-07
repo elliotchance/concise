@@ -7,9 +7,9 @@ use \Concise\Syntax\MatcherParser;
 
 class AbstractMatcherTestCase extends TestCase
 {
-	public function testExtendsAbstractMatcher()
+	public function _test_extends_AbstractMatcher()
 	{
-		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $this->matcher);
+		return '`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher';
 	}
 
 	public function testCanRegisterMatcher()
@@ -39,6 +39,9 @@ class AbstractMatcherTestCase extends TestCase
 		return $mock;
 	}
 
+	/**
+	 * @param string $syntax
+	 */
 	protected function assertMatcherFailureMessage($syntax, array $args, $failureMessage)
 	{
 		try {
@@ -50,6 +53,9 @@ class AbstractMatcherTestCase extends TestCase
 		}
 	}
 
+	/**
+	 * @param string $syntax
+	 */
 	protected function assertMatcherFailure($syntax, array $args = array())
 	{
 		try {
@@ -61,6 +67,9 @@ class AbstractMatcherTestCase extends TestCase
 		}
 	}
 
+	/**
+	 * @param string $syntax
+	 */
 	protected function assertMatcherSuccess($syntax, array $args = array())
 	{
 		$this->assertTrue($this->matcher->match($syntax, $args));

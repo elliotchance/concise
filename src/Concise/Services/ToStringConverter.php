@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class ToStringConverter
 {
+	/**
+	 * @return string
+	 */
 	public function convertToString($value)
 	{
 		if(is_null($value) || is_bool($value) || is_resource($value)) {

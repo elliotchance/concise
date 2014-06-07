@@ -42,7 +42,7 @@ class AssertionTest extends TestCase
 			'c' => 'xyz'
 		);
 		$assertion = new Assertion('a equals b', $matcher, $data);
-		$expected = "\n  a = 123\n  b = \"abc\"\n  c = \"xyz\"\n";
+		$expected = "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
 		$this->assertEquals($expected, (string) $assertion);
 	}
 
@@ -180,6 +180,9 @@ class AssertionTest extends TestCase
 		$assertion->run();
 	}
 
+	/**
+	 * @param string $theAssertion
+	 */
 	protected function compileAndRunAssertion($theAssertion)
 	{
 		$parser = MatcherParser::getInstance();

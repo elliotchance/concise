@@ -4,6 +4,7 @@ namespace Concise;
 
 use \Concise\Syntax\Lexer;
 use \Concise\Services\ValueRenderer;
+use \Concise\Services\ValueDescriptor;
 
 class Assertion
 {
@@ -66,7 +67,7 @@ class Assertion
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean|string
 	 */
 	protected function executeAssertion()
 	{
@@ -90,6 +91,9 @@ class Assertion
 		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
 	}
 
+	/**
+	 * @param boolean|string $reason
+	 */
 	public function fail($reason)
 	{
 		if(!is_object($this->testCase)) {
@@ -126,10 +130,11 @@ class Assertion
 		$excludeKeys[] = '__dataSet';
 		
 		$renderer = new ValueRenderer();
+		$descriptor = new ValueDescriptor();
 		$r = "";
 		foreach($this->getData() as $k => $v) {
 			if(!in_array($k, $excludeKeys)) {
-				$r .= "\n  $k = " . $renderer->render($v);
+				$r .= "\n  $k (" . $descriptor->describe($v) . ") = " . $renderer->render($v);
 			}
 		}
 
@@ -139,6 +144,9 @@ class Assertion
 		return $r;
 	}
 
+	/**
+	 * @param string $description
+	 */
 	public function setDescription($description)
 	{
 		$this->description = $description;
@@ -162,11 +170,17 @@ class Assertion
 		return $this->shouldRunFinalize;
 	}
 
+	/**
+	 * @param boolean $shouldRunPrepare
+	 */
 	public function setShouldRunPrepare($shouldRunPrepare)
 	{
 		$this->shouldRunPrepare = $shouldRunPrepare;
 	}
 
+	/**
+	 * @param boolean $shouldRunFinalize
+	 */
 	public function setShouldRunFinalize($shouldRunFinalize)
 	{
 		$this->shouldRunFinalize = $shouldRunFinalize;

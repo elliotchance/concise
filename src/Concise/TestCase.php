@@ -31,9 +31,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function runMethod($method)
 	{
+		$this->setUp();
 		return $this->$method();
 	}
 
+	/**
+	 * @param string $method
+	 */
 	public function countAssertionsForMethod($method)
 	{
 		if(!$this->isConciseTest($method)) {
@@ -160,6 +164,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return get_object_vars($this);
 	}
 
+	/**
+	 * @param string $class
+	 */
 	protected function getStub($class, array $methods, array $constructorArgs = array())
 	{
 		// @test force class to exist
@@ -209,6 +216,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @param string $assertionSyntax
+	 */
 	protected function assertionsForDataSet($assertionSyntax, $dataSet)
 	{
 		// @test dataSet does not show up as an attribute when test fails
