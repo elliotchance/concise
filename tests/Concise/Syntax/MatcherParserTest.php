@@ -20,11 +20,11 @@ class MatcherParserTest extends TestCase
 		$this->parser = new MatcherParser();
 	}
 
-	public function testCompileReturnsAssertion()
+	public function _test_compile_returns_assertion()
 	{
 		$this->parser->registerMatcher(new \Concise\Matcher\Equals());
-		$matcher = $this->parser->compile('x equals y', $this->getData());
-		$this->assertInstanceOf('\Concise\Assertion', $matcher);
+		$this->matcher = $this->parser->compile('x equals y', $this->getData());
+		return '`$self->matcher` is instance of \Concise\Assertion';
 	}
 
 	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()

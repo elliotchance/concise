@@ -2,10 +2,10 @@
 
 namespace Concise\Matcher;
 
-class DidNotMatchExceptionTest extends \PHPUnit_Framework_TestCase
+class DidNotMatchExceptionTest extends \Concise\TestCase
 {
-	public function testIsATypeOfException()
+	public function _test_is_a_type_of_Exception()
 	{
-		$this->assertInstanceOf('\Exception', new DidNotMatchException());
+		return '`new \Concise\Matcher\DidNotMatchException()` is an instance of \Exception';
 	}
 }

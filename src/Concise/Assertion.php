@@ -6,6 +6,7 @@ use \Concise\Syntax\Lexer;
 use \Concise\Syntax\Attribute;
 use \Concise\Syntax\Code;
 use \Concise\Services\ValueRenderer;
+use \Concise\Services\ValueDescriptor;
 
 class Assertion
 {
@@ -128,10 +129,11 @@ class Assertion
 		$excludeKeys[] = '__dataSet';
 		
 		$renderer = new ValueRenderer();
+		$descriptor = new ValueDescriptor();
 		$r = "";
 		foreach($this->getData() as $k => $v) {
 			if(!in_array($k, $excludeKeys)) {
-				$r .= "\n  $k = " . $renderer->render($v);
+				$r .= "\n  $k (" . $descriptor->describe($v) . ") = " . $renderer->render($v);
 			}
 		}
 

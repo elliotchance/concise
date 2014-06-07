@@ -7,9 +7,9 @@ use \Concise\Syntax\MatcherParser;
 
 class AbstractMatcherTestCase extends TestCase
 {
-	public function testExtendsAbstractMatcher()
+	public function _test_extends_AbstractMatcher()
 	{
-		$this->assertInstanceOf('\Concise\Matcher\AbstractMatcher', $this->matcher);
+		return '`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher';
 	}
 
 	public function testCanRegisterMatcher()
