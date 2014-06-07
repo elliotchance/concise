@@ -23,6 +23,6 @@ foreach($syntaxes as $syntax => $description) {
 	}
 }
 
-$readme = preg_replace('/<!-- start matchers -->.*<!-- end matchers -->/ms', "<!-- start matchers -->\n$matchersDoc<!-- end matchers -->", $readme);
+$readme = preg_replace('/<!-- start matchers -->.*<!-- end matchers -->/ms', "<!-- start matchers -->\n\n$matchersDoc\n<!-- end matchers -->", $readme);
 
 file_put_contents($readmeFile, $readme);

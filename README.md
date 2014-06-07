@@ -70,6 +70,7 @@ Matchers
 --------
 
 <!-- start matchers -->
+
 * `? anything except ?`
 * `? does not end with ?`
 * `? does not equal ?`
@@ -85,7 +86,7 @@ Matchers
 * `? equals ?`
 * `? exactly equals ?`
 * `? instance of ?`
-* `? is a string`
+* `? is a string` - Test for string type.
 * `? is an array`
 * `? is an instance of ?`
 * `? is an int`
@@ -115,8 +116,8 @@ Matchers
 * `? throws exception`
 * `false`
 * `true` - Always pass.
-<!-- end matchers -->
 
+<!-- end matchers -->
 
 ### Adding Custom Matchers
 
