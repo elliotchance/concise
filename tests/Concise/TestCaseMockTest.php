@@ -21,4 +21,13 @@ class TestCaseMockTest extends TestCase
 		           ->will($this->returnValue(456));
 		return '`$self->mock->mymethod()` equals 456';
 	}
+
+	public function _test_mocks_will_auto_verify()
+	{
+		$this->mock = $this->getMock('\stdClass', array('mymethod'));
+		$this->mock->expects($this->once())
+		           ->method('mymethod')
+		           ->will($this->returnValue(456));
+		return '`$self->mock->mymethod()` equals 456';
+	}
 }
