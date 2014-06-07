@@ -4,31 +4,43 @@ namespace Concise\Services;
 
 class MatcherSyntaxAndDescriptionTest extends \Concise\TestCase
 {
+	protected function assertProcess(array $expected, array $actual)
+	{
+		$service = new MatcherSyntaxAndDescription();
+		$result = $service->process($expected);
+		$this->assertSame($actual, $result);
+	}
+
 	public function testNoDescriptions()
 	{
-		$data = array(
+		$this->assertProcess(array(
 			'? equals ?',
 			'? is equal to ?'
-		);
-		$service = new MatcherSyntaxAndDescription();
-		$result = $service->process($data);
-		$this->assertSame(array(
+		), array(
 			'? equals ?'      => null,
 			'? is equal to ?' => null
-		), $result);
+		));
 	}
 
 	public function testAllDescriptions()
 	{
-		$data = array(
-			'? equals ?' => 'foo',
-			'? is equal to ?' => 'bar'
-		);
-		$service = new MatcherSyntaxAndDescription();
-		$result = $service->process($data);
-		$this->assertSame(array(
+		$this->assertProcess(array(
 			'? equals ?'      => 'foo',
 			'? is equal to ?' => 'bar'
-		), $result);
+		), array(
+			'? equals ?'      => 'foo',
+			'? is equal to ?' => 'bar'
+		));
+	}
+
+	public function testMixedDescriptions()
+	{
+		$this->assertProcess(array(
+			'? equals ?',
+			'? is equal to ?' => 'bar'
+		), array(
+			'? equals ?'      => null,
+			'? is equal to ?' => 'bar'
+		));
 	}
 }
