@@ -31,6 +31,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function runMethod($method)
 	{
+		$this->prepare();
 		return $this->$method();
 	}
 
