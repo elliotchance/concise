@@ -3,6 +3,7 @@
 namespace Concise\Syntax;
 
 use \Concise\Assertion;
+use \Concise\Services\MatcherSyntaxAndDescription;
 
 class MatcherParser
 {
@@ -19,7 +20,8 @@ class MatcherParser
 	{
 		$found = array();
 		foreach($this->matchers as $matcher) {
-			$syntaxes = $matcher->supportedSyntaxes();
+			$service = new MatcherSyntaxAndDescription();
+			$syntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
 			if(in_array($syntax, $syntaxes)) {
 				$found[] = $matcher;
 			}
@@ -100,7 +102,10 @@ class MatcherParser
 	{
 		$r = array();
 		foreach($this->getMatchers() as $matcher) {
-			foreach($matcher->supportedSyntaxes() as $syntax) {
+			$service = new MatcherSyntaxAndDescription();
+			$syntaxes = $service->process($matcher->supportedSyntaxes());
+
+			foreach(array_keys($syntaxes) as $syntax) {
 				foreach(explode(' ', $syntax) as $word) {
 					if($word !== '?') {
 						$r[] = $word;
@@ -125,7 +130,10 @@ class MatcherParser
 	{
 		$r = array();
 		foreach($this->getMatchers() as $matcher) {
-			foreach($matcher->supportedSyntaxes() as $syntax) {
+			$service = new MatcherSyntaxAndDescription();
+			$syntaxes = $service->process($matcher->supportedSyntaxes());
+
+			foreach(array_keys($syntaxes) as $syntax) {
 				$r[] = $syntax;
 			}
 		}
