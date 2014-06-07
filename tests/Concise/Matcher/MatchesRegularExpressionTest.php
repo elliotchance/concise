@@ -12,10 +12,8 @@ class MatchesRegularExpressionTest extends AbstractMatcherTestCase
 		$this->matcher = new MatchesRegularExpression();
 	}
 
-	public function _test_comparisons()
+	public function _test_comparison()
 	{
-		return array(
-			'123 matches regular expression "\\\\d+"',
-		);
+		return '123 matches regular expression /\\d+/';
 	}
 }
