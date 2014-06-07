@@ -54,7 +54,6 @@ class ValueRendererTest extends \Concise\TestCase
 
 	public function _test_resource_value_renders_as_resource()
 	{
-		// @test cannot use attributes set in prepare()?
 		$renderer = new ValueRenderer();
 		$this->str = $renderer->render(fopen('.', 'r'));
 		return 'str starts with "Resource id #"';

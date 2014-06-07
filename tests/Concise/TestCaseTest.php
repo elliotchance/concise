@@ -47,9 +47,9 @@ class TestCaseStub2 extends TestCase
 
 class TestCaseTest extends TestCase
 {
-	public function testExtendsTestCase()
+	public function _test_extends_TestCase()
 	{
-		$this->assertInstanceOf('\Concise\TestCase', new TestCase());
+		return '`new \Concise\TestCase()` is an instance of \PHPUnit_Framework_TestCase';
 	}
 
 	public function testCountAllTests()
