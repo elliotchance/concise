@@ -17,4 +17,18 @@ class MatcherSyntaxAndDescriptionTest extends \Concise\TestCase
 			'? is equal to ?' => null
 		), $result);
 	}
+
+	public function testAllDescriptions()
+	{
+		$data = array(
+			'? equals ?' => 'foo',
+			'? is equal to ?' => 'bar'
+		);
+		$service = new MatcherSyntaxAndDescription();
+		$result = $service->process($data);
+		$this->assertSame(array(
+			'? equals ?'      => 'foo',
+			'? is equal to ?' => 'bar'
+		), $result);
+	}
 }
