@@ -21,6 +21,9 @@ class DataTypeChecker
 
 	protected function getType($value)
 	{
+		if(is_callable($value)) {
+			return 'callable';
+		}
 		return gettype($value);
 	}
 
