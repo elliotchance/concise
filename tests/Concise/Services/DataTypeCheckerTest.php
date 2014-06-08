@@ -22,13 +22,15 @@ class DataTypeCheckerTest extends \Concise\TestCase
 		};
 	}
 
-	public function _test_int_accepts_integers()
+	public function _test_check()
 	{
-		return '`$self->dataTypeChecker->check("int", 123)` is true';
-	}
-
-	public function _test_integer_accepts_integers()
-	{
-		return '`$self->dataTypeChecker->check("integer", 123)` is true';
+		$data = array(
+			array("int",      123),
+			array("integer",  123),
+			array("float",   1.23),
+			array("double",  1.23),
+			array("string", 'abc'),
+		);
+		return $this->assertionsForDataSet('`$self->dataTypeChecker->check(?, ?)` is true', $data);
 	}
 }
