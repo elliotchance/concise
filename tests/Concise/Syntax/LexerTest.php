@@ -120,7 +120,7 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfDoubleQuotedStringIsNotClosed()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse('"abc');
+		$lexer->parse('"abc');
 	}
 
 	/**
@@ -130,7 +130,7 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfSingleQuotedStringIsNotClosed()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse("'abc");
+		$lexer->parse("'abc");
 	}
 
 	/**
@@ -140,6 +140,13 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfArrayIsNotValid()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse('[abc');
+		$lexer->parse('[abc');
+	}
+
+	public function testLexerCanExtractExpectedTypeFromSyntax()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('?:int');
+		$this->assertSame(array('int'), $result['arguments'][0]->getAcceptedTypes());
 	}
 }
