@@ -26,4 +26,9 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	{
 		return '`$self->dataTypeChecker->check("int", 123)` is true';
 	}
+
+	public function _test_integer_accepts_integers()
+	{
+		return '`$self->dataTypeChecker->check("integer", 123)` is true';
+	}
 }
