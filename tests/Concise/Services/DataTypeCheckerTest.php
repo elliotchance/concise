@@ -36,4 +36,11 @@ class DataTypeCheckerTest extends \Concise\TestCase
 		);
 		return $this->assertionsForDataSet('`$self->dataTypeChecker->check(?, ?)` is true', $data);
 	}
+
+	public function _test_sendingValueNotListedInExpectedTypes_throws_exception()
+	{
+		$this->sendingValueNotListedInExpectedTypes = function() {
+			$this->dataTypeChecker->check("int,string", 1.23);
+		};
+	}
 }
