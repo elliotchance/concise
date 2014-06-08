@@ -7,7 +7,7 @@ class DoesNotThrow extends Throws
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not throw ?',
+			'? does not throw ?' => "Verify that a specific exception is not thrown.",
 		);
 	}
 

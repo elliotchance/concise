@@ -6,13 +6,15 @@ use \Concise\Services\ToStringConverter;
 
 class DoesNotMatchRegularExpression extends MatchesRegularExpression
 {
+	const DESCRIPTION = 'Check if a string does not match a regular expression.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not match regular expression ?',
-			'? doesnt match regular expression ?',
-			'? does not match regex ?',
-			'? doesnt match regex ?',
+			'? does not match regular expression ?' => self::DESCRIPTION,
+			'? doesnt match regular expression ?' => self::DESCRIPTION,
+			'? does not match regex ?' => self::DESCRIPTION,
+			'? doesnt match regex ?' => self::DESCRIPTION,
 		);
 	}
 
