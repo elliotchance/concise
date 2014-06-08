@@ -25,11 +25,14 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	public function _test_check()
 	{
 		$data = array(
-			array("int",      123),
-			array("integer",  123),
-			array("float",   1.23),
-			array("double",  1.23),
+			array("int", 123),
+			array("integer", 123),
+			array("float", 1.23),
+			array("double", 1.23),
 			array("string", 'abc'),
+			array("array", array()),
+			array("resource", fopen('.', 'r')),
+			array("object", new \stdClass()),
 		);
 		return $this->assertionsForDataSet('`$self->dataTypeChecker->check(?, ?)` is true', $data);
 	}
