@@ -12,17 +12,38 @@ class MatcherParser
 
 	protected $keywords = array();
 
+	protected $lexer;
+
+	protected $syntaxCache = array();
+
+	public function __construct()
+	{
+		$this->lexer = new Lexer();
+	}
+
+	protected function getRawSyntax($syntax)
+	{
+		if(!array_key_exists($syntax, $this->syntaxCache)) {
+			if(strpos($syntax, ':') === false) {
+				$this->syntaxCache[$syntax] = $syntax;
+			}
+			else {
+				$this->syntaxCache[$syntax] = $this->lexer->parse($syntax)['syntax'];
+			}
+		}
+		return $this->syntaxCache[$syntax];
+	}
+
 	/**
 	 * @param string $syntax
 	 */
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();
-		$lexer = new Lexer();
 		foreach($this->matchers as $matcher) {
 			$syntaxes = $matcher->supportedSyntaxes();
 			foreach($syntaxes as $s) {
-				if($lexer->parse($syntax)['syntax'] === $lexer->parse($s)['syntax']) {
+				if($this->getRawSyntax($syntax) === $this->getRawSyntax($s)) {
 					$found[] = $matcher;
 				}
 			}
@@ -42,8 +63,7 @@ class MatcherParser
 	 */
 	public function compile($string, array $data = array())
 	{
-		$lexer = new Lexer();
-		$result = $lexer->parse($string);
+		$result = $this->lexer->parse($string);
 		$matcher = $this->getMatcherForSyntax($result['syntax']);
 		$assertion = new Assertion($string, $matcher, $data);
 		return $assertion;
