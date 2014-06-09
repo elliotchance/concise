@@ -149,4 +149,16 @@ class MatcherParserTest extends TestCase
 		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
 		$this->assertArrayContains(array('? is null', '? is equal to ?'), $syntaxes);
 	}
+
+	public function testCanMatchSyntaxWithExpectedTypes()
+	{
+		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
+		$matcher->expects($this->once())
+		        ->method('supportedSyntaxes')
+		        ->will($this->returnValue(array('?:int equals ?:float')));
+
+		$this->parser->registerMatcher($matcher);
+		$assertion = $this->parser->compile('123 equals 1.23', array());
+		$this->assertSame($matcher, $assertion->getMatcher());
+	}
 }

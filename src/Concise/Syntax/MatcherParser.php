@@ -18,10 +18,13 @@ class MatcherParser
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();
+		$lexer = new Lexer();
 		foreach($this->matchers as $matcher) {
 			$syntaxes = $matcher->supportedSyntaxes();
-			if(in_array($syntax, $syntaxes)) {
-				$found[] = $matcher;
+			foreach($syntaxes as $s) {
+				if($lexer->parse($syntax)['syntax'] === $lexer->parse($s)['syntax']) {
+					$found[] = $matcher;
+				}
 			}
 		}
 		if(count($found) === 0) {
