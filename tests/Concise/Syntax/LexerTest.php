@@ -149,4 +149,11 @@ class LexerTest extends TestCase
 		$result = $lexer->parse('?:int');
 		$this->assertSame(array('int'), $result['arguments'][0]->getAcceptedTypes());
 	}
+
+	public function testLexerCanExtractExpectedTypesFromSyntax()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('?:int,float');
+		$this->assertSame(array('int', 'float'), $result['arguments'][0]->getAcceptedTypes());
+	}
 }
