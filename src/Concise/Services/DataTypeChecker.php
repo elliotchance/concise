@@ -4,18 +4,18 @@ namespace Concise\Services;
 
 class DataTypeChecker
 {
-	public function check($accepts, $value)
+	public function check(array $acceptedTypes, $value)
 	{
-		if($accepts === '') {
+		if(count($acceptedTypes) === 0) {
 			return true;
 		}
 
-		$acceptedTypes = explode(',', $accepts);
 		foreach($acceptedTypes as $acceptedType) {
 			if($this->matches($acceptedType, $value)) {
 				return true;
 			}
 		}
+		$accepts = implode(',', $acceptedTypes);
 		throw new \InvalidArgumentException($this->getType($value) . ' not found in ' . $accepts);
 	}
 

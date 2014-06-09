@@ -12,30 +12,30 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function _test_blank_accepts_anything()
 	{
-		return '`$self->dataTypeChecker->check("", 123)` is true';
+		return '`$self->dataTypeChecker->check(array(), 123)` is true';
 	}
 
 	public function _test_sendingValueOfDifferentExpectedType_throws_exception()
 	{
 		$self = $this;
 		$this->sendingValueOfDifferentExpectedType = function() use ($self) {
-			$self->dataTypeChecker->check("int", 1.23);
+			$self->dataTypeChecker->check(array("int"), 1.23);
 		};
 	}
 
 	public function _test_check()
 	{
 		$data = array(
-			array("int", 123),
-			array("integer", 123),
-			array("float", 1.23),
-			array("double", 1.23),
-			array("string", 'abc'),
-			array("array", array()),
-			array("resource", fopen('.', 'r')),
-			array("object", new \stdClass()),
-			array("callable", function() {}),
-			array("int,float", 1.23),
+			array(array("int"), 123),
+			array(array("integer"), 123),
+			array(array("float"), 1.23),
+			array(array("double"), 1.23),
+			array(array("string"), 'abc'),
+			array(array("array"), array()),
+			array(array("resource"), fopen('.', 'r')),
+			array(array("object"), new \stdClass()),
+			array(array("callable"), function() {}),
+			array(array("int", "float"), 1.23),
 		);
 		return $this->assertionsForDataSet('`$self->dataTypeChecker->check(?, ?)` is true', $data);
 	}
@@ -43,7 +43,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	public function _test_sendingValueNotListedInExpectedTypes_throws_exception()
 	{
 		$this->sendingValueNotListedInExpectedTypes = function() {
-			$this->dataTypeChecker->check("int,string", 1.23);
+			$this->dataTypeChecker->check(array("int", "string"), 1.23);
 		};
 	}
 }

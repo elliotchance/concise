@@ -161,4 +161,20 @@ class MatcherParserTest extends TestCase
 		$assertion = $this->parser->compile('123 equals 1.23', array());
 		$this->assertSame($matcher, $assertion->getMatcher());
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage double not found in int
+	 */
+	public function testWillValidateAllAttributes()
+	{
+		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
+		$matcher->expects($this->once())
+		        ->method('supportedSyntaxes')
+		        ->will($this->returnValue(array('?:int equals ?:float')));
+
+		$this->parser->registerMatcher($matcher);
+		$assertion = $this->parser->compile('1.23 equals 123', array());
+		$assertion->run();
+	}
 }

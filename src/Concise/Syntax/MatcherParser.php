@@ -36,6 +36,7 @@ class MatcherParser
 
 	/**
 	 * @param string $syntax
+	 * @return array
 	 */
 	public function getMatcherForSyntax($syntax)
 	{
@@ -44,7 +45,10 @@ class MatcherParser
 			$syntaxes = $matcher->supportedSyntaxes();
 			foreach($syntaxes as $s) {
 				if($this->getRawSyntax($syntax) === $this->getRawSyntax($s)) {
-					$found[] = $matcher;
+					$found[] = array(
+						'matcher' => $matcher,
+						'originalSyntax' => $s,
+					);
 				}
 			}
 		}
@@ -64,8 +68,9 @@ class MatcherParser
 	public function compile($string, array $data = array())
 	{
 		$result = $this->lexer->parse($string);
-		$matcher = $this->getMatcherForSyntax($result['syntax']);
-		$assertion = new Assertion($string, $matcher, $data);
+		$match = $this->getMatcherForSyntax($result['syntax']);
+		$assertion = new Assertion($string, $match['matcher'], $data);
+		$assertion->setOriginalSyntax($match['originalSyntax']);
 		return $assertion;
 	}
 

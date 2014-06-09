@@ -163,20 +163,27 @@ class TestCaseTest extends TestCase
 		$this->assertAssertions($expected, $testCase->getAssertionsForMethod('_test_c'));
 	}
 
+	protected function createAssertion($assertionString, Matcher\AbstractMatcher $matcher, array $data, $shouldRunPrepare, $shouldRunFinalize, $originalSyntax)
+	{
+		$assertion = new Assertion($assertionString, $matcher, $data, $shouldRunPrepare, $shouldRunFinalize);
+		$assertion->setOriginalSyntax($originalSyntax);
+		return $assertion;
+	}
+
 	public function testGetAllAssertions()
 	{
 		$testCase = new TestCaseStub1();
 		$expectedAttributes = self::getPHPUnitProperties();
 		$expected = array(
 			'_test_x_equals_b' => array(
-				new Assertion('x equals b', new Matcher\Equals(), $expectedAttributes, true, true),
+				$this->createAssertion('x equals b', new Matcher\Equals(), $expectedAttributes, true, true, '? equals ?'),
 			),
 			'_test_b' => array(
-				new Assertion('b equals x', new Matcher\Equals(), $expectedAttributes, true, true),
+				$this->createAssertion('b equals x', new Matcher\Equals(), $expectedAttributes, true, true, '? equals ?'),
 			),
 			'_test_c' => array(
-				new Assertion('c equals d', new Matcher\Equals(), $expectedAttributes, true, false),
-				new Assertion('d equals c', new Matcher\Equals(), $expectedAttributes, false, true),
+				$this->createAssertion('c equals d', new Matcher\Equals(), $expectedAttributes, true, false, '? equals ?'),
+				$this->createAssertion('d equals c', new Matcher\Equals(), $expectedAttributes, false, true, '? equals ?'),
 			)
 		);
 		$this->assertEquals($expected, $testCase->getAllAssertions());
