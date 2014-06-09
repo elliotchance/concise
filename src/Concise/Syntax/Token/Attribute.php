@@ -14,6 +14,7 @@ class Attribute extends Token
 		$pos = strpos($value, ':');
 		if($pos !== false) {
 			$this->acceptedTypes = explode(',', substr($value, $pos + 1));
+			$this->value = '?';
 		}
 	}
 
