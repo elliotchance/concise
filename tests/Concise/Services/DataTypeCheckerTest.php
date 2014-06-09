@@ -17,8 +17,9 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function _test_sendingValueOfDifferentExpectedType_throws_exception()
 	{
-		$this->sendingValueOfDifferentExpectedType = function() {
-			$this->dataTypeChecker->check("int", 1.23);
+		$self = $this;
+		$this->sendingValueOfDifferentExpectedType = function() use ($self) {
+			$self->dataTypeChecker->check("int", 1.23);
 		};
 	}
 
