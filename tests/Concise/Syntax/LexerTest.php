@@ -10,8 +10,8 @@ class LexerTest extends TestCase
 	{
 		return array(
 			'keyword' => array('equals', new Token\Keyword('equals')),
-			'attribute' => array('z',    new Token\Attribute('z')),
-			'integer1' => array('123',   new Token\Value('123')),
+			'attribute' => array('z', new Token\Attribute('z')),
+			'integer1' => array('123', new Token\Value('123')),
 			'integer2' => array('-123', new Token\Value('-123')),
 			'integer3' => array('-123e10', new Token\Value('-123e10')),
 			'integer4' => array('-123e-10', new Token\Value('-123e-10')),

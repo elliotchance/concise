@@ -163,8 +163,8 @@ class MatcherParserTest extends TestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage double not found in int
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Argument 1 (1.23) must be int.
 	 */
 	public function testWillValidateAllAttributes()
 	{

@@ -80,7 +80,13 @@ class Assertion
 		$lexer = new Lexer();
 		$args = $lexer->parse($this->originalSyntax)['arguments'];
 		for($i = 0; $i < count($args); ++$i) {
-			$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
+			try {
+				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
+			}
+			catch(\InvalidArgumentException $e) {
+				$acceptedTypes = implode(" or ", $args[$i]->getAcceptedTypes());
+				throw new \Exception("Argument " . ($i + 1) . " (" . $arguments[$i] . ") must be $acceptedTypes.");
+			}
 		}
 	}
 
