@@ -36,14 +36,6 @@ class TestCaseTest extends TestCase
 		$this->noSuchAttribute;
 	}
 
-	public function testDataProviderWillAlwaysContainAtLeastOneItem()
-	{
-		$stub = $this->getStub('\Concise\TestCase', array(
-			'getAllAssertions' => array()
-		));
-		$this->assertCount(1, $stub->dataProvider());
-	}
-
 	public function testCanExtractDataFromTest()
 	{
 		$this->x = 123;
@@ -111,18 +103,6 @@ class TestCaseTest extends TestCase
 			)
 		));
 		return $testCase->getAssertionsForMethod('abc');
-	}
-
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage There must be at least one assertion returned from the test 'myTest'.
-	 */
-	public function testWillThrowExceptionIfTestMethodReturnsEmptyArray()
-	{
-		$testCase = $this->getStub('\Concise\TestCase', array(
-			'runMethod' => array()
-		));
-		$testCase->getRawAssertionsForMethod('myTest');
 	}
 
 	public function testInlineAssertion()
