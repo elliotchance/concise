@@ -84,15 +84,6 @@ class TestCaseTest extends TestCase
 		$this->assertFalse(isset($this->x));
 	}
 
-	public function expectedFixtureStatuses()
-	{
-		return array(
-			array(0, true, false),
-			array(1, false, false),
-			array(2, false, true),
-		);
-	}
-
 	protected function getAssertionsForFixtureTests()
 	{
 		$testCase = $this->getStub('\Concise\TestCase', array(
