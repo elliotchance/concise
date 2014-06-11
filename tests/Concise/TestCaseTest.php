@@ -339,4 +339,10 @@ class TestCaseTest extends TestCase
 		));
 		$testCase->getRawAssertionsForMethod('myTest');
 	}
+
+	public function testInlineAssertion()
+	{
+		$this->abc = 123;
+		$this->assert('abc equals 123');
+	}
 }

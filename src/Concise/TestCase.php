@@ -251,4 +251,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			'preserveGlobalState' => true,
 		);
 	}
+
+	public function assert($assertionString)
+	{
+		$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+		$assertion->setTestCase($this);
+		$assertion->run();
+	}
 }
