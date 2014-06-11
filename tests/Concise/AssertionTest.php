@@ -120,10 +120,10 @@ class AssertionTest extends TestCase
 		$this->compileAndRunAssertion('`false` equals `false`');
 	}
 
-	public function _test_assertion_code_can_use_attributes()
+	public function testAssertionCodeCanUseAttributes()
 	{
 		$this->x = 123;
-		return '`$self->x` equals 123';
+		$this->assert('`$self->x` equals 123');
 	}
 
 	public function testDoNotShowPHPUnitPropertiesOnError()

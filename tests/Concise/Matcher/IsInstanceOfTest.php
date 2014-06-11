@@ -10,13 +10,21 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 		$this->matcher = new IsInstanceOf();
 	}
 
-	public function _test_comparisons()
+	public function comparisons()
+	{
+		return array(
+			array('x is an instance of \Concise\Matcher\IsInstanceOfTest'),
+			array('x instance of \Concise\Matcher\AbstractMatcherTestCase'),
+		);
+	}
+
+	/**
+	 * @dataProvider comparisons
+	 */
+	public function testComparisons($assertion)
 	{
 		$this->x = new self();
-		return array(
-			'x is an instance of \Concise\Matcher\IsInstanceOfTest',
-			'x instance of \Concise\Matcher\AbstractMatcherTestCase'
-		);
+		$this->assert($assertion);
 	}
 
 	public function testFailure()

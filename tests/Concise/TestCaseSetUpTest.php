@@ -10,8 +10,8 @@ class TestCaseSetUpTest extends TestCase
 		$this->xyz = 456;
 	}
 
-	public function _test_can_use_attributes_set_in_setUp()
+	public function testCanUseAttributesSetInSetUp()
 	{
-		return 'xyz equals 456';
+		$this->assert('xyz equals 456');
 	}
 }

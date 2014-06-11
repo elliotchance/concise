@@ -12,12 +12,20 @@ class StringEndsWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringEndsWith();
 	}
 
-	public function _test_comparisons()
+	public function comparisons()
 	{
 		return array(
-			'number substring'  => '123 ends with 23',
-			'basic string'      => '"abc" ends with "bc"',
-			'strings are equal' => '"abc" ends with "abc"',
+			'number substring'  => array('123 ends with 23'),
+			'basic string'      => array('"abc" ends with "bc"'),
+			'strings are equal' => array('"abc" ends with "abc"'),
 		);
+	}
+
+	/**
+	 * @dataProvider comparisons
+	 */
+	public function testComparisons($assert)
+	{
+		$this->assert($assert);
 	}
 }

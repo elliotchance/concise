@@ -52,11 +52,11 @@ class ValueRendererTest extends \Concise\TestCase
 		$this->assertSame('null', $this->renderer->render(null));
 	}
 
-	public function _test_resource_value_renders_as_resource()
+	public function testResourceValueRendersAsResource()
 	{
 		$renderer = new ValueRenderer();
 		$this->str = $renderer->render(fopen('.', 'r'));
-		return 'str starts with "Resource id #"';
+		$this->assert('str starts with "Resource id #"');
 	}
 
 	public function testFunctionRendersAsString()

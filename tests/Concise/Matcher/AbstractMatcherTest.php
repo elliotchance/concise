@@ -36,8 +36,8 @@ class AbstractMatcherTest extends TestCase
 		$this->assertEquals('', $this->matcher->renderFailureMessage(''));
 	}
 
-	public function _test_has_access_to_comparer()
+	public function testHasAccessToComparer()
 	{
-		return '`$self->matcher->getComparer()` is instance of \Concise\Services\Comparer';
+		$this->assert('`$self->matcher->getComparer()` is instance of \Concise\Services\Comparer');
 	}
 }

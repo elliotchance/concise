@@ -12,8 +12,8 @@ class IsNullTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNull();
 	}
 
-	public function _test_null()
+	public function testComparison()
 	{
-		return '`null` is null';
+		$this->assert('`null` is null');
 	}
 }

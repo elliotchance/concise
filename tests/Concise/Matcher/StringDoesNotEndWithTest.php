@@ -12,11 +12,19 @@ class StringDoesNotEndWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringDoesNotEndWith();
 	}
 
-	public function _test_comparisons()
+	public function comparisons()
 	{
 		return array(
-			'string does not start with another string' => '"abc" does not end with "a"',
-			'needle longer than haystack'               => '"abc" does not end with "abcd"',
+			'string does not start with another string' => array('"abc" does not end with "a"'),
+			'needle longer than haystack'               => array('"abc" does not end with "abcd"'),
 		);
+	}
+
+	/**
+	 * @dataProvider comparisons
+	 */
+	public function testComparisons($assert)
+	{
+		$this->assert($assert);
 	}
 }

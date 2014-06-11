@@ -12,10 +12,8 @@ class TrueTest extends AbstractMatcherTestCase
 		$this->matcher = new True();
 	}
 
-	public function _test_comparisons()
+	public function testComparison()
 	{
-		return array(
-			'true',
-		);
+		$this->assert('true');
 	}
 }

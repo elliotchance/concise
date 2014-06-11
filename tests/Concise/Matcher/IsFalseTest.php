@@ -12,10 +12,8 @@ class IsFalseTest extends AbstractMatcherTestCase
 		$this->matcher = new IsFalse();
 	}
 
-	public function _test_comparisons()
+	public function testComparisons()
 	{
-		return array(
-			'`false` is false'
-		);
+		$this->assert('`false` is false');
 	}
 }

@@ -12,10 +12,8 @@ class ExactlyEqualsTest extends AbstractMatcherTestCase
 		$this->matcher = new ExactlyEquals();
 	}
 
-	public function _test_comparisons()
+	public function testComparison()
 	{
-		return array(
-			'123 exactly equals 123',
-		);
+		$this->assert('123 exactly equals 123');
 	}
 }

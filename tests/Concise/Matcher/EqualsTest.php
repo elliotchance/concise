@@ -12,12 +12,20 @@ class EqualsTest extends AbstractMatcherTestCase
 		$this->matcher = new Equals();
 	}
 
-	public function _test_comparisons()
+	public function comparisons()
 	{
 		return array(
-			'123 equals 123',
-			'123 equals 123.0',
-			'123 equals "123"'
+			array('123 equals 123'),
+			array('123 equals 123.0'),
+			array('123 equals "123"'),
 		);
+	}
+
+	/**
+	 * @dataProvider comparisons
+	 */
+	public function testComparisons($assertion)
+	{
+		$this->assert($assertion);
 	}
 }

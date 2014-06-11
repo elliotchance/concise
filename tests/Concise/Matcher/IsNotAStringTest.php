@@ -12,10 +12,8 @@ class IsNotAStringTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNotAString();
 	}
 
-	public function _test_comparisons()
+	public function testComparisons()
 	{
-		return array(
-			'123 is not a string',
-		);
+		$this->assert('123 is not a string');
 	}
 }

@@ -10,10 +10,8 @@ class IsTrueTest extends AbstractMatcherTestCase
 		$this->matcher = new IsTrue();
 	}
 
-	public function _test_comparisons()
+	public function testComparisons()
 	{
-		return array(
-			'`true` is true',
-		);
+		$this->assert('`true` is true');
 	}
 }
