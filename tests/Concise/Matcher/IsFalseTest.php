@@ -6,9 +6,9 @@ use \Concise\TestCase;
 
 class IsFalseTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsFalse();
 	}
 

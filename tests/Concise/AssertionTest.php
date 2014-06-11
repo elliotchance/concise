@@ -90,64 +90,6 @@ class AssertionTest extends TestCase
 		$this->assertEquals('? equals ?', $assertion->getDescription());
 	}
 
-	public function testPrepareIsCalledAsPartOfTheAssertion()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), true, false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->once())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
-	public function testShouldUsePrepareDefaultsToFalse()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$this->assertSame(false, $assertion->shouldRunPrepare());
-	}
-
-	public function testCanChangeStatusOfPrepareAfterConstructor()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$assertion->setShouldRunPrepare(true);
-		$this->assertSame(true, $assertion->shouldRunPrepare());
-	}
-
-	public function testCanSetShouldRunPrepareInConstructor()
-	{
-		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), true);
-		$this->assertSame(true, $assertion->shouldRunPrepare());
-	}
-
-	public function testPrepareIsNotCalledIfFixturesAreSetNotToBeRun()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->never())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
-	public function testFinalizeIsNotCalledIfFixturesAreSetNotToBeRun()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
-		$testCase->expects($this->never())
-		         ->method('finalize')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
 	/**
 	 * @param string $theAssertion
 	 */

@@ -293,24 +293,6 @@ class TestCaseTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider expectedFixtureStatuses
-	 */
-	public function testGetAssertionsForMethodWillSetPrepareStatus($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
-	{
-		$assertions = $this->getAssertionsForFixtureTests();
-		$this->assertSame($shouldRunPrepare, $assertions[$assertionIndex]->shouldRunPrepare());
-	}
-
-	public function testPrepareIsCalledBySetup()
-	{
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->once())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$testCase->setUp();
-	}
-
-	/**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage There must be at least one assertion returned from the test 'myTest'.
 	 */

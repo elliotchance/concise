@@ -20,14 +20,11 @@ class Assertion
 
 	protected $description = '';
 
-	protected $shouldRunPrepare;
-
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false)
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
-		$this->shouldRunPrepare = $shouldRunPrepare;
 	}
 
 	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
@@ -106,9 +103,6 @@ class Assertion
 
 	public function run()
 	{
-		if($this->shouldRunPrepare()) {
-			$this->testCase->prepare();
-		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
 			$this->success();
@@ -152,18 +146,5 @@ class Assertion
 			return $this->getAssertion();
 		}
 		return $this->description . " (" . $this->getAssertion() . ")";
-	}
-
-	public function shouldRunPrepare()
-	{
-		return $this->shouldRunPrepare;
-	}
-
-	/**
-	 * @param boolean $shouldRunPrepare
-	 */
-	public function setShouldRunPrepare($shouldRunPrepare)
-	{
-		$this->shouldRunPrepare = $shouldRunPrepare;
 	}
 }

@@ -25,9 +25,9 @@ class MyMatcher extends AbstractMatcher
 
 class AbstractMatcherTest extends TestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new MyMatcher();
 	}
 

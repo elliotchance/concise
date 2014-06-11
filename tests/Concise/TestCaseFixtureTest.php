@@ -20,12 +20,6 @@ class TestCaseFixtureTest extends TestCase
 		$this->addFixtureLog('setUp');
 	}
 
-	public function prepare()
-	{
-		parent::prepare();
-		$this->addFixtureLog('prepare');
-	}
-
 	public function tearDown()
 	{
 		parent::tearDown();
@@ -58,18 +52,13 @@ class TestCaseFixtureTest extends TestCase
 	public static function tearDownAfterClass()
 	{
 		$expected = array(
-			'prepare ',
             'setUp ',
-            'prepare ',
             'setUp ',
-			'prepare testNothing',
             'setUp testNothing',
             'tearDown testNothing',
             'setUp test with data set "_test_1_equals_1: 1 equals 1"',
-            'prepare test with data set "_test_1_equals_1: 1 equals 1"',
             'tearDown test with data set "_test_1_equals_1: 1 equals 1"',
             'setUp test with data set "_test_a_few_things: 1 equals 1"',
-            'prepare test with data set "_test_a_few_things: 1 equals 1"',
             'tearDown test with data set "_test_a_few_things: 1 equals 1"',
             'setUp test with data set "_test_a_few_things: 2 equals 2"',
             'tearDown test with data set "_test_a_few_things: 2 equals 2"',

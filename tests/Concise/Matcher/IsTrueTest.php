@@ -4,9 +4,9 @@ namespace Concise\Matcher;
 
 class IsTrueTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsTrue();
 	}
 
