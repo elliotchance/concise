@@ -22,15 +22,12 @@ class Assertion
 
 	protected $shouldRunPrepare;
 
-	protected $shouldRunFinalize;
-
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false, $shouldRunFinalize = false)
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false)
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
 		$this->shouldRunPrepare = $shouldRunPrepare;
-		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 
 	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
@@ -119,9 +116,6 @@ class Assertion
 		else {
 			$this->fail($result);
 		}
-		if($this->shouldRunFinalize()) {
-			$this->testCase->finalize();
-		}
 	}
 
 	public function __toString()
@@ -165,24 +159,11 @@ class Assertion
 		return $this->shouldRunPrepare;
 	}
 
-	public function shouldRunFinalize()
-	{
-		return $this->shouldRunFinalize;
-	}
-
 	/**
 	 * @param boolean $shouldRunPrepare
 	 */
 	public function setShouldRunPrepare($shouldRunPrepare)
 	{
 		$this->shouldRunPrepare = $shouldRunPrepare;
-	}
-
-	/**
-	 * @param boolean $shouldRunFinalize
-	 */
-	public function setShouldRunFinalize($shouldRunFinalize)
-	{
-		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 }

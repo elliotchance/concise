@@ -301,15 +301,6 @@ class TestCaseTest extends TestCase
 		$this->assertSame($shouldRunPrepare, $assertions[$assertionIndex]->shouldRunPrepare());
 	}
 
-	/**
-	 * @dataProvider expectedFixtureStatuses
-	 */
-	public function testGetAssertionsForMethodWillSetFinalizeStatus($assertionIndex, $shouldRunPrepare, $shouldRunFinalize)
-	{
-		$assertions = $this->getAssertionsForFixtureTests();
-		$this->assertSame($shouldRunFinalize, $assertions[$assertionIndex]->shouldRunFinalize());
-	}
-
 	public function testPrepareIsCalledBySetup()
 	{
 		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
@@ -317,15 +308,6 @@ class TestCaseTest extends TestCase
 		         ->method('prepare')
 		         ->will($this->returnValue(null));
 		$testCase->setUp();
-	}
-
-	public function testFinalizeIsCalledByTearDown()
-	{
-		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
-		$testCase->expects($this->once())
-		         ->method('finalize')
-		         ->will($this->returnValue(null));
-		$testCase->tearDown();
 	}
 
 	/**

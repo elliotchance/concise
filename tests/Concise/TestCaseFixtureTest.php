@@ -32,12 +32,6 @@ class TestCaseFixtureTest extends TestCase
 		$this->addFixtureLog('tearDown');
 	}
 
-	public function finalize()
-	{
-		parent::finalize();
-		$this->addFixtureLog('finalize');
-	}
-
 	public function _test_1_equals_1()
 	{
 	}
@@ -70,11 +64,9 @@ class TestCaseFixtureTest extends TestCase
             'setUp ',
 			'prepare testNothing',
             'setUp testNothing',
-            'finalize testNothing',
             'tearDown testNothing',
             'setUp test with data set "_test_1_equals_1: 1 equals 1"',
             'prepare test with data set "_test_1_equals_1: 1 equals 1"',
-            'finalize test with data set "_test_1_equals_1: 1 equals 1"',
             'tearDown test with data set "_test_1_equals_1: 1 equals 1"',
             'setUp test with data set "_test_a_few_things: 1 equals 1"',
             'prepare test with data set "_test_a_few_things: 1 equals 1"',
@@ -82,7 +74,6 @@ class TestCaseFixtureTest extends TestCase
             'setUp test with data set "_test_a_few_things: 2 equals 2"',
             'tearDown test with data set "_test_a_few_things: 2 equals 2"',
             'setUp test with data set "_test_a_few_things: 3 equals 3"',
-            'finalize test with data set "_test_a_few_things: 3 equals 3"',
             'tearDown test with data set "_test_a_few_things: 3 equals 3"',
 		);
 		if(self::$fixtureLog !== $expected) {

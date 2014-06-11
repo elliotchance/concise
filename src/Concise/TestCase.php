@@ -90,7 +90,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$r[] = $this->getMatcherParserInstance()->compile($a, $this->getData());
 		}
 		$r[0]->setShouldRunPrepare(true);
-		$r[count($r) - 1]->setShouldRunFinalize(true);
 		return $r;
 	}
 
@@ -184,10 +183,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 	}
 
-	public function finalize()
-	{
-	}
-
 	protected function getRealTestName()
 	{
 		$name = substr($this->getName(), 20);
@@ -205,14 +200,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		parent::setup();
 		if($this->shouldRunFixtures()) {
 			$this->prepare();
-		}
-	}
-
-	public function tearDown()
-	{
-		parent::tearDown();
-		if($this->shouldRunFixtures()) {
-			$this->finalize();
 		}
 	}
 
