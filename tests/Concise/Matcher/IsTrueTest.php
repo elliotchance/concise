@@ -19,4 +19,9 @@ class IsTrueTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('123 is true');
 	}
+
+	public function testOneIsNotTrue()
+	{
+		$this->assertFailure('1 is true');
+	}
 }
