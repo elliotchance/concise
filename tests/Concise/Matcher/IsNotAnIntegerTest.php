@@ -12,19 +12,13 @@ class IsNotAnIntegerTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNotAnInteger();
 	}
 
-	public function comparisons()
+	public function testStringThatRepresentsAnIntegerIsNotAnInteger()
 	{
-		return array(
-			array('"123" is not an integer'),
-			array('1.23 is not an integer'),
-		);
+		$this->assert('"123" is not an integer');
 	}
 
-	/**
-	 * @dataProvider comparisons
-	 */
-	public function testComparisons($assert)
+	public function testFloatThatIsAWholeNumberIsNotAnInteger()
 	{
-		$this->assert($assert);
+		$this->assert('1.0 is not an integer');
 	}
 }
