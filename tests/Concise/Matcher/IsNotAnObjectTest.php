@@ -16,4 +16,9 @@ class IsNotAnObjectTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 is not an object');
 	}
+
+	public function testClassNameIsNotAnObject()
+	{
+		$this->assert('\My\Class is not an object');
+	}
 }
