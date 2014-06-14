@@ -12,9 +12,13 @@ class IsAnIntegerTest extends AbstractMatcherTestCase
 		$this->matcher = new IsAnInteger();
 	}
 
-	public function testComparison()
+	public function testIntegerIsAnInteger()
 	{
-		$this->x = 123;
-		$this->assert('x is an integer');
+		$this->assert('123 is an integer');
+	}
+
+	public function testFloatIsNotAnInteger()
+	{
+		$this->assertFailure('123.0 is an integer');
 	}
 }
