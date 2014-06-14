@@ -24,8 +24,13 @@ class EqualsTest extends AbstractMatcherTestCase
 	/**
 	 * @dataProvider comparisons
 	 */
-	public function testComparisons($assertion)
+	public function testEquals($assertion)
 	{
 		$this->assert($assertion);
+	}
+
+	public function testEqualsFailure()
+	{
+		$this->assertFailure("123 equals 124");
 	}
 }
