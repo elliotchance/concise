@@ -12,7 +12,7 @@ class IsNullTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNull();
 	}
 
-	public function testComparison()
+	public function testIsNull()
 	{
 		$this->assert('`null` is null');
 	}
