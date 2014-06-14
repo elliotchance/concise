@@ -21,4 +21,9 @@ class IsFalseTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('0 is false');
 	}
+
+	public function testEmptyStringIsNotFalse()
+	{
+		$this->assertFailure('"" is false');
+	}
 }
