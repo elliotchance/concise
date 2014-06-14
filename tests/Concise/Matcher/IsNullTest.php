@@ -16,4 +16,9 @@ class IsNullTest extends AbstractMatcherTestCase
 	{
 		$this->assert('`null` is null');
 	}
+
+	public function testIsNullFailure()
+	{
+		$this->assertFailure('123 is null');
+	}
 }
