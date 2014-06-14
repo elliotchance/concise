@@ -21,4 +21,9 @@ class IsAStringTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('123 is a string');
 	}
+
+	public function testClassNameIsAString()
+	{
+		$this->assert('\My\Class is a string');
+	}
 }
