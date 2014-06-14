@@ -16,4 +16,9 @@ class IsNotAStringTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 is not a string');
 	}
+
+	public function testIsNotAStringFailure()
+	{
+		$this->assertFailure('"123" is not a string');
+	}
 }
