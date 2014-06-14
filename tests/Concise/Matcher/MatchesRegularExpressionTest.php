@@ -16,4 +16,9 @@ class MatchesRegularExpressionTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 matches regular expression /\\d+/');
 	}
+
+	public function testMatchesRegularExpressionFailure()
+	{
+		$this->assertFailure('"abc" matches regular expression /\\d+/');
+	}
 }
