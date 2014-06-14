@@ -16,4 +16,9 @@ class IsNotNullTest extends AbstractMatcherTestCase
 	{
 		$this->assert('0 is not null');
 	}
+
+	public function testABlankStringIsNotNull()
+	{
+		$this->assert('"" is not null');
+	}
 }
