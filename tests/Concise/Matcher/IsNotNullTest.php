@@ -12,22 +12,8 @@ class IsNotNullTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNotNull();
 	}
 
-	public function comparisons()
+	public function testZeroIsNotNull()
 	{
-		return array(
-			array('y is not null'),
-			array('"null" is not null'),
-			array('"" is not null'),
-		);
-	}
-
-	/**
-	 * @dataProvider comparisons
-	 */
-	public function testComparisons($assert)
-	{
-		$this->x = null;
-		$this->y = 'a';
-		$this->assert($assert);
+		$this->assert('0 is not null');
 	}
 }
