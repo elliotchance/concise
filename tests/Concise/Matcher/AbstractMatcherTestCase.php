@@ -74,4 +74,15 @@ class AbstractMatcherTestCase extends TestCase
 	{
 		$this->assertTrue($this->matcher->match($syntax, $args));
 	}
+
+	protected function assertFailure($assertionString)
+	{
+		try {
+			$this->assert($assertionString);
+			$this->fail("Assertion '$assertionString' did not fail.");
+		}
+		catch(\PHPUnit_Framework_AssertionFailedError $e) {
+			$this->assertTrue(true);
+		}
+	}
 }

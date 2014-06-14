@@ -12,8 +12,13 @@ class DoesNotMatchRegularExpressionTest extends AbstractMatcherTestCase
 		$this->matcher = new DoesNotMatchRegularExpression();
 	}
 
-	public function testComparison()
+	public function testMatch()
 	{
 		$this->assert('"abc" does not match regex /^f/');
+	}
+
+	public function testFailure()
+	{
+		$this->assertFailure('"foo" does not match regex /^f/');
 	}
 }
