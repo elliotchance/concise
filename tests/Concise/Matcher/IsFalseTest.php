@@ -26,4 +26,9 @@ class IsFalseTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('"" is false');
 	}
+
+	public function testFloatingZeroIsNotFalse()
+	{
+		$this->assertFailure('0.0 is false');
+	}
 }
