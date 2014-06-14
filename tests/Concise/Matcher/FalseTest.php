@@ -12,6 +12,6 @@ class FalseTest extends AbstractMatcherTestCase
 
 	public function testAlwaysFails()
 	{
-		$this->assertMatcherFailure('false');
+		$this->assertFailure('false');
 	}
 }

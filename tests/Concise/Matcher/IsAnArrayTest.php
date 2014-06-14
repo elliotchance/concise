@@ -17,4 +17,9 @@ class IsAnArrayTest extends AbstractMatcherTestCase
 		$this->x = array();
 		$this->assert('x is an array');
 	}
+
+	public function testIsAnArrayFailure()
+	{
+		$this->assertFailure('123 is an array');
+	}
 }
