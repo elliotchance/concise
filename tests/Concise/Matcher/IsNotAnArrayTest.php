@@ -10,9 +10,14 @@ class IsNotAnArrayTest extends AbstractMatcherTestCase
 		$this->matcher = new IsNotAnArray();
 	}
 
-	public function testComparison()
+	public function testIsNotAnArray()
 	{
-		$this->x = 123;
-		$this->assert('x is not an array');
+		$this->assert('123 is not an array');
+	}
+
+	public function testIsNotAnArrayFailure()
+	{
+		$this->x = array();
+		$this->assertFailure('x is not an array');
 	}
 }
