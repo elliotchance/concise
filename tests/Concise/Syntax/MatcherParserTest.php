@@ -152,11 +152,7 @@ class MatcherParserTest extends TestCase
 
 	public function testCanMatchSyntaxWithExpectedTypes()
 	{
-		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher->expects($this->any())
-		        ->method('supportedSyntaxes')
-		        ->will($this->returnValue(array('?:int foobar ?:float')));
-
+		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
 		$this->parser->registerMatcher($matcher);
 		$assertion = $this->parser->compile('123 foobar 1.23', array());
 		$this->assertSame($matcher, $assertion->getMatcher());
@@ -173,14 +169,28 @@ class MatcherParserTest extends TestCase
 
 	public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
 	{
-		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher->expects($this->any())
-		        ->method('supportedSyntaxes')
-		        ->will($this->returnValue(array('?:int foobar ?:float')));
-
+		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
 		$this->parser->registerMatcher($matcher);
 		$this->assertEquals(array('foobar'), $this->parser->getKeywords());
 	}
 
-	// @test keyword cache is dropped when a matcher is added
+	protected function getAbstractMatcherMockWithSupportedSyntaxes($supportedSyntaxes)
+	{
+		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
+		$matcher->expects($this->any())
+		        ->method('supportedSyntaxes')
+		        ->will($this->returnValue($supportedSyntaxes));
+		return $matcher;
+	}
+
+	public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
+	{
+		$matcher1 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+		$matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('bar'));
+		$this->parser->registerMatcher($matcher1);
+		$keywords1 = $this->parser->getKeywords();
+		$this->parser->registerMatcher($matcher2);
+		$keywords2 = $this->parser->getKeywords();
+		$this->assertNotEquals($keywords1, $keywords2);
+	}
 }

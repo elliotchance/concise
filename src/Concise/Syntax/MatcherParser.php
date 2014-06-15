@@ -85,9 +85,15 @@ class MatcherParser
 		return false;
 	}
 
+	protected function clearKeywordCache()
+	{
+		$this->keywords = array();
+	}
+
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
 		$this->matchers[] = $matcher;
+		$this->clearKeywordCache();
 		return true;
 	}
 
