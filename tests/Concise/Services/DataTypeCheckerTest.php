@@ -36,6 +36,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("object"), new \stdClass()),
 			array(array("callable"), function() {}),
 			array(array("int", "float"), 1.23),
+			array(array("regex"), '/abc/'),
 		);
 	}
 
