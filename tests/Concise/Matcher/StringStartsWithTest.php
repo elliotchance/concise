@@ -12,20 +12,23 @@ class StringStartsWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringStartsWith();
 	}
 
-	public function comparisons()
+	public function testNumberSubstring()
 	{
-		return array(
-			'number substring'  => array('123 starts with 12'),
-			'basic string'      => array('"abc" starts with "ab"'),
-			'strings are equal' => array('"abc" starts with "abc"'),
-		);
+		$this->assert('123 starts with 12');
 	}
 
-	/**
-	 * @dataProvider comparisons
-	 */
-	public function testComparisons($assert)
+	public function testBasicString()
 	{
-		$this->assert($assert);
+		$this->assert('"abc" starts with "ab"');
+	}
+
+	public function testStringsAreEqual()
+	{
+		$this->assert('"abc" starts with "abc"');
+	}
+
+	public function testStringStartsWithFailure()
+	{
+		$this->assertFailure('"abc" starts with "abcd"');
 	}
 }
