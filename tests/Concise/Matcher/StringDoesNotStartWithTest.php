@@ -15,7 +15,6 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 	public function comparisons()
 	{
 		return array(
-			'string does not start with another string' => array('"abc" does not start with "c"'),
 			'needle longer than haystack'               => array('"abc" does not start with "abcd"'),
 		);
 	}
@@ -26,5 +25,10 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 	public function testComparisons($assert)
 	{
 		$this->assert($assert);
+	}
+
+	public function testStringDoesNotStartWithAnotherString()
+	{
+		$this->assert('"abc" does not start with "c"');
 	}
 }
