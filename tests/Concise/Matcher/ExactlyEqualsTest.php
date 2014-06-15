@@ -17,19 +17,13 @@ class ExactlyEqualsTest extends AbstractMatcherTestCase
 		$this->assert('123 exactly equals 123');
 	}
 
-	public function failures()
+	public function testIntegerAndFloatWithTheSameValueAreNotExactlyEqual()
 	{
-		return array(
-			array('123 exactly equals 123.0'),
-			array('123 exactly equals "123"'),
-		);
+		$this->assertFailure('123 exactly equals 123.0');
 	}
 
-	/**
-	 * @dataProvider failures
-	 */
-	public function testExactlyEqualsFailure($assertion)
+	public function testIntegerAndItsStringRepresentationAreNotExactlyEqual()
 	{
-		$this->assertFailure($assertion);
+		$this->assertFailure('123 exactly equals "123"');
 	}
 }
