@@ -12,15 +12,13 @@ class NotExactlyEqualsTest extends AbstractMatcherTestCase
 		$this->matcher = new NotExactlyEquals();
 	}
 
-	public function comparisons()
-	{
-		return array(
-			array('123 is not exactly equal to "123"'),
-		);
-	}
-
 	public function testIntegerAndFloatOfTheSameValueAreNotExactlyEqual()
 	{
 		$this->assert('123 is not exactly equal to 123.0');
+	}
+
+	public function testIntegerAndStringRepresentationOfTheSameValueAreNotExactlyEqual()
+	{
+		$this->assert('123 is not exactly equal to "123"');
 	}
 }
