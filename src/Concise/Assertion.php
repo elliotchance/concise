@@ -72,7 +72,8 @@ class Assertion
 	{
 		$checker = new DataTypeChecker();
 		$lexer = new Lexer();
-		$args = $lexer->parse($this->originalSyntax)['arguments'];
+		$parse = $lexer->parse($this->originalSyntax);
+		$args = $parse['arguments'];
 		for($i = 0; $i < count($args); ++$i) {
 			try {
 				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
