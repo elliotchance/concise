@@ -21,4 +21,9 @@ class NotExactlyEqualsTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 is not exactly equal to "123"');
 	}
+
+	public function testNotExactlyEqualsFailure()
+	{
+		$this->assertFailure('123 is not exactly equal to 123');
+	}
 }
