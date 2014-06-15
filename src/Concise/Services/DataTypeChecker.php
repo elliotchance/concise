@@ -64,6 +64,9 @@ class DataTypeChecker
 		else if($type === 'double') {
 			$type = 'float';
 		}
+		else if($type === 'class') {
+			$type = 'string';
+		}
 		return $type;
 	}
 
