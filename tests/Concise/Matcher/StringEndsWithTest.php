@@ -6,18 +6,29 @@ use \Concise\TestCase;
 
 class StringEndsWithTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new StringEndsWith();
 	}
 
-	public function _test_comparisons()
+	public function testBasicString()
 	{
-		return array(
-			'number substring'  => '123 ends with 23',
-			'basic string'      => '"abc" ends with "bc"',
-			'strings are equal' => '"abc" ends with "abc"',
-		);
+		$this->assert('"abc" ends with "bc"');
+	}
+
+	public function testNumberSubstring()
+	{
+		$this->assert('123 ends with 23');
+	}
+
+	public function testStringsAreEqual()
+	{
+		$this->assert('"abc" ends with "abc"');
+	}
+
+	public function testStringEndsWithFailure()
+	{
+		$this->assertFailure('"abc" ends with "ab"');
 	}
 }

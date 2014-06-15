@@ -21,19 +21,13 @@ class Assertion
 
 	protected $description = '';
 
-	protected $shouldRunPrepare;
-
-	protected $shouldRunFinalize;
-
 	protected $originalSyntax = null;
 
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false, $shouldRunFinalize = false)
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
-		$this->shouldRunPrepare = $shouldRunPrepare;
-		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 
 	public function setOriginalSyntax($originalSyntax)
@@ -141,18 +135,12 @@ class Assertion
 
 	public function run()
 	{
-		if($this->shouldRunPrepare()) {
-			$this->testCase->prepare();
-		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
 			$this->success();
 		}
 		else {
 			$this->fail($result);
-		}
-		if($this->shouldRunFinalize()) {
-			$this->testCase->finalize();
 		}
 	}
 
@@ -190,31 +178,5 @@ class Assertion
 			return $this->getAssertion();
 		}
 		return $this->description . " (" . $this->getAssertion() . ")";
-	}
-
-	public function shouldRunPrepare()
-	{
-		return $this->shouldRunPrepare;
-	}
-
-	public function shouldRunFinalize()
-	{
-		return $this->shouldRunFinalize;
-	}
-
-	/**
-	 * @param boolean $shouldRunPrepare
-	 */
-	public function setShouldRunPrepare($shouldRunPrepare)
-	{
-		$this->shouldRunPrepare = $shouldRunPrepare;
-	}
-
-	/**
-	 * @param boolean $shouldRunFinalize
-	 */
-	public function setShouldRunFinalize($shouldRunFinalize)
-	{
-		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 }

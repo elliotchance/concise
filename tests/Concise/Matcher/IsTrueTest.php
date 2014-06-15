@@ -4,16 +4,24 @@ namespace Concise\Matcher;
 
 class IsTrueTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsTrue();
 	}
 
-	public function _test_comparisons()
+	public function testIsTrue()
 	{
-		return array(
-			'`true` is true',
-		);
+		$this->assert('`true` is true');
+	}
+
+	public function testIsTrueFailure()
+	{
+		$this->assertFailure('123 is true');
+	}
+
+	public function testOneIsNotTrue()
+	{
+		$this->assertFailure('1 is true');
 	}
 }

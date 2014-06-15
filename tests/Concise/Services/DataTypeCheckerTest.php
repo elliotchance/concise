@@ -4,28 +4,28 @@ namespace Concise\Services;
 
 class DataTypeCheckerTest extends \Concise\TestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->dataTypeChecker = new DataTypeChecker();
 	}
 
-	public function _test_blank_accepts_anything()
+	public function testBlankAcceptsAnything()
 	{
-		return '`$self->dataTypeChecker->check(array(), 123)` is true';
+		$this->assert('`$self->dataTypeChecker->check(array(), 123)` is true');
 	}
 
-	public function _test_sendingValueOfDifferentExpectedType_throws_exception()
+	public function testSendingValueOfDifferentExpectedTypeThrowsException()
 	{
-		$self = $this;
-		$this->sendingValueOfDifferentExpectedType = function() use ($self) {
-			$self->dataTypeChecker->check(array("int"), 1.23);
+		$this->sendingValueOfDifferentExpectedType = function() {
+			$this->dataTypeChecker->check(array("int"), 1.23);
 		};
+		$this->assert('sendingValueOfDifferentExpectedType throws exception');
 	}
 
-	public function _test_check()
+	public function dataTypes()
 	{
-		$data = array(
+		return array(
 			array(array("int"), 123),
 			array(array("integer"), 123),
 			array(array("float"), 1.23),
@@ -37,24 +37,32 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("callable"), function() {}),
 			array(array("int", "float"), 1.23),
 		);
-		return $this->assertionsForDataSet('`$self->dataTypeChecker->check(?, ?)` is true', $data);
 	}
 
-	public function _test_sendingValueNotListedInExpectedTypes_throws_exception()
+	/**
+	 * @dataProvider dataTypes
+	 */
+	public function testDataTypes(array $types, $value)
 	{
-		$self = $this;
-		$this->sendingValueNotListedInExpectedTypes = function() use ($self) {
-			$self->dataTypeChecker->check(array("int", "string"), 1.23);
-		};
+		$this->types = $types;
+		$this->value = $value;
+		$this->assert('`$self->dataTypeChecker->check($self->types, $self->value)` is true');
 	}
 
-	public function _test_exclude_mode_will_not_allow_type()
+	public function testSendingValueNotListedInExpectedTypesThrowsException()
 	{
-		$self = $this;
-		$this->block = function() use ($self) {
-			$self->dataTypeChecker->setExcludeMode();
-			$self->dataTypeChecker->check(array("int"), 123);
+		$this->sendingValueNotListedInExpectedTypes = function() {
+			$this->dataTypeChecker->check(array("int", "string"), 1.23);
 		};
-		return 'block throws exception';
+		$this->assert('sendingValueNotListedInExpectedTypes throws exception');
+	}
+
+	public function testExcludeModeWillNotAllowType()
+	{
+		$this->block = function() {
+			$this->dataTypeChecker->setExcludeMode();
+			$this->dataTypeChecker->check(array("int"), 123);
+		};
+		$this->assert('block throws exception');
 	}
 }

@@ -90,96 +90,6 @@ class AssertionTest extends TestCase
 		$this->assertEquals('? equals ?', $assertion->getDescription());
 	}
 
-	public function testPrepareIsCalledAsPartOfTheAssertion()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), true, false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->once())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
-	public function testFinalizeIsCalledAsPartOfTheAssertion()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), false, true);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
-		$testCase->expects($this->once())
-		         ->method('finalize')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
-	public function testShouldUsePrepareDefaultsToFalse()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$this->assertSame(false, $assertion->shouldRunPrepare());
-	}
-
-	public function testShouldUseFinalizeDefaultsToFalse()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$this->assertSame(false, $assertion->shouldRunFinalize());
-	}
-
-	public function testCanChangeStatusOfPrepareAfterConstructor()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$assertion->setShouldRunPrepare(true);
-		$this->assertSame(true, $assertion->shouldRunPrepare());
-	}
-
-	public function testCanChangeStatusOfFinalizeAfterConstructor()
-	{
-		$assertion = new Assertion('true', new Matcher\True());
-		$assertion->setShouldRunFinalize(true);
-		$this->assertSame(true, $assertion->shouldRunFinalize());
-	}
-
-	public function testCanSetShouldRunPrepareInConstructor()
-	{
-		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), true);
-		$this->assertSame(true, $assertion->shouldRunPrepare());
-	}
-
-	public function testCanSetShouldRunFinalizeInConstructor()
-	{
-		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array(), true, true);
-		$this->assertSame(true, $assertion->shouldRunFinalize());
-	}
-
-	public function testPrepareIsNotCalledIfFixturesAreSetNotToBeRun()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('prepare'));
-		$testCase->expects($this->never())
-		         ->method('prepare')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
-	public function testFinalizeIsNotCalledIfFixturesAreSetNotToBeRun()
-	{
-		$assertion = new Assertion('true', new Matcher\True(), array(), false);
-
-		$testCase = $this->getMock('\Concise\TestCase', array('finalize'));
-		$testCase->expects($this->never())
-		         ->method('finalize')
-		         ->will($this->returnValue(null));
-		$assertion->setTestCase($testCase);
-
-		$assertion->run();
-	}
-
 	/**
 	 * @param string $theAssertion
 	 */
@@ -210,10 +120,10 @@ class AssertionTest extends TestCase
 		$this->compileAndRunAssertion('`false` equals `false`');
 	}
 
-	public function _test_assertion_code_can_use_attributes()
+	public function testAssertionCodeCanUseAttributes()
 	{
 		$this->x = 123;
-		return '`$self->x` equals 123';
+		$this->assert('`$self->x` equals 123');
 	}
 
 	public function testDoNotShowPHPUnitPropertiesOnError()

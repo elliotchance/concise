@@ -6,10 +6,9 @@ use \Concise\TestCase;
 
 class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
 {
-
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new ThrowsAnythingExcept();
 	}
 

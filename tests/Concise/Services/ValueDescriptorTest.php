@@ -4,9 +4,9 @@ namespace Concise\Services;
 
 class ValueDescriptorTest extends \Concise\TestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->descriptor = new ValueDescriptor();
 	}
 

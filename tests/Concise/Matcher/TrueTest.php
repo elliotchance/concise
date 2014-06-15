@@ -6,16 +6,14 @@ use \Concise\TestCase;
 
 class TrueTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new True();
 	}
 
-	public function _test_comparisons()
+	public function testTrue()
 	{
-		return array(
-			'true',
-		);
+		$this->assert('true');
 	}
 }
