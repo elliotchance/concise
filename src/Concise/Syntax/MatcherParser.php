@@ -29,7 +29,8 @@ class MatcherParser
 				$this->syntaxCache[$syntax] = $syntax;
 			}
 			else {
-				$this->syntaxCache[$syntax] = $this->lexer->parse($syntax)['syntax'];
+				$parse = $this->lexer->parse($syntax);
+				$this->syntaxCache[$syntax] = $parse['syntax'];
 			}
 		}
 		return $this->syntaxCache[$syntax];
