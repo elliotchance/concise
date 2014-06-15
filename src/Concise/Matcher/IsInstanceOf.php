@@ -7,9 +7,9 @@ class IsInstanceOf extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is an instance of ?',
-			'? is instance of ?',
-			'? instance of ?',
+			'?:object is an instance of ?:class',
+			'?:object is instance of ?:class',
+			'?:object instance of ?:class',
 		);
 	}
 
