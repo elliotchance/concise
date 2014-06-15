@@ -12,7 +12,7 @@ class TrueTest extends AbstractMatcherTestCase
 		$this->matcher = new True();
 	}
 
-	public function testComparison()
+	public function testTrue()
 	{
 		$this->assert('true');
 	}
