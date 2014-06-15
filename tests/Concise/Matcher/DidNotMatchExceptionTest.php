@@ -4,8 +4,8 @@ namespace Concise\Matcher;
 
 class DidNotMatchExceptionTest extends \Concise\TestCase
 {
-	public function _test_is_a_type_of_Exception()
+	public function testIsATypeOfException()
 	{
-		return '`new \Concise\Matcher\DidNotMatchException()` is an instance of \Exception';
+		$this->assert('`new \Concise\Matcher\DidNotMatchException()` is an instance of \Exception');
 	}
 }

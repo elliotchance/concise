@@ -6,14 +6,24 @@ use \Concise\TestCase;
 
 class IsAnIntegerTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsAnInteger();
 	}
 
-	public function _test_x_is_an_integer()
+	public function testIntegerIsAnInteger()
 	{
-		$this->x = 123;
+		$this->assert('123 is an integer');
+	}
+
+	public function testFloatIsNotAnInteger()
+	{
+		$this->assertFailure('123.0 is an integer');
+	}
+
+	public function testStringThatRepresentsAnIntegerIsNotAnInteger()
+	{
+		$this->assertFailure('"123" is an integer');
 	}
 }

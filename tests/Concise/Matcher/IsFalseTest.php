@@ -6,16 +6,34 @@ use \Concise\TestCase;
 
 class IsFalseTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsFalse();
 	}
 
-	public function _test_comparisons()
+	public function testFalse()
 	{
-		return array(
-			'`false` is false'
-		);
+		$this->assert('`false` is false');
+	}
+
+	public function testZeroIsNotFalse()
+	{
+		$this->assertFailure('0 is false');
+	}
+
+	public function testEmptyStringIsNotFalse()
+	{
+		$this->assertFailure('"" is false');
+	}
+
+	public function testFloatingZeroIsNotFalse()
+	{
+		$this->assertFailure('0.0 is false');
+	}
+
+	public function testFalseFailure()
+	{
+		$this->assertFailure('`true` is false');
 	}
 }

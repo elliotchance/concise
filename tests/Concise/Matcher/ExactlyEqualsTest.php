@@ -6,16 +6,24 @@ use \Concise\TestCase;
 
 class ExactlyEqualsTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new ExactlyEquals();
 	}
 
-	public function _test_comparisons()
+	public function testExactlyEquals()
 	{
-		return array(
-			'123 exactly equals 123',
-		);
+		$this->assert('123 exactly equals 123');
+	}
+
+	public function testIntegerAndFloatWithTheSameValueAreNotExactlyEqual()
+	{
+		$this->assertFailure('123 exactly equals 123.0');
+	}
+
+	public function testIntegerAndItsStringRepresentationAreNotExactlyEqual()
+	{
+		$this->assertFailure('123 exactly equals "123"');
 	}
 }

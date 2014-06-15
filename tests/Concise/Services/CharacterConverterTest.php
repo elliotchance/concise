@@ -6,7 +6,6 @@ use \Concise\TestCase;
 
 class CharacterConverterTest extends TestCase
 {
-
 	public function stringData()
 	{
 		return array(
@@ -24,12 +23,14 @@ class CharacterConverterTest extends TestCase
 		);
 	}
 
-	public function _test_converting_character_to_escape_character()
+	/**
+	 * @dataProvider stringData
+	 */
+	public function testConvertingCharacterToEscapeCharacter($letter, $outcome)
 	{
 		$this->converter = new CharacterConverter();
-		return $this->assertionsForDataSet(
-			'`$self->converter->convertEscapedCharacter(?)` equals `?`',
-			$this->stringData()
-		);
+		$this->letter = $letter;
+		$this->outcome = $outcome;
+		$this->assert('`$self->converter->convertEscapedCharacter($self->letter)` equals `$self->outcome`');
 	}
 }

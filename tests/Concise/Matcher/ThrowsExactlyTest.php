@@ -7,9 +7,9 @@ use \Concise\TestCase;
 class ThrowsExactlyTest extends AbstractExceptionTestCase
 {
 
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new ThrowsExactly();
 	}
 

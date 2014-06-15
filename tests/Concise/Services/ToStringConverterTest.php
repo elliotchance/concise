@@ -4,9 +4,9 @@ namespace Concise\Services;
 
 class ToStringConverterTest extends \Concise\TestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->converter = new ToStringConverter();
 	}
 

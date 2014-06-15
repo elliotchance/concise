@@ -12,11 +12,13 @@ class NotEqualsTest extends AbstractMatcherTestCase
 		$this->matcher = new NotEquals();
 	}
 
-	public function _test_comparisons()
+	public function testNotEquals()
 	{
-		return array(
-			'123 does not equal 124',
-			'123 is not equal to 123.1'
-		);
+		$this->assert('123 does not equal 124');
+	}
+
+	public function testFloatingPointValuesThatDifferSlightlyAreNotEqual()
+	{
+		$this->assert('123 is not equal to 123.000001');
 	}
 }

@@ -6,14 +6,19 @@ use \Concise\TestCase;
 
 class IsNullTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsNull();
 	}
 
-	public function _test_null()
+	public function testIsNull()
 	{
-		return '`null` is null';
+		$this->assert('`null` is null');
+	}
+
+	public function testIsNullFailure()
+	{
+		$this->assertFailure('123 is null');
 	}
 }
