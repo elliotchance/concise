@@ -42,6 +42,9 @@ class DataTypeChecker
 
 	protected function getType($value)
 	{
+		if(is_object($value) && get_class($value) === 'Concise\Syntax\Token\Regexp') {
+			return 'regex';
+		}
 		if(is_callable($value)) {
 			return 'callable';
 		}
@@ -60,9 +63,6 @@ class DataTypeChecker
 		}
 		else if($type === 'double') {
 			$type = 'float';
-		}
-		else if($type === 'regex') {
-			$type = 'string';
 		}
 		return $type;
 	}

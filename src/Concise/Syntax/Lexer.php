@@ -6,10 +6,22 @@ use \Concise\Services\CharacterConverter;
 
 class Lexer
 {
+	/**
+	 * @var \Concise\Syntax\MatcherParser
+	 */
+	protected $matcherParser = null;
 
-	protected static function isKeyword($token)
+	protected function getMatcherParser()
 	{
-		return in_array($token, self::getKeywords());
+		if(null === $this->matcherParser) {
+			$this->setMatcherParser(MatcherParser::getInstance());
+		}
+		return $this->matcherParser;
+	}
+
+	protected function isKeyword($token)
+	{
+		return in_array($token, $this->getMatcherParser()->getKeywords());
 	}
 
 	protected function consumeUntilToken($string, $until, &$startIndex, $mustConsumeUntil = true)
@@ -58,7 +70,7 @@ class Lexer
 
 	protected function translateValue($t)
 	{
-		if(self::isKeyword($t)) {
+		if($this->isKeyword($t)) {
 			return new Token\Keyword($t);
 		}
 		if(preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $t) ||
@@ -170,8 +182,8 @@ class Lexer
 		);
 	}
 
-	public static function getKeywords()
+	public function setMatcherParser(MatcherParser $matcherParser)
 	{
-		return MatcherParser::getInstance()->getKeywords();
+		$this->matcherParser = $matcherParser;
 	}
 }

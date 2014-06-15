@@ -153,28 +153,34 @@ class MatcherParserTest extends TestCase
 	public function testCanMatchSyntaxWithExpectedTypes()
 	{
 		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher->expects($this->once())
+		$matcher->expects($this->any())
 		        ->method('supportedSyntaxes')
-		        ->will($this->returnValue(array('?:int equals ?:float')));
+		        ->will($this->returnValue(array('?:int foobar ?:float')));
 
 		$this->parser->registerMatcher($matcher);
-		$assertion = $this->parser->compile('123 equals 1.23', array());
+		$assertion = $this->parser->compile('123 foobar 1.23', array());
 		$this->assertSame($matcher, $assertion->getMatcher());
 	}
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Argument 1 (1.23) must be int.
+	 * @expectedExceptionMessage Argument 2 (123) must be regex.
 	 */
 	public function testWillValidateAllAttributes()
 	{
+		$this->assert('"abc" does not match regex 123');
+	}
+
+	public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
+	{
 		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher->expects($this->once())
+		$matcher->expects($this->any())
 		        ->method('supportedSyntaxes')
-		        ->will($this->returnValue(array('?:int equals ?:float')));
+		        ->will($this->returnValue(array('?:int foobar ?:float')));
 
 		$this->parser->registerMatcher($matcher);
-		$assertion = $this->parser->compile('1.23 equals 123', array());
-		$assertion->run();
+		$this->assertEquals(array('foobar'), $this->parser->getKeywords());
 	}
+
+	// @test keyword cache is dropped when a matcher is added
 }

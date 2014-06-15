@@ -2,6 +2,8 @@
 
 namespace Concise\Services;
 
+use \Concise\Syntax\Token\Regexp;
+
 class DataTypeCheckerTest extends \Concise\TestCase
 {
 	public function setUp()
@@ -36,7 +38,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("object"), new \stdClass()),
 			array(array("callable"), function() {}),
 			array(array("int", "float"), 1.23),
-			array(array("regex"), '/abc/'),
+			array(array("regex"), new Regexp('abc')),
 		);
 	}
 

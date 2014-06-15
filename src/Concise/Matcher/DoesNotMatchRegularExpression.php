@@ -9,10 +9,10 @@ class DoesNotMatchRegularExpression extends MatchesRegularExpression
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not match regular expression ?',
-			'? doesnt match regular expression ?',
-			'? does not match regex ?',
-			'? doesnt match regex ?',
+			'? does not match regular expression ?:regex',
+			'? doesnt match regular expression ?:regex',
+			'? does not match regex ?:regex',
+			'? doesnt match regex ?:regex',
 		);
 	}
 

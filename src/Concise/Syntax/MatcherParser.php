@@ -19,6 +19,7 @@ class MatcherParser
 	public function __construct()
 	{
 		$this->lexer = new Lexer();
+		$this->lexer->setMatcherParser($this);
 	}
 
 	protected function getRawSyntax($syntax)
@@ -130,7 +131,7 @@ class MatcherParser
 		foreach($this->getMatchers() as $matcher) {
 			foreach($matcher->supportedSyntaxes() as $syntax) {
 				foreach(explode(' ', $syntax) as $word) {
-					if($word !== '?') {
+					if($word[0] !== '?') {
 						$r[] = $word;
 					}
 				}
