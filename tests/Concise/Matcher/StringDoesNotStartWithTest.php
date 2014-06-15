@@ -11,20 +11,10 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 		parent::setUp();
 		$this->matcher = new StringDoesNotStartWith();
 	}
-
-	public function comparisons()
+	
+	public function testNeedleLongerThanHaystack()
 	{
-		return array(
-			'needle longer than haystack'               => array('"abc" does not start with "abcd"'),
-		);
-	}
-
-	/**
-	 * @dataProvider comparisons
-	 */
-	public function testComparisons($assert)
-	{
-		$this->assert($assert);
+		$this->assert('"abc" does not start with "abcd"');
 	}
 
 	public function testStringDoesNotStartWithAnotherString()
