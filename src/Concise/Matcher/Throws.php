@@ -7,7 +7,7 @@ class Throws extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? throws ?',
+			'?:callable throws ?:string',
 		);
 	}
 

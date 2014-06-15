@@ -18,6 +18,6 @@ class DoesNotMatchRegularExpression extends MatchesRegularExpression
 
 	public function match($syntax, array $data = array())
 	{
-		return !parent::match('? matches regular expression ?', $data);
+		return !parent::match('? matches regular expression ?:regex', $data);
 	}
 }
