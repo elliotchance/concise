@@ -6,17 +6,24 @@ use \Concise\TestCase;
 
 class StringDoesNotEndWithTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new StringDoesNotEndWith();
 	}
 
-	public function _test_comparisons()
+	public function testNeedleLongerThanHaystack()
 	{
-		return array(
-			'string does not start with another string' => '"abc" does not end with "a"',
-			'needle longer than haystack'               => '"abc" does not end with "abcd"',
-		);
+		$this->assert('"abc" does not end with "abcd"');
+	}
+
+	public function testStringDoesNotStartWithAnotherString()
+	{
+		$this->assert('"abc" does not end with "a"');
+	}
+
+	public function testStringDoesNotEndWithFailure()
+	{
+		$this->assertFailure('"abc" does not end with "abc"');
 	}
 }

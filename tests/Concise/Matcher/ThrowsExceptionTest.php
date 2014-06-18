@@ -6,9 +6,9 @@ use \Concise\TestCase;
 
 class ThrowsExceptionTest extends AbstractExceptionTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new ThrowsException();
 	}
 

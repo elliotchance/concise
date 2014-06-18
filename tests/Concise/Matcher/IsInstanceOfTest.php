@@ -10,20 +10,20 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 		$this->matcher = new IsInstanceOf();
 	}
 
-	public function _test_comparisons()
+	public function testIsInstanceOfWithSameClass()
 	{
 		$this->x = new self();
-		return array(
-			'x is an instance of \Concise\Matcher\IsInstanceOfTest',
-			'x instance of \Concise\Matcher\AbstractMatcherTestCase'
-		);
+		$this->assert('x is an instance of \Concise\Matcher\IsInstanceOfTest');
 	}
 
-	public function testFailure()
+	public function testIsInstanceOfWithSuperClass()
 	{
-		$this->assertMatcherFailure('? is instance of ?', array(
-			new \stdClass(),
-			'\Concise\Matcher\IsInstanceOfTest'
-		));
+		$this->x = new self();
+		$this->assert('x instance of \Concise\Matcher\AbstractMatcherTestCase');
+	}
+
+	public function testIsInstanceOfFailure()
+	{
+		$this->assertFailure('`new \stdClass()` is instance of \Concise\Matcher\IsInstanceOfTest');
 	}
 }

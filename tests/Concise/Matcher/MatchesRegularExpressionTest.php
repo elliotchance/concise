@@ -6,14 +6,19 @@ use \Concise\TestCase;
 
 class MatchesRegularExpressionTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new MatchesRegularExpression();
 	}
 
-	public function _test_comparison()
+	public function testMatchesRegularExpression()
 	{
-		return '123 matches regular expression /\\d+/';
+		$this->assert('123 matches regular expression /\\d+/');
+	}
+
+	public function testMatchesRegularExpressionFailure()
+	{
+		$this->assertFailure('"abc" matches regular expression /\\d+/');
 	}
 }

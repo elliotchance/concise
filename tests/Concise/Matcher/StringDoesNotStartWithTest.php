@@ -6,17 +6,24 @@ use \Concise\TestCase;
 
 class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new StringDoesNotStartWith();
 	}
 
-	public function _test_comparisons()
+	public function testNeedleLongerThanHaystack()
 	{
-		return array(
-			'string does not start with another string' => '"abc" does not start with "c"',
-			'needle longer than haystack'               => '"abc" does not start with "abcd"',
-		);
+		$this->assert('"abc" does not start with "abcd"');
+	}
+
+	public function testStringDoesNotStartWithAnotherString()
+	{
+		$this->assert('"abc" does not start with "c"');
+	}
+
+	public function testStringDoesNotStartWithFailure()
+	{
+		$this->assertFailure('"abc" does not start with "abc"');
 	}
 }

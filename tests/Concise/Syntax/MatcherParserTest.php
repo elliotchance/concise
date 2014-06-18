@@ -20,11 +20,11 @@ class MatcherParserTest extends TestCase
 		$this->parser = new MatcherParser();
 	}
 
-	public function _test_compile_returns_assertion()
+	public function testCompileReturnsAssertion()
 	{
 		$this->parser->registerMatcher(new \Concise\Matcher\Equals());
 		$this->matcher = $this->parser->compile('x equals y', $this->getData());
-		return '`$self->matcher` is instance of \Concise\Assertion';
+		$this->assert('`$self->matcher` is instance of \Concise\Assertion');
 	}
 
 	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
@@ -151,5 +151,49 @@ class MatcherParserTest extends TestCase
 			'? is null'       => null,
 			'? is equal to ?' => null
 		), $syntaxes);
+	}
+
+	public function testCanMatchSyntaxWithExpectedTypes()
+	{
+		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
+		$this->parser->registerMatcher($matcher);
+		$assertion = $this->parser->compile('123 foobar 1.23', array());
+		$this->assertSame($matcher, $assertion->getMatcher());
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Argument 2 (123) must be regex.
+	 */
+	public function testWillValidateAllAttributes()
+	{
+		$this->assert('"abc" does not match regex 123');
+	}
+
+	public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
+	{
+		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
+		$this->parser->registerMatcher($matcher);
+		$this->assertEquals(array('foobar'), $this->parser->getKeywords());
+	}
+
+	protected function getAbstractMatcherMockWithSupportedSyntaxes($supportedSyntaxes)
+	{
+		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
+		$matcher->expects($this->any())
+		        ->method('supportedSyntaxes')
+		        ->will($this->returnValue($supportedSyntaxes));
+		return $matcher;
+	}
+
+	public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
+	{
+		$matcher1 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+		$matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('bar'));
+		$this->parser->registerMatcher($matcher1);
+		$keywords1 = $this->parser->getKeywords();
+		$this->parser->registerMatcher($matcher2);
+		$keywords2 = $this->parser->getKeywords();
+		$this->assertNotEquals($keywords1, $keywords2);
 	}
 }

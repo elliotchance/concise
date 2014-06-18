@@ -6,18 +6,29 @@ use \Concise\TestCase;
 
 class StringStartsWithTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new StringStartsWith();
 	}
 
-	public function _test_comparisons()
+	public function testNumberSubstring()
 	{
-		return array(
-			'number substring'                          => '123 starts with 12',
-			'basic string'                              => '"abc" starts with "ab"',
-			'strings are equal'                         => '"abc" starts with "abc"',
-		);
+		$this->assert('123 starts with 12');
+	}
+
+	public function testBasicString()
+	{
+		$this->assert('"abc" starts with "ab"');
+	}
+
+	public function testStringsAreEqual()
+	{
+		$this->assert('"abc" starts with "abc"');
+	}
+
+	public function testStringStartsWithFailure()
+	{
+		$this->assertFailure('"abc" starts with "abcd"');
 	}
 }

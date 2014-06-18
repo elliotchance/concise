@@ -11,15 +11,15 @@ class DoesNotMatchRegularExpression extends MatchesRegularExpression
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not match regular expression ?' => self::DESCRIPTION,
-			'? doesnt match regular expression ?' => self::DESCRIPTION,
-			'? does not match regex ?' => self::DESCRIPTION,
-			'? doesnt match regex ?' => self::DESCRIPTION,
+			'? does not match regular expression ?:regex' => self::DESCRIPTION,
+			'? doesnt match regular expression ?:regex' => self::DESCRIPTION,
+			'? does not match regex ?:regex' => self::DESCRIPTION,
+			'? doesnt match regex ?:regex' => self::DESCRIPTION,
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return !parent::match('? matches regular expression ?', $data);
+		return !parent::match('? matches regular expression ?:regex', $data);
 	}
 }

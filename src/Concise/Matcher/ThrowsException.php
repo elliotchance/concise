@@ -7,16 +7,12 @@ class ThrowsException extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? throws exception',
+			'?:callable throws exception',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		if(!is_callable($data[0])) {
-			throw new DidNotMatchException("The attribute to test for exception must be callable (an anonymous function)");
-		}
-
 		try {
 			$data[0]();
 		}

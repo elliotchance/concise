@@ -5,6 +5,7 @@ namespace Concise;
 use \Concise\Syntax\Lexer;
 use \Concise\Services\ValueRenderer;
 use \Concise\Services\ValueDescriptor;
+use \Concise\Services\DataTypeChecker;
 
 class Assertion
 {
@@ -20,17 +21,18 @@ class Assertion
 
 	protected $description = '';
 
-	protected $shouldRunPrepare;
+	protected $originalSyntax = null;
 
-	protected $shouldRunFinalize;
-
-	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array(), $shouldRunPrepare = false, $shouldRunFinalize = false)
+	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
 		$this->matcher = $matcher;
 		$this->data = $data;
-		$this->shouldRunPrepare = $shouldRunPrepare;
-		$this->shouldRunFinalize = $shouldRunFinalize;
+	}
+
+	public function setOriginalSyntax($originalSyntax)
+	{
+		$this->originalSyntax = $originalSyntax;
 	}
 
 	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
@@ -66,6 +68,24 @@ class Assertion
 		return $r;
 	}
 
+	protected function checkDataTypes(array $arguments)
+	{
+		$checker = new DataTypeChecker();
+		$checker->setContext($this->getData());
+		$lexer = new Lexer();
+		$parse = $lexer->parse($this->originalSyntax);
+		$args = $parse['arguments'];
+		for($i = 0; $i < count($args); ++$i) {
+			try {
+				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
+			}
+			catch(\InvalidArgumentException $e) {
+				$acceptedTypes = implode(" or ", $args[$i]->getAcceptedTypes());
+				throw new \Exception("Argument " . ($i + 1) . " (" . $arguments[$i] . ") must be $acceptedTypes.");
+			}
+		}
+	}
+
 	/**
 	 * @return boolean|string
 	 */
@@ -73,19 +93,27 @@ class Assertion
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($this->getAssertion());
+		$args = array();
 
 		$data = $this->getData();
 		for($i = 0; $i < count($result['arguments']); ++$i) {
 			$arg = $result['arguments'][$i];
 			if($arg instanceof \Concise\Syntax\Token\Attribute) {
-				$result['arguments'][$i] = $data[(string) $arg];
+				$args[$i] = $data[(string) $arg];
 			}
 			else if($arg instanceof \Concise\Syntax\Token\Code) {
-				$result['arguments'][$i] = $this->evalCode((string) $arg);
+				$args[$i] = $this->evalCode((string) $arg);
+			}
+			else {
+				$args[$i] = $arg;
 			}
 		}
 
-		if(true === $this->getMatcher()->match($result['syntax'], $result['arguments'])) {
+		if(null !== $this->originalSyntax) {
+			$this->checkDataTypes($result['arguments']);
+		}
+
+		if(true === $this->getMatcher()->match($result['syntax'], $args)) {
 			return true;
 		}
 		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
@@ -109,18 +137,12 @@ class Assertion
 
 	public function run()
 	{
-		if($this->shouldRunPrepare()) {
-			$this->testCase->prepare();
-		}
 		$result = $this->executeAssertion();
 		if(true === $result) {
 			$this->success();
 		}
 		else {
 			$this->fail($result);
-		}
-		if($this->shouldRunFinalize()) {
-			$this->testCase->finalize();
 		}
 	}
 
@@ -158,31 +180,5 @@ class Assertion
 			return $this->getAssertion();
 		}
 		return $this->description . " (" . $this->getAssertion() . ")";
-	}
-
-	public function shouldRunPrepare()
-	{
-		return $this->shouldRunPrepare;
-	}
-
-	public function shouldRunFinalize()
-	{
-		return $this->shouldRunFinalize;
-	}
-
-	/**
-	 * @param boolean $shouldRunPrepare
-	 */
-	public function setShouldRunPrepare($shouldRunPrepare)
-	{
-		$this->shouldRunPrepare = $shouldRunPrepare;
-	}
-
-	/**
-	 * @param boolean $shouldRunFinalize
-	 */
-	public function setShouldRunFinalize($shouldRunFinalize)
-	{
-		$this->shouldRunFinalize = $shouldRunFinalize;
 	}
 }

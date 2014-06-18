@@ -6,20 +6,29 @@ use \Concise\TestCase;
 
 class IsNotNullTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new IsNotNull();
 	}
 
-	public function _test_comparisons()
+	public function testZeroIsNotNull()
 	{
-		$this->x = null;
-		$this->y = 'a';
-		return array(
-			'y is not null',
-			'"null" is not null',
-			'"" is not null',
-		);
+		$this->assert('0 is not null');
+	}
+
+	public function testABlankStringIsNotNull()
+	{
+		$this->assert('"" is not null');
+	}
+
+	public function testFalseIsNotNull()
+	{
+		$this->assert('`false` is not null');
+	}
+
+	public function testIsNotNullFailure()
+	{
+		$this->assertFailure('`null` is not null');
 	}
 }

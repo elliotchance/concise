@@ -6,14 +6,19 @@ use \Concise\TestCase;
 
 class DoesNotMatchRegularExpressionTest extends AbstractMatcherTestCase
 {
-	public function prepare()
+	public function setUp()
 	{
-		parent::prepare();
+		parent::setUp();
 		$this->matcher = new DoesNotMatchRegularExpression();
 	}
 
-	public function _test_comparison()
+	public function testDoesNotMatchRegularExpression()
 	{
-		return '"abc" does not match regex /^f/';
+		$this->assert('"abc" does not match regex /^f/');
+	}
+
+	public function testDoesNotMatchRegularExpressionFailure()
+	{
+		$this->assertFailure('"foo" does not match regex /^f/');
 	}
 }

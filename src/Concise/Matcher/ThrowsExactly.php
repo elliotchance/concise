@@ -7,16 +7,12 @@ class ThrowsExactly extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? throws exactly ?',
+			'?:callable throws exactly ?:class',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		if(!is_callable($data[0])) {
-			throw new DidNotMatchException("The attribute to test for exception must be callable (an anonymous function)");
-		}
-
 		try {
 			$data[0]();
 		}

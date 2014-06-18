@@ -4,12 +4,13 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 use \Concise\Syntax\MatcherParser;
+use \Concise\Services\MatcherSyntaxAndDescription;
 
 class AbstractMatcherTestCase extends TestCase
 {
-	public function _test_extends_AbstractMatcher()
+	public function testExtendsAbstractMatcher()
 	{
-		return '`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher';
+		$this->assert('`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher');
 	}
 
 	public function testCanRegisterMatcher()
@@ -26,7 +27,8 @@ class AbstractMatcherTestCase extends TestCase
 
 	public function testSupportedSyntaxesAreUnique()
 	{
-		$syntaxes = $this->matcher->supportedSyntaxes();
+		$service = new MatcherSyntaxAndDescription();
+		$syntaxes = array_keys($service->process($this->matcher->supportedSyntaxes()));
 		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
 	}
 
@@ -73,5 +75,16 @@ class AbstractMatcherTestCase extends TestCase
 	protected function assertMatcherSuccess($syntax, array $args = array())
 	{
 		$this->assertTrue($this->matcher->match($syntax, $args));
+	}
+
+	protected function assertFailure($assertionString)
+	{
+		try {
+			$this->assert($assertionString);
+			$this->fail("Assertion '$assertionString' did not fail.");
+		}
+		catch(\PHPUnit_Framework_AssertionFailedError $e) {
+			$this->assertTrue(true);
+		}
 	}
 }
