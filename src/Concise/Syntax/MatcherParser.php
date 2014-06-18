@@ -12,16 +12,46 @@ class MatcherParser
 
 	protected $keywords = array();
 
+	protected $lexer;
+
+	protected $syntaxCache = array();
+
+	public function __construct()
+	{
+		$this->lexer = new Lexer();
+		$this->lexer->setMatcherParser($this);
+	}
+
+	protected function getRawSyntax($syntax)
+	{
+		if(!array_key_exists($syntax, $this->syntaxCache)) {
+			if(strpos($syntax, ':') === false) {
+				$this->syntaxCache[$syntax] = $syntax;
+			}
+			else {
+				$parse = $this->lexer->parse($syntax);
+				$this->syntaxCache[$syntax] = $parse['syntax'];
+			}
+		}
+		return $this->syntaxCache[$syntax];
+	}
+
 	/**
 	 * @param string $syntax
+	 * @return array
 	 */
 	public function getMatcherForSyntax($syntax)
 	{
 		$found = array();
 		foreach($this->matchers as $matcher) {
 			$syntaxes = $matcher->supportedSyntaxes();
-			if(in_array($syntax, $syntaxes)) {
-				$found[] = $matcher;
+			foreach($syntaxes as $s) {
+				if($this->getRawSyntax($syntax) === $this->getRawSyntax($s)) {
+					$found[] = array(
+						'matcher' => $matcher,
+						'originalSyntax' => $s,
+					);
+				}
 			}
 		}
 		if(count($found) === 0) {
@@ -39,10 +69,10 @@ class MatcherParser
 	 */
 	public function compile($string, array $data = array())
 	{
-		$lexer = new Lexer();
-		$result = $lexer->parse($string);
-		$matcher = $this->getMatcherForSyntax($result['syntax']);
-		$assertion = new Assertion($string, $matcher, $data);
+		$result = $this->lexer->parse($string);
+		$match = $this->getMatcherForSyntax($result['syntax']);
+		$assertion = new Assertion($string, $match['matcher'], $data);
+		$assertion->setOriginalSyntax($match['originalSyntax']);
 		return $assertion;
 	}
 
@@ -56,9 +86,15 @@ class MatcherParser
 		return false;
 	}
 
+	protected function clearKeywordCache()
+	{
+		$this->keywords = array();
+	}
+
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
 		$this->matchers[] = $matcher;
+		$this->clearKeywordCache();
 		return true;
 	}
 
@@ -102,7 +138,7 @@ class MatcherParser
 		foreach($this->getMatchers() as $matcher) {
 			foreach($matcher->supportedSyntaxes() as $syntax) {
 				foreach(explode(' ', $syntax) as $word) {
-					if($word !== '?') {
+					if($word[0] !== '?') {
 						$r[] = $word;
 					}
 				}

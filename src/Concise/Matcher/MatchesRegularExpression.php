@@ -9,7 +9,7 @@ class MatchesRegularExpression extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? matches regular expression ?',
+			'? matches regular expression ?:regex',
 		);
 	}
 

@@ -20,7 +20,7 @@ class TestCaseTest extends TestCase
 		}
 		$this->assertEquals($expected, $right);
 	}
-
+	
 	public function testCanSetAttribute()
 	{
 		$this->myAttribute = 123;

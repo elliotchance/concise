@@ -10,8 +10,8 @@ class LexerTest extends TestCase
 	{
 		return array(
 			'keyword' => array('equals', new Token\Keyword('equals')),
-			'attribute' => array('z',    new Token\Attribute('z')),
-			'integer1' => array('123',   new Token\Value('123')),
+			'attribute' => array('z', new Token\Attribute('z')),
+			'integer1' => array('123', new Token\Value('123')),
 			'integer2' => array('-123', new Token\Value('-123')),
 			'integer3' => array('-123e10', new Token\Value('-123e10')),
 			'integer4' => array('-123e-10', new Token\Value('-123e-10')),
@@ -54,25 +54,6 @@ class LexerTest extends TestCase
 		$this->assertCount(0, $result['tokens']);
 	}
 
-	public function testKeywordsReturnsArray()
-	{
-		$this->assertTrue(is_array(Lexer::getKeywords()));
-	}
-
-	public function testKeywordsAreUnique()
-	{
-		$keywords = Lexer::getKeywords();
-		$this->assertCount(count($keywords), array_unique($keywords));
-	}
-
-	public function testKeywordsAreSorted()
-	{
-		$keywords = Lexer::getKeywords();
-		$sortedKeywords = Lexer::getKeywords();
-		sort($sortedKeywords);
-		$this->assertEquals($keywords, $sortedKeywords);
-	}
-
 	public function testLexerIgnoresBlankTokens()
 	{
 		$lexer = new Lexer();
@@ -108,11 +89,6 @@ class LexerTest extends TestCase
 		$this->assertEquals(array(new Token\Value($expected)), $result['tokens']);
 	}
 
-	public function testLexerUsesKeywordsFromMatcherParser()
-	{
-		$this->assertEquals(Lexer::getKeywords(), MatcherParser::getInstance()->getKeywords());
-	}
-
 	/**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage Expected " before end of string.
@@ -120,7 +96,7 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfDoubleQuotedStringIsNotClosed()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse('"abc');
+		$lexer->parse('"abc');
 	}
 
 	/**
@@ -130,7 +106,7 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfSingleQuotedStringIsNotClosed()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse("'abc");
+		$lexer->parse("'abc");
 	}
 
 	/**
@@ -140,6 +116,27 @@ class LexerTest extends TestCase
 	public function testLexerThrowsExceptionIfArrayIsNotValid()
 	{
 		$lexer = new Lexer();
-		$result = $lexer->parse('[abc');
+		$lexer->parse('[abc');
+	}
+
+	public function testLexerCanExtractExpectedTypeFromSyntax()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('?:int');
+		$this->assertSame(array('int'), $result['arguments'][0]->getAcceptedTypes());
+	}
+
+	public function testLexerCanExtractExpectedTypesFromSyntax()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('?:int,float');
+		$this->assertSame(array('int', 'float'), $result['arguments'][0]->getAcceptedTypes());
+	}
+
+	public function testLexerWillNotPutExpectedTypesInAttributeValue()
+	{
+		$lexer = new Lexer();
+		$result = $lexer->parse('?:int,float');
+		$this->assertSame('?', $result['arguments'][0]->getValue());
 	}
 }

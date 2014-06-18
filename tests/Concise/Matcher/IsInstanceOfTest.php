@@ -26,9 +26,4 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('`new \stdClass()` is instance of \Concise\Matcher\IsInstanceOfTest');
 	}
-
-	public function testClassNameCanNotBeUsed()
-	{
-		$this->assertFailure('\Concise\Matcher\IsInstanceOfTest is instance of \Concise\Matcher\IsInstanceOfTest');
-	}
 }
