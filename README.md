@@ -11,58 +11,50 @@ Simple Example
 
 The assertion "x is not null" is taken directly from the method name:
 
-```
+```php
 class AttributeTest extends TestCase
 {
-	public function _test_x_is_not_null() {
+	public function test_x_is_not_null() {
 		$this->x = 123;
 	}
 }
 ```
 
-All _attributes_ are assigned to `$this` and can be used in assertions. More than likely you will want to be more descritive with your tests, even if its only one assertions. You may name your testing method anything you want as long as it starts with `_test_` and returns a string that is the actual assertion:
-
-```
-public function _test_XCantBeNull()
-{
-	$this->x = 123;
-	return 'x is not null';
-}
-```
-
-This principle can be extended further to use multiple assertions per test by returning an array of assertions:
-
-```
-public function _test_XCantBeNull()
-{
-	$this->x = 123;
-	return array(
-		'x is not null',
-		'x is an integer'
-	);
-}
-```
-
-The assertions will be be shown as separate results and all assertions will executed in regardless of the outcomes of other individual assertions in the same test.
+All _attributes_ are assigned to `$this` and can be used in assertions.
 
 ### Arbitrary Code
 
 It is often nessesary and/or easier to use arbitrary code in the assertions themselfs. The following code is equivilent:
 
-```
-public function _test_my_calculator()
+```php
+public function testMyCalculator()
 {
 	$this->calc = new Calculator();
 	$this->answer = $self->calc->add(3, 5);
-	return 'answer equals 8';
+	$this->assert('answer equals 8');
 }
 ```
 
-```
-public function _test_my_calculator()
+```php
+public function testMyCalculator()
 {
 	$this->calc = new Calculator();
-	return '`$self->calc->add(3, 5)` equals 8';
+	$this->assert('`$self->calc->add(3, 5)` equals 8');
+}
+```
+
+Or, perhaps even more readable:
+
+```php
+public function setUp()
+{
+	parent::setUp();
+	$this->calc = new Calculator();
+}
+
+public function test_adding3and5_equals_8()
+{
+	$this->adding3and5 = $this->calc->add(3, 5);
 }
 ```
 
@@ -95,7 +87,7 @@ Matchers
 
 Create the matcher class:
 
-```
+```php
 class MyMatcher extends \Concise\Matcher\AbstractMatcher
 {
 	/**
@@ -124,32 +116,7 @@ class MyMatcher extends \Concise\Matcher\AbstractMatcher
 
 Somewhere in your test (or your bootstrap) you can get the default parser and register your class:
 
-```
+```php
 $defaultParser = \Concise\Syntax\MatcherParser::getInstance();
 $defaultParser->registerMatcher(new MyMatcher());
 ```
-
-Data Sets (Data Providers)
---------------------------
-
-Data set allow you to generate many assertions from a set of values. This works much the same as how PHPUnit uses data providers. Values are substituted into `?` placeholders like:
-
-```
-class AdditionTest extends TestCase
-{
-	public function _test_adding_some_stuff()
-	{
-		$this->calc = new Calculator();
-		$cases = array(
-			array(1, 1, 2),
-			array(3, 5, 8),
-		);
-		return $this->assertionsForDataSet(
-		    '`$self->calc->add(?, ?)` equals `?`',
-			$cases
-		);
-	}
-}
-```
-
-**Note: The placeholder `?` must be inside a backtick block, even if it is by itself.**
