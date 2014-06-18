@@ -47,6 +47,14 @@ class DataTypeChecker
 		return true;
 	}
 
+	protected function getAttribute($name)
+	{
+		if(!array_key_exists($name, $this->context)) {
+			throw new \Exception("Attribute '$name' does not exist.");
+		}
+		return $this->context[$name];
+	}
+
 	protected function getType($value)
 	{
 		if(is_object($value)) {
@@ -54,7 +62,7 @@ class DataTypeChecker
 				return 'regex';
 			}
 			if(get_class($value) === 'Concise\Syntax\Token\Attribute') {
-				return $this->getType($this->context[$value->getValue()]);
+				return $this->getType($this->getAttribute($value->getValue()));
 			}
 		}
 		if(is_callable($value)) {

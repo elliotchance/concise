@@ -82,4 +82,13 @@ class DataTypeCheckerTest extends \Concise\TestCase
 		$this->dataTypeChecker->setContext($context);
 		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Attribute 'foo' does not exist.
+	 */
+	public function testWillThrowExceptionIfAttributeDoesNotExist()
+	{
+		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+	}
 }
