@@ -78,4 +78,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$assertion->setTestCase($this);
 		$assertion->run();
 	}
+
+	public function tearDown()
+	{
+		if($this->getName()[4] === '_') {
+			$assertion = str_replace("_", " ", substr($this->getName(), 5));
+			$this->assert($assertion);
+		}
+		parent::tearDown();
+	}
 }
