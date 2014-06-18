@@ -74,27 +74,22 @@ Matchers
 * `? does not end with ?`
 * `? does not equal ?`
 * `? does not exactly equal ?`
-* `? does not match regex ?`
-* `? does not match regular expression ?`
+* `? does not match regex ?:regex` - Check if a string does not match a regular expression.
+* `? does not match regular expression ?:regex` - Check if a string does not match a regular expression.
 * `? does not start with ?`
-* `? does not throw ?`
-* `? does not throw exception`
-* `? doesnt match regex ?`
-* `? doesnt match regular expression ?`
+* `? doesnt match regex ?:regex` - Check if a string does not match a regular expression.
+* `? doesnt match regular expression ?:regex` - Check if a string does not match a regular expression.
 * `? ends with ?`
-* `? equals ?`
-* `? exactly equals ?`
-* `? instance of ?`
+* `? equals ?` - Compare values with no regard to exact data types.
+* `? exactly equals ?` - Match the value and data type.
 * `? is a string` - Test for string type.
-* `? is an array`
-* `? is an instance of ?`
-* `? is an int`
-* `? is an integer`
-* `? is an object`
-* `? is equal to ?`
-* `? is exactly equal to ?`
-* `? is false`
-* `? is instance of ?`
+* `? is an array` - Check value is an array
+* `? is an int` - Check value is strictly an integer type.
+* `? is an integer` - Check value is strictly an integer type.
+* `? is an object` - Check value is an object.
+* `? is equal to ?` - Compare values with no regard to exact data types.
+* `? is exactly equal to ?` - Match the value and data type.
+* `? is false` - Check for boolean false.
 * `? is not a string`
 * `? is not an array`
 * `? is not an int`
@@ -105,16 +100,21 @@ Matchers
 * `? is not null`
 * `? is not the same as ?`
 * `? is null`
-* `? is the same as ?`
+* `? is the same as ?` - Match the value and data type.
 * `? is true`
-* `? matches regular expression ?`
+* `? matches regular expression ?:regex`
 * `? not equals ?`
 * `? starts with ?`
-* `? throws ?`
-* `? throws anything except ?`
-* `? throws exactly ?`
-* `? throws exception`
-* `false`
+* `?:callable does not throw ?:class` - Verify that a specific exception is not thrown.
+* `?:callable does not throw exception` - Check that no exception is thrown.
+* `?:callable throws ?:class`
+* `?:callable throws anything except ?:class`
+* `?:callable throws exactly ?:class`
+* `?:callable throws exception`
+* `?:object instance of ?:class`
+* `?:object is an instance of ?:class`
+* `?:object is instance of ?:class`
+* `false` - Always fail.
 * `true` - Always pass.
 
 <!-- end matchers -->

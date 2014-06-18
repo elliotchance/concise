@@ -7,8 +7,8 @@ class IsAnInteger extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is an int',
-			'? is an integer',
+			'? is an int' => 'Check value is strictly an integer type.',
+			'? is an integer' => 'Check value is strictly an integer type.',
 		);
 	}
 

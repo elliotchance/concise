@@ -7,7 +7,7 @@ class False extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'false',
+			'false' => 'Always fail.',
 		);
 	}
 

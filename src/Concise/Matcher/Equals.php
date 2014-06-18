@@ -6,11 +6,13 @@ use \Concise\Syntax\ConvertToString;
 
 class Equals extends AbstractMatcher
 {
+	const EQUALS_DESCRIPTION = 'Compare values with no regard to exact data types.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? equals ?',
-			'? is equal to ?'
+			'? equals ?' => self::EQUALS_DESCRIPTION,
+			'? is equal to ?' => self::EQUALS_DESCRIPTION,
 		);
 	}
 
