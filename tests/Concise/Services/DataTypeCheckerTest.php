@@ -2,6 +2,7 @@
 
 namespace Concise\Services;
 
+use \Concise\Syntax\Token\Attribute;
 use \Concise\Syntax\Token\Regexp;
 
 class DataTypeCheckerTest extends \Concise\TestCase
@@ -71,5 +72,14 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			$self->dataTypeChecker->check(array("int"), 123);
 		};
 		$this->assert('block throws exception');
+	}
+
+	public function testAttributesAreEvaluatedFromContext()
+	{
+		$context = array(
+			'foo' => 'bar',
+		);
+		$this->dataTypeChecker->setContext($context);
+		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
 	}
 }

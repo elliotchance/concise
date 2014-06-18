@@ -71,6 +71,7 @@ class Assertion
 	protected function checkDataTypes(array $arguments)
 	{
 		$checker = new DataTypeChecker();
+		$checker->setContext($this->getData());
 		$lexer = new Lexer();
 		$parse = $lexer->parse($this->originalSyntax);
 		$args = $parse['arguments'];

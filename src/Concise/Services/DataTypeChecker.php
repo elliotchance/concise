@@ -6,6 +6,13 @@ class DataTypeChecker
 {
 	protected $excludeMode = false;
 
+	protected $context = array();
+
+	public function setContext(array $context)
+	{
+		$this->context = $context;
+	}
+
 	public function check(array $acceptedTypes, $value)
 	{
 		if(count($acceptedTypes) === 0) {
@@ -42,8 +49,13 @@ class DataTypeChecker
 
 	protected function getType($value)
 	{
-		if(is_object($value) && get_class($value) === 'Concise\Syntax\Token\Regexp') {
-			return 'regex';
+		if(is_object($value)) {
+			if(get_class($value) === 'Concise\Syntax\Token\Regexp') {
+				return 'regex';
+			}
+			if(get_class($value) === 'Concise\Syntax\Token\Attribute') {
+				return $this->getType($this->context[$value->getValue()]);
+			}
 		}
 		if(is_callable($value)) {
 			return 'callable';
