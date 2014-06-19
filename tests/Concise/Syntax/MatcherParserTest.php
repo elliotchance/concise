@@ -148,8 +148,8 @@ class MatcherParserTest extends TestCase
 	{
 		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
 		$this->assertArrayContains(array(
-			'? is null'       => null,
-			'? is equal to ?' => null
+			'? is null'       => 'Assert a value is null.',
+			'? is equal to ?' => 'Assert values with no regard to exact data types.',
 		), $syntaxes);
 	}
 
