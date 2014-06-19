@@ -7,7 +7,7 @@ class IsTrue extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is true',
+			'? is true' => 'Assert a value is true.',
 		);
 	}
 

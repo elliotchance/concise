@@ -7,7 +7,7 @@ class IsNotAnObject extends IsAnObject
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is not an object',
+			'? is not an object' => 'Assert a value is not an object.',
 		);
 	}
 

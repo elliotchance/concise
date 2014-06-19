@@ -7,7 +7,7 @@ class IsAString extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is a string' => 'Test for string type.',
+			'? is a string' => 'Assert value is a string.',
 		);
 	}
 

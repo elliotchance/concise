@@ -7,7 +7,7 @@ class IsNull extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is null'
+			'? is null' => 'Assert a value is null.',
 		);
 	}
 

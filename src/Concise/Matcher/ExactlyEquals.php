@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 class ExactlyEquals extends AbstractMatcher
 {
-	const EXACTLY_EQUALS_DESCRIPTION = 'Match the value and data type.';
+	const EXACTLY_EQUALS_DESCRIPTION = 'Assert two values match data type and value.';
 
 	public function supportedSyntaxes()
 	{

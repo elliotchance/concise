@@ -7,7 +7,7 @@ class IsNotAnArray extends IsAnArray
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is not an array',
+			'? is not an array' => 'Assert a value is not an array.',
 		);
 	}
 

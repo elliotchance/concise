@@ -63,49 +63,50 @@ Matchers
 
 <!-- start matchers -->
 
-* `? does not end with ?`
-* `? does not equal ?`
-* `? does not exactly equal ?`
-* `? does not match regex ?:regex` - Check if a string does not match a regular expression.
-* `? does not match regular expression ?:regex` - Check if a string does not match a regular expression.
-* `? does not start with ?`
-* `? doesnt match regex ?:regex` - Check if a string does not match a regular expression.
-* `? doesnt match regular expression ?:regex` - Check if a string does not match a regular expression.
-* `? ends with ?`
-* `? equals ?` - Compare values with no regard to exact data types.
-* `? exactly equals ?` - Match the value and data type.
-* `? is a string` - Test for string type.
-* `? is an array` - Check value is an array
-* `? is an int` - Check value is strictly an integer type.
-* `? is an integer` - Check value is strictly an integer type.
-* `? is an object` - Check value is an object.
-* `? is equal to ?` - Compare values with no regard to exact data types.
-* `? is exactly equal to ?` - Match the value and data type.
-* `? is false` - Check for boolean false.
-* `? is not a string`
-* `? is not an array`
-* `? is not an int`
-* `? is not an integer`
-* `? is not an object`
-* `? is not equal to ?`
-* `? is not exactly equal to ?`
-* `? is not null`
-* `? is not the same as ?`
-* `? is null`
-* `? is the same as ?` - Match the value and data type.
-* `? is true`
-* `? matches regular expression ?:regex`
-* `? not equals ?`
-* `? starts with ?`
-* `?:callable does not throw ?:class` - Verify that a specific exception is not thrown.
-* `?:callable does not throw exception` - Check that no exception is thrown.
-* `?:callable throws ?:class`
-* `?:callable throws anything except ?:class`
-* `?:callable throws exactly ?:class`
-* `?:callable throws exception`
-* `?:object instance of ?:class`
-* `?:object is an instance of ?:class`
-* `?:object is instance of ?:class`
+* `? does not end with ?` - Assert a string does not end with another string.
+* `? does not equal ?` - Assert two value do not match with no regard to type.
+* `? does not exactly equal ?` - Assert two values are of exactly the same type and value.
+* `? does not match regex ?:regex` - Assert a string does not match a regular expression.
+* `? does not match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `? does not start with ?` - Assert a string does not not start (begin) with another string.
+* `? doesnt match regex ?:regex` - Assert a string does not match a regular expression.
+* `? doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `? ends with ?` - Assert a string ends with another string.
+* `? equals ?` - Assert values with no regard to exact data types.
+* `? exactly equals ?` - Assert two values match data type and value.
+* `? is a string` - Assert value is a string.
+* `? is an array` - Assert a value is an array.
+* `? is an int` - Assert value is an integer type.
+* `? is an integer` - Assert value is an integer type.
+* `? is an object` - Assert value is an object.
+* `? is equal to ?` - Assert values with no regard to exact data types.
+* `? is exactly equal to ?` - Assert two values match data type and value.
+* `? is false` - Assert value is false.
+* `? is not a string` - Assert a value is not a string.
+* `? is not an array` - Assert a value is not an array.
+* `? is not an int` - Assert a value is not an integer type.
+* `? is not an integer` - Assert a value is not an integer type.
+* `? is not an object` - Assert a value is not an object.
+* `? is not equal to ?` - Assert two value do not match with no regard to type.
+* `? is not exactly equal to ?` - Assert two values are of exactly the same type and value.
+* `? is not null` - Assert a value is not null.
+* `? is not the same as ?` - Assert two values are of exactly the same type and value.
+* `? is null` - Assert a value is null.
+* `? is the same as ?` - Assert two values match data type and value.
+* `? is true` - Assert a value is true.
+* `? matches regex ?:regex` - Assert a string matches a regular expression
+* `? matches regular expression ?:regex` - Assert a string matches a regular expression
+* `? not equals ?` - Assert two value do not match with no regard to type.
+* `? starts with ?` - Assert a string starts (begins) with another string.
+* `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.
+* `?:callable does not throw exception` - Assert that no exception is thrown.
+* `?:callable throws ?:class` - Assert a specific exception was thrown.
+* `?:callable throws anything except ?:class` - Assert any exception except a specific one was thrown.
+* `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
+* `?:callable throws exception` - Assert an exception was thrown.
+* `?:object instance of ?:class` - Assert an objects class or subclass.
+* `?:object is an instance of ?:class` - Assert an objects class or subclass.
+* `?:object is instance of ?:class` - Assert an objects class or subclass.
 * `false` - Always fail.
 * `true` - Always pass.
 

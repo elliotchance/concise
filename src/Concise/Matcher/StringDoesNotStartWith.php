@@ -9,7 +9,7 @@ class StringDoesNotStartWith extends StringStartsWith
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not start with ?',
+			'? does not start with ?' => 'Assert a string does not not start (begin) with another string.',
 		);
 	}
 

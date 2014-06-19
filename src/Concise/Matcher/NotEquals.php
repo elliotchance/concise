@@ -4,12 +4,14 @@ namespace Concise\Matcher;
 
 class NotEquals extends Equals
 {
+	const DESCRIPTION = 'Assert two value do not match with no regard to type.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? not equals ?',
-			'? is not equal to ?',
-			'? does not equal ?',
+			'? not equals ?' => self::DESCRIPTION,
+			'? is not equal to ?' => self::DESCRIPTION,
+			'? does not equal ?' => self::DESCRIPTION,
 		);
 	}
 

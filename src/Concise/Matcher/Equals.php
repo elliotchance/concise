@@ -6,7 +6,7 @@ use \Concise\Syntax\ConvertToString;
 
 class Equals extends AbstractMatcher
 {
-	const EQUALS_DESCRIPTION = 'Compare values with no regard to exact data types.';
+	const EQUALS_DESCRIPTION = 'Assert values with no regard to exact data types.';
 
 	public function supportedSyntaxes()
 	{

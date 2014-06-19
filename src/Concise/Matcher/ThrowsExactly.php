@@ -7,7 +7,7 @@ class ThrowsExactly extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:callable throws exactly ?:class',
+			'?:callable throws exactly ?:class' => 'Assert a specific exception was thrown.',
 		);
 	}
 

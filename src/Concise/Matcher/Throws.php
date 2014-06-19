@@ -7,7 +7,7 @@ class Throws extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:callable throws ?:class',
+			'?:callable throws ?:class' => 'Assert a specific exception was thrown.',
 		);
 	}
 

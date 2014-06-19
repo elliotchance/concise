@@ -6,7 +6,7 @@ use \Concise\Services\ToStringConverter;
 
 class DoesNotMatchRegularExpression extends MatchesRegularExpression
 {
-	const DESCRIPTION = 'Check if a string does not match a regular expression.';
+	const DESCRIPTION = 'Assert a string does not match a regular expression.';
 
 	public function supportedSyntaxes()
 	{

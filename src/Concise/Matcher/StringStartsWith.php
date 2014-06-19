@@ -9,7 +9,7 @@ class StringStartsWith extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? starts with ?',
+			'? starts with ?' => 'Assert a string starts (begins) with another string.',
 		);
 	}
 

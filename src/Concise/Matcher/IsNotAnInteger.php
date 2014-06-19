@@ -4,11 +4,13 @@ namespace Concise\Matcher;
 
 class IsNotAnInteger extends IsAnInteger
 {
+	const DESCRIPTION = 'Assert a value is not an integer type.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is not an int',
-			'? is not an integer',
+			'? is not an int' => self::DESCRIPTION,
+			'? is not an integer' => self::DESCRIPTION,
 		);
 	}
 

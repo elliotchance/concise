@@ -4,11 +4,13 @@ namespace Concise\Matcher;
 
 class IsAnInteger extends AbstractMatcher
 {
+	const DESCRIPTION = 'Assert value is an integer type.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is an int' => 'Check value is strictly an integer type.',
-			'? is an integer' => 'Check value is strictly an integer type.',
+			'? is an int' => self::DESCRIPTION,
+			'? is an integer' => self::DESCRIPTION,
 		);
 	}
 

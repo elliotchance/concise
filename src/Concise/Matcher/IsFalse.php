@@ -7,7 +7,7 @@ class IsFalse extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is false' => 'Check for boolean false.'
+			'? is false' => 'Assert value is false.'
 		);
 	}
 

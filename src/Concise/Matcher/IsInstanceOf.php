@@ -4,12 +4,14 @@ namespace Concise\Matcher;
 
 class IsInstanceOf extends AbstractMatcher
 {
+	const DESCRIPTION = 'Assert an objects class or subclass.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:object is an instance of ?:class',
-			'?:object is instance of ?:class',
-			'?:object instance of ?:class',
+			'?:object is an instance of ?:class' => self::DESCRIPTION,
+			'?:object is instance of ?:class' => self::DESCRIPTION,
+			'?:object instance of ?:class' => self::DESCRIPTION,
 		);
 	}
 

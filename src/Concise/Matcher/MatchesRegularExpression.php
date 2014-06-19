@@ -9,7 +9,8 @@ class MatchesRegularExpression extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? matches regular expression ?:regex',
+			'? matches regular expression ?:regex' => 'Assert a string matches a regular expression',
+			'? matches regex ?:regex' => 'Assert a string matches a regular expression',
 		);
 	}
 

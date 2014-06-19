@@ -7,7 +7,7 @@ class IsNotNull extends IsNull
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is not null',
+			'? is not null' => 'Assert a value is not null.',
 		);
 	}
 
