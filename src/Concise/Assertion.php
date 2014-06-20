@@ -124,9 +124,6 @@ class Assertion
 	 */
 	public function fail($reason)
 	{
-		if(!is_object($this->testCase)) {
-			throw new \Exception();
-		}
 		$this->testCase->fail($reason);
 	}
 
