@@ -16,13 +16,13 @@ class DataTypeChecker
 	public function check(array $acceptedTypes, $value)
 	{
 		if($this->excludeMode === true) {
-			return $this->checkExclude($acceptedTypes, $value);
+			return $this->throwInvalidArgumentException($acceptedTypes, $value, false, "must not be");
 		}
 
 		if(count($acceptedTypes) === 0) {
 			return true;
 		}
-		return $this->checkInclude($acceptedTypes, $value);
+		return $this->throwInvalidArgumentException($acceptedTypes, $value, true, "not found in");
 	}
 
 	protected function matchesInAcceptedTypes(array $acceptedTypes, $value)
@@ -35,24 +35,14 @@ class DataTypeChecker
 		return false;
 	}
 
-	protected function checkInclude(array $acceptedTypes, $value)
+	protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting, $message)
 	{
 		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
-		if(true === $match) {
+		if($expecting === $match) {
 			return true;
 		}
 		$accepts = implode(' or ', $acceptedTypes);
-		throw new \InvalidArgumentException($this->getType($value) . ' not found in ' . $accepts);
-	}
-
-	protected function checkExclude(array $acceptedTypes, $value)
-	{
-		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
-		if(true === $match) {
-			$accepts = implode(' or ', $acceptedTypes);
-			throw new \InvalidArgumentException($this->getType($value) . ' must not be ' . $accepts);
-		}
-		return true;
+		throw new \InvalidArgumentException($this->getType($value) . " $message " . $accepts);
 	}
 
 	protected function getAttribute($name)
