@@ -96,29 +96,30 @@ class AssertionTest extends TestCase
 		$this->assert('`$self->x` equals 123');
 	}
 
+	protected function getStubForAssertionThatReturnsData(array $data)
+	{
+		return $this->getStub('\Concise\Assertion', array(
+			'getData' => $data
+		), array('true', new True()));
+	}
+
 	public function testDoNotShowPHPUnitPropertiesOnError()
 	{
-		$assertion = $this->getStub('\Concise\Assertion', array(
-			'getData' => self::getPHPUnitProperties()
-		), array('true', new True()));
+		$assertion = $this->getStubForAssertionThatReturnsData(self::getPHPUnitProperties());
 		$this->assertEquals("", (string) $assertion);
 	}
 
 	public function testDoNotShowDataSetOnError()
 	{
-		$assertion = $this->getStub('\Concise\Assertion', array(
-			'getData' => array(
-				'__dataSet' => array()
-			)
-		), array('true', new True()));
+		$assertion = $this->getStubForAssertionThatReturnsData(array(
+			'__dataSet' => array()
+		));
 		$this->assertEquals("", (string) $assertion);
 	}
 
 	public function testNoAttributesRendersAsAnEmptyString()
 	{
-		$assertion = $this->getStub('\Concise\Assertion', array(
-			'getData' => array()
-		), array('true', new True()));
+		$assertion = $this->getStubForAssertionThatReturnsData(array());
 		$this->assertEquals("", (string) $assertion);
 	}
 }
