@@ -41,11 +41,8 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
 	{
 		$expectException = 'Exception';
 		$expectMyException = 'Concise\Matcher\MyException';
-		$expectOtherException = 'Concise\Matcher\OtherException';
-		$throwNothing = function() {};
 		$throwException = function() { throw new \Exception(); };
 		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
-		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
 
 		return array(
 			array($throwException,   $expectException,   "Expected any exception except $expectException to be thrown, but $expectException was thrown."),
