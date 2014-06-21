@@ -14,6 +14,9 @@ class MatcherParserStub extends MatcherParser
 
 class MatcherParserTest extends TestCase
 {
+	/** @var MatcherParser */
+	protected $parser;
+
 	public function setUp()
 	{
 		parent::setUp();
