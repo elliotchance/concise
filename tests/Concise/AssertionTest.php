@@ -5,6 +5,7 @@ namespace Concise;
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
 use \Concise\Matcher\True;
+use \Concise\Matcher\False;
 
 class AssertionTest extends TestCase
 {
@@ -44,37 +45,6 @@ class AssertionTest extends TestCase
 		$assertion = new Assertion('a equals b', $matcher, $data);
 		$expected = "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
 		$this->assertEquals($expected, (string) $assertion);
-	}
-
-	public function testWillFailIfTheAssertionMessageIsNotEmpty()
-	{
-		$stub = $this->getMock('\Concise\Assertion',
-			array('executeAssertion', 'fail'),
-			array('true', new Matcher\True())
-		);
-		$stub->expects($this->once())
-		     ->method('executeAssertion')
-		     ->will($this->returnValue('oh no'));
-		$stub->expects($this->once())
-		     ->method('fail')
-		     ->with('oh no');
-
-		$stub->run();
-	}
-
-	public function testWillSucceedIfTheAssertionResultIsTrue()
-	{
-		$stub = $this->getMock('\Concise\Assertion',
-			array('executeAssertion', 'success'),
-			array('true', new Matcher\True())
-		);
-		$stub->expects($this->once())
-		     ->method('executeAssertion')
-		     ->will($this->returnValue(true));
-		$stub->expects($this->once())
-		     ->method('success');
-
-		$stub->run();
 	}
 
 	public function testCanSetDescriptiveString()

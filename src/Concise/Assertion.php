@@ -86,9 +86,6 @@ class Assertion
 		}
 	}
 
-	/**
-	 * @return boolean|string
-	 */
 	protected function executeAssertion()
 	{
 		$lexer = new Lexer();
@@ -114,33 +111,16 @@ class Assertion
 		}
 
 		if(true === $this->getMatcher()->match($result['syntax'], $args)) {
-			return true;
+			return;
 		}
-		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
-	}
-
-	/**
-	 * @param boolean|string $reason
-	 */
-	public function fail($reason)
-	{
-		throw new \PHPUnit_Framework_AssertionFailedError($reason);
-	}
-
-	public function success()
-	{
-		$this->testCase->assertTrue(true);
+		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
+		throw new \PHPUnit_Framework_AssertionFailedError($message);
 	}
 
 	public function run()
 	{
 		$result = $this->executeAssertion();
-		if(true === $result) {
-			$this->success();
-		}
-		else {
-			$this->fail($result);
-		}
+		$this->testCase->assertTrue(true);
 	}
 
 	public function __toString()
