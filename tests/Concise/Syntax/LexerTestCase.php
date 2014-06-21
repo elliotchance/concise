@@ -4,10 +4,15 @@ namespace Concise\Syntax;
 
 use \Concise\TestCase;
 
-class LexerTestCase extends TestCase
+abstract class LexerTestCase extends TestCase
 {
 	/** @var Lexer */
 	protected $lexer;
+
+	/**
+	 * @var array
+	 */
+	protected $parsed;
 
 	public function setUp()
 	{
@@ -30,4 +35,10 @@ class LexerTestCase extends TestCase
 	{
 		$this->assertEquals($this->expectedArguments(), $this->parsed['arguments']);
 	}
+
+	protected abstract function expectedTokens();
+
+	protected abstract function expectedSyntax();
+
+	protected abstract function expectedArguments();
 }
