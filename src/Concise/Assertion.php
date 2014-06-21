@@ -121,7 +121,7 @@ class Assertion
 
 	public function run()
 	{
-		$result = $this->executeAssertion();
+		$this->executeAssertion();
 		$this->testCase->assertTrue(true);
 	}
 
