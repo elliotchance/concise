@@ -34,11 +34,9 @@ class AbstractMatcherTestCase extends TestCase
 
 	protected function createStdClassThatCanBeCastToString($value)
 	{
-		$mock = $this->getMock('\stdClass', array('__toString'));
-		$mock->expects($this->any())
-		     ->method('__toString')
-		     ->will($this->returnValue($value));
-		return $mock;
+		return $this->getStub('\stdClass', array(
+			'__toString' => $value
+		));
 	}
 
 	/**
