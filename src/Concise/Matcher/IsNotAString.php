@@ -7,7 +7,7 @@ class IsNotAString extends IsAString
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is not a string',
+			'? is not a string' => 'Assert a value is not a string.',
 		);
 	}
 

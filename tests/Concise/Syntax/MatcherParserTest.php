@@ -147,7 +147,10 @@ class MatcherParserTest extends TestCase
 	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
 	{
 		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$this->assertArrayContains(array('? is null', '? is equal to ?'), $syntaxes);
+		$this->assertArrayContains(array(
+			'? is null'       => 'Assert a value is null.',
+			'? is equal to ?' => 'Assert values with no regard to exact data types.',
+		), $syntaxes);
 	}
 
 	public function testCanMatchSyntaxWithExpectedTypes()

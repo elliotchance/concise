@@ -7,7 +7,7 @@ class DoesNotThrow extends Throws
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:callable does not throw ?:class',
+			'?:callable does not throw ?:class' => "Assert that a specific exception is not thrown.",
 		);
 	}
 

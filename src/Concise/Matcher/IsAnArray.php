@@ -7,7 +7,7 @@ class IsAnArray extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is an array',
+			'? is an array' => 'Assert a value is an array.',
 		);
 	}
 

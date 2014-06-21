@@ -124,10 +124,7 @@ class Assertion
 	 */
 	public function fail($reason)
 	{
-		if(!is_object($this->testCase)) {
-			throw new \Exception();
-		}
-		$this->testCase->fail($reason);
+		throw new \PHPUnit_Framework_AssertionFailedError($reason);
 	}
 
 	public function success()

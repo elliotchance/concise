@@ -7,7 +7,7 @@ class IsAnObject extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is an object',
+			'? is an object' => 'Assert value is an object.',
 		);
 	}
 

@@ -7,7 +7,7 @@ class ThrowsAnythingExcept extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:callable throws anything except ?:class',
+			'?:callable throws anything except ?:class' => 'Assert any exception except a specific one was thrown.',
 		);
 	}
 

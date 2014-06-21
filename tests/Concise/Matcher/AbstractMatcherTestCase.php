@@ -4,6 +4,7 @@ namespace Concise\Matcher;
 
 use \Concise\TestCase;
 use \Concise\Syntax\MatcherParser;
+use \Concise\Services\MatcherSyntaxAndDescription;
 
 class AbstractMatcherTestCase extends TestCase
 {
@@ -26,7 +27,8 @@ class AbstractMatcherTestCase extends TestCase
 
 	public function testSupportedSyntaxesAreUnique()
 	{
-		$syntaxes = $this->matcher->supportedSyntaxes();
+		$service = new MatcherSyntaxAndDescription();
+		$syntaxes = array_keys($service->process($this->matcher->supportedSyntaxes()));
 		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
 	}
 

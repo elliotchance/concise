@@ -9,7 +9,7 @@ class StringEndsWith extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? ends with ?',
+			'? ends with ?' => 'Assert a string ends with another string.',
 		);
 	}
 

@@ -91,4 +91,10 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	{
 		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
 	}
+
+	public function testExcludeWithEmptyArrayAllowsAnything()
+	{
+		$this->dataTypeChecker->setExcludeMode();
+		$this->assertTrue($this->dataTypeChecker->check(array(), 123));
+	}
 }

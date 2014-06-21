@@ -7,7 +7,7 @@ class DoesNotThrowException extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:callable does not throw exception',
+			'?:callable does not throw exception' => "Assert that no exception is thrown.",
 		);
 	}
 

@@ -15,12 +15,12 @@ class DataTypeChecker
 
 	public function check(array $acceptedTypes, $value)
 	{
-		if(count($acceptedTypes) === 0) {
-			return true;
-		}
-
 		if($this->excludeMode === true) {
 			return $this->checkExclude($acceptedTypes, $value);
+		}
+
+		if(count($acceptedTypes) === 0) {
+			return true;
 		}
 		return $this->checkInclude($acceptedTypes, $value);
 	}
