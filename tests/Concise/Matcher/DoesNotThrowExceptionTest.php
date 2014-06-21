@@ -33,7 +33,7 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 			$success = $this->matcher->match('? does not throw exception', array($method));
 		}
 		catch(DidNotMatchException $e) {
-			// the assertion happens just below...
+			$success = false;
 		}
 		$this->assertSame($expectSuccess, !$success);
 	}
