@@ -7,6 +7,9 @@ use \Concise\Syntax\Token\Regexp;
 
 class DataTypeCheckerTest extends \Concise\TestCase
 {
+	/** @var DataTypeChecker */
+	protected $dataTypeChecker;
+
 	public function setUp()
 	{
 		parent::setUp();
