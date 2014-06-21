@@ -35,6 +35,10 @@ class DataTypeChecker
 		return false;
 	}
 
+	/**
+	 * @param boolean $expecting
+	 * @param string $message
+	 */
 	protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting, $message)
 	{
 		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
@@ -45,6 +49,9 @@ class DataTypeChecker
 		throw new \InvalidArgumentException($this->getType($value) . " $message " . $accepts);
 	}
 
+	/**
+	 * @param string $name
+	 */
 	protected function getAttribute($name)
 	{
 		if(!array_key_exists($name, $this->context)) {

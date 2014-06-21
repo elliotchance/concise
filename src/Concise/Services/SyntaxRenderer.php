@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class SyntaxRenderer
 {
+	/**
+	 * @param string $syntax
+	 */
 	public function render($syntax, array $data = array())
 	{
 		$renderer = new ValueRenderer();

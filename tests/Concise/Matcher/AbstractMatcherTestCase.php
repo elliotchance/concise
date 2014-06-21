@@ -75,6 +75,9 @@ class AbstractMatcherTestCase extends TestCase
 		$this->assertTrue($this->matcher->match($syntax, $args));
 	}
 
+	/**
+	 * @param string $assertionString
+	 */
 	protected function assertFailure($assertionString)
 	{
 		try {
