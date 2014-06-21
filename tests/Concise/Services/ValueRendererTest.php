@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class ValueRendererTest extends \Concise\TestCase
 {
+	/** @var ValueRenderer */
+	protected $renderer;
+
 	public function setUp()
 	{
 		parent::setUp();
