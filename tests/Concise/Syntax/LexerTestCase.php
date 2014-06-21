@@ -13,21 +13,21 @@ class LexerTestCase extends TestCase
 	{
 		parent::setUp();
 		$this->lexer = new Lexer();
-		$this->result = $this->lexer->parse($this->assertion());
+		$this->parsed = $this->lexer->parse($this->assertion());
 	}
 
 	public function testLexerWillReturnTokensForString()
 	{
-		$this->assertEquals($this->expectedTokens(), $this->result['tokens']);
+		$this->assertEquals($this->expectedTokens(), $this->parsed['tokens']);
 	}
 
 	public function testLexerWillReturnSyntaxForString()
 	{
-		$this->assertEquals($this->expectedSyntax(), $this->result['syntax']);
+		$this->assertEquals($this->expectedSyntax(), $this->parsed['syntax']);
 	}
 
 	public function testLexerWillReturnArgumentsForString()
 	{
-		$this->assertEquals($this->expectedArguments(), $this->result['arguments']);
+		$this->assertEquals($this->expectedArguments(), $this->parsed['arguments']);
 	}
 }
