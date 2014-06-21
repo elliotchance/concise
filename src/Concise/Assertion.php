@@ -124,7 +124,7 @@ class Assertion
 	 */
 	public function fail($reason)
 	{
-		$this->testCase->fail($reason);
+		throw new \PHPUnit_Framework_AssertionFailedError($reason);
 	}
 
 	public function success()
