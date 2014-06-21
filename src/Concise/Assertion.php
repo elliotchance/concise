@@ -75,7 +75,8 @@ class Assertion
 		$lexer = new Lexer();
 		$parse = $lexer->parse($this->originalSyntax);
 		$args = $parse['arguments'];
-		for($i = 0; $i < count($args); ++$i) {
+		$len = count($args);
+		for($i = 0; $i < $len; ++$i) {
 			try {
 				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
 			}
@@ -93,7 +94,8 @@ class Assertion
 		$args = array();
 
 		$data = $this->getData();
-		for($i = 0; $i < count($result['arguments']); ++$i) {
+		$len = count($result['arguments']);
+		for($i = 0; $i < $len; ++$i) {
 			$arg = $result['arguments'][$i];
 			if($arg instanceof \Concise\Syntax\Token\Attribute) {
 				$args[$i] = $data[(string) $arg];
