@@ -25,12 +25,21 @@ class DataTypeChecker
 		return $this->checkInclude($acceptedTypes, $value);
 	}
 
-	protected function checkInclude(array $acceptedTypes, $value)
+	protected function matchesInAcceptedTypes(array $acceptedTypes, $value)
 	{
 		foreach($acceptedTypes as $acceptedType) {
 			if($this->matches($acceptedType, $value)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	protected function checkInclude(array $acceptedTypes, $value)
+	{
+		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
+		if(true === $match) {
+			return true;
 		}
 		$accepts = implode(' or ', $acceptedTypes);
 		throw new \InvalidArgumentException($this->getType($value) . ' not found in ' . $accepts);
@@ -38,11 +47,10 @@ class DataTypeChecker
 
 	protected function checkExclude(array $acceptedTypes, $value)
 	{
-		foreach($acceptedTypes as $acceptedType) {
-			if($this->matches($acceptedType, $value)) {
-				$accepts = implode(' or ', $acceptedTypes);
-				throw new \InvalidArgumentException($this->getType($value) . ' must not be ' . $accepts);
-			}
+		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
+		if(true === $match) {
+			$accepts = implode(' or ', $acceptedTypes);
+			throw new \InvalidArgumentException($this->getType($value) . ' must not be ' . $accepts);
 		}
 		return true;
 	}
