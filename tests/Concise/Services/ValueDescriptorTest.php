@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class ValueDescriptorTest extends \Concise\TestCase
 {
+	/** @var ValueDescriptor */
+	protected $descriptor;
+
 	public function setUp()
 	{
 		parent::setUp();
