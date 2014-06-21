@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class ComparerTest extends \Concise\TestCase
 {
+	/** @var Comparer */
+	protected $comparer;
+
 	public function setUp()
 	{
 		parent::setUp();
