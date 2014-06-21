@@ -6,6 +6,9 @@ use \Concise\TestCase;
 
 class LexerTestCase extends TestCase
 {
+	/** @var Lexer */
+	protected $lexer;
+
 	public function setUp()
 	{
 		parent::setUp();
