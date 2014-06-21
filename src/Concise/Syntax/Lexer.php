@@ -68,6 +68,9 @@ class Lexer
 		return $this->consumeUntilToken($string, '/', $startIndex);
 	}
 
+	/**
+	 * @param string $t
+	 */
 	protected function translateValue($t)
 	{
 		if($this->isKeyword($t)) {

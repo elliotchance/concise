@@ -40,6 +40,7 @@ class ComparerTest extends \Concise\TestCase
 
 	/**
 	 * @param string $value
+	 * @return ToStringConverter
 	 */
 	protected function getConvertToStringMockThatExpects($value)
 	{

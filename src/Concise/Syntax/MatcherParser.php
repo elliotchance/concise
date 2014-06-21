@@ -67,6 +67,7 @@ class MatcherParser
 
 	/**
 	 * @param array $data The data from the test case.
+	 * @param string $string
 	 * @return \Concise\Assertion
 	 */
 	public function compile($string, array $data = array())
@@ -78,6 +79,9 @@ class MatcherParser
 		return $assertion;
 	}
 
+	/**
+	 * @param string $matcherClass
+	 */
 	public function matcherIsRegistered($matcherClass)
 	{
 		foreach($this->matchers as $matcher) {

@@ -55,6 +55,9 @@ class Assertion
 		return $this->matcher;
 	}
 
+	/**
+	 * @param string $code
+	 */
 	protected function evalCode($code)
 	{
 		$self = (object) $this->getData();
