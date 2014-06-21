@@ -55,12 +55,12 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
 	 */
 	public function testThrowsAnythingExcept(\Closure $method, $expectedException, $expectToThrow)
 	{
-		$didThrow = true;
 		try {
 			$this->matcher->match('? throws anything except ?', array($method, $expectedException));
 			$didThrow = false;
 		}
 		catch(DidNotMatchException $e) {
+			$didThrow = true;
 		}
 		$this->assertSame($expectToThrow, !$didThrow);
 	}
