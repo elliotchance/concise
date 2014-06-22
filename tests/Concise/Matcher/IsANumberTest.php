@@ -16,4 +16,9 @@ class IsANumberTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 is a number');
 	}
+
+	public function testStringThatRepresentsANumberIsNotANumber()
+	{
+		$this->assertFailure('"123" is a number');
+	}
 }

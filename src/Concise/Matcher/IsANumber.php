@@ -13,6 +13,6 @@ class IsANumber extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		return is_int($data[0]);
 	}
 }
