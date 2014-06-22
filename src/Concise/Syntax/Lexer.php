@@ -68,6 +68,9 @@ class Lexer
 		return $this->consumeUntilToken($string, '/', $startIndex);
 	}
 
+	/**
+	 * @param string $t
+	 */
 	protected function translateValue($t)
 	{
 		if($this->isKeyword($t)) {
@@ -82,7 +85,8 @@ class Lexer
 
 	protected function consumeArray($string, &$startIndex)
 	{
-		for($i = 2; $startIndex + $i <= strlen($string); ++$i) {
+		$len = strlen($string);
+		for($i = 2; $startIndex + $i <= $len; ++$i) {
 			$json = substr($string, $startIndex, $i);
 			$value = json_decode($json, true);
 			if(null !== $value) {
@@ -97,7 +101,8 @@ class Lexer
 	{
 		$r = array();
 		$t = '';
-		for($i = 0; $i < strlen($string); ++$i) {
+		$len = strlen($string);
+		for($i = 0; $i < $len; ++$i) {
 			$ch = $string[$i];
 			if($ch === '"' || $ch === "'") {
 				$t = $this->consumeString($string, $ch, $i);

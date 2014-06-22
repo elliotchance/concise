@@ -55,6 +55,9 @@ class Assertion
 		return $this->matcher;
 	}
 
+	/**
+	 * @param string $code
+	 */
 	protected function evalCode($code)
 	{
 		$self = (object) $this->getData();
@@ -75,7 +78,8 @@ class Assertion
 		$lexer = new Lexer();
 		$parse = $lexer->parse($this->originalSyntax);
 		$args = $parse['arguments'];
-		for($i = 0; $i < count($args); ++$i) {
+		$len = count($args);
+		for($i = 0; $i < $len; ++$i) {
 			try {
 				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
 			}
@@ -86,9 +90,6 @@ class Assertion
 		}
 	}
 
-	/**
-	 * @return boolean|string
-	 */
 	protected function executeAssertion()
 	{
 		$lexer = new Lexer();
@@ -96,7 +97,8 @@ class Assertion
 		$args = array();
 
 		$data = $this->getData();
-		for($i = 0; $i < count($result['arguments']); ++$i) {
+		$len = count($result['arguments']);
+		for($i = 0; $i < $len; ++$i) {
 			$arg = $result['arguments'][$i];
 			if($arg instanceof \Concise\Syntax\Token\Attribute) {
 				$args[$i] = $data[(string) $arg];
@@ -114,33 +116,16 @@ class Assertion
 		}
 
 		if(true === $this->getMatcher()->match($result['syntax'], $args)) {
-			return true;
+			return;
 		}
-		return $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
-	}
-
-	/**
-	 * @param boolean|string $reason
-	 */
-	public function fail($reason)
-	{
-		throw new \PHPUnit_Framework_AssertionFailedError($reason);
-	}
-
-	public function success()
-	{
-		$this->testCase->assertTrue(true);
+		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
+		throw new \PHPUnit_Framework_AssertionFailedError($message);
 	}
 
 	public function run()
 	{
-		$result = $this->executeAssertion();
-		if(true === $result) {
-			$this->success();
-		}
-		else {
-			$this->fail($result);
-		}
+		$this->executeAssertion();
+		$this->testCase->assertTrue(true);
 	}
 
 	public function __toString()

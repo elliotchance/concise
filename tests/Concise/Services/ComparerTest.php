@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class ComparerTest extends \Concise\TestCase
 {
+	/** @var Comparer */
+	protected $comparer;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -37,6 +40,7 @@ class ComparerTest extends \Concise\TestCase
 
 	/**
 	 * @param string $value
+	 * @return ToStringConverter
 	 */
 	protected function getConvertToStringMockThatExpects($value)
 	{

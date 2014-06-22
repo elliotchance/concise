@@ -15,47 +15,29 @@ class ThrowsTest extends AbstractExceptionTestCase
 
 	public function exceptionTests()
 	{
-		$expectException = 'Exception';
-		$expectMyException = 'Concise\Matcher\MyException';
-		$expectOtherException = 'Concise\Matcher\OtherException';
-		$throwNothing = function() {};
-		$throwException = function() { throw new \Exception(); };
-		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
-		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
-		$FAIL = true;
-		$PASS = false;
-
-		return array(
-			array($throwNothing,        $expectException,      $FAIL),
-			array($throwNothing,        $expectMyException,    $FAIL),
-			array($throwException,      $expectException,      $PASS),
-			array($throwException,      $expectMyException,    $FAIL),
-			array($throwMyException,    $expectException,      $PASS),
-			array($throwMyException,    $expectMyException,    $PASS),
-			array($throwMyException,    $expectOtherException, $FAIL),
-			array($throwOtherException, $expectException,      $PASS),
-			array($throwOtherException, $expectMyException,    $FAIL),
-			array($throwOtherException, $expectOtherException, $PASS),
-		);
+		return $this->createExceptionTests(array(
+			array('throwNothing',        'expectException',      'FAIL'),
+			array('throwNothing',        'expectMyException',    'FAIL'),
+			array('throwException',      'expectException',      'PASS'),
+			array('throwException',      'expectMyException',    'FAIL'),
+			array('throwMyException',    'expectException',      'PASS'),
+			array('throwMyException',    'expectMyException',    'PASS'),
+			array('throwMyException',    'expectOtherException', 'FAIL'),
+			array('throwOtherException', 'expectException',      'PASS'),
+			array('throwOtherException', 'expectMyException',    'FAIL'),
+			array('throwOtherException', 'expectOtherException', 'PASS'),
+		));
 	}
 
 	public function exceptionThrowsTestMessages()
 	{
-		$expectException = 'Exception';
-		$expectMyException = 'Concise\Matcher\MyException';
-		$expectOtherException = 'Concise\Matcher\OtherException';
-		$throwNothing = function() {};
-		$throwException = function() { throw new \Exception(); };
-		$throwMyException = function() { throw new \Concise\Matcher\MyException(); };
-		$throwOtherException = function() { throw new \Concise\Matcher\OtherException(); };
-
-		return array(
-			array($throwNothing,        $expectException,      "Expected $expectException to be thrown, but nothing was thrown."),
-			array($throwNothing,        $expectMyException,    "Expected $expectMyException to be thrown, but nothing was thrown."),
-			array($throwException,      $expectMyException,    "Expected $expectMyException to be thrown, but $expectException was thrown."),
-			array($throwMyException,    $expectOtherException, "Expected $expectOtherException to be thrown, but $expectMyException was thrown."),
-			array($throwOtherException, $expectMyException,    "Expected $expectMyException to be thrown, but $expectOtherException was thrown."),
-		);
+		return $this->createExceptionTests(array(
+			array('throwNothing',        'expectException',      "Expected Exception to be thrown, but nothing was thrown."),
+			array('throwNothing',        'expectMyException',    "Expected Concise\Matcher\MyException to be thrown, but nothing was thrown."),
+			array('throwException',      'expectMyException',    "Expected Concise\Matcher\MyException to be thrown, but Exception was thrown."),
+			array('throwMyException',    'expectOtherException', "Expected Concise\Matcher\OtherException to be thrown, but Concise\Matcher\MyException was thrown."),
+			array('throwOtherException', 'expectMyException',    "Expected Concise\Matcher\MyException to be thrown, but Concise\Matcher\OtherException was thrown."),
+		));
 	}
 
 	/**

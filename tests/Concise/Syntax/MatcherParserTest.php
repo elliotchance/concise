@@ -14,6 +14,9 @@ class MatcherParserStub extends MatcherParser
 
 class MatcherParserTest extends TestCase
 {
+	/** @var MatcherParser */
+	protected $parser;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -177,6 +180,9 @@ class MatcherParserTest extends TestCase
 		$this->assertEquals(array('foobar'), $this->parser->getKeywords());
 	}
 
+	/**
+	 * @param string[] $supportedSyntaxes
+	 */
 	protected function getAbstractMatcherMockWithSupportedSyntaxes($supportedSyntaxes)
 	{
 		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');

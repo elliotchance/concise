@@ -16,37 +16,42 @@ class DataTypeChecker
 	public function check(array $acceptedTypes, $value)
 	{
 		if($this->excludeMode === true) {
-			return $this->checkExclude($acceptedTypes, $value);
+			return $this->throwInvalidArgumentException($acceptedTypes, $value, false, "must not be");
 		}
 
 		if(count($acceptedTypes) === 0) {
 			return true;
 		}
-		return $this->checkInclude($acceptedTypes, $value);
+		return $this->throwInvalidArgumentException($acceptedTypes, $value, true, "not found in");
 	}
 
-	protected function checkInclude(array $acceptedTypes, $value)
+	protected function matchesInAcceptedTypes(array $acceptedTypes, $value)
 	{
 		foreach($acceptedTypes as $acceptedType) {
 			if($this->matches($acceptedType, $value)) {
 				return true;
 			}
 		}
-		$accepts = implode(' or ', $acceptedTypes);
-		throw new \InvalidArgumentException($this->getType($value) . ' not found in ' . $accepts);
+		return false;
 	}
 
-	protected function checkExclude(array $acceptedTypes, $value)
+	/**
+	 * @param boolean $expecting
+	 * @param string $message
+	 */
+	protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting, $message)
 	{
-		foreach($acceptedTypes as $acceptedType) {
-			if($this->matches($acceptedType, $value)) {
-				$accepts = implode(' or ', $acceptedTypes);
-				throw new \InvalidArgumentException($this->getType($value) . ' must not be ' . $accepts);
-			}
+		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
+		if($expecting === $match) {
+			return true;
 		}
-		return true;
+		$accepts = implode(' or ', $acceptedTypes);
+		throw new \InvalidArgumentException($this->getType($value) . " $message " . $accepts);
 	}
 
+	/**
+	 * @param string $name
+	 */
 	protected function getAttribute($name)
 	{
 		if(!array_key_exists($name, $this->context)) {

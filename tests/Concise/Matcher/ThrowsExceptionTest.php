@@ -28,12 +28,12 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
 	 */
 	public function testThrows(\Closure $method, $expectSuccess)
 	{
-		$success = false;
 		try {
 			$this->matcher->match('? throws exception', array($method));
 			$success = true;
 		}
 		catch(DidNotMatchException $e) {
+			$success = false;
 		}
 		$this->assertSame($expectSuccess, $success);
 	}
