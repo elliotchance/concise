@@ -21,4 +21,9 @@ class IsNumericTest extends AbstractMatcherTestCase
 	{
 		$this->assert('12.3 is numeric');
 	}
+
+	public function testStringIsNotNumeric()
+	{
+		$this->assertFailure('"abc" is numeric');
+	}
 }
