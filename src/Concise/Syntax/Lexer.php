@@ -85,6 +85,7 @@ class Lexer
 
 	protected function consumeJson($string, &$startIndex)
 	{
+		$originalStartIndex = $startIndex;
 		$len = strlen($string);
 		for($i = 2; $startIndex + $i <= $len; ++$i) {
 			$json = substr($string, $startIndex, $i);
@@ -93,8 +94,16 @@ class Lexer
 				$startIndex += $i;
 				return $value;
 			}
+			if(substr($json, 0, 1) === '[' && substr($json, strlen($json) - 1, 1) === ']') {
+				$json = '{' . substr($json, 1, strlen($json) - 2) . '}';
+				$value = json_decode($json, true);
+				if(null !== $value) {
+					$startIndex += $i;
+					return $value;
+				}
+			}
 		}
-		throw new \Exception("Invalid array.");
+		throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
 	}
 
 	protected function getTokens($string)

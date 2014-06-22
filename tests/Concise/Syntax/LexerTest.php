@@ -111,7 +111,7 @@ class LexerTest extends TestCase
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Invalid array.
+	 * @expectedExceptionMessage Invalid JSON: [abc
 	 */
 	public function testLexerThrowsExceptionIfArrayIsNotValid()
 	{
