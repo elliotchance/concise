@@ -74,6 +74,7 @@ Matchers
 * `? ends with ?` - Assert a string ends with another string.
 * `? equals ?` - Assert values with no regard to exact data types.
 * `? exactly equals ?` - Assert two values match data type and value.
+* `? is a number` - Assert that a value is an integer or floating-point.
 * `? is a string` - Assert value is a string.
 * `? is an array` - Assert a value is an array.
 * `? is an int` - Assert value is an integer type.
@@ -82,6 +83,7 @@ Matchers
 * `? is equal to ?` - Assert values with no regard to exact data types.
 * `? is exactly equal to ?` - Assert two values match data type and value.
 * `? is false` - Assert value is false.
+* `? is not a number` - Assert that a value is not an integer or floating-point.
 * `? is not a string` - Assert a value is not a string.
 * `? is not an array` - Assert a value is not an array.
 * `? is not an int` - Assert a value is not an integer type.
