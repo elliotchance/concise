@@ -21,4 +21,9 @@ class IsANumberTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('"123" is a number');
 	}
+
+	public function testFloatIsANumber()
+	{
+		$this->assert('12.3 is a number');
+	}
 }
