@@ -9,7 +9,7 @@ class HasKey extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:array has key ?:string' => self::DESCRIPTION,
+			'?:array has key ?:int,string' => self::DESCRIPTION,
 		);
 	}
 

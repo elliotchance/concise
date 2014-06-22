@@ -10,8 +10,8 @@ class HasKeyTest extends AbstractMatcherTestCase
 		$this->matcher = new HasKey();
 	}
 
-	public function testArrayHasKey()
+	public function testArrayIntegerHasKey()
 	{
-		$this->assert('[123] has key "0"');
+		$this->assert('[123] has key 0');
 	}
 }
