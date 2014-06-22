@@ -23,6 +23,9 @@ class Assertion
 
 	protected $originalSyntax = null;
 
+	/**
+	 * @param string $assertionString
+	 */
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
 		$this->assertionString = $assertionString;
