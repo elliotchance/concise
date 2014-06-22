@@ -15,6 +15,10 @@ class HasKeys extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return array_keys($data[0]) == $data[1];
+		$a = array_keys($data[0]);
+		$b = $data[1];
+		sort($a);
+		sort($b);
+		return $a == $b;
 	}
 }

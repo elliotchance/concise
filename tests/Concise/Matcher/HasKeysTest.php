@@ -19,4 +19,9 @@ class HasKeysTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('[123] has keys [0,1]');
 	}
+
+	public function testArrayKeysCanBeInAnyOrder()
+	{
+		$this->assert('["a":123,"b":456] has keys ["b","a"]');
+	}
 }
