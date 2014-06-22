@@ -24,4 +24,9 @@ class HasKeysTest extends AbstractMatcherTestCase
 	{
 		$this->assert('["a":123,"b":456] has keys ["b","a"]');
 	}
+
+	public function testArrayKeysCanBeASubset()
+	{
+		$this->assert('["a":123,"b":456] has keys ["b"]');
+	}
 }
