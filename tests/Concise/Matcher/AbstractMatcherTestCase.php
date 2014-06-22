@@ -82,10 +82,11 @@ class AbstractMatcherTestCase extends TestCase
 	{
 		try {
 			$this->assert($assertionString);
-			$this->fail("Assertion '$assertionString' did not fail.");
 		}
 		catch(\PHPUnit_Framework_AssertionFailedError $e) {
 			$this->assertTrue(true);
+			return;
 		}
+		$this->fail("Assertion '$assertionString' did not fail.");
 	}
 }

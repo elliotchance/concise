@@ -115,7 +115,8 @@ class Assertion
 			$this->checkDataTypes($result['arguments']);
 		}
 
-		if(true === $this->getMatcher()->match($result['syntax'], $args)) {
+		$answer = $this->getMatcher()->match($result['syntax'], $args);
+		if(true === $answer || null === $answer) {
 			return;
 		}
 		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
