@@ -36,4 +36,9 @@ class IsNumericTest extends AbstractMatcherTestCase
 	{
 		$this->assert('"12.3" is numeric');
 	}
+
+	public function testStringThatRepresentsScientificNotationIsNumeric()
+	{
+		$this->assert('"12.3e-17" is numeric');
+	}
 }
