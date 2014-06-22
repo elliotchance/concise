@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 class HasKeys extends AbstractMatcher
 {
-	const DESCRIPTION = 'Assert an array has contains several keys in any order.';
+	const DESCRIPTION = 'Assert an array has several keys in any order.';
 
 	public function supportedSyntaxes()
 	{
