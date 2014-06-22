@@ -16,4 +16,9 @@ class IsNumericTest extends AbstractMatcherTestCase
 	{
 		$this->assert('123 is numeric');
 	}
+
+	public function testFloatIsNumeric()
+	{
+		$this->assert('12.3 is numeric');
+	}
 }
