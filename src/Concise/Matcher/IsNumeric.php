@@ -13,6 +13,6 @@ class IsNumeric extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		return is_numeric($data[0]);
 	}
 }
