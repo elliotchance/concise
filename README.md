@@ -92,8 +92,10 @@ Matchers
 * `? is not equal to ?` - Assert two value do not match with no regard to type.
 * `? is not exactly equal to ?` - Assert two values are of exactly the same type and value.
 * `? is not null` - Assert a value is not null.
+* `? is not numeric` - Assert value is not a number or string that represents a number.
 * `? is not the same as ?` - Assert two values are of exactly the same type and value.
 * `? is null` - Assert a value is null.
+* `? is numeric` - Assert value is a number or string that represents a number.
 * `? is the same as ?` - Assert two values match data type and value.
 * `? is true` - Assert a value is true.
 * `? matches regex ?:regex` - Assert a string matches a regular expression
