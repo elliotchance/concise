@@ -83,12 +83,12 @@ class Lexer
 		return new Token\Attribute($t);
 	}
 
-	protected function consumeArray($string, &$startIndex)
+	protected function consumeJson($string, &$startIndex)
 	{
 		$len = strlen($string);
 		for($i = 2; $startIndex + $i <= $len; ++$i) {
 			$json = substr($string, $startIndex, $i);
-			$value = json_decode($json, true);
+			$value = json_decode($json);
 			if(null !== $value) {
 				$startIndex += $i;
 				return $value;
@@ -124,8 +124,8 @@ class Lexer
 				$r[] = new Token\Regexp($t);
 				$t = '';
 			}
-			else if($ch === '[') {
-				$t = $this->consumeArray($string, $i);
+			else if($ch === '[' || $ch === '{') {
+				$t = $this->consumeJson($string, $i);
 				$r[] = new Token\Value($t);
 				$t = '';
 			}
