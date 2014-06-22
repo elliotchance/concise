@@ -19,6 +19,9 @@ class Lexer
 		return $this->matcherParser;
 	}
 
+	/**
+	 * @param string $token
+	 */
 	protected function isKeyword($token)
 	{
 		return in_array($token, $this->getMatcherParser()->getKeywords());
