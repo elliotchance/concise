@@ -111,7 +111,7 @@ class LexerTest extends TestCase
 
 	/**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Invalid array.
+	 * @expectedExceptionMessage Invalid JSON: [abc
 	 */
 	public function testLexerThrowsExceptionIfArrayIsNotValid()
 	{
@@ -138,5 +138,15 @@ class LexerTest extends TestCase
 		$lexer = new Lexer();
 		$result = $lexer->parse('?:int,float');
 		$this->assertSame('?', $result['arguments'][0]->getValue());
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Invalid JSON: [abc:123]
+	 */
+	public function testLexerThrowsExceptionIfAssociativeArrayIsNotValid()
+	{
+		$lexer = new Lexer();
+		$lexer->parse('[abc:123]');
 	}
 }
