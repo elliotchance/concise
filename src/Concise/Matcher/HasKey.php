@@ -15,6 +15,6 @@ class HasKey extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		return array_key_exists($data[1], $data[0]);
 	}
 }

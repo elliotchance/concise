@@ -14,4 +14,9 @@ class HasKeyTest extends AbstractMatcherTestCase
 	{
 		$this->assert('[123] has key 0');
 	}
+
+	public function testKeyDoesNotExist()
+	{
+		$this->assertFailure('[123] has key 1');
+	}
 }
