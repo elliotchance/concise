@@ -17,6 +17,6 @@ class HasValueTest extends AbstractMatcherTestCase
 
 	public function testArrayValueDoesNotExist()
 	{
-		$this->assertFailure('["abc"] has value "def"');
+		$this->assertFailure('["abc"] contains "def"');
 	}
 }

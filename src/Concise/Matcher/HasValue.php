@@ -10,6 +10,7 @@ class HasValue extends AbstractMatcher
 	{
 		return array(
 			'?:array has value ?' => self::DESCRIPTION,
+			'?:array contains ?' => self::DESCRIPTION,
 		);
 	}
 
