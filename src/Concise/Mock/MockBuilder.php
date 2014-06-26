@@ -20,6 +20,9 @@ class MockBuilder
 
 	public function stub(array $stubs)
 	{
+		if(count($stubs) === 0) {
+			throw new \Exception("stub() called with array must have at least 1 element.");
+		}
 		foreach($stubs as $method => $value) {
 			$this->rules[$method] = $value;
 		}

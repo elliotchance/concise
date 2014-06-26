@@ -50,4 +50,15 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->assertSame('bar', $this->mock->foo());
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage stub() called with array must have at least 1 element.
+	 */
+	public function testStubbingWithAnArrayMustHaveMoreThanZeroElements()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->stub(array())
+		                   ->done();
+	}
 }
