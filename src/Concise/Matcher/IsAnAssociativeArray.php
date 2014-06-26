@@ -13,6 +13,7 @@ class IsAnAssociativeArray extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		$arr = $data[0];
+		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 }
