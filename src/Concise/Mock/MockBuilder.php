@@ -29,14 +29,36 @@ class MockBuilder
 		return $this;
 	}
 
+	protected function getAllMethodNamesForClass()
+	{
+		$class = new \ReflectionClass($this->className);
+		$methodNames = array();
+		foreach($class->getMethods() as $method) {
+			$methodNames[] = $method->getName();
+		}
+		return $methodNames;
+	}
+
 	public function done()
 	{
-		$mock = $this->testCase->getMock($this->className, array_keys($this->rules));
+		$mockedMethods = array_keys($this->rules);
+		$mock = $this->testCase->getMock($this->className, $mockedMethods);
 		foreach($this->rules as $method => $value) {
 			$mock->expects($this->testCase->any())
 			     ->method($method)
 			     ->will($this->testCase->returnValue($value));
 		}
+
+		// throw exception for remaining methods
+		foreach($this->getAllMethodNamesForClass() as $method) {
+			if(in_array($method, $mockedMethods)) {
+				continue;
+			}
+			$mock->expects($this->testCase->any())
+			     ->method($method)
+			     ->will($this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?")));
+		}
+
 		return $mock;
 	}
 }

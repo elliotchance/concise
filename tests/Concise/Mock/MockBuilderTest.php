@@ -61,4 +61,15 @@ class MockBuilderTest extends TestCase
 		                   ->stub(array())
 		                   ->done();
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
+	 */
+	public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->done();
+		$this->mock->myMethod();
+	}
 }
