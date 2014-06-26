@@ -110,6 +110,8 @@ Matchers
 * `?:array has key ?:int,string` - Assert an array has key.
 * `?:array has keys ?:array` - Assert an array has several keys in any order.
 * `?:array has value ?` - Assert an array has at least one occurrence of the given value.
+* `?:array is an associative array` - Assert an array is associative.
+* `?:array is not an associative array` - Assert an array is associative.
 * `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.
 * `?:callable does not throw exception` - Assert that no exception is thrown.
 * `?:callable throws ?:class` - Assert a specific exception was thrown.
