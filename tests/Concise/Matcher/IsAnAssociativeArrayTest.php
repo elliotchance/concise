@@ -29,4 +29,9 @@ class IsAnAssociativeArrayTest extends AbstractMatcherTestCase
 		);
 		$this->assert('x is an associative array');
 	}
+
+	public function testAnArrayIsNotAssociativeIfZeroIndexed()
+	{
+		$this->assertFailure('[1,"foo"] is an associative array');
+	}
 }
