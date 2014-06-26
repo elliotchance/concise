@@ -45,6 +45,9 @@ class MockBuilder
 	public function done()
 	{
 		$mockedMethods = array_keys($this->rules);
+		if($this->niceMock) {
+			$mockedMethods = null;
+		}
 		$mock = $this->testCase->getMock($this->className, $mockedMethods);
 		foreach($this->rules as $method => $value) {
 			$mock->expects($this->testCase->any())
@@ -53,13 +56,15 @@ class MockBuilder
 		}
 
 		// throw exception for remaining methods
-		foreach($this->getAllMethodNamesForClass() as $method) {
-			if(in_array($method, $mockedMethods)) {
-				continue;
+		if(!$this->niceMock) {
+			foreach($this->getAllMethodNamesForClass() as $method) {
+				if(in_array($method, $mockedMethods)) {
+					continue;
+				}
+				$mock->expects($this->testCase->any())
+				     ->method($method)
+				     ->will($this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?")));
 			}
-			$mock->expects($this->testCase->any())
-			     ->method($method)
-			     ->will($this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?")));
 		}
 
 		return $mock;
