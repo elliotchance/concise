@@ -12,4 +12,14 @@ class MockBuilderTest extends TestCase
 		$this->mock = $generator->getMock();
 		$this->assert('mock instance of \Concise\TestCase');
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage Class '\Abc' does not exist.
+	 */
+	public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
+	{
+		$generator = new MockBuilder($this, '\Abc');
+		$generator->getMock();
+	}
 }
