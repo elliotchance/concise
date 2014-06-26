@@ -7,6 +7,8 @@ class MockBuilder
 	/** @var \PHPUnit_Framework_TestCase */
 	protected $testCase;
 
+	protected $rules = array();
+
 	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className)
 	{
 		$this->testCase = $testCase;
@@ -16,8 +18,22 @@ class MockBuilder
 		$this->className = $className;
 	}
 
-	public function getMock()
+	public function stub($pair)
 	{
-		return $this->testCase->getMock($this->className);
+		$method = current(array_keys($pair));
+		$value = current(array_values($pair));
+		$this->rules[$method] = $value;
+		return $this;
+	}
+
+	public function done()
+	{
+		$mock = $this->testCase->getMock($this->className, array_keys($this->rules));
+		foreach($this->rules as $method => $value) {
+			$mock->expects($this->testCase->any())
+			     ->method($method)
+			     ->will($this->testCase->returnValue($value));
+		}
+		return $mock;
 	}
 }

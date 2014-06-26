@@ -4,12 +4,25 @@ namespace Concise\Mock;
 
 use \Concise\TestCase;
 
+class Mock1
+{
+	public function myMethod()
+	{
+		return 'abc';
+	}
+}
+
 class MockBuilderTest extends TestCase
 {
+	protected function mock($className)
+	{
+		return new MockBuilder($this, $className);
+	}
+
 	public function testMockCanBeCreatedFromAClassThatExists()
 	{
-		$generator = new MockBuilder($this, '\Concise\TestCase');
-		$this->mock = $generator->getMock();
+		$this->mock = $this->mock('\Concise\TestCase')
+		                   ->done();
 		$this->assert('mock instance of \Concise\TestCase');
 	}
 
@@ -19,7 +32,14 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
 	{
-		$generator = new MockBuilder($this, '\Abc');
-		$generator->getMock();
+		$this->mock('\Abc')->done();
+	}
+
+	public function testCanStubMethodWithAssociativeArray()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->stub(array('myMethod' => 123))
+		                   ->done();
+		$this->assertSame($this->mock->myMethod(), 123);
 	}
 }
