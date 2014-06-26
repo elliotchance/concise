@@ -54,8 +54,8 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	public function testDataTypes(array $types, $value)
 	{
 		$this->types = $types;
-		$this->value = $value;
-		$this->assert('`$self->dataTypeChecker->check($self->types, $self->value)` is true');
+		$this->v = $value;
+		$this->assert('`$self->dataTypeChecker->check($self->types, $self->v)` is true');
 	}
 
 	public function testSendingValueNotListedInExpectedTypesThrowsException()

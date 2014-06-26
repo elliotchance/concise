@@ -102,6 +102,14 @@ Matchers
 * `? matches regular expression ?:regex` - Assert a string matches a regular expression
 * `? not equals ?` - Assert two value do not match with no regard to type.
 * `? starts with ?` - Assert a string starts (begins) with another string.
+* `?:array contains ?` - Assert an array has at least one occurrence of the given value.
+* `?:array does not contain ?` - Assert an array does not have any occurrences of the given value.
+* `?:array does not have key ?:int,string` - Assert an array does not have a key.
+* `?:array does not have keys ?:array` - Assert an array does not contain any keys.
+* `?:array does not have value ?` - Assert an array does not have any occurrences of the given value.
+* `?:array has key ?:int,string` - Assert an array has key.
+* `?:array has keys ?:array` - Assert an array has several keys in any order.
+* `?:array has value ?` - Assert an array has at least one occurrence of the given value.
 * `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.
 * `?:callable does not throw exception` - Assert that no exception is thrown.
 * `?:callable throws ?:class` - Assert a specific exception was thrown.
