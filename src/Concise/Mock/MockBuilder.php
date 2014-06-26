@@ -9,13 +9,16 @@ class MockBuilder
 
 	protected $rules = array();
 
-	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className)
+	protected $niceMock;
+
+	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
 	{
 		$this->testCase = $testCase;
 		if(!class_exists($className)) {
 			throw new \Exception("Class '$className' does not exist.");
 		}
 		$this->className = $className;
+		$this->niceMock = $niceMock;
 	}
 
 	public function stub(array $stubs)
