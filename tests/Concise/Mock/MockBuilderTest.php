@@ -40,6 +40,14 @@ class MockBuilderTest extends TestCase
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->stub(array('myMethod' => 123))
 		                   ->done();
-		$this->assertSame($this->mock->myMethod(), 123);
+		$this->assertSame(123, $this->mock->myMethod());
+	}
+
+	public function testStubbingWithAnArrayCanCreateMultipleStubs()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->stub(array('myMethod' => 123, 'foo' => 'bar'))
+		                   ->done();
+		$this->assertSame('bar', $this->mock->foo());
 	}
 }

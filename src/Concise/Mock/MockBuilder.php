@@ -18,11 +18,11 @@ class MockBuilder
 		$this->className = $className;
 	}
 
-	public function stub($pair)
+	public function stub(array $stubs)
 	{
-		$method = current(array_keys($pair));
-		$value = current(array_values($pair));
-		$this->rules[$method] = $value;
+		foreach($stubs as $method => $value) {
+			$this->rules[$method] = $value;
+		}
 		return $this;
 	}
 
