@@ -123,4 +123,15 @@ class MockBuilder
 		$this->rules[$this->currentRule] = new Action\ThrowAction($exception);
 		return $this;
 	}
+
+	public function once()
+	{
+		return $this;
+	}
+
+	public function expect($method)
+	{
+		$this->addRule($method, new Action\NoAction());
+		return $this;
+	}
 }

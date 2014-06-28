@@ -139,4 +139,12 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->mock->myMethod();
 	}
+
+	public function testCanCreateAnExpectation()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->once()->andReturn(null)
+		                   ->done();
+		$this->assertNull($this->mock->myMethod());
+	}
 }
