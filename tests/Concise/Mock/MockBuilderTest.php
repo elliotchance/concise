@@ -146,4 +146,11 @@ class MockBuilderTest extends TestCase
 		$this->mock->myMethod();
 		$this->mock->myMethod();
 	}
+
+	public function testCanCreateAnExpectationOfNever()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->never()->andReturn(null)
+		                   ->done();
+	}
 }
