@@ -73,7 +73,7 @@ class MockBuilder
 		$m = $mock->expects($expect)
 				  ->method($method);
 		if(null !== $with) {
-			$m = call_user_method_array('with', $m, $with);
+			$m = call_user_func_array(array($m, 'with'), $with);
 		}
 		$m->will($will);
 	}
