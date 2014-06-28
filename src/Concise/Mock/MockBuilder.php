@@ -69,6 +69,8 @@ class MockBuilder
 
 	public function done()
 	{
+		$this->validate();
+
 		$class = $this->className;
 		$originalObject = new $class();
 
@@ -105,5 +107,14 @@ class MockBuilder
 	{
 		$this->rules[$this->currentRule] = $value;
 		return $this;
+	}
+
+	protected function validate()
+	{
+		foreach($this->rules as $method => $value) {
+			if(is_null($value)) {
+				throw new \Exception("$method() does not have an associated action - did you forget andReturn()?");
+			}
+		}
 	}
 }

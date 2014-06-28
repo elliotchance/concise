@@ -107,4 +107,16 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->assertSame(123, $this->mock->myMethod());
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage myMethod() does not have an associated action - did you forget andReturn()?
+	 */
+	public function testStubWithNoActionThrowsException()
+	{
+		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		                   ->stub('myMethod')
+		                   ->done();
+		$this->mock->myMethod();
+	}
 }
