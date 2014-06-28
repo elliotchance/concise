@@ -154,13 +154,15 @@ class MockBuilder
 
 	public function never()
 	{
-		$this->andReturn(null);
 		$this->exactly(0);
 		return $this;
 	}
 
 	public function exactly($times)
 	{
+		if($times === 0) {
+			$this->andReturn(null);
+		}
 		$this->rules[$this->currentRule]['times'] = $times;
 		return $this;
 	}

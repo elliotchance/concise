@@ -170,4 +170,11 @@ class MockBuilderTest extends TestCase
 		$this->mock->myMethod();
 		$this->mock->myMethod();
 	}
+
+	public function testExactlyZeroIsTheSameAsNever()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->exactly(0)
+		                   ->done();
+	}
 }
