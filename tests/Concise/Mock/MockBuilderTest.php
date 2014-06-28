@@ -102,7 +102,7 @@ class MockBuilderTest extends TestCase
 
 	public function testStubsCanBeCreatedByChainingAnAction()
 	{
-		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->stub('myMethod')->andReturn(123)
 		                   ->done();
 		$this->assertSame(123, $this->mock->myMethod());
@@ -114,7 +114,7 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testStubWithNoActionThrowsException()
 	{
-		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->stub('myMethod')
 		                   ->done();
 		$this->mock->myMethod();
@@ -122,9 +122,21 @@ class MockBuilderTest extends TestCase
 
 	public function testStubCanReturnNull()
 	{
-		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->stub('myMethod')->andReturn(null)
 		                   ->done();
 		$this->assertNull($this->mock->myMethod());
+	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage whatever
+	 */
+	public function testStubCanThrowException()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->stub('myMethod')->andThrow(new \Exception('whatever'))
+		                   ->done();
+		$this->mock->myMethod();
 	}
 }

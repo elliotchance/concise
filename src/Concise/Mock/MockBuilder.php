@@ -77,7 +77,7 @@ class MockBuilder
 		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
 		$mock = $this->testCase->getMock($this->className, $allMethods);
 		foreach($this->rules as $method => $action) {
-			$this->stubMethod($mock, $method, $this->testCase->returnValue($action->getValue()));
+			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase));
 		}
 
 		// throw exception for remaining methods
@@ -116,5 +116,11 @@ class MockBuilder
 				throw new \Exception("$method() does not have an associated action - did you forget andReturn()?");
 			}
 		}
+	}
+
+	public function andThrow($exception)
+	{
+		$this->rules[$this->currentRule] = new Action\ThrowAction($exception);
+		return $this;
 	}
 }
