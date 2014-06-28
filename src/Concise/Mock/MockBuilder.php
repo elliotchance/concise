@@ -34,6 +34,7 @@ class MockBuilder
 		$this->rules[$method] = array(
 			'action' => $action,
 			'times' => $times,
+			'with' => null,
 		);
 	}
 
@@ -63,15 +64,18 @@ class MockBuilder
 		return $methodNames;
 	}
 
-	protected function stubMethod($mock, $method, $will, $times = -1)
+	protected function stubMethod($mock, $method, $will, $times = -1, $with = null)
 	{
 		$expect = $this->testCase->any();
 		if($times >= 0) {
 			$expect = $this->testCase->exactly($times);
 		}
-		$mock->expects($expect)
-			 ->method($method)
-			 ->will($will);
+		$m = $mock->expects($expect)
+				  ->method($method);
+		if(null !== $with) {
+			$m = call_user_method_array('with', $m, $with);
+		}
+		$m->will($will);
 	}
 
 	public function done()
@@ -81,13 +85,11 @@ class MockBuilder
 		$class = $this->className;
 		$originalObject = new $class();
 
-		//var_dump($this->rules);
-
 		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
 		$mock = $this->testCase->getMock($this->className, $allMethods);
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
-			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times']);
+			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
 		}
 
 		// throw exception for remaining methods
@@ -189,6 +191,7 @@ class MockBuilder
 
 	public function with()
 	{
+		$this->rules[$this->currentRule]['with'] = func_get_args();
 		return $this;
 	}
 }
