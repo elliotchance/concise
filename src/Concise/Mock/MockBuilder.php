@@ -186,4 +186,9 @@ class MockBuilder
 		$this->rules[$this->currentRule]['times'] = $times;
 		return $this;
 	}
+
+	public function with()
+	{
+		return $this;
+	}
 }

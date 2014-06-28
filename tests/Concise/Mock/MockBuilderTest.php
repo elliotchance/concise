@@ -197,5 +197,11 @@ class MockBuilderTest extends TestCase
 		$this->mock->myMethod();
 	}
 
-	// testCanCreateAnExpectationWithArgumentValues
+	public function testCanCreateAnExpectationWithArgumentValues()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->andReturn('bar')
+		                   ->done();
+		$this->assertSame('bar', $this->mock->myMethod('foo'));
+	}
 }
