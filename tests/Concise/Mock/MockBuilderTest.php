@@ -160,4 +160,14 @@ class MockBuilderTest extends TestCase
 		                   ->expect('myMethod')->never()
 		                   ->done();
 	}
+
+	public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->exactly(3)->andReturn(null)
+		                   ->done();
+		$this->mock->myMethod();
+		$this->mock->myMethod();
+		$this->mock->myMethod();
+	}
 }

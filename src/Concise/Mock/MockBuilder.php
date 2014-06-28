@@ -136,7 +136,7 @@ class MockBuilder
 
 	public function once()
 	{
-		$this->rules[$this->currentRule]['times'] = 1;
+		$this->exactly(1);
 		return $this;
 	}
 
@@ -148,14 +148,20 @@ class MockBuilder
 
 	public function twice()
 	{
-		$this->rules[$this->currentRule]['times'] = 2;
+		$this->exactly(2);
 		return $this;
 	}
 
 	public function never()
 	{
 		$this->andReturn(null);
-		$this->rules[$this->currentRule]['times'] = 0;
+		$this->exactly(0);
+		return $this;
+	}
+
+	public function exactly($times)
+	{
+		$this->rules[$this->currentRule]['times'] = $times;
 		return $this;
 	}
 }
