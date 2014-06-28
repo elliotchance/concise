@@ -11,6 +11,10 @@ class MockBuilder
 
 	protected $niceMock;
 
+	protected $mockedMethods = array();
+
+	protected $className;
+
 	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
 	{
 		$this->testCase = $testCase;
@@ -27,6 +31,7 @@ class MockBuilder
 			throw new \Exception("stub() called with array must have at least 1 element.");
 		}
 		foreach($stubs as $method => $value) {
+			$this->mockedMethods[] = $method;
 			$this->rules[$method] = $value;
 		}
 		return $this;
@@ -42,28 +47,41 @@ class MockBuilder
 		return $methodNames;
 	}
 
+	protected function stubMethod($mock, $method, $will)
+	{
+		$mock->expects($this->testCase->any())
+			 ->method($method)
+			 ->will($will);
+	}
+
 	public function done()
 	{
-		$mockedMethods = array_keys($this->rules);
-		if($this->niceMock) {
-			$mockedMethods = null;
-		}
-		$mock = $this->testCase->getMock($this->className, $mockedMethods);
+		$class = $this->className;
+		$originalObject = new $class();
+		
+		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
+		$mock = $this->testCase->getMock($this->className, $allMethods);
 		foreach($this->rules as $method => $value) {
-			$mock->expects($this->testCase->any())
-			     ->method($method)
-			     ->will($this->testCase->returnValue($value));
+			$this->stubMethod($mock, $method, $this->testCase->returnValue($value));
 		}
 
 		// throw exception for remaining methods
-		if(!$this->niceMock) {
-			foreach($this->getAllMethodNamesForClass() as $method) {
-				if(in_array($method, $mockedMethods)) {
+		if($this->niceMock) {
+			foreach($allMethods as $method) {
+				if(in_array($method, $this->mockedMethods)) {
 					continue;
 				}
-				$mock->expects($this->testCase->any())
-				     ->method($method)
-				     ->will($this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?")));
+				$will = $this->testCase->returnCallback(array($originalObject, $method));
+				$this->stubMethod($mock, $method, $will);
+			}
+		}
+		else {
+			foreach($allMethods as $method) {
+				if(in_array($method, $this->mockedMethods)) {
+					continue;
+				}
+				$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
+				$this->stubMethod($mock, $method, $will);
 			}
 		}
 

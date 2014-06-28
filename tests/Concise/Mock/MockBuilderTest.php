@@ -62,9 +62,9 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testStubbingWithAnArrayMustHaveMoreThanZeroElements()
 	{
-		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->stub(array())
-		                   ->done();
+		$this->mock('\Concise\Mock\Mock1')
+		     ->stub(array())
+		     ->done();
 	}
 
 	/**
@@ -90,5 +90,13 @@ class MockBuilderTest extends TestCase
 		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
 		                   ->done();
 		$this->assertSame('abc', $this->mock->myMethod());
+	}
+
+	public function testCallingMethodOnNiceMockWithStub()
+	{
+		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		                   ->stub(array('myMethod' => 123))
+		                   ->done();
+		$this->assertSame(123, $this->mock->myMethod());
 	}
 }
