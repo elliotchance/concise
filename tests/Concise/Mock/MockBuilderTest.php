@@ -135,6 +135,15 @@ class MockBuilderTest extends TestCase
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->expect('myMethod')->once()->andReturn(null)
 		                   ->done();
-		$this->assertNull($this->mock->myMethod());
+		$this->mock->myMethod();
+	}
+
+	public function testCanCreateAnExpectationOfTwice()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->twice()->andReturn(null)
+		                   ->done();
+		$this->mock->myMethod();
+		$this->mock->myMethod();
 	}
 }

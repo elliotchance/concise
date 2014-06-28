@@ -145,4 +145,10 @@ class MockBuilder
 		$this->addRule($method, new Action\NoAction());
 		return $this;
 	}
+
+	public function twice()
+	{
+		$this->rules[$this->currentRule]['times'] = 2;
+		return $this;
+	}
 }
