@@ -3,6 +3,7 @@
 namespace Concise;
 
 use Concise\Syntax\MatcherParser;
+use Concise\Mock\MockBuilder;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -86,5 +87,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$this->assert($assertion);
 		}
 		parent::tearDown();
+	}
+	protected function mock($className)
+	{
+		return new MockBuilder($this, $className, false);
+	}
+
+	protected function niceMock($className)
+	{
+		return new MockBuilder($this, $className, true);
 	}
 }

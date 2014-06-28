@@ -14,16 +14,6 @@ class Mock1
 
 class MockBuilderTest extends TestCase
 {
-	protected function mock($className)
-	{
-		return new MockBuilder($this, $className, false);
-	}
-
-	protected function niceMock($className)
-	{
-		return new MockBuilder($this, $className, true);
-	}
-
 	public function testMockCanBeCreatedFromAClassThatExists()
 	{
 		$this->mock = $this->mock('\Concise\TestCase')

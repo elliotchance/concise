@@ -27,11 +27,14 @@ class MockBuilder
 		$this->niceMock = $niceMock;
 	}
 
-	protected function addRule($method, Action\AbstractAction $action)
+	protected function addRule($method, Action\AbstractAction $action, $times = -1)
 	{
 		$this->currentRule = $method;
 		$this->mockedMethods[] = $method;
-		$this->rules[$method] = $action;
+		$this->rules[$method] = array(
+			'action' => $action,
+			'times' => $times,
+		);
 	}
 
 	public function stub($arg)
@@ -60,9 +63,13 @@ class MockBuilder
 		return $methodNames;
 	}
 
-	protected function stubMethod($mock, $method, $will)
+	protected function stubMethod($mock, $method, $will, $times = -1)
 	{
-		$mock->expects($this->testCase->any())
+		$expect = $this->testCase->any();
+		if($times >= 0) {
+			$expect = $this->testCase->exactly($times);
+		}
+		$mock->expects($expect)
 			 ->method($method)
 			 ->will($will);
 	}
@@ -74,10 +81,13 @@ class MockBuilder
 		$class = $this->className;
 		$originalObject = new $class();
 
+		//var_dump($this->rules);
+
 		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
 		$mock = $this->testCase->getMock($this->className, $allMethods);
-		foreach($this->rules as $method => $action) {
-			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase));
+		foreach($this->rules as $method => $rule) {
+			$action = $rule['action'];
+			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times']);
 		}
 
 		// throw exception for remaining methods
@@ -105,14 +115,14 @@ class MockBuilder
 
 	public function andReturn($value)
 	{
-		$this->rules[$this->currentRule] = new Action\ReturnValueAction($value);
+		$this->rules[$this->currentRule]['action'] = new Action\ReturnValueAction($value);
 		return $this;
 	}
 
 	protected function validate()
 	{
-		foreach($this->rules as $method => $value) {
-			if($value instanceof Action\NoAction) {
+		foreach($this->rules as $method => $rule) {
+			if($rule['action'] instanceof Action\NoAction) {
 				throw new \Exception("$method() does not have an associated action - did you forget andReturn()?");
 			}
 		}
@@ -120,12 +130,13 @@ class MockBuilder
 
 	public function andThrow($exception)
 	{
-		$this->rules[$this->currentRule] = new Action\ThrowAction($exception);
+		$this->rules[$this->currentRule]['action'] = new Action\ThrowAction($exception);
 		return $this;
 	}
 
 	public function once()
 	{
+		$this->rules[$this->currentRule]['times'] = 1;
 		return $this;
 	}
 
