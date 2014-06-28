@@ -113,10 +113,30 @@ class MockBuilder
 		return $mock;
 	}
 
+	protected function hasAction()
+	{
+		$action = $this->rules[$this->currentRule]['action'];
+		if($action instanceof Action\NoAction) {
+			return false;
+		}
+		if($action instanceof Action\ReturnValueAction && is_null($action->getValue())) {
+			return false;
+		}
+		return true;
+	}
+
+	protected function setAction(Action\AbstractAction $action)
+	{
+		if($this->hasAction()) {
+			throw new \Exception("{$this->currentRule}() has more than one action attached.");
+		}
+		$this->rules[$this->currentRule]['action'] = $action;
+		return $this;
+	}
+
 	public function andReturn($value)
 	{
-		$this->rules[$this->currentRule]['action'] = new Action\ReturnValueAction($value);
-		return $this;
+		return $this->setAction(new Action\ReturnValueAction($value));
 	}
 
 	protected function validate()
@@ -130,8 +150,7 @@ class MockBuilder
 
 	public function andThrow($exception)
 	{
-		$this->rules[$this->currentRule]['action'] = new Action\ThrowAction($exception);
-		return $this;
+		return $this->setAction(new Action\ThrowAction($exception));
 	}
 
 	public function once()

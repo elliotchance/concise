@@ -15,4 +15,9 @@ class ReturnValueAction extends AbstractAction
 	{
 		return $testCase->returnValue($this->value);
 	}
+
+	public function getValue()
+	{
+		return $this->value;
+	}
 }

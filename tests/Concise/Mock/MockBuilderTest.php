@@ -177,4 +177,15 @@ class MockBuilderTest extends TestCase
 		                   ->expect('myMethod')->exactly(0)
 		                   ->done();
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage myMethod() has more than one action attached.
+	 */
+	public function testMethodsCanOnlyHaveOneActionAppliedToThem()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->stub('myMethod')->andReturn(123)->andReturn(456)
+		                   ->done();
+	}
 }
