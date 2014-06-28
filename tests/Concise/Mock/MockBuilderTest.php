@@ -99,4 +99,12 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->assertSame(123, $this->mock->myMethod());
 	}
+
+	public function testStubsCanBeCreatedByChainingAnAction()
+	{
+		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		                   ->stub('myMethod')->andReturn(123)
+		                   ->done();
+		$this->assertSame(123, $this->mock->myMethod());
+	}
 }

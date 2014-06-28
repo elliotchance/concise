@@ -15,6 +15,8 @@ class MockBuilder
 
 	protected $className;
 
+	protected $currentRule;
+
 	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
 	{
 		$this->testCase = $testCase;
@@ -25,14 +27,25 @@ class MockBuilder
 		$this->niceMock = $niceMock;
 	}
 
-	public function stub(array $stubs)
+	protected function addRule($method, $value)
 	{
-		if(count($stubs) === 0) {
-			throw new \Exception("stub() called with array must have at least 1 element.");
+		$this->currentRule = $method;
+		$this->mockedMethods[] = $method;
+		$this->rules[$method] = $value;
+	}
+
+	public function stub($arg)
+	{
+		if(is_array($arg)) {
+			if(count($arg) === 0) {
+				throw new \Exception("stub() called with array must have at least 1 element.");
+			}
+			foreach($arg as $method => $value) {
+				$this->addRule($method, $value);
+			}
 		}
-		foreach($stubs as $method => $value) {
-			$this->mockedMethods[] = $method;
-			$this->rules[$method] = $value;
+		else {
+			$this->addRule($arg, null);
 		}
 		return $this;
 	}
@@ -58,7 +71,7 @@ class MockBuilder
 	{
 		$class = $this->className;
 		$originalObject = new $class();
-		
+
 		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
 		$mock = $this->testCase->getMock($this->className, $allMethods);
 		foreach($this->rules as $method => $value) {
@@ -86,5 +99,11 @@ class MockBuilder
 		}
 
 		return $mock;
+	}
+
+	public function andReturn($value)
+	{
+		$this->rules[$this->currentRule] = $value;
+		return $this;
 	}
 }
