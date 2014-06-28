@@ -27,11 +27,11 @@ class MockBuilder
 		$this->niceMock = $niceMock;
 	}
 
-	protected function addRule($method, $value)
+	protected function addRule($method, Action\AbstractAction $action)
 	{
 		$this->currentRule = $method;
 		$this->mockedMethods[] = $method;
-		$this->rules[$method] = $value;
+		$this->rules[$method] = $action;
 	}
 
 	public function stub($arg)
@@ -41,11 +41,11 @@ class MockBuilder
 				throw new \Exception("stub() called with array must have at least 1 element.");
 			}
 			foreach($arg as $method => $value) {
-				$this->addRule($method, $value);
+				$this->addRule($method, new Action\ReturnValueAction($value));
 			}
 		}
 		else {
-			$this->addRule($arg, null);
+			$this->addRule($arg, new Action\NoAction());
 		}
 		return $this;
 	}
@@ -76,8 +76,8 @@ class MockBuilder
 
 		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
 		$mock = $this->testCase->getMock($this->className, $allMethods);
-		foreach($this->rules as $method => $value) {
-			$this->stubMethod($mock, $method, $this->testCase->returnValue($value));
+		foreach($this->rules as $method => $action) {
+			$this->stubMethod($mock, $method, $this->testCase->returnValue($action->getValue()));
 		}
 
 		// throw exception for remaining methods
@@ -105,14 +105,14 @@ class MockBuilder
 
 	public function andReturn($value)
 	{
-		$this->rules[$this->currentRule] = $value;
+		$this->rules[$this->currentRule] = new Action\ReturnValueAction($value);
 		return $this;
 	}
 
 	protected function validate()
 	{
 		foreach($this->rules as $method => $value) {
-			if(is_null($value)) {
+			if($value instanceof Action\NoAction) {
 				throw new \Exception("$method() does not have an associated action - did you forget andReturn()?");
 			}
 		}

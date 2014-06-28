@@ -119,4 +119,12 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->mock->myMethod();
 	}
+
+	public function testStubCanReturnNull()
+	{
+		$this->mock = $this->niceMock('\Concise\Mock\Mock1')
+		                   ->stub('myMethod')->andReturn(null)
+		                   ->done();
+		$this->assertNull($this->mock->myMethod());
+	}
 }
