@@ -162,6 +162,7 @@ class MockBuilder
 	public function expect($method)
 	{
 		$this->addRule($method, new Action\NoAction());
+		$this->once();
 		return $this;
 	}
 

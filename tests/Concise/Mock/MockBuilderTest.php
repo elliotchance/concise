@@ -188,4 +188,14 @@ class MockBuilderTest extends TestCase
 		                   ->stub('myMethod')->andReturn(123)->andReturn(456)
 		                   ->done();
 	}
+
+	public function testDefaultExpectationIsOnce()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->andReturn(null)
+		                   ->done();
+		$this->mock->myMethod();
+	}
+
+	// testCanCreateAnExpectationWithArgumentValues
 }
