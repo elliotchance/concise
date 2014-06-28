@@ -154,6 +154,7 @@ class MockBuilder
 
 	public function never()
 	{
+		$this->andReturn(null);
 		$this->rules[$this->currentRule]['times'] = 0;
 		return $this;
 	}

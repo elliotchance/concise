@@ -153,4 +153,11 @@ class MockBuilderTest extends TestCase
 		                   ->expect('myMethod')->never()->andReturn(null)
 		                   ->done();
 	}
+
+	public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->never()
+		                   ->done();
+	}
 }
