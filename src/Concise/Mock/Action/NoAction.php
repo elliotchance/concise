@@ -6,6 +6,6 @@ class NoAction extends AbstractAction
 {
 	public function getWillAction(\PHPUnit_Framework_TestCase $testCase)
 	{
-		return null;
+		throw new \Exception("You cannot render an action from NoAction.");
 	}
 }
