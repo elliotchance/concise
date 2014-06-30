@@ -101,7 +101,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return new MockBuilder($this, $className, false);
 	}
 
-	protected function niceMock($className)
+	protected function niceMock($className = '\StdClass')
 	{
 		return new MockBuilder($this, $className, true);
 	}
