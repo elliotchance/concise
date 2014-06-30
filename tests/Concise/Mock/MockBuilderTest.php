@@ -208,4 +208,11 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->mock->myMethod();
 	}
+
+	public function testMockClasDefaultsToStdClass()
+	{
+		$mock = $this->mock()
+		             ->done();
+		$this->assert($mock, 'instance of \stdClass');
+	}
 }

@@ -44,10 +44,9 @@ class ComparerTest extends \Concise\TestCase
 	 */
 	protected function getConvertToStringMockThatExpects($value)
 	{
-		$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
-		$convertToStringMock->expects($this->once())
-		                    ->method('convertToString')
-		                    ->with($value);
+		$convertToStringMock = $this->mock('\Concise\Services\ToStringConverter')
+		                            ->expect('convertToString')->with($value)
+		                            ->done();
 		return $convertToStringMock;
 	}
 

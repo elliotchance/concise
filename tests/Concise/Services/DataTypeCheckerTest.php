@@ -18,16 +18,15 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function testBlankAcceptsAnything()
 	{
-		$this->assert('`$self->dataTypeChecker->check(array(), 123)` is true');
+		$this->assert($this->dataTypeChecker->check(array(), 123), 'is true');
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSendingValueOfDifferentExpectedTypeThrowsException()
 	{
-		$self = $this;
-		$this->sendingValueOfDifferentExpectedType = function() use ($self) {
-			$self->dataTypeChecker->check(array("int"), 1.23);
-		};
-		$this->assert('sendingValueOfDifferentExpectedType throws exception');
+		$this->dataTypeChecker->check(array("int"), 1.23);
 	}
 
 	public function dataTypes()
@@ -53,28 +52,24 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testDataTypes(array $types, $value)
 	{
-		$this->types = $types;
-		$this->v = $value;
-		$this->assert('`$self->dataTypeChecker->check($self->types, $self->v)` is true');
+		$this->assert($this->dataTypeChecker->check($types, $value), 'is true');
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSendingValueNotListedInExpectedTypesThrowsException()
 	{
-		$self = $this;
-		$this->sendingValueNotListedInExpectedTypes = function() use ($self) {
-			$self->dataTypeChecker->check(array("int", "string"), 1.23);
-		};
-		$this->assert('sendingValueNotListedInExpectedTypes throws exception');
+		$this->dataTypeChecker->check(array("int", "string"), 1.23);
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testExcludeModeWillNotAllowType()
 	{
-		$self = $this;
-		$this->block = function() use ($self) {
-			$self->dataTypeChecker->setExcludeMode();
-			$self->dataTypeChecker->check(array("int"), 123);
-		};
-		$this->assert('block throws exception');
+		$this->dataTypeChecker->setExcludeMode();
+		$this->dataTypeChecker->check(array("int"), 123);
 	}
 
 	public function testAttributesAreEvaluatedFromContext()

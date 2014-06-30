@@ -35,23 +35,23 @@ class ToStringConverterTest extends \Concise\TestCase
 
 	public function testWillConvertANumberToAString()
 	{
-		$this->assertSame($this->converter->convertToString(123), '123');
+		$this->assert($this->converter->convertToString(123), 'exactly equals "123"');
 	}
 
 	public function testWillReturnTheMethodsReturnValueIfItIsCallable()
 	{
-		$this->assertSame($this->converter->convertToString(function () {
+		$this->assert($this->converter->convertToString(function () {
 			return 'abc';
-		}), 'abc');
+		}), 'exactly equals "abc"');
 	}
 
 	public function testWillAlwaysReturnAStringEvenIfItHasToRecurse()
 	{
-		$this->assertSame($this->converter->convertToString(function () {
+		$this->assert($this->converter->convertToString(function () {
 			return function() {
 				return 123;
 			};
-		}), '123');
+		}), 'exactly equals "123"');
 	}
 
 	/**
@@ -65,9 +65,9 @@ class ToStringConverterTest extends \Concise\TestCase
 
 	public function testWillReturnTheExceptionMessageIfTheCallableValueThrowsAnException()
 	{
-		$this->assertSame($this->converter->convertToString(function () {
+		$this->assert($this->converter->convertToString(function () {
 			throw new \Exception('hi');
-		}), 'hi');
+		}), 'exactly equals "hi"');
 	}
 
 	public function testWillRenderAnObjectAsAString()

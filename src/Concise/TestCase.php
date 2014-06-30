@@ -95,7 +95,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 		parent::tearDown();
 	}
-	protected function mock($className)
+	
+	protected function mock($className = '\StdClass')
 	{
 		return new MockBuilder($this, $className, false);
 	}
