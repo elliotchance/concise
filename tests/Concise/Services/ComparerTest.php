@@ -21,14 +21,6 @@ class ComparerTest extends \Concise\TestCase
 		$this->comparer->setConvertToString($convertToStringMock);
 
 		$this->comparer->compare("abc", "abc");
-
-
-		/*$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
-		$convertToStringMock->expects($this->exactly(2))
-		                    ->method('convertToString');
-		$this->comparer->setConvertToString($convertToStringMock);
-
-		$this->comparer->compare("abc", "abc");*/
 	}
 
 	public function testBooleansAreSupported()

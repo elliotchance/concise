@@ -200,4 +200,12 @@ class MockBuilderTest extends TestCase
 		                   ->done();
 		$this->assertSame('bar', $this->mock->myMethod('foo'));
 	}
+
+	public function testCanUseExpectsInsteadOfExpect()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expects('myMethod')
+		                   ->done();
+		$this->mock->myMethod();
+	}
 }

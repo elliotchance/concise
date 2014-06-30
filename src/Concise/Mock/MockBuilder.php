@@ -154,6 +154,11 @@ class MockBuilder
 		return $this;
 	}
 
+	public function expects($method)
+	{
+		return $this->expect($method);
+	}
+
 	public function twice()
 	{
 		$this->exactly(2);
