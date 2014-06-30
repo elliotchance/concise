@@ -2,8 +2,9 @@
 
 namespace Concise;
 
-use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockBuilder;
+use Concise\Services\AssertionBuilder;
+use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -75,7 +76,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function assert($assertionString)
 	{
-		$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+		if(count(func_get_args()) > 1) {
+			$builder = new AssertionBuilder(func_get_args());
+			$assertion = $builder->getAssertion();
+		}
+		else {
+			$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+		}
 		$assertion->setTestCase($this);
 		$assertion->run();
 	}

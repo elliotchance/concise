@@ -15,12 +15,20 @@ class ComparerTest extends \Concise\TestCase
 	
 	public function testAllNonspecificComparisonsUseConvertToString()
 	{
-		$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
+		$convertToStringMock = $this->mock('\Concise\Services\ToStringConverter')
+		                            ->expect('convertToString')->twice()
+		                            ->done();
+		$this->comparer->setConvertToString($convertToStringMock);
+
+		$this->comparer->compare("abc", "abc");
+
+
+		/*$convertToStringMock = $this->getMock('\Concise\Services\ToStringConverter');
 		$convertToStringMock->expects($this->exactly(2))
 		                    ->method('convertToString');
 		$this->comparer->setConvertToString($convertToStringMock);
 
-		$this->comparer->compare("abc", "abc");
+		$this->comparer->compare("abc", "abc");*/
 	}
 
 	public function testBooleansAreSupported()

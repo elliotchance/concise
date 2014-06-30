@@ -9,7 +9,8 @@ class AssertionBuilderTest extends TestCase
 	public function testCanFindAssertionWithArguments()
 	{
 		$builder = new AssertionBuilder(array(123, 'equals', 123));
-		$this->assertInstanceOf('\Concise\Matcher\Equals', $builder->getAssertion());
+		$assertion = $builder->getAssertion();
+		$this->assert($assertion->getMatcher(), 'instance of \Concise\Matcher\Equals');
 	}
 
 	/**

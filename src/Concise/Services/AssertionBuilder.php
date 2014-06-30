@@ -3,6 +3,7 @@
 namespace Concise\Services;
 
 use \Concise\Syntax\MatcherParser;
+use \Concise\Assertion;
 
 class AssertionBuilder
 {
@@ -16,10 +17,13 @@ class AssertionBuilder
 	public function getAssertion()
 	{
 		$syntax = array();
+		$data = array();
 		$argc = count($this->args);
 		for($i = 0; $i < $argc; ++$i) {
 			if($i % 2 === 0) {
-				$syntax[] = '?';
+				$name = "arg" . ($i / 2);
+				$syntax[] = $name;
+				$data[$name] = $this->args[$i];
 			}
 			else {
 				$syntax[] = $this->args[$i];
@@ -27,7 +31,7 @@ class AssertionBuilder
 		}
 
 		$matcherParser = MatcherParser::getInstance();
-		$assertion = $matcherParser->compile(implode(' ', $syntax));
-		return $assertion->getMatcher();
+		$syntaxString = implode(' ', $syntax);
+		return $matcherParser->compile($syntaxString, $data);
 	}
 }

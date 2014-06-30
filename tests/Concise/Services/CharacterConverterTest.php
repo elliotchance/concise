@@ -28,9 +28,7 @@ class CharacterConverterTest extends TestCase
 	 */
 	public function testConvertingCharacterToEscapeCharacter($letter, $outcome)
 	{
-		$this->converter = new CharacterConverter();
-		$this->letter = $letter;
-		$this->outcome = $outcome;
-		$this->assert('`$self->converter->convertEscapedCharacter($self->letter)` equals `$self->outcome`');
+		$converter = new CharacterConverter();
+		$this->assert($converter->convertEscapedCharacter($letter), 'exactly equals', $outcome);
 	}
 }

@@ -101,4 +101,9 @@ class TestCaseTest extends TestCase
 		$this->abc = 123;
 		$this->assert('abc equals 123');
 	}
+
+	public function testAssertionBuilder()
+	{
+		$this->assert(123, 'equals', "123");
+	}
 }
