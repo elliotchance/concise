@@ -10,7 +10,7 @@ class AssertionBuilderTest extends TestCase
 	{
 		$builder = new AssertionBuilder(array(123, 'equals', 123));
 		$assertion = $builder->getAssertion();
-		$this->assert($assertion->getMatcher(), 'instance of \Concise\Matcher\Equals');
+		assertThat($assertion->getMatcher(), 'instance of \Concise\Matcher\Equals');
 	}
 
 	/**

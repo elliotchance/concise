@@ -18,7 +18,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function testBlankAcceptsAnything()
 	{
-		$this->assert($this->dataTypeChecker->check(array(), 123), 'is true');
+		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
 	}
 
 	/**
@@ -43,7 +43,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("callable"), function() {}),
 			array(array("int", "float"), 1.23),
 			array(array("regex"), new Regexp('abc')),
-			array(array("class"), '\Concise\Syntax\Token\Regexp'),
+			array(array("class"), 'Concise\Syntax\Token\Regexp'),
 		);
 	}
 
@@ -52,7 +52,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testDataTypes(array $types, $value)
 	{
-		$this->assert($this->dataTypeChecker->check($types, $value), 'is true');
+		$this->assertSame($value, $this->dataTypeChecker->check($types, $value));
 	}
 
 	/**
@@ -78,7 +78,8 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			'foo' => 'bar',
 		);
 		$this->dataTypeChecker->setContext($context);
-		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+		$attribute = new Attribute('foo');
+		$this->assertSame($attribute, $this->dataTypeChecker->check(array('string'), $attribute));
 	}
 
 	/**
@@ -87,12 +88,17 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testWillThrowExceptionIfAttributeDoesNotExist()
 	{
-		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+		$this->dataTypeChecker->check(array('string'), new Attribute('foo'));
 	}
 
 	public function testExcludeWithEmptyArrayAllowsAnything()
 	{
 		$this->dataTypeChecker->setExcludeMode();
-		$this->assertTrue($this->dataTypeChecker->check(array(), 123));
+		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
+	}
+
+	public function testWillTrimBackslashOffClass()
+	{
+		$this->assertSame('My\Class', $this->dataTypeChecker->check(array('class'), '\My\Class'));
 	}
 }

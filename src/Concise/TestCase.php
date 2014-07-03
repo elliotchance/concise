@@ -1,6 +1,7 @@
 <?php
 
-namespace Concise;
+namespace Concise
+{
 
 use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
@@ -114,7 +115,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 		if(!defined('__KEYWORDS_LOADED')) {
 			$parser = MatcherParser::getInstance();
-			
+
 			$all = array();
 			foreach($parser->getAllSyntaxes() as $syntax => $description) {
 				$simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
@@ -135,8 +136,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	}
 }
 
-function assert($a)
+}
+
+namespace
 {
-	global $_currentTestCase;
-	call_user_func_array(array($_currentTestCase, 'assert'), func_get_args());
+
+	function assertThat()
+	{
+		global $_currentTestCase;
+		call_user_func_array(array($_currentTestCase, 'assert'), func_get_args());
+	}
+
 }
