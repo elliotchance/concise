@@ -101,4 +101,30 @@ class TestCaseTest extends TestCase
 		$this->abc = 123;
 		$this->assert('abc equals 123');
 	}
+
+	public function testAssertionBuilder()
+	{
+		$this->assert(123, 'equals', "123");
+	}
+
+	public function testEachTestMethodSetsTheCurrentTestCaseForRawAssertKeyword()
+	{
+		global $_currentTestCase;
+		$this->assertSame($this, $_currentTestCase);
+	}
+
+	public function testCanUseAssertThatFunction()
+	{
+		assertThat("123 equals 123");
+	}
+
+	public function testConstantsForKeywordsAreInitialised()
+	{
+		$this->assertSame(equals, 'equals');
+	}
+
+	public function testConstantsForKeywordStringsAreInitialised()
+	{
+		$this->assertSame(exactly_equals, 'exactly equals');
+	}
 }

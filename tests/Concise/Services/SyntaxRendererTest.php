@@ -6,17 +6,10 @@ use \Concise\TestCase;
 
 class SyntaxRendererTest extends TestCase
 {
-	protected $renderer;
-
-	public function setUp()
-	{
-		parent::setUp();
-		$this->renderer = new SyntaxRenderer();
-	}
-
 	public function testCanSubstituteValuesFromArrayIntoPlaceholders()
 	{
+		$renderer = new SyntaxRenderer();
 		$data = array(1, '2', 3.1);
-		$this->assertEquals('1 is "2" bla 3.1', $this->renderer->render('? is ? bla ?', $data));
+		assertThat('1 is "2" bla 3.1', equals, $renderer->render('? is ? bla ?', $data));
 	}
 }

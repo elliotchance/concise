@@ -1,9 +1,11 @@
 <?php
 
-namespace Concise;
+namespace Concise
+{
 
-use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockBuilder;
+use Concise\Services\AssertionBuilder;
+use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -75,7 +77,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function assert($assertionString)
 	{
-		$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+		if(count(func_get_args()) > 1) {
+			$builder = new AssertionBuilder(func_get_args());
+			$assertion = $builder->getAssertion();
+		}
+		else {
+			$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+		}
 		$assertion->setTestCase($this);
 		$assertion->run();
 	}
@@ -88,13 +96,55 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 		parent::tearDown();
 	}
-	protected function mock($className)
+	
+	protected function mock($className = '\StdClass')
 	{
 		return new MockBuilder($this, $className, false);
 	}
 
-	protected function niceMock($className)
+	protected function niceMock($className = '\StdClass')
 	{
 		return new MockBuilder($this, $className, true);
 	}
+
+	public function setUp()
+	{
+		global $_currentTestCase;
+		parent::setUp();
+		$_currentTestCase = $this;
+
+		if(!defined('__KEYWORDS_LOADED')) {
+			$parser = MatcherParser::getInstance();
+
+			$all = array();
+			foreach($parser->getAllSyntaxes() as $syntax => $description) {
+				$simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
+				foreach(explode('?', $simpleSyntax) as $part) {
+					$p = trim($part);
+					$all[str_replace(' ', '_', $p)] = $p;
+				}
+			}
+
+			foreach($all as $name => $value) {
+				if(!defined($name)) {
+					define($name, $value);
+				}
+			}
+
+			define('__KEYWORDS_LOADED', 1);
+		}
+	}
+}
+
+}
+
+namespace
+{
+
+	function assertThat()
+	{
+		global $_currentTestCase;
+		call_user_func_array(array($_currentTestCase, 'assert'), func_get_args());
+	}
+
 }

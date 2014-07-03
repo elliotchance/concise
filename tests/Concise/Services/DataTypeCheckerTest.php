@@ -18,16 +18,15 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function testBlankAcceptsAnything()
 	{
-		$this->assert('`$self->dataTypeChecker->check(array(), 123)` is true');
+		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSendingValueOfDifferentExpectedTypeThrowsException()
 	{
-		$self = $this;
-		$this->sendingValueOfDifferentExpectedType = function() use ($self) {
-			$self->dataTypeChecker->check(array("int"), 1.23);
-		};
-		$this->assert('sendingValueOfDifferentExpectedType throws exception');
+		$this->dataTypeChecker->check(array("int"), 1.23);
 	}
 
 	public function dataTypes()
@@ -44,7 +43,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("callable"), function() {}),
 			array(array("int", "float"), 1.23),
 			array(array("regex"), new Regexp('abc')),
-			array(array("class"), '\Concise\Syntax\Token\Regexp'),
+			array(array("class"), 'Concise\Syntax\Token\Regexp'),
 		);
 	}
 
@@ -53,28 +52,24 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testDataTypes(array $types, $value)
 	{
-		$this->types = $types;
-		$this->v = $value;
-		$this->assert('`$self->dataTypeChecker->check($self->types, $self->v)` is true');
+		$this->assertSame($value, $this->dataTypeChecker->check($types, $value));
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSendingValueNotListedInExpectedTypesThrowsException()
 	{
-		$self = $this;
-		$this->sendingValueNotListedInExpectedTypes = function() use ($self) {
-			$self->dataTypeChecker->check(array("int", "string"), 1.23);
-		};
-		$this->assert('sendingValueNotListedInExpectedTypes throws exception');
+		$this->dataTypeChecker->check(array("int", "string"), 1.23);
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testExcludeModeWillNotAllowType()
 	{
-		$self = $this;
-		$this->block = function() use ($self) {
-			$self->dataTypeChecker->setExcludeMode();
-			$self->dataTypeChecker->check(array("int"), 123);
-		};
-		$this->assert('block throws exception');
+		$this->dataTypeChecker->setExcludeMode();
+		$this->dataTypeChecker->check(array("int"), 123);
 	}
 
 	public function testAttributesAreEvaluatedFromContext()
@@ -83,7 +78,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			'foo' => 'bar',
 		);
 		$this->dataTypeChecker->setContext($context);
-		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+		$this->assertSame('bar', $this->dataTypeChecker->check(array('string'), new Attribute('foo')));
 	}
 
 	/**
@@ -92,12 +87,36 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testWillThrowExceptionIfAttributeDoesNotExist()
 	{
-		$this->assertTrue($this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+		$this->dataTypeChecker->check(array('string'), new Attribute('foo'));
 	}
 
 	public function testExcludeWithEmptyArrayAllowsAnything()
 	{
 		$this->dataTypeChecker->setExcludeMode();
-		$this->assertTrue($this->dataTypeChecker->check(array(), 123));
+		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
+	}
+
+	public function testWillTrimBackslashOffClass()
+	{
+		$this->assertSame('My\Class', $this->dataTypeChecker->check(array('class'), '\My\Class'));
+	}
+
+	public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass()
+	{
+		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array('string'), '\My\Class'));
+	}
+
+	public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
+	{
+		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array(), '\My\Class'));
+	}
+
+	public function testWillTrimBackslashOffClassWhenInAttribute()
+	{
+		$context = array(
+			'foo' => '\Bar',
+		);
+		$this->dataTypeChecker->setContext($context);
+		$this->assertSame('Bar', $this->dataTypeChecker->check(array('class'), new Attribute('foo')));
 	}
 }

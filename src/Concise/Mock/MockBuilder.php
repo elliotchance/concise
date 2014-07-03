@@ -49,7 +49,7 @@ class MockBuilder
 			}
 		}
 		else {
-			$this->addRule($arg, new Action\NoAction());
+			$this->addRule($arg, new Action\ReturnValueAction(null));
 		}
 		return $this;
 	}
@@ -80,8 +80,6 @@ class MockBuilder
 
 	public function done()
 	{
-		$this->validate();
-
 		$class = $this->className;
 		$originalObject = new $class();
 
@@ -118,9 +116,6 @@ class MockBuilder
 	protected function hasAction()
 	{
 		$action = $this->rules[$this->currentRule]['action'];
-		if($action instanceof Action\NoAction) {
-			return false;
-		}
 		if($action instanceof Action\ReturnValueAction && is_null($action->getValue())) {
 			return false;
 		}
@@ -141,15 +136,6 @@ class MockBuilder
 		return $this->setAction(new Action\ReturnValueAction($value));
 	}
 
-	protected function validate()
-	{
-		foreach($this->rules as $method => $rule) {
-			if($rule['action'] instanceof Action\NoAction) {
-				throw new \Exception("$method() does not have an associated action - did you forget andReturn()?");
-			}
-		}
-	}
-
 	public function andThrow($exception)
 	{
 		return $this->setAction(new Action\ThrowAction($exception));
@@ -163,9 +149,14 @@ class MockBuilder
 
 	public function expect($method)
 	{
-		$this->addRule($method, new Action\NoAction());
+		$this->addRule($method, new Action\ReturnValueAction(null));
 		$this->once();
 		return $this;
+	}
+
+	public function expects($method)
+	{
+		return $this->expect($method);
 	}
 
 	public function twice()
