@@ -122,4 +122,9 @@ class TestCaseTest extends TestCase
 	{
 		$this->assertSame(equals, 'equals');
 	}
+
+	public function testConstantsForKeywordStringsAreInitialised()
+	{
+		$this->assertSame(exactly_equals, 'exactly equals');
+	}
 }

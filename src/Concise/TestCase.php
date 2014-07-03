@@ -114,11 +114,22 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 		if(!defined('__KEYWORDS_LOADED')) {
 			$parser = MatcherParser::getInstance();
-			foreach($parser->getKeywords() as $keyword) {
-				if(!defined($keyword)) {
-					define($keyword, $keyword);
+			
+			$all = array();
+			foreach($parser->getAllSyntaxes() as $syntax => $description) {
+				$simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
+				foreach(explode('?', $simpleSyntax) as $part) {
+					$p = trim($part);
+					$all[str_replace(' ', '_', $p)] = $p;
 				}
 			}
+
+			foreach($all as $name => $value) {
+				if(!defined($name)) {
+					define($name, $value);
+				}
+			}
+
 			define('__KEYWORDS_LOADED', 1);
 		}
 	}
