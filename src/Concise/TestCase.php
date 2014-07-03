@@ -111,6 +111,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		global $_currentTestCase;
 		parent::setUp();
 		$_currentTestCase = $this;
+
+		if(!defined('__KEYWORDS_LOADED')) {
+			$parser = MatcherParser::getInstance();
+			foreach($parser->getKeywords() as $keyword) {
+				if(!defined($keyword)) {
+					define($keyword, $keyword);
+				}
+			}
+			define('__KEYWORDS_LOADED', 1);
+		}
 	}
 }
 
