@@ -105,4 +105,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		return new MockBuilder($this, $className, true);
 	}
+
+	public function setUp()
+	{
+		global $_currentTestCase;
+		parent::setUp();
+		$_currentTestCase = $this;
+	}
+}
+
+function assert($a)
+{
+	global $_currentTestCase;
+	call_user_func_array(array($_currentTestCase, 'assert'), func_get_args());
 }
