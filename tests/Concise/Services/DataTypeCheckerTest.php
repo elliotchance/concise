@@ -106,4 +106,9 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	{
 		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array('string'), '\My\Class'));
 	}
+
+	public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
+	{
+		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array(), '\My\Class'));
+	}
 }
