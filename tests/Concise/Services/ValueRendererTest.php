@@ -37,7 +37,7 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$obj = new \stdClass();
 		$obj->a = 123;
-		$this->assertSame('{"a":123}', $this->renderer->render($obj));
+		$this->assertSame('stdClass:{"a":123}', $this->renderer->render($obj));
 	}
 
 	public function testTrueValueRendersAsTrue()

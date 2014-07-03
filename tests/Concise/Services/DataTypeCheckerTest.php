@@ -78,8 +78,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			'foo' => 'bar',
 		);
 		$this->dataTypeChecker->setContext($context);
-		$attribute = new Attribute('foo');
-		$this->assertSame($attribute, $this->dataTypeChecker->check(array('string'), $attribute));
+		$this->assertSame('bar', $this->dataTypeChecker->check(array('string'), new Attribute('foo')));
 	}
 
 	/**
@@ -110,5 +109,14 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
 	{
 		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array(), '\My\Class'));
+	}
+
+	public function testWillTrimBackslashOffClassWhenInAttribute()
+	{
+		$context = array(
+			'foo' => '\Bar',
+		);
+		$this->dataTypeChecker->setContext($context);
+		$this->assertSame('Bar', $this->dataTypeChecker->check(array('class'), new Attribute('foo')));
 	}
 }

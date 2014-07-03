@@ -43,6 +43,9 @@ class DataTypeChecker
 	{
 		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
 		if($expecting === $match) {
+			if(is_object($value) && $value instanceof \Concise\Syntax\Token\Attribute) {
+				$value = $this->getAttribute($value->getValue());
+			}
 			if(in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
 				return substr($value, 1);
 			}

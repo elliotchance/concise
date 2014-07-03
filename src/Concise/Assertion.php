@@ -82,15 +82,17 @@ class Assertion
 		$parse = $lexer->parse($this->originalSyntax);
 		$args = $parse['arguments'];
 		$len = count($args);
+		$r = array();
 		for($i = 0; $i < $len; ++$i) {
 			try {
-				$checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
+				$r[] = $checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
 			}
 			catch(\InvalidArgumentException $e) {
 				$acceptedTypes = implode(" or ", $args[$i]->getAcceptedTypes());
 				throw new \Exception("Argument " . ($i + 1) . " (" . $arguments[$i] . ") must be $acceptedTypes.");
 			}
 		}
+		return $r;
 	}
 
 	protected function executeAssertion()
@@ -115,7 +117,7 @@ class Assertion
 		}
 
 		if(null !== $this->originalSyntax) {
-			$this->checkDataTypes($result['arguments']);
+			$args = $this->checkDataTypes($args);
 		}
 
 		$answer = $this->getMatcher()->match($result['syntax'], $args);
