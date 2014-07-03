@@ -9,8 +9,6 @@ Concise is unit test framework for using plain English and minimal code, built o
 Simple Example
 --------------
 
-A basic assertion is a string:
-
 ```php
 class AttributeTest extends TestCase
 {
@@ -18,61 +16,51 @@ class AttributeTest extends TestCase
 		// the entire assertion can be string
 		$this->assert('123 equals "123"');
 
-		// it will understand when you mean a variable name
+		// it will understand when you mean an attribute
 		$this->foo = 'bar';
 		$this->assert('foo is the same as "bar"');
 
-		// or you can creating your assertion with chaining
+		// or you can create your assertion by chaining
 		$this->assert($result, exactly_equals, 123);
 
-		// assertThat for convienience
+		// assertThat for convenience
 		assertThat($answer, is_an_associative_array);
+
+		// while generally not recommended, you can use code blocks (notice $self instead of $this)
+		$this->assert('`$self->calc->add(3, 5)` equals 8');
 	}
 
-	// the assertion "x is not null" is taken directly from the method name:
-	public function test_x_is_not_null() {
-		$this->x = 123;
+	// the assertion can be taken directly from the method name
+	public function test_adding3and5_equals_8() {
+		$this->adding3and5 = $this->calc->add(3, 5);
 	}
 }
 ```
 
-All _attributes_ are assigned to `$this` and can be used in assertions.
+Mocking
+-------
 
-### Arbitrary Code
-
-It is often nessesary and/or easier to use arbitrary code in the assertions themselfs. The following code is equivilent:
-
-```php
-public function testMyCalculator()
-{
-	$this->calc = new Calculator();
-	$this->answer = $self->calc->add(3, 5);
-	$this->assert('answer equals 8');
-}
-```
+Mocking is much easier in concise, you no longer need to specify which method to mock:
 
 ```php
-public function testMyCalculator()
-{
-	$this->calc = new Calculator();
-	$this->assert('`$self->calc->add(3, 5)` equals 8');
-}
+$calculator = $this->mock('\My\Calculator')
+                   ->expect('add')->with(3, 5)->andReturn(8)
+                   ->stub('clear')->andThrow(new \CantClearException())
+                   ->expect('subtract')->never()
+                   ->done();
 ```
 
-Or, perhaps even more readable:
+Mocks will throw an exception for any method that is called that isn't told what to do. So maybe you need a
+`niceMock`? Nice mocks work exactly like the original class but allows you to specify how to handle specific
+methods:
 
 ```php
-public function setUp()
-{
-	parent::setUp();
-	$this->calc = new Calculator();
-}
-
-public function test_adding3and5_equals_8()
-{
-	$this->adding3and5 = $this->calc->add(3, 5);
-}
+$calculator = $this->niceMock('\My\Calculator')
+                   ->stub(['add' => 8])          // always return 8 for add()
+                   ->done();
 ```
+
+You can read more on the [Mocking](https://github.com/elliotchance/concise/wiki/Mocking) wiki page.
 
 Matchers
 --------
