@@ -43,7 +43,7 @@ class DataTypeChecker
 	{
 		$match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
 		if($expecting === $match) {
-			if(is_string($value) && substr($value, 0, 1) === '\\') {
+			if(in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
 				return substr($value, 1);
 			}
 			return $value;
