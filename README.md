@@ -9,11 +9,27 @@ Concise is unit test framework for using plain English and minimal code, built o
 Simple Example
 --------------
 
-The assertion "x is not null" is taken directly from the method name:
+A basic assertion is a string:
 
 ```php
 class AttributeTest extends TestCase
 {
+	public function testEquality() {
+		// the entire assertion can be string
+		$this->assert('123 equals "123"');
+
+		// it will understand when you mean a variable name
+		$this->foo = 'bar';
+		$this->assert('foo is the same as "bar"');
+
+		// or you can creating your assertion with chaining
+		$this->assert($result, exactly_equals, 123);
+
+		// assertThat for convienience
+		assertThat($answer, is_an_associative_array);
+	}
+
+	// the assertion "x is not null" is taken directly from the method name:
 	public function test_x_is_not_null() {
 		$this->x = 123;
 	}
