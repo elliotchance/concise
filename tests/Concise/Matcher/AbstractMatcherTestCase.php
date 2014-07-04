@@ -10,33 +10,31 @@ class AbstractMatcherTestCase extends TestCase
 {
 	public function testExtendsAbstractMatcher()
 	{
-		$this->assert('`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher');
+		$this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractMatcher');
 	}
 
 	public function testCanRegisterMatcher()
 	{
 		$parser = new MatcherParser();
-		$this->assertTrue($parser->registerMatcher($this->matcher));
+		$this->assert($parser->registerMatcher($this->matcher), is_true);
 	}
 
 	public function testParserKnowsAboutMatcher()
 	{
 		$parser = MatcherParser::getInstance();
-		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
+		$this->assert($parser->matcherIsRegistered(get_class($this->matcher)), is_true);
 	}
 
 	public function testSupportedSyntaxesAreUnique()
 	{
 		$service = new MatcherSyntaxAndDescription();
 		$syntaxes = array_keys($service->process($this->matcher->supportedSyntaxes()));
-		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
+		$this->assert(count($syntaxes), equals, count(array_unique($syntaxes)));
 	}
 
 	protected function createStdClassThatCanBeCastToString($value)
 	{
-		return $this->getStub('\stdClass', array(
-			'__toString' => $value
-		));
+		return $this->mock()->stub(array('__toString' => $value))->done();
 	}
 
 	/**
@@ -59,8 +57,7 @@ class AbstractMatcherTestCase extends TestCase
 	protected function assertMatcherFailure($syntax, array $args = array())
 	{
 		try {
-			$result = $this->matcher->match($syntax, $args);
-			$this->assertFalse($result);
+			$this->assert($this->matcher->match($syntax, $args), is_false);
 		}
 		catch(DidNotMatchException $e) {
 			$this->assertTrue(true);

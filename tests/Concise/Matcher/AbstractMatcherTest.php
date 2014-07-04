@@ -33,11 +33,11 @@ class AbstractMatcherTest extends TestCase
 
 	public function testDefaultRendererWorks()
 	{
-		$this->assertEquals('', $this->matcher->renderFailureMessage(''));
+		$this->assert($this->matcher->renderFailureMessage(''), is_blank);
 	}
 
 	public function testHasAccessToComparer()
 	{
-		$this->assert('`$self->matcher->getComparer()` is instance of \Concise\Services\Comparer');
+		$this->assert($this->matcher->getComparer(), is_instance_of, '\Concise\Services\Comparer');
 	}
 }
