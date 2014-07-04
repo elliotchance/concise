@@ -18,7 +18,7 @@ class AssertionBuilder
 	public function getAssertion()
 	{
 		$matcherParser = MatcherParser::getInstance();
-		if($this->args[0] === true) {
+		if(count($this->args) === 1 && $this->args[0] === true) {
 			return $matcherParser->compile('true');
 		}
 		if($this->args[0] === false) {

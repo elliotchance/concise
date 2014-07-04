@@ -8,8 +8,7 @@ class AssertionBuilderTest extends TestCase
 {
 	public function testCanFindAssertionWithArguments()
 	{
-		$builder = new AssertionBuilder(array(123, 'equals', 123));
-		$assertion = $builder->getAssertion();
+		$assertion = $this->getAssertionWithArgs(array(123, 'equals', 123));
 		assertThat($assertion->getMatcher(), instance_of, '\Concise\Matcher\Equals');
 	}
 
@@ -25,15 +24,25 @@ class AssertionBuilderTest extends TestCase
 
 	public function testAssertionBuilderWillAcceptTrue()
 	{
-		$builder = new AssertionBuilder(array(true));
-		$assertion = $builder->getAssertion();
+		$assertion = $this->getAssertionWithArgs(array(true));
 		$this->assert($assertion->getMatcher(), instance_of, '\Concise\Matcher\True');
 	}
 
 	public function testAssertionBuilderWillAcceptFalse()
 	{
-		$builder = new AssertionBuilder(array(false));
-		$assertion = $builder->getAssertion();
+		$assertion = $this->getAssertionWithArgs(array(false));
 		$this->assert($assertion->getMatcher(), instance_of, '\Concise\Matcher\False');
+	}
+
+	public function testAssertionBuilderWillAcceptTrueFollowedByOtherArguments()
+	{
+		$assertion = $this->getAssertionWithArgs(array(true, 'is true'));
+		$this->assert($assertion->getMatcher(), not_instance_of, '\Concise\Matcher\True');
+	}
+
+	protected function getAssertionWithArgs(array $args)
+	{
+		$builder = new AssertionBuilder($args);
+		return $builder->getAssertion();
 	}
 }
