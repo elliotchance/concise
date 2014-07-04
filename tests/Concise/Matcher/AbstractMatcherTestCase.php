@@ -75,18 +75,15 @@ class AbstractMatcherTestCase extends TestCase
 		$this->assertTrue($this->matcher->match($syntax, $args));
 	}
 
-	/**
-	 * @param string $assertionString
-	 */
-	protected function assertFailure($assertionString)
+	protected function assertFailure()
 	{
 		try {
-			$this->assert($assertionString);
+			call_user_func_array(array($this, 'assert'), func_get_args());
 		}
 		catch(\PHPUnit_Framework_AssertionFailedError $e) {
 			$this->assertTrue(true);
 			return;
 		}
-		$this->fail("Assertion '$assertionString' did not fail.");
+		$this->fail("Assertion did not fail.");
 	}
 }

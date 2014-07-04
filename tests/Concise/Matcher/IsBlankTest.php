@@ -14,4 +14,9 @@ class IsBlankTest extends AbstractMatcherTestCase
 	{
 		$this->assert('', is_blank);
 	}
+
+	public function testStringWithAtLeastOneCharacterIsNotBlank()
+	{
+		$this->assertFailure('a', is_blank);
+	}
 }
