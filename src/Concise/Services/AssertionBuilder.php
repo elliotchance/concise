@@ -21,6 +21,9 @@ class AssertionBuilder
 		if($this->args[0] === true) {
 			return $matcherParser->compile('true');
 		}
+		if($this->args[0] === false) {
+			return $matcherParser->compile('false');
+		}
 
 		$syntax = array();
 		$data = array();

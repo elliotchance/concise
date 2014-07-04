@@ -29,4 +29,11 @@ class AssertionBuilderTest extends TestCase
 		$assertion = $builder->getAssertion();
 		$this->assert($assertion->getMatcher(), instance_of, '\Concise\Matcher\True');
 	}
+
+	public function testAssertionBuilderWillAcceptFalse()
+	{
+		$builder = new AssertionBuilder(array(false));
+		$assertion = $builder->getAssertion();
+		$this->assert($assertion->getMatcher(), instance_of, '\Concise\Matcher\False');
+	}
 }
