@@ -84,4 +84,9 @@ class ComparerTest extends \Concise\TestCase
 		$obj2 = json_decode('{"a":124}');
 		$this->assert($this->comparer->compare($obj1, $obj2), is_false);
 	}
+
+	public function testComparisonsAreNotExact()
+	{
+		$this->assert($this->comparer->compare('123', 123));
+	}
 }
