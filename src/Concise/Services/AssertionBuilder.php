@@ -18,11 +18,8 @@ class AssertionBuilder
 	public function getAssertion()
 	{
 		$matcherParser = MatcherParser::getInstance();
-		if(count($this->args) === 1 && $this->args[0] === true) {
-			return $matcherParser->compile('true');
-		}
-		if($this->args[0] === false) {
-			return $matcherParser->compile('false');
+		if(count($this->args) === 1 && is_bool($this->args[0])) {
+			return $matcherParser->compile($this->args[0] ? 'true' : 'false');
 		}
 
 		$syntax = array();
