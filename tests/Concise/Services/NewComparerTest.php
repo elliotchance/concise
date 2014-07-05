@@ -21,4 +21,9 @@ class NewComparerTest extends \Concise\TestCase
 	{
 		$this->assert($this->comparer->compare(123, 124), is_false);
 	}
+
+	public function testDoesNotMatchStrictly()
+	{
+		$this->assert($this->comparer->compare(123, '123'));
+	}
 }
