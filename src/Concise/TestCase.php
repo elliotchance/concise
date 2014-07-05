@@ -77,7 +77,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	public function assert($assertionString)
 	{
-		if(count(func_get_args()) > 1) {
+		if(count(func_get_args()) > 1 || is_bool($assertionString)) {
 			$builder = new AssertionBuilder(func_get_args());
 			$assertion = $builder->getAssertion();
 		}

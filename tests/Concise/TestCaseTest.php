@@ -127,4 +127,9 @@ class TestCaseTest extends TestCase
 	{
 		$this->assertSame(exactly_equals, 'exactly equals');
 	}
+
+	public function testAssertionBuilderWillBeUsedForBooleanAssertions()
+	{
+		$this->assert(true);
+	}
 }

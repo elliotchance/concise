@@ -60,7 +60,7 @@ class AbstractMatcherTestCase extends TestCase
 			$this->assert($this->matcher->match($syntax, $args), is_false);
 		}
 		catch(DidNotMatchException $e) {
-			$this->assertTrue(true);
+			$this->assert(true);
 		}
 	}
 
