@@ -14,7 +14,7 @@ class IsFalseTest extends AbstractMatcherTestCase
 
 	public function testFalse()
 	{
-		$this->assert('`false` is false');
+		$this->assert(false, is_false);
 	}
 
 	public function testZeroIsNotFalse()
@@ -34,6 +34,6 @@ class IsFalseTest extends AbstractMatcherTestCase
 
 	public function testFalseFailure()
 	{
-		$this->assertFailure('`true` is false');
+		$this->assertFailure(true, is_false);
 	}
 }

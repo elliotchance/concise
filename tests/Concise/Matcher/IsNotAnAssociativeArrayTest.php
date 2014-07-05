@@ -14,20 +14,20 @@ class IsNotAnAssociativeArrayTest extends AbstractMatcherTestCase
 
 	public function testAnAssociativeArrayContainsAtLeastOneKeyThatsNotANumber()
 	{
-		$this->x = array(
+		$x = array(
 			"a" => 123,
 			0 => "foo",
 		);
-		$this->assertFailure('x is not an associative array');
+		$this->assertFailure($x, is_not_an_associative_array);
 	}
 
 	public function testAnArrayIsAssociativeIfAllIndexesAreIntegersButNotZeroIndexed()
 	{
-		$this->x = array(
+		$x = array(
 			5 => 123,
 			10 => "foo",
 		);
-		$this->assertFailure('x is not an associative array');
+		$this->assertFailure($x, is_not_an_associative_array);
 	}
 
 	public function testAnArrayIsNotAssociativeIfZeroIndexed()

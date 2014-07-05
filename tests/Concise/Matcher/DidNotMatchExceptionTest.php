@@ -6,6 +6,6 @@ class DidNotMatchExceptionTest extends \Concise\TestCase
 {
 	public function testIsATypeOfException()
 	{
-		$this->assert('`new \Concise\Matcher\DidNotMatchException()` is an instance of \Exception');
+		$this->assert(new DidNotMatchException(), is_an_instance_of, '\Exception');
 	}
 }

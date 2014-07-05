@@ -69,7 +69,7 @@ class AbstractMatcherTestCase extends TestCase
 	 */
 	protected function assertMatcherSuccess($syntax, array $args = array())
 	{
-		$this->assertTrue($this->matcher->match($syntax, $args));
+		$this->assert($this->matcher->match($syntax, $args));
 	}
 
 	protected function assertFailure()
@@ -78,7 +78,7 @@ class AbstractMatcherTestCase extends TestCase
 			call_user_func_array(array($this, 'assert'), func_get_args());
 		}
 		catch(\PHPUnit_Framework_AssertionFailedError $e) {
-			$this->assertTrue(true);
+			$this->assert(true);
 			return;
 		}
 		$this->fail("Assertion did not fail.");

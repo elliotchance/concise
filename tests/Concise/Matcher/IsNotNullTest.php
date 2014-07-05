@@ -24,11 +24,11 @@ class IsNotNullTest extends AbstractMatcherTestCase
 
 	public function testFalseIsNotNull()
 	{
-		$this->assert('`false` is not null');
+		$this->assert(false, is_not_null);
 	}
 
 	public function testIsNotNullFailure()
 	{
-		$this->assertFailure('`null` is not null');
+		$this->assertFailure(null, is_not_null);
 	}
 }
