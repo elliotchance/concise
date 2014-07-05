@@ -14,6 +14,11 @@ class IsUniqueTest extends AbstractMatcherTestCase
 
 	public function testArrayIsUniqueIfItContainsZeroElements()
 	{
-		$this->assert('[] is unique');
+		$this->assert(array(), is_unique);
+	}
+
+	public function testArrayIsNotUniqueIfAnyElementsAppearMoreThanOnce()
+	{
+		$this->assertFailure(array(123, 456, 123), is_unique);
 	}
 }
