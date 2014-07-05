@@ -80,34 +80,40 @@ class MockBuilder
 
 	public function done()
 	{
-		$class = $this->className;
-		$originalObject = new $class();
+		$refClass = new \ReflectionClass($this->className);
+		if($refClass->isAbstract()) {
+			$mock = $this->testCase->getMockForAbstractClass($this->className);
+		}
+		else {
+			$class = $this->className;
+			$originalObject = new $class();
+			$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
+			$mock = $this->testCase->getMock($this->className, $allMethods);
 
-		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
-		$mock = $this->testCase->getMock($this->className, $allMethods);
+			// throw exception for remaining methods
+			if($this->niceMock) {
+				foreach($allMethods as $method) {
+					if(in_array($method, $this->mockedMethods)) {
+						continue;
+					}
+					$will = $this->testCase->returnCallback(array($originalObject, $method));
+					$this->stubMethod($mock, $method, $will);
+				}
+			}
+			else {
+				foreach($allMethods as $method) {
+					if(in_array($method, $this->mockedMethods)) {
+						continue;
+					}
+					$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
+					$this->stubMethod($mock, $method, $will);
+				}
+			}
+		}
+
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
-		}
-
-		// throw exception for remaining methods
-		if($this->niceMock) {
-			foreach($allMethods as $method) {
-				if(in_array($method, $this->mockedMethods)) {
-					continue;
-				}
-				$will = $this->testCase->returnCallback(array($originalObject, $method));
-				$this->stubMethod($mock, $method, $will);
-			}
-		}
-		else {
-			foreach($allMethods as $method) {
-				if(in_array($method, $this->mockedMethods)) {
-					continue;
-				}
-				$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
-				$this->stubMethod($mock, $method, $will);
-			}
 		}
 
 		return $mock;

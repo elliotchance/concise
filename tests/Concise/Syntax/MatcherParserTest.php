@@ -26,18 +26,18 @@ class MatcherParserTest extends TestCase
 	public function testCompileReturnsAssertion()
 	{
 		$this->parser->registerMatcher(new \Concise\Matcher\Equals());
-		$this->matcher = $this->parser->compile('x equals y', $this->getData());
-		$this->assert('`$self->matcher` is instance of \Concise\Assertion');
+		$matcher = $this->parser->compile('x equals y', $this->getData());
+		$this->assert($matcher, is_instance_of, '\Concise\Assertion');
 	}
 
 	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
 	{
-		$this->assertFalse($this->parser->matcherIsRegistered('\No\Such\Class'));
+		$this->assert($this->parser->matcherIsRegistered('\No\Such\Class'), is_false);
 	}
 
 	public function testRegisteringANewMatcherReturnsTrue()
 	{
-		$this->assertTrue($this->parser->registerMatcher(new \Concise\Matcher\Equals()));
+		$this->assert($this->parser->registerMatcher(new \Concise\Matcher\Equals()));
 	}
 
 	/**

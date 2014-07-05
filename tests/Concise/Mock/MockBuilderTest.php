@@ -12,6 +12,11 @@ class Mock1
 	}
 }
 
+abstract class Mock2
+{
+	public abstract function foo();
+}
+
 class MockBuilderTest extends TestCase
 {
 	public function testMockCanBeCreatedFromAClassThatExists()
@@ -221,5 +226,13 @@ class MockBuilderTest extends TestCase
 		$mock = $this->niceMock()
 		             ->done();
 		$this->assert($mock, instance_of, '\stdClass');
+	}
+
+	public function testMocksCanBeCreatedFromAbstractClasses()
+	{
+		$mock = $this->mock('\Concise\Mock\Mock2')
+		             ->stub(array('foo' => 'bar'))
+		             ->done();
+		$this->assert($mock->foo(), equals, 'bar');
 	}
 }

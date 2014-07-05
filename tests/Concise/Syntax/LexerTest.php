@@ -64,8 +64,7 @@ class LexerTest extends TestCase
 	public function testTokensHaveUniqueValues()
 	{
 		$class = new \ReflectionClass('\Concise\Syntax\Lexer');
-		$constants = $class->getConstants();
-		$this->assert(count($constants), equals, count(array_unique($constants)));
+		$this->assert($class->getConstants(), is_unique);
 	}
 
 	public function stringData()
@@ -86,7 +85,7 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($string);
-		$this->assertEquals(array(new Token\Value($expected)), $result['tokens']);
+		$this->assert(array(new Token\Value($expected)), equals, $result['tokens']);
 	}
 
 	/**
@@ -123,21 +122,21 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('?:int');
-		$this->assertSame(array('int'), $result['arguments'][0]->getAcceptedTypes());
+		$this->assert($result['arguments'][0]->getAcceptedTypes(), equals, array('int'));
 	}
 
 	public function testLexerCanExtractExpectedTypesFromSyntax()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('?:int,float');
-		$this->assertSame(array('int', 'float'), $result['arguments'][0]->getAcceptedTypes());
+		$this->assert($result['arguments'][0]->getAcceptedTypes(), equals, array('int', 'float'));
 	}
 
 	public function testLexerWillNotPutExpectedTypesInAttributeValue()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('?:int,float');
-		$this->assertSame('?', $result['arguments'][0]->getValue());
+		$this->assert($result['arguments'][0]->getValue(), equals, '?');
 	}
 
 	/**
