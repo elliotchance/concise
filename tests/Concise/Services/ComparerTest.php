@@ -71,4 +71,10 @@ class ComparerTest extends \Concise\TestCase
 	{
 		$this->assert($this->comparer->compare(fopen('.', 'r'), null), is_false);
 	}
+
+	public function testMatchingAnObjectWithItselfAlwaysMatches()
+	{
+		$obj = new \stdClass();
+		$this->assert($this->comparer->compare($obj, $obj));
+	}
 }

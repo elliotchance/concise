@@ -10,7 +10,7 @@ class Comparer
 
 	public function __construct()
 	{
-		$this->convertToString = new ToStringConverter;
+		$this->convertToString = new ToStringConverter();
 	}
 
 	public function setConvertToString(ToStringConverter $convertToString)
