@@ -77,4 +77,11 @@ class ComparerTest extends \Concise\TestCase
 		$obj = new \stdClass();
 		$this->assert($this->comparer->compare($obj, $obj));
 	}
+
+	public function testComparingObjectsWithDifferentPropertiesAreNotEqual()
+	{
+		$obj1 = json_decode('{"a":123}');
+		$obj2 = json_decode('{"a":124}');
+		$this->assert($this->comparer->compare($obj1, $obj2), is_false);
+	}
 }
