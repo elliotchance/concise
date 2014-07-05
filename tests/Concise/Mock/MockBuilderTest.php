@@ -15,6 +15,11 @@ class Mock1
 abstract class Mock2
 {
 	public abstract function foo();
+
+	public function bar()
+	{
+		return 123;
+	}
 }
 
 class MockBuilderTest extends TestCase
@@ -228,7 +233,7 @@ class MockBuilderTest extends TestCase
 		$this->assert($mock, instance_of, '\stdClass');
 	}
 
-	public function testMocksCanBeCreatedFromAbstractClasses()
+	public function testMockCanBeCreatedFromAnAbstractClass()
 	{
 		$mock = $this->mock('\Concise\Mock\Mock2')
 		             ->stub(array('foo' => 'bar'))
@@ -245,5 +250,12 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock2')
 		             ->done();
 		$this->assert($mock->foo(), equals, 'bar');
+	}
+
+	public function testNiceMockCanBeCreatedFromAbstractClass()
+	{
+		$mock = $this->niceMock('\Concise\Mock\Mock2')
+		             ->done();
+		$this->assert($mock->bar(), equals, 123);
 	}
 }
