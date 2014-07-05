@@ -2,8 +2,6 @@
 
 namespace Concise\Services;
 
-use \Concise\Syntax\Token\Attribute;
-
 class ValueRendererTest extends \Concise\TestCase
 {
 	/** @var ValueRenderer */
@@ -67,14 +65,5 @@ class ValueRendererTest extends \Concise\TestCase
 	public function testFunctionRendersAsString()
 	{
 		$this->assertSame('function', $this->renderer->render(function() {}));
-	}
-
-	public function testRenderingAnAttributeWillShowItsValue()
-	{
-		$attribute = new Attribute('foo');
-		$this->renderer->setContext(array(
-			'foo' => 'bar'
-		));
-		$this->assert($this->renderer->render($attribute), equals, '"bar"');
 	}
 }

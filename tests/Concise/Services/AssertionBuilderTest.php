@@ -40,12 +40,6 @@ class AssertionBuilderTest extends TestCase
 		$this->assert($assertion->getMatcher(), not_instance_of, '\Concise\Matcher\True');
 	}
 
-	public function testAssertionBuilderWillAcceptFalseFollowedByOtherArguments()
-	{
-		$assertion = $this->getAssertionWithArgs(array(false, 'is false'));
-		$this->assert($assertion->getMatcher(), not_instance_of, '\Concise\Matcher\False');
-	}
-
 	protected function getAssertionWithArgs(array $args)
 	{
 		$builder = new AssertionBuilder($args);
