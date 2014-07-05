@@ -115,7 +115,7 @@ class TestCaseTest extends TestCase
 
 	public function testCanUseAssertThatFunction()
 	{
-		assertThat("123 equals 123");
+		assert_that("123 equals 123");
 	}
 
 	public function testConstantsForKeywordsAreInitialised()

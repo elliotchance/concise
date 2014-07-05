@@ -9,7 +9,7 @@ class AssertionBuilderTest extends TestCase
 	public function testCanFindAssertionWithArguments()
 	{
 		$assertion = $this->getAssertionWithArgs(array(123, 'equals', 123));
-		assertThat($assertion->getMatcher(), instance_of, '\Concise\Matcher\Equals');
+		assert_that($assertion->getMatcher(), instance_of, '\Concise\Matcher\Equals');
 	}
 
 	/**

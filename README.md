@@ -23,8 +23,8 @@ class AttributeTest extends TestCase
 		// or you can create your assertion by chaining
 		$this->assert($result, exactly_equals, 123);
 
-		// assertThat for convenience
-		assertThat($answer, is_an_associative_array);
+		// you may prefer assert_that
+		assert_that($answer, is_an_associative_array);
 
 		// while generally not recommended, you can use code blocks (notice $self instead of $this)
 		$this->assert('`$self->calc->add(3, 5)` equals 8');

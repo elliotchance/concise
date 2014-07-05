@@ -10,6 +10,6 @@ class SyntaxRendererTest extends TestCase
 	{
 		$renderer = new SyntaxRenderer();
 		$data = array(1, '2', 3.1);
-		assertThat('1 is "2" bla 3.1', equals, $renderer->render('? is ? bla ?', $data));
+		assert_that('1 is "2" bla 3.1', equals, $renderer->render('? is ? bla ?', $data));
 	}
 }
