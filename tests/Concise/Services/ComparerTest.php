@@ -25,17 +25,17 @@ class ComparerTest extends \Concise\TestCase
 
 	public function testBooleansAreSupported()
 	{
-		$this->assertTrue($this->comparer->compare(true, true));
+		$this->assert($this->comparer->compare(true, true));
 	}
 
 	public function testNullsAreSupported()
 	{
-		$this->assertTrue($this->comparer->compare(null, null));
+		$this->assert($this->comparer->compare(null, null));
 	}
 
 	public function testFailureReturnsFalse()
 	{
-		$this->assertFalse($this->comparer->compare(true, false));
+		$this->assert($this->comparer->compare(true, false), is_false);
 	}
 
 	/**
@@ -64,11 +64,11 @@ class ComparerTest extends \Concise\TestCase
 
 	public function testComparisonsAreExact()
 	{
-		$this->assertFalse($this->comparer->compare(false, ''));
+		$this->assert($this->comparer->compare(false, ''), is_false);
 	}
 
 	public function testResourcesAreSupported()
 	{
-		$this->assertFalse($this->comparer->compare(fopen('.', 'r'), null));
+		$this->assert($this->comparer->compare(fopen('.', 'r'), null), is_false);
 	}
 }

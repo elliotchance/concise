@@ -21,7 +21,7 @@ class ToStringConverterTest extends \Concise\TestCase
 
 	public function testWillReturnTheExactStringUsed()
 	{
-		$this->assertSame($this->converter->convertToString('hello'), 'hello');
+		$this->assert($this->converter->convertToString('hello'), equals, 'hello');
 	}
 
 	/**
@@ -35,14 +35,14 @@ class ToStringConverterTest extends \Concise\TestCase
 
 	public function testWillConvertANumberToAString()
 	{
-		$this->assert($this->converter->convertToString(123), 'exactly equals "123"');
+		$this->assert($this->converter->convertToString(123), exactly_equals, '123');
 	}
 
 	public function testWillReturnTheMethodsReturnValueIfItIsCallable()
 	{
 		$this->assert($this->converter->convertToString(function () {
 			return 'abc';
-		}), 'exactly equals "abc"');
+		}), exactly_equals, 'abc');
 	}
 
 	public function testWillAlwaysReturnAStringEvenIfItHasToRecurse()
@@ -51,7 +51,7 @@ class ToStringConverterTest extends \Concise\TestCase
 			return function() {
 				return 123;
 			};
-		}), 'exactly equals "123"');
+		}), exactly_equals, '123');
 	}
 
 	/**
@@ -67,32 +67,30 @@ class ToStringConverterTest extends \Concise\TestCase
 	{
 		$this->assert($this->converter->convertToString(function () {
 			throw new \Exception('hi');
-		}), 'exactly equals "hi"');
+		}), exactly_equals, "hi");
 	}
 
 	public function testWillRenderAnObjectAsAString()
 	{
-		$object = $this->getStub('\stdClass', array(
-			'__toString' => 'xyz'
-		));
-		$this->assertSame($this->converter->convertToString($object), 'xyz');
+		$object = $this->mock()->stub(array('__toString' => 'xyz'))->done();
+		$this->assert($this->converter->convertToString($object), equals, 'xyz');
 	}
 
 	public function testWillExpandScientificNotationToAbsoluteValue()
 	{
-		$this->assertSame($this->converter->convertToString(1.23e5), '123000');
+		$this->assert($this->converter->convertToString(1.23e5), exactly_equals, '123000');
 	}
 
 	public function testWillReturnAJsonStringForAnObjectIfIsCannotBeConvertedToAString()
 	{
 		$object = new \stdClass();
 		$object->abc = 123;
-		$this->assertSame($this->converter->convertToString($object), '{"abc":123}');
+		$this->assert($this->converter->convertToString($object), equals, '{"abc":123}');
 	}
 
 	public function testWillReturnAJsonStringForAnArray()
 	{
-		$this->assertSame($this->converter->convertToString(array(1, 'abc')), '[1,"abc"]');
+		$this->assert($this->converter->convertToString(array(1, 'abc')), equals, '[1,"abc"]');
 	}
 
 	/**
