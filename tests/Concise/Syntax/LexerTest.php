@@ -44,28 +44,28 @@ class LexerTest extends TestCase
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse($string);
-		$this->assertEquals($expectedToken, $result['tokens'][0]);
+		$this->assert($expectedToken, equals, $result['tokens'][0]);
 	}
 
 	public function testTokensReturnsAnArrayWithABlankString()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse('');
-		$this->assertCount(0, $result['tokens']);
+		$this->assert(count($result['tokens']), equals, 0);
 	}
 
 	public function testLexerIgnoresBlankTokens()
 	{
 		$lexer = new Lexer();
 		$result = $lexer->parse(' not not  not   not ');
-		$this->assertCount(4, $result['tokens']);
+		$this->assert(count($result['tokens']), equals, 4);
 	}
 
 	public function testTokensHaveUniqueValues()
 	{
 		$class = new \ReflectionClass('\Concise\Syntax\Lexer');
 		$constants = $class->getConstants();
-		$this->assertEquals(count($constants), count(array_unique($constants)));
+		$this->assert(count($constants), equals, count(array_unique($constants)));
 	}
 
 	public function stringData()
