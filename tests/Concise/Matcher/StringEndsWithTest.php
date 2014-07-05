@@ -17,11 +17,6 @@ class StringEndsWithTest extends AbstractMatcherTestCase
 		$this->assert('"abc" ends with "bc"');
 	}
 
-	public function testNumberSubstring()
-	{
-		$this->assert('123 ends with 23');
-	}
-
 	public function testStringsAreEqual()
 	{
 		$this->assert('"abc" ends with "abc"');

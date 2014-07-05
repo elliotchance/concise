@@ -27,9 +27,4 @@ abstract class AbstractMatcher
 		$renderer = new SyntaxRenderer();
 		return $renderer->render($syntax, $data);
 	}
-
-	protected function getComparer()
-	{
-		return new Comparer();
-	}
 }

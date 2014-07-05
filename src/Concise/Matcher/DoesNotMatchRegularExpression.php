@@ -2,8 +2,6 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Services\ToStringConverter;
-
 class DoesNotMatchRegularExpression extends MatchesRegularExpression
 {
 	const DESCRIPTION = 'Assert a string does not match a regular expression.';
@@ -11,15 +9,15 @@ class DoesNotMatchRegularExpression extends MatchesRegularExpression
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? does not match regular expression ?:regex' => self::DESCRIPTION,
-			'? doesnt match regular expression ?:regex' => self::DESCRIPTION,
-			'? does not match regex ?:regex' => self::DESCRIPTION,
-			'? doesnt match regex ?:regex' => self::DESCRIPTION,
+			'?:string does not match regular expression ?:regex' => self::DESCRIPTION,
+			'?:string doesnt match regular expression ?:regex' => self::DESCRIPTION,
+			'?:string does not match regex ?:regex' => self::DESCRIPTION,
+			'?:string doesnt match regex ?:regex' => self::DESCRIPTION,
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return !parent::match('? matches regular expression ?:regex', $data);
+		return !parent::match(null, $data);
 	}
 }

@@ -12,11 +12,6 @@ class StringStartsWithTest extends AbstractMatcherTestCase
 		$this->matcher = new StringStartsWith();
 	}
 
-	public function testNumberSubstring()
-	{
-		$this->assert('123 starts with 12');
-	}
-
 	public function testBasicString()
 	{
 		$this->assert('"abc" starts with "ab"');

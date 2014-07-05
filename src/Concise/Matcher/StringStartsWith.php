@@ -2,23 +2,17 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Services\ToStringConverter;
-
 class StringStartsWith extends AbstractMatcher
 {
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? starts with ?' => 'Assert a string starts (begins) with another string.',
+			'?:string starts with ?:string' => 'Assert a string starts (begins) with another string.',
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		$converter = new ToStringConverter();
-		$haystack = $converter->convertToString($data[0]);
-		$needle = $converter->convertToString($data[1]);
-
-		return ((substr($haystack, 0, strlen($needle)) === $needle));
+		return ((substr($data[0], 0, strlen($data[1])) === $data[1]));
 	}
 }
