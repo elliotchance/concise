@@ -235,4 +235,15 @@ class MockBuilderTest extends TestCase
 		             ->done();
 		$this->assert($mock->foo(), equals, 'bar');
 	}
+
+	/**
+	 * @expectedException Exception
+	 * @expectedExceptionMessage foo() does not have an associated action - consider a niceMock()?
+	 */
+	public function testAbstractMocksWillThrowExceptionForMethodsWithoutARule()
+	{
+		$mock = $this->mock('\Concise\Mock\Mock2')
+		             ->done();
+		$this->assert($mock->foo(), equals, 'bar');
+	}
 }

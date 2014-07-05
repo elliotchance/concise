@@ -83,6 +83,14 @@ class MockBuilder
 		$refClass = new \ReflectionClass($this->className);
 		if($refClass->isAbstract()) {
 			$mock = $this->testCase->getMockForAbstractClass($this->className);
+			$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
+			foreach($allMethods as $method) {
+				if(in_array($method, $this->mockedMethods)) {
+					continue;
+				}
+				$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
+				$this->stubMethod($mock, $method, $will);
+			}
 		}
 		else {
 			$class = $this->className;
