@@ -124,7 +124,7 @@ class Assertion
 		if(true === $answer || null === $answer) {
 			return;
 		}
-		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
+		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $args);
 		throw new \PHPUnit_Framework_AssertionFailedError($message);
 	}
 
