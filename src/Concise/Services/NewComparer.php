@@ -8,6 +8,6 @@ class NewComparer
 {
 	public function compare($a, $b)
 	{
-		return true;
+		return $a === $b;
 	}
 }
