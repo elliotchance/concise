@@ -31,7 +31,7 @@ class MockBuilderFailuresTest extends TestCase
 	protected function onNotSuccessfulTest(\Exception $e)
 	{
 		self::$failures[] = $this->getName();
-		$this->assertSame(self::$expectedFailures[$this->getName()], $e->getMessage());
+		$this->assert(self::$expectedFailures[$this->getName()], equals, $e->getMessage());
 	}
 
 	public static function tearDownAfterClass()

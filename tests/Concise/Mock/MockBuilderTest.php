@@ -18,7 +18,7 @@ class MockBuilderTest extends TestCase
 	{
 		$mock = $this->mock('\Concise\TestCase')
 		             ->done();
-		$this->assert($mock, 'instance of \Concise\TestCase');
+		$this->assert($mock, instance_of, '\Concise\TestCase');
 	}
 
 	/**
@@ -35,7 +35,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123))
 		             ->done();
-		$this->assertSame(123, $mock->myMethod());
+		$this->assert($mock->myMethod(), equals, 123);
 	}
 
 	public function testStubbingWithAnArrayCanCreateMultipleStubs()
@@ -43,7 +43,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123, 'foo' => 'bar'))
 		             ->done();
-		$this->assertSame('bar', $mock->foo());
+		$this->assert($mock->foo(), equals, 'bar');
 	}
 
 	/**
@@ -72,14 +72,14 @@ class MockBuilderTest extends TestCase
 	{
 		$mock = $this->niceMock('\Concise\TestCase')
 		             ->done();
-		$this->assert($mock, 'instance of \Concise\TestCase');
+		$this->assert($mock, instance_of, '\Concise\TestCase');
 	}
 
 	public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
 	{
 		$mock = $this->niceMock('\Concise\Mock\Mock1')
 		             ->done();
-		$this->assertSame('abc', $mock->myMethod());
+		$this->assert($mock->myMethod(), equals, 'abc');
 	}
 
 	public function testCallingMethodOnNiceMockWithStub()
@@ -87,7 +87,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->niceMock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123))
 		             ->done();
-		$this->assertSame(123, $mock->myMethod());
+		$this->assert($mock->myMethod(), equals, 123);
 	}
 
 	public function testStubsCanBeCreatedByChainingAnAction()
@@ -95,7 +95,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock1')
 		             ->stub('myMethod')->andReturn(123)
 		             ->done();
-		$this->assertSame(123, $mock->myMethod());
+		$this->assert($mock->myMethod(), equals, 123);
 	}
 
 	public function testStubWithNoActionWillReturnNull()
@@ -103,7 +103,7 @@ class MockBuilderTest extends TestCase
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
 		                   ->stub('myMethod')
 		                   ->done();
-		$this->assertNull($this->mock->myMethod());
+		$this->assert($this->mock->myMethod(), is_null);
 	}
 
 	public function testStubCanReturnNull()
@@ -111,7 +111,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock1')
 		             ->stub('myMethod')->andReturn(null)
 		             ->done();
-		$this->assertNull($mock->myMethod());
+		$this->assert($mock->myMethod(), is_null);
 	}
 
 	/**
@@ -198,7 +198,7 @@ class MockBuilderTest extends TestCase
 		$mock = $this->mock('\Concise\Mock\Mock1')
 		             ->expect('myMethod')->with('foo')->andReturn('bar')
 		             ->done();
-		$this->assertSame('bar', $mock->myMethod('foo'));
+		$this->assert($mock->myMethod('foo'), equals, 'bar');
 	}
 
 	public function testCanUseExpectsInsteadOfExpect()
@@ -213,13 +213,13 @@ class MockBuilderTest extends TestCase
 	{
 		$mock = $this->mock()
 		             ->done();
-		$this->assert($mock, 'instance of \stdClass');
+		$this->assert($mock, instance_of, '\stdClass');
 	}
 
 	public function testNiceMockClassDefaultsToStdClass()
 	{
 		$mock = $this->niceMock()
 		             ->done();
-		$this->assert($mock, 'instance of \stdClass');
+		$this->assert($mock, instance_of, '\stdClass');
 	}
 }
