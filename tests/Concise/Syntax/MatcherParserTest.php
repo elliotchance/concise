@@ -46,25 +46,18 @@ class MatcherParserTest extends TestCase
 	 */
 	public function testThatOnlyOneMatcherCanRespondToASyntax()
 	{
-		$matcher1 = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher1->expects($this->once())
-		         ->method('supportedSyntaxes')
-		         ->will($this->returnValue(array('something')));
+		$matcher = $this->niceMock('\Concise\Matcher\AbstractMatcher')
+		                ->expect('supportedSyntaxes')->andReturn(array('something'));
 
-		$matcher2 = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher2->expects($this->once())
-		         ->method('supportedSyntaxes')
-		         ->will($this->returnValue(array('something')));
-
-		$this->parser->registerMatcher($matcher1);
-		$this->parser->registerMatcher($matcher2);
+		$this->parser->registerMatcher($matcher->done());
+		$this->parser->registerMatcher($matcher->done());
 
 		$this->parser->getMatcherForSyntax('something');
 	}
 
 	public function testGetInstanceIsASingleton()
 	{
-		$this->assertSame(MatcherParser::getInstance(), MatcherParser::getInstance());
+		$this->assert(MatcherParser::getInstance(), exactly_equals, MatcherParser::getInstance());
 	}
 
 	/**

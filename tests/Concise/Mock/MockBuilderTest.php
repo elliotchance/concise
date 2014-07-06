@@ -233,9 +233,9 @@ class MockBuilderTest extends TestCase
 		$this->assert($mock, instance_of, '\stdClass');
 	}
 
-	public function testMockCanBeCreatedFromAnAbstractClass()
+	public function testNiceMockCanBeCreatedFromAnAbstractClass()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock2')
+		$mock = $this->niceMock('\Concise\Mock\Mock2')
 		             ->stub(array('foo' => 'bar'))
 		             ->done();
 		$this->assert($mock->foo(), equals, 'bar');
@@ -243,19 +243,11 @@ class MockBuilderTest extends TestCase
 
 	/**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage foo() does not have an associated action - consider a niceMock()?
+	 * @expectedExceptionMessage You cannot create a mock() from an abstract class - use a niceMock() instead.
 	 */
-	public function testAbstractMocksWillThrowExceptionForMethodsWithoutARule()
+	public function testYouCannotCreateAMockFromAnAbstractClass()
 	{
 		$mock = $this->mock('\Concise\Mock\Mock2')
 		             ->done();
-		$this->assert($mock->foo(), equals, 'bar');
-	}
-
-	public function testNiceMockCanBeCreatedFromAbstractClass()
-	{
-		$mock = $this->niceMock('\Concise\Mock\Mock2')
-		             ->done();
-		$this->assert($mock->bar(), equals, 123);
 	}
 }
