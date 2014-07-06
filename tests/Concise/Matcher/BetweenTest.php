@@ -12,7 +12,7 @@ class BetweenTest extends AbstractMatcherTestCase
 		$this->matcher = new Between();
 	}
 
-	public function testANumberExistsBetweenTwoOtherNumbers()
+	public function testNumberExistsBetweenTwoOtherNumbers()
 	{
 		$this->assert(123, between, 100, 'and', 150);
 	}
@@ -20,5 +20,10 @@ class BetweenTest extends AbstractMatcherTestCase
 	public function testNumberIsBelowLowerBounds()
 	{
 		$this->assertFailure(80, between, 100, 'and', 150);
+	}
+
+	public function testNumberIsOnTheLowerBound()
+	{
+		$this->assert(123, between, 123, 'and', 150);
 	}
 }
