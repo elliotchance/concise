@@ -90,7 +90,7 @@ class DataTypeChecker
 	protected function matches($type, $value)
 	{
 		if($type === 'number') {
-			return $this->singleMatch('int', $value) || $this->singleMatch('float', $value);
+			return $this->singleMatch('int', $value) || $this->singleMatch('float', $value) || is_numeric($value);
 		}
 		return $this->singleMatch($this->simpleType($type), $value);
 	}
