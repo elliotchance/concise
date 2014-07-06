@@ -97,14 +97,14 @@ class DataTypeChecker
 
 	protected function simpleType($type)
 	{
-		if($type === 'integer') {
-			$type = 'int';
-		}
-		else if($type === 'double') {
-			$type = 'float';
-		}
-		else if($type === 'class') {
-			$type = 'string';
+		$aliases = array(
+			'integer' => 'int',
+			'double'  => 'float',
+			'class'   => 'string',
+			'bool'    => 'boolean',
+		);
+		if(array_key_exists($type, $aliases)) {
+			return $aliases[$type];
 		}
 		return $type;
 	}
