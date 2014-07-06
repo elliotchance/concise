@@ -31,4 +31,9 @@ class BetweenTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure(170, between, 100, 'and', 150);
 	}
+
+	public function testNumberIsOnTheUpperBound()
+	{
+		$this->assert(150, between, 123, 'and', 150);
+	}
 }
