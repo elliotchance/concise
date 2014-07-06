@@ -82,12 +82,17 @@ class DataTypeChecker
 		return gettype($value);
 	}
 
+	protected function singleMatch($type, $value)
+	{
+		return $type === $this->simpleType($this->getType($value));
+	}
+
 	protected function matches($type, $value)
 	{
 		if($type === 'number') {
-			return 'int' === $this->simpleType($this->getType($value));
+			return $this->singleMatch('int', $value) || $this->singleMatch('float', $value);
 		}
-		return $this->simpleType($type) === $this->simpleType($this->getType($value));
+		return $this->singleMatch($this->simpleType($type), $value);
 	}
 
 	protected function simpleType($type)

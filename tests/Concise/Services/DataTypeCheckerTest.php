@@ -45,6 +45,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("regex"), new Regexp('abc')),
 			array(array("class"), 'Concise\Syntax\Token\Regexp'),
 			array(array("number"), 123),
+			array(array("number"), 12.3),
 		);
 	}
 
