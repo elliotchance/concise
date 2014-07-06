@@ -84,6 +84,9 @@ class DataTypeChecker
 
 	protected function matches($type, $value)
 	{
+		if($type === 'number') {
+			return 'int' === $this->simpleType($this->getType($value));
+		}
 		return $this->simpleType($type) === $this->simpleType($this->getType($value));
 	}
 
