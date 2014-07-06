@@ -15,7 +15,7 @@ class IsGreaterThanTest extends AbstractMatcherTestCase
 		$this->assertFailure(100, is_greater_than, 200);
 	}
 
-	public function testLessThanOrEqual()
+	public function testGreaterThanOrEqual()
 	{
 		$this->assertFailure(200, is_greater_than, 200);
 	}

@@ -3,6 +3,7 @@
 namespace Concise\Syntax;
 
 use \Concise\TestCase;
+use \Concise\Services\MatcherSyntaxAndDescription;
 
 class MatcherParserStub extends MatcherParser
 {
@@ -194,5 +195,13 @@ class MatcherParserTest extends TestCase
 		$this->parser->registerMatcher($matcher2);
 		$keywords2 = $this->parser->getKeywords();
 		$this->assertNotEquals($keywords1, $keywords2);
+	}
+
+	public function testSupportedSyntaxesAreUnique()
+	{
+		$rawSyntaxes = MatcherParser::getInstance()->getAllSyntaxes();
+		$service = new MatcherSyntaxAndDescription();
+		$syntaxes = array_keys($service->process($rawSyntaxes));
+		$this->assert($syntaxes, is_unique);
 	}
 }
