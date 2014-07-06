@@ -4,10 +4,14 @@ namespace Concise\Matcher;
 
 class IsLessThan extends AbstractMatcher
 {
+	const DESCRIPTION = 'A number is less than another number.';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'?:number is less than ?:number' => 'A number is less than another number.',
+			'?:number is less than ?:number' => self::DESCRIPTION,
+			'?:number less than ?:number' => self::DESCRIPTION,
+			'?:number lt ?:number' => self::DESCRIPTION,
 		);
 	}
 
