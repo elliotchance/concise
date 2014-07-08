@@ -41,21 +41,6 @@ class MatcherParserTest extends TestCase
 		$this->assert($this->parser->registerMatcher(new \Concise\Matcher\Equals()));
 	}
 
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Ambiguous syntax for 'something'.
-	 */
-	public function testThatOnlyOneMatcherCanRespondToASyntax()
-	{
-		$matcher = $this->niceMock('\Concise\Matcher\AbstractMatcher')
-		                ->expect('supportedSyntaxes')->andReturn(array('something'));
-
-		$this->parser->registerMatcher($matcher->done());
-		$this->parser->registerMatcher($matcher->done());
-
-		$this->parser->getMatcherForSyntax('something');
-	}
-
 	public function testGetInstanceIsASingleton()
 	{
 		$this->assert(MatcherParser::getInstance(), exactly_equals, MatcherParser::getInstance());
@@ -197,11 +182,15 @@ class MatcherParserTest extends TestCase
 		$this->assertNotEquals($keywords1, $keywords2);
 	}
 
-	public function testSupportedSyntaxesAreUnique()
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Syntax 'foo' is already declared.
+	 */
+	public function testAddingAMatcherWithDuplicateSyntaxThrowsException()
 	{
-		$rawSyntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$service = new MatcherSyntaxAndDescription();
-		$syntaxes = array_keys($service->process($rawSyntaxes));
-		$this->assert($syntaxes, is_unique);
+		$matcher1 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+		$matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+		$this->parser->registerMatcher($matcher1);
+		$this->parser->registerMatcher($matcher2);
 	}
 }

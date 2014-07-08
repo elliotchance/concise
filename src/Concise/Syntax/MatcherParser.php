@@ -26,13 +26,7 @@ class MatcherParser
 	protected function getRawSyntax($syntax)
 	{
 		if(!array_key_exists($syntax, $this->syntaxCache)) {
-			if(strpos($syntax, ':') === false) {
-				$this->syntaxCache[$syntax] = $syntax;
-			}
-			else {
-				$parse = $this->lexer->parse($syntax);
-				$this->syntaxCache[$syntax] = $parse['syntax'];
-			}
+			$this->syntaxCache[$syntax] = preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
 		}
 		return $this->syntaxCache[$syntax];
 	}
@@ -97,9 +91,22 @@ class MatcherParser
 		$this->keywords = array();
 	}
 
-	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
+	public function registerMatcher(\Concise\Matcher\AbstractMatcher $m)
 	{
-		$this->matchers[] = $matcher;
+		$service = new MatcherSyntaxAndDescription();
+		$allSyntaxes = array_keys($service->process($m->supportedSyntaxes()));
+		foreach($allSyntaxes as $syntax) {
+			foreach($this->matchers as $matcher) {
+				$syntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
+				foreach($syntaxes as $s) {
+					if($this->getRawSyntax($syntax) === $this->getRawSyntax($s)) {
+						throw new \Exception("Syntax '$s' is already declared.");
+					}
+				}
+			}
+		}
+
+		$this->matchers[] = $m;
 		$this->clearKeywordCache();
 		return true;
 	}

@@ -11,7 +11,7 @@ class IsLessThanEqual extends AbstractMatcher
 		return array(
 			'?:number is less than or equal to ?:number' => self::DESCRIPTION,
 			'?:number less than or equal ?:number' => self::DESCRIPTION,
-			'?:number lt ?:number' => self::DESCRIPTION,
+			'?:number lte ?:number' => self::DESCRIPTION,
 		);
 	}
 
