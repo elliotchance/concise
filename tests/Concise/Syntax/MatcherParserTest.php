@@ -31,11 +31,6 @@ class MatcherParserTest extends TestCase
 		$this->assert($matcher, is_instance_of, '\Concise\Assertion');
 	}
 
-	public function testMatcherIsRegisteredReturnsFalseIfClassIsNotRegistered()
-	{
-		$this->assert($this->parser->matcherIsRegistered('\No\Such\Class'), is_false);
-	}
-
 	public function testRegisteringANewMatcherReturnsTrue()
 	{
 		$this->assert($this->parser->registerMatcher(new \Concise\Matcher\Equals()));

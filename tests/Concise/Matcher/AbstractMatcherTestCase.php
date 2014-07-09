@@ -19,12 +19,6 @@ class AbstractMatcherTestCase extends TestCase
 		$this->assert($parser->registerMatcher($this->matcher), is_true);
 	}
 
-	public function testParserKnowsAboutMatcher()
-	{
-		$parser = MatcherParser::getInstance();
-		$this->assert($parser->matcherIsRegistered(get_class($this->matcher)), is_true);
-	}
-
 	protected function createStdClassThatCanBeCastToString($value)
 	{
 		return $this->mock()->stub(array('__toString' => $value))->done();
