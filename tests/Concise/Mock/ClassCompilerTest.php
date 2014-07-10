@@ -8,13 +8,22 @@ class ClassCompilerTest extends TestCase
 {
 	public function testPHPCodeIsGeneratedWithTheClassName()
 	{
-		$compiler = new ClassCompiler('MyClass');
-		$this->assert($compiler->generateCode(), equals, "class MyClassMock extends MyClass {}");
+		$compiler = new ClassCompiler('DateTime');
+		$this->assert($compiler->generateCode(), equals, "class DateTimeMock extends DateTime {}");
 	}
 
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
 	{
-		$compiler = new ClassCompiler('MyCoolClass');
-		$this->assert($compiler->generateCode(), equals, "class MyCoolClassMock extends MyCoolClass {}");
+		$compiler = new ClassCompiler('ReflectionClass');
+		$this->assert($compiler->generateCode(), equals, "class ReflectionClassMock extends ReflectionClass {}");
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage The class 'DoesntExist' is not loaded so it cannot be mocked.
+	 */
+	public function testExceptionIsThrownIfClassToBeMockedIsNotLoaded()
+	{
+		new ClassCompiler('DoesntExist');
 	}
 }
