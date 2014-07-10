@@ -16,13 +16,23 @@ class ClassCompiler
 
 	public function generateCode()
 	{
+		$refClass = new \ReflectionClass($this->className);
+
+		$code = '';
 		if(strpos($this->className, '\\') !== false) {
 			$parts = explode('\\', $this->className);
 			$this->className = array_pop($parts);
-			return "namespace " . implode('\\', $parts) . "; class {$this->getMockName()} extends {$this->className} {}";
+			$code = "namespace " . implode('\\', $parts) . "; ";
 		}
 
-		return "class {$this->getMockName()} extends {$this->className} {}";
+		$methods = array();
+		if($refClass->isAbstract()) {
+			foreach($refClass->getMethods() as $method) {
+				$methods[] = "public function " . $method->getName() . '() {}';
+			}
+		}
+
+		return $code . "class {$this->getMockName()} extends {$this->className} {" . implode(" ", $methods) . "}";
 	}
 
 	protected function getMockName()
