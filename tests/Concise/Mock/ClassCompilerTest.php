@@ -4,6 +4,10 @@ namespace Concise\Mock;
 
 use \Concise\TestCase;
 
+class ClassCompilerMock1
+{
+}
+
 class ClassCompilerTest extends TestCase
 {
 	public function testPHPCodeIsGeneratedWithTheClassName()
@@ -25,5 +29,11 @@ class ClassCompilerTest extends TestCase
 	public function testExceptionIsThrownIfClassToBeMockedIsNotLoaded()
 	{
 		new ClassCompiler('DoesntExist');
+	}
+
+	public function testMockedClassesWillBePutIntoTheCorrectNamespace()
+	{
+		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$this->assert($compiler->generateCode(), equals, "namespace Concise\Mock; class ClassCompilerMock1Mock extends ClassCompilerMock1 {}");
 	}
 }
