@@ -4,8 +4,13 @@ namespace Concise\Mock;
 
 class ClassCompiler
 {
+	public function __construct($className)
+	{
+		$this->code = "class {$className}Mock extends $className {}";
+	}
+
 	public function generateCode()
 	{
-		return "class MyClassMock extends MyClass {}";
+		return $this->code;
 	}
 }
