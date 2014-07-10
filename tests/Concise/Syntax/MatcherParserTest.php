@@ -65,31 +65,31 @@ class MatcherParserTest extends TestCase
 	{
 		$parser = new MatcherParserStub();
 		$parser->registerMatchers();
-		$this->assertGreaterThan(0, $parser->getMatchers());
+		$this->assert(count($parser->getMatchers()), greater_than, 0);
 	}
 
 	public function testGetAllKeywordsReturnsAnArray()
 	{
 		$keywords = MatcherParser::getInstance()->getKeywords();
-		$this->assertTrue(is_array($keywords));
+		$this->assert($keywords, is_an_array);
 	}
 
 	public function testGetAllKeywordsContainsKeywordsFromMatchers()
 	{
 		$keywords = MatcherParser::getInstance()->getKeywords();
-		$this->assertContains('not', $keywords);
+		$this->assert($keywords, has_value, 'not');
 	}
 
 	public function testGetAllKeywordsContainsOnlyUniqueWords()
 	{
 		$keywords = MatcherParser::getInstance()->getKeywords();
-		$this->assertEquals(count($keywords), count(array_unique($keywords)));
+		$this->assert($keywords, is_unique);
 	}
 
 	public function testGetAllKeywordsDoesNotContainPlaceholders()
 	{
 		$keywords = MatcherParser::getInstance()->getKeywords();
-		$this->assertNotContains('?', $keywords);
+		$this->assert($keywords, does_not_have_value, '?');
 	}
 
 	public function testGetAllKeywordsAreSorted()
@@ -97,7 +97,7 @@ class MatcherParserTest extends TestCase
 		$keywords1 = MatcherParser::getInstance()->getKeywords();
 		$keywords2 = MatcherParser::getInstance()->getKeywords();
 		sort($keywords2);
-		$this->assertEquals($keywords1, $keywords2);
+		$this->assert($keywords1, equals, $keywords2);
 	}
 
 	public function testGetKeywordsAreOnlyGeneratedOnce()
