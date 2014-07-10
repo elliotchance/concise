@@ -36,4 +36,10 @@ class ClassCompilerTest extends TestCase
 		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
 		$this->assert($compiler->generateCode(), equals, "namespace Concise\Mock; class ClassCompilerMock1Mock extends ClassCompilerMock1 {}");
 	}
+
+	public function testInstanceCanBeReturnedFromGeneratedCode()
+	{
+		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock1');
+	}
 }
