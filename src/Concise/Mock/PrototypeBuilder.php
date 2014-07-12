@@ -18,6 +18,9 @@ class PrototypeBuilder
 			if($p->getClass()) {
 				$param = '\\' . $p->getClass()->name . ' ' . $param;
 			}
+			if($p->isOptional()) {
+				$param .= ' = ' . $p->getDefaultValue();
+			}
 			$parameters[] = $param;
 		}
 		return $modifiers . ' function ' . $method->getName() . "(" . implode(', ', $parameters) . ")";
