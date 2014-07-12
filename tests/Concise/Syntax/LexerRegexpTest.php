@@ -14,7 +14,7 @@ class LexerRegexpTest extends LexerTestCase
 		return array(
 			new Token\Attribute('x'),
 			new Token\Keyword('equals'),
-			new Token\Regexp('\\a'),
+			new Token\Regexp('/\\a/'),
 		);
 	}
 
@@ -25,6 +25,6 @@ class LexerRegexpTest extends LexerTestCase
 
 	protected function expectedArguments()
 	{
-		return array(new Token\Attribute('x'), new Token\Regexp('\\a'));
+		return array(new Token\Attribute('x'), new Token\Regexp('/\\a/'));
 	}
 }

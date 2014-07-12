@@ -6,17 +6,20 @@ class ClassCompiler
 {
 	protected $className;
 
+	protected $mockUnique;
+
 	public function __construct($className)
 	{
 		if(!class_exists($className)) {
 			throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
 		}
-		$this->className = $className;
+		$this->className = ltrim($className, '\\');
 	}
 
 	public function generateCode()
 	{
 		$refClass = new \ReflectionClass($this->className);
+		$this->mockUnique = '_' . substr(md5(rand()), 24);
 
 		$code = '';
 		if(strpos($this->className, '\\') !== false) {
@@ -37,7 +40,7 @@ class ClassCompiler
 
 	protected function getMockName()
 	{
-		return $this->className . 'Mock';
+		return $this->className . $this->mockUnique;
 	}
 
 	public function newInstance()

@@ -18,13 +18,13 @@ class ClassCompilerTest extends TestCase
 	public function testPHPCodeIsGeneratedWithTheClassName()
 	{
 		$compiler = new ClassCompiler('DateTime');
-		$this->assert($compiler->generateCode(), equals, "class DateTimeMock extends DateTime {}");
+		$this->assertPHP($compiler, "class DateTime_% extends DateTime {}");
 	}
 
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
 	{
 		$compiler = new ClassCompiler('ReflectionClass');
-		$this->assert($compiler->generateCode(), equals, "class ReflectionClassMock extends ReflectionClass {}");
+		$this->assertPHP($compiler, "class ReflectionClass_% extends ReflectionClass {}");
 	}
 
 	/**
@@ -39,7 +39,7 @@ class ClassCompilerTest extends TestCase
 	public function testMockedClassesWillBePutIntoTheCorrectNamespace()
 	{
 		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-		$this->assert($compiler->generateCode(), equals, "namespace Concise\Mock; class ClassCompilerMock1Mock extends ClassCompilerMock1 {}");
+		$this->assertPHP($compiler, "namespace Concise\Mock; class ClassCompilerMock1_% extends ClassCompilerMock1 {}");
 	}
 
 	public function testInstanceCanBeReturnedFromGeneratedCode()
@@ -52,5 +52,17 @@ class ClassCompilerTest extends TestCase
 	{
 		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock2');
 		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
+	}
+
+	public function testMultipleMocksGeneratedFromTheSameClassIsPossible()
+	{
+		$a = (new ClassCompiler('Concise\Mock\ClassCompilerMock1'))->newInstance();
+		$b = (new ClassCompiler('Concise\Mock\ClassCompilerMock1'))->newInstance();
+		$this->assert($a, is_not_exactly_equal_to, $b);
+	}
+
+	protected function assertPHP(ClassCompiler $compiler, $php)
+	{
+		$this->assert($compiler->generateCode(), matches_regex, '/' . str_replace('%', '(.*)', preg_quote($php)) . '/');
 	}
 }

@@ -24,6 +24,11 @@ abstract class Mock2
 
 class MockBuilderTest extends TestCase
 {
+	protected function _mock($className = '\StdClass')
+	{
+		return new MockBuilder($this, $className, false, true);
+	}
+
 	public function testMockCanBeCreatedFromAClassThatExists()
 	{
 		$mock = $this->mock('\Concise\TestCase')
