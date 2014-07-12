@@ -128,4 +128,13 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	{
 		$this->assertSame('/a/', $this->dataTypeChecker->check(array('regex'), '/a/'));
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage integer not found in regex
+	 */
+	public function testNonStringsWillNotBeAcceptedForRegex()
+	{
+		$this->dataTypeChecker->check(array('regex'), 123);
+	}
 }
