@@ -15,16 +15,10 @@ abstract class ClassCompilerMock2
 
 class ClassCompilerTest extends TestCase
 {
-	public function testPHPCodeIsGeneratedWithTheClassName()
-	{
-		$compiler = new ClassCompiler('DateTime');
-		$this->assertPHP($compiler, "class DateTime_% extends DateTime {}");
-	}
-
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
 	{
-		$compiler = new ClassCompiler('ReflectionClass');
-		$this->assertPHP($compiler, "class ReflectionClass_% extends ReflectionClass {}");
+		$compiler = new ClassCompiler('DateTime');
+		$this->assertPHP($compiler, "class DateTime_% extends \\DateTime {}");
 	}
 
 	/**
@@ -39,7 +33,7 @@ class ClassCompilerTest extends TestCase
 	public function testMockedClassesWillBePutIntoTheCorrectNamespace()
 	{
 		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-		$this->assertPHP($compiler, "namespace Concise\Mock; class ClassCompilerMock1_% extends ClassCompilerMock1 {}");
+		$this->assertPHP($compiler, "namespace Concise\Mock; class ClassCompilerMock1_% extends \Concise\Mock\ClassCompilerMock1 {}");
 	}
 
 	public function testInstanceCanBeReturnedFromGeneratedCode()
@@ -64,5 +58,12 @@ class ClassCompilerTest extends TestCase
 	protected function assertPHP(ClassCompiler $compiler, $php)
 	{
 		$this->assert($compiler->generateCode(), matches_regex, '/' . str_replace('%', '(.*)', preg_quote($php)) . '/');
+		$compiler->newInstance();
+	}
+
+	public function testExtraBackslashesAtTheStartOfTheClassNameWillBeTrimmedOff()
+	{
+		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
+		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
 	}
 }

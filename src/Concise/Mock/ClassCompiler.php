@@ -14,18 +14,29 @@ class ClassCompiler
 			throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
 		}
 		$this->className = ltrim($className, '\\');
+		$this->mockUnique = '_' . substr(md5(rand()), 24);
+	}
+
+	protected function getNamespaceName()
+	{
+		$parts = explode('\\', $this->className);
+		array_pop($parts);
+		return implode('\\', $parts);
+	}
+
+	protected function getClassName()
+	{
+		$parts = explode('\\', $this->className);
+		return $parts[count($parts) - 1];
 	}
 
 	public function generateCode()
 	{
 		$refClass = new \ReflectionClass($this->className);
-		$this->mockUnique = '_' . substr(md5(rand()), 24);
 
 		$code = '';
-		if(strpos($this->className, '\\') !== false) {
-			$parts = explode('\\', $this->className);
-			$this->className = array_pop($parts);
-			$code = "namespace " . implode('\\', $parts) . "; ";
+		if($this->getNamespaceName()) {
+			$code = "namespace " . $this->getNamespaceName() . "; ";
 		}
 
 		$methods = array();
@@ -35,12 +46,12 @@ class ClassCompiler
 			}
 		}
 
-		return $code . "class {$this->getMockName()} extends {$this->className} {" . implode(" ", $methods) . "}";
+		return $code . "class {$this->getMockName()} extends \\{$this->className} {" . implode(" ", $methods) . "}";
 	}
 
 	protected function getMockName()
 	{
-		return $this->className . $this->mockUnique;
+		return $this->getClassName() . $this->mockUnique;
 	}
 
 	public function newInstance()
