@@ -40,4 +40,11 @@ class PrototypeBuilderTest extends TestCase
 		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'baz');
 		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function baz($a, $b)');
 	}
+
+	public function testWillNotReturnAbstractKeywordIfToldNotTo()
+	{
+		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'bar');
+		$this->builder->hideAbstract = true;
+		$this->assert($this->builder->getPrototype($method), equals, 'protected function bar()');
+	}
 }
