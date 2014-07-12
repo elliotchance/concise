@@ -44,14 +44,18 @@ class ClassCompiler
 		$methods = array();
 		if($refClass->isAbstract()) {
 			foreach($refClass->getMethods() as $method) {
-				$methods[] = "public function " . $method->getName() . '() {}';
+				if(array_key_exists($method->getName(), $this->rules)) {
+					continue;
+				}
+				$methods[] = "public function " . $method->getName() .
+					'() { throw new \\Exception("' . $method->getName() .
+					'() does not have an associated action - consider a niceMock()?"); }';
 			}
 		}
 
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$methods[] = "public function " . $method . '() { ' . $action->getActionCode() . ' }';
-			//$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
 		}
 
 		return $code . "class {$this->getMockName()} extends \\{$this->className} {" . implode(" ", $methods) . "}";

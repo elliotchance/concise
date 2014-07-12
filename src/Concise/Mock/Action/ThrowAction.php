@@ -18,6 +18,7 @@ class ThrowAction extends AbstractAction
 
 	public function getActionCode()
 	{
-		return '';
+		var_dump('throw unserialize("' . serialize($this->exception) . '");');
+		return 'throw unserialize("' . serialize($this->exception) . '");';
 	}
 }

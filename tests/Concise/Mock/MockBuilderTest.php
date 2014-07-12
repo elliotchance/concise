@@ -55,7 +55,7 @@ class MockBuilderTest extends TestCase
 
 	public function testStubbingWithAnArrayCanCreateMultipleStubs()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123, 'foo' => 'bar'))
 		             ->done();
 		$this->assert($mock->foo(), equals, 'bar');
@@ -67,7 +67,7 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testStubbingWithAnArrayMustHaveMoreThanZeroElements()
 	{
-		$this->mock('\Concise\Mock\Mock1')
+		$this->_mock('\Concise\Mock\Mock1')
 		     ->stub(array())
 		     ->done();
 	}
