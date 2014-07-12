@@ -49,6 +49,9 @@ class DataTypeChecker
 			if(in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
 				return substr($value, 1);
 			}
+			if(in_array('regex', $acceptedTypes)) {
+				return $value;
+			}
 			return $value;
 		}
 		$accepts = implode(' or ', $acceptedTypes);
@@ -102,6 +105,7 @@ class DataTypeChecker
 			'double'  => 'float',
 			'class'   => 'string',
 			'bool'    => 'boolean',
+			'regex'   => 'string',
 		);
 		if(array_key_exists($type, $aliases)) {
 			return $aliases[$type];

@@ -123,4 +123,9 @@ class DataTypeCheckerTest extends \Concise\TestCase
 		$this->dataTypeChecker->setContext($context);
 		$this->assert($this->dataTypeChecker->check(array('class'), new Attribute('foo')), equals, 'Bar');
 	}
+
+	public function testStringsWillBeAcceptedForRegex()
+	{
+		$this->assertSame('/a/', $this->dataTypeChecker->check(array('regex'), '/a/'));
+	}
 }
