@@ -17,6 +17,8 @@ abstract class MyClass
 	protected abstract function a(\DateTime $a);
 
 	protected abstract function b($a = 123);
+
+	protected abstract function c(&$a);
 }
 
 class PrototypeBuilderTest extends TestCase
@@ -62,5 +64,11 @@ class PrototypeBuilderTest extends TestCase
 	{
 		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'b');
 		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function b($a = 123)');
+	}
+
+	public function testWillRespectPrototypeArgumentPassByReference()
+	{
+		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'c');
+		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function c(&$a)');
 	}
 }

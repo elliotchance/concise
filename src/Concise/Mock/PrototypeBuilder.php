@@ -15,6 +15,9 @@ class PrototypeBuilder
 		$parameters = array();
 		foreach($method->getParameters() as $p) {
 			$param = '$' . $p->getName();
+			if($p->isPassedbyReference()) {
+				$param = '&' . $param;
+			}
 			if($p->getClass()) {
 				$param = '\\' . $p->getClass()->name . ' ' . $param;
 			}
