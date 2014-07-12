@@ -14,7 +14,11 @@ class PrototypeBuilder
 		}
 		$parameters = array();
 		foreach($method->getParameters() as $p) {
-			$parameters[] = '$' . $p->getName();
+			$param = '$' . $p->getName();
+			if($p->getClass()) {
+				$param = '\\' . $p->getClass()->name . ' ' . $param;
+			}
+			$parameters[] = $param;
 		}
 		return $modifiers . ' function ' . $method->getName() . "(" . implode(', ', $parameters) . ")";
 	}
