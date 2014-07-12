@@ -6,6 +6,7 @@ class PrototypeBuilder
 {
 	public function getPrototype(\ReflectionMethod $method)
 	{
-		return 'public function testPrototypeIsBuiltFromReflectionMethod()';
+		$modifiers = \Reflection::getModifierNames($method->getModifiers());
+		return implode(' ', $modifiers) . ' function ' . $method->getName() . '()';
 	}
 }
