@@ -8,6 +8,8 @@ class ClassCompiler
 
 	protected $mockUnique;
 
+	protected $rules = [];
+
 	public function __construct($className)
 	{
 		if(!class_exists($className)) {
@@ -46,6 +48,12 @@ class ClassCompiler
 			}
 		}
 
+		foreach($this->rules as $method => $rule) {
+			$action = $rule['action'];
+			$methods[] = "public function " . $method . '() { ' . $action->getActionCode() . ' }';
+			//$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
+		}
+
 		return $code . "class {$this->getMockName()} extends \\{$this->className} {" . implode(" ", $methods) . "}";
 	}
 
@@ -57,5 +65,10 @@ class ClassCompiler
 	public function newInstance()
 	{
 		return eval($this->generateCode() . " return new {$this->getMockName()}();");
+	}
+
+	public function setRules(array $rules)
+	{
+		$this->rules = $rules;
 	}
 }

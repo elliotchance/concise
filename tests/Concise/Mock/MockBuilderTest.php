@@ -24,14 +24,14 @@ abstract class Mock2
 
 class MockBuilderTest extends TestCase
 {
-	protected function _mock($className = '\StdClass')
+	protected function _mock($className = '\stdClass')
 	{
 		return new MockBuilder($this, $className, false, true);
 	}
 
 	public function testMockCanBeCreatedFromAClassThatExists()
 	{
-		$mock = $this->mock('\Concise\TestCase')
+		$mock = $this->_mock('\Concise\TestCase')
 		             ->done();
 		$this->assert($mock, instance_of, '\Concise\TestCase');
 	}
@@ -42,12 +42,12 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
 	{
-		$this->mock('\Abc')->done();
+		$this->_mock('\Abc')->done();
 	}
 
 	public function testCanStubMethodWithAssociativeArray()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123))
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 123);

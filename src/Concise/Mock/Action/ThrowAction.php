@@ -15,4 +15,9 @@ class ThrowAction extends AbstractAction
 	{
 		return $testCase->throwException($this->exception);
 	}
+
+	public function getActionCode()
+	{
+		return '';
+	}
 }

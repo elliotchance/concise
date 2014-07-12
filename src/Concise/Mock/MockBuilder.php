@@ -85,6 +85,7 @@ class MockBuilder
 	{
 		if($this->useNewBuilder) {
 			$compiler = new ClassCompiler($this->className);
+			$compiler->setRules($this->rules);
 			return $compiler->newInstance();
 		}
 

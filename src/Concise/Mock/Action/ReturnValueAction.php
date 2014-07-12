@@ -16,6 +16,12 @@ class ReturnValueAction extends AbstractAction
 		return $testCase->returnValue($this->value);
 	}
 
+	public function getActionCode()
+	{
+		// @test value need to be compiled into PHP
+		return 'return ' . $this->value . ';';
+	}
+
 	public function getValue()
 	{
 		return $this->value;
