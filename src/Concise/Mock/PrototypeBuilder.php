@@ -21,6 +21,9 @@ class PrototypeBuilder
 			if($p->getClass()) {
 				$param = '\\' . $p->getClass()->name . ' ' . $param;
 			}
+			else if($p->isArray()) {
+				$param = 'array ' . $param;
+			}
 			if($p->isOptional()) {
 				try {
 					$param .= ' = ' . var_export($p->getDefaultValue(), true);

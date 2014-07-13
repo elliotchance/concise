@@ -19,6 +19,8 @@ abstract class MyClass
 	protected abstract function b($a = 123);
 
 	protected abstract function c(&$a);
+
+	protected abstract function d(array $a);
 }
 
 class PrototypeBuilderTest extends TestCase
@@ -76,5 +78,11 @@ class PrototypeBuilderTest extends TestCase
 	{
 		$method = new \ReflectionMethod('\DateTime', 'setTime');
 		$this->assert($this->builder->getPrototype($method), equals, 'public function setTime($hour, $minute, $second = NULL)');
+	}
+
+	public function testArrayHint()
+	{
+		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'd');
+		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function d(array $a)');
 	}
 }
