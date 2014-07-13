@@ -9,6 +9,8 @@ use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+	protected $_mocks = array();
+
 	protected function getMatcherParserInstance()
 	{
 		return MatcherParser::getInstance();

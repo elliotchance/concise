@@ -84,7 +84,7 @@ class MockBuilder
 	public function done()
 	{
 		if($this->useNewBuilder) {
-			$compiler = new ClassCompiler($this->className);
+			$compiler = new ClassCompiler($this->className, $this->niceMock);
 			$compiler->setRules($this->rules);
 			return $compiler->newInstance();
 		}

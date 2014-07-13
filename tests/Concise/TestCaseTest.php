@@ -132,4 +132,9 @@ class TestCaseTest extends TestCase
 	{
 		$this->assert(true);
 	}
+
+	public function testMocksAreResetInTheSetup()
+	{
+		$this->assert($this->_mocks, exactly_equals, array());
+	}
 }

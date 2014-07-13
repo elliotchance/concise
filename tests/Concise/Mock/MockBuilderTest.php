@@ -29,6 +29,11 @@ class MockBuilderTest extends TestCase
 		return new MockBuilder($this, $className, false, true);
 	}
 
+	protected function _niceMock($className = '\stdClass')
+	{
+		return new MockBuilder($this, $className, true, true);
+	}
+
 	public function testMockCanBeCreatedFromAClassThatExists()
 	{
 		$mock = $this->_mock('\Concise\TestCase')
@@ -61,6 +66,10 @@ class MockBuilderTest extends TestCase
 		$this->assert($mock->foo(), equals, 'bar');
 	}
 
+	// @test you cannot mock methods that do not exist
+
+	// @test you can only mock methods that do not exist if there is an approproate __call
+
 	/**
 	 * @expectedException Exception
 	 * @expectedExceptionMessage stub() called with array must have at least 1 element.
@@ -85,21 +94,21 @@ class MockBuilderTest extends TestCase
 
 	public function testNiceMockCanBeCreatedFromAClassThatExists()
 	{
-		$mock = $this->niceMock('\Concise\TestCase')
+		$mock = $this->_niceMock('\Concise\TestCase')
 		             ->done();
 		$this->assert($mock, instance_of, '\Concise\TestCase');
 	}
 
 	public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
 	{
-		$mock = $this->niceMock('\Concise\Mock\Mock1')
+		$mock = $this->_niceMock('\Concise\Mock\Mock1')
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 'abc');
 	}
 
 	public function testCallingMethodOnNiceMockWithStub()
 	{
-		$mock = $this->niceMock('\Concise\Mock\Mock1')
+		$mock = $this->_niceMock('\Concise\Mock\Mock1')
 		             ->stub(array('myMethod' => 123))
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 123);
@@ -107,7 +116,7 @@ class MockBuilderTest extends TestCase
 
 	public function testStubsCanBeCreatedByChainingAnAction()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->stub('myMethod')->andReturn(123)
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 123);
@@ -115,7 +124,7 @@ class MockBuilderTest extends TestCase
 
 	public function testStubWithNoActionWillReturnNull()
 	{
-		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		$this->mock = $this->_mock('\Concise\Mock\Mock1')
 		                   ->stub('myMethod')
 		                   ->done();
 		$this->assert($this->mock->myMethod(), is_null);
@@ -123,7 +132,7 @@ class MockBuilderTest extends TestCase
 
 	public function testStubCanReturnNull()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->stub('myMethod')->andReturn(null)
 		             ->done();
 		$this->assert($mock->myMethod(), is_null);
@@ -135,7 +144,7 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testStubCanThrowException()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->stub('myMethod')->andThrow(new \Exception('whatever'))
 		             ->done();
 		$mock->myMethod();

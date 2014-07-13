@@ -10,13 +10,16 @@ class ClassCompiler
 
 	protected $rules = [];
 
-	public function __construct($className)
+	protected $niceMock;
+
+	public function __construct($className, $niceMock = false)
 	{
 		if(!class_exists($className)) {
 			throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
 		}
 		$this->className = ltrim($className, '\\');
 		$this->mockUnique = '_' . substr(md5(rand()), 24);
+		$this->niceMock = $niceMock;
 	}
 
 	protected function getNamespaceName()
@@ -44,9 +47,11 @@ class ClassCompiler
 		}
 
 		$methods = array();
-		foreach($refClass->getMethods() as $method) {
-			$methods[$method->getName()] = $prototypeBuilder->getPrototype($method) . ' { throw new \\Exception("' .
-				$method->getName() . '() does not have an associated action - consider a niceMock()?"); }';
+		if(!$this->niceMock) {
+			foreach($refClass->getMethods() as $method) {
+				$methods[$method->getName()] = $prototypeBuilder->getPrototype($method) . ' { throw new \\Exception("' .
+					$method->getName() . '() does not have an associated action - consider a niceMock()?"); }';
+			}
 		}
 
 		foreach($this->rules as $method => $rule) {
