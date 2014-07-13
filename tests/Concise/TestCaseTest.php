@@ -143,4 +143,10 @@ class TestCaseTest extends TestCase
 		$this->mock();
 		$this->assert(count($this->_mocks), equals, 1);
 	}
+
+	public function testCreatingANiceMockAddsItToTheMocks()
+	{
+		$this->niceMock();
+		$this->assert(count($this->_mocks), equals, 1);
+	}
 }
