@@ -23,6 +23,8 @@ abstract class MyClass
 	protected abstract function d(array $a);
 
 	protected abstract function e(callable $a);
+
+	protected abstract function f($a = array());
 }
 
 class PrototypeBuilderTest extends TestCase
@@ -92,5 +94,11 @@ class PrototypeBuilderTest extends TestCase
 	{
 		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
 		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(callable $a)');
+	}
+
+	public function testArrayDefaultValue()
+	{
+		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'f');
+		$this->assert($this->builder->getPrototype($method), equals, "abstract protected function f(\$a = array (\n))");
 	}
 }
