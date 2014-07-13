@@ -96,6 +96,27 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$assertion = str_replace("_", " ", substr($this->getName(), 5));
 			$this->assert($assertion);
 		}
+		foreach($this->_mocks as $mock) {
+			foreach($mock['mockBuilder']->getRules() as $method => $rule) {
+				// Negative times means it is a stub.
+				if($rule['times'] < 0) {
+					continue;
+				}
+				
+				// @todo This if statement is only required while we make the transition to the new
+				// ClassBuilder, then it can be removed.
+				if(method_exists($mock['instance'], 'getCallsForMethod')) {
+					if(null === $rule['with']) {
+						$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
+					}
+					else {
+						foreach($mock['instance']->getCallsForMethod($method) as $call) {
+							$this->assert($call, exactly_equals, $rule['with']);
+						}
+					}
+				}
+			}
+		}
 		parent::tearDown();
 	}
 	
@@ -109,9 +130,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return new MockBuilder($this, $className, true);
 	}
 
-	public function addMockInstance($mockInstance)
+	public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
 	{
-		$this->_mocks[] = $mockInstance;
+		$this->_mocks[] = array(
+			'mockBuilder' => $mockBuilder,
+			'instance' => $mockInstance,
+		);
 	}
 
 	public function setUp()

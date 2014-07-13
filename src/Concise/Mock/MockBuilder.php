@@ -17,9 +17,7 @@ class MockBuilder
 
 	protected $currentRule;
 
-	protected $useNewBuilder;
-
-	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock, $useNewBuilder = false)
+	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
 	{
 		$this->testCase = $testCase;
 		if(!class_exists($className)) {
@@ -27,7 +25,6 @@ class MockBuilder
 		}
 		$this->className = $className;
 		$this->niceMock = $niceMock;
-		$this->useNewBuilder = $useNewBuilder;
 	}
 
 	protected function addRule($method, Action\AbstractAction $action, $times = -1)
@@ -84,48 +81,11 @@ class MockBuilder
 
 	public function done()
 	{
-		if($this->useNewBuilder) {
-			$compiler = new ClassCompiler($this->className, $this->niceMock);
-			$compiler->setRules($this->rules);
-			$mockInstance = $compiler->newInstance();
-			$this->testCase->addMockInstance($mockInstance);
-			return $mockInstance;
-		}
-
-		$refClass = new \ReflectionClass($this->className);
-		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
-		if($refClass->isAbstract()) {
-			$mock = $this->testCase->getMockForAbstractClass($this->className);
-			if(!$this->niceMock) {
-				throw new \Exception("You cannot create a mock() from an abstract class - use a niceMock() instead.");
-			}
-		}
-		else {
-			$class = $this->className;
-			$originalObject = new $class();
-			$mock = $this->testCase->getMock($this->className, $allMethods);
-		}
-
-		foreach($allMethods as $method) {
-			if(in_array($method, $this->mockedMethods)) {
-				continue;
-			}
-			if($this->niceMock && !$refClass->isAbstract()) {
-				$will = $this->testCase->returnCallback(array($originalObject, $method));
-			}
-			else {
-				$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
-			}
-			$this->stubMethod($mock, $method, $will);
-		}
-
-		foreach($this->rules as $method => $rule) {
-			$action = $rule['action'];
-			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
-		}
-
-		$this->testCase->addMockInstance($mock);
-		return $mock;
+		$compiler = new ClassCompiler($this->className, $this->niceMock);
+		$compiler->setRules($this->rules);
+		$mockInstance = $compiler->newInstance();
+		$this->testCase->addMockInstance($this, $mockInstance);
+		return $mockInstance;
 	}
 
 	protected function hasAction()

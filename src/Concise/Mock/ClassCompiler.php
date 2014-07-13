@@ -57,10 +57,10 @@ class ClassCompiler
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$realMethod = new \ReflectionMethod($this->className, $method);
-			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { \$this->_methodCalls['$method'] = 1; " . $action->getActionCode() . ' }';
+			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', \$this->_methodCalls)) { \$this->_methodCalls['$method'] = array(); } \$this->_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
-		$methods['getCallCountForMethod'] = 'public function getCallCountForMethod($method) { if(!array_key_exists($method, $this->_methodCalls)) { $this->_methodCalls[$method] = 0; } return $this->_methodCalls[$method]; }';
+		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, $this->_methodCalls) ? $this->_methodCalls[$method] : array(); }';
 
 		unset($methods['__construct']);
 

@@ -50,9 +50,9 @@ class ClassCompilerTest extends TestCase
 
 	public function testMultipleMocksGeneratedFromTheSameClassIsPossible()
 	{
-		$a = (new ClassCompiler('Concise\Mock\ClassCompilerMock1'))->newInstance();
-		$b = (new ClassCompiler('Concise\Mock\ClassCompilerMock1'))->newInstance();
-		$this->assert($a, is_not_exactly_equal_to, $b);
+		$a = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$b = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$this->assert($a->newInstance(), is_not_exactly_equal_to, $b->newInstance());
 	}
 
 	protected function assertPHP(ClassCompiler $compiler, $php)
