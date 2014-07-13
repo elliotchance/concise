@@ -22,7 +22,12 @@ class PrototypeBuilder
 				$param = '\\' . $p->getClass()->name . ' ' . $param;
 			}
 			if($p->isOptional()) {
-				$param .= ' = ' . $p->getDefaultValue();
+				try {
+					$param .= ' = ' . $p->getDefaultValue();
+				}
+				catch(\ReflectionException $e) {
+					// The default value cannot be determined for internal methods.
+				}
 			}
 			$parameters[] = $param;
 		}

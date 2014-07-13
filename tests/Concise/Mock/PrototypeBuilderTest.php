@@ -71,4 +71,10 @@ class PrototypeBuilderTest extends TestCase
 		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'c');
 		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function c(&$a)');
 	}
+
+	public function testWillNotSetADefualtValueForInternalMethods()
+	{
+		$method = new \ReflectionMethod('\DateTime', 'setTime');
+		$this->assert($this->builder->getPrototype($method), equals, 'public function setTime($hour, $minute, $second)');
+	}
 }
