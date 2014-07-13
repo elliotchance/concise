@@ -273,4 +273,15 @@ class MockBuilderTest extends TestCase
 
 		$this->assert(end($this->_mocks)->getCallCountForMethod('myMethod'), exactly_equals, 0);
 	}
+
+	public function testMockSetsCalledTimesToOneWhenMethodIsCalled()
+	{
+		$mock = $this->_mock('\Concise\Mock\Mock1')
+		             ->stub(array('myMethod' => 123))
+		             ->done();
+
+		$mock->myMethod();
+
+		$this->assert(end($this->_mocks)->getCallCountForMethod('myMethod'), exactly_equals, 1);
+	}
 }

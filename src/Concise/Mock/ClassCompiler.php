@@ -57,14 +57,14 @@ class ClassCompiler
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$realMethod = new \ReflectionMethod($this->className, $method);
-			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . ' { ' . $action->getActionCode() . ' }';
+			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { \$this->_methodCalls['$method'] = 1; " . $action->getActionCode() . ' }';
 		}
 
-		$methods['getCallCountForMethod'] = 'public function getCallCountForMethod($method) { return 0; }';
+		$methods['getCallCountForMethod'] = 'public function getCallCountForMethod($method) { if(!array_key_exists($method, $this->_methodCalls)) { $this->_methodCalls[$method] = 0; } return $this->_methodCalls[$method]; }';
 
 		unset($methods['__construct']);
 
-		return $code . "class {$this->getMockName()} extends \\{$this->className} {" . implode(" ", $methods) . "}";
+		return $code . "class {$this->getMockName()} extends \\{$this->className} { public \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}
 
 	protected function getMockName()
