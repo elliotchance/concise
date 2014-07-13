@@ -101,8 +101,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 	protected function createMockAndAddToMocks($className, $niceMock)
 	{
-		$this->_mocks = array(new MockBuilder($this, $className, $niceMock));
-		return $this->_mocks[0];
+		$this->_mocks[] = new MockBuilder($this, $className, $niceMock);
+		return end($this->_mocks);
 	}
 	
 	protected function mock($className = '\stdClass')
