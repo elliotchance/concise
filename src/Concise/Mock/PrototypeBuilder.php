@@ -23,7 +23,7 @@ class PrototypeBuilder
 			}
 			if($p->isOptional()) {
 				try {
-					$param .= ' = ' . $p->getDefaultValue();
+					$param .= ' = ' . var_export($p->getDefaultValue(), true);
 				}
 				catch(\ReflectionException $e) {
 					// The default value cannot be determined for internal methods.

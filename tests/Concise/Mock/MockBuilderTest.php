@@ -55,8 +55,8 @@ class MockBuilderTest extends TestCase
 
 	public function testStubbingWithAnArrayCanCreateMultipleStubs()
 	{
-		$mock = $this->_mock('\Concise\Mock\Mock1')
-		             ->stub(array('myMethod' => 123, 'foo' => 'bar'))
+		$mock = $this->_mock('\Concise\Mock\Mock2')
+		             ->stub(array('bar' => 123, 'foo' => 'bar'))
 		             ->done();
 		$this->assert($mock->foo(), equals, 'bar');
 	}
@@ -78,7 +78,7 @@ class MockBuilderTest extends TestCase
 	 */
 	public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
 	{
-		$mock = $this->mock('\Concise\Mock\Mock1')
+		$mock = $this->_mock('\Concise\Mock\Mock1')
 		             ->done();
 		$mock->myMethod();
 	}

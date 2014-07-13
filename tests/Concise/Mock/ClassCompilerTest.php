@@ -18,7 +18,7 @@ class ClassCompilerTest extends TestCase
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
 	{
 		$compiler = new ClassCompiler('DateTime');
-		$this->assertPHP($compiler, "class DateTime_% extends \\DateTime {}");
+		$this->assertPHP($compiler, "class DateTime_% extends \\DateTime {%}");
 	}
 
 	/**
