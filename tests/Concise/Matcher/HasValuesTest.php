@@ -14,4 +14,9 @@ class HasValuesTest extends AbstractMatcherTestCase
 	{
 		$this->assert('[123] has values [123]');
 	}
+
+	public function testArrayDoesNotContainAllValues()
+	{
+		$this->assertFailure('[123] has values [0,123]');
+	}
 }
