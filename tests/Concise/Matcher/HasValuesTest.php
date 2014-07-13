@@ -19,4 +19,9 @@ class HasValuesTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('[123] has values [0,123]');
 	}
+
+	public function testArrayValuesCanBeInAnyOrder()
+	{
+		$this->assert('["a":123,"b":456] has values [123,456]');
+	}
 }
