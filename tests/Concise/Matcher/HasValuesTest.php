@@ -24,4 +24,9 @@ class HasValuesTest extends AbstractMatcherTestCase
 	{
 		$this->assert('["a":123,"b":456] has values [123,456]');
 	}
+
+	public function testArrayValuesCanBeASubset()
+	{
+		$this->assert('["a":123,"b":456] has values [456]');
+	}
 }
