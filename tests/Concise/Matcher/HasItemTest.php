@@ -14,4 +14,9 @@ class HasItemTest extends AbstractMatcherTestCase
 	{
 		$this->assert(array("foo" => 123), has_key, "foo", with_value, 123);
 	}
+
+	public function testAlternativeSyntaxForItemExists()
+	{
+		$this->assert(array("foo" => 123), has_item, array("foo" => 123));
+	}
 }

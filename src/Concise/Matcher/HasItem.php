@@ -10,11 +10,15 @@ class HasItem extends AbstractMatcher
 	{
 		return array(
 			'?:array has key ?:string with value ?' => self::DESCRIPTION,
+			'?:array has item ?:array' => self::DESCRIPTION,
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
+		if($syntax === '?:array has key ?:string with value ?') {
+			return $this->match(null, array($data[0], array($data[1] => $data[2])));
+		}
 		return true;
 	}
 }
