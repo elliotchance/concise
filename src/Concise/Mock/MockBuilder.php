@@ -35,9 +35,10 @@ class MockBuilder
 		$this->currentRule = $method;
 		$this->mockedMethods[] = $method;
 		$this->rules[$method] = array(
-			'action' => $action,
-			'times' => $times,
-			'with' => null,
+			'action'      => $action,
+			'times'       => $times,
+			'with'        => null,
+			'calledTimes' => 0,
 		);
 	}
 
@@ -195,5 +196,10 @@ class MockBuilder
 	{
 		$this->rules[$this->currentRule]['with'] = func_get_args();
 		return $this;
+	}
+
+	public function getRules()
+	{
+		return $this->rules;
 	}
 }
