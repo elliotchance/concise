@@ -26,7 +26,7 @@ class PrototypeBuilder
 					$param .= ' = ' . var_export($p->getDefaultValue(), true);
 				}
 				catch(\ReflectionException $e) {
-					// The default value cannot be determined for internal methods.
+					$param .= ' = NULL';
 				}
 			}
 			$parameters[] = $param;

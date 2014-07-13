@@ -8,7 +8,7 @@ class ClassCompiler
 
 	protected $mockUnique;
 
-	protected $rules = [];
+	protected $rules = array();
 
 	protected $niceMock;
 
