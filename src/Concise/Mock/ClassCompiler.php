@@ -60,6 +60,8 @@ class ClassCompiler
 			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . ' { ' . $action->getActionCode() . ' }';
 		}
 
+		$methods['getCallCountForMethod'] = 'public function getCallCountForMethod($method) { return 0; }';
+
 		unset($methods['__construct']);
 
 		return $code . "class {$this->getMockName()} extends \\{$this->className} {" . implode(" ", $methods) . "}";

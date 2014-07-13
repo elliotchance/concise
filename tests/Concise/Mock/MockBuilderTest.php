@@ -24,20 +24,14 @@ abstract class Mock2
 
 class MockBuilderTest extends TestCase
 {
-	protected function _createMockAndAddToMocks($className, $niceMock)
-	{
-		$this->_mocks[] = new MockBuilder($this, $className, $niceMock, true);
-		return end($this->_mocks);
-	}
-	
 	protected function _mock($className = '\stdClass')
 	{
-		return $this->_createMockAndAddToMocks($className, false);
+		return new MockBuilder($this, $className, false, true);
 	}
 
 	protected function _niceMock($className = '\stdClass')
 	{
-		return $this->_createMockAndAddToMocks($className, true);
+		return new MockBuilder($this, $className, true, true);
 	}
 
 	public function testMockCanBeCreatedFromAClassThatExists()
@@ -277,7 +271,6 @@ class MockBuilderTest extends TestCase
 		     ->stub(array('myMethod' => 123))
 		     ->done();
 
-		$rules = $this->_mocks[0]->getRules();
-		$this->assert($rules['myMethod']['calledTimes'], exactly_equals, 0);
+		$this->assert(end($this->_mocks)->getCallCountForMethod('myMethod'), exactly_equals, 0);
 	}
 }

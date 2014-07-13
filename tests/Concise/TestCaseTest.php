@@ -140,20 +140,28 @@ class TestCaseTest extends TestCase
 
 	public function testCreatingAMockAddsItToTheMocks()
 	{
-		$this->mock();
+		$this->mock()->done();
 		$this->assert(count($this->_mocks), equals, 1);
 	}
 
 	public function testCreatingANiceMockAddsItToTheMocks()
 	{
-		$this->niceMock();
+		$this->niceMock()->done();
 		$this->assert(count($this->_mocks), equals, 1);
 	}
 
 	public function testCreatingMultipleMocksAddsAllToMocks()
 	{
-		$this->mock();
-		$this->niceMock();
+		$this->mock()->done();
+		$this->niceMock()->done();
+		$this->assert(count($this->_mocks), equals, 2);
+	}
+
+	public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
+	{
+		$mockTemplate = $this->mock();
+		$mockTemplate->done();
+		$mockTemplate->done();
 		$this->assert(count($this->_mocks), equals, 2);
 	}
 }

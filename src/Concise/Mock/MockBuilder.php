@@ -87,7 +87,9 @@ class MockBuilder
 		if($this->useNewBuilder) {
 			$compiler = new ClassCompiler($this->className, $this->niceMock);
 			$compiler->setRules($this->rules);
-			return $compiler->newInstance();
+			$mockInstance = $compiler->newInstance();
+			$this->testCase->addMockInstance($mockInstance);
+			return $mockInstance;
 		}
 
 		$refClass = new \ReflectionClass($this->className);
@@ -122,6 +124,7 @@ class MockBuilder
 			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
 		}
 
+		$this->testCase->addMockInstance($mock);
 		return $mock;
 	}
 

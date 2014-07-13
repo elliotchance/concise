@@ -33,7 +33,7 @@ class ClassCompilerTest extends TestCase
 	public function testMockedClassesWillBePutIntoTheCorrectNamespace()
 	{
 		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-		$this->assertPHP($compiler, "namespace Concise\Mock; class ClassCompilerMock1_% extends \Concise\Mock\ClassCompilerMock1 {}");
+		$this->assertPHP($compiler, "namespace Concise\Mock; class ClassCompilerMock1_% extends \Concise\Mock\ClassCompilerMock1 {%}");
 	}
 
 	public function testInstanceCanBeReturnedFromGeneratedCode()

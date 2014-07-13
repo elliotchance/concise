@@ -98,21 +98,20 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		}
 		parent::tearDown();
 	}
-
-	protected function createMockAndAddToMocks($className, $niceMock)
-	{
-		$this->_mocks[] = new MockBuilder($this, $className, $niceMock);
-		return end($this->_mocks);
-	}
 	
 	protected function mock($className = '\stdClass')
 	{
-		return $this->createMockAndAddToMocks($className, false);
+		return new MockBuilder($this, $className, false);
 	}
 
 	protected function niceMock($className = '\stdClass')
 	{
-		return $this->createMockAndAddToMocks($className, true);
+		return new MockBuilder($this, $className, true);
+	}
+
+	public function addMockInstance($mockInstance)
+	{
+		$this->_mocks[] = $mockInstance;
 	}
 
 	public function setUp()
