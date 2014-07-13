@@ -137,4 +137,10 @@ class TestCaseTest extends TestCase
 	{
 		$this->assert($this->_mocks, exactly_equals, array());
 	}
+
+	public function testCreatingAMockAddsItToTheMocks()
+	{
+		$this->mock();
+		$this->assert(count($this->_mocks), equals, 1);
+	}
 }
