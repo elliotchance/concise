@@ -24,7 +24,7 @@ class PrototypeBuilder
 			else if($p->isArray()) {
 				$param = 'array ' . $param;
 			}
-			else if($p->isCallable()) {
+			else if(method_exists($p, 'isCallable') && $p->isCallable()) {
 				$param = 'callable ' . $param;
 			}
 			if($p->isOptional()) {
