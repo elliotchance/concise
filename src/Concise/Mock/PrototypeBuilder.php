@@ -24,6 +24,9 @@ class PrototypeBuilder
 			else if($p->isArray()) {
 				$param = 'array ' . $param;
 			}
+			else if($p->isCallable()) {
+				$param = 'callable ' . $param;
+			}
 			if($p->isOptional()) {
 				try {
 					$param .= ' = ' . var_export($p->getDefaultValue(), true);
