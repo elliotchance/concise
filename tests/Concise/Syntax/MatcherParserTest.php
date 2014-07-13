@@ -102,10 +102,9 @@ class MatcherParserTest extends TestCase
 
 	public function testGetKeywordsAreOnlyGeneratedOnce()
 	{
-		$parser = $this->getMock('\Concise\Syntax\MatcherParser', array('getRawKeywords'));
-		$parser->expects($this->once())
-		       ->method('getRawKeywords')
-		       ->will($this->returnValue(array('a')));
+		$parser = $this->niceMock('\Concise\Syntax\MatcherParser')
+		               ->expect('getRawKeywords')->once()->andReturn(array('a'))
+		               ->done();
 
 		$parser->getKeywords();
 		$parser->getKeywords();
