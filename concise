@@ -7,51 +7,79 @@ echo "Concise 1.0 by Elliot Chance.\n\n";
 
 class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 {
-	protected $width = 79;
+    protected $width = 79;
 
-	public function write($buffer)
-	{
-		if(substr($buffer, 0, 7) !== 'PHPUnit') {
-			return parent::write($buffer);
-		}
-	}
+    public function write($buffer)
+    {
+        if(substr($buffer, 0, 7) !== 'PHPUnit') {
+            return parent::write($buffer);
+        }
+    }
 
-	public function endTest(PHPUnit_Framework_Test $test, $time)
-	{
-		if ($test instanceof PHPUnit_Framework_TestCase) {
-			$this->numAssertions += $test->getNumAssertions();
-		}
-		else if ($test instanceof PHPUnit_Extensions_PhptTestCase) {
-			$this->numAssertions++;
-		}
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
+        if ($test instanceof PHPUnit_Framework_TestCase) {
+            $this->numAssertions += $test->getNumAssertions();
+        }
+        else if ($test instanceof PHPUnit_Extensions_PhptTestCase) {
+            $this->numAssertions++;
+        }
 
-		++$this->numTestsRun;
-		$this->update();
-	}
+        ++$this->numTestsRun;
+        $this->update();
+    }
 
-	protected function printFooter()
-	{
-	}
+    protected function printHeader()
+    {
+    }
 
-	protected function update()
-	{
-		if($this->numTestsRun > 1) {
-			echo "\033[2A";
-		}
+    protected function printFooter(PHPUnit_Framework_TestResult $result)
+    {
+    	if (count($result) === 0) {
+    		$message = 'No tests executed!';
+        }
+        else if ($result->wasSuccessful() &&
+                 $result->allHarmless() &&
+                 $result->allCompletelyImplemented() &&
+                 $result->noneSkipped()) {
+    		$message = 'OK';
+        }
+        else if ((!$result->allCompletelyImplemented() ||
+                  !$result->allHarmless() ||
+                  !$result->noneSkipped()) &&
+                 $result->wasSuccessful()) {
+    		$message = 'OK, but incomplete, skipped, or risky tests!';
+        }
+        else {
+    		$message = 'FAILURES!';
+        }
 
-		$assertionString = $this->numAssertions . ' assertion' . ($this->numAssertions == 1 ? '' : 's');
-		echo $assertionString . str_repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
-		$done = $this->numTestsRun / $this->numTests;
-		printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
-			$this->numTestsRun, $this->numTests, floor($done * 100));
+        echo "\033[1A";
+        echo "\033[0;30m\033[42m{$message}\033[0m";
 
-		$dots = floor($this->width * $done);
-		echo "\033[42m" . str_repeat(' ', $dots) . "\033[0m" . str_repeat('_', $this->width - $dots);
+		parent::printHeader();
+    }
 
-		if($this->numTestsRun < $this->numTests) {
-			echo "\n";
-		}
-	}
+    protected function writeWithColor($color, $buffer)
+    {
+        $this->buffer .= $buffer;
+    }
+
+    protected function update()
+    {
+        if($this->numTestsRun > 1) {
+            echo "\033[2A";
+        }
+
+        $assertionString = $this->numAssertions . ' assertion' . ($this->numAssertions == 1 ? '' : 's');
+        echo $assertionString . str_repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
+        $done = $this->numTestsRun / $this->numTests;
+        printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
+            $this->numTestsRun, $this->numTests, floor($done * 100));
+
+        $dots = floor($this->width * $done);
+        echo "\033[42m" . str_repeat(' ', $dots) . "\033[0m" . str_repeat('_', $this->width - $dots) . "\n";
+    }
 }
 
 class Concise_TestRunner extends PHPUnit_TextUI_TestRunner
@@ -60,12 +88,12 @@ class Concise_TestRunner extends PHPUnit_TextUI_TestRunner
 
 class Concise_Command extends PHPUnit_TextUI_Command
 {
-	protected function createRunner()
-	{
-		$runner = new Concise_TestRunner($this->arguments['loader']);
-		$runner->setPrinter(new Concise_ResultPrinter());
-		return $runner;
-	}
+    protected function createRunner()
+    {
+        $runner = new Concise_TestRunner($this->arguments['loader']);
+        $runner->setPrinter(new Concise_ResultPrinter());
+        return $runner;
+    }
 }
 
 $command = new Concise_Command();
