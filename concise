@@ -9,6 +9,14 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 {
     protected $width = 79;
 
+    protected $numTestsFailed = 0;
+
+    public function __construct()
+    {
+    	parent::__construct();
+    	$this->width = exec('tput cols');
+    }
+
     public function write($buffer)
     {
         if(substr($buffer, 0, 7) !== 'PHPUnit') {
@@ -43,26 +51,25 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
                  $result->allCompletelyImplemented() &&
                  $result->noneSkipped()) {
     		$message = 'OK';
+	        echo "\033[1A\033[0;30m\033[42m{$message}\033[0m";
         }
         else if ((!$result->allCompletelyImplemented() ||
                   !$result->allHarmless() ||
                   !$result->noneSkipped()) &&
                  $result->wasSuccessful()) {
     		$message = 'OK, but incomplete, skipped, or risky tests!';
+	        echo "\033[1A\033[0;30m\033[42m{$message}\033[0m";
         }
-        else {
-    		$message = 'FAILURES!';
-        }
-
-        echo "\033[1A";
-        echo "\033[0;30m\033[42m{$message}\033[0m";
 
 		parent::printHeader();
     }
 
-    protected function writeWithColor($color, $buffer)
+    protected function repeat($string, $times)
     {
-        $this->buffer .= $buffer;
+    	if($times < 0) {
+    		return '';
+    	}
+    	return str_repeat($string, $times);
     }
 
     protected function update()
@@ -72,13 +79,30 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
         }
 
         $assertionString = $this->numAssertions . ' assertion' . ($this->numAssertions == 1 ? '' : 's');
-        echo $assertionString . str_repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
+        echo $assertionString . $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
         $done = $this->numTestsRun / $this->numTests;
         printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
             $this->numTestsRun, $this->numTests, floor($done * 100));
 
-        $dots = floor($this->width * $done);
-        echo "\033[42m" . str_repeat(' ', $dots) . "\033[0m" . str_repeat('_', $this->width - $dots) . "\n";
+        $failures = 0;
+        if($this->numTestsFailed) {
+        	$failures = ceil($this->width * $this->numTestsFailed / $this->numTests);
+        }
+        $successes = floor($this->width * $done) - $failures;
+        echo "\033[42m" . $this->repeat(' ', $successes);
+        echo "\033[41m" . $this->repeat(' ', $failures);
+        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $failures) . "\n";
+    }
+
+    protected function printDefect(PHPUnit_Framework_TestFailure $defect, $count)
+    {
+        $this->printDefectHeader($defect, $count);
+        $this->printDefectTrace($defect);
+    }
+
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
+        ++$this->numTestsFailed;
     }
 }
 
