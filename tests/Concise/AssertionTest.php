@@ -12,7 +12,7 @@ class AssertionTest extends TestCase
 	public function testCreatingAssertionRequiresTheAssertionString()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
-		$this->assertEquals('? equals ?', $assertion->getAssertion());
+		$this->assert($assertion->getAssertion(), equals, '? equals ?');
 	}
 
 	public function testCreatingAssertionWithoutProvidingDataIsAnEmptyArray()

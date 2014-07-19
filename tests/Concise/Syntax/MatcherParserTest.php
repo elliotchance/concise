@@ -110,23 +110,13 @@ class MatcherParserTest extends TestCase
 		$parser->getKeywords();
 	}
 
-	/**
-	 * @param string[] $needles
-	 */
-	protected function assertArrayContains($needles,  $haystack)
-	{
-		foreach($needles as $needle) {
-			$this->assertContains($needle, $haystack);
-		}
-	}
-
 	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
 	{
 		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$this->assertArrayContains(array(
+		$this->assert($syntaxes, has_items, array(
 			'? is null'       => 'Assert a value is null.',
 			'? is equal to ?' => 'Assert values with no regard to exact data types.',
-		), $syntaxes);
+		));
 	}
 
 	public function testCanMatchSyntaxWithExpectedTypes()
@@ -134,7 +124,7 @@ class MatcherParserTest extends TestCase
 		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
 		$this->parser->registerMatcher($matcher);
 		$assertion = $this->parser->compile('123 foobar 1.23', array());
-		$this->assertSame($matcher, $assertion->getMatcher());
+		$this->assert($matcher, exactly_equals, $assertion->getMatcher());
 	}
 
 	/**
@@ -150,7 +140,7 @@ class MatcherParserTest extends TestCase
 	{
 		$matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
 		$this->parser->registerMatcher($matcher);
-		$this->assertEquals(array('foobar'), $this->parser->getKeywords());
+		$this->assert($this->parser->getKeywords(), equals, array('foobar'));
 	}
 
 	/**
@@ -158,11 +148,9 @@ class MatcherParserTest extends TestCase
 	 */
 	protected function getAbstractMatcherMockWithSupportedSyntaxes($supportedSyntaxes)
 	{
-		$matcher = $this->getMockForAbstractClass('\Concise\Matcher\AbstractMatcher');
-		$matcher->expects($this->any())
-		        ->method('supportedSyntaxes')
-		        ->will($this->returnValue($supportedSyntaxes));
-		return $matcher;
+		return $this->mock('\Concise\Matcher\AbstractMatcher')
+		            ->stub(array('supportedSyntaxes' => $supportedSyntaxes))
+		            ->done();
 	}
 
 	public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
@@ -173,7 +161,7 @@ class MatcherParserTest extends TestCase
 		$keywords1 = $this->parser->getKeywords();
 		$this->parser->registerMatcher($matcher2);
 		$keywords2 = $this->parser->getKeywords();
-		$this->assertNotEquals($keywords1, $keywords2);
+		$this->assert($keywords1, does_not_equal, $keywords2);
 	}
 
 	/**
