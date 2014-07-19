@@ -14,4 +14,9 @@ class HasItemsTest extends AbstractMatcherTestCase
 	{
 		$this->assert(array("foo" => 123), has_items, array());
 	}
+
+	public function testSingleItemIsInSet()
+	{
+		$this->assert(array("foo" => 123), has_items, array("foo" => 123));
+	}
 }
