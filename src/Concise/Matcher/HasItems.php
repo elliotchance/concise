@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class HasItems extends AbstractMatcher
+class HasItems extends HasItem
 {
 	const DESCRIPTION = 'Assert an array has all key and value items.';
 
@@ -18,6 +18,11 @@ class HasItems extends AbstractMatcher
 		if(count($data[1]) === 0) {
 			return true;
 		}
-		return $data[0] == $data[1];
+		foreach($data[1] as $key => $value) {
+			if(!parent::match($data[0], array($data[0], array($key => $value)))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
