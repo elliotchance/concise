@@ -9,13 +9,13 @@ class IsAnEmptyArray extends AbstractMatcher
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? is empty array' => self::DESCRIPTION,
-			'? is an empty array' => self::DESCRIPTION,
+			'?:array is empty array' => self::DESCRIPTION,
+			'?:array is an empty array' => self::DESCRIPTION,
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		return count($data[0]) === 0;
 	}
 }

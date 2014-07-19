@@ -16,4 +16,9 @@ class IsAnEmptyArrayTest extends AbstractMatcherTestCase
 	{
 		$this->assert(array(), is_empty_array);
 	}
+
+	public function testArrayWithMoreThanZeroElements()
+	{
+		$this->assertFailure(array('a'), is_empty_array);
+	}
 }
