@@ -34,4 +34,9 @@ class HasItemsTest extends AbstractMatcherTestCase
 	{
 		$this->assert(array("foo" => 123, "a" => "b", "bar" => "baz"), has_items, array("foo" => 123, "bar" => "baz"));
 	}
+
+	public function testSomeItemsAreInSubset()
+	{
+		$this->assertFailure(array("foo" => 123, "a" => "b", "bar" => "baz"), has_items, array("foo" => 123, "bart" => 123));
+	}
 }
