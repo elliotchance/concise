@@ -15,6 +15,9 @@ class HasItems extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		if(count($data[1]) === 0) {
+			return true;
+		}
+		return $data[0] == $data[1];
 	}
 }
