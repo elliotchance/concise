@@ -120,7 +120,7 @@ class Assertion
 			$args = $this->checkDataTypes($args);
 		}
 
-		$answer = $this->getMatcher()->match($result['syntax'], $args);
+		$answer = $this->getMatcher()->match($this->originalSyntax, $args);
 		if(true === $answer || null === $answer) {
 			return;
 		}

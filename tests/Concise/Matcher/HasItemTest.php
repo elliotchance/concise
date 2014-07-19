@@ -19,4 +19,9 @@ class HasItemTest extends AbstractMatcherTestCase
 	{
 		$this->assert(array("foo" => 123), has_item, array("foo" => 123));
 	}
+
+	public function testItemDoesNotExist()
+	{
+		$this->assertFailure(array("foo" => 123), has_item, array("foo" => 124));
+	}
 }
