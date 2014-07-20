@@ -189,6 +189,11 @@ class MyMatcher extends \Concise\Matcher\AbstractMatcher
 	{
 		return ($data[0] == $data[1]);
 	}
+
+	public function getTags()
+	{
+		return array(\Concise\Matcher\Tag::BASIC);
+	}
 }
 ```
 

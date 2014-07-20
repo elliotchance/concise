@@ -15,4 +15,9 @@ class IsAnObject extends AbstractMatcher
 	{
 		return is_object($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::OBJECTS);
+	}
 }

@@ -25,4 +25,9 @@ class ThrowsExactly extends AbstractMatcher
 		}
 		throw new DidNotMatchException("Expected exactly {$data[1]} to be thrown, but nothing was thrown.");
 	}
+
+	public function getTags()
+	{
+		return array(Tag::EXCEPTIONS);
+	}
 }

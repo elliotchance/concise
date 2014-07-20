@@ -21,4 +21,9 @@ class ThrowsException extends AbstractMatcher
 		}
 		throw new DidNotMatchException("Expected exception to be thrown.");
 	}
+
+	public function getTags()
+	{
+		return array(Tag::EXCEPTIONS);
+	}
 }

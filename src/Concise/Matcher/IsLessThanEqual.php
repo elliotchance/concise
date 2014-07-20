@@ -19,4 +19,9 @@ class IsLessThanEqual extends AbstractMatcher
 	{
 		return $data[0] <= $data[1];
 	}
+
+	public function getTags()
+	{
+		return array(Tag::NUMBERS);
+	}
 }

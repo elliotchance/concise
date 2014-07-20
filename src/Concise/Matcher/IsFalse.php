@@ -15,4 +15,9 @@ class IsFalse extends AbstractMatcher
 	{
 		return $data[0] === false;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::BOOLEANS);
+	}
 }

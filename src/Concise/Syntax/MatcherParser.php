@@ -92,7 +92,7 @@ class MatcherParser
 	protected function autoloadAllMatchers()
 	{
 		foreach(scandir(__DIR__ . "/../Matcher") as $file) {
-			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php'))) {
+			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
 				continue;
 			}
 			$class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);

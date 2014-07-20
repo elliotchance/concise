@@ -15,4 +15,9 @@ class False extends AbstractMatcher
 	{
 		return false;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::BOOLEANS);
+	}
 }

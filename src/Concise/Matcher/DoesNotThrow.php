@@ -26,4 +26,9 @@ class DoesNotThrow extends Throws
 		}
 		throw new DidNotMatchException("Expected {$data[1]} not to be thrown, but nothing was thrown.");
 	}
+
+	public function getTags()
+	{
+		return array(Tag::EXCEPTIONS);
+	}
 }

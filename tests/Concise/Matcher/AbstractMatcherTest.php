@@ -16,6 +16,11 @@ class MyMatcher extends AbstractMatcher
 	{
 		return array();
 	}
+
+	public function getTags()
+	{
+		return array();
+	}
 }
 
 class AbstractMatcherTest extends TestCase

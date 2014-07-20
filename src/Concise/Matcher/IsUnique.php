@@ -15,4 +15,9 @@ class IsUnique extends AbstractMatcher
 	{
 		return count($data[0]) === count(array_unique($data[0]));
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

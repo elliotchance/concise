@@ -15,4 +15,9 @@ class IsNotNull extends IsNull
 	{
 		return !parent::match($syntax, $data);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC);
+	}
 }

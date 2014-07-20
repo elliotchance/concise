@@ -18,4 +18,9 @@ class IsAnInteger extends AbstractMatcher
 	{
 		return is_int($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::NUMBERS);
+	}
 }

@@ -15,4 +15,9 @@ class IsANumber extends AbstractMatcher
 	{
 		return is_int($data[0]) || is_float($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::NUMBERS);
+	}
 }

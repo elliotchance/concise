@@ -15,4 +15,9 @@ class IsAnArray extends AbstractMatcher
 	{
 		return is_array($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

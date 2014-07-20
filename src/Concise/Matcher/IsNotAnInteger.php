@@ -18,4 +18,9 @@ class IsNotAnInteger extends IsAnInteger
 	{
 		return !parent::match($syntax, $data);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::NUMBERS);
+	}
 }

@@ -15,4 +15,9 @@ class IsNotANumber extends IsANumber
 	{
 		return !parent::match(null, $data);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC, Tag::NUMBERS);
+	}
 }

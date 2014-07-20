@@ -27,4 +27,6 @@ abstract class AbstractMatcher
 		$renderer = new SyntaxRenderer();
 		return $renderer->render($syntax, $data);
 	}
+
+	public abstract function getTags();
 }
