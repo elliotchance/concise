@@ -70,12 +70,7 @@ Matchers
 * `? does not end with ?` - Assert a string does not end with another string.
 * `? does not equal ?` - Assert two value do not match with no regard to type.
 * `? does not exactly equal ?` - Assert two values are of exactly the same type and value.
-* `? does not match regex ?:regex` - Assert a string does not match a regular expression.
-* `? does not match regular expression ?:regex` - Assert a string does not match a regular expression.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
-* `? doesnt match regex ?:regex` - Assert a string does not match a regular expression.
-* `? doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
-* `? ends with ?` - Assert a string ends with another string.
 * `? equals ?` - Assert values with no regard to exact data types.
 * `? exactly equals ?` - Assert two values match data type and value.
 * `? is a number` - Assert that a value is an integer or floating-point.
@@ -102,29 +97,65 @@ Matchers
 * `? is numeric` - Assert value is a number or string that represents a number.
 * `? is the same as ?` - Assert two values match data type and value.
 * `? is true` - Assert a value is true.
-* `? matches regex ?:regex` - Assert a string matches a regular expression
-* `? matches regular expression ?:regex` - Assert a string matches a regular expression
 * `? not equals ?` - Assert two value do not match with no regard to type.
-* `? starts with ?` - Assert a string starts (begins) with another string.
 * `?:array contains ?` - Assert an array has at least one occurrence of the given value.
 * `?:array does not contain ?` - Assert an array does not have any occurrences of the given value.
 * `?:array does not have key ?:int,string` - Assert an array does not have a key.
 * `?:array does not have keys ?:array` - Assert an array does not contain any keys.
 * `?:array does not have value ?` - Assert an array does not have any occurrences of the given value.
+* `?:array has item ?:array` - Assert an array has key and value item.
+* `?:array has items ?:array` - Assert an array has all key and value items.
 * `?:array has key ?:int,string` - Assert an array has key.
+* `?:array has key ?:string with value ?` - Assert an array has key and value item.
 * `?:array has keys ?:array` - Assert an array has several keys in any order.
 * `?:array has value ?` - Assert an array has at least one occurrence of the given value.
+* `?:array has values ?:array` - Assert an array has several values in any order.
 * `?:array is an associative array` - Assert an array is associative.
+* `?:array is an empty array` - Assert an array is empty (no elements).
+* `?:array is empty array` - Assert an array is empty (no elements).
 * `?:array is not an associative array` - Assert an array is associative.
+* `?:array is not an empty array` - Assert an array is not empty (at least one element).
+* `?:array is not empty array` - Assert an array is not empty (at least one element).
+* `?:array is not unique` - Assert that an array only has at least one element that is repeated.
+* `?:array is unique` - Assert that an array only contains unique values.
 * `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.
 * `?:callable does not throw exception` - Assert that no exception is thrown.
 * `?:callable throws ?:class` - Assert a specific exception was thrown.
 * `?:callable throws anything except ?:class` - Assert any exception except a specific one was thrown.
 * `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
 * `?:callable throws exception` - Assert an exception was thrown.
+* `?:number between ?:number and ?:number` - A number must be between two values (inclusive).
+* `?:number greater than ?:number` - A number is greater than another number.
+* `?:number greater than or equal ?:number` - A number is greater than or equal to another number.
+* `?:number gt ?:number` - A number is greater than another number.
+* `?:number gte ?:number` - A number is greater than or equal to another number.
+* `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
+* `?:number is greater than ?:number` - A number is greater than another number.
+* `?:number is greater than or equal to ?:number` - A number is greater than or equal to another number.
+* `?:number is less than ?:number` - A number is less than another number.
+* `?:number is less than or equal to ?:number` - A number is less than or equal to another number.
+* `?:number is not between ?:number and ?:number` - A number must not be between two values (inclusive).
+* `?:number less than ?:number` - A number is less than another number.
+* `?:number less than or equal ?:number` - A number is less than or equal to another number.
+* `?:number lt ?:number` - A number is less than another number.
+* `?:number lte ?:number` - A number is less than or equal to another number.
+* `?:number not between ?:number and ?:number` - A number must not be between two values (inclusive).
 * `?:object instance of ?:class` - Assert an objects class or subclass.
 * `?:object is an instance of ?:class` - Assert an objects class or subclass.
 * `?:object is instance of ?:class` - Assert an objects class or subclass.
+* `?:object is not an instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:object not instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:string does not match regex ?:regex` - Assert a string does not match a regular expression.
+* `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `?:string doesnt match regex ?:regex` - Assert a string does not match a regular expression.
+* `?:string doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `?:string ends with ?:string` - Assert a string ends with another string.
+* `?:string is blank` - Assert a string is zero length.
+* `?:string is not blank` - Assert a string has at least one character.
+* `?:string matches regex ?:regex` - Assert a string matches a regular expression
+* `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
+* `?:string starts with ?:string` - Assert a string starts (begins) with another string.
 * `false` - Always fail.
 * `true` - Always pass.
 
