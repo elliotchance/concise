@@ -108,6 +108,9 @@ class MockBuilder
 		return $this;
 	}
 
+	/**
+	 * @param string $method
+	 */
 	public function expect($method)
 	{
 		$this->addRule($method, new Action\ReturnValueAction(null));
