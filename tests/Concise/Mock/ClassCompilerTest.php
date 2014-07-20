@@ -55,6 +55,9 @@ class ClassCompilerTest extends TestCase
 		$this->assert($a->newInstance(), is_not_exactly_equal_to, $b->newInstance());
 	}
 
+	/**
+	 * @param string $php
+	 */
 	protected function assertPHP(ClassCompiler $compiler, $php)
 	{
 		$this->assert($compiler->generateCode(), matches_regex, '/' . str_replace('%', '(.*)', preg_quote($php)) . '/');
