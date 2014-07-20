@@ -35,7 +35,7 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 		catch(DidNotMatchException $e) {
 			$success = false;
 		}
-		$this->assertSame($expectSuccess, !$success);
+		$this->assert($expectSuccess, equals, !$success);
 	}
 
 	public function testDoesNotThrowMessage()
@@ -45,7 +45,7 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 			$this->fail("Exception was not thrown.");
 		}
 		catch(DidNotMatchException $e) {
-			$this->assertEquals("Expected exception not to be thrown.", $e->getMessage());
+			$this->assert("Expected exception not to be thrown.", equals, $e->getMessage());
 		}
 	}
 	

@@ -12,26 +12,26 @@ class AssertionTest extends TestCase
 	public function testCreatingAssertionRequiresTheAssertionString()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
-		$this->assertEquals('? equals ?', $assertion->getAssertion());
+		$this->assert($assertion->getAssertion(), equals, '? equals ?');
 	}
 
 	public function testCreatingAssertionWithoutProvidingDataIsAnEmptyArray()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
-		$this->assertEquals(array(), $assertion->getData());
+		$this->assert($assertion->getData(), is_an_empty_array);
 	}
 
 	public function testSettingDataWhenCreatingAssertion()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals(), array('abc', 'def'));
-		$this->assertEquals(array('abc', 'def'), $assertion->getData());
+		$this->assert($assertion->getData(), equals, array('abc', 'def'));
 	}
 
 	public function testCreatingAssertionRequiresTheMatcher()
 	{
 		$matcher = new Matcher\Equals();
 		$assertion = new Assertion('? equals ?', $matcher);
-		$this->assertSame($matcher, $assertion->getMatcher());
+		$this->assert($matcher, is_the_same_as, $assertion->getMatcher());
 	}
 
 	public function testToStringRenderedData()
@@ -44,20 +44,20 @@ class AssertionTest extends TestCase
 		);
 		$assertion = new Assertion('a equals b', $matcher, $data);
 		$expected = "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
-		$this->assertEquals($expected, (string) $assertion);
+		$this->assert((string) $assertion, equals, $expected);
 	}
 
 	public function testCanSetDescriptiveString()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
 		$assertion->setDescription('my description');
-		$this->assertEquals('my description (? equals ?)', $assertion->getDescription());
+		$this->assert($assertion->getDescription(), equals, 'my description (? equals ?)');
 	}
 
 	public function testDescriptionReturnsAssertionIfNotSet()
 	{
 		$assertion = new Assertion('? equals ?', new Matcher\Equals());
-		$this->assertEquals('? equals ?', $assertion->getDescription());
+		$this->assert($assertion->getDescription(), equals, '? equals ?');
 	}
 
 	/**
@@ -98,15 +98,15 @@ class AssertionTest extends TestCase
 
 	protected function getStubForAssertionThatReturnsData(array $data)
 	{
-		return $this->getStub('\Concise\Assertion', array(
-			'getData' => $data
-		), array('true', new True()));
+		return $this->niceMock('\Concise\Assertion', array('true', new True()))
+		            ->stub(array('getData' => $data))
+		            ->done();
 	}
 
 	public function testDoNotShowPHPUnitPropertiesOnError()
 	{
 		$assertion = $this->getStubForAssertionThatReturnsData(self::getPHPUnitProperties());
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 
 	public function testDoNotShowDataSetOnError()
@@ -114,12 +114,12 @@ class AssertionTest extends TestCase
 		$assertion = $this->getStubForAssertionThatReturnsData(array(
 			'__dataSet' => array()
 		));
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 
 	public function testNoAttributesRendersAsAnEmptyString()
 	{
 		$assertion = $this->getStubForAssertionThatReturnsData(array());
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 }

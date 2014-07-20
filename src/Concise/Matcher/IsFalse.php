@@ -13,6 +13,6 @@ class IsFalse extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return $this->getComparer()->compare($data[0], false);
+		return $data[0] === false;
 	}
 }

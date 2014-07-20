@@ -11,9 +11,9 @@ class ReturnValueAction extends AbstractAction
 		$this->value = $value;
 	}
 
-	public function getWillAction(\PHPUnit_Framework_TestCase $testCase)
+	public function getActionCode()
 	{
-		return $testCase->returnValue($this->value);
+		return 'return ' . var_export($this->value, true) . ';';
 	}
 
 	public function getValue()

@@ -16,11 +16,6 @@ class MyMatcher extends AbstractMatcher
 	{
 		return array();
 	}
-
-	public function getComparer()
-	{
-		return parent::getComparer();
-	}
 }
 
 class AbstractMatcherTest extends TestCase
@@ -33,11 +28,6 @@ class AbstractMatcherTest extends TestCase
 
 	public function testDefaultRendererWorks()
 	{
-		$this->assertEquals('', $this->matcher->renderFailureMessage(''));
-	}
-
-	public function testHasAccessToComparer()
-	{
-		$this->assert('`$self->matcher->getComparer()` is instance of \Concise\Services\Comparer');
+		$this->assert($this->matcher->renderFailureMessage(''), is_blank);
 	}
 }

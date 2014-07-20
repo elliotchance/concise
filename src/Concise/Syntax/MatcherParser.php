@@ -25,16 +25,7 @@ class MatcherParser
 
 	protected function getRawSyntax($syntax)
 	{
-		if(!array_key_exists($syntax, $this->syntaxCache)) {
-			if(strpos($syntax, ':') === false) {
-				$this->syntaxCache[$syntax] = $syntax;
-			}
-			else {
-				$parse = $this->lexer->parse($syntax);
-				$this->syntaxCache[$syntax] = $parse['syntax'];
-			}
-		}
-		return $this->syntaxCache[$syntax];
+		return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
 	}
 
 	/**
@@ -43,26 +34,11 @@ class MatcherParser
 	 */
 	public function getMatcherForSyntax($syntax)
 	{
-		$found = array();
-		foreach($this->matchers as $matcher) {
-			$service = new MatcherSyntaxAndDescription();
-			$syntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
-			foreach($syntaxes as $s) {
-				if($this->getRawSyntax($syntax) === $this->getRawSyntax($s)) {
-					$found[] = array(
-						'matcher' => $matcher,
-						'originalSyntax' => $s,
-					);
-				}
-			}
+		$rawSyntax = $this->getRawSyntax($syntax);
+		if(array_key_exists($rawSyntax, $this->syntaxCache)) {
+			return $this->syntaxCache[$rawSyntax];
 		}
-		if(count($found) === 0) {
-			throw new \Exception("No such matcher for syntax '$syntax'.");
-		}
-		if(count($found) > 1) {
-			throw new \Exception("Ambiguous syntax for '$syntax'.");
-		}
-		return $found[0];
+		throw new \Exception("No such matcher for syntax '$syntax'.");
 	}
 
 	/**
@@ -79,19 +55,6 @@ class MatcherParser
 		return $assertion;
 	}
 
-	/**
-	 * @param string $matcherClass
-	 */
-	public function matcherIsRegistered($matcherClass)
-	{
-		foreach($this->matchers as $matcher) {
-			if(get_class($matcher) === $matcherClass) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	protected function clearKeywordCache()
 	{
 		$this->keywords = array();
@@ -99,6 +62,19 @@ class MatcherParser
 
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
+		$service = new MatcherSyntaxAndDescription();
+		$allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
+		foreach($allSyntaxes as $syntax) {
+			$rawSyntax = $this->getRawSyntax($syntax);
+			if(array_key_exists($rawSyntax, $this->syntaxCache)) {
+				throw new \Exception("Syntax '$syntax' is already declared.");
+			}
+			$this->syntaxCache[$rawSyntax] = array(
+				'matcher' => $matcher,
+				'originalSyntax' => $syntax,
+			);
+		}
+
 		$this->matchers[] = $matcher;
 		$this->clearKeywordCache();
 		return true;

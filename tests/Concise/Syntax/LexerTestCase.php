@@ -23,17 +23,17 @@ abstract class LexerTestCase extends TestCase
 
 	public function testLexerWillReturnTokensForString()
 	{
-		$this->assertEquals($this->expectedTokens(), $this->parsed['tokens']);
+		$this->assert($this->expectedTokens(), equals, $this->parsed['tokens']);
 	}
 
 	public function testLexerWillReturnSyntaxForString()
 	{
-		$this->assertEquals($this->expectedSyntax(), $this->parsed['syntax']);
+		$this->assert($this->expectedSyntax(), equals, $this->parsed['syntax']);
 	}
 
 	public function testLexerWillReturnArgumentsForString()
 	{
-		$this->assertEquals($this->expectedArguments(), $this->parsed['arguments']);
+		$this->assert($this->expectedArguments(), equals, $this->parsed['arguments']);
 	}
 
 	protected abstract function expectedTokens();

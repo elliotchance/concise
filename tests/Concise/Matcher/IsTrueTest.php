@@ -12,7 +12,7 @@ class IsTrueTest extends AbstractMatcherTestCase
 
 	public function testIsTrue()
 	{
-		$this->assert('`true` is true');
+		$this->assert(true, is_true);
 	}
 
 	public function testIsTrueFailure()

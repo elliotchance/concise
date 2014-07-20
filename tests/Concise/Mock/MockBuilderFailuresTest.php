@@ -9,8 +9,8 @@ class MockBuilderFailuresTest extends TestCase
 	protected static $failures = array();
 
 	protected static $expectedFailures = array(
-		'testFailedToFulfilExpectationWillThrowException' => "Expectation failed for method name is equal to <string:myMethod> when invoked 1 time(s).\nMethod was expected to be called 1 times, actually called 0 times.\n",
-		'testMethodCalledWithWrongArgumentValues' => "Expectation failed for method name is equal to <string:myMethod> when invoked 1 time(s)\nParameter 0 for invocation Concise\Mock\Mock1::myMethod('bar') does not match expected value.\nFailed asserting that two strings are equal.",
+		'testFailedToFulfilExpectationWillThrowException' => "0 equals 1",
+		'testMethodCalledWithWrongArgumentValues' => '["bar"] exactly equals ["foo"]',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -31,7 +31,7 @@ class MockBuilderFailuresTest extends TestCase
 	protected function onNotSuccessfulTest(\Exception $e)
 	{
 		self::$failures[] = $this->getName();
-		$this->assertSame(self::$expectedFailures[$this->getName()], $e->getMessage());
+		$this->assert(self::$expectedFailures[$this->getName()], equals, $e->getMessage());
 	}
 
 	public static function tearDownAfterClass()

@@ -68,7 +68,7 @@ class Lexer
 
 	protected function consumeRegexp($string, &$startIndex)
 	{
-		return $this->consumeUntilToken($string, '/', $startIndex);
+		return '/' . $this->consumeUntilToken($string, '/', $startIndex) . '/';
 	}
 
 	/**

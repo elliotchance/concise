@@ -15,44 +15,44 @@ class ValueRendererTest extends \Concise\TestCase
 
 	public function testIntegerValueRendersWithoutModification()
 	{
-		$this->assertSame('123', $this->renderer->render(123));
+		$this->assert($this->renderer->render(123), equals, 123);
 	}
 
 	public function testFloatingPointValueRendersWithoutModification()
 	{
-		$this->assertSame('1.23', $this->renderer->render(1.23));
+		$this->assert($this->renderer->render(1.23), equals, '1.23');
 	}
 
 	public function testStringValueRendersWithDoubleQuotes()
 	{
-		$this->assertSame('"abc"', $this->renderer->render("abc"));
+		$this->assert($this->renderer->render("abc"), equals, '"abc"');
 	}
 
 	public function testArrayValueRendersAsJson()
 	{
-		$this->assertSame('[123,"abc"]', $this->renderer->render(array(123, "abc")));
+		$this->assert($this->renderer->render(array(123, "abc")), equals, '[123,"abc"]');
 	}
 
 	public function testObjectValueRendersAsJson()
 	{
 		$obj = new \stdClass();
 		$obj->a = 123;
-		$this->assertSame('stdClass:{"a":123}', $this->renderer->render($obj));
+		$this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123}');
 	}
 
 	public function testTrueValueRendersAsTrue()
 	{
-		$this->assertSame('true', $this->renderer->render(true));
+		$this->assert($this->renderer->render(true), equals, 'true');
 	}
 
 	public function testFalseValueRendersAsFalse()
 	{
-		$this->assertSame('false', $this->renderer->render(false));
+		$this->assert($this->renderer->render(false), equals, 'false');
 	}
 
 	public function testNullRendersAsNull()
 	{
-		$this->assertSame('null', $this->renderer->render(null));
+		$this->assert($this->renderer->render(null), equals, 'null');
 	}
 
 	public function testResourceValueRendersAsResource()
@@ -64,6 +64,6 @@ class ValueRendererTest extends \Concise\TestCase
 
 	public function testFunctionRendersAsString()
 	{
-		$this->assertSame('function', $this->renderer->render(function() {}));
+		$this->assert($this->renderer->render(function() {}), equals, 'function');
 	}
 }

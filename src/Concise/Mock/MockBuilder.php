@@ -17,7 +17,9 @@ class MockBuilder
 
 	protected $currentRule;
 
-	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
+	protected $constructorArgs;
+
+	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
 	{
 		$this->testCase = $testCase;
 		if(!class_exists($className)) {
@@ -25,6 +27,7 @@ class MockBuilder
 		}
 		$this->className = $className;
 		$this->niceMock = $niceMock;
+		$this->constructorArgs = $constructorArgs;
 	}
 
 	protected function addRule($method, Action\AbstractAction $action, $times = -1)
@@ -32,9 +35,10 @@ class MockBuilder
 		$this->currentRule = $method;
 		$this->mockedMethods[] = $method;
 		$this->rules[$method] = array(
-			'action' => $action,
-			'times' => $times,
-			'with' => null,
+			'action'      => $action,
+			'times'       => $times,
+			'with'        => null,
+			'calledTimes' => 0,
 		);
 	}
 
@@ -54,63 +58,13 @@ class MockBuilder
 		return $this;
 	}
 
-	protected function getAllMethodNamesForClass()
-	{
-		$class = new \ReflectionClass($this->className);
-		$methodNames = array();
-		foreach($class->getMethods() as $method) {
-			$methodNames[] = $method->getName();
-		}
-		return $methodNames;
-	}
-
-	protected function stubMethod($mock, $method, $will, $times = -1, $with = null)
-	{
-		$expect = $this->testCase->any();
-		if($times >= 0) {
-			$expect = $this->testCase->exactly($times);
-		}
-		$m = $mock->expects($expect)
-				  ->method($method);
-		if(null !== $with) {
-			$m = call_user_func_array(array($m, 'with'), $with);
-		}
-		$m->will($will);
-	}
-
 	public function done()
 	{
-		$class = $this->className;
-		$originalObject = new $class();
-
-		$allMethods = array_unique($this->getAllMethodNamesForClass() + array_keys($this->rules));
-		$mock = $this->testCase->getMock($this->className, $allMethods);
-		foreach($this->rules as $method => $rule) {
-			$action = $rule['action'];
-			$this->stubMethod($mock, $method, $action->getWillAction($this->testCase), $rule['times'], $rule['with']);
-		}
-
-		// throw exception for remaining methods
-		if($this->niceMock) {
-			foreach($allMethods as $method) {
-				if(in_array($method, $this->mockedMethods)) {
-					continue;
-				}
-				$will = $this->testCase->returnCallback(array($originalObject, $method));
-				$this->stubMethod($mock, $method, $will);
-			}
-		}
-		else {
-			foreach($allMethods as $method) {
-				if(in_array($method, $this->mockedMethods)) {
-					continue;
-				}
-				$will = $this->testCase->throwException(new \Exception("$method() does not have an associated action - consider a niceMock()?"));
-				$this->stubMethod($mock, $method, $will);
-			}
-		}
-
-		return $mock;
+		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs);
+		$compiler->setRules($this->rules);
+		$mockInstance = $compiler->newInstance();
+		$this->testCase->addMockInstance($this, $mockInstance);
+		return $mockInstance;
 	}
 
 	protected function hasAction()
@@ -184,5 +138,10 @@ class MockBuilder
 	{
 		$this->rules[$this->currentRule]['with'] = func_get_args();
 		return $this;
+	}
+
+	public function getRules()
+	{
+		return $this->rules;
 	}
 }

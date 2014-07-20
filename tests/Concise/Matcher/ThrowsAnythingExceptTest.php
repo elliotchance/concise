@@ -47,7 +47,7 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
 		catch(DidNotMatchException $e) {
 			$didThrow = true;
 		}
-		$this->assertSame($expectToThrow, !$didThrow);
+		$this->assert($expectToThrow, equals, !$didThrow);
 	}
 
 	/**

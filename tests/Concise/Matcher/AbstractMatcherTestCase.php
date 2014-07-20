@@ -10,33 +10,18 @@ class AbstractMatcherTestCase extends TestCase
 {
 	public function testExtendsAbstractMatcher()
 	{
-		$this->assert('`$self->matcher` is instance of \Concise\Matcher\AbstractMatcher');
+		$this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractMatcher');
 	}
 
 	public function testCanRegisterMatcher()
 	{
 		$parser = new MatcherParser();
-		$this->assertTrue($parser->registerMatcher($this->matcher));
-	}
-
-	public function testParserKnowsAboutMatcher()
-	{
-		$parser = MatcherParser::getInstance();
-		$this->assertTrue($parser->matcherIsRegistered(get_class($this->matcher)));
-	}
-
-	public function testSupportedSyntaxesAreUnique()
-	{
-		$service = new MatcherSyntaxAndDescription();
-		$syntaxes = array_keys($service->process($this->matcher->supportedSyntaxes()));
-		$this->assertEquals(count($syntaxes), count(array_unique($syntaxes)));
+		$this->assert($parser->registerMatcher($this->matcher), is_true);
 	}
 
 	protected function createStdClassThatCanBeCastToString($value)
 	{
-		return $this->getStub('\stdClass', array(
-			'__toString' => $value
-		));
+		return $this->mock()->stub(array('__toString' => $value))->done();
 	}
 
 	/**
@@ -59,11 +44,10 @@ class AbstractMatcherTestCase extends TestCase
 	protected function assertMatcherFailure($syntax, array $args = array())
 	{
 		try {
-			$result = $this->matcher->match($syntax, $args);
-			$this->assertFalse($result);
+			$this->assert($this->matcher->match($syntax, $args), is_false);
 		}
 		catch(DidNotMatchException $e) {
-			$this->assertTrue(true);
+			$this->assert(true);
 		}
 	}
 
@@ -72,21 +56,18 @@ class AbstractMatcherTestCase extends TestCase
 	 */
 	protected function assertMatcherSuccess($syntax, array $args = array())
 	{
-		$this->assertTrue($this->matcher->match($syntax, $args));
+		$this->assert($this->matcher->match($syntax, $args));
 	}
 
-	/**
-	 * @param string $assertionString
-	 */
-	protected function assertFailure($assertionString)
+	protected function assertFailure()
 	{
 		try {
-			$this->assert($assertionString);
+			call_user_func_array(array($this, 'assert'), func_get_args());
 		}
 		catch(\PHPUnit_Framework_AssertionFailedError $e) {
-			$this->assertTrue(true);
+			$this->assert(true);
 			return;
 		}
-		$this->fail("Assertion '$assertionString' did not fail.");
+		$this->fail("Assertion did not fail.");
 	}
 }

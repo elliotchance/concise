@@ -17,7 +17,6 @@ class IsNotAnArrayTest extends AbstractMatcherTestCase
 
 	public function testIsNotAnArrayFailure()
 	{
-		$this->x = array();
-		$this->assertFailure('x is not an array');
+		$this->assertFailure('[] is not an array');
 	}
 }

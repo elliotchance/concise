@@ -2,23 +2,20 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Services\ToStringConverter;
-
 class MatchesRegularExpression extends AbstractMatcher
 {
+	const DESCRIPTION = 'Assert a string matches a regular expression';
+
 	public function supportedSyntaxes()
 	{
 		return array(
-			'? matches regular expression ?:regex' => 'Assert a string matches a regular expression',
-			'? matches regex ?:regex' => 'Assert a string matches a regular expression',
+			'?:string matches regular expression ?:regex' => self::DESCRIPTION,
+			'?:string matches regex ?:regex' => self::DESCRIPTION,
 		);
 	}
 
 	public function match($syntax, array $data = array())
 	{
-		$converter = new ToStringConverter();
-		$subject = $converter->convertToString($data[0]);
-		$pattern = $converter->convertToString($data[1]);
-		return preg_match('/' . $pattern . '/', $subject) === 1;
+		return preg_match($data[1], $data[0]) === 1;
 	}
 }

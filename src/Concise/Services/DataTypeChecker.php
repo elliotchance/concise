@@ -49,6 +49,9 @@ class DataTypeChecker
 			if(in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
 				return substr($value, 1);
 			}
+			if(in_array('regex', $acceptedTypes)) {
+				return $value;
+			}
 			return $value;
 		}
 		$accepts = implode(' or ', $acceptedTypes);
@@ -82,21 +85,30 @@ class DataTypeChecker
 		return gettype($value);
 	}
 
+	protected function singleMatch($type, $value)
+	{
+		return $type === $this->simpleType($this->getType($value));
+	}
+
 	protected function matches($type, $value)
 	{
-		return $this->simpleType($type) === $this->simpleType($this->getType($value));
+		if($type === 'number') {
+			return $this->singleMatch('int', $value) || $this->singleMatch('float', $value) || is_numeric($value);
+		}
+		return $this->singleMatch($this->simpleType($type), $value);
 	}
 
 	protected function simpleType($type)
 	{
-		if($type === 'integer') {
-			$type = 'int';
-		}
-		else if($type === 'double') {
-			$type = 'float';
-		}
-		else if($type === 'class') {
-			$type = 'string';
+		$aliases = array(
+			'integer' => 'int',
+			'double'  => 'float',
+			'class'   => 'string',
+			'bool'    => 'boolean',
+			'regex'   => 'string',
+		);
+		if(array_key_exists($type, $aliases)) {
+			return $aliases[$type];
 		}
 		return $type;
 	}

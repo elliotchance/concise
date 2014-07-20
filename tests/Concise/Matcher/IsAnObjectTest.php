@@ -14,8 +14,7 @@ class IsAnObjectTest extends AbstractMatcherTestCase
 
 	public function testIsAnObject()
 	{
-		$this->x = new \stdClass();
-		$this->assert('x is an object');
+		$this->assert(new \stdClass(), is_an_object);
 	}
 
 	public function testIsAnObjectFailure()

@@ -120,11 +120,11 @@ class Assertion
 			$args = $this->checkDataTypes($args);
 		}
 
-		$answer = $this->getMatcher()->match($result['syntax'], $args);
+		$answer = $this->getMatcher()->match($this->originalSyntax, $args);
 		if(true === $answer || null === $answer) {
 			return;
 		}
-		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $result['arguments']);
+		$message = $this->getMatcher()->renderFailureMessage($result['syntax'], $args);
 		throw new \PHPUnit_Framework_AssertionFailedError($message);
 	}
 

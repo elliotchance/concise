@@ -18,7 +18,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
 	public function testBlankAcceptsAnything()
 	{
-		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
+		$this->assert($this->dataTypeChecker->check(array(), 123), exactly_equals, 123);
 	}
 
 	/**
@@ -44,6 +44,10 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			array(array("int", "float"), 1.23),
 			array(array("regex"), new Regexp('abc')),
 			array(array("class"), 'Concise\Syntax\Token\Regexp'),
+			array(array("number"), 123),
+			array(array("number"), 12.3),
+			array(array("number"), '12.3'),
+			array(array("bool"), true),
 		);
 	}
 
@@ -52,7 +56,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	 */
 	public function testDataTypes(array $types, $value)
 	{
-		$this->assertSame($value, $this->dataTypeChecker->check($types, $value));
+		$this->assert($value, exactly_equals, $this->dataTypeChecker->check($types, $value));
 	}
 
 	/**
@@ -78,7 +82,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			'foo' => 'bar',
 		);
 		$this->dataTypeChecker->setContext($context);
-		$this->assertSame('bar', $this->dataTypeChecker->check(array('string'), new Attribute('foo')));
+		$this->assert($this->dataTypeChecker->check(array('string'), new Attribute('foo')), exactly_equals, 'bar');
 	}
 
 	/**
@@ -93,22 +97,22 @@ class DataTypeCheckerTest extends \Concise\TestCase
 	public function testExcludeWithEmptyArrayAllowsAnything()
 	{
 		$this->dataTypeChecker->setExcludeMode();
-		$this->assertSame(123, $this->dataTypeChecker->check(array(), 123));
+		$this->assert($this->dataTypeChecker->check(array(), 123), equals, 123);
 	}
 
 	public function testWillTrimBackslashOffClass()
 	{
-		$this->assertSame('My\Class', $this->dataTypeChecker->check(array('class'), '\My\Class'));
+		$this->assert($this->dataTypeChecker->check(array('class'), '\My\Class'), equals, 'My\Class');
 	}
 
 	public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass()
 	{
-		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array('string'), '\My\Class'));
+		$this->assert($this->dataTypeChecker->check(array('string'), '\My\Class'), equals, '\My\Class');
 	}
 
 	public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
 	{
-		$this->assertSame('\My\Class', $this->dataTypeChecker->check(array(), '\My\Class'));
+		$this->assert($this->dataTypeChecker->check(array(), '\My\Class'), equals, '\My\Class');
 	}
 
 	public function testWillTrimBackslashOffClassWhenInAttribute()
@@ -117,6 +121,20 @@ class DataTypeCheckerTest extends \Concise\TestCase
 			'foo' => '\Bar',
 		);
 		$this->dataTypeChecker->setContext($context);
-		$this->assertSame('Bar', $this->dataTypeChecker->check(array('class'), new Attribute('foo')));
+		$this->assert($this->dataTypeChecker->check(array('class'), new Attribute('foo')), equals, 'Bar');
+	}
+
+	public function testStringsWillBeAcceptedForRegex()
+	{
+		$this->assertSame('/a/', $this->dataTypeChecker->check(array('regex'), '/a/'));
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage integer not found in regex
+	 */
+	public function testNonStringsWillNotBeAcceptedForRegex()
+	{
+		$this->dataTypeChecker->check(array('regex'), 123);
 	}
 }

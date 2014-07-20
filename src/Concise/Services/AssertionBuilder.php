@@ -4,6 +4,7 @@ namespace Concise\Services;
 
 use \Concise\Syntax\MatcherParser;
 use \Concise\Assertion;
+use \Concise\Matcher\IsTrue;
 
 class AssertionBuilder
 {
@@ -16,6 +17,11 @@ class AssertionBuilder
 
 	public function getAssertion()
 	{
+		$matcherParser = MatcherParser::getInstance();
+		if(count($this->args) === 1 && is_bool($this->args[0])) {
+			return $matcherParser->compile($this->args[0] ? 'true' : 'false');
+		}
+
 		$syntax = array();
 		$data = array();
 		$argc = count($this->args);
@@ -30,7 +36,6 @@ class AssertionBuilder
 			}
 		}
 
-		$matcherParser = MatcherParser::getInstance();
 		$syntaxString = implode(' ', $syntax);
 		return $matcherParser->compile($syntaxString, $data);
 	}

@@ -18,6 +18,6 @@ class Equals extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return $this->getComparer()->compare($data[0], $data[1]);
+		return $data[0] == $data[1];
 	}
 }

@@ -8,23 +8,23 @@ class TestCaseTest extends TestCase
 {
 	public function testExtendsTestCase()
 	{
-		$this->assert('`new \Concise\TestCase()` is an instance of \PHPUnit_Framework_TestCase');
+		$this->assert(new TestCase(), is_an_instance_of, '\PHPUnit_Framework_TestCase');
 	}
 
 	protected function assertAssertions(array $expected, array $actual)
 	{
-		$this->assertEquals(count($expected), count($actual));
+		$this->assert(count($actual), equals, count($expected));
 		$right = array();
 		foreach($actual as $a) {
 			$right[] = $a->getAssertion();
 		}
-		$this->assertEquals($expected, $right);
+		$this->assert($right, equals, $expected);
 	}
 	
 	public function testCanSetAttribute()
 	{
 		$this->myAttribute = 123;
-		$this->assertSame(123, $this->myAttribute);
+		$this->assert(123, exactly_equals, $this->myAttribute);
 	}
 
 	/**
@@ -41,20 +41,20 @@ class TestCaseTest extends TestCase
 		$this->x = 123;
 		$this->b = '456';
 		$data = $this->getData();
-		$this->assertSame($data['x'], 123);
+		$this->assert($data['x'], exactly_equals, 123);
 	}
 
 	public function testCanUnsetProperty()
 	{
 		$this->myUniqueProperty = 123;
 		unset($this->myUniqueProperty);
-		$this->assertFalse(isset($this->myUniqueProperty));
+		$this->assert(isset($this->myUniqueProperty), is_false);
 	}
 
 	public function testUnsettingAnAttributeThatDoesntExistDoesNothing()
 	{
 		unset($this->foobar);
-		$this->assertFalse(isset($this->myUniqueProperty));
+		$this->assert(isset($this->myUniqueProperty), is_false);
 	}
 
 	/**
@@ -70,29 +70,31 @@ class TestCaseTest extends TestCase
 
 	public function testDataIncludesExplicitInstanceVariables()
 	{
-		$this->assertTrue(array_key_exists('mySpecialAttribute', $this->getData()));
+		$this->assert($this->getData(), has_key, 'mySpecialAttribute');
 	}
 
 	public function testIssetWorksWithAttributes()
 	{
 		$this->x = 123;
-		$this->assertTrue(isset($this->x));
+		$this->assert(isset($this->x));
 	}
 
 	public function testDataIsResetBetweenTests()
 	{
-		$this->assertFalse(isset($this->x));
+		$this->assert(isset($this->x), is_false);
 	}
 
 	protected function getAssertionsForFixtureTests()
 	{
-		$testCase = $this->getStub('\Concise\TestCase', array(
-			'getRawAssertionsForMethod' => array(
-				'x equals b',
-				'false',
-				'true',
-			)
-		));
+		$testCase = $this->niceMock('\Concise\TestCase')
+		                 ->stub(array(
+		                 	'getRawAssertionsForMethod' => array(
+								'x equals b',
+								'false',
+								'true',
+							)
+						 ))
+		                 ->done();
 		return $testCase->getAssertionsForMethod('abc');
 	}
 
@@ -110,12 +112,12 @@ class TestCaseTest extends TestCase
 	public function testEachTestMethodSetsTheCurrentTestCaseForRawAssertKeyword()
 	{
 		global $_currentTestCase;
-		$this->assertSame($this, $_currentTestCase);
+		$this->assert($this, is_the_same_as, $_currentTestCase);
 	}
 
 	public function testCanUseAssertThatFunction()
 	{
-		assertThat("123 equals 123");
+		assert_that("123 equals 123");
 	}
 
 	public function testConstantsForKeywordsAreInitialised()
@@ -126,5 +128,42 @@ class TestCaseTest extends TestCase
 	public function testConstantsForKeywordStringsAreInitialised()
 	{
 		$this->assertSame(exactly_equals, 'exactly equals');
+	}
+
+	public function testAssertionBuilderWillBeUsedForBooleanAssertions()
+	{
+		$this->assert(true);
+	}
+
+	public function testMocksAreResetInTheSetup()
+	{
+		$this->assert($this->_mocks, exactly_equals, array());
+	}
+
+	public function testCreatingAMockAddsItToTheMocks()
+	{
+		$this->mock()->done();
+		$this->assert(count($this->_mocks), equals, 1);
+	}
+
+	public function testCreatingANiceMockAddsItToTheMocks()
+	{
+		$this->niceMock()->done();
+		$this->assert(count($this->_mocks), equals, 1);
+	}
+
+	public function testCreatingMultipleMocksAddsAllToMocks()
+	{
+		$this->mock()->done();
+		$this->niceMock()->done();
+		$this->assert(count($this->_mocks), equals, 2);
+	}
+
+	public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
+	{
+		$mockTemplate = $this->mock();
+		$mockTemplate->done();
+		$mockTemplate->done();
+		$this->assert(count($this->_mocks), equals, 2);
 	}
 }

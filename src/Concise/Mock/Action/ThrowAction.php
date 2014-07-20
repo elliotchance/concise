@@ -4,15 +4,18 @@ namespace Concise\Mock\Action;
 
 class ThrowAction extends AbstractAction
 {
+	public static $cache = array();
+
 	protected $exception;
 
 	public function __construct($exception)
 	{
-		$this->exception = $exception;
+		$this->cacheId = md5(rand());
+		self::$cache[$this->cacheId] = $exception;
 	}
 
-	public function getWillAction(\PHPUnit_Framework_TestCase $testCase)
+	public function getActionCode()
 	{
-		return $testCase->throwException($this->exception);
+		return 'throw \Concise\Mock\Action\ThrowAction::$cache["' . $this->cacheId . '"];';
 	}
 }
