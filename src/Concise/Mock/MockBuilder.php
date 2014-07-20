@@ -58,30 +58,6 @@ class MockBuilder
 		return $this;
 	}
 
-	protected function getAllMethodNamesForClass()
-	{
-		$class = new \ReflectionClass($this->className);
-		$methodNames = array();
-		foreach($class->getMethods() as $method) {
-			$methodNames[] = $method->getName();
-		}
-		return $methodNames;
-	}
-
-	protected function stubMethod($mock, $method, $will, $times = -1, $with = null)
-	{
-		$expect = $this->testCase->any();
-		if($times >= 0) {
-			$expect = $this->testCase->exactly($times);
-		}
-		$m = $mock->expects($expect)
-				  ->method($method);
-		if(null !== $with) {
-			$m = call_user_func_array(array($m, 'with'), $with);
-		}
-		$m->will($will);
-	}
-
 	public function done()
 	{
 		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs);

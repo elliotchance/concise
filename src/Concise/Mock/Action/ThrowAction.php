@@ -14,11 +14,6 @@ class ThrowAction extends AbstractAction
 		self::$cache[$this->cacheId] = $exception;
 	}
 
-	public function getWillAction(\PHPUnit_Framework_TestCase $testCase)
-	{
-		return $testCase->throwException($this->exception);
-	}
-
 	public function getActionCode()
 	{
 		return 'throw \Concise\Mock\Action\ThrowAction::$cache["' . $this->cacheId . '"];';
