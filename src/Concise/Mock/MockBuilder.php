@@ -19,6 +19,10 @@ class MockBuilder
 
 	protected $constructorArgs;
 
+	/**
+	 * @param string $className
+	 * @param boolean $niceMock
+	 */
 	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
 	{
 		$this->testCase = $testCase;
@@ -90,6 +94,9 @@ class MockBuilder
 		return $this->setAction(new Action\ReturnValueAction($value));
 	}
 
+	/**
+	 * @param \Exception $exception
+	 */
 	public function andThrow($exception)
 	{
 		return $this->setAction(new Action\ThrowAction($exception));
@@ -108,6 +115,9 @@ class MockBuilder
 		return $this;
 	}
 
+	/**
+	 * @param string $method
+	 */
 	public function expects($method)
 	{
 		return $this->expect($method);
@@ -125,6 +135,9 @@ class MockBuilder
 		return $this;
 	}
 
+	/**
+	 * @param integer $times
+	 */
 	public function exactly($times)
 	{
 		if($times === 0) {
