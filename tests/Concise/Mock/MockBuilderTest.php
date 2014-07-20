@@ -293,4 +293,11 @@ class MockBuilderTest extends TestCase
 		             ->done();
 		$this->assert($mock, instance_of, '\Concise\Mock\Mock3');
 	}
+
+	public function testNiceMockReceivesConstructorArguments()
+	{
+		$mock = $this->niceMock('\Concise\Mock\Mock3', array('foo'))
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\Mock3');
+	}
 }
