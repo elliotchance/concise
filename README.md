@@ -67,37 +67,10 @@ Matchers
 
 <!-- start matchers -->
 
-* `? does not end with ?` - Assert a string does not end with another string.
-* `? does not equal ?` - Assert two value do not match with no regard to type.
-* `? does not exactly equal ?` - Assert two values are of exactly the same type and value.
-* `? does not start with ?` - Assert a string does not not start (begin) with another string.
-* `? equals ?` - Assert values with no regard to exact data types.
-* `? exactly equals ?` - Assert two values match data type and value.
-* `? is a number` - Assert that a value is an integer or floating-point.
-* `? is a string` - Assert value is a string.
+### Arrays
+
 * `? is an array` - Assert a value is an array.
-* `? is an int` - Assert value is an integer type.
-* `? is an integer` - Assert value is an integer type.
-* `? is an object` - Assert value is an object.
-* `? is equal to ?` - Assert values with no regard to exact data types.
-* `? is exactly equal to ?` - Assert two values match data type and value.
-* `? is false` - Assert value is false.
-* `? is not a number` - Assert that a value is not an integer or floating-point.
-* `? is not a string` - Assert a value is not a string.
 * `? is not an array` - Assert a value is not an array.
-* `? is not an int` - Assert a value is not an integer type.
-* `? is not an integer` - Assert a value is not an integer type.
-* `? is not an object` - Assert a value is not an object.
-* `? is not equal to ?` - Assert two value do not match with no regard to type.
-* `? is not exactly equal to ?` - Assert two values are of exactly the same type and value.
-* `? is not null` - Assert a value is not null.
-* `? is not numeric` - Assert value is not a number or string that represents a number.
-* `? is not the same as ?` - Assert two values are of exactly the same type and value.
-* `? is null` - Assert a value is null.
-* `? is numeric` - Assert value is a number or string that represents a number.
-* `? is the same as ?` - Assert two values match data type and value.
-* `? is true` - Assert a value is true.
-* `? not equals ?` - Assert two value do not match with no regard to type.
 * `?:array contains ?` - Assert an array has at least one occurrence of the given value.
 * `?:array does not contain ?` - Assert an array does not have any occurrences of the given value.
 * `?:array does not have key ?:int,string` - Assert an array does not have a key.
@@ -118,12 +91,49 @@ Matchers
 * `?:array is not empty array` - Assert an array is not empty (at least one element).
 * `?:array is not unique` - Assert that an array only has at least one element that is repeated.
 * `?:array is unique` - Assert that an array only contains unique values.
+
+### Basic
+
+* `? does not equal ?` - Assert two value do not match with no regard to type.
+* `? does not exactly equal ?` - Assert two values are of exactly the same type and value.
+* `? equals ?` - Assert values with no regard to exact data types.
+* `? exactly equals ?` - Assert two values match data type and value.
+* `? is equal to ?` - Assert values with no regard to exact data types.
+* `? is exactly equal to ?` - Assert two values match data type and value.
+* `? is not equal to ?` - Assert two value do not match with no regard to type.
+* `? is not exactly equal to ?` - Assert two values are of exactly the same type and value.
+* `? is not null` - Assert a value is not null.
+* `? is not the same as ?` - Assert two values are of exactly the same type and value.
+* `? is null` - Assert a value is null.
+* `? is the same as ?` - Assert two values match data type and value.
+* `? not equals ?` - Assert two value do not match with no regard to type.
+
+### Booleans
+
+* `? is false` - Assert value is false.
+* `? is true` - Assert a value is true.
+* `false` - Always fail.
+* `true` - Always pass.
+
+### Exceptions
+
 * `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.
 * `?:callable does not throw exception` - Assert that no exception is thrown.
 * `?:callable throws ?:class` - Assert a specific exception was thrown.
 * `?:callable throws anything except ?:class` - Assert any exception except a specific one was thrown.
 * `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
 * `?:callable throws exception` - Assert an exception was thrown.
+
+### Numbers
+
+* `? is a number` - Assert that a value is an integer or floating-point.
+* `? is an int` - Assert value is an integer type.
+* `? is an integer` - Assert value is an integer type.
+* `? is not a number` - Assert that a value is not an integer or floating-point.
+* `? is not an int` - Assert a value is not an integer type.
+* `? is not an integer` - Assert a value is not an integer type.
+* `? is not numeric` - Assert value is not a number or string that represents a number.
+* `? is numeric` - Assert value is a number or string that represents a number.
 * `?:number between ?:number and ?:number` - A number must be between two values (inclusive).
 * `?:number greater than ?:number` - A number is greater than another number.
 * `?:number greater than or equal ?:number` - A number is greater than or equal to another number.
@@ -140,12 +150,24 @@ Matchers
 * `?:number lt ?:number` - A number is less than another number.
 * `?:number lte ?:number` - A number is less than or equal to another number.
 * `?:number not between ?:number and ?:number` - A number must not be between two values (inclusive).
+
+### Objects
+
+* `? is an object` - Assert value is an object.
+* `? is not an object` - Assert a value is not an object.
 * `?:object instance of ?:class` - Assert an objects class or subclass.
 * `?:object is an instance of ?:class` - Assert an objects class or subclass.
 * `?:object is instance of ?:class` - Assert an objects class or subclass.
 * `?:object is not an instance of ?:class` - Assert than an object is not a class or subclass.
 * `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
 * `?:object not instance of ?:class` - Assert than an object is not a class or subclass.
+
+### Strings
+
+* `? does not end with ?` - Assert a string does not end with another string.
+* `? does not start with ?` - Assert a string does not not start (begin) with another string.
+* `? is a string` - Assert value is a string.
+* `? is not a string` - Assert a value is not a string.
 * `?:string does not match regex ?:regex` - Assert a string does not match a regular expression.
 * `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
 * `?:string doesnt match regex ?:regex` - Assert a string does not match a regular expression.
@@ -156,8 +178,7 @@ Matchers
 * `?:string matches regex ?:regex` - Assert a string matches a regular expression
 * `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
-* `false` - Always fail.
-* `true` - Always pass.
+
 
 <!-- end matchers -->
 

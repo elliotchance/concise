@@ -18,6 +18,6 @@ class IsAString extends AbstractMatcher
 
 	public function getTags()
 	{
-		return array(Tag::BASIC, Tag::STRINGS);
+		return array(Tag::STRINGS);
 	}
 }

@@ -15,9 +15,4 @@ class IsNotUnique extends IsUnique
 	{
 		return !parent::match(null, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::BASIC, Tag::ARRAYS);
-	}
 }

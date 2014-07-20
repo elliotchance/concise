@@ -17,9 +17,4 @@ class StringDoesNotEndWith extends StringEndsWith
 	{
 		return !parent::match($syntax, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::STRINGS);
-	}
 }

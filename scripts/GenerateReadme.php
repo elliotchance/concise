@@ -11,16 +11,29 @@ $readme = file_get_contents($readmeFile);
 
 // generate the matchers doc
 $parser = \Concise\Syntax\MatcherParser::getInstance();
-$syntaxes = $parser->getAllSyntaxes();
+$syntaxes = $parser->getAllMatcherDescriptions();
+
+$matchers = array();
+foreach($syntaxes as $syntax => $d) {
+	foreach($d['tags'] as $tag) {
+		$matchers[$tag][$syntax] = $d['description'];
+	}
+}
 
 $matchersDoc = '';
-foreach($syntaxes as $syntax => $description) {
-	if(!is_null($description)) {
-		$matchersDoc .= "* `$syntax` - $description\n";
+ksort($matchers);
+foreach($matchers as $tag => $syntaxes) {
+	ksort($syntaxes);
+	$matchersDoc .= "### $tag\n\n";
+	foreach($syntaxes as $syntax => $description) {
+		if(is_null($description)) {
+			$matchersDoc .= "* `$syntax`\n";
+		}
+		else {
+			$matchersDoc .= "* `$syntax` - $description\n";
+		}
 	}
-	else {
-		$matchersDoc .= "* `$syntax`\n";
-	}
+	$matchersDoc .= "\n";
 }
 
 $readme = preg_replace('/<!-- start matchers -->.*<!-- end matchers -->/ms', "<!-- start matchers -->\n\n$matchersDoc\n<!-- end matchers -->", $readme);

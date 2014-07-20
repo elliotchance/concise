@@ -18,6 +18,6 @@ class IsNotAnArray extends IsAnArray
 
 	public function getTags()
 	{
-		return array(Tag::BASIC, Tag::ARRAYS);
+		return array(Tag::ARRAYS);
 	}
 }

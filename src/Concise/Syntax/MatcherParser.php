@@ -152,4 +152,21 @@ class MatcherParser
 		ksort($r);
 		return $r;
 	}
+
+	public function getAllMatcherDescriptions()
+	{
+		$r = array();
+		$service = new MatcherSyntaxAndDescription();
+		foreach($this->getMatchers() as $matcher) {
+			$syntaxes = $service->process($matcher->supportedSyntaxes());
+			foreach($syntaxes as &$syntax) {
+				$syntax = array(
+					'description' => $syntax,
+					'tags' => $matcher->getTags(),
+				);
+			}
+			$r += $syntaxes;
+		}
+		return $r;
+	}
 }

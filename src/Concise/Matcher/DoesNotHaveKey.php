@@ -17,9 +17,4 @@ class DoesNotHaveKey extends HasKey
 	{
 		return !parent::match(null, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::ARRAYS);
-	}
 }

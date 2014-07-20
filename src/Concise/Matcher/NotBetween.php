@@ -18,9 +18,4 @@ class NotBetween extends Between
 	{
 		return !parent::match(null, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::NUMBERS);
-	}
 }

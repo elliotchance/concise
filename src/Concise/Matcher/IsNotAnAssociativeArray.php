@@ -15,9 +15,4 @@ class IsNotAnAssociativeArray extends IsAnAssociativeArray
 	{
 		return !parent::match(null, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::BASIC, Tag::ARRAYS);
-	}
 }

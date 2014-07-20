@@ -18,6 +18,6 @@ class IsNotNumeric extends IsNumeric
 
 	public function getTags()
 	{
-		return array(Tag::BASIC, Tag::NUMBERS);
+		return array(Tag::NUMBERS);
 	}
 }

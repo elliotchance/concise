@@ -21,6 +21,6 @@ class IsAnInteger extends AbstractMatcher
 
 	public function getTags()
 	{
-		return array(Tag::BASIC, Tag::NUMBERS);
+		return array(Tag::NUMBERS);
 	}
 }

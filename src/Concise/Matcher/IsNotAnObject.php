@@ -15,9 +15,4 @@ class IsNotAnObject extends IsAnObject
 	{
 		return !parent::match($syntax, $data);
 	}
-
-	public function getTags()
-	{
-		return array(Tag::BASIC, Tag::OBJECTS);
-	}
 }
