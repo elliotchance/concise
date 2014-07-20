@@ -38,22 +38,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return get_object_vars($this);
 	}
 
-	/**
-	 * @param string $class
-	 */
-	protected function getStub($class, array $methods, array $constructorArgs = array())
-	{
-		// @test force class to exist
-		// @test force class to be fully qualified
-		$stub = $this->getMock($class, array_keys($methods), $constructorArgs);
-		foreach($methods as $method => $returnValue) {
-			$stub->expects($this->any())
-			     ->method($method)
-			     ->will($this->returnValue($returnValue));
-		}
-		return $stub;
-	}
-
 	protected function getRealTestName()
 	{
 		$name = substr($this->getName(), 20);

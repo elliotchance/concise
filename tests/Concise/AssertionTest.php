@@ -98,15 +98,15 @@ class AssertionTest extends TestCase
 
 	protected function getStubForAssertionThatReturnsData(array $data)
 	{
-		return $this->getStub('\Concise\Assertion', array(
-			'getData' => $data
-		), array('true', new True()));
+		return $this->niceMock('\Concise\Assertion', array('true', new True()))
+		            ->stub(array('getData' => $data))
+		            ->done();
 	}
 
 	public function testDoNotShowPHPUnitPropertiesOnError()
 	{
 		$assertion = $this->getStubForAssertionThatReturnsData(self::getPHPUnitProperties());
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 
 	public function testDoNotShowDataSetOnError()
@@ -114,12 +114,12 @@ class AssertionTest extends TestCase
 		$assertion = $this->getStubForAssertionThatReturnsData(array(
 			'__dataSet' => array()
 		));
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 
 	public function testNoAttributesRendersAsAnEmptyString()
 	{
 		$assertion = $this->getStubForAssertionThatReturnsData(array());
-		$this->assertEquals("", (string) $assertion);
+		$this->assert((string) $assertion, is_blank);
 	}
 }
