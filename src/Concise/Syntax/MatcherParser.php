@@ -142,17 +142,6 @@ class MatcherParser
 		return $this->keywords;
 	}
 
-	public function getAllSyntaxes()
-	{
-		$r = array();
-		$service = new MatcherSyntaxAndDescription();
-		foreach($this->getMatchers() as $matcher) {
-			$r += $service->process($matcher->supportedSyntaxes());
-		}
-		ksort($r);
-		return $r;
-	}
-
 	public function getAllMatcherDescriptions()
 	{
 		$r = array();

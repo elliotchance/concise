@@ -7,7 +7,7 @@ class HasValuesTest extends AbstractMatcherTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->matcher = new HasKeys();
+		$this->matcher = new HasValues();
 	}
 
 	public function testArrayHasOneValue()
