@@ -22,6 +22,13 @@ abstract class Mock2
 	}
 }
 
+class Mock3
+{
+	public function __construct($a)
+	{
+	}
+}
+
 class MockBuilderTest extends TestCase
 {
 	public function testMockCanBeCreatedFromAClassThatExists()
@@ -278,5 +285,12 @@ class MockBuilderTest extends TestCase
 
 		$mock = end($this->_mocks);
 		$this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
+	}
+
+	public function testMockReceivesConstructorArguments()
+	{
+		$mock = $this->mock('\Concise\Mock\Mock3', array('foo'))
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\Mock3');
 	}
 }

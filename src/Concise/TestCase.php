@@ -120,9 +120,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		parent::tearDown();
 	}
 	
-	protected function mock($className = '\stdClass')
+	protected function mock($className = '\stdClass', array $constructorArgs = array())
 	{
-		return new MockBuilder($this, $className, false);
+		return new MockBuilder($this, $className, false, $constructorArgs);
 	}
 
 	protected function niceMock($className = '\stdClass')

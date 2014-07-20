@@ -12,7 +12,9 @@ class ClassCompiler
 
 	protected $niceMock;
 
-	public function __construct($className, $niceMock = false)
+	protected $constructorArgs;
+
+	public function __construct($className, $niceMock = false, array $constructorArgs = array())
 	{
 		if(!class_exists($className)) {
 			throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
@@ -20,6 +22,7 @@ class ClassCompiler
 		$this->className = ltrim($className, '\\');
 		$this->mockUnique = '_' . substr(md5(rand()), 24);
 		$this->niceMock = $niceMock;
+		$this->constructorArgs = $constructorArgs;
 	}
 
 	protected function getNamespaceName()
@@ -74,7 +77,8 @@ class ClassCompiler
 
 	public function newInstance()
 	{
-		return eval($this->generateCode() . " return new {$this->getMockName()}();");
+		$reflect = eval($this->generateCode() . " return new \\ReflectionClass('{$this->getNamespaceName()}\\{$this->getMockName()}');");
+		return $reflect->newInstanceArgs($this->constructorArgs);
 	}
 
 	public function setRules(array $rules)

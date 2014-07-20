@@ -17,7 +17,9 @@ class MockBuilder
 
 	protected $currentRule;
 
-	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock)
+	protected $constructorArgs;
+
+	public function __construct(\PHPUnit_Framework_TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
 	{
 		$this->testCase = $testCase;
 		if(!class_exists($className)) {
@@ -25,6 +27,7 @@ class MockBuilder
 		}
 		$this->className = $className;
 		$this->niceMock = $niceMock;
+		$this->constructorArgs = $constructorArgs;
 	}
 
 	protected function addRule($method, Action\AbstractAction $action, $times = -1)
@@ -81,7 +84,7 @@ class MockBuilder
 
 	public function done()
 	{
-		$compiler = new ClassCompiler($this->className, $this->niceMock);
+		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs);
 		$compiler->setRules($this->rules);
 		$mockInstance = $compiler->newInstance();
 		$this->testCase->addMockInstance($this, $mockInstance);
