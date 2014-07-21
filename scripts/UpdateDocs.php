@@ -10,29 +10,34 @@ updateWikiAssertions();
 
 function getAssertionsByTag()
 {
-	// generate the matchers doc
 	$parser = \Concise\Syntax\MatcherParser::getInstance();
 	$syntaxes = $parser->getAllMatcherDescriptions();
 
 	$matchers = array();
 	foreach($syntaxes as $syntax => $d) {
 		foreach($d['tags'] as $tag) {
-			$matchers[$tag][$syntax] = $d['description'];
+			$matchers[$tag][$d['matcher']][] = array($syntax, $d['description']);
 		}
 	}
 
 	return $matchers;
 }
 
-function generateMarkdownList(array $syntaxes)
+function generateMarkdownItem($syntax, $description, $indent = '*')
+{
+	if(is_null($description)) {
+		return "$indent `$syntax`\n";
+	}
+	return "$indent `$syntax` - $description\n";
+}
+
+function generateMarkdownList(array $matchers)
 {
 	$matchersDoc = '';
-	foreach($syntaxes as $syntax => $description) {
-		if(is_null($description)) {
-			$matchersDoc .= "* `$syntax`\n";
-		}
-		else {
-			$matchersDoc .= "* `$syntax` - $description\n";
+	foreach($matchers as $matcher => $syntaxes) {
+		$matchersDoc .= generateMarkdownItem($syntaxes[0][0], $syntaxes[0][1]);
+		for($i = 1; $i < count($syntaxes); ++$i) {
+			$matchersDoc .= generateMarkdownItem($syntaxes[$i][0], null, '  *');
 		}
 	}
 	return "$matchersDoc\n";
@@ -66,12 +71,11 @@ function updateWikiAssertions()
 	ksort($matchers);
 	foreach($matchers as $tag => $syntaxes) {
 		ksort($syntaxes);
-		$matchersDoc = "# $tag\n\n";
-		$matchersDoc .= generateMarkdownList($syntaxes);
+		$matchersDoc = generateMarkdownList($syntaxes);
 
-		$wikiFile = __DIR__ . "/../wiki/Assertions-$tag.md";
+		$wikiFile = __DIR__ . "/../wiki/Assertions-for-$tag.md";
 		if(file_exists($wikiFile)) {
-			$matchersDoc = preg_replace('/<!-- start assertions -->.*<!-- end assertions -->/ms', "<!-- start assertions -->\n\n$matchersDoc\n<!-- end assertions -->",  file_get_contents($wikiFile));
+			$matchersDoc = preg_replace('/<!-- start assertions -->.*<!-- end assertions -->/ms', "<!-- start assertions -->\n\n$matchersDoc\n<!-- end assertions -->", file_get_contents($wikiFile));
 		}
 		else {
 			$matchersDoc = "<!-- start assertions -->\n\n$matchersDoc\n<!-- end assertions -->";

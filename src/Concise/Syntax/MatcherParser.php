@@ -152,6 +152,7 @@ class MatcherParser
 				$syntax = array(
 					'description' => $syntax,
 					'tags' => $matcher->getTags(),
+					'matcher' => get_class($matcher),
 				);
 			}
 			$r += $syntaxes;
