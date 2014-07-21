@@ -15,4 +15,9 @@ class IsNumeric extends AbstractMatcher
 	{
 		return is_numeric($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::NUMBERS);
+	}
 }

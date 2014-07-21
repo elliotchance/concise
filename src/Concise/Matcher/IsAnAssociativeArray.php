@@ -16,4 +16,9 @@ class IsAnAssociativeArray extends AbstractMatcher
 		$arr = $data[0];
 		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

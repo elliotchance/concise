@@ -23,4 +23,9 @@ class HasKeys extends AbstractMatcher
 		}
 		return true;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

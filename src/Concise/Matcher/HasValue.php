@@ -18,4 +18,9 @@ class HasValue extends AbstractMatcher
 	{
 		return in_array($data[1], $data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

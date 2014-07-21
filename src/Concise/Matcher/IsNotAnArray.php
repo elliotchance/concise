@@ -15,4 +15,9 @@ class IsNotAnArray extends IsAnArray
 	{
 		return !parent::match($syntax, $data);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

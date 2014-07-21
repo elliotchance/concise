@@ -15,4 +15,9 @@ class IsAString extends AbstractMatcher
 	{
 		return is_string($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::STRINGS);
+	}
 }

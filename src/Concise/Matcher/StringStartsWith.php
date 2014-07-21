@@ -15,4 +15,9 @@ class StringStartsWith extends AbstractMatcher
 	{
 		return ((substr($data[0], 0, strlen($data[1])) === $data[1]));
 	}
+
+	public function getTags()
+	{
+		return array(Tag::STRINGS);
+	}
 }

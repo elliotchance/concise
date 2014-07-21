@@ -28,4 +28,9 @@ class HasItem extends AbstractMatcher
 		}
 		return false;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

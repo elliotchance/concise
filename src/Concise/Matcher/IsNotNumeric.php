@@ -15,4 +15,9 @@ class IsNotNumeric extends IsNumeric
 	{
 		return !parent::match(null, $data);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::NUMBERS);
+	}
 }

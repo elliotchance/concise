@@ -14,6 +14,9 @@ class ClassCompiler
 
 	protected $constructorArgs;
 
+	/**
+	 * @param string $className
+	 */
 	public function __construct($className, $niceMock = false, array $constructorArgs = array())
 	{
 		if(!class_exists($className)) {

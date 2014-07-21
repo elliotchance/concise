@@ -8,6 +8,9 @@ class ThrowAction extends AbstractAction
 
 	protected $exception;
 
+	/**
+	 * @param \Exception $exception
+	 */
 	public function __construct($exception)
 	{
 		$this->cacheId = md5(rand());

@@ -15,4 +15,9 @@ class IsBlank extends AbstractMatcher
 	{
 		return $data[0] === '';
 	}
+
+	public function getTags()
+	{
+		return array(Tag::STRINGS);
+	}
 }

@@ -4,6 +4,7 @@ namespace Concise\Syntax;
 
 use \Concise\TestCase;
 use \Concise\Services\MatcherSyntaxAndDescription;
+use \Concise\Matcher\Tag;
 
 class MatcherParserStub extends MatcherParser
 {
@@ -112,11 +113,8 @@ class MatcherParserTest extends TestCase
 
 	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
 	{
-		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$this->assert($syntaxes, has_items, array(
-			'? is null'       => 'Assert a value is null.',
-			'? is equal to ?' => 'Assert values with no regard to exact data types.',
-		));
+		$syntaxes = MatcherParser::getInstance()->getAllMatcherDescriptions();
+		$this->assert($syntaxes, has_keys, array('? is null', '? is equal to ?'));
 	}
 
 	public function testCanMatchSyntaxWithExpectedTypes()
