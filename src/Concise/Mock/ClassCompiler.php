@@ -45,7 +45,7 @@ class ClassCompiler
 	{
 		$refClass = new \ReflectionClass($this->className);
 		if($refClass->isFinal()) {
-			throw new \Exception("Class '{$this->className}' is final so it cannot be mocked.");
+			throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
 		}
 
 		$prototypeBuilder = new PrototypeBuilder();
@@ -67,6 +67,9 @@ class ClassCompiler
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$realMethod = new \ReflectionMethod($this->className, $method);
+			if($realMethod->isFinal()) {
+				throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
+			}
 			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 

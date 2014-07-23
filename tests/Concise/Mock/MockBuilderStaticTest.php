@@ -17,7 +17,7 @@ class MockBuilderStaticTest extends TestCase
 	public function testMocksCanMockStaticMethods()
 	{
 		$mock = $this->mock('\Concise\Mock\MockStatic')
-		             ->stub(['myMethod' => 'foo'])
+		             ->stub(array('myMethod' => 'foo'))
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 'foo');
 	}
