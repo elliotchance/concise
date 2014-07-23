@@ -44,6 +44,10 @@ class ClassCompiler
 	public function generateCode()
 	{
 		$refClass = new \ReflectionClass($this->className);
+		if($refClass->isFinal()) {
+			throw new \Exception("Class '{$this->className}' is final so it cannot be mocked.");
+		}
+
 		$prototypeBuilder = new PrototypeBuilder();
 		$prototypeBuilder->hideAbstract = true;
 
