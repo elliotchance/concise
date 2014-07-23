@@ -63,14 +63,14 @@ class ClassCompiler
 		foreach($this->rules as $method => $rule) {
 			$action = $rule['action'];
 			$realMethod = new \ReflectionMethod($this->className, $method);
-			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', \$this->_methodCalls)) { \$this->_methodCalls['$method'] = array(); } \$this->_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
+			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
-		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, $this->_methodCalls) ? $this->_methodCalls[$method] : array(); }';
+		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
 
 		unset($methods['__construct']);
 
-		return $code . "class {$this->getMockName()} extends \\{$this->className} { public \$_methodCalls = array(); " . implode(" ", $methods) . "}";
+		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}
 
 	protected function getMockName()
