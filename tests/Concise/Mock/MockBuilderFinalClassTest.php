@@ -37,4 +37,11 @@ class MockBuilderFinalClassTest extends TestCase
 		     ->stub('myMethod')
 		     ->done();
 	}
+
+	public function testFinalMethodsWillNotBeOverriddenInChildClasses()
+	{
+		$mock = $this->mock('\Concise\Mock\MockFinalClass2')
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
+	}
 }

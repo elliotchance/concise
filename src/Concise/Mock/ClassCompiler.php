@@ -59,6 +59,9 @@ class ClassCompiler
 		$methods = array();
 		if(!$this->niceMock) {
 			foreach($refClass->getMethods() as $method) {
+				if($method->isFinal()) {
+					continue;
+				}
 				$methods[$method->getName()] = $prototypeBuilder->getPrototype($method) . ' { throw new \\Exception("' .
 					$method->getName() . '() does not have an associated action - consider a niceMock()?"); }';
 			}
