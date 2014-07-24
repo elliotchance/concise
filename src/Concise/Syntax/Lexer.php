@@ -2,15 +2,18 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Services\CharacterConverter;
+use Concise\Services\CharacterConverter;
 
 class Lexer
 {
 	/**
-	 * @var \Concise\Syntax\MatcherParser
+	 * @var Concise\Syntax\MatcherParser
 	 */
 	protected $matcherParser = null;
 
+	/**
+	 * @return Concise\Syntax\MatcherParser
+	 */
 	protected function getMatcherParser()
 	{
 		if(null === $this->matcherParser) {
@@ -21,12 +24,20 @@ class Lexer
 
 	/**
 	 * @param string $token
+	 * @return bool
 	 */
 	protected function isKeyword($token)
 	{
 		return in_array($token, $this->getMatcherParser()->getKeywords());
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  string $until A single character.
+	 * @param  integer $startIndex
+	 * @param  boolean $mustConsumeUntil
+	 * @return string
+	 */
 	protected function consumeUntilToken($string, $until, &$startIndex, $mustConsumeUntil = true)
 	{
 		$t = '';
@@ -51,21 +62,42 @@ class Lexer
 		return $t;
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  string $container
+	 * @param  integer $startIndex
+	 * @return string
+	 */
 	protected function consumeString($string, $container, &$startIndex)
 	{
 		return $this->consumeUntilToken($string, $container, $startIndex);
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  integer $startIndex
+	 * @return string
+	 */
 	protected function consumeClassname($string, &$startIndex)
 	{
 		return $this->consumeUntilToken($string, ' ', $startIndex, false);
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  integer $startIndex
+	 * @return string
+	 */
 	protected function consumeCode($string, &$startIndex)
 	{
 		return $this->consumeUntilToken($string, '`', $startIndex);
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  integer $startIndex
+	 * @return string
+	 */
 	protected function consumeRegexp($string, &$startIndex)
 	{
 		return '/' . $this->consumeUntilToken($string, '/', $startIndex) . '/';
@@ -73,6 +105,7 @@ class Lexer
 
 	/**
 	 * @param string $t
+	 * @return Token
 	 */
 	protected function translateValue($t)
 	{
@@ -86,6 +119,11 @@ class Lexer
 		return new Token\Attribute($t);
 	}
 
+	/**
+	 * @param  string $string
+	 * @param  integer $startIndex
+	 * @return string
+	 */
 	protected function consumeJson($string, &$startIndex)
 	{
 		$originalStartIndex = $startIndex;
@@ -109,6 +147,10 @@ class Lexer
 		throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
 	}
 
+	/**
+	 * @param  string $string
+	 * @return array
+	 */
 	protected function getTokens($string)
 	{
 		$r = array();
@@ -157,6 +199,10 @@ class Lexer
 		return $r;
 	}
 
+	/**
+	 * @param  string $string
+	 * @return array
+	 */
 	protected function getAttributes($string)
 	{
 		$tokens = $this->getTokens($string);
@@ -175,6 +221,10 @@ class Lexer
 		return $attributes;
 	}
 
+	/**
+	 * @param  string $string
+	 * @return string
+	 */
 	protected function getSyntax($string)
 	{
 		$tokens = $this->getTokens($string);
@@ -190,6 +240,10 @@ class Lexer
 		return implode(' ', $syntax);
 	}
 
+	/**
+	 * @param  string $string
+	 * @return array
+	 */
 	public function parse($string)
 	{
 		return array(
@@ -199,6 +253,9 @@ class Lexer
 		);
 	}
 
+	/**
+	 * @param MatcherParser $matcherParser
+	 */
 	public function setMatcherParser(MatcherParser $matcherParser)
 	{
 		$this->matcherParser = $matcherParser;

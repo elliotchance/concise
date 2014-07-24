@@ -4,6 +4,10 @@ namespace Concise\Services;
 
 class ValueRenderer
 {
+	/**
+	 * @param  mixed $value
+	 * @return string
+	 */
 	public function render($value)
 	{
 		if(is_callable($value)) {

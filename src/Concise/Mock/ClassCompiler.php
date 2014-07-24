@@ -4,18 +4,41 @@ namespace Concise\Mock;
 
 class ClassCompiler
 {
+	/**
+	 * The fully qualified class name.
+	 * @var string
+	 */
 	protected $className;
 
+	/**
+	 * A unique string to be appended to the mock class name to make it unique (separate it from other mocks with the
+	 * same name)
+	 * @var string
+	 */
 	protected $mockUnique;
 
+	/**
+	 * The rules for the methods.
+	 * @var array
+	 */
 	protected $rules = array();
 
+	/**
+	 * If this is a nice mock.
+	 * @var bool
+	 */
 	protected $niceMock;
 
+	/**
+	 * Arguments to pass to the constructor for the mock.
+	 * @var array
+	 */
 	protected $constructorArgs;
 
 	/**
-	 * @param string $className
+	 * @param string  $className
+	 * @param boolean $niceMock
+	 * @param array   $constructorArgs
 	 */
 	public function __construct($className, $niceMock = false, array $constructorArgs = array())
 	{
@@ -28,6 +51,10 @@ class ClassCompiler
 		$this->constructorArgs = $constructorArgs;
 	}
 
+	/**
+	 * Get the namespace for the mocked class.
+	 * @return string
+	 */
 	protected function getNamespaceName()
 	{
 		$parts = explode('\\', $this->className);
@@ -35,12 +62,20 @@ class ClassCompiler
 		return implode('\\', $parts);
 	}
 
+	/**
+	 * Get the class name (not including the namespace) of the class to be mocked.
+	 * @return string
+	 */
 	protected function getClassName()
 	{
 		$parts = explode('\\', $this->className);
 		return $parts[count($parts) - 1];
 	}
 
+	/**
+	 * Generate the PHP code for the mocked class.
+	 * @return string
+	 */
 	public function generateCode()
 	{
 		$refClass = new \ReflectionClass($this->className);
@@ -86,17 +121,29 @@ class ClassCompiler
 		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}
 
+	/**
+	 * Get the name of the mocked class (not including the namespace).
+	 * @return string
+	 */
 	protected function getMockName()
 	{
 		return $this->getClassName() . $this->mockUnique;
 	}
 
+	/**
+	 * Create a new instance of the mocked class. There is no need to generate the code before invoking this.
+	 * @return object
+	 */
 	public function newInstance()
 	{
 		$reflect = eval($this->generateCode() . " return new \\ReflectionClass('{$this->getNamespaceName()}\\{$this->getMockName()}');");
 		return $reflect->newInstanceArgs($this->constructorArgs);
 	}
 
+	/**
+	 * Set all the rules for the mock.
+	 * @param array $rules
+	 */
 	public function setRules(array $rules)
 	{
 		$this->rules = $rules;

@@ -8,13 +8,22 @@ use \Concise\Matcher\IsTrue;
 
 class AssertionBuilder
 {
+	/**
+	 * @var array
+	 */
 	protected $args;
 
+	/**
+	 * @param array $args
+	 */
 	public function __construct(array $args)
 	{
 		$this->args = $args;
 	}
 
+	/**
+	 * @return Concise\Assertion
+	 */
 	public function getAssertion()
 	{
 		$matcherParser = MatcherParser::getInstance();

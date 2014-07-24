@@ -14,7 +14,7 @@ abstract class AbstractMatcher
 	public abstract function match($syntax, array $data = array());
 
 	/**
-	 * @return array of syntaxes this matcher can understand.
+	 * @return array Syntaxes this matcher can understand.
 	 */
 	public abstract function supportedSyntaxes();
 
@@ -28,5 +28,8 @@ abstract class AbstractMatcher
 		return $renderer->render($syntax, $data);
 	}
 
+	/**
+	 * @return array
+	 */
 	public abstract function getTags();
 }

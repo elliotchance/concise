@@ -6,25 +6,44 @@ use \Concise\Syntax\Lexer;
 use \Concise\Services\ValueRenderer;
 use \Concise\Services\ValueDescriptor;
 use \Concise\Services\DataTypeChecker;
+use \Concise\TestCase;
 
 class Assertion
 {
-	/** @var \Concise\Matcher\AbstractMatcher */
+	/**
+	 * @var \Concise\Matcher\AbstractMatcher
+	 */
 	protected $matcher;
 
+	/**
+	 * @var string
+	 */
 	protected $assertionString;
 
+	/**
+	 * @var array
+	 */
 	protected $data = array();
 
-	/** @var \PHPUnit_Framework_TestCase */
+	/**
+	 * @var \PHPUnit_Framework_TestCase
+	 */
 	protected $testCase = null;
 
+	/**
+	 * @var string
+	 */
 	protected $description = '';
 
-	protected $originalSyntax = null;
+	/**
+	 * @var string
+	 */
+	protected $originalSyntax = '';
 
 	/**
-	 * @param string $assertionString
+	 * @param string                  $assertionString
+	 * @param Matcher\AbstractMatcher $matcher
+	 * @param array                   $data
 	 */
 	public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
 	{
@@ -33,26 +52,41 @@ class Assertion
 		$this->data = $data;
 	}
 
+	/**
+	 * @param string $originalSyntax
+	 */
 	public function setOriginalSyntax($originalSyntax)
 	{
 		$this->originalSyntax = $originalSyntax;
 	}
 
-	public function setTestCase(\PHPUnit_Framework_TestCase $testCase)
+	/**
+	 * @param \Concise\TestCase $testCase
+	 */
+	public function setTestCase(TestCase $testCase)
 	{
 		$this->testCase = $testCase;
 	}
 	
+	/**
+	 * @return string
+	 */
 	public function getAssertion()
 	{
 		return $this->assertionString;
 	}
 	
+	/**
+	 * @return array
+	 */
 	public function getData()
 	{
 		return $this->data;
 	}
 
+	/**
+	 * @return \Concise\Matcher\AbstractMatcher
+	 */
 	public function getMatcher()
 	{
 		return $this->matcher;
@@ -60,6 +94,7 @@ class Assertion
 
 	/**
 	 * @param string $code
+	 * @return boolean
 	 */
 	protected function evalCode($code)
 	{
@@ -74,6 +109,10 @@ class Assertion
 		return $r;
 	}
 
+	/**
+	 * @param  array $arguments
+	 * @return array
+	 */
 	protected function checkDataTypes(array $arguments)
 	{
 		$checker = new DataTypeChecker();
@@ -95,6 +134,9 @@ class Assertion
 		return $r;
 	}
 
+	/**
+	 * @return void
+	 */
 	protected function executeAssertion()
 	{
 		$lexer = new Lexer();
@@ -116,7 +158,7 @@ class Assertion
 			}
 		}
 
-		if(null !== $this->originalSyntax) {
+		if('' !== $this->originalSyntax) {
 			$args = $this->checkDataTypes($args);
 		}
 
@@ -134,6 +176,9 @@ class Assertion
 		$this->testCase->assertTrue(true);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function __toString()
 	{
 		$excludeKeys = array_keys(TestCase::getPHPUnitProperties());
@@ -162,6 +207,9 @@ class Assertion
 		$this->description = $description;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDescription()
 	{
 		if('' === $this->description) {
