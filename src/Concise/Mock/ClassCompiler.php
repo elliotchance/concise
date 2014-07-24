@@ -73,6 +73,9 @@ class ClassCompiler
 			if($realMethod->isFinal()) {
 				throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
 			}
+			if($realMethod->isPrivate()) {
+				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
+			}
 			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
