@@ -4,8 +4,17 @@ namespace Concise\Mock;
 
 class PrototypeBuilder
 {
+	/**
+	 * If this is `true` then the `abstract` keyword will not be outputted in the prototypes.
+	 * @var boolean
+	 */
 	public $hideAbstract = false;
 
+	/**
+	 * Get the prototype for the method.
+	 * @param  \ReflectionMethod $method
+	 * @return string
+	 */
 	public function getPrototype(\ReflectionMethod $method)
 	{
 		$modifiers = implode(' ', \Reflection::getModifierNames($method->getModifiers()));
