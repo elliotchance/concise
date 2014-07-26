@@ -46,6 +46,11 @@ class MockBuilder
 	protected $constructorArgs;
 
 	/**
+	 * @var boolean
+	 */
+	protected $disableConstructor = false;
+
+	/**
 	 * @param string   $className
 	 * @param boolean  $niceMock
 	 * @param TestCase $testCase
@@ -105,7 +110,7 @@ class MockBuilder
 	 */
 	public function done()
 	{
-		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs);
+		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
 		$compiler->setRules($this->rules);
 		$mockInstance = $compiler->newInstance();
 		$this->testCase->addMockInstance($this, $mockInstance);
@@ -234,5 +239,11 @@ class MockBuilder
 	public function getRules()
 	{
 		return $this->rules;
+	}
+
+	public function disableConstructor()
+	{
+		$this->disableConstructor = true;
+		return $this;
 	}
 }
