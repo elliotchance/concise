@@ -15,9 +15,14 @@ class ClassCompiler
 	protected $constructorArgs;
 
 	/**
+	 * @var boolean
+	 */
+	protected $disableConstructor;
+
+	/**
 	 * @param string $className
 	 */
-	public function __construct($className, $niceMock = false, array $constructorArgs = array())
+	public function __construct($className, $niceMock = false, array $constructorArgs = array(), $disableConstructor = false)
 	{
 		if(!class_exists($className)) {
 			throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
@@ -26,6 +31,7 @@ class ClassCompiler
 		$this->mockUnique = '_' . substr(md5(rand()), 24);
 		$this->niceMock = $niceMock;
 		$this->constructorArgs = $constructorArgs;
+		$this->disableConstructor = $disableConstructor;
 	}
 
 	protected function getNamespaceName()
@@ -66,9 +72,14 @@ class ClassCompiler
 			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', \$this->_methodCalls)) { \$this->_methodCalls['$method'] = array(); } \$this->_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
-		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, $this->_methodCalls) ? $this->_methodCalls[$method] : array(); }';
+		if($this->disableConstructor) {
+			$methods['__construct'] = 'public function __construct() {}';
+		}
+		else {
+			unset($methods['__construct']);
+		}
 
-		unset($methods['__construct']);
+		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, $this->_methodCalls) ? $this->_methodCalls[$method] : array(); }';
 
 		return $code . "class {$this->getMockName()} extends \\{$this->className} { public \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}

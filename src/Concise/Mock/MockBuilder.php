@@ -69,7 +69,7 @@ class MockBuilder
 
 	public function done()
 	{
-		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs);
+		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
 		$compiler->setRules($this->rules);
 		$mockInstance = $compiler->newInstance();
 		$this->testCase->addMockInstance($this, $mockInstance);

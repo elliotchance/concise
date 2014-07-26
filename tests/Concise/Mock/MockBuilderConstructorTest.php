@@ -30,4 +30,12 @@ class MockBuilderConstructorTest extends TestCase
 		             ->done();
 		$this->assert($mock, instance_of, '\Concise\Mock\MockConstructor1');
 	}
+
+	public function testMocksCanHaveTheirConstructorDisabled()
+	{
+		$mock = $this->mock('\Concise\Mock\MockConstructor1')
+		             ->disableConstructor()
+		             ->done();
+		$this->assert($mock->constructorRun, is_false);
+	}
 }
