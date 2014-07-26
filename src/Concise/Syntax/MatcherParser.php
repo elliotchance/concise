@@ -80,7 +80,7 @@ class MatcherParser
 	}
 
 	/**
-	 * @param  Concise\Matcher\AbstractMatcher $matcher
+	 * @param  \Concise\Matcher\AbstractMatcher $matcher
 	 * @return boolean
 	 */
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
