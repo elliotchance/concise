@@ -12,7 +12,7 @@ class PrototypeBuilder
 
 	/**
 	 * Get the prototype for the method.
-	 * @param  ReflectionMethod $method
+	 * @param  \ReflectionMethod $method
 	 * @return string
 	 */
 	public function getPrototype(\ReflectionMethod $method)

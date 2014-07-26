@@ -22,7 +22,7 @@ class AssertionBuilder
 	}
 
 	/**
-	 * @return Concise\Assertion
+	 * @return Assertion
 	 */
 	public function getAssertion()
 	{
