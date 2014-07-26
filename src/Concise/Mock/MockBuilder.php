@@ -20,6 +20,11 @@ class MockBuilder
 	protected $constructorArgs;
 
 	/**
+	 * @var boolean
+	 */
+	protected $disableConstructor = false;
+
+	/**
 	 * @param string $className
 	 * @param boolean $niceMock
 	 */
@@ -159,5 +164,11 @@ class MockBuilder
 	public function getRules()
 	{
 		return $this->rules;
+	}
+
+	public function disableConstructor()
+	{
+		$this->disableConstructor = true;
+		return $this;
 	}
 }

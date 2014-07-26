@@ -22,4 +22,12 @@ class MockBuilderConstructorTest extends TestCase
 		             ->done();
 		$this->assert($mock->constructorRun);
 	}
+
+	public function testDisableConstructorCanBeChained()
+	{
+		$mock = $this->mock('\Concise\Mock\MockConstructor1')
+		             ->disableConstructor()
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\MockConstructor1');
+	}
 }
