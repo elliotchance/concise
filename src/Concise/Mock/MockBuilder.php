@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use \Concise\TestCase;
 
 class MockBuilder
 {

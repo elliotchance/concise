@@ -7,7 +7,7 @@ use Concise\Services\CharacterConverter;
 class Lexer
 {
 	/**
-	 * @var Concise\Syntax\MatcherParser
+	 * @var \Concise\Syntax\MatcherParser
 	 */
 	protected $matcherParser = null;
 
@@ -30,6 +30,7 @@ class Lexer
 	{
 		return in_array($token, $this->getMatcherParser()->getKeywords());
 	}
+
 
 	/**
 	 * @param  string $string
@@ -254,7 +255,7 @@ class Lexer
 	}
 
 	/**
-	 * @param MatcherParser $matcherParser
+	 * @param \Concise\Syntax\MatcherParser $matcherParser
 	 */
 	public function setMatcherParser(MatcherParser $matcherParser)
 	{
