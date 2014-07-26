@@ -7,14 +7,29 @@ use \Concise\Services\MatcherSyntaxAndDescription;
 
 class MatcherParser
 {
+	/**
+	 * @var array
+	 */
 	protected $matchers = array();
 
+	/**
+	 * @var MatcherParser
+	 */
 	protected static $instance = null;
 
+	/**
+	 * @var array
+	 */
 	protected $keywords = array();
 
+	/**
+	 * @var Lexer
+	 */
 	protected $lexer;
 
+	/**
+	 * @var array
+	 */
 	protected $syntaxCache = array();
 
 	public function __construct()
@@ -23,6 +38,10 @@ class MatcherParser
 		$this->lexer->setMatcherParser($this);
 	}
 
+	/**
+	 * @param  string $syntax
+	 * @return string
+	 */
 	protected function getRawSyntax($syntax)
 	{
 		return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
@@ -60,6 +79,10 @@ class MatcherParser
 		$this->keywords = array();
 	}
 
+	/**
+	 * @param  \Concise\Matcher\AbstractMatcher $matcher
+	 * @return boolean
+	 */
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
 		$service = new MatcherSyntaxAndDescription();
@@ -80,6 +103,9 @@ class MatcherParser
 		return true;
 	}
 
+	/**
+	 * @return MatcherParser
+	 */
 	public static function getInstance()
 	{
 		if(null === self::$instance) {
@@ -109,11 +135,17 @@ class MatcherParser
 		$this->autoloadAllMatchers();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getMatchers()
 	{
 		return $this->matchers;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getRawKeywords()
 	{
 		$r = array();
@@ -134,6 +166,9 @@ class MatcherParser
 		return $r;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getKeywords()
 	{
 		if(0 === count($this->keywords)) {
@@ -142,6 +177,9 @@ class MatcherParser
 		return $this->keywords;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllMatcherDescriptions()
 	{
 		$r = array();

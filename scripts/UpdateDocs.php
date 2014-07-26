@@ -31,6 +31,9 @@ function generateMarkdownItem($syntax, $description, $indent = '*')
 	return "$indent `$syntax` - $description\n";
 }
 
+/**
+ * @return string
+ */
 function generateMarkdownList(array $matchers)
 {
 	$matchersDoc = '';

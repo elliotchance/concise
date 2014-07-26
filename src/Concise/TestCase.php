@@ -9,13 +9,23 @@ use Concise\Syntax\MatcherParser;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var array
+	 */
 	protected $_mocks = array();
 
+	/**
+	 * @return \Concise\Syntax\MatcherParser
+	 */
 	protected function getMatcherParserInstance()
 	{
 		return MatcherParser::getInstance();
 	}
 
+	/**
+	 * @param  string $name
+	 * @return mixed
+	 */
 	public function __get($name)
 	{
 		if(!isset($this->$name)) {
@@ -24,6 +34,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		return $this->$name;
 	}
 
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 */
 	public function __set($name, $value)
 	{
 		$parser = MatcherParser::getInstance();
@@ -33,11 +47,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$this->$name = $value;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getData()
 	{
 		return get_object_vars($this);
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getRealTestName()
 	{
 		$name = substr($this->getName(), 20);
@@ -61,6 +81,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	/**
+	 * @param  string $assertionString
+	 */
 	public function assert($assertionString)
 	{
 		if(count(func_get_args()) > 1 || is_bool($assertionString)) {
@@ -87,16 +110,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 					continue;
 				}
 				
-				// @todo This if statement is only required while we make the transition to the new
-				// ClassBuilder, then it can be removed.
-				if(method_exists($mock['instance'], 'getCallsForMethod')) {
-					if(null === $rule['with']) {
-						$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
-					}
-					else {
-						foreach($mock['instance']->getCallsForMethod($method) as $call) {
-							$this->assert($call, exactly_equals, $rule['with']);
-						}
+				if(null === $rule['with']) {
+					$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
+				}
+				else {
+					foreach($mock['instance']->getCallsForMethod($method) as $call) {
+						$this->assert($call, exactly_equals, $rule['with']);
 					}
 				}
 			}
@@ -104,16 +123,30 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		parent::tearDown();
 	}
 	
+	/**
+	 * @param  string $className
+	 * @param  array  $constructorArgs
+	 * @return MockBuilder
+	 */
 	protected function mock($className = '\stdClass', array $constructorArgs = array())
 	{
 		return new MockBuilder($this, $className, false, $constructorArgs);
 	}
 
+	/**
+	 * @param  string $className
+	 * @param  array  $constructorArgs
+	 * @return MockBuilder
+	 */
 	protected function niceMock($className = '\stdClass', array $constructorArgs = array())
 	{
 		return new MockBuilder($this, $className, true, $constructorArgs);
 	}
 
+	/**
+	 * @param MockBuilder $mockBuilder
+	 * @param object      $mockInstance
+	 */
 	public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
 	{
 		$this->_mocks[] = array(

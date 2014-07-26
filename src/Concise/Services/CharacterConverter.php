@@ -4,6 +4,9 @@ namespace Concise\Services;
 
 class CharacterConverter
 {
+	/**
+	 * @var array
+	 */
 	protected $characterMap = array(
 		'a' => "\a",
 		'e' => "\e",
@@ -13,6 +16,10 @@ class CharacterConverter
 		't' => "\t",
 	);
 
+	/**
+	 * @param  string $ch A string character.
+	 * @return string
+	 */
 	public function convertEscapedCharacter($ch)
 	{
 		// @test \cx : "control-x", where x is any character
