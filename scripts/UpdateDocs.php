@@ -48,10 +48,6 @@ function generateMarkdownList(array $matchers)
 
 function updateReadme()
 {
-	// load in the current README
-	$readmeFile = __DIR__ . '/../README.md';
-	$readme = file_get_contents($readmeFile);
-
 	$matchers = getAssertionsByTag();
 
 	$matchersDoc = '';
@@ -62,8 +58,14 @@ function updateReadme()
 		$matchersDoc .= generateMarkdownList($syntaxes);
 	}
 
+	$readmeFile = __DIR__ . '/../README.md';
+	$readme = file_get_contents($readmeFile);
 	$readme = preg_replace('/<!-- start matchers -->.*<!-- end matchers -->/ms', "<!-- start matchers -->\n\n$matchersDoc\n<!-- end matchers -->", $readme);
+	file_put_contents($readmeFile, $readme);
 
+	$readmeFile = __DIR__ . '/../wiki/Home.md';
+	$readme = file_get_contents($readmeFile);
+	$readme = preg_replace('/<!-- start matchers -->.*<!-- end matchers -->/ms', "<!-- start matchers -->\n\n$matchersDoc\n<!-- end matchers -->", $readme);
 	file_put_contents($readmeFile, $readme);
 }
 
