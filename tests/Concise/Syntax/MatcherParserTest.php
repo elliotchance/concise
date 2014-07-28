@@ -5,12 +5,31 @@ namespace Concise\Syntax;
 use \Concise\TestCase;
 use \Concise\Services\MatcherSyntaxAndDescription;
 use \Concise\Matcher\Tag;
+use \Concise\Matcher\AbstractMatcher;
 
 class MatcherParserStub extends MatcherParser
 {
 	public function registerMatchers()
 	{
 		return parent::registerMatchers();
+	}
+}
+
+class MyBadMatcher extends AbstractMatcher
+{
+	public function supportedSyntaxes()
+	{
+		return array('Capitols');
+	}
+
+	public function match($syntax, array $data = array())
+	{
+		return false;
+	}
+
+	public function getTags()
+	{
+		return array();
 	}
 }
 
@@ -172,5 +191,15 @@ class MatcherParserTest extends TestCase
 		$matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
 		$this->parser->registerMatcher($matcher1);
 		$this->parser->registerMatcher($matcher2);
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage All assertions ('Capitols') must be lower case.
+	 */
+	public function testUsingCapitolsInAssertionNamesThrowsException()
+	{
+		$matcher = new MatcherParser();
+		$matcher->registerMatcher(new MyBadMatcher());
 	}
 }
