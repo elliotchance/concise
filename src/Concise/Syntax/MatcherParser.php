@@ -89,6 +89,9 @@ class MatcherParser
 		$allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
 		foreach($allSyntaxes as $syntax) {
 			$rawSyntax = $this->getRawSyntax($syntax);
+			if(strtolower($rawSyntax) != $rawSyntax) {
+				throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
+			}
 			if(array_key_exists($rawSyntax, $this->syntaxCache)) {
 				throw new \Exception("Syntax '$syntax' is already declared.");
 			}
