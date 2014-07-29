@@ -4,15 +4,29 @@ namespace Concise\Services;
 
 class DataTypeChecker
 {
+	/**
+	 * @var boolean
+	 */
 	protected $excludeMode = false;
 
+	/**
+	 * @var array
+	 */
 	protected $context = array();
 
+	/**
+	 * @param array $context
+	 */
 	public function setContext(array $context)
 	{
 		$this->context = $context;
 	}
 
+	/**
+	 * @param  array $acceptedTypes
+	 * @param  mixed $value
+	 * @return bool
+	 */
 	public function check(array $acceptedTypes, $value)
 	{
 		if($this->excludeMode === true) {
@@ -25,6 +39,11 @@ class DataTypeChecker
 		return $this->throwInvalidArgumentException($acceptedTypes, $value, true, "not found in");
 	}
 
+	/**
+	 * @param  array $acceptedTypes
+	 * @param  mixed $value
+	 * @return bool
+	 */
 	protected function matchesInAcceptedTypes(array $acceptedTypes, $value)
 	{
 		foreach($acceptedTypes as $acceptedType) {
@@ -36,8 +55,11 @@ class DataTypeChecker
 	}
 
 	/**
-	 * @param boolean $expecting
-	 * @param string $message
+	 * @param  array  $acceptedTypes
+	 * @param  mixed  $value
+	 * @param  bool   $expecting
+	 * @param  string $message
+	 * @return mixed
 	 */
 	protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting, $message)
 	{
@@ -60,6 +82,7 @@ class DataTypeChecker
 
 	/**
 	 * @param string $name
+	 * @return mixed
 	 */
 	protected function getAttribute($name)
 	{
@@ -69,6 +92,10 @@ class DataTypeChecker
 		return $this->context[$name];
 	}
 
+	/**
+	 * @param  mixed $value
+	 * @return string
+	 */
 	protected function getType($value)
 	{
 		if(is_object($value)) {
@@ -85,11 +112,21 @@ class DataTypeChecker
 		return gettype($value);
 	}
 
+	/**
+	 * @param  string $type
+	 * @param  string $value
+	 * @return bool
+	 */
 	protected function singleMatch($type, $value)
 	{
 		return $type === $this->simpleType($this->getType($value));
 	}
 
+	/**
+	 * @param  string $type
+	 * @param  mixed $value
+	 * @return bool
+	 */
 	protected function matches($type, $value)
 	{
 		if($type === 'number') {
@@ -98,6 +135,10 @@ class DataTypeChecker
 		return $this->singleMatch($this->simpleType($type), $value);
 	}
 
+	/**
+	 * @param  string $type
+	 * @return string
+	 */
 	protected function simpleType($type)
 	{
 		$aliases = array(

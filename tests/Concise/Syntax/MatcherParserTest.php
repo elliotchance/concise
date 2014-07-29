@@ -4,12 +4,32 @@ namespace Concise\Syntax;
 
 use \Concise\TestCase;
 use \Concise\Services\MatcherSyntaxAndDescription;
+use \Concise\Matcher\Tag;
+use \Concise\Matcher\AbstractMatcher;
 
 class MatcherParserStub extends MatcherParser
 {
 	public function registerMatchers()
 	{
 		return parent::registerMatchers();
+	}
+}
+
+class MyBadMatcher extends AbstractMatcher
+{
+	public function supportedSyntaxes()
+	{
+		return array('Capitols');
+	}
+
+	public function match($syntax, array $data = array())
+	{
+		return false;
+	}
+
+	public function getTags()
+	{
+		return array();
 	}
 }
 
@@ -112,11 +132,8 @@ class MatcherParserTest extends TestCase
 
 	public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
 	{
-		$syntaxes = MatcherParser::getInstance()->getAllSyntaxes();
-		$this->assert($syntaxes, has_items, array(
-			'? is null'       => 'Assert a value is null.',
-			'? is equal to ?' => 'Assert values with no regard to exact data types.',
-		));
+		$syntaxes = MatcherParser::getInstance()->getAllMatcherDescriptions();
+		$this->assert($syntaxes, has_keys, array('? is null', '? is equal to ?'));
 	}
 
 	public function testCanMatchSyntaxWithExpectedTypes()
@@ -174,5 +191,15 @@ class MatcherParserTest extends TestCase
 		$matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
 		$this->parser->registerMatcher($matcher1);
 		$this->parser->registerMatcher($matcher2);
+	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage All assertions ('Capitols') must be lower case.
+	 */
+	public function testUsingCapitolsInAssertionNamesThrowsException()
+	{
+		$matcher = new MatcherParser();
+		$matcher->registerMatcher(new MyBadMatcher());
 	}
 }

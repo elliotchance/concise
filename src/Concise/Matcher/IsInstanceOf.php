@@ -19,4 +19,9 @@ class IsInstanceOf extends AbstractMatcher
 	{
 		return (get_class($data[0]) === $data[1]) || is_subclass_of($data[0], $data[1]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::OBJECTS);
+	}
 }

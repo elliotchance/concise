@@ -17,4 +17,9 @@ class HasKey extends AbstractMatcher
 	{
 		return array_key_exists($data[1], $data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

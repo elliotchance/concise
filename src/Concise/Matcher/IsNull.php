@@ -15,4 +15,9 @@ class IsNull extends AbstractMatcher
 	{
 		return is_null($data[0]);
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BASIC);
+	}
 }

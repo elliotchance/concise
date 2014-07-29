@@ -25,4 +25,9 @@ class ThrowsAnythingExcept extends AbstractMatcher
 		}
 		return true;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::EXCEPTIONS);
+	}
 }

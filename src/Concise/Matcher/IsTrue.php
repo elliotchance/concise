@@ -15,4 +15,9 @@ class IsTrue extends AbstractMatcher
 	{
 		return $data[0] === true;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::BOOLEANS);
+	}
 }

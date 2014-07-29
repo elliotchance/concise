@@ -6,6 +6,8 @@ class SyntaxRenderer
 {
 	/**
 	 * @param string $syntax
+	 * @param array $data
+	 * @return string
 	 */
 	public function render($syntax, array $data = array())
 	{

@@ -18,4 +18,9 @@ class Between extends AbstractMatcher
 	{
 		return $data[0] >= $data[1] && $data[0] <= $data[2];
 	}
+
+	public function getTags()
+	{
+		return array(Tag::NUMBERS);
+	}
 }

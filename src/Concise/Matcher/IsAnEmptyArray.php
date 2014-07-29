@@ -18,4 +18,9 @@ class IsAnEmptyArray extends AbstractMatcher
 	{
 		return count($data[0]) === 0;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::ARRAYS);
+	}
 }

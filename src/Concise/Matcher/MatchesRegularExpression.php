@@ -18,4 +18,9 @@ class MatchesRegularExpression extends AbstractMatcher
 	{
 		return preg_match($data[1], $data[0]) === 1;
 	}
+
+	public function getTags()
+	{
+		return array(Tag::STRINGS);
+	}
 }

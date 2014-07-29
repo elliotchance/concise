@@ -7,14 +7,29 @@ use \Concise\Services\MatcherSyntaxAndDescription;
 
 class MatcherParser
 {
+	/**
+	 * @var array
+	 */
 	protected $matchers = array();
 
+	/**
+	 * @var MatcherParser
+	 */
 	protected static $instance = null;
 
+	/**
+	 * @var array
+	 */
 	protected $keywords = array();
 
+	/**
+	 * @var Lexer
+	 */
 	protected $lexer;
 
+	/**
+	 * @var array
+	 */
 	protected $syntaxCache = array();
 
 	public function __construct()
@@ -23,6 +38,10 @@ class MatcherParser
 		$this->lexer->setMatcherParser($this);
 	}
 
+	/**
+	 * @param  string $syntax
+	 * @return string
+	 */
 	protected function getRawSyntax($syntax)
 	{
 		return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
@@ -60,12 +79,19 @@ class MatcherParser
 		$this->keywords = array();
 	}
 
+	/**
+	 * @param  \Concise\Matcher\AbstractMatcher $matcher
+	 * @return boolean
+	 */
 	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
 	{
 		$service = new MatcherSyntaxAndDescription();
 		$allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
 		foreach($allSyntaxes as $syntax) {
 			$rawSyntax = $this->getRawSyntax($syntax);
+			if(strtolower($rawSyntax) != $rawSyntax) {
+				throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
+			}
 			if(array_key_exists($rawSyntax, $this->syntaxCache)) {
 				throw new \Exception("Syntax '$syntax' is already declared.");
 			}
@@ -80,6 +106,9 @@ class MatcherParser
 		return true;
 	}
 
+	/**
+	 * @return MatcherParser
+	 */
 	public static function getInstance()
 	{
 		if(null === self::$instance) {
@@ -92,7 +121,7 @@ class MatcherParser
 	protected function autoloadAllMatchers()
 	{
 		foreach(scandir(__DIR__ . "/../Matcher") as $file) {
-			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php'))) {
+			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
 				continue;
 			}
 			$class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
@@ -109,11 +138,17 @@ class MatcherParser
 		$this->autoloadAllMatchers();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getMatchers()
 	{
 		return $this->matchers;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getRawKeywords()
 	{
 		$r = array();
@@ -134,6 +169,9 @@ class MatcherParser
 		return $r;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getKeywords()
 	{
 		if(0 === count($this->keywords)) {
@@ -142,14 +180,24 @@ class MatcherParser
 		return $this->keywords;
 	}
 
-	public function getAllSyntaxes()
+	/**
+	 * @return array
+	 */
+	public function getAllMatcherDescriptions()
 	{
 		$r = array();
 		$service = new MatcherSyntaxAndDescription();
 		foreach($this->getMatchers() as $matcher) {
-			$r += $service->process($matcher->supportedSyntaxes());
+			$syntaxes = $service->process($matcher->supportedSyntaxes());
+			foreach($syntaxes as &$syntax) {
+				$syntax = array(
+					'description' => $syntax,
+					'tags' => $matcher->getTags(),
+					'matcher' => get_class($matcher),
+				);
+			}
+			$r += $syntaxes;
 		}
-		ksort($r);
 		return $r;
 	}
 }
