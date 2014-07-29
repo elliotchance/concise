@@ -16,7 +16,7 @@ class ReturnValueAction extends AbstractAction
 
 	public function getActionCode()
 	{
-		return "return \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}'];";
+		return "\$v = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}']; return is_object(\$v) ? clone \$v : \$v;";
 	}
 
 	public function getValue()

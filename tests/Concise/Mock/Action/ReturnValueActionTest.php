@@ -11,6 +11,18 @@ class ReturnValueActionTest extends TestCase
 		$myObject = new \stdClass();
 		$value = new ReturnValueAction($myObject);
 		$result = eval($value->getActionCode());
-		$this->assert($myObject, is_the_same_as, $result);
+		$this->assert($myObject, equals, $result);
+	}
+
+	public function testObjectsInCacheAreClonedSoThatTheyWillNotChangeState()
+	{
+		$myObject = json_decode('{"foo":"bar"}');
+		$value = new ReturnValueAction($myObject);
+
+		$result1 = eval($value->getActionCode());
+		$result1->foo = "baz";
+		$result2 = eval($value->getActionCode());
+
+		$this->assert($result2->foo, equals, "bar");
 	}
 }
