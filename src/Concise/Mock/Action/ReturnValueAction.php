@@ -4,20 +4,23 @@ namespace Concise\Mock\Action;
 
 class ReturnValueAction extends AbstractAction
 {
-	protected $value;
+	public static $cache = array();
+
+	protected $cacheKey;
 
 	public function __construct($value)
 	{
-		$this->value = $value;
+		$this->cacheKey = md5(rand() . time());
+		self::$cache[$this->cacheKey] = $value;
 	}
 
 	public function getActionCode()
 	{
-		return 'return ' . var_export($this->value, true) . ';';
+		return "return \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}'];";
 	}
 
 	public function getValue()
 	{
-		return $this->value;
+		return self::$cache[$this->cacheKey];
 	}
 }
