@@ -3,6 +3,7 @@
 use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
+use Concise\TestCase;
 
 /**
  * This trait resides in the global namespace so that it can be included more easily. However, you should extend
@@ -94,7 +95,12 @@ trait Concise
 		else {
 			$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
 		}
-		$assertion->setTestCase($this);
+		if($this instanceof TestCase) {
+			$assertion->setTestCase($this);
+		}
+		else {
+			$assertion->setTestCase(new TestCase());
+		}
 		$assertion->run();
 	}
 
