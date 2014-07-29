@@ -5,21 +5,28 @@ namespace Concise\Mock\Action;
 class ReturnValueAction extends AbstractAction
 {
 	/**
-	 * @var mixed
+	 * @var array
 	 */
-	protected $value;
+	public static $cache = array();
+
+	/**
+	 * Each time a ReturnValueAction is instantiated it will generate a new cache key.
+	 * @var string
+	 */
+	protected $cacheKey;
 
 	/**
 	 * @param mixed $value
 	 */
 	public function __construct($value)
 	{
-		$this->value = $value;
+		$this->cacheKey = md5(rand() . time());
+		self::$cache[$this->cacheKey] = $value;
 	}
 
 	public function getActionCode()
 	{
-		return 'return ' . var_export($this->value, true) . ';';
+		return "\$v = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}']; return is_object(\$v) ? clone \$v : \$v;";
 	}
 
 	/**
@@ -27,6 +34,6 @@ class ReturnValueAction extends AbstractAction
 	 */
 	public function getValue()
 	{
-		return $this->value;
+		return self::$cache[$this->cacheKey];
 	}
 }
