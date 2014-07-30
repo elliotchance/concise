@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use \Concise\TestCase;
+use \Concise\Mock\Action\ReturnValueAction;
 
 class ClassCompilerMock1
 {
@@ -84,5 +85,14 @@ class ClassCompilerTest extends TestCase
 		$compiler->addExpose('hidden');
 		$instance = $compiler->newInstance();
 		$this->assert($instance->hidden(), equals, 'foo');
+	}
+
+	public function testAMethodThatHasARuleCanBeExposed()
+	{
+		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
+		$compiler->setRules(array('hidden' => array('action' => new ReturnValueAction('bar'))));
+		$compiler->addExpose('hidden');
+		$instance = $compiler->newInstance();
+		$this->assert($instance->hidden(), equals, 'bar');
 	}
 }

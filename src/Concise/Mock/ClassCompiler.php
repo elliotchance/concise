@@ -83,6 +83,16 @@ class ClassCompiler
 		return $parts[count($parts) - 1];
 	}
 
+	protected function getPrototype($method)
+	{
+		$prototypeBuilder = new PrototypeBuilder();
+		$prototypeBuilder->hideAbstract = true;
+		$realMethod = new \ReflectionMethod($this->className, $method);
+		$prototype = $prototypeBuilder->getPrototype($realMethod);
+		$prototype = str_replace('protected ', 'public ', $prototype);
+		return $prototype;
+	}
+
 	/**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -108,8 +118,9 @@ class ClassCompiler
 				if($method->isFinal()) {
 					continue;
 				}
-				$methods[$method->getName()] = $prototypeBuilder->getPrototype($method) . ' { throw new \\Exception("' .
-					$method->getName() . '() does not have an associated action - consider a niceMock()?"); }';
+				$prototype = $prototypeBuilder->getPrototype($method);
+				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
+					'() does not have an associated action - consider a niceMock()?"); }';
 			}
 		}
 
@@ -122,7 +133,7 @@ class ClassCompiler
 			if($realMethod->isPrivate()) {
 				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
 			}
-			$prototype = $prototypeBuilder->getPrototype($realMethod);
+			$prototype = $this->getPrototype($method);
 			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
@@ -134,10 +145,8 @@ class ClassCompiler
 		}
 		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
 
-		if($this->expose) {
-			$realMethod = new \ReflectionMethod($this->className, $this->expose);
-			$prototype = $prototypeBuilder->getPrototype($realMethod);
-			$prototype = str_replace('protected ', 'public ', $prototype);
+		if($this->expose && !array_key_exists($this->expose, $methods)) {
+			$prototype = $this->getPrototype($this->expose, true);
 			$methods[$this->expose] = "$prototype { return parent::{$this->expose}(); }";
 		}
 
