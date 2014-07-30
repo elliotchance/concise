@@ -29,7 +29,7 @@ class MyTinyTestSuite
         $this->testCase->assert(3 + 5, equals, 8);
     }
 }
- 
+
 class TestCaseExternalTest extends TestCase
 {
     public function testAnExternalRunner()
