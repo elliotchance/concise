@@ -246,4 +246,9 @@ class MockBuilder
 		$this->disableConstructor = true;
 		return $this;
 	}
+
+	public function expose($method)
+	{
+		return $this;
+	}
 }
