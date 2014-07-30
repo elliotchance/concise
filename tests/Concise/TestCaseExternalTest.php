@@ -23,6 +23,11 @@ class MyTinyTestSuite
     {
         $this->testCase->assert(3 + 5, equals, 7);
     }
+ 
+    public function checkSomethingAgain()
+    {
+        $this->testCase->assert(3 + 5, equals, 8);
+    }
 }
  
 class TestCaseExternalTest extends TestCase
@@ -39,5 +44,11 @@ class TestCaseExternalTest extends TestCase
             $suite = new MyTinyTestSuite();
             $suite->checkSomethingElse();
         }, throws, "PHPUnit_Framework_AssertionFailedError");
+    }
+
+    public function testAnExternalRunnerCanUseAssertThat()
+    {
+        $suite = new MyTinyTestSuite();
+        $suite->checkSomethingAgain();
     }
 }
