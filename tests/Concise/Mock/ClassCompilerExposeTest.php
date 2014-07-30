@@ -79,4 +79,12 @@ class ClassCompilerExposeTest extends TestCase
 		$reflectionClass = new \ReflectionClass(get_class($instance));
 		$this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
 	}
+
+	public function testTwoMethodsCanBeExposed()
+	{
+		$this->compiler->addExpose('hidden');
+		$this->compiler->addExpose('hidden2');
+		$instance = $this->compiler->newInstance();
+		$this->assert($instance->hidden(), equals, 'foo');
+	}
 }
