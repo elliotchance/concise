@@ -16,4 +16,9 @@ class ContainsStringTest extends AbstractMatcherTestCase
 	{
 		$this->assert('foobar', contains_string, 'oob');
 	}
+
+	public function testFailsIfSubstringDoesNotExistInString()
+	{
+		$this->assertFailure('foobar', contains_string, 'baz');
+	}
 }

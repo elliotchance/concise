@@ -13,7 +13,7 @@ class ContainsString extends AbstractMatcher
 
 	public function match($syntax, array $data = array())
 	{
-		return true;
+		return strpos($data[0], $data[1]) !== false;
 	}
 
 	public function getTags()
