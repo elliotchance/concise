@@ -114,8 +114,8 @@ class MockBuilder
 	{
 		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
 		$compiler->setRules($this->rules);
-		if($this->expose) {
-			$compiler->addExpose($this->expose[0]);
+		foreach($this->expose as $method) {
+			$compiler->addExpose($method);
 		}
 		$mockInstance = $compiler->newInstance();
 		$this->testCase->addMockInstance($this, $mockInstance);
@@ -252,9 +252,9 @@ class MockBuilder
 		return $this;
 	}
 
-	public function expose($method)
+	public function expose()
 	{
-		$this->expose = array($method);
+		$this->expose = func_get_args();
 		return $this;
 	}
 }

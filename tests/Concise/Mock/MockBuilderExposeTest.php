@@ -10,6 +10,11 @@ class MockExpose
 	{
 		return 'abc';
 	}
+
+	protected function foo()
+	{
+		return 'bar';
+	}
 }
 
 class MockBuilderExposeTest extends TestCase
@@ -30,12 +35,20 @@ class MockBuilderExposeTest extends TestCase
 
 	/**
 	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method 'Concise\Mock\MockExpose::foo' does not exist.
+	 * @expectedExceptionMessage Method 'Concise\Mock\MockExpose::baz' does not exist.
 	 */
 	public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
 	{
 		$this->niceMock('\Concise\Mock\MockExpose')
-		     ->expose('foo')
+		     ->expose('baz')
 		     ->done();
+	}
+
+	public function testExposeTwoMethodsWithSeparateParameters()
+	{
+		$mock = $this->niceMock('\Concise\Mock\MockExpose')
+		             ->expose('myMethod', 'foo')
+		             ->done();
+		$this->assert($mock->foo(), equals, 'bar');
 	}
 }
