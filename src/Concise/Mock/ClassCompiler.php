@@ -187,6 +187,12 @@ class ClassCompiler
 	 */
 	public function addExpose($method)
 	{
+		try {
+			new \ReflectionMethod($this->className, $method);
+		}
+		catch(\ReflectionException $e) {
+			throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
+		}
 		$this->expose[$method] = true;
 	}
 }

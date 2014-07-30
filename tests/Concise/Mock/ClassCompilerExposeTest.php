@@ -99,4 +99,13 @@ class ClassCompilerExposeTest extends TestCase
 		$instance = $this->compiler->newInstance();
 		$this->assert($instance->hidden3(3), equals, 6);
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Method 'Concise\Mock\ClassCompilerMock3::foo' does not exist.
+	 */
+	public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
+	{
+		$this->compiler->addExpose('foo');
+	}
 }
