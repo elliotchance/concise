@@ -104,9 +104,6 @@ class ClassCompiler
 			throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
 		}
 
-		$prototypeBuilder = new PrototypeBuilder();
-		$prototypeBuilder->hideAbstract = true;
-
 		$code = '';
 		if($this->getNamespaceName()) {
 			$code = "namespace " . $this->getNamespaceName() . "; ";
@@ -118,7 +115,7 @@ class ClassCompiler
 				if($method->isFinal()) {
 					continue;
 				}
-				$prototype = $prototypeBuilder->getPrototype($method);
+				$prototype = $this->getPrototype($method->getName());
 				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
 					'() does not have an associated action - consider a niceMock()?"); }';
 			}
@@ -146,7 +143,7 @@ class ClassCompiler
 		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
 
 		if($this->expose && !array_key_exists($this->expose, $methods)) {
-			$prototype = $this->getPrototype($this->expose, true);
+			$prototype = $this->getPrototype($this->expose);
 			$methods[$this->expose] = "$prototype { return parent::{$this->expose}(); }";
 		}
 
