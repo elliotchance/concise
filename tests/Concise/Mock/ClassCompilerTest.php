@@ -13,6 +13,14 @@ abstract class ClassCompilerMock2
 	public abstract function myMethod();
 }
 
+class ClassCompilerMock3
+{
+	protected function hidden()
+	{
+		return 'foo';
+	}
+}
+
 class ClassCompilerTest extends TestCase
 {
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
@@ -68,5 +76,13 @@ class ClassCompilerTest extends TestCase
 	{
 		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
 		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
+	}
+
+	public function testAMethodCanBeExposed()
+	{
+		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
+		$compiler->addExpose('hidden');
+		$instance = $compiler->newInstance();
+		$this->assert($instance->hidden(), equals, 'foo');
 	}
 }

@@ -40,6 +40,11 @@ class ClassCompiler
 	 */
 	protected $disableConstructor;
 
+	/**
+	 * @var string
+	 */
+	protected $expose;
+
 	/*
 	 * @param string  $className
 	 * @param boolean $niceMock
@@ -117,7 +122,8 @@ class ClassCompiler
 			if($realMethod->isPrivate()) {
 				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
 			}
-			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
+			$prototype = $prototypeBuilder->getPrototype($realMethod);
+			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
 		if($this->disableConstructor) {
@@ -127,6 +133,13 @@ class ClassCompiler
 			unset($methods['__construct']);
 		}
 		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
+
+		if($this->expose) {
+			$realMethod = new \ReflectionMethod($this->className, $this->expose);
+			$prototype = $prototypeBuilder->getPrototype($realMethod);
+			$prototype = str_replace('protected ', 'public ', $prototype);
+			$methods[$this->expose] = "$prototype { return parent::{$this->expose}(); }";
+		}
 
 		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}
@@ -157,5 +170,10 @@ class ClassCompiler
 	public function setRules(array $rules)
 	{
 		$this->rules = $rules;
+	}
+
+	public function addExpose($method)
+	{
+		$this->expose = $method;
 	}
 }
