@@ -21,6 +21,10 @@ class ClassCompilerMock3
 	{
 		return $a * 2;
 	}
+
+	private function superSecret()
+	{
+	}
 }
 
 class ClassCompilerExposeTest extends TestCase
@@ -107,5 +111,14 @@ class ClassCompilerExposeTest extends TestCase
 	public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
 	{
 		$this->compiler->addExpose('foo');
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Method 'Concise\Mock\ClassCompilerMock3::superSecret' is private and cannot be exposed.
+	 */
+	public function testTryingToExposeAPrivateMethodThrowsException()
+	{
+		$this->compiler->addExpose('superSecret');
 	}
 }

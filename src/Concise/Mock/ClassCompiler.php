@@ -188,7 +188,10 @@ class ClassCompiler
 	public function addExpose($method)
 	{
 		try {
-			new \ReflectionMethod($this->className, $method);
+			$m = new \ReflectionMethod($this->className, $method);
+			if($m->isPrivate()) {
+				throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
+			}
 		}
 		catch(\ReflectionException $e) {
 			throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
