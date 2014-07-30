@@ -124,6 +124,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 				}
 			}
 		}
+
+		global $_currentTestCase;
+		$_currentTestCase = null;
+
 		parent::tearDown();
 	}
 	
