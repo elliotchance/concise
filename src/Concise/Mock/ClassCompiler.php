@@ -117,7 +117,8 @@ class ClassCompiler
 				if($method->isFinal()) {
 					continue;
 				}
-				$prototype = $this->getPrototype($method->getName());
+				$makePublic = ($method === $this->expose);
+				$prototype = $this->getPrototype($method->getName(), $makePublic);
 				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
 					'() does not have an associated action - consider a niceMock()?"); }';
 			}

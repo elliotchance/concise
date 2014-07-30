@@ -71,4 +71,12 @@ class ClassCompilerExposeTest extends TestCase
 		$reflectionClass = new \ReflectionClass(get_class($instance));
 		$this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
 	}
+
+	public function testMocksThatAreNotNiceWillNotExposeAMethod()
+	{
+		$this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3');
+		$instance = $this->compiler->newInstance();
+		$reflectionClass = new \ReflectionClass(get_class($instance));
+		$this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
+	}
 }
