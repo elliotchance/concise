@@ -254,7 +254,13 @@ class MockBuilder
 
 	public function expose()
 	{
-		$this->expose += func_get_args();
+		foreach(func_get_args() as $arg) {
+			if(!is_array($arg)) {
+				$arg = array($arg);
+			}
+			$this->expose = array_merge($arg, $this->expose);
+		}
+		
 		return $this;
 	}
 }
