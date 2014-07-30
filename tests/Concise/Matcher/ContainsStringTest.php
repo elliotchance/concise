@@ -21,4 +21,9 @@ class ContainsStringTest extends AbstractMatcherTestCase
 	{
 		$this->assertFailure('foobar', contains_string, 'baz');
 	}
+
+	public function testIsSensitiveToCase()
+	{
+		$this->assertFailure('foobar', contains_string, 'Foo');
+	}
 }
