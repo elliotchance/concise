@@ -50,6 +50,8 @@ class MockBuilder
 	 */
 	protected $disableConstructor = false;
 
+	protected $expose = array();
+
 	/**
 	 * @param string   $className
 	 * @param boolean  $niceMock
@@ -112,6 +114,9 @@ class MockBuilder
 	{
 		$compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
 		$compiler->setRules($this->rules);
+		if($this->expose) {
+			$compiler->addExpose($this->expose[0]);
+		}
 		$mockInstance = $compiler->newInstance();
 		$this->testCase->addMockInstance($this, $mockInstance);
 		return $mockInstance;
@@ -249,6 +254,7 @@ class MockBuilder
 
 	public function expose($method)
 	{
+		$this->expose = array($method);
 		return $this;
 	}
 }

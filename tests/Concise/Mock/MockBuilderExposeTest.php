@@ -14,9 +14,17 @@ class MockExpose
 
 class MockBuilderExposeTest extends TestCase
 {
-	public function testMocksCanMockStaticMethods()
+	public function testExposeWillReturnSelfToAllowChaining()
 	{
 		$builder = $this->mock('\Concise\Mock\MockExpose');
 		$this->assert($builder, equals, $builder->expose('myMethod'));
+	}
+
+	public function testExposeASingleMethod()
+	{
+		$mock = $this->niceMock('\Concise\Mock\MockExpose')
+		             ->expose('myMethod')
+		             ->done();
+		$this->assert($mock->myMethod(), equals, 'abc');
 	}
 }
