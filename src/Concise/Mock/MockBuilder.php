@@ -254,7 +254,7 @@ class MockBuilder
 
 	public function expose()
 	{
-		$this->expose = func_get_args();
+		$this->expose += func_get_args();
 		return $this;
 	}
 }
