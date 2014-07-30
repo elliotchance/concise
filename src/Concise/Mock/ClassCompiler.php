@@ -147,7 +147,7 @@ class ClassCompiler
 		foreach($this->expose as $method => $value) {
 			if(!array_key_exists($method, $methods)) {
 				$prototype = $this->getPrototype($method);
-				$methods[$method] = "$prototype { return parent::{$method}(); }";
+				$methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
 			}
 		}
 
@@ -182,6 +182,9 @@ class ClassCompiler
 		$this->rules = $rules;
 	}
 
+	/**
+	 * @param string $method
+	 */
 	public function addExpose($method)
 	{
 		$this->expose[$method] = true;

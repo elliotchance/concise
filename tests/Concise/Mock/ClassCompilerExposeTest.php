@@ -16,6 +16,11 @@ class ClassCompilerMock3
 	{
 		return 'foo';
 	}
+
+	protected function hidden3($a)
+	{
+		return $a * 2;
+	}
 }
 
 class ClassCompilerExposeTest extends TestCase
@@ -86,5 +91,12 @@ class ClassCompilerExposeTest extends TestCase
 		$this->compiler->addExpose('hidden2');
 		$instance = $this->compiler->newInstance();
 		$this->assert($instance->hidden(), equals, 'foo');
+	}
+
+	public function testExposingAMethodRespectsArguments()
+	{
+		$this->compiler->addExpose('hidden3');
+		$instance = $this->compiler->newInstance();
+		$this->assert($instance->hidden3(3), equals, 6);
 	}
 }
