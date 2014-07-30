@@ -83,13 +83,15 @@ class ClassCompiler
 		return $parts[count($parts) - 1];
 	}
 
-	protected function getPrototype($method)
+	protected function getPrototype($method, $forcePublic = true)
 	{
 		$prototypeBuilder = new PrototypeBuilder();
 		$prototypeBuilder->hideAbstract = true;
 		$realMethod = new \ReflectionMethod($this->className, $method);
 		$prototype = $prototypeBuilder->getPrototype($realMethod);
-		$prototype = str_replace('protected ', 'public ', $prototype);
+		if($forcePublic) {
+			$prototype = str_replace('protected ', 'public ', $prototype);
+		}
 		return $prototype;
 	}
 
@@ -130,7 +132,8 @@ class ClassCompiler
 			if($realMethod->isPrivate()) {
 				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
 			}
-			$prototype = $this->getPrototype($method);
+			$makePublic = ($method === $this->expose);
+			$prototype = $this->getPrototype($method, $makePublic);
 			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
