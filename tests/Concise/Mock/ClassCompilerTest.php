@@ -14,19 +14,6 @@ abstract class ClassCompilerMock2
 	public abstract function myMethod();
 }
 
-class ClassCompilerMock3
-{
-	protected function hidden()
-	{
-		return 'foo';
-	}
-
-	protected function hidden2()
-	{
-		return 'foo';
-	}
-}
-
 class ClassCompilerTest extends TestCase
 {
 	public function testClassNameIsUsedInTheNamingOfTheMockClass()
@@ -82,39 +69,5 @@ class ClassCompilerTest extends TestCase
 	{
 		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
 		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
-	}
-
-	public function testAMethodCanBeExposed()
-	{
-		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
-		$compiler->addExpose('hidden');
-		$instance = $compiler->newInstance();
-		$this->assert($instance->hidden(), equals, 'foo');
-	}
-
-	public function testAMethodThatHasARuleCanBeExposed()
-	{
-		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
-		$compiler->setRules(array('hidden' => array('action' => new ReturnValueAction('bar'))));
-		$compiler->addExpose('hidden');
-		$instance = $compiler->newInstance();
-		$this->assert($instance->hidden(), equals, 'bar');
-	}
-
-	public function testAProtectedMethodMustStayProtected()
-	{
-		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
-		$instance = $compiler->newInstance();
-		$reflectionClass = new \ReflectionClass(get_class($instance));
-		$this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
-	}
-
-	public function testExposingOneMethodWillNotExposeThemAll()
-	{
-		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
-		$compiler->addExpose('hidden');
-		$instance = $compiler->newInstance();
-		$reflectionClass = new \ReflectionClass(get_class($instance));
-		$this->assert($reflectionClass->getMethod('hidden2')->isPublic(), is_false);
 	}
 }
