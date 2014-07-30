@@ -27,4 +27,15 @@ class MockBuilderExposeTest extends TestCase
 		             ->done();
 		$this->assert($mock->myMethod(), equals, 'abc');
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Method 'Concise\Mock\MockExpose::foo' does not exist.
+	 */
+	public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
+	{
+		$this->niceMock('\Concise\Mock\MockExpose')
+		     ->expose('foo')
+		     ->done();
+	}
 }
