@@ -1,7 +1,6 @@
 <?php
 
-namespace Concise
-{
+namespace Concise;
 
 use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
@@ -93,7 +92,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		else {
 			$assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
 		}
-		$assertion->setTestCase($this);
+		if($this instanceof TestCase) {
+			$assertion->setTestCase($this);
+		}
+		else {
+			$assertion->setTestCase(new TestCase());
+		}
 		$assertion->run();
 	}
 
@@ -120,6 +124,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 				}
 			}
 		}
+
+		global $_currentTestCase;
+		$_currentTestCase = null;
+
 		parent::tearDown();
 	}
 	
@@ -184,15 +192,4 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	}
 }
 
-}
-
-namespace
-{
-
-	function assert_that()
-	{
-		global $_currentTestCase;
-		call_user_func_array(array($_currentTestCase, 'assert'), func_get_args());
-	}
-
-}
+require_once(__DIR__ . '/AssertThat.php');
