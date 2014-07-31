@@ -164,6 +164,10 @@ Matchers
 
 ### Strings
 
+* `?:string contains string ?:string` - A string contains a substring
+* `?:string contains string ?:string ignoring case` - A string contains a substring (ignoring case-sensitivity)
+* `?:string does not contain string ?:string` - A string does not contain a substring.
+* `?:string does not contain string ?:string ignoring case` - A string does not contain a substring (ignoring case-sensitivity)
 * `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
   * `?:string doesnt match regular expression ?:regex`
   * `?:string does not match regex ?:regex`
