@@ -17,4 +17,12 @@ class AssertThatTest extends TestCase
 		$this->tearDown();
 		$this->assert($_currentTestCase, is_null);
 	}
+
+	public function testAssertThatWillNotPersistATemporaryTestCase()
+	{
+		global $_currentTestCase;
+		$_currentTestCase = null;
+		assert_that(true);
+		$this->assert($_currentTestCase, is_null);
+	}
 }
