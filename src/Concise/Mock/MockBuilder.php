@@ -246,6 +246,9 @@ class MockBuilder
 		return $this->rules;
 	}
 
+	/**
+	 * @return MockBuilder
+	 */
 	public function disableConstructor()
 	{
 		$this->disableConstructor = true;
@@ -262,5 +265,13 @@ class MockBuilder
 		}
 		
 		return $this;
+	}
+
+	/**
+	 * @return MockBuilder
+	 */
+	public function andReturnSelf()
+	{
+		return $this->setAction(new Action\ReturnSelfAction());
 	}
 }
