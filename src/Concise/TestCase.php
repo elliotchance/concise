@@ -133,6 +133,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			if(count($calls) === 0) {
 				throw new \PHPUnit_Framework_AssertionFailedError("Expected $method() to be called.");
 			}
+			if(count($calls) !== $rule['times']) {
+				throw new \PHPUnit_Framework_AssertionFailedError("Expected $method() to be called {$rule['times']} times, but was only called " . count($calls) . " times.");
+			}
 			foreach($calls as $call) {
 				$this->assert($call, exactly_equals, $rule['with']);
 			}

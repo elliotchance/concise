@@ -12,6 +12,7 @@ class MockBuilderFailuresTest extends TestCase
 		'testFailedToFulfilExpectationWillThrowException' => "0 equals 1",
 		'testMethodCalledWithWrongArgumentValues' => '["bar"] exactly equals ["foo"]',
 		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod() to be called.',
+		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod() to be called 2 times, but was only called 1 times.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -34,6 +35,14 @@ class MockBuilderFailuresTest extends TestCase
 		$this->mock('\Concise\Mock\Mock1')
 		     ->expect('myMethod')->with('foo')->andReturn('bar')
 		     ->done();
+	}
+
+	public function testExpectionMustBeCalledTheRequiredAmountOfTimes()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->twice()->with('foo')->andReturn('bar')
+		                   ->done();
+		$this->mock->myMethod('foo');
 	}
 
 	protected function onNotSuccessfulTest(\Exception $e)
