@@ -113,15 +113,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 				if($rule['times'] < 0) {
 					continue;
 				}
-				
-				if(null === $rule['with']) {
-					$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
-				}
-				else {
-					foreach($mock['instance']->getCallsForMethod($method) as $call) {
-						$this->assert($call, exactly_equals, $rule['with']);
-					}
-				}
+				$this->validateExpectation($mock, $method, $rule);
 			}
 		}
 
@@ -129,6 +121,22 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$_currentTestCase = null;
 
 		parent::tearDown();
+	}
+
+	protected function validateExpectation($mock, $method, $rule)
+	{
+		if(null === $rule['with']) {
+			$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
+		}
+		else {
+			$calls = $mock['instance']->getCallsForMethod($method);
+			if(count($calls) === 0) {
+				throw new \PHPUnit_Framework_AssertionFailedError("Expected $method() to be called.");
+			}
+			foreach($calls as $call) {
+				$this->assert($call, exactly_equals, $rule['with']);
+			}
+		}
 	}
 	
 	/**
