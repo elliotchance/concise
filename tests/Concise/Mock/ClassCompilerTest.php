@@ -69,4 +69,11 @@ class ClassCompilerTest extends TestCase
 		$compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
 		$this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
 	}
+
+	public function testTheNameOfTheClassCanBeSet()
+	{
+		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$compiler->setCustomClassName('MyCustomClass');
+		$this->assert(get_class($compiler->newInstance()), equals, 'Concise\Mock\MyCustomClass');
+	}
 }

@@ -40,6 +40,12 @@ class ClassCompiler
 	 */
 	protected $disableConstructor;
 
+	/**
+	 * You may specify a custom class name for the mock.
+	 * @var string
+	 */
+	protected $customClassName;
+
 	/*
 	 * @param string  $className
 	 * @param boolean $niceMock
@@ -137,6 +143,9 @@ class ClassCompiler
 	 */
 	protected function getMockName()
 	{
+		if($this->customClassName) {
+			return $this->customClassName;
+		}
 		return $this->getClassName() . $this->mockUnique;
 	}
 
@@ -157,5 +166,10 @@ class ClassCompiler
 	public function setRules(array $rules)
 	{
 		$this->rules = $rules;
+	}
+
+	public function setCustomClassName($className)
+	{
+		$this->customClassName = $className;
 	}
 }
