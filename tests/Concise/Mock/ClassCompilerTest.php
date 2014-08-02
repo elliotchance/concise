@@ -76,4 +76,11 @@ class ClassCompilerTest extends TestCase
 		$compiler->setCustomClassName('MyCustomClass');
 		$this->assert(get_class($compiler->newInstance()), equals, 'Concise\Mock\MyCustomClass');
 	}
+
+	public function testTheClassCanBeCreatedInADifferentNamespace()
+	{
+		$compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+		$compiler->setCustomClassName('Other\Place\MyRandomClass');
+		$this->assert(get_class($compiler->newInstance()), equals, 'Other\Place\MyRandomClass');
+	}
 }
