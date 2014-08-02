@@ -41,6 +41,12 @@ class ClassCompiler
 	protected $disableConstructor;
 
 	/**
+	 * You may specify a custom class name for the mock.
+	 * @var string
+	 */
+	protected $customClassName;
+
+	/**
 	 * @var string[]
 	 */
 	protected $expose = array();
@@ -64,22 +70,24 @@ class ClassCompiler
 
 	/**
 	 * Get the namespace for the mocked class.
+	 * @param  string $className
 	 * @return string
 	 */
-	protected function getNamespaceName()
+	protected function getNamespaceName($className = null)
 	{
-		$parts = explode('\\', $this->className);
+		$parts = explode('\\', $className ?: $this->className);
 		array_pop($parts);
 		return implode('\\', $parts);
 	}
 
 	/**
 	 * Get the class name (not including the namespace) of the class to be mocked.
+	 * @param  string $className
 	 * @return string
 	 */
-	protected function getClassName()
+	protected function getClassName($className = null)
 	{
-		$parts = explode('\\', $this->className);
+		$parts = explode('\\', $className ?: $this->className);
 		return $parts[count($parts) - 1];
 	}
 
@@ -107,8 +115,8 @@ class ClassCompiler
 		}
 
 		$code = '';
-		if($this->getNamespaceName()) {
-			$code = "namespace " . $this->getNamespaceName() . "; ";
+		if($this->getMockNamespaceName()) {
+			$code = "namespace " . $this->getMockNamespaceName() . "; ";
 		}
 
 		$methods = array();
@@ -160,7 +168,15 @@ class ClassCompiler
 	 */
 	protected function getMockName()
 	{
+		if($this->customClassName) {
+			return $this->getClassName($this->customClassName);
+		}
 		return $this->getClassName() . $this->mockUnique;
+	}
+
+	protected function getMockNamespaceName()
+	{
+	    return $this->getNamespaceName($this->customClassName);
 	}
 
 	/**
@@ -169,7 +185,7 @@ class ClassCompiler
 	 */
 	public function newInstance()
 	{
-		$reflect = eval($this->generateCode() . " return new \\ReflectionClass('{$this->getNamespaceName()}\\{$this->getMockName()}');");
+		$reflect = eval($this->generateCode() . " return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');");
 		return $reflect->newInstanceArgs($this->constructorArgs);
 	}
 
@@ -180,6 +196,14 @@ class ClassCompiler
 	public function setRules(array $rules)
 	{
 		$this->rules = $rules;
+	}
+
+	public function setCustomClassName($className)
+	{
+		if(strpos($className, '\\') === false) {
+			$className = $this->getNamespaceName() . '\\' . $className;
+		}
+		$this->customClassName = $className;
 	}
 
 	/**
