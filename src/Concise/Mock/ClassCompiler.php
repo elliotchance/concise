@@ -176,10 +176,7 @@ class ClassCompiler
 
 	protected function getMockNamespaceName()
 	{
-		if($this->customClassName) {
-			return $this->getNamespaceName($this->customClassName);
-		}
-		return $this->getNamespaceName();
+	    return $this->getNamespaceName($this->customClassName);
 	}
 
 	/**
