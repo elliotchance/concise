@@ -46,6 +46,11 @@ class ClassCompiler
 	 */
 	protected $customClassName;
 
+	/**
+	 * @var string[]
+	 */
+	protected $expose = array();
+
 	/*
 	 * @param string  $className
 	 * @param boolean $niceMock
@@ -86,6 +91,18 @@ class ClassCompiler
 		return $parts[count($parts) - 1];
 	}
 
+	protected function getPrototype($method)
+	{
+		$prototypeBuilder = new PrototypeBuilder();
+		$prototypeBuilder->hideAbstract = true;
+		$realMethod = new \ReflectionMethod($this->className, $method);
+		$prototype = $prototypeBuilder->getPrototype($realMethod);
+		if(array_key_exists($method, $this->expose)) {
+			$prototype = str_replace('protected ', 'public ', $prototype);
+		}
+		return $prototype;
+	}
+
 	/**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -96,9 +113,6 @@ class ClassCompiler
 		if($refClass->isFinal()) {
 			throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
 		}
-
-		$prototypeBuilder = new PrototypeBuilder();
-		$prototypeBuilder->hideAbstract = true;
 
 		$code = '';
 		if($this->getMockNamespaceName()) {
@@ -111,8 +125,9 @@ class ClassCompiler
 				if($method->isFinal()) {
 					continue;
 				}
-				$methods[$method->getName()] = $prototypeBuilder->getPrototype($method) . ' { throw new \\Exception("' .
-					$method->getName() . '() does not have an associated action - consider a niceMock()?"); }';
+				$prototype = $this->getPrototype($method->getName());
+				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
+					'() does not have an associated action - consider a niceMock()?"); }';
 			}
 		}
 
@@ -125,7 +140,8 @@ class ClassCompiler
 			if($realMethod->isPrivate()) {
 				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
 			}
-			$methods[$method] = $prototypeBuilder->getPrototype($realMethod) . " { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
+			$prototype = $this->getPrototype($method);
+			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
 		}
 
 		if($this->disableConstructor) {
@@ -135,6 +151,13 @@ class ClassCompiler
 			unset($methods['__construct']);
 		}
 		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
+
+		foreach($this->expose as $method => $value) {
+			if(!array_key_exists($method, $methods)) {
+				$prototype = $this->getPrototype($method);
+				$methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
+			}
+		}
 
 		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
 	}
@@ -184,5 +207,22 @@ class ClassCompiler
 			$className = $this->getNamespaceName() . '\\' . $className;
 		}
 		$this->customClassName = $className;
+	}
+
+	/**
+	 * @param string $method
+	 */
+	public function addExpose($method)
+	{
+		try {
+			$m = new \ReflectionMethod($this->className, $method);
+			if($m->isPrivate()) {
+				throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
+			}
+		}
+		catch(\ReflectionException $e) {
+			throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
+		}
+		$this->expose[$method] = true;
 	}
 }
