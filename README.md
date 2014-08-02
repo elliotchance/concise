@@ -69,6 +69,8 @@ Matchers
 
 ### Arrays
 
+* `?:array does not have key ?:string with value ?` - Assert an array does not have key and value item.
+  * `?:array does not have item ?:array`
 * `?:array does not have key ?:int,string` - Assert an array does not have a key.
 * `?:array does not have keys ?:array` - Assert an array does not contain any keys.
 * `?:array does not have value ?` - Assert an array does not have any occurrences of the given value.
