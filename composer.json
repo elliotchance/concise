@@ -1,6 +1,7 @@
 {
     "name": "elliotchance/concise",
     "description": "Concise is test framework for using plain English and minimal code, built on PHPUnit.",
+    "bin": ["bin/concise"],
     "require": {
         "php": ">=5.3.0"
     },
