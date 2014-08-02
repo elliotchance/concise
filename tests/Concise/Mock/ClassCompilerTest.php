@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use \Concise\TestCase;
+use \Concise\Mock\Action\ReturnValueAction;
 
 class ClassCompilerMock1
 {
