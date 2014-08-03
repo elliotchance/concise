@@ -160,6 +160,9 @@ class MockBuilder
 	 */
 	protected function setAction(Action\AbstractAction $action)
 	{
+		if($this->hasAction()) {
+			throw new \Exception("{$this->currentRule}() has more than one action attached.");
+		}
 		$this->rules[$this->currentRule][$this->getWithKey()]['action'] = $action;
 		return $this;
 	}
