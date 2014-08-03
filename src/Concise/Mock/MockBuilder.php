@@ -253,7 +253,6 @@ class MockBuilder
 			'action'      => $action,
 			'times'       => $times,
 			'with'        => $this->currentWith,
-			'calledTimes' => 0,
 		);
 	}
 

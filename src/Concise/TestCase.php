@@ -125,7 +125,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		if($rule['times'] == 1 && $actualTimes == 0) {
 			throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called, but it was not.");
 		}
-		throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called {$rule['times']} times, but it was called $actual times.");
+		throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called {$rule['times']} times, but it was called $actualTimes times.");
 	}
 
 	protected function validateExpectation($mock, $method, array $rule)
@@ -146,7 +146,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			if(!array_key_exists($key, $callGraph)) {
 				$this->validateSingleWith($rule, 0, $method);
 			}
-			$this->validateSingleWith($rule, count($callGraph[$key]), $method);
+			$this->validateSingleWith($rule, $callGraph[$key], $method);
 		}
 		$this->assert(true);
 	}

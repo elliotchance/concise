@@ -40,4 +40,13 @@ class MockBuilderWithTest extends TestCase
 		             ->done();
 		$this->assert($mock->myMethod('a'), equals, 'foo');
 	}
+
+	public function testSingleWithWithMultipleTimes()
+	{
+		$mock = $this->mock('Concise\Mock\MockBuilderWithStub')
+		             ->stub('myMethod')->with('a')->twice()->andReturn('foo')
+		             ->done();
+		$mock->myMethod('a');
+		$this->assert($mock->myMethod('a'), equals, 'foo');
+	}
 }

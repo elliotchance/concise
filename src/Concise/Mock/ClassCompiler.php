@@ -126,8 +126,11 @@ class ClassCompiler
 					continue;
 				}
 				$prototype = $this->getPrototype($method->getName());
-				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
-					'() does not have an associated action - consider a niceMock()?"); }';
+				$methods[$method->getName()] = <<<EOF
+$prototype {
+	throw new \\Exception("{$method->getName()}() does not have an associated action - consider a niceMock()?");
+}
+EOF;
 			}
 		}
 
