@@ -131,8 +131,7 @@ class ClassCompiler
 			}
 		}
 
-		foreach($this->rules as $method => $rule) {
-			$action = $rule['action'];
+		foreach($this->rules as $method => $withs) {
 			$realMethod = new \ReflectionMethod($this->className, $method);
 			if($realMethod->isFinal()) {
 				throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
@@ -140,8 +139,34 @@ class ClassCompiler
 			if($realMethod->isPrivate()) {
 				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
 			}
+			$actionCode = '';
+			$defaultActionCode = '';
+			foreach($withs as $withKey => $rule) {
+				$action = $rule['action'];
+				if(null === $rule['with']) {
+					$defaultActionCode = $action->getActionCode();
+				}
+				else {
+					$args = str_replace('"', '\\"', json_encode($rule['with']));
+					$actionCode .= <<<EOF
+if(json_encode(func_get_args()) == "$args") {
+	{$action->getActionCode()}
+}
+EOF;
+				}
+			}
+
 			$prototype = $this->getPrototype($method);
-			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
+			$methods[$method] = <<<EOF
+$prototype {
+	if(!array_key_exists('$method', self::\$_methodCalls)) {
+		self::\$_methodCalls['$method'] = array();
+	}
+	self::\$_methodCalls['$method'][] = func_get_args();
+	$actionCode
+	$defaultActionCode
+}
+EOF;
 		}
 
 		if($this->disableConstructor) {
@@ -150,7 +175,11 @@ class ClassCompiler
 		else {
 			unset($methods['__construct']);
 		}
-		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
+		$methods['getCallsForMethod'] = <<<EOF
+public function getCallsForMethod(\$method) {
+	return array_key_exists(\$method, self::\$_methodCalls) ? self::\$_methodCalls[\$method] : array();
+}
+EOF;
 
 		foreach($this->expose as $method => $value) {
 			if(!array_key_exists($method, $methods)) {
@@ -159,7 +188,7 @@ class ClassCompiler
 			}
 		}
 
-		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
+		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode("\n", $methods) . "}";
 	}
 
 	/**

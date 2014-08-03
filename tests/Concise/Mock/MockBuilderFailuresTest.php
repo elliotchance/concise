@@ -15,15 +15,15 @@ class MockBuilderFailuresTest extends TestCase
 
 	public function testFailedToFulfilExpectationWillThrowException()
 	{
-		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->expect('myMethod')->andReturn(null)
-		                   ->done();
+		$this->mock('\Concise\Mock\Mock1')
+		     ->expect('myMethod')
+		     ->done();
 	}
 
 	public function testMethodCalledWithWrongArgumentValues()
 	{
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->expect('myMethod')->with('foo')->andReturn(null)
+		                   ->expect('myMethod')->with('foo')
 		                   ->done();
 		$this->mock->myMethod('bar');
 	}

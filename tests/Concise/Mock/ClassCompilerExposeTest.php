@@ -42,9 +42,21 @@ class ClassCompilerExposeTest extends TestCase
 		$this->assert($instance->hidden(), equals, 'foo');
 	}
 
+	protected function setRulesForExposure()
+	{
+		$this->compiler->setRules(array(
+			'hidden' => array(
+				array(
+					'action' => new ReturnValueAction('bar'),
+					'with'   => null,
+				),
+			),
+		));
+	}
+
 	public function testAMethodThatHasARuleCanBeExposed()
 	{
-		$this->compiler->setRules(array('hidden' => array('action' => new ReturnValueAction('bar'))));
+		$this->setRulesForExposure();
 		$this->compiler->addExpose('hidden');
 		$instance = $this->compiler->newInstance();
 		$this->assert($instance->hidden(), equals, 'bar');
@@ -67,7 +79,7 @@ class ClassCompilerExposeTest extends TestCase
 
 	public function testAddingARuleToAMethodWillNotExposeThemAll()
 	{
-		$this->compiler->setRules(array('hidden' => array('action' => new ReturnValueAction('bar'))));
+		$this->setRulesForExposure();
 		$instance = $this->compiler->newInstance();
 		$reflectionClass = new \ReflectionClass(get_class($instance));
 		$this->assert($reflectionClass->getMethod('hidden2')->isPublic(), is_false);
@@ -75,7 +87,7 @@ class ClassCompilerExposeTest extends TestCase
 
 	public function testAddingARuleToAMethodWillNotExposeIt()
 	{
-		$this->compiler->setRules(array('hidden' => array('action' => new ReturnValueAction('bar'))));
+		$this->setRulesForExposure();
 		$instance = $this->compiler->newInstance();
 		$reflectionClass = new \ReflectionClass(get_class($instance));
 		$this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);

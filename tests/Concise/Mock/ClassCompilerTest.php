@@ -61,7 +61,7 @@ class ClassCompilerTest extends TestCase
 	 */
 	protected function assertPHP(ClassCompiler $compiler, $php)
 	{
-		$this->assert($compiler->generateCode(), matches_regex, '/' . str_replace('%', '(.*)', preg_quote($php)) . '/');
+		$this->assert($compiler->generateCode(), matches_regex, '/' . str_replace('%', '(.*)', preg_quote($php)) . '/sm');
 		$compiler->newInstance();
 	}
 

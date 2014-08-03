@@ -108,18 +108,20 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$this->assert($assertion);
 		}
 		foreach($this->_mocks as $mock) {
-			foreach($mock['mockBuilder']->getRules() as $method => $rule) {
-				// Negative times means it is a stub.
-				if($rule['times'] < 0) {
-					continue;
-				}
-				
-				if(null === $rule['with']) {
-					$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
-				}
-				else {
-					foreach($mock['instance']->getCallsForMethod($method) as $call) {
-						$this->assert($call, exactly_equals, $rule['with']);
+			foreach($mock['mockBuilder']->getRules() as $method => $methodWiths) {
+				foreach($methodWiths as $withKey => $rule) {
+					// Negative times means it is a stub.
+					if($rule['times'] < 0) {
+						continue;
+					}
+
+					if(null === $rule['with']) {
+						$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
+					}
+					else {
+						foreach($mock['instance']->getCallsForMethod($method) as $call) {
+							$this->assert($call, exactly_equals, $rule['with']);
+						}
 					}
 				}
 			}
