@@ -107,7 +107,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		if(null === $args) {
 			return '';
 		}
-		
+
 		$a = array();
 		$valueRenderer = new ValueRenderer();
 		foreach($args as $arg) {
@@ -148,6 +148,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			}
 			$this->validateSingleWith($rule, count($callGraph[$key]), $method);
 		}
+		$this->assert(true);
 	}
 
 	protected function validateMock(array $mock)
@@ -160,7 +161,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 				}
 
 				$this->validateExpectation($mock, $method, $rule);
-				$this->assert(true);
 			}
 		}
 	}

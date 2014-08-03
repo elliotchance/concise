@@ -264,6 +264,7 @@ class MockBuilder
 	public function with()
 	{
 		$this->currentWith = func_get_args();
+		$this->rules[$this->currentRule][md5('null')]['times'] = -1;
 		$this->setupWith(new Action\ReturnValueAction(null), $this->isExpecting ? 1 : -1);
 		return $this;
 	}

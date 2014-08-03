@@ -13,6 +13,7 @@ class MockBuilderFailuresTest extends TestCase
 		'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called, but it was not.',
 		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called, but it was not.',
 		'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called, but it was not.',
+		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called, but it was not.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -44,6 +45,13 @@ class MockBuilderFailuresTest extends TestCase
 		                   ->expect('myMethod')->with('foo', 'bar')
 		                   ->done();
 		$this->mock->myMethod('bar');
+	}
+
+	public function testMissingAllExpectations()
+	{
+		$this->mock('\Concise\Mock\Mock1')
+		     ->expect('myMethod')->with('foo')->with('bar')
+		     ->done();
 	}
 
 	protected function onNotSuccessfulTest(\Exception $e)
