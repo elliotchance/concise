@@ -14,6 +14,7 @@ class MockBuilderFailuresTest extends TestCase
 		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called, but it was not.',
 		'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called, but it was not.',
 		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called, but it was not.',
+		'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called 2 times, but it was called 1 times.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -52,6 +53,15 @@ class MockBuilderFailuresTest extends TestCase
 		$this->mock('\Concise\Mock\Mock1')
 		     ->expect('myMethod')->with('foo')->with('bar')
 		     ->done();
+	}
+
+	public function testLessTimesThanExpected()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->twice()
+		                                       ->with('bar')
+		                   ->done();
+		$this->mock->myMethod('foo');
 	}
 
 	protected function onNotSuccessfulTest(\Exception $e)
