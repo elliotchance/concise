@@ -116,13 +116,25 @@ class TestCase extends \PHPUnit_Framework_TestCase
 					}
 
 					if(null === $rule['with']) {
-						$this->assert(count($mock['instance']->getCallsForMethod($method)), equals, $rule['times']);
-					}
-					else {
-						foreach($mock['instance']->getCallsForMethod($method) as $call) {
-							$this->assert($call, exactly_equals, $rule['with']);
+						if(count($mock['instance']->getCallsForMethod($method)) != $rule['times']) {
+							throw new \PHPUnit_Framework_AssertionFailedError("Expected $method() to be called, but it was not.");
 						}
 					}
+					else {
+						$callGraph = array();
+						foreach($mock['instance']->getCallsForMethod($method) as $call) {
+							$key = md5(json_encode($call));
+							if(!array_key_exists($key, $callGraph)) {
+								$callGraph[$key] = 0;
+							}
+							++$callGraph[$key];
+						}
+						$key = md5(json_encode($rule['with']));
+						if(!array_key_exists($key, $callGraph)) {
+							throw new \PHPUnit_Framework_AssertionFailedError("Expected $method(\"foo\") to be called, but it was not.");
+						}
+					}
+					$this->assert(true);
 				}
 			}
 		}

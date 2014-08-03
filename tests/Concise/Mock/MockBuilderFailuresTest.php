@@ -9,8 +9,9 @@ class MockBuilderFailuresTest extends TestCase
 	protected static $failures = array();
 
 	protected static $expectedFailures = array(
-		'testFailedToFulfilExpectationWillThrowException' => "0 equals 1",
-		'testMethodCalledWithWrongArgumentValues' => '["bar"] exactly equals ["foo"]',
+		'testFailedToFulfilExpectationWillThrowException' => 'Expected myMethod() to be called, but it was not.',
+		'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called, but it was not.',
+		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called, but it was not.'
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -28,6 +29,14 @@ class MockBuilderFailuresTest extends TestCase
 		$this->mock->myMethod('bar');
 	}
 
+	public function testMissingSecondWithExpectation()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->with('bar')
+		                   ->done();
+		$this->mock->myMethod('bar');
+	}
+
 	protected function onNotSuccessfulTest(\Exception $e)
 	{
 		self::$failures[] = $this->getName();
@@ -36,7 +45,7 @@ class MockBuilderFailuresTest extends TestCase
 
 	public static function tearDownAfterClass()
 	{
-		if(count(self::$failures) !== 2) {
+		if(count(self::$failures) !== count(self::$expectedFailures)) {
 			throw new \Exception("All tests must fail, but only " . implode(", ", self::$failures) . " did.");
 		}
 	}
