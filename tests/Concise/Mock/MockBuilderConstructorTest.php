@@ -21,6 +21,13 @@ class MockConstructor2
 	}
 }
 
+class Mock3
+{
+	public function __construct($a)
+	{
+	}
+}
+
 class MockBuilderConstructorTest extends TestCase
 {
 	public function testMocksWillCallConstructorByDefault()
@@ -52,5 +59,19 @@ class MockBuilderConstructorTest extends TestCase
 		             ->disableConstructor()
 		             ->done();
 		$this->assert($mock, instance_of, '\Concise\Mock\MockConstructor2');
+	}
+
+	public function testMockReceivesConstructorArguments()
+	{
+		$mock = $this->mock('\Concise\Mock\Mock3', array('foo'))
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\Mock3');
+	}
+
+	public function testNiceMockReceivesConstructorArguments()
+	{
+		$mock = $this->niceMock('\Concise\Mock\Mock3', array('foo'))
+		             ->done();
+		$this->assert($mock, instance_of, '\Concise\Mock\Mock3');
 	}
 }
