@@ -5,6 +5,7 @@ namespace Concise;
 use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
+use Concise\Services\ValueRenderer;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -101,43 +102,83 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$assertion->run();
 	}
 
+	protected function renderArguments(array $args = null)
+	{
+		if(null === $args) {
+			return '';
+		}
+		
+		$a = array();
+		$valueRenderer = new ValueRenderer();
+		foreach($args as $arg) {
+			$a[] = $valueRenderer->render($arg);
+		}
+		return implode(", ", $a);
+	}
+
+	protected function validateSingleWith(array $rule, $actualTimes, $method)
+	{
+		if($rule['times'] == $actualTimes) {
+			return;
+		}
+		$args = $this->renderArguments($rule['with']);
+		if($rule['times'] == 1 && $actualTimes == 0) {
+			throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called, but it was not.");
+		}
+		throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called {$rule['times']} times, but it was called $actual times.");
+	}
+
+	protected function validateExpectation($mock, $method, array $rule)
+	{
+		if(null === $rule['with']) {
+			$this->validateSingleWith($rule, count($mock['instance']->getCallsForMethod($method)), $method);
+		}
+		else {
+			$callGraph = array();
+			foreach($mock['instance']->getCallsForMethod($method) as $call) {
+				$key = md5(json_encode($call));
+				if(!array_key_exists($key, $callGraph)) {
+					$callGraph[$key] = 0;
+				}
+				++$callGraph[$key];
+			}
+			$key = md5(json_encode($rule['with']));
+			if(!array_key_exists($key, $callGraph)) {
+				$this->validateSingleWith($rule, 0, $method);
+			}
+			$this->validateSingleWith($rule, count($callGraph[$key]), $method);
+		}
+	}
+
+	protected function validateMock(array $mock)
+	{
+		foreach($mock['mockBuilder']->getRules() as $method => $methodWiths) {
+			foreach($methodWiths as $withKey => $rule) {
+				// Negative times means it is a stub.
+				if($rule['times'] < 0) {
+					continue;
+				}
+
+				$this->validateExpectation($mock, $method, $rule);
+				$this->assert(true);
+			}
+		}
+	}
+
+	protected function validateMocks()
+	{
+		foreach($this->_mocks as $mock) {
+			$this->validateMock($mock);
+		}
+	}
+
 	public function tearDown()
 	{
 		if(substr($this->getName(), 4, 1) === '_') {
 			$assertion = str_replace("_", " ", substr($this->getName(), 5));
 			$this->assert($assertion);
 		}
-		foreach($this->_mocks as $mock) {
-			foreach($mock['mockBuilder']->getRules() as $method => $methodWiths) {
-				foreach($methodWiths as $withKey => $rule) {
-					// Negative times means it is a stub.
-					if($rule['times'] < 0) {
-						continue;
-					}
-
-					if(null === $rule['with']) {
-						if(count($mock['instance']->getCallsForMethod($method)) != $rule['times']) {
-							throw new \PHPUnit_Framework_AssertionFailedError("Expected $method() to be called, but it was not.");
-						}
-					}
-					else {
-						$callGraph = array();
-						foreach($mock['instance']->getCallsForMethod($method) as $call) {
-							$key = md5(json_encode($call));
-							if(!array_key_exists($key, $callGraph)) {
-								$callGraph[$key] = 0;
-							}
-							++$callGraph[$key];
-						}
-						$key = md5(json_encode($rule['with']));
-						if(!array_key_exists($key, $callGraph)) {
-							throw new \PHPUnit_Framework_AssertionFailedError("Expected $method(\"foo\") to be called, but it was not.");
-						}
-					}
-					$this->assert(true);
-				}
-			}
-		}
+		$this->validateMocks();
 
 		global $_currentTestCase;
 		$_currentTestCase = null;
