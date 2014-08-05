@@ -17,4 +17,10 @@ class NumberToTimesConverterTest extends TestCase
 		$converter = new NumberToTimesConverter();
 		$this->assert($converter->convert(0), equals, 'never');
 	}
+
+	public function testTwoIsTwice()
+	{
+		$converter = new NumberToTimesConverter();
+		$this->assert($converter->convert(2), equals, 'twice');
+	}
 }
