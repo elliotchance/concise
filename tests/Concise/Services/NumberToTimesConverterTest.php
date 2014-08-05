@@ -48,4 +48,9 @@ class NumberToTimesConverterTest extends TestCase
 	{
 		$this->assert($this->converter->convertToMethod(2), equals, 'twice()');
 	}
+
+	public function testMethodAcceptsStringsThatLookLikeNumbers()
+	{
+		$this->assert($this->converter->convertToMethod('2'), equals, 'twice()');
+	}
 }

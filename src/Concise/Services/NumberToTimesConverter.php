@@ -23,6 +23,7 @@ class NumberToTimesConverter
 
 	public function convertToMethod($number)
 	{
+		$number = (int) $number;
 		if($number === 2) {
 			return 'twice()';
 		}
