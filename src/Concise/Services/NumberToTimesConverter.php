@@ -8,6 +8,7 @@ class NumberToTimesConverter
 {
 	public function convert($number)
 	{
+		$number = (int) $number;
 		if($number === 0) {
 			return 'never';
 		}

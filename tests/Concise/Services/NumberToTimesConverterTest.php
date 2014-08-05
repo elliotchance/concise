@@ -23,4 +23,10 @@ class NumberToTimesConverterTest extends TestCase
 		$converter = new NumberToTimesConverter();
 		$this->assert($converter->convert(2), equals, 'twice');
 	}
+
+	public function testStringsThatLookLikeNumbersAreAllowed()
+	{
+		$converter = new NumberToTimesConverter();
+		$this->assert($converter->convert('2'), equals, 'twice');
+	}
 }
