@@ -24,4 +24,9 @@ class ValueRenderer
 		}
 		return (string) $value;
 	}
+
+	public function renderAll(array $items)
+	{
+		return '';
+	}
 }
