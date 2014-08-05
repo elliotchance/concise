@@ -71,4 +71,9 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assert($this->renderer->renderAll([]), equals, '');
 	}
+
+	public function testRenderAllMethodWithOneElement()
+	{
+		$this->assert($this->renderer->renderAll([1]), equals, '1');
+	}
 }

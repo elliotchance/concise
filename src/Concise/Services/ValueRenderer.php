@@ -27,6 +27,9 @@ class ValueRenderer
 
 	public function renderAll(array $items)
 	{
+		if($items) {
+			return $this->render($items[0]);
+		}
 		return '';
 	}
 }
