@@ -27,9 +27,7 @@ class ValueRenderer
 
 	public function renderAll(array $items)
 	{
-		if($items) {
-			return $this->render($items[0]);
-		}
-		return '';
+		array_walk($items, array($this, 'render'));
+		return implode(', ', $items);
 	}
 }

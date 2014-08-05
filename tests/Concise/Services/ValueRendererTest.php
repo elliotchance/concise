@@ -76,4 +76,9 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assert($this->renderer->renderAll([1]), equals, '1');
 	}
+
+	public function testRenderAllMethodWithTwoElements()
+	{
+		$this->assert($this->renderer->renderAll([1, 2]), equals, '1, 2');
+	}
 }
