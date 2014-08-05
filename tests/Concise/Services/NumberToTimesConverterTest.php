@@ -38,4 +38,9 @@ class NumberToTimesConverterTest extends TestCase
 	{
 		$this->assert($this->converter->convert(123), equals, '123 times');
 	}
+
+	public function testMethodForOneIsOnce()
+	{
+		$this->assert($this->converter->convertToMethod(1), equals, 'once()');
+	}
 }

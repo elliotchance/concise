@@ -20,4 +20,9 @@ class NumberToTimesConverter
 		}
 		return "$number times";
 	}
+
+	public function convertToMethod($number)
+	{
+		return 'once()';
+	}
 }
