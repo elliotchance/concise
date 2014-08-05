@@ -109,12 +109,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			return '';
 		}
 
-		$a = array();
 		$valueRenderer = new ValueRenderer();
-		foreach($args as $arg) {
-			$a[] = $valueRenderer->render($arg);
-		}
-		return implode(", ", $a);
+		return $valueRenderer->renderAll($args);
 	}
 
 	protected function validateSingleWith(array $rule, $actualTimes, $method)

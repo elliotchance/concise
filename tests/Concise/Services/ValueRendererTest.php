@@ -81,4 +81,9 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assert($this->renderer->renderAll([1, 2]), equals, '1, 2');
 	}
+
+	public function testRenderAllWithStrings()
+	{
+		$this->assert($this->renderer->renderAll(['foo']), equals, '"foo"');
+	}
 }
