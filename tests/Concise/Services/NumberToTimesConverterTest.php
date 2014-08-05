@@ -43,4 +43,9 @@ class NumberToTimesConverterTest extends TestCase
 	{
 		$this->assert($this->converter->convertToMethod(1), equals, 'once()');
 	}
+
+	public function testMethodForTwoIsTwice()
+	{
+		$this->assert($this->converter->convertToMethod(2), equals, 'twice()');
+	}
 }
