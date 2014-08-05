@@ -204,6 +204,7 @@ class MockBuilder
 		$this->isExpecting = true;
 		$this->addRule($method, new Action\ReturnValueAction(null));
 		$this->once();
+		$this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = false;
 		return $this;
 	}
 
@@ -240,6 +241,7 @@ class MockBuilder
 	 */
 	public function exactly($times)
 	{
+		$this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
 		if($times === 0) {
 			$this->andReturn(null);
 		}
@@ -253,6 +255,7 @@ class MockBuilder
 			'action'      => $action,
 			'times'       => $times,
 			'with'        => $this->currentWith,
+			'hasSetTimes' => false,
 		);
 	}
 
@@ -263,6 +266,9 @@ class MockBuilder
 	public function with()
 	{
 		$this->currentWith = func_get_args();
+		if($this->rules[$this->currentRule][md5('null')]['hasSetTimes']) {
+			throw new \Exception();
+		}
 		$this->rules[$this->currentRule][md5('null')]['times'] = -1;
 		$this->setupWith(new Action\ReturnValueAction(null), $this->isExpecting ? 1 : -1);
 		return $this;

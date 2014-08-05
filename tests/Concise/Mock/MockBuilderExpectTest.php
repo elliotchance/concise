@@ -77,4 +77,13 @@ class MockBuilderExpectTest extends TestCase
 		             ->done();
 		$mock->myMethod();
 	}
+
+	/**
+	 * @expectedException \Exception
+	 */
+	public function testUsingExpectationCountBeforeWithWillThrowException()
+	{
+		$mock = $this->mock()
+		             ->expects('myMethod')->once()->with('foo');
+	}
 }
