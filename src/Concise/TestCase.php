@@ -6,6 +6,7 @@ use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Services\ValueRenderer;
+use Concise\Services\NumberToTimesConverter;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -122,10 +123,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			return;
 		}
 		$args = $this->renderArguments($rule['with']);
-		if($rule['times'] == 1 && $actualTimes == 0) {
-			throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called, but it was not.");
-		}
-		throw new \PHPUnit_Framework_AssertionFailedError("Expected $method($args) to be called {$rule['times']} times, but it was called $actualTimes times.");
+		$converter = new NumberToTimesConverter();
+		$msg = sprintf(
+			"Expected $method($args) to be called %s, but it was called %s.",
+			$converter->convert($rule['times']),
+			$converter->convert($actualTimes)
+		);
+		throw new \PHPUnit_Framework_AssertionFailedError($msg);
 	}
 
 	protected function validateExpectation($mock, $method, array $rule)

@@ -9,15 +9,15 @@ class MockBuilderFailuresTest extends TestCase
 	protected static $failures = array();
 
 	protected static $expectedFailures = array(
-		'testFailedToFulfilExpectationWillThrowException' => 'Expected myMethod() to be called, but it was not.',
-		'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called, but it was not.',
-		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called, but it was not.',
-		'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called, but it was not.',
-		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called, but it was not.',
-		'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called 2 times, but it was called 1 times.',
-		'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called 2 times, but it was called 3 times.',
-		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called, but it was not.',
-		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called 2 times, but it was called 1 times.',
+		'testFailedToFulfilExpectationWillThrowException' => 'Expected myMethod() to be called once, but it was called never.',
+		'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called once, but it was called never.',
+		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called once.',
+		'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called 3 times.',
+		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()

@@ -6,27 +6,36 @@ use \Concise\TestCase;
 
 class NumberToTimesConverterTest extends TestCase
 {
+	protected $converter;
+
+	public function setUp()
+	{
+		parent::setUp();
+		$this->converter = new NumberToTimesConverter();
+	}
+
 	public function testOneIsOnce()
 	{
-		$converter = new NumberToTimesConverter();
-		$this->assert($converter->convert(1), equals, 'once');
+		$this->assert($this->converter->convert(1), equals, 'once');
 	}
 
 	public function testZeroIsNever()
 	{
-		$converter = new NumberToTimesConverter();
-		$this->assert($converter->convert(0), equals, 'never');
+		$this->assert($this->converter->convert(0), equals, 'never');
 	}
 
 	public function testTwoIsTwice()
 	{
-		$converter = new NumberToTimesConverter();
-		$this->assert($converter->convert(2), equals, 'twice');
+		$this->assert($this->converter->convert(2), equals, 'twice');
 	}
 
 	public function testStringsThatLookLikeNumbersAreAllowed()
 	{
-		$converter = new NumberToTimesConverter();
-		$this->assert($converter->convert('2'), equals, 'twice');
+		$this->assert($this->converter->convert('2'), equals, 'twice');
+	}
+
+	public function testAnyOtherNumberIsPluralized()
+	{
+		$this->assert($this->converter->convert(123), equals, '123 times');
 	}
 }

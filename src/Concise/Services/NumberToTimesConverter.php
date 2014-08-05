@@ -12,9 +12,12 @@ class NumberToTimesConverter
 		if($number === 0) {
 			return 'never';
 		}
+		if($number === 1) {
+			return 'once';
+		}
 		if($number === 2) {
 			return 'twice';
 		}
-		return 'once';
+		return "$number times";
 	}
 }
