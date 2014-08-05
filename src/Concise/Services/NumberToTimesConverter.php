@@ -23,12 +23,8 @@ class NumberToTimesConverter
 
 	public function convertToMethod($number)
 	{
-		$number = (int) $number;
-		if($number === 1) {
-			return 'once()';
-		}
-		if($number === 2) {
-			return 'twice()';
+		if($number < 3) {
+			return $this->convert($number) . '()';
 		}
 		return "exactly($number)";
 	}

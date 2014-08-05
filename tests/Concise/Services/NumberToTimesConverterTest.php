@@ -58,4 +58,9 @@ class NumberToTimesConverterTest extends TestCase
 	{
 		$this->assert($this->converter->convertToMethod(123), equals, 'exactly(123)');
 	}
+
+	public function testMethodForZeroIsNever()
+	{
+		$this->assert($this->converter->convertToMethod(0), equals, 'never()');
+	}
 }
