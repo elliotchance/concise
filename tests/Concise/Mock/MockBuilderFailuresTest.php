@@ -16,6 +16,8 @@ class MockBuilderFailuresTest extends TestCase
 		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called, but it was not.',
 		'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called 2 times, but it was called 1 times.',
 		'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called 2 times, but it was called 3 times.',
+		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called, but it was not.',
+		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called 2 times, but it was called 1 times.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
@@ -65,6 +67,21 @@ class MockBuilderFailuresTest extends TestCase
 		$this->mock->myMethod('foo');
 	}
 
+	public function testExpectionThatIsNeverCalledWillFail()
+	{
+		$this->mock('\Concise\Mock\Mock1')
+		     ->expect('myMethod')->with('foo')->andReturn('bar')
+		     ->done();
+	}
+
+	public function testExpectionMustBeCalledTheRequiredAmountOfTimes()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->twice()->andReturn('bar')
+		                   ->done();
+		$this->mock->myMethod('foo');
+	}
+
 	public function testMoreTimesThanExpected()
 	{
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
@@ -84,8 +101,8 @@ class MockBuilderFailuresTest extends TestCase
 
 	public static function tearDownAfterClass()
 	{
-		if(count(self::$failures) !== count(self::$expectedFailures)) {
-			throw new \Exception("All tests must fail, but only " . implode(", ", self::$failures) . " did.");
-		}
+		$a = array_keys(self::$expectedFailures);
+		$b = self::$failures;
+		assert_that(array_diff($a, $b), equals, array_diff($b, $a));
 	}
 }

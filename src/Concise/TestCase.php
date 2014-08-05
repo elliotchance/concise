@@ -159,7 +159,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 				if($rule['times'] < 0) {
 					continue;
 				}
-
+				
 				$this->validateExpectation($mock, $method, $rule);
 			}
 		}
