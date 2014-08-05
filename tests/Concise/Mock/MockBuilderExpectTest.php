@@ -86,4 +86,15 @@ class MockBuilderExpectTest extends TestCase
 		$mock = $this->mock()
 		             ->expects('myMethod')->once()->with('foo');
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage When using with you must specify expecations for each with():
+	 * @expectedExceptionMessage ->expects('myMethod')->with("foo")->twice()
+	 */
+	public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes()
+	{
+		$mock = $this->mock()
+		             ->expects('myMethod')->twice()->with("foo");
+	}
 }

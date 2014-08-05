@@ -3,6 +3,8 @@
 namespace Concise\Mock;
 
 use \Concise\TestCase;
+use \Concise\Services\NumberToTimesConverter;
+use \Concise\Services\ValueRenderer;
 
 class MockBuilder
 {
@@ -267,7 +269,11 @@ class MockBuilder
 	{
 		$this->currentWith = func_get_args();
 		if($this->rules[$this->currentRule][md5('null')]['hasSetTimes']) {
-			throw new \Exception();
+			$renderer = new ValueRenderer();
+			$converter = new NumberToTimesConverter();
+			$args = $renderer->renderAll($this->currentWith);
+			throw new \Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
+				$this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
 		}
 		$this->rules[$this->currentRule][md5('null')]['times'] = -1;
 		$this->setupWith(new Action\ReturnValueAction(null), $this->isExpecting ? 1 : -1);
