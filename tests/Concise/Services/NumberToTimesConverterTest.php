@@ -11,4 +11,10 @@ class NumberToTimesConverterTest extends TestCase
 		$converter = new NumberToTimesConverter();
 		$this->assert($converter->convert(1), equals, 'once');
 	}
+
+	public function testZeroIsNever()
+	{
+		$converter = new NumberToTimesConverter();
+		$this->assert($converter->convert(0), equals, 'never');
+	}
 }
