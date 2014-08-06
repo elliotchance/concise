@@ -66,4 +66,24 @@ class ValueRendererTest extends \Concise\TestCase
 	{
 		$this->assert($this->renderer->render(function() {}), equals, 'function');
 	}
+
+	public function testRenderAllMethodWithZeroElements()
+	{
+		$this->assert($this->renderer->renderAll(array()), equals, '');
+	}
+
+	public function testRenderAllMethodWithOneElement()
+	{
+		$this->assert($this->renderer->renderAll(array(1)), equals, '1');
+	}
+
+	public function testRenderAllMethodWithTwoElements()
+	{
+		$this->assert($this->renderer->renderAll(array(1, 2)), equals, '1, 2');
+	}
+
+	public function testRenderAllWithStrings()
+	{
+		$this->assert($this->renderer->renderAll(array('foo')), equals, '"foo"');
+	}
 }

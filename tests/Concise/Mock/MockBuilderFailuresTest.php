@@ -9,25 +9,62 @@ class MockBuilderFailuresTest extends TestCase
 	protected static $failures = array();
 
 	protected static $expectedFailures = array(
-		'testFailedToFulfilExpectationWillThrowException' => "0 equals 1",
-		'testMethodCalledWithWrongArgumentValues' => '["bar"] exactly equals ["foo"]',
-		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod() to be called.',
-		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod() to be called 2 times, but was only called 1 times.',
+		'testFailedToFulfilExpectationWillThrowException' => 'Expected myMethod() to be called once, but it was called never.',
+		'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called once, but it was called never.',
+		'testMissingAllExpectations' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called once.',
+		'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called 3 times.',
+		'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called once, but it was called never.',
+		'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
 	);
 
 	public function testFailedToFulfilExpectationWillThrowException()
 	{
-		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->expect('myMethod')->andReturn(null)
-		                   ->done();
+		$this->mock('\Concise\Mock\Mock1')
+		     ->expect('myMethod')
+		     ->done();
 	}
 
 	public function testMethodCalledWithWrongArgumentValues()
 	{
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->expect('myMethod')->with('foo')->andReturn(null)
+		                   ->expect('myMethod')->with('foo')
 		                   ->done();
 		$this->mock->myMethod('bar');
+	}
+
+	public function testMissingSecondWithExpectation()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->with('bar')
+		                   ->done();
+		$this->mock->myMethod('bar');
+	}
+
+	public function testExpectationsRenderMultipleArguments()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo', 'bar')
+		                   ->done();
+		$this->mock->myMethod('bar');
+	}
+
+	public function testMissingAllExpectations()
+	{
+		$this->mock('\Concise\Mock\Mock1')
+		     ->expect('myMethod')->with('foo')->with('bar')
+		     ->done();
+	}
+
+	public function testLessTimesThanExpected()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->twice()
+		                                       ->with('bar')
+		                   ->done();
+		$this->mock->myMethod('foo');
 	}
 
 	public function testExpectionThatIsNeverCalledWillFail()
@@ -40,8 +77,19 @@ class MockBuilderFailuresTest extends TestCase
 	public function testExpectionMustBeCalledTheRequiredAmountOfTimes()
 	{
 		$this->mock = $this->mock('\Concise\Mock\Mock1')
-		                   ->expect('myMethod')->twice()->with('foo')->andReturn('bar')
+		                   ->expect('myMethod')->with('foo')->twice()->andReturn('bar')
 		                   ->done();
+		$this->mock->myMethod('foo');
+	}
+
+	public function testMoreTimesThanExpected()
+	{
+		$this->mock = $this->mock('\Concise\Mock\Mock1')
+		                   ->expect('myMethod')->with('foo')->twice()
+		                                       ->with('bar')
+		                   ->done();
+		$this->mock->myMethod('foo');
+		$this->mock->myMethod('foo');
 		$this->mock->myMethod('foo');
 	}
 
@@ -53,8 +101,8 @@ class MockBuilderFailuresTest extends TestCase
 
 	public static function tearDownAfterClass()
 	{
-		if(count(self::$failures) !== count(self::$expectedFailures)) {
-			throw new \Exception("All tests must fail, but only " . implode(", ", self::$failures) . " did.");
-		}
+		$a = array_keys(self::$expectedFailures);
+		$b = self::$failures;
+		assert_that(array_diff($a, $b), equals, array_diff($b, $a));
 	}
 }

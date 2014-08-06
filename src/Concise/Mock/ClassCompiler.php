@@ -51,6 +51,8 @@ class ClassCompiler
 	 */
 	protected $expose = array();
 
+	protected $methods = array();
+
 	/*
 	 * @param string  $className
 	 * @param boolean $niceMock
@@ -103,6 +105,83 @@ class ClassCompiler
 		return $prototype;
 	}
 
+	protected function makeAllMethodsThrowException(\ReflectionClass $refClass)
+	{
+		$this->methods = array();
+		foreach($refClass->getMethods() as $method) {
+			if($method->isFinal()) {
+				continue;
+			}
+			$prototype = $this->getPrototype($method->getName());
+			$this->methods[$method->getName()] = <<<EOF
+$prototype {
+	throw new \\Exception("{$method->getName()}() does not have an associated action - consider a niceMock()?");
+}
+EOF;
+		}
+	}
+
+	protected function renderRules()
+	{
+		foreach($this->rules as $method => $withs) {
+			$realMethod = new \ReflectionMethod($this->className, $method);
+			if($realMethod->isFinal()) {
+				throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
+			}
+			if($realMethod->isPrivate()) {
+				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
+			}
+			$actionCode = '';
+			$defaultActionCode = '';
+			foreach($withs as $withKey => $rule) {
+				$action = $rule['action'];
+				if(null === $rule['with']) {
+					$defaultActionCode = $action->getActionCode();
+				}
+				else {
+					$args = str_replace('"', '\\"', json_encode($rule['with']));
+					$actionCode .= <<<EOF
+if(json_encode(func_get_args()) == "$args") {
+	{$action->getActionCode()}
+}
+EOF;
+				}
+			}
+
+			$prototype = $this->getPrototype($method);
+			$this->methods[$method] = <<<EOF
+$prototype {
+	if(!array_key_exists('$method', self::\$_methodCalls)) {
+		self::\$_methodCalls['$method'] = array();
+	}
+	self::\$_methodCalls['$method'][] = func_get_args();
+	$actionCode
+	$defaultActionCode
+}
+EOF;
+		}
+	}
+
+	protected function renderConstructor()
+	{
+		if($this->disableConstructor) {
+			$this->methods['__construct'] = 'public function __construct() {}';
+		}
+		else {
+			unset($this->methods['__construct']);
+		}
+	}
+
+	protected function exposeMethods()
+	{
+		foreach($this->expose as $method => $value) {
+			if(!array_key_exists($method, $this->methods)) {
+				$prototype = $this->getPrototype($method);
+				$this->methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
+			}
+		}
+	}
+
 	/**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -119,47 +198,21 @@ class ClassCompiler
 			$code = "namespace " . $this->getMockNamespaceName() . "; ";
 		}
 
-		$methods = array();
+		$this->methods = array();
 		if(!$this->niceMock) {
-			foreach($refClass->getMethods() as $method) {
-				if($method->isFinal()) {
-					continue;
-				}
-				$prototype = $this->getPrototype($method->getName());
-				$methods[$method->getName()] = $prototype . ' { throw new \\Exception("' . $method->getName() .
-					'() does not have an associated action - consider a niceMock()?"); }';
-			}
+			$this->makeAllMethodsThrowException($refClass);
 		}
+		$this->renderRules();
+		$this->renderConstructor();
+		$this->exposeMethods();
+		
+		$this->methods['getCallsForMethod'] = <<<EOF
+public function getCallsForMethod(\$method) {
+	return array_key_exists(\$method, self::\$_methodCalls) ? self::\$_methodCalls[\$method] : array();
+}
+EOF;
 
-		foreach($this->rules as $method => $rule) {
-			$action = $rule['action'];
-			$realMethod = new \ReflectionMethod($this->className, $method);
-			if($realMethod->isFinal()) {
-				throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
-			}
-			if($realMethod->isPrivate()) {
-				throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
-			}
-			$prototype = $this->getPrototype($method);
-			$methods[$method] = "$prototype { if(!array_key_exists('$method', self::\$_methodCalls)) { self::\$_methodCalls['$method'] = array(); } self::\$_methodCalls['$method'][] = func_get_args(); " . $action->getActionCode() . ' }';
-		}
-
-		if($this->disableConstructor) {
-			$methods['__construct'] = 'public function __construct() {}';
-		}
-		else {
-			unset($methods['__construct']);
-		}
-		$methods['getCallsForMethod'] = 'public function getCallsForMethod($method) { return array_key_exists($method, self::$_methodCalls) ? self::$_methodCalls[$method] : array(); }';
-
-		foreach($this->expose as $method => $value) {
-			if(!array_key_exists($method, $methods)) {
-				$prototype = $this->getPrototype($method);
-				$methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
-			}
-		}
-
-		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode(" ", $methods) . "}";
+		return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode("\n", $this->methods) . "}";
 	}
 
 	/**
