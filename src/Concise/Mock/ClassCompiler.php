@@ -139,7 +139,7 @@ EOF;
 					$defaultActionCode = $action->getActionCode();
 				}
 				else {
-					$args = str_replace('"', '\\"', json_encode($rule['with']));
+					$args = addslashes(json_encode($rule['with']));
 					$actionCode .= <<<EOF
 if(json_encode(func_get_args()) == "$args") {
 	{$action->getActionCode()}

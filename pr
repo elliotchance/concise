@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+git push
+
+VERSION=`git branch | egrep "^\*" | cut -c3- | cut -d/ -f1`
+ISSUE=`git branch | egrep "^\*" | cut -c3- | cut -d- -f1 | cut -d/ -f2`
+hub pull-request -o -i $ISSUE -b release/$VERSION
