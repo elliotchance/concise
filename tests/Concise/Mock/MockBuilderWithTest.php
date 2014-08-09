@@ -49,4 +49,12 @@ class MockBuilderWithTest extends TestCase
 		$mock->myMethod('a');
 		$this->assert($mock->myMethod('a'), equals, 'foo');
 	}
+
+	public function testStringsInExpectedArgumentsMustBeEscapedCorrectly()
+	{
+		$mock = $this->mock('Concise\Mock\MockBuilderWithStub')
+		             ->stub('myMethod')->with('"foo"')
+		             ->done();
+		$this->assert($mock->myMethod('"foo"'), is_null);
+	}
 }
