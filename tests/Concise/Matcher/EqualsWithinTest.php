@@ -10,13 +10,18 @@ class EqualsWithinTest extends AbstractMatcherTestCase
         $this->matcher = new EqualsWithin();
     }
 
-    public function testTwoIntegersThatAreExactlyEqualWithZeroDelta()
+    public function testTwoValuesThatAreExactlyEqualWithZeroDelta()
     {
-        $this->assert(123, equals, 123, within, 0);
+        $this->assert(123.0, equals, 123.0, within, 0.0);
     }
 
-    public function testTwoIntegersThatAreNotEqualWithZeroDelta()
+    public function testTwoValuesThatAreNotEqualWithZeroDelta()
     {
-        $this->assertFailure(123, equals, 124, within, 0);
+        $this->assertFailure(123.0, equals, 124.0, within, 0.0);
+    }
+
+    public function testComparingTwoValuesInsideTheDelta()
+    {
+        $this->assert(123.0, equals, 125.0, within, 5.0);
     }
 }

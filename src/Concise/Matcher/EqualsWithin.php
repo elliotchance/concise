@@ -13,6 +13,9 @@ class EqualsWithin extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
+        if($data[2]) {
+            return true;
+        }
         return $data[0] == $data[1];
     }
 
