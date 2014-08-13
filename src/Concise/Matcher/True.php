@@ -4,20 +4,20 @@ namespace Concise\Matcher;
 
 class True extends AbstractMatcher
 {
-	public function supportedSyntaxes()
-	{
-		return array(
-			'true' => 'Always pass.',
-		);
-	}
+    public function supportedSyntaxes()
+    {
+        return array(
+            'true' => 'Always pass.',
+        );
+    }
 
-	public function match($syntax, array $data = array())
-	{
-		return true;
-	}
+    public function match($syntax, array $data = array())
+    {
+        return true;
+    }
 
-	public function getTags()
-	{
-		return array(Tag::BOOLEANS);
-	}
+    public function getTags()
+    {
+        return array(Tag::BOOLEANS);
+    }
 }

@@ -2,168 +2,167 @@
 
 namespace Concise;
 
-use \Concise\Syntax\MatcherParser;
-
 class TestCaseTest extends TestCase
 {
-	public function testExtendsTestCase()
-	{
-		$this->assert(new TestCase(), is_an_instance_of, '\PHPUnit_Framework_TestCase');
-	}
+    public function testExtendsTestCase()
+    {
+        $this->assert(new TestCase(), is_an_instance_of, '\PHPUnit_Framework_TestCase');
+    }
 
-	protected function assertAssertions(array $expected, array $actual)
-	{
-		$this->assert(count($actual), equals, count($expected));
-		$right = array();
-		foreach($actual as $a) {
-			$right[] = $a->getAssertion();
-		}
-		$this->assert($right, equals, $expected);
-	}
-	
-	public function testCanSetAttribute()
-	{
-		$this->myAttribute = 123;
-		$this->assert(123, exactly_equals, $this->myAttribute);
-	}
+    protected function assertAssertions(array $expected, array $actual)
+    {
+        $this->assert(count($actual), equals, count($expected));
+        $right = array();
+        foreach ($actual as $a) {
+            $right[] = $a->getAssertion();
+        }
+        $this->assert($right, equals, $expected);
+    }
 
-	/**
+    public function testCanSetAttribute()
+    {
+        $this->myAttribute = 123;
+        $this->assert(123, exactly_equals, $this->myAttribute);
+    }
+
+    /**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
 	 */
-	public function testGetAttributeThatDoesNotExistThrowsException()
-	{
-		$this->noSuchAttribute;
-	}
+    public function testGetAttributeThatDoesNotExistThrowsException()
+    {
+        $this->noSuchAttribute;
+    }
 
-	public function testCanExtractDataFromTest()
-	{
-		$this->x = 123;
-		$this->b = '456';
-		$data = $this->getData();
-		$this->assert($data['x'], exactly_equals, 123);
-	}
+    public function testCanExtractDataFromTest()
+    {
+        $this->x = 123;
+        $this->b = '456';
+        $data = $this->getData();
+        $this->assert($data['x'], exactly_equals, 123);
+    }
 
-	public function testCanUnsetProperty()
-	{
-		$this->myUniqueProperty = 123;
-		unset($this->myUniqueProperty);
-		$this->assert(isset($this->myUniqueProperty), is_false);
-	}
+    public function testCanUnsetProperty()
+    {
+        $this->myUniqueProperty = 123;
+        unset($this->myUniqueProperty);
+        $this->assert(isset($this->myUniqueProperty), is_false);
+    }
 
-	public function testUnsettingAnAttributeThatDoesntExistDoesNothing()
-	{
-		unset($this->foobar);
-		$this->assert(isset($this->myUniqueProperty), is_false);
-	}
+    public function testUnsettingAnAttributeThatDoesntExistDoesNothing()
+    {
+        unset($this->foobar);
+        $this->assert(isset($this->myUniqueProperty), is_false);
+    }
 
-	/**
+    /**
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage You cannot assign an attribute with the keyword 'not'.
 	 */
-	public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
-	{
-		$this->not = 123;
-	}
+    public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
+    {
+        $this->not = 123;
+    }
 
-	protected $mySpecialAttribute = 123;
+    protected $mySpecialAttribute = 123;
 
-	public function testDataIncludesExplicitInstanceVariables()
-	{
-		$this->assert($this->getData(), has_key, 'mySpecialAttribute');
-	}
+    public function testDataIncludesExplicitInstanceVariables()
+    {
+        $this->assert($this->getData(), has_key, 'mySpecialAttribute');
+    }
 
-	public function testIssetWorksWithAttributes()
-	{
-		$this->x = 123;
-		$this->assert(isset($this->x));
-	}
+    public function testIssetWorksWithAttributes()
+    {
+        $this->x = 123;
+        $this->assert(isset($this->x));
+    }
 
-	public function testDataIsResetBetweenTests()
-	{
-		$this->assert(isset($this->x), is_false);
-	}
+    public function testDataIsResetBetweenTests()
+    {
+        $this->assert(isset($this->x), is_false);
+    }
 
-	protected function getAssertionsForFixtureTests()
-	{
-		$testCase = $this->niceMock('\Concise\TestCase')
-		                 ->stub(array(
-		                 	'getRawAssertionsForMethod' => array(
-								'x equals b',
-								'false',
-								'true',
-							)
-						 ))
-		                 ->done();
-		return $testCase->getAssertionsForMethod('abc');
-	}
+    protected function getAssertionsForFixtureTests()
+    {
+        $testCase = $this->niceMock('\Concise\TestCase')
+                         ->stub(array(
+                             'getRawAssertionsForMethod' => array(
+                                'x equals b',
+                                'false',
+                                'true',
+                            )
+                         ))
+                         ->done();
 
-	public function testInlineAssertion()
-	{
-		$this->abc = 123;
-		$this->assert('abc equals 123');
-	}
+        return $testCase->getAssertionsForMethod('abc');
+    }
 
-	public function testAssertionBuilder()
-	{
-		$this->assert(123, 'equals', "123");
-	}
+    public function testInlineAssertion()
+    {
+        $this->abc = 123;
+        $this->assert('abc equals 123');
+    }
 
-	public function testEachTestMethodSetsTheCurrentTestCaseForRawAssertKeyword()
-	{
-		global $_currentTestCase;
-		$this->assert($this, is_the_same_as, $_currentTestCase);
-	}
+    public function testAssertionBuilder()
+    {
+        $this->assert(123, 'equals', "123");
+    }
 
-	public function testCanUseAssertThatFunction()
-	{
-		assert_that("123 equals 123");
-	}
+    public function testEachTestMethodSetsTheCurrentTestCaseForRawAssertKeyword()
+    {
+        global $_currentTestCase;
+        $this->assert($this, is_the_same_as, $_currentTestCase);
+    }
 
-	public function testConstantsForKeywordsAreInitialised()
-	{
-		$this->assertSame(equals, 'equals');
-	}
+    public function testCanUseAssertThatFunction()
+    {
+        assert_that("123 equals 123");
+    }
 
-	public function testConstantsForKeywordStringsAreInitialised()
-	{
-		$this->assertSame(exactly_equals, 'exactly equals');
-	}
+    public function testConstantsForKeywordsAreInitialised()
+    {
+        $this->assertSame(equals, 'equals');
+    }
 
-	public function testAssertionBuilderWillBeUsedForBooleanAssertions()
-	{
-		$this->assert(true);
-	}
+    public function testConstantsForKeywordStringsAreInitialised()
+    {
+        $this->assertSame(exactly_equals, 'exactly equals');
+    }
 
-	public function testMocksAreResetInTheSetup()
-	{
-		$this->assert($this->_mocks, exactly_equals, array());
-	}
+    public function testAssertionBuilderWillBeUsedForBooleanAssertions()
+    {
+        $this->assert(true);
+    }
 
-	public function testCreatingAMockAddsItToTheMocks()
-	{
-		$this->mock()->done();
-		$this->assert(count($this->_mocks), equals, 1);
-	}
+    public function testMocksAreResetInTheSetup()
+    {
+        $this->assert($this->_mocks, exactly_equals, array());
+    }
 
-	public function testCreatingANiceMockAddsItToTheMocks()
-	{
-		$this->niceMock()->done();
-		$this->assert(count($this->_mocks), equals, 1);
-	}
+    public function testCreatingAMockAddsItToTheMocks()
+    {
+        $this->mock()->done();
+        $this->assert(count($this->_mocks), equals, 1);
+    }
 
-	public function testCreatingMultipleMocksAddsAllToMocks()
-	{
-		$this->mock()->done();
-		$this->niceMock()->done();
-		$this->assert(count($this->_mocks), equals, 2);
-	}
+    public function testCreatingANiceMockAddsItToTheMocks()
+    {
+        $this->niceMock()->done();
+        $this->assert(count($this->_mocks), equals, 1);
+    }
 
-	public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
-	{
-		$mockTemplate = $this->mock();
-		$mockTemplate->done();
-		$mockTemplate->done();
-		$this->assert(count($this->_mocks), equals, 2);
-	}
+    public function testCreatingMultipleMocksAddsAllToMocks()
+    {
+        $this->mock()->done();
+        $this->niceMock()->done();
+        $this->assert(count($this->_mocks), equals, 2);
+    }
+
+    public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
+    {
+        $mockTemplate = $this->mock();
+        $mockTemplate->done();
+        $mockTemplate->done();
+        $this->assert(count($this->_mocks), equals, 2);
+    }
 }
