@@ -27,6 +27,11 @@ class EqualsWithinTest extends AbstractMatcherTestCase
 
     public function testComparingTwoValuesOutsideTheDelta()
     {
-        $this->assertFailure(123.0, equals, 223.0, within, 5.0);
+        $this->assertFailure(123, equals, 223, within, 5.0);
+    }
+
+    public function testComparingTwoValuesOutsideTheDeltainReverse()
+    {
+        $this->assertFailure(223, equals, 123, within, 5.0);
     }
 }
