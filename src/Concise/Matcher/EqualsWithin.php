@@ -18,6 +18,6 @@ class EqualsWithin extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::NUMBERS);
+        return array(Tag::BASIC, Tag::NUMBERS);
     }
 }
