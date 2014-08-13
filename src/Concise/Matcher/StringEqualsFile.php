@@ -13,7 +13,10 @@ class StringEqualsFile extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        throw new DidNotMatchException("File '{$data[1]}' does not exist.");
+        if(!file_exists($data[1])) {
+            throw new DidNotMatchException("File '{$data[1]}' does not exist.");
+        }
+        return false;
     }
 
     public function getTags()

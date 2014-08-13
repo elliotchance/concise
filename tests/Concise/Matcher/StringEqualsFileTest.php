@@ -18,4 +18,11 @@ class StringEqualsFileTest extends AbstractMatcherTestCase
     {
         $this->assert('foo', equals_file, 'bar');
     }
+
+    public function testWillFailIfStringDoesNotMatchFile()
+    {
+        $fileName = tempnam('', 'concise');
+        file_put_contents($fileName, 'baz');
+        $this->assertFailure('bar', equals_file, $fileName);
+    }
 }
