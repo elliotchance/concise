@@ -8,6 +8,7 @@ abstract class Tag
     const BASIC = 'Basic';
     const BOOLEANS = 'Booleans';
     const EXCEPTIONS = 'Exceptions';
+    const FILES = 'Files';
     const NUMBERS = 'Numbers';
     const OBJECTS = 'Objects';
     const STRINGS = 'Strings';
