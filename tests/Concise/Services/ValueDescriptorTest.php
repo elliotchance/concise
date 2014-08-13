@@ -4,42 +4,42 @@ namespace Concise\Services;
 
 class ValueDescriptorTest extends \Concise\TestCase
 {
-	/** @var ValueDescriptor */
-	protected $descriptor;
+    /** @var ValueDescriptor */
+    protected $descriptor;
 
-	public function setUp()
-	{
-		parent::setUp();
-		$this->descriptor = new ValueDescriptor();
-	}
+    public function setUp()
+    {
+        parent::setUp();
+        $this->descriptor = new ValueDescriptor();
+    }
 
-	public function testDescriptionOfString()
-	{
-		$this->assert($this->descriptor->describe('abc'), equals, 'string');
-	}
+    public function testDescriptionOfString()
+    {
+        $this->assert($this->descriptor->describe('abc'), equals, 'string');
+    }
 
-	public function testDescriptionOfInteger()
-	{
-		$this->assert($this->descriptor->describe(123), equals, 'integer');
-	}
+    public function testDescriptionOfInteger()
+    {
+        $this->assert($this->descriptor->describe(123), equals, 'integer');
+    }
 
-	public function testDescriptionOfDouble()
-	{
-		$this->assert($this->descriptor->describe(1.23), equals, 'double');
-	}
+    public function testDescriptionOfDouble()
+    {
+        $this->assert($this->descriptor->describe(1.23), equals, 'double');
+    }
 
-	public function testDescriptionOfArray()
-	{
-		$this->assert($this->descriptor->describe(array()), equals, 'array');
-	}
+    public function testDescriptionOfArray()
+    {
+        $this->assert($this->descriptor->describe(array()), equals, 'array');
+    }
 
-	public function testDescriptionOfObject()
-	{
-		$this->assert($this->descriptor->describe($this), equals, 'Concise\Services\ValueDescriptorTest');
-	}
+    public function testDescriptionOfObject()
+    {
+        $this->assert($this->descriptor->describe($this), equals, 'Concise\Services\ValueDescriptorTest');
+    }
 
-	public function testDescriptionOfResource()
-	{
-		$this->assert($this->descriptor->describe(fopen('.', 'r')), equals, 'resource');
-	}
+    public function testDescriptionOfResource()
+    {
+        $this->assert($this->descriptor->describe(fopen('.', 'r')), equals, 'resource');
+    }
 }
