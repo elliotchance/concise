@@ -128,6 +128,11 @@ Matchers
 * `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
 * `?:callable throws exception` - Assert an exception was thrown.
 
+### Files
+
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
+
 ### Numbers
 
 * `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
@@ -185,8 +190,10 @@ Matchers
 * `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
   * `?:string matches regex ?:regex`
 * `? does not end with ?` - Assert a string does not end with another string.
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
 * `?:string ends with ?:string` - Assert a string ends with another string.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
 
 
