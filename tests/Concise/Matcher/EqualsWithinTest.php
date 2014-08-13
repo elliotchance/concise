@@ -14,4 +14,9 @@ class EqualsWithinTest extends AbstractMatcherTestCase
     {
         $this->assert(123, equals, 123, within, 0);
     }
+
+    public function testTwoIntegersThatAreNotEqualWithZeroDelta()
+    {
+        $this->assertFailure(123, equals, 124, within, 0);
+    }
 }
