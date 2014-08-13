@@ -2,12 +2,12 @@
 
 namespace Concise\Matcher;
 
-class StringEqualsFileTest extends AbstractFileTestCase
+class StringDoesNotEqualFileTest extends AbstractFileTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new StringEqualsFile();
+        $this->matcher = new StringDoesNotEqualFile();
     }
 
     /**
@@ -16,16 +16,16 @@ class StringEqualsFileTest extends AbstractFileTestCase
      */
     public function testExceptionIsThrownIfFileDoesNotExist()
     {
-        $this->assert('foo', equals_file, 'bar');
+        $this->assert('foo', does_not_equal_file, 'bar');
     }
 
     public function testWillFailIfStringDoesNotMatchFile()
     {
-        $this->assertFailure('bar', equals_file, $this->createTempFile());
+        $this->assert('bar', does_not_equal_file, $this->createTempFile());
     }
 
     public function testWillSucceedIfStringDoesMatchFile()
     {
-        $this->assert('baz', equals_file, $this->createTempFile());
+        $this->assertFailure('baz', does_not_equal_file, $this->createTempFile());
     }
 }
