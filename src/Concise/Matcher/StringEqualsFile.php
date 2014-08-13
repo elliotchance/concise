@@ -16,7 +16,8 @@ class StringEqualsFile extends AbstractMatcher
         if(!file_exists($data[1])) {
             throw new DidNotMatchException("File '{$data[1]}' does not exist.");
         }
-        return false;
+        
+        return $data[0] == file_get_contents($data[1]);
     }
 
     public function getTags()

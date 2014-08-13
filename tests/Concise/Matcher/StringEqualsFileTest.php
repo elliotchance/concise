@@ -21,8 +21,18 @@ class StringEqualsFileTest extends AbstractMatcherTestCase
 
     public function testWillFailIfStringDoesNotMatchFile()
     {
+        $this->assertFailure('bar', equals_file, $this->createTempFile());
+    }
+
+    public function testWillSucceedIfStringDoesMatchFile()
+    {
+        $this->assert('baz', equals_file, $this->createTempFile());
+    }
+
+    protected function createTempFile()
+    {
         $fileName = tempnam('', 'concise');
         file_put_contents($fileName, 'baz');
-        $this->assertFailure('bar', equals_file, $fileName);
+        return $fileName;
     }
 }
