@@ -6,10 +6,11 @@ class DoAction extends AbstractAction
 {
     public function __construct(callable $action)
     {
+        $this->cacheKey = '';
     }
 
     public function getActionCode()
     {
-        return '';
+        return "\$v = \Concise\Mock\Action\DoAction::\$cache['{$this->cacheKey}']; return \$v();";
     }
 }
