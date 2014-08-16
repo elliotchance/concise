@@ -15,4 +15,11 @@ class HasPropertyTest extends AbstractMatcherTestCase
         $obj = new \stdClass();
         $this->assertFailure($obj, has_property, 'foo');
     }
+
+    public function testObjectDoesHaveAProperty()
+    {
+        $obj = new \stdClass();
+        $obj->foo = 'bar';
+        $this->assert($obj, has_property, 'foo');
+    }
 }
