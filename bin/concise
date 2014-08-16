@@ -3,7 +3,8 @@
 
 require_once('vendor/autoload.php');
 
-echo "Concise 1.3 by Elliot Chance.\n\n";
+$version = new \Concise\Version();
+echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
 class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 {

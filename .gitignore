@@ -1,6 +1,4 @@
 /composer.phar
 /vendor
-
 .DS_Store
-
-/.idea/
+/.idea
