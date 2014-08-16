@@ -19,4 +19,9 @@ class VersionTest extends TestCase
     {
         $this->assert($this->version->getVersionForPackage('sebastian/version'), matches_regex, '/^\\d\.\\d+/');
     }
+
+    public function testWeCanEasilyGetTheConciseVersion()
+    {
+        $this->assert($this->version->getConciseVersion(), equals, $this->version->getVersionForPackage('elliotchance/concise'));
+    }
 }
