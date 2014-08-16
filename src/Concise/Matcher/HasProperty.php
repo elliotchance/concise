@@ -13,7 +13,8 @@ class HasProperty extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return isset($data[0]->$data[1]);
+        $a = (array) $data[0];
+        return array_Key_exists($data[1], $a);
     }
 
     public function getTags()
