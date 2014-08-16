@@ -30,8 +30,6 @@ class LexerTest extends TestCase
             'string3' => array('"a\nbc"', new Token\Value("a\nbc")),
             'string4' => array("'a\nbc'", new Token\Value("a\nbc")),
             'string5' => array("\MyClass", new Token\Value("MyClass")),
-            'code1' => array("`abc`", new Token\Code("abc")),
-            'code2' => array("`ab\nc`", new Token\Code("ab\nc")),
             'regexp1' => array("/abc/", new Token\Regexp("/abc/")),
             'array' => array("[]", new Token\Value(array())),
         );
