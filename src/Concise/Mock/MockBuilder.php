@@ -323,4 +323,9 @@ class MockBuilder
     {
         return $this->setAction(new Action\ReturnSelfAction());
     }
+
+    public function andDo(callable $action)
+    {
+        return $this;
+    }
 }
