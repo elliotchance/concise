@@ -4,9 +4,11 @@ namespace Concise\Mock\Action;
 
 class DoAction extends AbstractAction
 {
+    protected $cacheKey;
+
     public function __construct(callable $action)
     {
-        $this->cacheKey = '';
+        $this->cacheKey = md5(rand() . time());
     }
 
     public function getActionCode()

@@ -17,4 +17,11 @@ class DoActionTest extends TestCase
         $action = new DoAction(function () {});
         $this->assert($action->getActionCode(), matches_regex, "/return/");
     }
+
+    public function testWillUseDifferentCacheKeyEachTime()
+    {
+        $action1 = new DoAction(function () {});
+        $action2 = new DoAction(function () {});
+        $this->assert($action1->getActionCode(), does_not_equal, $action2->getActionCode());
+    }
 }
