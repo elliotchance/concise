@@ -4,15 +4,19 @@ namespace Concise;
 
 class VersionTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->version = new Version();
+    }
+
     public function testAnEmptyStringWillBeReturnedIfThePackageCanNotBeFound()
     {
-        $version = new Version();
-        $this->assert($version->getVersionForPackage('foo'), is_blank);
+        $this->assert($this->version->getVersionForPackage('foo'), is_blank);
     }
 
     public function testVersionCanBeExtractedForAPackageName()
     {
-        $version = new Version();
-        $this->assert($version->getVersionForPackage('sebastian/version'), matches_regex, '/^\\d\.\\d+/');
+        $this->assert($this->version->getVersionForPackage('sebastian/version'), matches_regex, '/^\\d\.\\d+/');
     }
 }
