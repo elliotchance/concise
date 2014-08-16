@@ -326,6 +326,7 @@ class MockBuilder
 
     public function andDo(callable $action)
     {
+        $action();
         return $this;
     }
 }
