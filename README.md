@@ -96,8 +96,10 @@ Matchers
 
 ### Basic
 
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
 * `? equals ?` - Assert values with no regard to exact data types.
   * `? is equal to ?`
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is exactly equal to ?` - Assert two values match data type and value.
   * `? exactly equals ?`
   * `? is the same as ?`
@@ -126,10 +128,17 @@ Matchers
 * `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
 * `?:callable throws exception` - Assert an exception was thrown.
 
+### Files
+
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
+
 ### Numbers
 
 * `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
   * `?:number between ?:number and ?:number`
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is a number` - Assert that a value is an integer or floating-point.
 * `? is an int` - Assert value is an integer type.
   * `? is an integer`
@@ -181,8 +190,10 @@ Matchers
 * `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
   * `?:string matches regex ?:regex`
 * `? does not end with ?` - Assert a string does not end with another string.
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
 * `?:string ends with ?:string` - Assert a string ends with another string.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
 
 
