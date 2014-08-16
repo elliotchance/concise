@@ -169,7 +169,11 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
             if($lastFile != $line['file']) {
                 $message .= " \033[90m$path\033[0m\n";
             }
-            $message .= "    \033[90mLine {$line['line']}: {$line['class']}{$line['type']}{$line['function']}()\033[0m\n";
+            $message .= "    \033[90mLine {$line['line']}: ";
+            if(array_key_exists('class', $line)) {
+                $message .= "{$line['class']}{$line['type']}";
+            }
+            $message .= "{$line['function']}()\033[0m\n";
             $lastFile = $line['file'];
         }
         $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m";

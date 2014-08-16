@@ -93,8 +93,10 @@ Matchers
 
 ### Basic
 
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
 * `? equals ?` - Assert values with no regard to exact data types.
   * `? is equal to ?`
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is exactly equal to ?` - Assert two values match data type and value.
   * `? exactly equals ?`
   * `? is the same as ?`
@@ -132,6 +134,8 @@ Matchers
 
 * `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
   * `?:number between ?:number and ?:number`
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is a number` - Assert that a value is an integer or floating-point.
 * `? is an int` - Assert value is an integer type.
   * `? is an integer`
