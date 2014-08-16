@@ -25,9 +25,6 @@ class AttributeTest extends TestCase
 
 		// you may prefer assert_that
 		assert_that($answer, is_an_associative_array);
-
-		// while generally not recommended, you can use code blocks (notice $self instead of $this)
-		$this->assert('`$self->calc->add(3, 5)` equals 8');
 	}
 
 	// the assertion can be taken directly from the method name

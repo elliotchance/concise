@@ -92,24 +92,6 @@ class Assertion
     }
 
     /**
-	 * @param string $code
-	 * @return boolean
-	 */
-    protected function evalCode($code)
-    {
-        $self = (object) $this->getData();
-        $lastError = error_get_last();
-        $r = false;
-        @eval("\$r = $code;");
-        if ($lastError != error_get_last()) {
-            $error = error_get_last();
-            throw new \Exception("Could not compile code block '$code': {$error['message']}");
-        }
-
-        return $r;
-    }
-
-    /**
 	 * @param  array $arguments
 	 * @return array
 	 */
@@ -149,8 +131,6 @@ class Assertion
             $arg = $result['arguments'][$i];
             if ($arg instanceof \Concise\Syntax\Token\Attribute) {
                 $args[$i] = $data[(string) $arg];
-            } elseif ($arg instanceof \Concise\Syntax\Token\Code) {
-                $args[$i] = $this->evalCode((string) $arg);
             } else {
                 $args[$i] = $arg;
             }
