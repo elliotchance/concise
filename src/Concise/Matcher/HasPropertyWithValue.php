@@ -13,7 +13,7 @@ class HasPropertyWithValue extends HasProperty
 
     public function match($syntax, array $data = array())
     {
-        return false;
+        return parent::match(null, $data);
     }
 
     public function getTags()
