@@ -2,18 +2,18 @@
 
 namespace Concise\Matcher;
 
-class HasProperty extends AbstractMatcher
+class DoesNotHaveProperty extends HasProperty
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:object has property ?:string' => 'Assert that an object has a property.',
+            '?:object does not have property ?:string' => 'Assert that an object does not have a property.',
         );
     }
 
     public function match($syntax, array $data = array())
     {
-        return array_key_exists($data[1], (array) $data[0]);
+        return !parent::match(null, $data);
     }
 
     public function getTags()
