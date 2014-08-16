@@ -89,16 +89,6 @@ class Lexer
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeCode($string, &$startIndex)
-    {
-        return $this->consumeUntilToken($string, '`', $startIndex);
-    }
-
-    /**
-	 * @param  string $string
-	 * @param  integer $startIndex
-	 * @return string
-	 */
     protected function consumeRegexp($string, &$startIndex)
     {
         return '/' . $this->consumeUntilToken($string, '/', $startIndex) . '/';
@@ -169,10 +159,6 @@ class Lexer
             } elseif ($ch === "\\") {
                 $t = $this->consumeClassname($string, $i);
                 $r[] = new Token\Value($t);
-                $t = '';
-            } elseif ($ch === '`') {
-                $t = $this->consumeCode($string, $i);
-                $r[] = new Token\Code($t);
                 $t = '';
             } elseif ($ch === '/') {
                 $t = $this->consumeRegexp($string, $i);

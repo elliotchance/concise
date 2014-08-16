@@ -71,31 +71,6 @@ class AssertionTest extends TestCase
         $assertion->run();
     }
 
-    public function testAssertionWillEvaluateCodeBlocks()
-    {
-        $this->compileAndRunAssertion('`1 + 2` equals 3');
-    }
-
-    /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Could not compile code block '1 + ':
-	 */
-    public function testAssertionWillThrowExceptionIfCodeBlockCannotCompile()
-    {
-        $this->compileAndRunAssertion('`1 + ` equals 3');
-    }
-
-    public function testAssertionWillNotThrowExceptionIfCodeBlockReturnsFalse()
-    {
-        $this->compileAndRunAssertion('`false` equals `false`');
-    }
-
-    public function testAssertionCodeCanUseAttributes()
-    {
-        $this->x = 123;
-        $this->assert('`$self->x` equals 123');
-    }
-
     protected function getStubForAssertionThatReturnsData(array $data)
     {
         return $this->niceMock('\Concise\Assertion', array('true', new True()))

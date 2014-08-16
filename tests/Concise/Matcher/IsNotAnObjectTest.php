@@ -22,6 +22,6 @@ class IsNotAnObjectTest extends AbstractMatcherTestCase
 
     public function testIsNotAnObjectFailure()
     {
-        $this->assertFailure('`new \stdClass()` is not an object');
+        $this->assertFailure(new \stdClass(), is_not_an_object);
     }
 }
