@@ -12,7 +12,8 @@ Simple Example
 ```php
 class AttributeTest extends TestCase
 {
-	public function testEquality() {
+	public function testEquality()
+	{
 		// the entire assertion can be string
 		$this->assert('123 equals "123"');
 
@@ -22,13 +23,11 @@ class AttributeTest extends TestCase
 
 		// or you can create your assertion by chaining
 		$this->assert($result, exactly_equals, 123);
-
-		// you may prefer assert_that
-		assert_that($answer, is_an_associative_array);
 	}
 
 	// the assertion can be taken directly from the method name
-	public function test_adding3and5_equals_8() {
+	public function test_adding3and5_equals_8()
+	{
 		$this->adding3and5 = $this->calc->add(3, 5);
 	}
 }

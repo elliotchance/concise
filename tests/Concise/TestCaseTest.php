@@ -114,11 +114,6 @@ class TestCaseTest extends TestCase
         $this->assert($this, is_the_same_as, $_currentTestCase);
     }
 
-    public function testCanUseAssertThatFunction()
-    {
-        assert_that("123 equals 123");
-    }
-
     public function testConstantsForKeywordsAreInitialised()
     {
         $this->assertSame(equals, 'equals');
