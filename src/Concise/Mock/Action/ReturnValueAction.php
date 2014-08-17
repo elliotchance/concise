@@ -2,38 +2,30 @@
 
 namespace Concise\Mock\Action;
 
-class ReturnValueAction extends AbstractAction
+class ReturnValueAction extends AbstractCachingAction
 {
     /**
-	 * @var array
+	 * @param array $values
 	 */
-    public static $cache = array();
-
-    /**
-	 * Each time a ReturnValueAction is instantiated it will generate a new cache key.
-	 * @var string
-	 */
-    protected $cacheKey;
-
-    /**
-	 * @param mixed $value
-	 */
-    public function __construct($value)
+    public function __construct(array $values)
     {
-        $this->cacheKey = md5(rand() . time());
-        self::$cache[$this->cacheKey] = $value;
+        parent::__construct($values);
+        self::$cache[$this->cacheKey . 'i'] = 0;
     }
 
     public function getActionCode()
     {
-        return "\$v = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}']; return is_object(\$v) ? clone \$v : \$v;";
-    }
-
-    /**
-	 * @return mixed
-	 */
-    public function getValue()
-    {
-        return self::$cache[$this->cacheKey];
+        return <<<EOF
+\$i = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}i'];
+\$vs = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}'];
+if (\$i >= count(\$vs)) {
+    throw new \Exception("Only \$i return values have been provided.");
+}
+\$v = \$vs[\$i];
+if (count(\$vs) > 1) {
+    ++\Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}i'];
+}
+return is_object(\$v) ? clone \$v : \$v;
+EOF;
     }
 }

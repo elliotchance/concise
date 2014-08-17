@@ -64,34 +64,42 @@ class Lexer
     }
 
     /**
+     * @param  array $tokens
 	 * @param  string $string
-	 * @param  string $container
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeString($string, $container, &$startIndex)
+    protected function consumeString(array &$tokens, $string, &$startIndex)
     {
-        return $this->consumeUntilToken($string, $container, $startIndex);
+        if ($string[$startIndex] === '"' || $string[$startIndex] === "'") {
+            $tokens[] = new Token\Value($this->consumeUntilToken($string, $string[$startIndex], $startIndex));
+        }
     }
 
     /**
+     * @param  array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeClassname($string, &$startIndex)
+    protected function consumeClassname(array &$tokens, $string, &$startIndex)
     {
-        return $this->consumeUntilToken($string, ' ', $startIndex, false);
+        if ($string[$startIndex] === "\\") {
+            $tokens[] = new Token\Value($this->consumeUntilToken($string, ' ', $startIndex, false));
+        }
     }
 
     /**
+     * @param  array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeRegexp($string, &$startIndex)
+    protected function consumeRegexp(array &$tokens, $string, &$startIndex)
     {
-        return '/' . $this->consumeUntilToken($string, '/', $startIndex) . '/';
+        if ($string[$startIndex] === '/') {
+            $tokens[] = new Token\Regexp('/' . $this->consumeUntilToken($string, '/', $startIndex) . '/');
+        }
     }
 
     /**
@@ -112,33 +120,56 @@ class Lexer
     }
 
     /**
+     * @param  array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeJson($string, &$startIndex)
+    protected function consumeJson(array &$tokens, $string, &$startIndex)
     {
-        $originalStartIndex = $startIndex;
-        $len = strlen($string);
-        for ($i = 2; $startIndex + $i <= $len; ++$i) {
-            $json = substr($string, $startIndex, $i);
-            $value = json_decode($json);
-            if (null !== $value) {
-                $startIndex += $i;
-
-                return $value;
-            }
-            if (substr($json, 0, 1) === '[' && substr($json, strlen($json) - 1, 1) === ']') {
-                $json = '{' . substr($json, 1, strlen($json) - 2) . '}';
-                $value = json_decode($json, true);
+        if ($string[$startIndex] === '[' || $string[$startIndex] === '{') {
+            $originalStartIndex = $startIndex;
+            $len = strlen($string);
+            for ($i = 2; $startIndex + $i <= $len; ++$i) {
+                $json = substr($string, $startIndex, $i);
+                $value = json_decode($json);
                 if (null !== $value) {
                     $startIndex += $i;
 
-                    return $value;
+                    $tokens[] = new Token\Value($value);
+                    return;
+                }
+                if (substr($json, 0, 1) === '[' && substr($json, strlen($json) - 1, 1) === ']') {
+                    $json = '{' . substr($json, 1, strlen($json) - 2) . '}';
+                    $value = json_decode($json, true);
+                    if (null !== $value) {
+                        $startIndex += $i;
+
+                        $tokens[] = new Token\Value($value);
+                        return;
+                    }
                 }
             }
+            throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
         }
-        throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
+    }
+
+    protected function consumeToken(array &$tokens, $string, &$startIndex)
+    {
+        $currentTokens = count($tokens);
+        $this->consumeString($tokens, $string, $startIndex);
+        $this->consumeClassname($tokens, $string, $startIndex);
+        $this->consumeRegexp($tokens, $string, $startIndex);
+        $this->consumeJson($tokens, $string, $startIndex);
+        return $currentTokens !== count($tokens);
+    }
+
+    protected function addTokenIfNotEmpty(array &$tokens, $token)
+    {
+        $token = trim($token);
+        if ($token !== '') {
+            $tokens[] = $this->translateValue($token);
+        }
     }
 
     /**
@@ -151,35 +182,18 @@ class Lexer
         $t = '';
         $len = strlen($string);
         for ($i = 0; $i < $len; ++$i) {
+            if ($this->consumeToken($r, $string, $i)) {
+                continue;
+            }
+
             $ch = $string[$i];
-            if ($ch === '"' || $ch === "'") {
-                $t = $this->consumeString($string, $ch, $i);
-                $r[] = new Token\Value($t);
+            $t .= $ch;
+            if ($ch === ' ') {
+                $this->addTokenIfNotEmpty($r, $t);
                 $t = '';
-            } elseif ($ch === "\\") {
-                $t = $this->consumeClassname($string, $i);
-                $r[] = new Token\Value($t);
-                $t = '';
-            } elseif ($ch === '/') {
-                $t = $this->consumeRegexp($string, $i);
-                $r[] = new Token\Regexp($t);
-                $t = '';
-            } elseif ($ch === '[' || $ch === '{') {
-                $t = $this->consumeJson($string, $i);
-                $r[] = new Token\Value($t);
-                $t = '';
-            } elseif ($ch === ' ') {
-                if ($t !== '') {
-                    $r[] = $this->translateValue($t);
-                    $t = '';
-                }
-            } else {
-                $t .= $ch;
             }
         }
-        if ($t !== '') {
-            $r[] = $this->translateValue($t);
-        }
+        $this->addTokenIfNotEmpty($r, $t);
 
         return $r;
     }
