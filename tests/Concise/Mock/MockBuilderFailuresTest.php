@@ -103,6 +103,9 @@ class MockBuilderFailuresTest extends TestCase
     {
         $a = array_keys(self::$expectedFailures);
         $b = self::$failures;
-        assert_that(array_diff($a, $b), equals, array_diff($b, $a));
+        $testCase = new TestCase();
+        $testCase->setUp();
+        $testCase->assert(array_diff($a, $b), equals, array_diff($b, $a));
+        $testCase->tearDown();
     }
 }
