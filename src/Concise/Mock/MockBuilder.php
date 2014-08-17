@@ -324,7 +324,7 @@ class MockBuilder
         return $this->setAction(new Action\ReturnSelfAction());
     }
 
-    public function andDo(callable $action)
+    public function andDo(\Closure $action)
     {
         return $this->setAction(new Action\DoAction($action));
     }
