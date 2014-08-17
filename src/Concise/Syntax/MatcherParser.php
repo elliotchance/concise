@@ -60,13 +60,15 @@ class MatcherParser
     {
         $rawSyntax = $this->getRawSyntax($syntax);
         $endsWith = ' on error ?';
+        $options = array();
         if ($this->endsWith($rawSyntax, $endsWith)) {
             $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
-        }
-        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            return $this->syntaxCache[$rawSyntax] + array(
+            $options = array(
                 'on_error' => true,
             );
+        }
+        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
+            return $this->syntaxCache[$rawSyntax] + $options;
         }
         throw new \Exception("No such matcher for syntax '$syntax'.");
     }
