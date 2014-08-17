@@ -14,6 +14,14 @@ abstract class Mock2
     }
 }
 
+class MockMagicCall
+{
+    public function __call($name, $arguments)
+    {
+        return 'foo';
+    }
+}
+
 class MockBuilderTest extends TestCase
 {
     public function testMockCanBeCreatedFromAClassThatExists()
@@ -32,7 +40,13 @@ class MockBuilderTest extends TestCase
         $this->mock('\Abc')->done();
     }
 
-    // @test you can only mock methods that do not exist if there is an approproate __call
+    public function testMockingAMethodThatDoesNotExistIfThereIsAMagicCallMethod()
+    {
+        $mock = $this->mock('\Concise\Mock\MockMagicCall')
+                     ->stub('nothing')
+                     ->done();
+        $this->assert($mock->nothing(), is_null);
+    }
 
     /**
 	 * @expectedException Exception

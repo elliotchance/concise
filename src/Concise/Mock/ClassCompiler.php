@@ -99,8 +99,15 @@ class ClassCompiler
     {
         $prototypeBuilder = new PrototypeBuilder();
         $prototypeBuilder->hideAbstract = true;
-        $realMethod = new \ReflectionMethod($this->className, $method);
-        $prototype = $prototypeBuilder->getPrototype($realMethod);
+        try {
+            $realMethod = new \ReflectionMethod($this->className, $method);
+            $prototype = $prototypeBuilder->getPrototype($realMethod);
+        } catch(\ReflectionException $e) {
+            if (!method_exists($this->className, '__call')) {
+                throw $e;
+            }
+            $prototype = $prototypeBuilder->getPrototypeForNonExistantMethod($method);
+        }
         if (array_key_exists($method, $this->expose)) {
             $prototype = str_replace('protected ', 'public ', $prototype);
         }
@@ -127,12 +134,18 @@ EOF;
     protected function renderRules()
     {
         foreach ($this->rules as $method => $withs) {
-            $realMethod = new \ReflectionMethod($this->className, $method);
-            if ($realMethod->isFinal()) {
-                throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
-            }
-            if ($realMethod->isPrivate()) {
-                throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
+            try {
+                $realMethod = new \ReflectionMethod($this->className, $method);
+                if ($realMethod->isFinal()) {
+                    throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
+                }
+                if ($realMethod->isPrivate()) {
+                    throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
+                }
+            } catch (\ReflectionException $e) {
+                if (!method_exists($this->className, '__call')) {
+                    throw $e;
+                }
             }
             $actionCode = '';
             $defaultActionCode = '';
@@ -274,6 +287,7 @@ EOF;
                 throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
             }
         } catch (\ReflectionException $e) {
+            // @test this is allowed with magic __call
             throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
         }
         $this->expose[$method] = true;
