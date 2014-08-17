@@ -151,7 +151,7 @@ class MockBuilder
     protected function hasAction()
     {
         $action = $this->rules[$this->currentRule][$this->getWithKey()]['action'];
-        if ($action instanceof Action\ReturnValueAction && is_null($action->getValue()[0])) {
+        if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
         }
 
