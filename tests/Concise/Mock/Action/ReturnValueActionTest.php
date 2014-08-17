@@ -9,7 +9,7 @@ class ReturnValueActionTest extends TestCase
     public function testObjectReturnedInAnotherNamespaceIsCompatible()
     {
         $myObject = new \stdClass();
-        $value = new ReturnValueAction($myObject);
+        $value = new ReturnValueAction(array($myObject));
         $result = eval($value->getActionCode());
         $this->assert($myObject, equals, $result);
     }
@@ -17,7 +17,7 @@ class ReturnValueActionTest extends TestCase
     public function testObjectsInCacheAreClonedSoThatTheyWillNotChangeState()
     {
         $myObject = json_decode('{"foo":"bar"}');
-        $value = new ReturnValueAction($myObject);
+        $value = new ReturnValueAction(array($myObject));
 
         $result1 = eval($value->getActionCode());
         $result1->foo = "baz";

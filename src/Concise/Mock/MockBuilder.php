@@ -114,10 +114,10 @@ class MockBuilder
                 throw new \Exception("stub() called with array must have at least 1 element.");
             }
             foreach ($arg as $method => $value) {
-                $this->addRule($method, new Action\ReturnValueAction($value));
+                $this->addRule($method, new Action\ReturnValueAction(array($value)));
             }
         } else {
-            $this->addRule($arg, new Action\ReturnValueAction(null));
+            $this->addRule($arg, new Action\ReturnValueAction(array(null)));
         }
 
         return $this;
@@ -151,7 +151,7 @@ class MockBuilder
     protected function hasAction()
     {
         $action = $this->rules[$this->currentRule][$this->getWithKey()]['action'];
-        if ($action instanceof Action\ReturnValueAction && is_null($action->getValue())) {
+        if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
         }
 
@@ -172,13 +172,21 @@ class MockBuilder
         return $this;
     }
 
+    protected function methodIsNeverExpected()
+    {
+        return $this->rules[$this->currentRule][$this->getWithKey()]['times'] === 0;
+    }
+
     /**
-	 * @param  mixed $value
 	 * @return MockBuilder
 	 */
-    public function andReturn($value)
+    public function andReturn()
     {
-        return $this->setAction(new Action\ReturnValueAction($value));
+        if($this->methodIsNeverExpected()) {
+            throw new \Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
+        }
+        $values = func_get_args();
+        return $this->setAction(new Action\ReturnValueAction($values));
     }
 
     /**
@@ -207,7 +215,7 @@ class MockBuilder
     {
         $this->reset();
         $this->isExpecting = true;
-        $this->addRule($method, new Action\ReturnValueAction(null));
+        $this->addRule($method, new Action\ReturnValueAction(array(null)));
         $this->once();
         $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = false;
 
@@ -249,7 +257,7 @@ class MockBuilder
     {
         $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
         if ($times === 0) {
-            $this->andReturn(null);
+            $this->andReturn(array(null));
         }
         $this->rules[$this->currentRule][$this->getWithKey()]['times'] = $times;
 
@@ -281,7 +289,7 @@ class MockBuilder
                 $this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
         }
         $this->rules[$this->currentRule][md5('null')]['times'] = -1;
-        $this->setupWith(new Action\ReturnValueAction(null), $this->isExpecting ? 1 : -1);
+        $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);
 
         return $this;
     }
