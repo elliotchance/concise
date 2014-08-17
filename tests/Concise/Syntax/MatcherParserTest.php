@@ -155,7 +155,7 @@ class MatcherParserTest extends TestCase
     {
         $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
         $this->parser->registerMatcher($matcher);
-        $this->assert($this->parser->getKeywords(), equals, array('foobar'));
+        $this->assert($this->parser->getKeywords(), has_value, 'foobar');
     }
 
     /**
@@ -199,5 +199,11 @@ class MatcherParserTest extends TestCase
     {
         $matcher = new MatcherParser();
         $matcher->registerMatcher(new MyBadMatcher());
+    }
+
+    public function testOnIsAKeyword()
+    {
+        $parser = MatcherParser::getInstance();
+        $this->assert($parser->getKeywords(), has_value, 'on');
     }
 }

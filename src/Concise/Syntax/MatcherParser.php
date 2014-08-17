@@ -154,7 +154,7 @@ class MatcherParser
 	 */
     protected function getRawKeywords()
     {
-        $r = array();
+        $r = array('on');
         foreach ($this->getMatchers() as $matcher) {
             $service = new MatcherSyntaxAndDescription();
             $syntaxes = $service->process($matcher->supportedSyntaxes());
