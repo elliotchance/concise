@@ -326,7 +326,6 @@ class MockBuilder
 
     public function andDo(callable $action)
     {
-        $action();
-        return $this;
+        return $this->setAction(new Action\DoAction($action));
     }
 }
