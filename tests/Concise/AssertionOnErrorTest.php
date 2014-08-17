@@ -13,4 +13,9 @@ class AssertionOnErrorTest extends TestCase
     {
         $this->assert(defined('on_error'));
     }
+
+    public function testOnErrorCanBeAddedToTheEndOfAnAssertion()
+    {
+        $this->assert(123, equals, 123, on_error, 'foo');
+    }
 }

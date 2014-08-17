@@ -54,6 +54,10 @@ class MatcherParser
     public function getMatcherForSyntax($syntax)
     {
         $rawSyntax = $this->getRawSyntax($syntax);
+        $endsWith = ' on error ?';
+        if (substr($rawSyntax, strlen($rawSyntax) - strlen($endsWith)) == $endsWith) {
+            $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
+        }
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             return $this->syntaxCache[$rawSyntax];
         }
