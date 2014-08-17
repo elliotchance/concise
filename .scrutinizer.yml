@@ -10,3 +10,7 @@ tools:
   external_code_coverage: true
 filter:
   paths: [src]
+checks:
+  php:
+    code_rating: true
+    
