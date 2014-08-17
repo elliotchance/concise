@@ -243,6 +243,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
                     define($name, $value);
                 }
             }
+            define('on_error', 'on error');
 
             define('__KEYWORDS_LOADED', 1);
         }
