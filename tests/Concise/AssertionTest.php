@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Matcher\Equals;
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
 use \Concise\Matcher\True;
@@ -96,5 +97,23 @@ class AssertionTest extends TestCase
     {
         $assertion = $this->getStubForAssertionThatReturnsData(array());
         $this->assert((string) $assertion, is_blank);
+    }
+
+    public function testCanSetCustomFailureMessage()
+    {
+        $assertion = new Assertion('true', new True());
+        $this->assert($assertion->setFailureMessage('foo'), is_null);
+    }
+
+    public function testWillFailWithCustomMessage()
+    {
+        try {
+            $assertion = new Assertion('false', new False());
+            $assertion->setFailureMessage('foo');
+            $assertion->run();
+            $this->fail('Did not fail.');
+        } catch(\PHPUnit_Framework_AssertionFailedError $e) {
+            $this->assert($e->getMessage(), equals, 'foo');
+        }
     }
 }

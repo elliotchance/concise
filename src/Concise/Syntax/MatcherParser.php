@@ -47,15 +47,28 @@ class MatcherParser
         return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
     }
 
+    protected function endsWith($string, $substring)
+    {
+        return (substr($string, strlen($string) - strlen($substring)) === $substring);
+    }
+
     /**
 	 * @param string $syntax
 	 * @return array
 	 */
-    public function getMatcherForSyntax($syntax)
+    public function getMatcherForSyntax($syntax, array $data = array())
     {
         $rawSyntax = $this->getRawSyntax($syntax);
+        $endsWith = ' on error ?';
+        $options = array();
+        if ($this->endsWith($rawSyntax, $endsWith)) {
+            $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
+            $options = array(
+                'on_error' => $data[count($data) - 1],
+            );
+        }
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            return $this->syntaxCache[$rawSyntax];
+            return $this->syntaxCache[$rawSyntax] + $options;
         }
         throw new \Exception("No such matcher for syntax '$syntax'.");
     }
@@ -68,8 +81,11 @@ class MatcherParser
     public function compile($string, array $data = array())
     {
         $result = $this->lexer->parse($string);
-        $match = $this->getMatcherForSyntax($result['syntax']);
+        $match = $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
         $assertion = new Assertion($string, $match['matcher'], $data);
+        if (array_key_exists('on_error', $match)) {
+            $assertion->setFailureMessage($data[(string) $match['on_error']]);
+        }
         $assertion->setOriginalSyntax($match['originalSyntax']);
 
         return $assertion;
@@ -154,7 +170,7 @@ class MatcherParser
 	 */
     protected function getRawKeywords()
     {
-        $r = array();
+        $r = array('error', 'on');
         foreach ($this->getMatchers() as $matcher) {
             $service = new MatcherSyntaxAndDescription();
             $syntaxes = $service->process($matcher->supportedSyntaxes());
