@@ -249,5 +249,3 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
     }
 }
-
-require_once __DIR__ . '/AssertThat.php';
