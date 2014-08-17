@@ -23,18 +23,22 @@ class MockBuilderExpectTest extends TestCase
         $mock->myMethod();
     }
 
-    public function testCanCreateAnExpectationOfNever()
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage You cannot assign an action to 'myMethod()' when it is never expected.
+     */
+    public function testAddingAnActionOntoAMethodThatIsNeverExpectedThrowsException()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expect('myMethod')->never()
-                     ->done();
+        $this->mock('\Concise\Mock\Mock1')
+             ->expect('myMethod')->never()->andReturn(null)
+             ->done();
     }
 
     public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expect('myMethod')->never()
-                     ->done();
+        $this->mock('\Concise\Mock\Mock1')
+             ->expect('myMethod')->never()
+             ->done();
     }
 
     public function testCanCreateAnExpectationOfASpecificAmountOfTimes()

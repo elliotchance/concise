@@ -172,11 +172,19 @@ class MockBuilder
         return $this;
     }
 
+    protected function methodIsNeverExpected()
+    {
+        return $this->rules[$this->currentRule][$this->getWithKey()]['times'] === 0;
+    }
+
     /**
 	 * @return MockBuilder
 	 */
     public function andReturn()
     {
+        if($this->methodIsNeverExpected()) {
+            throw new \Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
+        }
         $values = func_get_args();
         return $this->setAction(new Action\ReturnValueAction($values));
     }
