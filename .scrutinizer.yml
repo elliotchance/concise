@@ -3,7 +3,13 @@ tools:
   php_pdepend: true
   php_analyzer: true
   php_mess_detector: true
-  php_sim: true
+  php_sim:
+    path_configs:
+      -
+        paths:
+          - src/Concise/Matcher/*
+        config:
+          mass: 50
   php_code_sniffer: true
   php_cs_fixer: true
   sensiolabs_security_checker: true
