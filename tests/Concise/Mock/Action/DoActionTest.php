@@ -24,4 +24,11 @@ class DoActionTest extends TestCase
         $action2 = new DoAction(function () {});
         $this->assert($action1->getActionCode(), does_not_equal, $action2->getActionCode());
     }
+
+    public function testItemCanBeFetchedBackFromCache()
+    {
+        $action = new DoAction(function () { return 'foo'; });
+        $result = eval($action->getActionCode());
+        $this->assert($result, equals, 'foo');
+    }
 }
