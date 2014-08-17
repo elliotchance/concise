@@ -58,7 +58,8 @@ class ClassCompiler
 	 * @param boolean $niceMock
 	 * @param array   $constructorArgs
 	 */
-    public function __construct($className, $niceMock = false, array $constructorArgs = array(), $disableConstructor = false)
+    public function __construct($className, $niceMock = false, array $constructorArgs = array(),
+                                $disableConstructor = false)
     {
         if (!class_exists($className)) {
             throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
@@ -95,19 +96,34 @@ class ClassCompiler
         return $parts[count($parts) - 1];
     }
 
+    protected function methodIsAllowedToBeMocked($method)
+    {
+        try {
+            new \ReflectionMethod($this->className, $method);
+        } catch(\ReflectionException $e) {
+            if (!method_exists($this->className, '__call')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected function getPrototype($method)
     {
+        $this->methodMustBeMockable($method);
         $prototypeBuilder = new PrototypeBuilder();
         $prototypeBuilder->hideAbstract = true;
         try {
             $realMethod = new \ReflectionMethod($this->className, $method);
-            $prototype = $prototypeBuilder->getPrototype($realMethod);
+            return $prototypeBuilder->getPrototype($realMethod);
         } catch(\ReflectionException $e) {
-            if (!method_exists($this->className, '__call')) {
-                throw $e;
-            }
-            $prototype = $prototypeBuilder->getPrototypeForNonExistantMethod($method);
+            return $prototypeBuilder->getPrototypeForNonExistantMethod($method);
         }
+    }
+
+    protected function getPublicPrototype($method)
+    {
+        $prototype = $this->getPrototype($method);
         if (array_key_exists($method, $this->expose)) {
             $prototype = str_replace('protected ', 'public ', $prototype);
         }
@@ -115,56 +131,68 @@ class ClassCompiler
         return $prototype;
     }
 
-    protected function makeAllMethodsThrowException(\ReflectionClass $refClass)
+    protected function makeMethodThrowException(\ReflectionMethod $method)
     {
-        $this->methods = array();
-        foreach ($refClass->getMethods() as $method) {
-            if ($method->isFinal()) {
-                continue;
-            }
-            $prototype = $this->getPrototype($method->getName());
-            $this->methods[$method->getName()] = <<<EOF
+        if ($method->isFinal()) {
+            return;
+        }
+        $prototype = $this->getPublicPrototype($method->getName());
+        $this->methods[$method->getName()] = <<<EOF
 $prototype {
 	throw new \\Exception("{$method->getName()}() does not have an associated action - consider a niceMock()?");
 }
 EOF;
+    }
+
+    protected function makeAllMethodsThrowException(\ReflectionClass $refClass)
+    {
+        $this->methods = array();
+        foreach ($refClass->getMethods() as $method) {
+            $this->makeMethodThrowException($method);
         }
     }
 
-    protected function renderRules()
+    protected function finalMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
-        foreach ($this->rules as $method => $withs) {
-            try {
-                $realMethod = new \ReflectionMethod($this->className, $method);
-                if ($realMethod->isFinal()) {
-                    throw new \Exception("Method {$this->className}::{$method}() is final so it cannot be mocked.");
-                }
-                if ($realMethod->isPrivate()) {
-                    throw new \Exception("Method '{$method}' cannot be mocked becuase it it private.");
-                }
-            } catch (\ReflectionException $e) {
-                if (!method_exists($this->className, '__call')) {
-                    throw $e;
-                }
-            }
-            $actionCode = '';
-            $defaultActionCode = '';
-            foreach ($withs as $withKey => $rule) {
-                $action = $rule['action'];
-                if (null === $rule['with']) {
-                    $defaultActionCode = $action->getActionCode();
-                } else {
-                    $args = addslashes(json_encode($rule['with']));
-                    $args = str_replace('$', '\\$', $args);
-                    $actionCode .= <<<EOF
+        if ($method->isFinal()) {
+            throw new \Exception("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
+        }
+    }
+
+    protected function privateMethodsCanNotBeMocked(\ReflectionMethod $method)
+    {
+        if ($method->isPrivate()) {
+            throw new \Exception("Method '{$method->getName()}' cannot be mocked becuase it it private.");
+        }
+    }
+
+    protected function renderRule($method, array $withs)
+    {
+        $this->methodMustBeMockable($method);
+        try {
+            $realMethod = new \ReflectionMethod($this->className, $method);
+            $this->finalMethodsCanNotBeMocked($realMethod);
+            $this->privateMethodsCanNotBeMocked($realMethod);
+        } catch (\ReflectionException $e) {
+        }
+        $actionCode = '';
+        $defaultActionCode = '';
+        foreach ($withs as $withKey => $rule) {
+            $action = $rule['action'];
+            if (null === $rule['with']) {
+                $defaultActionCode = $action->getActionCode();
+            } else {
+                $args = addslashes(json_encode($rule['with']));
+                $args = str_replace('$', '\\$', $args);
+                $actionCode .= <<<EOF
 if (json_encode(func_get_args()) == "$args") { {$action->getActionCode()}
 }
 EOF;
-                }
             }
+        }
 
-            $prototype = $this->getPrototype($method);
-            $this->methods[$method] = <<<EOF
+        $prototype = $this->getPublicPrototype($method);
+        $this->methods[$method] = <<<EOF
 $prototype {
 	if (!array_key_exists('$method', self::\$_methodCalls)) {
 		self::\$_methodCalls['$method'] = array();
@@ -174,6 +202,12 @@ $prototype {
 	$defaultActionCode
 }
 EOF;
+    }
+
+    protected function renderRules()
+    {
+        foreach ($this->rules as $method => $withs) {
+            $this->renderRule($method, $withs);
         }
     }
 
@@ -190,9 +224,16 @@ EOF;
     {
         foreach ($this->expose as $method => $value) {
             if (!array_key_exists($method, $this->methods)) {
-                $prototype = $this->getPrototype($method);
+                $prototype = $this->getPublicPrototype($method);
                 $this->methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
             }
+        }
+    }
+
+    protected function finalClassesCanNotBeMocked(\ReflectionClass $refClass)
+    {
+        if ($refClass->isFinal()) {
+            throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
         }
     }
 
@@ -203,9 +244,7 @@ EOF;
     public function generateCode()
     {
         $refClass = new \ReflectionClass($this->className);
-        if ($refClass->isFinal()) {
-            throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
-        }
+        $this->finalClassesCanNotBeMocked($refClass);
 
         $code = '';
         if ($this->getMockNamespaceName()) {
@@ -227,7 +266,8 @@ public function getCallsForMethod(\$method)
 }
 EOF;
 
-        return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); " . implode("\n", $this->methods) . "}";
+        $methods = implode("\n", $this->methods);
+        return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); $methods }";
     }
 
     /**
@@ -254,7 +294,8 @@ EOF;
 	 */
     public function newInstance()
     {
-        $reflect = eval($this->generateCode() . " return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');");
+        $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
+        $reflect = eval($this->generateCode() . $getInstance);
 
         return $reflect->newInstanceArgs($this->constructorArgs);
     }
@@ -276,19 +317,22 @@ EOF;
         $this->customClassName = $className;
     }
 
+    protected function methodMustBeMockable($method)
+    {
+        if (!$this->methodIsAllowedToBeMocked($method)) {
+            throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
+        }
+    }
+
     /**
 	 * @param string $method
 	 */
     public function addExpose($method)
     {
-        try {
-            $m = new \ReflectionMethod($this->className, $method);
-            if ($m->isPrivate()) {
-                throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
-            }
-        } catch (\ReflectionException $e) {
-            // @test this is allowed with magic __call
-            throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
+        $this->methodMustBeMockable($method);
+        $m = new \ReflectionMethod($this->className, $method);
+        if ($m->isPrivate()) {
+            throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
         }
         $this->expose[$method] = true;
     }
