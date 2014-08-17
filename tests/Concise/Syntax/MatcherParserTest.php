@@ -233,4 +233,11 @@ class MatcherParserTest extends TestCase
         $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
         $this->assert($matcher['on_error'], equals, 'foo');
     }
+
+    public function testOnErrorMustBeTheLastData()
+    {
+        $parser = MatcherParser::getInstance();
+        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo', 'bar'));
+        $this->assert($matcher['on_error'], equals, 'bar');
+    }
 }

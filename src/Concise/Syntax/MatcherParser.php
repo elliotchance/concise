@@ -64,7 +64,7 @@ class MatcherParser
         if ($this->endsWith($rawSyntax, $endsWith)) {
             $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
             $options = array(
-                'on_error' => $data[0],
+                'on_error' => $data[count($data) - 1],
             );
         }
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
