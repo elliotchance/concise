@@ -47,7 +47,7 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler->setRules(array(
             'hidden' => array(
                 array(
-                    'action' => new ReturnValueAction('bar'),
+                    'action' => new ReturnValueAction(array('bar')),
                     'with'   => null,
                 ),
             ),

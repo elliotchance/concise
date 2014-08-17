@@ -21,4 +21,13 @@ class MockBuilderReturnTest extends TestCase
                      ->done();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
+
+    public function testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->stub('myMethod')->andReturn('foo', 'bar')
+                     ->done();
+        $mock->myMethod();
+        $this->assert($mock->myMethod(), equals, 'bar');
+    }
 }

@@ -16,17 +16,26 @@ class ReturnValueAction extends AbstractAction
     protected $cacheKey;
 
     /**
-	 * @param mixed $value
+	 * @param array $values
 	 */
-    public function __construct($value)
+    public function __construct(array $values)
     {
         $this->cacheKey = md5(rand() . time());
-        self::$cache[$this->cacheKey] = $value;
+        self::$cache[$this->cacheKey] = $values;
+        self::$cache[$this->cacheKey . 'i'] = 0;
     }
 
     public function getActionCode()
     {
-        return "\$v = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}']; return is_object(\$v) ? clone \$v : \$v;";
+        return <<<EOF
+\$i = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}i'];
+\$vs = \Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}'];
+\$v = \$vs[\$i];
+if(count(\$vs) > 1) {
+    ++\Concise\Mock\Action\ReturnValueAction::\$cache['{$this->cacheKey}i'];
+}
+return is_object(\$v) ? clone \$v : \$v;
+EOF;
     }
 
     /**

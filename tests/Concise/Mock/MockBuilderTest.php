@@ -32,8 +32,6 @@ class MockBuilderTest extends TestCase
         $this->mock('\Abc')->done();
     }
 
-    // @test you cannot mock methods that do not exist
-
     // @test you can only mock methods that do not exist if there is an approproate __call
 
     /**
