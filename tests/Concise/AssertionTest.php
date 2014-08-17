@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Matcher\Equals;
 use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
 use \Concise\Matcher\True;
@@ -96,5 +97,11 @@ class AssertionTest extends TestCase
     {
         $assertion = $this->getStubForAssertionThatReturnsData(array());
         $this->assert((string) $assertion, is_blank);
+    }
+
+    public function testCanSetCustomFailureMessage()
+    {
+        $assertion = new Assertion('true', new Equals());
+        $this->assert($assertion->setFailureMessage('foo'), is_null);
     }
 }
