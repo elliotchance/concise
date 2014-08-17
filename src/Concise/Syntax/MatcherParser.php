@@ -83,6 +83,9 @@ class MatcherParser
         $result = $this->lexer->parse($string);
         $match = $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
         $assertion = new Assertion($string, $match['matcher'], $data);
+        if (array_key_exists('on_error', $match)) {
+            $assertion->setFailureMessage($data[(string) $match['on_error']]);
+        }
         $assertion->setOriginalSyntax($match['originalSyntax']);
 
         return $assertion;
