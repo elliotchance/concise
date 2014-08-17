@@ -212,4 +212,11 @@ class MatcherParserTest extends TestCase
         $parser = MatcherParser::getInstance();
         $this->assert($parser->getKeywords(), has_value, 'error');
     }
+
+    public function testOnErrorIsReturnedWhenLocatingTheMatcher()
+    {
+        $parser = MatcherParser::getInstance();
+        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?');
+        $this->assert($matcher, has_key, 'on_error');
+    }
 }

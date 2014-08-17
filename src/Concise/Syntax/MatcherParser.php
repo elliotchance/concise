@@ -47,6 +47,11 @@ class MatcherParser
         return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
     }
 
+    protected function endsWith($string, $substring)
+    {
+        return (substr($string, strlen($string) - strlen($substring)) === $substring);
+    }
+
     /**
 	 * @param string $syntax
 	 * @return array
@@ -55,11 +60,13 @@ class MatcherParser
     {
         $rawSyntax = $this->getRawSyntax($syntax);
         $endsWith = ' on error ?';
-        if (substr($rawSyntax, strlen($rawSyntax) - strlen($endsWith)) == $endsWith) {
+        if ($this->endsWith($rawSyntax, $endsWith)) {
             $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
         }
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            return $this->syntaxCache[$rawSyntax];
+            return $this->syntaxCache[$rawSyntax] + array(
+                'on_error' => true,
+            );
         }
         throw new \Exception("No such matcher for syntax '$syntax'.");
     }
