@@ -56,7 +56,7 @@ class MatcherParser
 	 * @param string $syntax
 	 * @return array
 	 */
-    public function getMatcherForSyntax($syntax)
+    public function getMatcherForSyntax($syntax, array $data = array())
     {
         $rawSyntax = $this->getRawSyntax($syntax);
         $endsWith = ' on error ?';
@@ -64,7 +64,7 @@ class MatcherParser
         if ($this->endsWith($rawSyntax, $endsWith)) {
             $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
             $options = array(
-                'on_error' => true,
+                'on_error' => $data[0],
             );
         }
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
@@ -81,7 +81,7 @@ class MatcherParser
     public function compile($string, array $data = array())
     {
         $result = $this->lexer->parse($string);
-        $match = $this->getMatcherForSyntax($result['syntax']);
+        $match = $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
         $assertion = new Assertion($string, $match['matcher'], $data);
         $assertion->setOriginalSyntax($match['originalSyntax']);
 

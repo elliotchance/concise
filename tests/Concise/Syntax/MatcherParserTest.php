@@ -216,14 +216,21 @@ class MatcherParserTest extends TestCase
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()
     {
         $parser = MatcherParser::getInstance();
-        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?');
+        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
         $this->assert($matcher, has_key, 'on_error');
     }
 
     public function testOnErrorIsNotReturnedIfNotInTheSyntax()
     {
         $parser = MatcherParser::getInstance();
-        $matcher = $parser->getMatcherForSyntax('? equals ?');
+        $matcher = $parser->getMatcherForSyntax('? equals ?', array());
         $this->assert($matcher, does_not_have_key, 'on_error');
+    }
+
+    public function testOnErrorIsReturnedFromData()
+    {
+        $parser = MatcherParser::getInstance();
+        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
+        $this->assert($matcher['on_error'], equals, 'foo');
     }
 }
