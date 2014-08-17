@@ -104,4 +104,9 @@ class PrototypeBuilderTest extends TestCase
         $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'f');
         $this->assert($this->builder->getPrototype($method), equals, "abstract protected function f(\$a = array (\n))");
     }
+
+    public function testPrototypeCanBeBuiltWithOnlyAMethodName()
+    {
+        $this->assert($this->builder->getPrototypeForNonExistantMethod('foo'), equals, 'public function foo()');
+    }
 }

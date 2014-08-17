@@ -46,4 +46,9 @@ class PrototypeBuilder
 
         return $modifiers . ' function ' . $method->getName() . "(" . implode(', ', $parameters) . ")";
     }
+
+    public function getPrototypeForNonExistantMethod($method)
+    {
+        return "public function $method()";
+    }
 }
