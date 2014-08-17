@@ -22,7 +22,7 @@ abstract class MyClass
 
     abstract protected function d(array $a);
 
-    abstract protected function e(callable $a);
+    abstract protected function e(\Closure $a);
 
     abstract protected function f($a = array());
 }
@@ -92,11 +92,8 @@ class PrototypeBuilderTest extends TestCase
 
     public function testCallableHint()
     {
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $this->markTestSkipped('callable does not apply to versions below 5.4');
-        }
         $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
-        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(callable $a)');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(\Closure $a)');
     }
 
     public function testArrayDefaultValue()
