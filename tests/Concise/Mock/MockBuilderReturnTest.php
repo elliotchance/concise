@@ -30,4 +30,14 @@ class MockBuilderReturnTest extends TestCase
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 'bar');
     }
+
+    public function testAndReturnWithASingleArgumentWillAlwaysReturnThatValue()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+            ->stub('myMethod')->andReturn('foo')
+            ->done();
+        $mock->myMethod();
+        $mock->myMethod();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
 }
