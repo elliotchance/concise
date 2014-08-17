@@ -206,4 +206,10 @@ class MatcherParserTest extends TestCase
         $parser = MatcherParser::getInstance();
         $this->assert($parser->getKeywords(), has_value, 'on');
     }
+
+    public function testErrorIsAKeyword()
+    {
+        $parser = MatcherParser::getInstance();
+        $this->assert($parser->getKeywords(), has_value, 'error');
+    }
 }
