@@ -96,19 +96,27 @@ class DataTypeChecker
         return $this->context[$name];
     }
 
+    protected function isRegex($value)
+    {
+        return is_object($value) && get_class($value) === 'Concise\Syntax\Token\Regexp';
+    }
+
+    protected function isAttribute($value)
+    {
+        return is_object($value) && get_class($value) === 'Concise\Syntax\Token\Attribute';
+    }
+
     /**
 	 * @param  mixed $value
 	 * @return string
 	 */
     protected function getType($value)
     {
-        if (is_object($value)) {
-            if (get_class($value) === 'Concise\Syntax\Token\Regexp') {
-                return 'regex';
-            }
-            if (get_class($value) === 'Concise\Syntax\Token\Attribute') {
-                return $this->getType($this->getAttribute($value->getValue()));
-            }
+        if ($this->isRegex($value)) {
+            return 'regex';
+        }
+        if ($this->isAttribute($value)) {
+            return $this->getType($this->getAttribute($value->getValue()));
         }
         if (is_callable($value)) {
             return 'callable';
