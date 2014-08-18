@@ -99,7 +99,9 @@ class ClassCompiler
     protected function methodIsAllowedToBeMocked($method)
     {
         try {
-            new \ReflectionMethod($this->className, $method);
+            $realMethod = new \ReflectionMethod($this->className, $method);
+            $this->finalMethodsCanNotBeMocked($realMethod);
+            $this->privateMethodsCanNotBeMocked($realMethod);
         } catch(\ReflectionException $e) {
             if (!method_exists($this->className, '__call')) {
                 return false;
@@ -148,33 +150,29 @@ EOF;
     {
         $this->methods = array();
         foreach ($refClass->getMethods() as $method) {
-            $this->makeMethodThrowException($method);
+            if (!$method->isPrivate() && !$method->isFinal()) {
+                $this->makeMethodThrowException($method);
+            }
         }
     }
 
     protected function finalMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isFinal()) {
-            throw new \Exception("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
+            throw new \InvalidArgumentException("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
         }
     }
 
     protected function privateMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isPrivate()) {
-            throw new \Exception("Method '{$method->getName()}' cannot be mocked becuase it it private.");
+            throw new \InvalidArgumentException("Method {$this->className}::{$method->getName()}() cannot be mocked because it it private.");
         }
     }
 
     protected function renderRule($method, array $withs)
     {
         $this->methodMustBeMockable($method);
-        try {
-            $realMethod = new \ReflectionMethod($this->className, $method);
-            $this->finalMethodsCanNotBeMocked($realMethod);
-            $this->privateMethodsCanNotBeMocked($realMethod);
-        } catch (\ReflectionException $e) {
-        }
         $actionCode = '';
         $defaultActionCode = '';
         foreach ($withs as $withKey => $rule) {
@@ -320,7 +318,7 @@ EOF;
     protected function methodMustBeMockable($method)
     {
         if (!$this->methodIsAllowedToBeMocked($method)) {
-            throw new \InvalidArgumentException("Method '{$this->className}::$method' does not exist.");
+            throw new \InvalidArgumentException("Method {$this->className}::$method() does not exist.");
         }
     }
 
@@ -330,10 +328,6 @@ EOF;
     public function addExpose($method)
     {
         $this->methodMustBeMockable($method);
-        $m = new \ReflectionMethod($this->className, $method);
-        if ($m->isPrivate()) {
-            throw new \InvalidArgumentException("Method '{$this->className}::$method' is private and cannot be exposed.");
-        }
         $this->expose[$method] = true;
     }
 }

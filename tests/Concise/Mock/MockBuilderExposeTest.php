@@ -35,7 +35,7 @@ class MockBuilderExposeTest extends TestCase
 
     /**
 	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method 'Concise\Mock\MockExpose::baz' does not exist.
+	 * @expectedExceptionMessage Method Concise\Mock\MockExpose::baz() does not exist.
 	 */
     public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
     {
