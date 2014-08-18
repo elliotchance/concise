@@ -22,6 +22,6 @@ class DoesNotHaveKeyTest extends AbstractMatcherTestCase
 
     public function testArrayHasStringKey()
     {
-        $this->assertFailure('["abc":123] does not have key "abc"');
+        $this->assertFailure(array("abc" => 123), does_not_have_key, "abc");
     }
 }

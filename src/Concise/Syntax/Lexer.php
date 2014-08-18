@@ -139,16 +139,6 @@ class Lexer
                     $tokens[] = new Token\Value($value);
                     return;
                 }
-                if (substr($json, 0, 1) === '[' && substr($json, strlen($json) - 1, 1) === ']') {
-                    $json = '{' . substr($json, 1, strlen($json) - 2) . '}';
-                    $value = json_decode($json, true);
-                    if (null !== $value) {
-                        $startIndex += $i;
-
-                        $tokens[] = new Token\Value($value);
-                        return;
-                    }
-                }
             }
             throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
         }

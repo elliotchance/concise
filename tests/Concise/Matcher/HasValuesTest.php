@@ -22,11 +22,11 @@ class HasValuesTest extends AbstractMatcherTestCase
 
     public function testArrayValuesCanBeInAnyOrder()
     {
-        $this->assert('["a":123,"b":456] has values [123,456]');
+        $this->assert(array("a" => 123, "b" => 456), has_values, array(123, 456));
     }
 
     public function testArrayValuesCanBeASubset()
     {
-        $this->assert('["a":123,"b":456] has values [456]');
+        $this->assert(array("a" => 123, "b" => 456), has_values, array(456));
     }
 }
