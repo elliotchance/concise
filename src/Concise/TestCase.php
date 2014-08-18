@@ -131,24 +131,29 @@ class TestCase extends \PHPUnit_Framework_TestCase
         throw new \PHPUnit_Framework_AssertionFailedError($msg);
     }
 
+    protected function validateMultiWith($method, array $rule, array $mock)
+    {
+        $callGraph = array();
+        foreach ($mock['instance']->getCallsForMethod($method) as $call) {
+            $key = md5(json_encode($call));
+            if (!array_key_exists($key, $callGraph)) {
+                $callGraph[$key] = 0;
+            }
+            ++$callGraph[$key];
+        }
+        $key = md5(json_encode($rule['with']));
+        if (!array_key_exists($key, $callGraph)) {
+            $this->validateSingleWith($rule, 0, $method);
+        }
+        $this->validateSingleWith($rule, $callGraph[$key], $method);
+    }
+
     protected function validateExpectation($mock, $method, array $rule)
     {
         if (null === $rule['with']) {
             $this->validateSingleWith($rule, count($mock['instance']->getCallsForMethod($method)), $method);
         } else {
-            $callGraph = array();
-            foreach ($mock['instance']->getCallsForMethod($method) as $call) {
-                $key = md5(json_encode($call));
-                if (!array_key_exists($key, $callGraph)) {
-                    $callGraph[$key] = 0;
-                }
-                ++$callGraph[$key];
-            }
-            $key = md5(json_encode($rule['with']));
-            if (!array_key_exists($key, $callGraph)) {
-                $this->validateSingleWith($rule, 0, $method);
-            }
-            $this->validateSingleWith($rule, $callGraph[$key], $method);
+            $this->validateMultiWith($method, $rule, $mock);
         }
         $this->assert(true);
     }
