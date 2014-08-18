@@ -181,6 +181,19 @@ class MatcherParser
         return $this->matchers;
     }
 
+    protected function getWordsForSyntaxes(array $syntaxes)
+    {
+        $r = array();
+        foreach (array_keys($syntaxes) as $syntax) {
+            foreach (explode(' ', $syntax) as $word) {
+                if ($word[0] !== '?') {
+                    $r[] = $word;
+                }
+            }
+        }
+        return $r;
+    }
+
     /**
 	 * @return array
 	 */
@@ -190,14 +203,7 @@ class MatcherParser
         foreach ($this->getMatchers() as $matcher) {
             $service = new MatcherSyntaxAndDescription();
             $syntaxes = $service->process($matcher->supportedSyntaxes());
-
-            foreach (array_keys($syntaxes) as $syntax) {
-                foreach (explode(' ', $syntax) as $word) {
-                    if ($word[0] !== '?') {
-                        $r[] = $word;
-                    }
-                }
-            }
+            $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
         }
         $r = array_unique($r);
         sort($r);
