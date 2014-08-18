@@ -182,9 +182,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
         $this->validateMocks();
 
-        global $_currentTestCase;
-        $_currentTestCase = null;
-
         parent::tearDown();
     }
 
@@ -220,31 +217,33 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
     }
 
+    protected function loadKeywords()
+    {
+        $parser = MatcherParser::getInstance();
+
+        $all = array();
+        foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
+            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
+            foreach (explode('?', $simpleSyntax) as $part) {
+                $p = trim($part);
+                $all[str_replace(' ', '_', $p)] = $p;
+            }
+        }
+
+        foreach ($all as $name => $value) {
+            if (!defined($name)) {
+                define($name, $value);
+            }
+        }
+        define('on_error', 'on error');
+    }
+
     public function setUp()
     {
-        global $_currentTestCase;
         parent::setUp();
-        $_currentTestCase = $this;
 
         if (!defined('__KEYWORDS_LOADED')) {
-            $parser = MatcherParser::getInstance();
-
-            $all = array();
-            foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-                $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
-                foreach (explode('?', $simpleSyntax) as $part) {
-                    $p = trim($part);
-                    $all[str_replace(' ', '_', $p)] = $p;
-                }
-            }
-
-            foreach ($all as $name => $value) {
-                if (!defined($name)) {
-                    define($name, $value);
-                }
-            }
-            define('on_error', 'on error');
-
+            $this->loadKeywords();
             define('__KEYWORDS_LOADED', 1);
         }
     }

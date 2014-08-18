@@ -108,12 +108,6 @@ class TestCaseTest extends TestCase
         $this->assert(123, 'equals', "123");
     }
 
-    public function testEachTestMethodSetsTheCurrentTestCaseForRawAssertKeyword()
-    {
-        global $_currentTestCase;
-        $this->assert($this, is_the_same_as, $_currentTestCase);
-    }
-
     public function testConstantsForKeywordsAreInitialised()
     {
         $this->assertSame(equals, 'equals');
