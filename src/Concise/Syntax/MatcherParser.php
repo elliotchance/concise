@@ -4,6 +4,7 @@ namespace Concise\Syntax;
 
 use \Concise\Assertion;
 use \Concise\Services\MatcherSyntaxAndDescription;
+use \Concise\Matcher\AbstractMatcher;
 
 class MatcherParser
 {
@@ -96,26 +97,41 @@ class MatcherParser
         $this->keywords = array();
     }
 
+    protected function throwExceptionIfNotInLowerCase($rawSyntax)
+    {
+        if (strtolower($rawSyntax) != $rawSyntax) {
+            throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
+        }
+    }
+
+    protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
+    {
+        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
+            throw new \Exception("Syntax '$syntax' is already declared.");
+        }
+    }
+
+    protected function registerSyntax($syntax, AbstractMatcher $matcher)
+    {
+        $rawSyntax = $this->getRawSyntax($syntax);
+        $this->throwExceptionIfNotInLowerCase($rawSyntax);
+        $this->throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax);
+        $this->syntaxCache[$rawSyntax] = array(
+            'matcher' => $matcher,
+            'originalSyntax' => $syntax,
+        );
+    }
+
     /**
 	 * @param  \Concise\Matcher\AbstractMatcher $matcher
 	 * @return boolean
 	 */
-    public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
+    public function registerMatcher(AbstractMatcher $matcher)
     {
         $service = new MatcherSyntaxAndDescription();
         $allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
         foreach ($allSyntaxes as $syntax) {
-            $rawSyntax = $this->getRawSyntax($syntax);
-            if (strtolower($rawSyntax) != $rawSyntax) {
-                throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
-            }
-            if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-                throw new \Exception("Syntax '$syntax' is already declared.");
-            }
-            $this->syntaxCache[$rawSyntax] = array(
-                'matcher' => $matcher,
-                'originalSyntax' => $syntax,
-            );
+            $this->registerSyntax($syntax, $matcher);
         }
 
         $this->matchers[] = $matcher;
