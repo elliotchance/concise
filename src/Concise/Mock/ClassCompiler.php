@@ -235,6 +235,24 @@ EOF;
         }
     }
 
+    protected function setUpGetCallsForMethod()
+    {
+        $this->methods['getCallsForMethod'] = <<<EOF
+public function getCallsForMethod(\$method)
+{
+	return array_key_exists(\$method, self::\$_methodCalls) ? self::\$_methodCalls[\$method] : array();
+}
+EOF;
+    }
+
+    protected function getNamespaceCode()
+    {
+        if ($this->getMockNamespaceName()) {
+            return "namespace " . $this->getMockNamespaceName() . "; ";
+        }
+        return '';
+    }
+
     /**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -244,11 +262,6 @@ EOF;
         $refClass = new \ReflectionClass($this->className);
         $this->finalClassesCanNotBeMocked($refClass);
 
-        $code = '';
-        if ($this->getMockNamespaceName()) {
-            $code = "namespace " . $this->getMockNamespaceName() . "; ";
-        }
-
         $this->methods = array();
         if (!$this->niceMock) {
             $this->makeAllMethodsThrowException($refClass);
@@ -256,14 +269,9 @@ EOF;
         $this->renderRules();
         $this->renderConstructor();
         $this->exposeMethods();
+        $this->setUpGetCallsForMethod();
 
-        $this->methods['getCallsForMethod'] = <<<EOF
-public function getCallsForMethod(\$method)
-{
-	return array_key_exists(\$method, self::\$_methodCalls) ? self::\$_methodCalls[\$method] : array();
-}
-EOF;
-
+        $code = $this->getNamespaceCode();
         $methods = implode("\n", $this->methods);
         return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); $methods }";
     }
