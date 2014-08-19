@@ -41,13 +41,6 @@ class MockBuilderTest extends TestCase
         $this->assert($mock->nothing(), is_null);
     }
 
-    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
-    {
-        $mock = $this->niceMock('\Concise\Mock\Mock1')
-                     ->done();
-        $this->assert($mock->myMethod(), equals, 'abc');
-    }
-
     public function testMockClassDefaultsToStdClass()
     {
         $mock = $this->mock()

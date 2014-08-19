@@ -62,7 +62,10 @@ class ClassCompiler
                                 $disableConstructor = false)
     {
         if (!class_exists($className) && !interface_exists($className)) {
-            throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
+            throw new \InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
+        }
+        if (interface_exists($className) && $niceMock) {
+            throw new \InvalidArgumentException("You cannot create a nice mock of an interface ($className).");
         }
         $this->className = ltrim($className, '\\');
         $this->mockUnique = '_' . substr(md5(rand()), 24);

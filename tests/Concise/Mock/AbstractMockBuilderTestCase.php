@@ -31,5 +31,12 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
+    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
+    {
+        $mock = $this->niceMock($this->getClassName())
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 'abc');
+    }
+
     abstract public function getClassName();
 }
