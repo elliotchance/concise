@@ -253,6 +253,14 @@ EOF;
         return '';
     }
 
+    protected function getSuperWord(\ReflectionClass $refClass)
+    {
+        if ($refClass->isInterface()) {
+            return 'implements';
+        }
+        return 'extends';
+    }
+
     /**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -273,7 +281,8 @@ EOF;
 
         $code = $this->getNamespaceCode();
         $methods = implode("\n", $this->methods);
-        return $code . "class {$this->getMockName()} extends \\{$this->className} { public static \$_methodCalls = array(); $methods }";
+        $superWord = $this->getSuperWord($refClass);
+        return $code . "class {$this->getMockName()} $superWord \\{$this->className} { public static \$_methodCalls = array(); $methods }";
     }
 
     /**

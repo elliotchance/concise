@@ -16,4 +16,10 @@ class ClassCompilerInterfaceTest extends TestCase
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
         $this->assert($compiler->generateCode(), is_not_blank);
     }
+
+    public function testWillImplementAnInterface()
+    {
+        $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
+        $this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock4');
+    }
 }
