@@ -41,17 +41,6 @@ class MockBuilderTest extends TestCase
         $this->assert($mock->nothing(), is_null);
     }
 
-    /**
-	 * @expectedException Exception
-	 * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
-	 */
-    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
-    {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->done();
-        $mock->myMethod();
-    }
-
     public function testNiceMockCanBeCreatedFromAClassThatExists()
     {
         $mock = $this->niceMock('\Concise\TestCase')

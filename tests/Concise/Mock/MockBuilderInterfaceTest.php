@@ -8,11 +8,10 @@ interface MockInterface
 {
 }
 
-class MockBuilderInterfaceTest extends TestCase
+class MockBuilderInterfaceTest extends AbstractMockBuilderTestCase
 {
-    public function testInterfacesAreAllowedToBeMocked()
+    public function getClassName()
     {
-        $builder = $this->mock('\Concise\Mock\MockInterface');
-        $this->assert($builder, is_not_null);
+        return '\Concise\Mock\MockInterface';
     }
 }

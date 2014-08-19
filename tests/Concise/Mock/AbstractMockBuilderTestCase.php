@@ -13,5 +13,16 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
+     */
+    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->done();
+        $mock->myMethod();
+    }
+
     abstract public function getClassName();
 }
