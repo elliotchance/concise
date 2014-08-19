@@ -75,8 +75,8 @@ class MockBuilder
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
         $this->testCase = $testCase;
-        if (!class_exists($className)) {
-            throw new \Exception("Class '$className' does not exist.");
+        if (!class_exists($className) && !interface_exists($className)) {
+            throw new \Exception("Class or interface '$className' does not exist.");
         }
         $this->className = $className;
         $this->niceMock = $niceMock;

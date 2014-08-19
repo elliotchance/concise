@@ -33,7 +33,7 @@ class MockBuilderTest extends TestCase
 
     /**
 	 * @expectedException Exception
-	 * @expectedExceptionMessage Class '\Abc' does not exist.
+	 * @expectedExceptionMessage Class or interface '\Abc' does not exist.
 	 */
     public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
     {
