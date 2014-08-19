@@ -61,7 +61,7 @@ class ClassCompiler
     public function __construct($className, $niceMock = false, array $constructorArgs = array(),
                                 $disableConstructor = false)
     {
-        if (!class_exists($className)) {
+        if (!class_exists($className) && !interface_exists($className)) {
             throw new \Exception("The class '$className' is not loaded so it cannot be mocked.");
         }
         $this->className = ltrim($className, '\\');
