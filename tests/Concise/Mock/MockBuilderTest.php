@@ -24,13 +24,6 @@ class MockMagicCall
 
 class MockBuilderTest extends TestCase
 {
-    public function testMockCanBeCreatedFromAClassThatExists()
-    {
-        $mock = $this->mock('\Concise\TestCase')
-                     ->done();
-        $this->assert($mock, instance_of, '\Concise\TestCase');
-    }
-
     /**
 	 * @expectedException Exception
 	 * @expectedExceptionMessage Class or interface '\Abc' does not exist.
