@@ -41,13 +41,6 @@ class MockBuilderTest extends TestCase
         $this->assert($mock->nothing(), is_null);
     }
 
-    public function testNiceMockCanBeCreatedFromAClassThatExists()
-    {
-        $mock = $this->niceMock('\Concise\TestCase')
-                     ->done();
-        $this->assert($mock, instance_of, '\Concise\TestCase');
-    }
-
     public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
     {
         $mock = $this->niceMock('\Concise\Mock\Mock1')

@@ -271,7 +271,7 @@ EOF;
         $this->finalClassesCanNotBeMocked($refClass);
 
         $this->methods = array();
-        if (!$this->niceMock) {
+        if (!$this->niceMock || $refClass->isAbstract()) {
             $this->makeAllMethodsThrowException($refClass);
         }
         $this->renderRules();

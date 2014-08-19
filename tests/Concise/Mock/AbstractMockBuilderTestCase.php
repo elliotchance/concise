@@ -19,9 +19,16 @@ abstract class AbstractMockBuilderTestCase extends TestCase
      */
     public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
+        $mock = $this->mock($this->getClassName())
                      ->done();
         $mock->myMethod();
+    }
+
+    public function testNiceMockCanBeCreatedFromAnObjectThatExists()
+    {
+        $mock = $this->niceMock($this->getClassName())
+                     ->done();
+        $this->assert($mock, instance_of, $this->getClassName());
     }
 
     abstract public function getClassName();
