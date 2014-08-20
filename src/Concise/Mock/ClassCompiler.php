@@ -2,6 +2,11 @@
 
 namespace Concise\Mock;
 
+use \InvalidArgumentException;
+use \ReflectionException;
+use \ReflectionMethod;
+use \ReflectionClass;
+
 class ClassCompiler
 {
     /**
@@ -62,10 +67,10 @@ class ClassCompiler
                                 $disableConstructor = false)
     {
         if (!class_exists($className) && !interface_exists($className)) {
-            throw new \InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
+            throw new InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
         }
         if (interface_exists($className) && $niceMock) {
-            throw new \InvalidArgumentException("You cannot create a nice mock of an interface ($className).");
+            throw new InvalidArgumentException("You cannot create a nice mock of an interface ($className).");
         }
         $this->className = ltrim($className, '\\');
         $this->mockUnique = '_' . substr(md5(rand()), 24);
@@ -102,10 +107,10 @@ class ClassCompiler
     protected function methodIsAllowedToBeMocked($method)
     {
         try {
-            $realMethod = new \ReflectionMethod($this->className, $method);
+            $realMethod = new ReflectionMethod($this->className, $method);
             $this->finalMethodsCanNotBeMocked($realMethod);
             $this->privateMethodsCanNotBeMocked($realMethod);
-        } catch(\ReflectionException $e) {
+        } catch(ReflectionException $e) {
             if (!method_exists($this->className, '__call')) {
                 return false;
             }
@@ -119,9 +124,9 @@ class ClassCompiler
         $prototypeBuilder = new PrototypeBuilder();
         $prototypeBuilder->hideAbstract = true;
         try {
-            $realMethod = new \ReflectionMethod($this->className, $method);
+            $realMethod = new ReflectionMethod($this->className, $method);
             return $prototypeBuilder->getPrototype($realMethod);
-        } catch(\ReflectionException $e) {
+        } catch(ReflectionException $e) {
             return $prototypeBuilder->getPrototypeForNonExistantMethod($method);
         }
     }
@@ -162,14 +167,14 @@ EOF;
     protected function finalMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isFinal()) {
-            throw new \InvalidArgumentException("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
+            throw new InvalidArgumentException("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
         }
     }
 
     protected function privateMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isPrivate()) {
-            throw new \InvalidArgumentException("Method {$this->className}::{$method->getName()}() cannot be mocked because it it private.");
+            throw new InvalidArgumentException("Method {$this->className}::{$method->getName()}() cannot be mocked because it it private.");
         }
     }
 
@@ -234,7 +239,7 @@ EOF;
     protected function finalClassesCanNotBeMocked(\ReflectionClass $refClass)
     {
         if ($refClass->isFinal()) {
-            throw new \Exception("Class {$this->className} is final so it cannot be mocked.");
+            throw new InvalidArgumentException("Class {$this->className} is final so it cannot be mocked.");
         }
     }
 
@@ -270,7 +275,7 @@ EOF;
 	 */
     public function generateCode()
     {
-        $refClass = new \ReflectionClass($this->className);
+        $refClass = new ReflectionClass($this->className);
         $this->finalClassesCanNotBeMocked($refClass);
 
         $this->methods = array();
@@ -308,7 +313,7 @@ EOF;
 
     protected function isInterface()
     {
-        $refClass = new \ReflectionClass($this->className);
+        $refClass = new ReflectionClass($this->className);
         return $refClass->isInterface();
     }
 
@@ -347,7 +352,7 @@ EOF;
     protected function methodMustBeMockable($method)
     {
         if (!$this->methodIsAllowedToBeMocked($method)) {
-            throw new \InvalidArgumentException("Method {$this->className}::$method() does not exist.");
+            throw new InvalidArgumentException("Method {$this->className}::$method() does not exist.");
         }
     }
 
