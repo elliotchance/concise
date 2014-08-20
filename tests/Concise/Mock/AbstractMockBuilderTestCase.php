@@ -76,4 +76,11 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->constructorRun, equals, 2);
     }
+
+    public function testNiceMockReceivesConstructorArguments()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->done();
+        $this->assert($mock->constructorRun, equals, 2);
+    }
 }

@@ -34,6 +34,11 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         parent::testMocksCanHaveTheirConstructorDisabled();
     }
 
+    public function testNiceMockReceivesConstructorArguments()
+    {
+        $this->notApplicable();
+    }
+
     public function getClassName()
     {
         return '\Concise\Mock\MockInterface';
