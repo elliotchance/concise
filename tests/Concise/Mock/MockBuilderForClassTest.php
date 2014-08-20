@@ -48,4 +48,9 @@ class MockBuilderForClassTest extends AbstractMockBuilderTestCase
     {
         return '\Concise\Mock\MockClass';
     }
+
+    public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $this->notApplicable();
+    }
 }

@@ -338,4 +338,10 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testStringsWithDollarCharacterMustBeEscaped();
     }
+
+    public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate();
+    }
 }
