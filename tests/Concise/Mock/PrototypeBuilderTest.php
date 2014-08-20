@@ -6,102 +6,104 @@ use \Concise\TestCase;
 
 abstract class MyClass
 {
-	public function foo()
-	{
-	}
+    public function foo()
+    {
+    }
 
-	protected abstract function bar();
+    abstract protected function bar();
 
-	protected abstract function baz($a, $b);
+    abstract protected function baz($a, $b);
 
-	protected abstract function a(\DateTime $a);
+    abstract protected function a(\DateTime $a);
 
-	protected abstract function b($a = 123);
+    abstract protected function b($a = 123);
 
-	protected abstract function c(&$a);
+    abstract protected function c(&$a);
 
-	protected abstract function d(array $a);
+    abstract protected function d(array $a);
 
-	protected abstract function e(callable $a);
+    abstract protected function e(\Closure $a);
 
-	protected abstract function f($a = array());
+    abstract protected function f($a = array());
 }
 
 class PrototypeBuilderTest extends TestCase
 {
-	public function setUp()
-	{
-		parent::setUp();
-		$this->builder = new PrototypeBuilder();
-	}
+    public function setUp()
+    {
+        parent::setUp();
+        $this->builder = new PrototypeBuilder();
+    }
 
-	public function testPrototypeIsBuiltFromReflectionMethod()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'foo');
-		$this->assert($this->builder->getPrototype($method), equals, 'public function foo()');
-	}
+    public function testPrototypeIsBuiltFromReflectionMethod()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'foo');
+        $this->assert($this->builder->getPrototype($method), equals, 'public function foo()');
+    }
 
-	public function testWillRespectPrototypeModifiers()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'bar');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function bar()');
-	}
+    public function testWillRespectPrototypeModifiers()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'bar');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function bar()');
+    }
 
-	public function testWillRespectPrototypeArguments()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'baz');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function baz($a, $b)');
-	}
+    public function testWillRespectPrototypeArguments()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'baz');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function baz($a, $b)');
+    }
 
-	public function testWillNotReturnAbstractKeywordIfToldNotTo()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'bar');
-		$this->builder->hideAbstract = true;
-		$this->assert($this->builder->getPrototype($method), equals, 'protected function bar()');
-	}
+    public function testWillNotReturnAbstractKeywordIfToldNotTo()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'bar');
+        $this->builder->hideAbstract = true;
+        $this->assert($this->builder->getPrototype($method), equals, 'protected function bar()');
+    }
 
-	public function testWillRespectPrototypeArgumentTypeHinting()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'a');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function a(\DateTime $a)');
-	}
+    public function testWillRespectPrototypeArgumentTypeHinting()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'a');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function a(\DateTime $a)');
+    }
 
-	public function testWillRespectPrototypeArgumentDefaultValue()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'b');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function b($a = 123)');
-	}
+    public function testWillRespectPrototypeArgumentDefaultValue()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'b');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function b($a = 123)');
+    }
 
-	public function testWillRespectPrototypeArgumentPassByReference()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'c');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function c(&$a)');
-	}
+    public function testWillRespectPrototypeArgumentPassByReference()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'c');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function c(&$a)');
+    }
 
-	public function testWillNotSetADefaultValueForInternalMethods()
-	{
-		$method = new \ReflectionMethod('\DateTime', 'setTime');
-		$this->assert($this->builder->getPrototype($method), equals, 'public function setTime($hour, $minute, $second = NULL)');
-	}
+    public function testWillNotSetADefaultValueForInternalMethods()
+    {
+        $method = new \ReflectionMethod('\DateTime', 'setTime');
+        $this->assert($this->builder->getPrototype($method), equals, 'public function setTime($hour, $minute, $second = NULL)');
+    }
 
-	public function testArrayHint()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'd');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function d(array $a)');
-	}
+    public function testArrayHint()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'd');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function d(array $a)');
+    }
 
-	public function testCallableHint()
-	{
-		if(version_compare(PHP_VERSION, '5.4.0') < 0) {
-			$this->markTestSkipped('callable does not apply to versions below 5.4');
-		}
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
-		$this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(callable $a)');
-	}
+    public function testCallableHint()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(\Closure $a)');
+    }
 
-	public function testArrayDefaultValue()
-	{
-		$method = new \ReflectionMethod('\Concise\Mock\MyClass', 'f');
-		$this->assert($this->builder->getPrototype($method), equals, "abstract protected function f(\$a = array (\n))");
-	}
+    public function testArrayDefaultValue()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'f');
+        $this->assert($this->builder->getPrototype($method), equals, "abstract protected function f(\$a = array (\n))");
+    }
+
+    public function testPrototypeCanBeBuiltWithOnlyAMethodName()
+    {
+        $this->assert($this->builder->getPrototypeForNonExistantMethod('foo'), equals, 'public function foo()');
+    }
 }

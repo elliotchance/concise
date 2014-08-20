@@ -12,7 +12,8 @@ Simple Example
 ```php
 class AttributeTest extends TestCase
 {
-	public function testEquality() {
+	public function testEquality()
+	{
 		// the entire assertion can be string
 		$this->assert('123 equals "123"');
 
@@ -22,16 +23,11 @@ class AttributeTest extends TestCase
 
 		// or you can create your assertion by chaining
 		$this->assert($result, exactly_equals, 123);
-
-		// you may prefer assert_that
-		assert_that($answer, is_an_associative_array);
-
-		// while generally not recommended, you can use code blocks (notice $self instead of $this)
-		$this->assert('`$self->calc->add(3, 5)` equals 8');
 	}
 
 	// the assertion can be taken directly from the method name
-	public function test_adding3and5_equals_8() {
+	public function test_adding3and5_equals_8()
+	{
 		$this->adding3and5 = $this->calc->add(3, 5);
 	}
 }
@@ -96,8 +92,10 @@ Matchers
 
 ### Basic
 
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
 * `? equals ?` - Assert values with no regard to exact data types.
   * `? is equal to ?`
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is exactly equal to ?` - Assert two values match data type and value.
   * `? exactly equals ?`
   * `? is the same as ?`
@@ -126,10 +124,17 @@ Matchers
 * `?:callable throws exactly ?:class` - Assert a specific exception was thrown.
 * `?:callable throws exception` - Assert an exception was thrown.
 
+### Files
+
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
+
 ### Numbers
 
 * `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
   * `?:number between ?:number and ?:number`
+* `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
+* `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is a number` - Assert that a value is an integer or floating-point.
 * `? is an int` - Assert value is an integer type.
   * `? is an integer`
@@ -155,6 +160,10 @@ Matchers
 
 ### Objects
 
+* `?:object does not have property ?:string` - Assert that an object does not have a property.
+* `?:object has property ?:string` - Assert that an object has a property.
+* `?:object has property ?:string with exact value ?` - Assert that an object has a property with a specific exact value.
+* `?:object has property ?:string with value ?` - Assert that an object has a property with a specific value.
 * `? is an object` - Assert value is an object.
 * `?:object is an instance of ?:class` - Assert an objects class or subclass.
   * `?:object is instance of ?:class`
@@ -181,8 +190,10 @@ Matchers
 * `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
   * `?:string matches regex ?:regex`
 * `? does not end with ?` - Assert a string does not end with another string.
+* `?:string does not equal file ?:string` - Compare string value with the contents of a file.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
 * `?:string ends with ?:string` - Assert a string ends with another string.
+* `?:string equals file ?:string` - Compare string value with the contents of a file.
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
 
 

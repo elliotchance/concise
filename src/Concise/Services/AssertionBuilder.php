@@ -4,48 +4,65 @@ namespace Concise\Services;
 
 use \Concise\Syntax\MatcherParser;
 use \Concise\Assertion;
-use \Concise\Matcher\IsTrue;
 
 class AssertionBuilder
 {
-	/**
+    /**
 	 * @var array
 	 */
-	protected $args;
+    protected $args;
 
-	/**
+    /**
 	 * @param array $args
 	 */
-	public function __construct(array $args)
-	{
-		$this->args = $args;
-	}
+    public function __construct(array $args)
+    {
+        $this->args = $args;
+    }
 
-	/**
+    protected function getArgName($i)
+    {
+        return "arg" . ($i / 2);
+    }
+
+    protected function getData()
+    {
+        $data = array();
+        $argc = count($this->args);
+        for ($i = 0; $i < $argc; $i += 2) {
+            $data[$this->getArgName($i)] = $this->args[$i];
+        }
+
+        return $data;
+    }
+
+    protected function getSyntaxString()
+    {
+        $syntax = array();
+        $argc = count($this->args);
+        for ($i = 0; $i < $argc; $i += 2) {
+            $syntax[] = $this->getArgName($i);
+            if ($i < $argc - 1) {
+                $syntax[] = $this->args[$i + 1];
+            }
+        }
+
+        return implode(' ', $syntax);
+    }
+
+    /**
 	 * @return Assertion
 	 */
-	public function getAssertion()
-	{
-		$matcherParser = MatcherParser::getInstance();
-		if(count($this->args) === 1 && is_bool($this->args[0])) {
-			return $matcherParser->compile($this->args[0] ? 'true' : 'false');
-		}
+    public function getAssertion()
+    {
+        $matcherParser = MatcherParser::getInstance();
+        if (count($this->args) === 1 && is_bool($this->args[0])) {
+            return $matcherParser->compile($this->args[0] ? 'true' : 'false');
+        }
 
-		$syntax = array();
-		$data = array();
-		$argc = count($this->args);
-		for($i = 0; $i < $argc; ++$i) {
-			if($i % 2 === 0) {
-				$name = "arg" . ($i / 2);
-				$syntax[] = $name;
-				$data[$name] = $this->args[$i];
-			}
-			else {
-				$syntax[] = $this->args[$i];
-			}
-		}
+        $syntaxString = $this->getSyntaxString();
+        $data = $this->getData();
 
-		$syntaxString = implode(' ', $syntax);
-		return $matcherParser->compile($syntaxString, $data);
-	}
+        return $matcherParser->compile($syntaxString, $data);
+    }
 }

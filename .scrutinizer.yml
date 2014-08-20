@@ -1,10 +1,12 @@
 tools:
-    php_changetracking: true
-    php_pdepend: true
-    php_analyzer: true
-    php_mess_detector: true
-    php_sim: true
-    php_code_sniffer: true
-    php_cs_fixer: true
-    sensiolabs_security_checker: true
-    external_code_coverage: true
+  php_changetracking: true
+  php_pdepend: true
+  php_analyzer: true
+  php_mess_detector: true
+  php_code_sniffer: true
+  php_cs_fixer: true
+  sensiolabs_security_checker: true
+  external_code_coverage: true
+filter:
+  paths:
+    - src/*

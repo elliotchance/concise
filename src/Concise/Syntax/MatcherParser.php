@@ -4,200 +4,244 @@ namespace Concise\Syntax;
 
 use \Concise\Assertion;
 use \Concise\Services\MatcherSyntaxAndDescription;
+use \Concise\Matcher\AbstractMatcher;
 
 class MatcherParser
 {
-	/**
+    /**
 	 * @var array
 	 */
-	protected $matchers = array();
+    protected $matchers = array();
 
-	/**
+    /**
 	 * @var MatcherParser
 	 */
-	protected static $instance = null;
+    protected static $instance = null;
 
-	/**
+    /**
 	 * @var array
 	 */
-	protected $keywords = array();
+    protected $keywords = array();
 
-	/**
+    /**
 	 * @var Lexer
 	 */
-	protected $lexer;
+    protected $lexer;
 
-	/**
+    /**
 	 * @var array
 	 */
-	protected $syntaxCache = array();
+    protected $syntaxCache = array();
 
-	public function __construct()
-	{
-		$this->lexer = new Lexer();
-		$this->lexer->setMatcherParser($this);
-	}
+    public function __construct()
+    {
+        $this->lexer = new Lexer();
+        $this->lexer->setMatcherParser($this);
+    }
 
-	/**
+    /**
 	 * @param  string $syntax
 	 * @return string
 	 */
-	protected function getRawSyntax($syntax)
-	{
-		return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
-	}
+    protected function getRawSyntax($syntax)
+    {
+        return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
+    }
 
-	/**
+    protected function endsWith($string, $substring)
+    {
+        return (substr($string, strlen($string) - strlen($substring)) === $substring);
+    }
+
+    /**
 	 * @param string $syntax
 	 * @return array
 	 */
-	public function getMatcherForSyntax($syntax)
-	{
-		$rawSyntax = $this->getRawSyntax($syntax);
-		if(array_key_exists($rawSyntax, $this->syntaxCache)) {
-			return $this->syntaxCache[$rawSyntax];
-		}
-		throw new \Exception("No such matcher for syntax '$syntax'.");
-	}
+    public function getMatcherForSyntax($syntax, array $data = array())
+    {
+        $rawSyntax = $this->getRawSyntax($syntax);
+        $endsWith = ' on error ?';
+        $options = array();
+        if ($this->endsWith($rawSyntax, $endsWith)) {
+            $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
+            $options = array(
+                'on_error' => $data[count($data) - 1],
+            );
+        }
+        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
+            return $this->syntaxCache[$rawSyntax] + $options;
+        }
+        throw new \Exception("No such matcher for syntax '$syntax'.");
+    }
 
-	/**
+    /**
 	 * @param array $data The data from the test case.
 	 * @param string $string
 	 * @return \Concise\Assertion
 	 */
-	public function compile($string, array $data = array())
-	{
-		$result = $this->lexer->parse($string);
-		$match = $this->getMatcherForSyntax($result['syntax']);
-		$assertion = new Assertion($string, $match['matcher'], $data);
-		$assertion->setOriginalSyntax($match['originalSyntax']);
-		return $assertion;
-	}
+    public function compile($string, array $data = array())
+    {
+        $result = $this->lexer->parse($string);
+        $match = $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
+        $assertion = new Assertion($string, $match['matcher'], $data);
+        if (array_key_exists('on_error', $match)) {
+            $assertion->setFailureMessage($data[(string) $match['on_error']]);
+        }
+        $assertion->setOriginalSyntax($match['originalSyntax']);
 
-	protected function clearKeywordCache()
-	{
-		$this->keywords = array();
-	}
+        return $assertion;
+    }
 
-	/**
+    protected function clearKeywordCache()
+    {
+        $this->keywords = array();
+    }
+
+    protected function throwExceptionIfNotInLowerCase($rawSyntax)
+    {
+        if (strtolower($rawSyntax) != $rawSyntax) {
+            throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
+        }
+    }
+
+    protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
+    {
+        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
+            throw new \Exception("Syntax '$syntax' is already declared.");
+        }
+    }
+
+    protected function registerSyntax($syntax, AbstractMatcher $matcher)
+    {
+        $rawSyntax = $this->getRawSyntax($syntax);
+        $this->throwExceptionIfNotInLowerCase($rawSyntax);
+        $this->throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax);
+        $this->syntaxCache[$rawSyntax] = array(
+            'matcher' => $matcher,
+            'originalSyntax' => $syntax,
+        );
+    }
+
+    /**
 	 * @param  \Concise\Matcher\AbstractMatcher $matcher
 	 * @return boolean
 	 */
-	public function registerMatcher(\Concise\Matcher\AbstractMatcher $matcher)
-	{
-		$service = new MatcherSyntaxAndDescription();
-		$allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
-		foreach($allSyntaxes as $syntax) {
-			$rawSyntax = $this->getRawSyntax($syntax);
-			if(strtolower($rawSyntax) != $rawSyntax) {
-				throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
-			}
-			if(array_key_exists($rawSyntax, $this->syntaxCache)) {
-				throw new \Exception("Syntax '$syntax' is already declared.");
-			}
-			$this->syntaxCache[$rawSyntax] = array(
-				'matcher' => $matcher,
-				'originalSyntax' => $syntax,
-			);
-		}
+    public function registerMatcher(AbstractMatcher $matcher)
+    {
+        $service = new MatcherSyntaxAndDescription();
+        $allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
+        foreach ($allSyntaxes as $syntax) {
+            $this->registerSyntax($syntax, $matcher);
+        }
 
-		$this->matchers[] = $matcher;
-		$this->clearKeywordCache();
-		return true;
-	}
+        $this->matchers[] = $matcher;
+        $this->clearKeywordCache();
 
-	/**
+        return true;
+    }
+
+    /**
 	 * @return MatcherParser
 	 */
-	public static function getInstance()
-	{
-		if(null === self::$instance) {
-			self::$instance = new MatcherParser();
-			self::$instance->registerMatchers();
-		}
-		return self::$instance;
-	}
+    public static function getInstance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new MatcherParser();
+            self::$instance->registerMatchers();
+        }
 
-	protected function autoloadAllMatchers()
-	{
-		foreach(scandir(__DIR__ . "/../Matcher") as $file) {
-			if(substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
-				continue;
-			}
-			$class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-			$this->registerMatcher(new $class());
-		}
-	}
+        return self::$instance;
+    }
 
-	protected function registerMatchers()
-	{
-		if(count($this->matchers) > 0) {
-			throw new \Exception("registerMatchers() can only be called once.");
-		}
+    protected function autoloadAllMatchers()
+    {
+        foreach (scandir(__DIR__ . "/../Matcher") as $file) {
+            if (substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
+                continue;
+            }
+            $class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
+            $this->registerMatcher(new $class());
+        }
+    }
 
-		$this->autoloadAllMatchers();
-	}
+    protected function registerMatchers()
+    {
+        if (count($this->matchers) > 0) {
+            throw new \Exception("registerMatchers() can only be called once.");
+        }
 
-	/**
+        $this->autoloadAllMatchers();
+    }
+
+    /**
 	 * @return array
 	 */
-	public function getMatchers()
-	{
-		return $this->matchers;
-	}
+    public function getMatchers()
+    {
+        return $this->matchers;
+    }
 
-	/**
+    protected function getWordsForSyntaxes(array $syntaxes)
+    {
+        $r = array();
+        foreach (array_keys($syntaxes) as $syntax) {
+            foreach (explode(' ', $syntax) as $word) {
+                if ($word[0] !== '?') {
+                    $r[] = $word;
+                }
+            }
+        }
+        return $r;
+    }
+
+    /**
 	 * @return array
 	 */
-	protected function getRawKeywords()
-	{
-		$r = array();
-		foreach($this->getMatchers() as $matcher) {
-			$service = new MatcherSyntaxAndDescription();
-			$syntaxes = $service->process($matcher->supportedSyntaxes());
+    protected function getRawKeywords()
+    {
+        $r = array('error', 'on');
+        foreach ($this->getMatchers() as $matcher) {
+            $service = new MatcherSyntaxAndDescription();
+            $syntaxes = $service->process($matcher->supportedSyntaxes());
+            $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
+        }
+        $r = array_unique($r);
+        sort($r);
 
-			foreach(array_keys($syntaxes) as $syntax) {
-				foreach(explode(' ', $syntax) as $word) {
-					if($word[0] !== '?') {
-						$r[] = $word;
-					}
-				}
-			}
-		}
-		$r = array_unique($r);
-		sort($r);
-		return $r;
-	}
+        return $r;
+    }
 
-	/**
+    /**
 	 * @return array
 	 */
-	public function getKeywords()
-	{
-		if(0 === count($this->keywords)) {
-			$this->keywords = $this->getRawKeywords();
-		}
-		return $this->keywords;
-	}
+    public function getKeywords()
+    {
+        if (0 === count($this->keywords)) {
+            $this->keywords = $this->getRawKeywords();
+        }
 
-	/**
+        return $this->keywords;
+    }
+
+    /**
 	 * @return array
 	 */
-	public function getAllMatcherDescriptions()
-	{
-		$r = array();
-		$service = new MatcherSyntaxAndDescription();
-		foreach($this->getMatchers() as $matcher) {
-			$syntaxes = $service->process($matcher->supportedSyntaxes());
-			foreach($syntaxes as &$syntax) {
-				$syntax = array(
-					'description' => $syntax,
-					'tags' => $matcher->getTags(),
-					'matcher' => get_class($matcher),
-				);
-			}
-			$r += $syntaxes;
-		}
-		return $r;
-	}
+    public function getAllMatcherDescriptions()
+    {
+        $r = array();
+        $service = new MatcherSyntaxAndDescription();
+        foreach ($this->getMatchers() as $matcher) {
+            $syntaxes = $service->process($matcher->supportedSyntaxes());
+            foreach ($syntaxes as &$syntax) {
+                $syntax = array(
+                    'description' => $syntax,
+                    'tags' => $matcher->getTags(),
+                    'matcher' => get_class($matcher),
+                );
+            }
+            $r += $syntaxes;
+        }
+
+        return $r;
+    }
 }

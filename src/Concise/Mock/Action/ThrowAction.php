@@ -2,29 +2,15 @@
 
 namespace Concise\Mock\Action;
 
-class ThrowAction extends AbstractAction
+class ThrowAction extends AbstractCachingAction
 {
-	/**
-	 * @var array
-	 */
-	public static $cache = array();
+    public function __construct(\Exception $e)
+    {
+        parent::__construct($e);
+    }
 
-	/**
-	 * @var \Exception
-	 */
-	protected $exception;
-
-	/**
-	 * @param \Exception $exception
-	 */
-	public function __construct(\Exception $exception)
-	{
-		$this->cacheId = md5(rand());
-		self::$cache[$this->cacheId] = $exception;
-	}
-
-	public function getActionCode()
-	{
-		return 'throw \Concise\Mock\Action\ThrowAction::$cache["' . $this->cacheId . '"];';
-	}
+    public function getActionCode()
+    {
+        return parent::getActionCode() . 'throw $v;';
+    }
 }
