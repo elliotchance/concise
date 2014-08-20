@@ -83,4 +83,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->constructorRun, equals, 2);
     }
+
+    // Do
+
+    public function testACallbackCanBeSet()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andDo(function () {})
+                     ->done();
+        $this->assert($mock->myMethod(), equals, null);
+    }
 }
