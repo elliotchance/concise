@@ -35,12 +35,4 @@ class MockBuilderExposeTest extends TestCase
              ->expose('baz')
              ->done();
     }
-
-    public function testExposeTwoMethodsWithArraySyntax()
-    {
-        $mock = $this->niceMock('\Concise\Mock\MockExpose')
-                     ->expose(array('myMethod', 'foo'))
-                     ->done();
-        $this->assert($mock->foo(), equals, 'bar');
-    }
 }

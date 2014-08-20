@@ -69,4 +69,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testExposeTwoMethodsByCallingExposeTwice();
     }
+
+    public function testExposeTwoMethodsWithArraySyntax()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testExposeTwoMethodsWithArraySyntax();
+    }
 }
