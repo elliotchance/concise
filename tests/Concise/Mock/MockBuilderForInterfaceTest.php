@@ -23,7 +23,7 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         parent::testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal();
     }
 
-    public function testMocksWillCallConstructorByDefault()
+    public function testMockReceivesConstructorArguments()
     {
         $this->notApplicable();
     }
