@@ -6,14 +6,6 @@ use \Concise\TestCase;
 
 class MockBuilderExpectTest extends TestCase
 {
-    public function testCanCreateAnExpectationOfTwice()
-    {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expect('myMethod')->twice()->andReturn(null)
-                     ->done();
-        $mock->myMethod();
-        $mock->myMethod();
-    }
 
     /**
      * @expectedException \Exception

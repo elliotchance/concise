@@ -126,4 +126,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $mock->myMethod();
     }
+
+    public function testCanCreateAnExpectationOfTwice()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->twice()->andReturn(null)
+                     ->done();
+        $mock->myMethod();
+        $mock->myMethod();
+    }
 }
