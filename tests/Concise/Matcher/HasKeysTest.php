@@ -22,11 +22,11 @@ class HasKeysTest extends AbstractMatcherTestCase
 
     public function testArrayKeysCanBeInAnyOrder()
     {
-        $this->assert('["a":123,"b":456] has keys ["b","a"]');
+        $this->assert(array("a" => 123, "b" => 456), has_keys, array("b", "a"));
     }
 
     public function testArrayKeysCanBeASubset()
     {
-        $this->assert('["a":123,"b":456] has keys ["b"]');
+        $this->assert(array("a" => 123, "b" => 456), has_keys, array("b"));
     }
 }

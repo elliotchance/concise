@@ -22,6 +22,6 @@ class HasKeyTest extends AbstractMatcherTestCase
 
     public function testArrayHasStringKey()
     {
-        $this->assert('["abc":123] has key "abc"');
+        $this->assert(array("abc" => 123), has_key, "abc");
     }
 }

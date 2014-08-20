@@ -4,6 +4,11 @@ namespace Concise\Services;
 
 class ValueRenderer
 {
+    protected function shouldBeJsonEncoded($value)
+    {
+        return is_null($value) || is_array($value) || is_object($value) || is_bool($value);
+    }
+
     /**
 	 * @param  mixed $value
 	 * @return string
@@ -16,7 +21,7 @@ class ValueRenderer
         if (is_object($value)) {
             return get_class($value) . ':' . json_encode($value);
         }
-        if (is_null($value) || is_array($value) || is_object($value) || is_bool($value)) {
+        if ($this->shouldBeJsonEncoded($value)) {
             return json_encode($value);
         }
         if (is_string($value)) {

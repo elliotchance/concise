@@ -32,6 +32,13 @@ class Lexer
         return in_array($token, $this->getMatcherParser()->getKeywords());
     }
 
+    protected function throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until)
+    {
+        if ($mustConsumeUntil) {
+            throw new \Exception("Expected $until before end of string.");
+        }
+    }
+
     /**
 	 * @param  string $string
 	 * @param  string $until A single character.
@@ -44,9 +51,7 @@ class Lexer
         $t = '';
         for ($i = $startIndex + 1; $string[$i] != $until; ++$i) {
             if ($i == strlen($string) - 1) {
-                if ($mustConsumeUntil) {
-                    throw new \Exception("Expected $until before end of string.");
-                }
+                $this->throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until);
                 $t .= $string[$i];
                 break;
             }
@@ -138,16 +143,6 @@ class Lexer
 
                     $tokens[] = new Token\Value($value);
                     return;
-                }
-                if (substr($json, 0, 1) === '[' && substr($json, strlen($json) - 1, 1) === ']') {
-                    $json = '{' . substr($json, 1, strlen($json) - 2) . '}';
-                    $value = json_decode($json, true);
-                    if (null !== $value) {
-                        $startIndex += $i;
-
-                        $tokens[] = new Token\Value($value);
-                        return;
-                    }
                 }
             }
             throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));

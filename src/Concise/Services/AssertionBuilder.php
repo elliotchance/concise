@@ -20,6 +20,36 @@ class AssertionBuilder
         $this->args = $args;
     }
 
+    protected function getArgName($i)
+    {
+        return "arg" . ($i / 2);
+    }
+
+    protected function getData()
+    {
+        $data = array();
+        $argc = count($this->args);
+        for ($i = 0; $i < $argc; $i += 2) {
+            $data[$this->getArgName($i)] = $this->args[$i];
+        }
+
+        return $data;
+    }
+
+    protected function getSyntaxString()
+    {
+        $syntax = array();
+        $argc = count($this->args);
+        for ($i = 0; $i < $argc; $i += 2) {
+            $syntax[] = $this->getArgName($i);
+            if ($i < $argc - 1) {
+                $syntax[] = $this->args[$i + 1];
+            }
+        }
+
+        return implode(' ', $syntax);
+    }
+
     /**
 	 * @return Assertion
 	 */
@@ -30,20 +60,8 @@ class AssertionBuilder
             return $matcherParser->compile($this->args[0] ? 'true' : 'false');
         }
 
-        $syntax = array();
-        $data = array();
-        $argc = count($this->args);
-        for ($i = 0; $i < $argc; ++$i) {
-            if ($i % 2 === 0) {
-                $name = "arg" . ($i / 2);
-                $syntax[] = $name;
-                $data[$name] = $this->args[$i];
-            } else {
-                $syntax[] = $this->args[$i];
-            }
-        }
-
-        $syntaxString = implode(' ', $syntax);
+        $syntaxString = $this->getSyntaxString();
+        $data = $this->getData();
 
         return $matcherParser->compile($syntaxString, $data);
     }

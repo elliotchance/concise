@@ -5,6 +5,9 @@ namespace Concise\Mock;
 use \Concise\TestCase;
 use \Concise\Services\NumberToTimesConverter;
 use \Concise\Services\ValueRenderer;
+use \InvalidArgumentException;
+use \Exception;
+use \ReflectionClass;
 
 class MockBuilder
 {
@@ -58,6 +61,10 @@ class MockBuilder
 	 */
     protected $disableConstructor = false;
 
+    /**
+     * A list of methods that should be exposed as public.
+     * @var array
+     */
     protected $expose = array();
 
     /**
@@ -75,8 +82,8 @@ class MockBuilder
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
         $this->testCase = $testCase;
-        if (!class_exists($className)) {
-            throw new \Exception("Class '$className' does not exist.");
+        if (!class_exists($className) && !interface_exists($className)) {
+            throw new Exception("Class or interface '$className' does not exist.");
         }
         $this->className = $className;
         $this->niceMock = $niceMock;
@@ -165,7 +172,7 @@ class MockBuilder
     protected function setAction(Action\AbstractAction $action)
     {
         if ($this->hasAction()) {
-            throw new \Exception("{$this->currentRule}() has more than one action attached.");
+            throw new Exception("{$this->currentRule}() has more than one action attached.");
         }
         $this->rules[$this->currentRule][$this->getWithKey()]['action'] = $action;
 
@@ -183,7 +190,7 @@ class MockBuilder
     public function andReturn()
     {
         if($this->methodIsNeverExpected()) {
-            throw new \Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
+            throw new Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
         }
         $values = func_get_args();
         return $this->setAction(new Action\ReturnValueAction($values));
@@ -285,7 +292,7 @@ class MockBuilder
             $renderer = new ValueRenderer();
             $converter = new NumberToTimesConverter();
             $args = $renderer->renderAll($this->currentWith);
-            throw new \Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
+            throw new Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
                 $this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
         }
         $this->rules[$this->currentRule][md5('null')]['times'] = -1;
@@ -302,11 +309,20 @@ class MockBuilder
         return $this->rules;
     }
 
+    protected function isInterface()
+    {
+        $refClass = new \ReflectionClass($this->className);
+        return $refClass->isInterface();
+    }
+
     /**
 	 * @return MockBuilder
 	 */
     public function disableConstructor()
     {
+        if ($this->isInterface()) {
+            throw new InvalidArgumentException("You cannot disable the constructor of an interface ({$this->className}).");
+        }
         $this->disableConstructor = true;
 
         return $this;

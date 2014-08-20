@@ -16,7 +16,7 @@ class MockBuilderPrivateTest extends TestCase
 {
     /**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage Method 'myMethod' cannot be mocked becuase it it private.
+	 * @expectedExceptionMessage Method Concise\Mock\MockPrivate::myMethod() cannot be mocked because it it private.
 	 */
     public function testMockingPrivateMethodWillThrowException()
     {

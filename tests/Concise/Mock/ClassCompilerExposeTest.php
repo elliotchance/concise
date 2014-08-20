@@ -118,7 +118,7 @@ class ClassCompilerExposeTest extends TestCase
 
     /**
 	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method 'Concise\Mock\ClassCompilerMock3::foo' does not exist.
+	 * @expectedExceptionMessage Method Concise\Mock\ClassCompilerMock3::foo() does not exist.
 	 */
     public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
     {
@@ -127,7 +127,7 @@ class ClassCompilerExposeTest extends TestCase
 
     /**
 	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method 'Concise\Mock\ClassCompilerMock3::superSecret' is private and cannot be exposed.
+	 * @expectedExceptionMessage Method Concise\Mock\ClassCompilerMock3::superSecret() cannot be mocked because it it private.
 	 */
     public function testTryingToExposeAPrivateMethodThrowsException()
     {

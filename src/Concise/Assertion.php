@@ -118,19 +118,30 @@ class Assertion
         return $r;
     }
 
-    /**
-	 * @return void
-	 */
-    protected function executeAssertion()
+    protected function checkDataTypesIfOriginalSyntaxWasProvided(array $args)
     {
-        $lexer = new Lexer();
-        $result = $lexer->parse($this->getAssertion());
-        $args = array();
+        if ('' !== $this->originalSyntax) {
+            $args = $this->checkDataTypes($args);
+        }
+        return $args;
+    }
 
+    protected function getFailureMessage($syntax, array $args)
+    {
+        $message = $this->failureMessage;
+        if (!$message) {
+            $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
+        }
+        return $message;
+    }
+
+    protected function getArgumentsAndValidate(array $arguments)
+    {
+        $args = array();
         $data = $this->getData();
-        $len = count($result['arguments']);
+        $len = count($arguments);
         for ($i = 0; $i < $len; ++$i) {
-            $arg = $result['arguments'][$i];
+            $arg = $arguments[$i];
             if ($arg instanceof \Concise\Syntax\Token\Attribute) {
                 $args[$i] = $data[(string) $arg];
             } else {
@@ -138,20 +149,23 @@ class Assertion
             }
         }
 
-        if ('' !== $this->originalSyntax) {
-            $args = $this->checkDataTypes($args);
-        }
+        $args = $this->checkDataTypesIfOriginalSyntaxWasProvided($args);
+        return $args;
+    }
 
+    /**
+	 * @return void
+	 */
+    protected function executeAssertion()
+    {
+        $lexer = new Lexer();
+        $result = $lexer->parse($this->getAssertion());
+        $args = $this->getArgumentsAndValidate($result['arguments']);
         $answer = $this->getMatcher()->match($this->originalSyntax, $args);
-        if (true === $answer || null === $answer) {
-            return;
+        if (true !== $answer && null !== $answer) {
+            $message = $this->getFailureMessage($result['syntax'], $args);
+            throw new \PHPUnit_Framework_AssertionFailedError($message);
         }
-
-        $message = $this->failureMessage;
-        if (!$message) {
-            $message = $this->getMatcher()->renderFailureMessage($result['syntax'], $args);
-        }
-        throw new \PHPUnit_Framework_AssertionFailedError($message);
     }
 
     public function run()
