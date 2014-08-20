@@ -104,4 +104,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate();
     }
+
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
+    }
 }

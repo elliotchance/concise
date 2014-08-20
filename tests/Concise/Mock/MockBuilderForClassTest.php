@@ -58,4 +58,9 @@ class MockBuilderForClassTest extends AbstractMockBuilderTestCase
     {
         $this->notApplicable();
     }
+
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $this->notApplicable();
+    }
 }

@@ -526,4 +526,16 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $mock->myAbstractMethod();
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage myAbstractMethod() does not have an associated action - consider a niceMock()?
+     */
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $mock->myAbstractMethod();
+    }
 }
