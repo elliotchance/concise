@@ -268,11 +268,9 @@ EOF;
 
     public function makeAllAbstractMethodsThrowException(ReflectionClass $refClass)
     {
-        if ($refClass->isAbstract()) {
-            foreach ($refClass->getMethods() as $method) {
-                if ($method->isAbstract()) {
-                    $this->makeMethodThrowException($method);
-                }
+        foreach ($refClass->getMethods() as $method) {
+            if ($method->isAbstract()) {
+                $this->makeMethodThrowException($method);
             }
         }
     }

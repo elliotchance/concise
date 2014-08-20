@@ -366,4 +366,10 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
     }
+
+    public function testAbstractMethodsCanHaveRulesAttached()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAbstractMethodsCanHaveRulesAttached();
+    }
 }

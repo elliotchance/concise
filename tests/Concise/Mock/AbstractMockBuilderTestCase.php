@@ -539,6 +539,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myAbstractMethod();
     }
 
+    public function testAbstractMethodsCanHaveRulesAttached()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myAbstractMethod')
+                     ->done();
+        $this->assert($mock->myAbstractMethod(), is_null);
+    }
+
     // Final
 
     /**
