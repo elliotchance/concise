@@ -506,4 +506,12 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myMethod(), is_null);
     }
+
+    public function testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $this->assert($mock->myMethod(), is_null);
+    }
 }
