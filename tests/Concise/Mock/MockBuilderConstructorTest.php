@@ -30,13 +30,6 @@ class Mock3
 
 class MockBuilderConstructorTest extends TestCase
 {
-    public function testMocksWillCallConstructorByDefault()
-    {
-        $mock = $this->mock('\Concise\Mock\MockConstructor1')
-                     ->done();
-        $this->assert($mock->constructorRun);
-    }
-
     public function testDisableConstructorCanBeChained()
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor1')

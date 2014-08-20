@@ -6,13 +6,20 @@ use \Concise\TestCase;
 
 class MockClass
 {
+    public $constructorRun = false;
+
+    public function __construct()
+    {
+        $this->constructorRun = true;
+    }
+
     public function myMethod()
     {
         return 'abc';
     }
 }
 
-class MockBuilderClassTest extends AbstractMockBuilderTestCase
+class MockBuilderForClassTest extends AbstractMockBuilderTestCase
 {
     public function getClassName()
     {

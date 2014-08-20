@@ -6,6 +6,11 @@ use \Concise\TestCase;
 
 abstract class AbstractMockBuilderTestCase extends TestCase
 {
+    protected function notApplicable()
+    {
+        $this->markTestSkipped("This test is not applicable");
+    }
+
     public function testMockCanBeCreatedFromAnObjectThatExists()
     {
         $mock = $this->mock($this->getClassName())
@@ -39,4 +44,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     }
 
     abstract public function getClassName();
+
+    // Constructor
+
+    public function testMocksWillCallConstructorByDefault()
+    {
+        $mock = $this->mock($this->getClassName())
+                     ->done();
+        $this->assert($mock->constructorRun);
+    }
 }

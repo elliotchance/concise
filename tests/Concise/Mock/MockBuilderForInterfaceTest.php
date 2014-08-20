@@ -9,7 +9,7 @@ interface MockInterface
     public function myMethod();
 }
 
-class MockBuilderInterfaceTest extends AbstractMockBuilderTestCase
+class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
 {
     public function testNiceMockCanBeCreatedFromAnObjectThatExists()
     {
@@ -21,6 +21,11 @@ class MockBuilderInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->setExpectedException('\InvalidArgumentException', 'You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal();
+    }
+
+    public function testMocksWillCallConstructorByDefault()
+    {
+        $this->notApplicable();
     }
 
     public function getClassName()
