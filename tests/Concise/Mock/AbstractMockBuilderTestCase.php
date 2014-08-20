@@ -252,4 +252,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->stub(array('myPrivateMethod' => 'bar'))
              ->done();
     }
+
+    // ReturnSelf
+
+    public function testMethodsCanReturnSelf()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnSelf()
+                     ->done();
+        $this->assert($mock->myMethod(), is_the_same_as, $mock);
+    }
 }
