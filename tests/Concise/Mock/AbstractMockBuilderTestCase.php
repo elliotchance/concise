@@ -6,14 +6,29 @@ use \Concise\TestCase;
 
 abstract class AbstractMockBuilderTestCase extends TestCase
 {
+    protected function expectFailure($message)
+    {
+        $this->setExpectedException('\InvalidArgumentException', $message);
+    }
+
     protected function notApplicable()
     {
-        $this->markTestSkipped("This test is not applicable");
+        $this->assert(true);
+    }
+
+    protected function mockBuilder()
+    {
+        return $this->mock($this->getClassName(), array(1, 2));
+    }
+
+    protected function niceMockBuilder()
+    {
+        return $this->niceMock($this->getClassName(), array(1, 2));
     }
 
     public function testMockCanBeCreatedFromAnObjectThatExists()
     {
-        $mock = $this->mock($this->getClassName())
+        $mock = $this->mockBuilder()
                      ->done();
         $this->assert($mock, instance_of, $this->getClassName());
     }
@@ -24,21 +39,21 @@ abstract class AbstractMockBuilderTestCase extends TestCase
      */
     public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
     {
-        $mock = $this->mock($this->getClassName())
+        $mock = $this->mockBuilder()
                      ->done();
         $mock->myMethod();
     }
 
     public function testNiceMockCanBeCreatedFromAnObjectThatExists()
     {
-        $mock = $this->niceMock($this->getClassName())
+        $mock = $this->niceMockBuilder()
                      ->done();
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
     public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
     {
-        $mock = $this->niceMock($this->getClassName())
+        $mock = $this->niceMockBuilder()
                      ->done();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
@@ -49,14 +64,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     public function testMocksWillCallConstructorByDefault()
     {
-        $mock = $this->mock($this->getClassName())
+        $mock = $this->mockBuilder()
                      ->done();
         $this->assert($mock->constructorRun);
     }
 
     public function testMocksCanHaveTheirConstructorDisabled()
     {
-        $mock = $this->mock('\Concise\Mock\MockConstructor1')
+        $mock = $this->mock($this->getClassName())
                      ->disableConstructor()
                      ->done();
         $this->assert($mock->constructorRun, is_false);

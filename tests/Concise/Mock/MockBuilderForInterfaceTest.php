@@ -13,19 +13,25 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
 {
     public function testNiceMockCanBeCreatedFromAnObjectThatExists()
     {
-        $this->setExpectedException('\InvalidArgumentException', 'You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testNiceMockCanBeCreatedFromAnObjectThatExists();
     }
 
     public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
     {
-        $this->setExpectedException('\InvalidArgumentException', 'You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal();
     }
 
     public function testMocksWillCallConstructorByDefault()
     {
         $this->notApplicable();
+    }
+
+    public function testMocksCanHaveTheirConstructorDisabled()
+    {
+        $this->expectFailure('You cannot disable the constructor of an interface (\Concise\Mock\MockInterface).');
+        parent::testMocksCanHaveTheirConstructorDisabled();
     }
 
     public function getClassName()

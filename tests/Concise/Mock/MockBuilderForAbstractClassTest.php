@@ -6,7 +6,7 @@ abstract class MockAbstractClass
 {
     public $constructorRun = false;
 
-    public function __construct()
+    public function __construct($a, $b)
     {
         $this->constructorRun = true;
     }
