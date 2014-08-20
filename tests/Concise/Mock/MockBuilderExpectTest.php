@@ -6,13 +6,6 @@ use \Concise\TestCase;
 
 class MockBuilderExpectTest extends TestCase
 {
-    public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
-    {
-        $this->mock('\Concise\Mock\Mock1')
-             ->expect('myMethod')->never()
-             ->done();
-    }
-
     public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')

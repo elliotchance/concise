@@ -146,4 +146,11 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->expect('myMethod')->never()->andReturn(null)
              ->done();
     }
+
+    public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
+    {
+        $this->mockBuilder()
+             ->expect('myMethod')->never()
+             ->done();
+    }
 }
