@@ -203,4 +203,28 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testAndReturnWithASingleArgument();
     }
+
+    public function testAndReturnWithMultipleArgumentsCanNotBeCalledMoreTimesThatReturnValues()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAndReturnWithMultipleArgumentsCanNotBeCalledMoreTimesThatReturnValues();
+    }
+
+    public function testAndReturnWithASingleArgumentWillAlwaysReturnThatValue()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAndReturnWithASingleArgumentWillAlwaysReturnThatValue();
+    }
+
+    public function testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults();
+    }
+
+    public function testAndReturnCanTakeMultipleArguments()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAndReturnCanTakeMultipleArguments();
+    }
 }
