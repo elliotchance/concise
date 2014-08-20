@@ -6,12 +6,6 @@ use \Concise\TestCase;
 
 class MockBuilderExpectTest extends TestCase
 {
-    public function testExactlyZeroIsTheSameAsNever()
-    {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expect('myMethod')->exactly(0)
-                     ->done();
-    }
 
     public function testDefaultExpectationIsOnce()
     {

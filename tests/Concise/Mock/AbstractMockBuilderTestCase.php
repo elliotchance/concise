@@ -163,4 +163,11 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
         $mock->myMethod();
     }
+
+    public function testExactlyZeroIsTheSameAsNever()
+    {
+        $this->mockBuilder()
+             ->expect('myMethod')->exactly(0)
+             ->done();
+    }
 }
