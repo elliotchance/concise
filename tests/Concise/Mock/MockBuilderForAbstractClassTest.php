@@ -30,7 +30,7 @@ abstract class MockAbstractClass
     {
     }
 
-    static public function myStaticMethod()
+    public static function myStaticMethod()
     {
         return 'foo';
     }
@@ -38,6 +38,8 @@ abstract class MockAbstractClass
     public function myWithMethod($a)
     {
     }
+
+    abstract public function myAbstractMethod();
 
     final public function myFinalMethod()
     {

@@ -266,6 +266,15 @@ EOF;
         return 'extends';
     }
 
+    public function makeAllAbstractMethodsThrowException(ReflectionClass $refClass)
+    {
+        foreach ($refClass->getMethods() as $method) {
+            if ($method->isAbstract()) {
+                $this->makeMethodThrowException($method);
+            }
+        }
+    }
+
     /**
 	 * Generate the PHP code for the mocked class.
 	 * @return string
@@ -276,6 +285,7 @@ EOF;
         $this->finalClassesCanNotBeMocked($refClass);
 
         $this->methods = array();
+        $this->makeAllAbstractMethodsThrowException($refClass);
         if (!$this->niceMock || $refClass->isInterface()) {
             $this->makeAllMethodsThrowException($refClass);
         }

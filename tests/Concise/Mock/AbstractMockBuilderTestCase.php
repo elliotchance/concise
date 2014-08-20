@@ -497,6 +497,56 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->myWithMethod('a$b'), is_null);
     }
 
+    // Abstract
+
+    public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $this->assert($mock->myMethod(), is_null);
+    }
+
+    public function testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $this->assert($mock->myMethod(), is_null);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage myAbstractMethod() does not have an associated action - consider a niceMock()?
+     */
+    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $mock->myAbstractMethod();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage myAbstractMethod() does not have an associated action - consider a niceMock()?
+     */
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $mock->myAbstractMethod();
+    }
+
+    public function testAbstractMethodsCanHaveRulesAttached()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myAbstractMethod')
+                     ->done();
+        $this->assert($mock->myAbstractMethod(), is_null);
+    }
+
     // Final
 
     /**

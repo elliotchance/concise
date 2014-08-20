@@ -342,4 +342,34 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testStringsWithDollarCharacterMustBeEscaped();
     }
+
+    public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate();
+    }
+
+    public function testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate();
+    }
+
+    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testCallingAnAbstractMethodWithNoRuleThrowsException();
+    }
+
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
+    }
+
+    public function testAbstractMethodsCanHaveRulesAttached()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAbstractMethodsCanHaveRulesAttached();
+    }
 }
