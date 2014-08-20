@@ -323,4 +323,123 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myStaticMethod(), equals, 'foo');
     }
+
+    // Stub
+
+    public function testCanStubMethodWithAssociativeArray()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub(array('myMethod' => 123))
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 123);
+    }
+
+    public function testStubbingWithAnArrayCanCreateMultipleStubs()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub(array('myMethod' => 123, 'mySecondMethod' => 'bar'))
+                     ->done();
+        $this->assert($mock->mySecondMethod(), equals, 'bar');
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage stub() called with array must have at least 1 element.
+     */
+    public function testStubbingWithAnArrayMustHaveMoreThanZeroElements()
+    {
+        $this->mockBuilder()
+             ->stub(array())
+             ->done();
+    }
+
+    public function testCallingMethodOnNiceMockWithStub()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->stub(array('myMethod' => 123))
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 123);
+    }
+
+    public function testStubsCanBeCreatedByChainingAnAction()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturn(123)
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 123);
+    }
+
+    public function testStubWithNoActionWillReturnNull()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')
+                     ->done();
+        $this->assert($mock->myMethod(), is_null);
+    }
+
+    public function testStubCanReturnNull()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturn(null)
+                     ->done();
+        $this->assert($mock->myMethod(), is_null);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage whatever
+     */
+    public function testStubCanThrowException()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andThrow(new \Exception('whatever'))
+                     ->done();
+        $mock->myMethod();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage myMethod() has more than one action attached.
+     */
+    public function testMethodsCanOnlyHaveOneActionAppliedToThem()
+    {
+        $this->mockBuilder()
+             ->stub('myMethod')->andReturn(123)->andReturn(456)
+             ->done();
+    }
+
+    public function testMockSetsActualCallsToZeroWhenRuleIsCreated()
+    {
+        $this->mockBuilder()
+             ->stub(array('myMethod' => 123))
+             ->done();
+
+        $mock = end($this->_mocks);
+        $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 0);
+    }
+
+    public function testMockSetsCalledTimesToOneWhenMethodIsCalled()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub(array('myMethod' => 123))
+                     ->done();
+
+        $mock->myMethod();
+
+        $mock = end($this->_mocks);
+        $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 1);
+    }
+
+    public function testMockSetsCalledTimesIncrementsWithMultipleCalls()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub(array('myMethod' => 123))
+                     ->done();
+
+        $mock->myMethod();
+        $mock->myMethod();
+
+        $mock = end($this->_mocks);
+        $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
+    }
 }

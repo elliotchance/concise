@@ -83,4 +83,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Method Concise\Mock\MockInterface::myPrivateMethod() does not exist.');
         parent::testMockingPrivateMethodWillThrowException();
     }
+
+    public function testCallingMethodOnNiceMockWithStub()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testCallingMethodOnNiceMockWithStub();
+    }
 }
