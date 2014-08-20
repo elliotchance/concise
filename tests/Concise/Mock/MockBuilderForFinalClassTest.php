@@ -36,6 +36,10 @@ final class MockFinalClass
     {
         return 'foo';
     }
+
+    public function myWithMethod($a)
+    {
+    }
 }
 
 class MockFinalClass2
@@ -297,5 +301,41 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testMockSetsCalledTimesIncrementsWithMultipleCalls();
+    }
+
+    public function testMultipleWithIsAllowedForASingleMethod()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMultipleWithIsAllowedForASingleMethod();
+    }
+
+    public function testMultipleWithCanChangeTheActionOfTheMethod()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMultipleWithCanChangeTheActionOfTheMethod();
+    }
+
+    public function testTheSecondWithActionWillNotOverrideTheFirstOne()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testTheSecondWithActionWillNotOverrideTheFirstOne();
+    }
+
+    public function testSingleWithWithMultipleTimes()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testSingleWithWithMultipleTimes();
+    }
+
+    public function testStringsInExpectedArgumentsMustBeEscapedCorrectly()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testStringsInExpectedArgumentsMustBeEscapedCorrectly();
+    }
+
+    public function testStringsWithDollarCharacterMustBeEscaped()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testStringsWithDollarCharacterMustBeEscaped();
     }
 }

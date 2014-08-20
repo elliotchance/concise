@@ -36,6 +36,10 @@ class MockClass
     {
         return 'foo';
     }
+
+    public function myWithMethod($a)
+    {
+    }
 }
 
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase

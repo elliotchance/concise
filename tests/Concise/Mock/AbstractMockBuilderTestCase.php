@@ -442,4 +442,58 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = end($this->_mocks);
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
     }
+
+    // With
+
+    public function testMultipleWithIsAllowedForASingleMethod()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('a')->andReturn('foo')
+                                           ->with('b')->andReturn('bar')
+                     ->done();
+        $this->assert($mock, instance_of, $this->getClassName());
+    }
+
+    public function testMultipleWithCanChangeTheActionOfTheMethod()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('a')->andReturn('foo')
+                                           ->with('b')->andReturn('bar')
+                     ->done();
+        $this->assert($mock->myWithMethod('b'), equals, 'bar');
+    }
+
+    public function testTheSecondWithActionWillNotOverrideTheFirstOne()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('a')->andReturn('foo')
+                                           ->with('b')->andReturn('bar')
+                     ->done();
+        $this->assert($mock->myWithMethod('a'), equals, 'foo');
+    }
+
+    public function testSingleWithWithMultipleTimes()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('a')->twice()->andReturn('foo')
+                     ->done();
+        $mock->myWithMethod('a');
+        $this->assert($mock->myWithMethod('a'), equals, 'foo');
+    }
+
+    public function testStringsInExpectedArgumentsMustBeEscapedCorrectly()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('"foo"')
+                     ->done();
+        $this->assert($mock->myWithMethod('"foo"'), is_null);
+    }
+
+    public function testStringsWithDollarCharacterMustBeEscaped()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myWithMethod')->with('a$b')
+                     ->done();
+        $this->assert($mock->myWithMethod('a$b'), is_null);
+    }
 }
