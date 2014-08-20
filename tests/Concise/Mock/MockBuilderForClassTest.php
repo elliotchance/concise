@@ -17,6 +17,11 @@ class MockClass
     {
         return 'abc';
     }
+
+    protected function mySecretMethod()
+    {
+        return 'abc';
+    }
 }
 
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase

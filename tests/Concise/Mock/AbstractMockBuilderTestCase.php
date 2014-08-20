@@ -194,4 +194,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $mock->myMethod();
     }
+
+    // Expose
+
+    public function testExposeASingleMethod()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->expose('mySecretMethod')
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 'abc');
+    }
 }

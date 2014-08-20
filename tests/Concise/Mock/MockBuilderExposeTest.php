@@ -25,14 +25,6 @@ class MockBuilderExposeTest extends TestCase
         $this->assert($builder, equals, $builder->expose('myMethod'));
     }
 
-    public function testExposeASingleMethod()
-    {
-        $mock = $this->niceMock('\Concise\Mock\MockExpose')
-                     ->expose('myMethod')
-                     ->done();
-        $this->assert($mock->myMethod(), equals, 'abc');
-    }
-
     /**
 	 * @expectedException \InvalidArgumentException
 	 * @expectedExceptionMessage Method Concise\Mock\MockExpose::baz() does not exist.
