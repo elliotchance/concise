@@ -27,6 +27,10 @@ class MockClass
     {
         return 'bar';
     }
+
+    private function myPrivateMethod()
+    {
+    }
 }
 
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase

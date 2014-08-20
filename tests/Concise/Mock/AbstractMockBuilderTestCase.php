@@ -239,4 +239,17 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
+
+    // Private
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage cannot be mocked because it it private.
+     */
+    public function testMockingPrivateMethodWillThrowException()
+    {
+        $this->mockBuilder()
+             ->stub(array('myPrivateMethod' => 'bar'))
+             ->done();
+    }
 }

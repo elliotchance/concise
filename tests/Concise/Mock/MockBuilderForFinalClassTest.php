@@ -27,6 +27,10 @@ final class MockFinalClass
     {
         return 'bar';
     }
+
+    private function myPrivateMethod()
+    {
+    }
 }
 
 class MockFinalClass2
@@ -180,5 +184,11 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testExposeTwoMethodsWithArraySyntax();
+    }
+
+    public function testMockingPrivateMethodWillThrowException()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMockingPrivateMethodWillThrowException();
     }
 }
