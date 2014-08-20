@@ -31,6 +31,11 @@ class MockClass
     private function myPrivateMethod()
     {
     }
+
+    static public function myStaticMethod()
+    {
+        return 'foo';
+    }
 }
 
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase

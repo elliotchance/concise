@@ -9,6 +9,8 @@ interface MockInterface
     public function myMethod();
 
     public function mySecondMethod();
+
+    static public function myStaticMethod();
 }
 
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase

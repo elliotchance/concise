@@ -313,4 +313,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
         $mock->myMethod();
     }
+
+    // Static
+
+    public function testMocksCanMockStaticMethods()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub(array('myStaticMethod' => 'foo'))
+                     ->done();
+        $this->assert($mock->myStaticMethod(), equals, 'foo');
+    }
 }
