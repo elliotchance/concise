@@ -6,16 +6,6 @@ use \Concise\TestCase;
 
 class MockBuilderExpectTest extends TestCase
 {
-    public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
-    {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expect('myMethod')->exactly(3)->andReturn(null)
-                     ->done();
-        $mock->myMethod();
-        $mock->myMethod();
-        $mock->myMethod();
-    }
-
     public function testExactlyZeroIsTheSameAsNever()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')

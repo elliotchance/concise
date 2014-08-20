@@ -153,4 +153,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->expect('myMethod')->never()
              ->done();
     }
+
+    public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->exactly(3)->andReturn(null)
+                     ->done();
+        $mock->myMethod();
+        $mock->myMethod();
+        $mock->myMethod();
+    }
 }
