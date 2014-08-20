@@ -13,6 +13,8 @@ interface MockInterface
     static public function myStaticMethod();
 
     public function myWithMethod($a);
+
+    public function myAbstractMethod();
 }
 
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
