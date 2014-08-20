@@ -116,4 +116,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->done();
         $this->assert($a, equals, 123);
     }
+
+    // Expect
+
+    public function testCanCreateAnExpectation()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->once()->andReturn(null)
+                     ->done();
+        $mock->myMethod();
+    }
 }
