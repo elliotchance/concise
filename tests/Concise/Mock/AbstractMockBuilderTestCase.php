@@ -262,4 +262,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myMethod(), is_the_same_as, $mock);
     }
+
+    // Return
+
+    public function testAndReturnWithASingleArgument()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturn('foo')
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
 }
