@@ -126,13 +126,13 @@ class Assertion
         return $args;
     }
 
-    protected function throwFailure($syntax, array $args)
+    protected function getFailureMessage($syntax, array $args)
     {
         $message = $this->failureMessage;
         if (!$message) {
             $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
         }
-        throw new \PHPUnit_Framework_AssertionFailedError($message);
+        return $message;
     }
 
     protected function getArgumentsAndValidate(array $arguments)
@@ -163,7 +163,8 @@ class Assertion
         $args = $this->getArgumentsAndValidate($result['arguments']);
         $answer = $this->getMatcher()->match($this->originalSyntax, $args);
         if (true !== $answer && null !== $answer) {
-            $this->throwFailure($result['syntax'], $args);
+            $message = $this->getFailureMessage($result['syntax'], $args);
+            throw new \PHPUnit_Framework_AssertionFailedError($message);
         }
     }
 
