@@ -496,4 +496,17 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myWithMethod('a$b'), is_null);
     }
+
+    // Final
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage is final so it cannot be mocked
+     */
+    public function testFinalMethodsCanNotBeMocked()
+    {
+        $this->mockBuilder()
+             ->stub('myFinalMethod')
+             ->done();
+    }
 }

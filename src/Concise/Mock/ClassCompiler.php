@@ -143,9 +143,6 @@ class ClassCompiler
 
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
-        if ($method->isFinal()) {
-            return;
-        }
         $prototype = $this->getPublicPrototype($method->getName());
         $this->methods[$method->getName()] = <<<EOF
 $prototype {

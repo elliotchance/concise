@@ -162,10 +162,9 @@ class Assertion
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
         $answer = $this->getMatcher()->match($this->originalSyntax, $args);
-        if (true === $answer || null === $answer) {
-            return;
+        if (true !== $answer && null !== $answer) {
+            $this->throwFailure($result['syntax'], $args);
         }
-        $this->throwFailure($result['syntax'], $args);
     }
 
     public function run()

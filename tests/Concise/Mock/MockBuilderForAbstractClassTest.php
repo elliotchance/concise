@@ -38,6 +38,10 @@ abstract class MockAbstractClass
     public function myWithMethod($a)
     {
     }
+
+    final public function myFinalMethod()
+    {
+    }
 }
 
 class MockBuilderForAbstractClassTest extends AbstractMockBuilderTestCase

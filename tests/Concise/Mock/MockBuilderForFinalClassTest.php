@@ -40,6 +40,10 @@ final class MockFinalClass
     public function myWithMethod($a)
     {
     }
+
+    final public function myFinalMethod()
+    {
+    }
 }
 
 class MockFinalClass2
