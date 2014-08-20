@@ -30,7 +30,7 @@ abstract class MockAbstractClass
     {
     }
 
-    static public function myStaticMethod()
+    public static function myStaticMethod()
     {
         return 'foo';
     }
@@ -40,6 +40,10 @@ abstract class MockAbstractClass
     }
 
     abstract public function myAbstractMethod();
+
+    final public function myFinalMethod()
+    {
+    }
 }
 
 class MockBuilderForAbstractClassTest extends AbstractMockBuilderTestCase

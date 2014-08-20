@@ -2,15 +2,13 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-
 interface MockInterface
 {
     public function myMethod();
 
     public function mySecondMethod();
 
-    static public function myStaticMethod();
+    public static function myStaticMethod();
 
     public function myWithMethod($a);
 
@@ -109,5 +107,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
+    }
+
+    public function testFinalMethodsCanNotBeMocked()
+    {
+        $this->notApplicable();
     }
 }

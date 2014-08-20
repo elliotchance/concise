@@ -126,13 +126,13 @@ class Assertion
         return $args;
     }
 
-    protected function throwFailure($syntax, array $args)
+    protected function getFailureMessage($syntax, array $args)
     {
         $message = $this->failureMessage;
         if (!$message) {
             $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
         }
-        throw new \PHPUnit_Framework_AssertionFailedError($message);
+        return $message;
     }
 
     protected function getArgumentsAndValidate(array $arguments)
@@ -162,10 +162,10 @@ class Assertion
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
         $answer = $this->getMatcher()->match($this->originalSyntax, $args);
-        if (true === $answer || null === $answer) {
-            return;
+        if (true !== $answer && null !== $answer) {
+            $message = $this->getFailureMessage($result['syntax'], $args);
+            throw new \PHPUnit_Framework_AssertionFailedError($message);
         }
-        $this->throwFailure($result['syntax'], $args);
     }
 
     public function run()
