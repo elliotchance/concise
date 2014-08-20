@@ -49,4 +49,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testExposeASingleMethod();
     }
+
+    public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testAnExceptionIsThrownIfTheMethodDoesNotExist();
+    }
 }

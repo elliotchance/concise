@@ -204,4 +204,15 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage does not exist.
+     */
+    public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
+    {
+        $this->niceMockBuilder()
+             ->expose('baz')
+             ->done();
+    }
 }
