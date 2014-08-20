@@ -20,6 +20,11 @@ abstract class MockAbstractClass
     {
         return 'abc';
     }
+
+    public function mySecondMethod()
+    {
+        return 'bar';
+    }
 }
 
 class MockBuilderForAbstractClassTest extends AbstractMockBuilderTestCase

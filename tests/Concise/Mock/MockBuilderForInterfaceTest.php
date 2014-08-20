@@ -7,6 +7,8 @@ use \Concise\TestCase;
 interface MockInterface
 {
     public function myMethod();
+
+    public function mySecondMethod();
 }
 
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
@@ -54,5 +56,11 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
         parent::testAnExceptionIsThrownIfTheMethodDoesNotExist();
+    }
+
+    public function testExposeTwoMethodsWithSeparateParameters()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testExposeTwoMethodsWithSeparateParameters();
     }
 }

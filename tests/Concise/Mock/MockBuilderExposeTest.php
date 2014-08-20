@@ -36,14 +36,6 @@ class MockBuilderExposeTest extends TestCase
              ->done();
     }
 
-    public function testExposeTwoMethodsWithSeparateParameters()
-    {
-        $mock = $this->niceMock('\Concise\Mock\MockExpose')
-                     ->expose('myMethod', 'foo')
-                     ->done();
-        $this->assert($mock->foo(), equals, 'bar');
-    }
-
     public function testExposeTwoMethodsByCallingExposeTwice()
     {
         $mock = $this->niceMock('\Concise\Mock\MockExpose')

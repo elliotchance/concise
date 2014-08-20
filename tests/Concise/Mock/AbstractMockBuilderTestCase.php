@@ -215,4 +215,12 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->expose('baz')
              ->done();
     }
+
+    public function testExposeTwoMethodsWithSeparateParameters()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->expose('myMethod', 'mySecondMethod')
+                     ->done();
+        $this->assert($mock->mySecondMethod(), equals, 'bar');
+    }
 }

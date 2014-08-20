@@ -22,6 +22,11 @@ class MockClass
     {
         return 'abc';
     }
+
+    public function mySecondMethod()
+    {
+        return 'bar';
+    }
 }
 
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase
