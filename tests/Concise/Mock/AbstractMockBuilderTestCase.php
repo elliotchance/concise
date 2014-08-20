@@ -170,4 +170,28 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->expect('myMethod')->exactly(0)
              ->done();
     }
+
+    public function testDefaultExpectationIsOnce()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->andReturn(null)
+                     ->done();
+        $mock->myMethod();
+    }
+
+    public function testCanCreateAnExpectationWithArgumentValues()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->with('foo')->andReturn('bar')
+                     ->done();
+        $this->assert($mock->myMethod('foo'), equals, 'bar');
+    }
+
+    public function testCanUseExpectsInsteadOfExpect()
+    {
+        $mock = $this->mockBuilder()
+                     ->expects('myMethod')
+                     ->done();
+        $mock->myMethod();
+    }
 }
