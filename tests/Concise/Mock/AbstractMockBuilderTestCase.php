@@ -135,4 +135,15 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
         $mock->myMethod();
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage You cannot assign an action to 'myMethod()' when it is never expected.
+     */
+    public function testAddingAnActionOntoAMethodThatIsNeverExpectedThrowsException()
+    {
+        $this->mockBuilder()
+             ->expect('myMethod')->never()->andReturn(null)
+             ->done();
+    }
 }

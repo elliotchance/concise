@@ -6,18 +6,6 @@ use \Concise\TestCase;
 
 class MockBuilderExpectTest extends TestCase
 {
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage You cannot assign an action to 'myMethod()' when it is never expected.
-     */
-    public function testAddingAnActionOntoAMethodThatIsNeverExpectedThrowsException()
-    {
-        $this->mock('\Concise\Mock\Mock1')
-             ->expect('myMethod')->never()->andReturn(null)
-             ->done();
-    }
-
     public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
     {
         $this->mock('\Concise\Mock\Mock1')
