@@ -4,6 +4,8 @@ namespace Concise\Console;
 
 abstract class AbstractResultPrinter implements ResultPrinterInterface
 {
+    public $failureCount = 0;
+
     public function getSuccessCount()
     {
         return 0;
@@ -11,7 +13,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function getFailureCount()
     {
-        return 0;
+        return $this->failureCount;
     }
 
     public function getErrorCount()

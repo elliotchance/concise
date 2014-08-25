@@ -23,4 +23,13 @@ class ResultPrinterProxyTest extends TestCase
         $proxy = new ResultPrinterProxy($printer);
         $this->assert($proxy->getResultPrinter(), is_the_same_as, $printer);
     }
+
+    public function testAddFailureWillIncrementCount()
+    {
+        $proxy = new ResultPrinterProxy();
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $e = $this->mock('PHPUnit_Framework_AssertionFailedError')->done();
+        $proxy->addFailure($test, $e, 0);
+        $this->assert($proxy->getResultPrinter()->getFailureCount(), equals, 1);
+    }
 }
