@@ -66,4 +66,9 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     protected function printDefect(PHPUnit_Framework_TestFailure $defect, $count)
     {
     }
+
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
+        $this->getResultPrinter()->endTest($test, $time);
+    }
 }

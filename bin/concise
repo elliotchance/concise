@@ -3,13 +3,14 @@
 
 require_once('vendor/autoload.php');
 
+use \Concise\Console\AbstractResultPrinter;
 use \Concise\Console\TestRunner;
 use \Concise\Console\ResultPrinterProxy;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
-class Concise_ResultPrinter extends ResultPrinterProxy
+class Concise_ResultPrinter extends AbstractResultPrinter
 {
     protected $width = 79;
 
@@ -27,67 +28,21 @@ class Concise_ResultPrinter extends ResultPrinterProxy
 
     protected $issueCount = 1;
 
+    protected $numTestsWidth = 4;
+
+    protected $numTests = 1000;
+
     public function __construct()
     {
         $this->width = exec('tput cols');
     }
 
-    public function write($buffer)
-    {
-        if(substr($buffer, 0, 7) !== 'PHPUnit') {
-            return parent::write($buffer);
-        }
-    }
-
-    public function appendTextAbove($text)
-    {
-        echo str_replace("\n", "\033[K\n", $text);
-        $this->update();
-    }
-
-    public function endTest(PHPUnit_Framework_Test $test, $time)
-    {
-        if ($test instanceof PHPUnit_Framework_TestCase) {
-            $this->numAssertions += $test->getNumAssertions();
-        }
-        else if ($test instanceof PHPUnit_Extensions_PhptTestCase) {
-            $this->numAssertions++;
-        }
-
-        ++$this->numTestsRun;
-        $this->update();
-    }
-
-    protected function printFooter(PHPUnit_Framework_TestResult $result)
-    {
-    	if (count($result) === 0) {
-    		$message = 'No tests executed!';
-            echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-        else if ($result->wasSuccessful() &&
-                 $result->allHarmless() &&
-                 $result->allCompletelyImplemented() &&
-                 $result->noneSkipped()) {
-    		$message = 'OK';
-	        echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-        else if ((!$result->allCompletelyImplemented() ||
-                  !$result->allHarmless() ||
-                  !$result->noneSkipped()) &&
-                 $result->wasSuccessful()) {
-    		$message = 'OK, but incomplete, skipped, or risky tests!';
-	        echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-
-		parent::printHeader();
-    }
-
     protected function repeat($string, $times)
     {
-    	if($times < 0) {
-    		return '';
-    	}
-    	return str_repeat($string, $times);
+        if($times < 0) {
+            return '';
+        }
+        return str_repeat($string, $times);
     }
 
     public function update()
@@ -103,7 +58,7 @@ class Concise_ResultPrinter extends ResultPrinterProxy
         $skipped = $incomplete = $failures = 0;
         if($this->numTestsFailed || $this->numTestsErrors) {
             $total = $this->numTestsFailed + $this->numTestsErrors;
-        	$failures = ceil($this->width * $total / $this->numTests);
+            $failures = ceil($this->width * $total / $this->numTests);
             $successes -= $this->numTestsFailed + $this->numTestsErrors;
         }
         if($this->numTestsIncomplete || $this->numTestsRisky) {
@@ -202,6 +157,59 @@ class Concise_ResultPrinter extends ResultPrinterProxy
         ++$this->numTestsSkipped;
     }
 
+    public function appendTextAbove($text)
+    {
+        echo str_replace("\n", "\033[K\n", $text);
+        $this->update();
+    }
+
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
+        if ($test instanceof PHPUnit_Framework_TestCase) {
+            $this->numAssertions += $test->getNumAssertions();
+        }
+        else if ($test instanceof PHPUnit_Extensions_PhptTestCase) {
+            $this->numAssertions++;
+        }
+
+        ++$this->numTestsRun;
+        $this->update();
+    }
+}
+
+class Concise_ResultPrinterProxy extends ResultPrinterProxy
+{
+    public function write($buffer)
+    {
+        if(substr($buffer, 0, 7) !== 'PHPUnit') {
+            return parent::write($buffer);
+        }
+    }
+
+    protected function printFooter(PHPUnit_Framework_TestResult $result)
+    {
+    	if (count($result) === 0) {
+    		$message = 'No tests executed!';
+            echo "\033[0;30m\033[42m{$message}\033[0m";
+        }
+        else if ($result->wasSuccessful() &&
+                 $result->allHarmless() &&
+                 $result->allCompletelyImplemented() &&
+                 $result->noneSkipped()) {
+    		$message = 'OK';
+	        echo "\033[0;30m\033[42m{$message}\033[0m";
+        }
+        else if ((!$result->allCompletelyImplemented() ||
+                  !$result->allHarmless() ||
+                  !$result->noneSkipped()) &&
+                 $result->wasSuccessful()) {
+    		$message = 'OK, but incomplete, skipped, or risky tests!';
+	        echo "\033[0;30m\033[42m{$message}\033[0m";
+        }
+
+		parent::printHeader();
+    }
+
     public function printResult(PHPUnit_Framework_TestResult $result)
     {
         echo "\n\n\n";
@@ -213,7 +221,7 @@ class Concise_Command extends PHPUnit_TextUI_Command
     protected function createRunner()
     {
         $runner = new TestRunner();
-        $runner->setPrinter(new Concise_ResultPrinter());
+        $runner->setPrinter(new Concise_ResultPrinterProxy(new Concise_ResultPrinter()));
         return $runner;
     }
 }
