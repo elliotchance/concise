@@ -3,6 +3,8 @@
 
 require_once('vendor/autoload.php');
 
+use \Concise\Console\TestRunner;
+
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
@@ -118,7 +120,7 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
             $skipped = ceil($this->width * $this->numTestsSkipped / $this->numTests);
             $successes -= $this->numTestsSkipped;
         }
-        $successes = floor($this->width * $done) - $failures - $incomplete - $skipped;
+        $successes = ceil($this->width * $done) - $failures - $incomplete - $skipped;
         $echo .= "\033[42m" . $this->repeat(' ', $successes);
         $echo .= "\033[101m" . $this->repeat(' ', $failures);
         $echo .= "\033[103m" . $this->repeat(' ', $incomplete);
@@ -212,17 +214,18 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
         $this->add($test, $e, 4);
         ++$this->numTestsSkipped;
     }
-}
 
-class Concise_TestRunner extends PHPUnit_TextUI_TestRunner
-{
+    public function printResult(PHPUnit_Framework_TestResult $result)
+    {
+        echo "\n\n\n";
+    }
 }
 
 class Concise_Command extends PHPUnit_TextUI_Command
 {
     protected function createRunner()
     {
-        $runner = new Concise_TestRunner($this->arguments['loader']);
+        $runner = new TestRunner($this->arguments['loader']);
         $runner->setPrinter(new Concise_ResultPrinter());
         return $runner;
     }
