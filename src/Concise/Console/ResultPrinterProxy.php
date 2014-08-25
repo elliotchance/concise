@@ -2,9 +2,9 @@
 
 namespace Concise\Console;
 
-use \Exception;
-use \PHPUnit_Framework_AssertionFailedError;
-use \PHPUnit_Framework_Test;
+use Exception;
+use PHPUnit_Framework_AssertionFailedError;
+use PHPUnit_Framework_Test;
 
 class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 {
@@ -34,6 +34,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         ++$this->getResultPrinter()->errorCount;
+        $this->getResultPrinter()->addError($test, $e, $time);
     }
 
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
