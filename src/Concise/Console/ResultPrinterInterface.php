@@ -11,4 +11,6 @@ interface ResultPrinterInterface
     public function getErrorCount();
 
     public function getIncompleteCount();
+
+    public function getRiskyCount();
 }

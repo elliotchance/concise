@@ -22,23 +22,28 @@ class ResultPrinterTest extends TestCase
         $this->assert($this->resultPrinter, instance_of, 'Concise\Console\AbstractResultPrinter');
     }
 
-    public function testDefaultSuccessesIsZero()
+    public function testDefaultSuccessCountIsZero()
     {
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 0);
     }
 
-    public function testDefaultFailuresIsZero()
+    public function testDefaultFailureCountIsZero()
     {
         $this->assert($this->resultPrinter->getFailureCount(), exactly_equals, 0);
     }
 
-    public function testDefaultErrorsIsZero()
+    public function testDefaultErrorCountIsZero()
     {
         $this->assert($this->resultPrinter->getErrorCount(), exactly_equals, 0);
     }
 
-    public function testDefaultIncompleteIsZero()
+    public function testDefaultIncompleteCountIsZero()
     {
         $this->assert($this->resultPrinter->getIncompleteCount(), exactly_equals, 0);
+    }
+
+    public function testDefaultRiskyCountIsZero()
+    {
+        $this->assert($this->resultPrinter->getRiskyCount(), exactly_equals, 0);
     }
 }

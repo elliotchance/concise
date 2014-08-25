@@ -23,4 +23,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
         return 0;
     }
+
+    public function getRiskyCount()
+    {
+        return 0;
+    }
 }
