@@ -10,6 +10,8 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public $incompleteCount = 0;
 
+    public $skippedCount = 0;
+
     public function getSuccessCount()
     {
         return 0;
@@ -37,6 +39,6 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function getSkippedCount()
     {
-        return 0;
+        return $this->skippedCount;
     }
 }
