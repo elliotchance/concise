@@ -59,4 +59,13 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->addSkippedTest($test, $e, 0);
         $this->assert($proxy->getResultPrinter()->getSkippedCount(), equals, 1);
     }
+
+    public function testAddRiskyWillIncrementCount()
+    {
+        $proxy = new ResultPrinterProxy();
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $e = $this->mock('Exception')->done();
+        $proxy->addRiskyTest($test, $e, 0);
+        $this->assert($proxy->getResultPrinter()->getRiskyCount(), equals, 1);
+    }
 }

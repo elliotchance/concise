@@ -4,11 +4,12 @@
 require_once('vendor/autoload.php');
 
 use \Concise\Console\TestRunner;
+use \Concise\Console\ResultPrinterProxy;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
-class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
+class Concise_ResultPrinter extends ResultPrinterProxy
 {
     protected $width = 79;
 
@@ -28,7 +29,6 @@ class Concise_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 
     public function __construct()
     {
-        parent::__construct();
         $this->width = exec('tput cols');
     }
 

@@ -12,6 +12,8 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public $skippedCount = 0;
 
+    public $riskyCount = 0;
+
     public function getSuccessCount()
     {
         return 0;
@@ -34,7 +36,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function getRiskyCount()
     {
-        return 0;
+        return $this->riskyCount;
     }
 
     public function getSkippedCount()
