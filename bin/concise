@@ -58,11 +58,6 @@ class Concise_ResultPrinter extends ResultPrinterProxy
         $this->update();
     }
 
-    protected function printHeader()
-    {
-        echo "\n";
-    }
-
     protected function printFooter(PHPUnit_Framework_TestResult $result)
     {
     	if (count($result) === 0) {
@@ -128,14 +123,6 @@ class Concise_ResultPrinter extends ResultPrinterProxy
         $echo .= "\033[0m" . $this->repeat('_', $this->width - $successes - $failures - $incomplete - $skipped) . "\n";
 
         echo $echo . "\033[2F";
-    }
-
-    protected function printDefects(array $defects, $type)
-    {
-    }
-
-    protected function printDefect(PHPUnit_Framework_TestFailure $defect, $count)
-    {
     }
 
     protected function getFilePath($absolutePath)

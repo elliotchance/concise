@@ -2,6 +2,9 @@
 
 namespace Concise\Console;
 
+use \PHPUnit_Framework_AssertionFailedError;
+use \PHPUnit_Framework_Test;
+
 abstract class AbstractResultPrinter implements ResultPrinterInterface
 {
     public $failureCount = 0;
@@ -42,5 +45,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     public function getSkippedCount()
     {
         return $this->skippedCount;
+    }
+
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
     }
 }

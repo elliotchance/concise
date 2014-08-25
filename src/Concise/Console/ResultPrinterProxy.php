@@ -28,6 +28,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
         ++$this->getResultPrinter()->failureCount;
+        $this->getResultPrinter()->addFailure($test, $e, $time);
     }
 
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
@@ -48,5 +49,17 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         ++$this->getResultPrinter()->riskyCount;
+    }
+
+    protected function printHeader()
+    {
+    }
+
+    protected function printDefects(array $defects, $type)
+    {
+    }
+
+    protected function printDefect(PHPUnit_Framework_TestFailure $defect, $count)
+    {
     }
 }

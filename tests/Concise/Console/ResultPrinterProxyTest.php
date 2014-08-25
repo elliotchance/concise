@@ -68,4 +68,16 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->addRiskyTest($test, $e, 0);
         $this->assert($proxy->getResultPrinter()->getRiskyCount(), equals, 1);
     }
+
+    public function testAddFailureWillCallResultPrinter()
+    {
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $e = $this->mock('PHPUnit_Framework_AssertionFailedError')->done();
+
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
+                              ->expect('addFailure')->with($test, $e, 0.1)
+                              ->done();
+        $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->addFailure($test, $e, 0.1);
+    }
 }

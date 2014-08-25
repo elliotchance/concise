@@ -2,6 +2,9 @@
 
 namespace Concise\Console;
 
+use \PHPUnit_Framework_AssertionFailedError;
+use \PHPUnit_Framework_Test;
+
 interface ResultPrinterInterface
 {
     public function getSuccessCount();
@@ -15,4 +18,6 @@ interface ResultPrinterInterface
     public function getRiskyCount();
 
     public function getSkippedCount();
+
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time);
 }
