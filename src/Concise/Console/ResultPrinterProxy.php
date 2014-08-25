@@ -46,6 +46,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         ++$this->getResultPrinter()->skippedCount;
+        $this->getResultPrinter()->addSkippedTest($test, $e, $time);
     }
 
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)

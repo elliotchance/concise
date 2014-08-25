@@ -25,4 +25,6 @@ interface ResultPrinterInterface
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time);
 
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time);
+
+    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time);
 }
