@@ -2,6 +2,6 @@
 
 namespace Concise\Console;
 
-class ResultPrinter extends AbstractResultPrinter implements ResultPrinterInterface
+class ResultPrinter extends AbstractResultPrinter
 {
 }

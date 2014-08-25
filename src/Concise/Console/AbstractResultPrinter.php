@@ -2,6 +2,10 @@
 
 namespace Concise\Console;
 
-abstract class AbstractResultPrinter
+abstract class AbstractResultPrinter implements ResultPrinterInterface
 {
+    public function getSuccessCount()
+    {
+        return 0;
+    }
 }

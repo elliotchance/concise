@@ -15,4 +15,10 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert(new ResultPrinter(), instance_of, 'Concise\Console\AbstractResultPrinter');
     }
+
+    public function testDefaultSuccessesIsZero()
+    {
+        $resultPrinter = new ResultPrinter();
+        $this->assert($resultPrinter->getSuccessCount(), exactly_equals, 0);
+    }
 }
