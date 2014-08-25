@@ -10,4 +10,9 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert(new ResultPrinter(), instance_of, 'Concise\Console\ResultPrinterInterface');
     }
+
+    public function testResultPrinterExtendsAbstractResultPrinter()
+    {
+        $this->assert(new ResultPrinter(), instance_of, 'Concise\Console\AbstractResultPrinter');
+    }
 }
