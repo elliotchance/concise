@@ -225,7 +225,7 @@ class Concise_Command extends PHPUnit_TextUI_Command
 {
     protected function createRunner()
     {
-        $runner = new TestRunner($this->arguments['loader']);
+        $runner = new TestRunner();
         $runner->setPrinter(new Concise_ResultPrinter());
         return $runner;
     }
