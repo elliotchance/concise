@@ -16,4 +16,11 @@ class ResultPrinterProxyTest extends TestCase
         $proxy = new ResultPrinterProxy();
         $this->assert($proxy->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinterInterface');
     }
+
+    public function testResultPrinterIsSetViaConstructor()
+    {
+        $printer = new ResultPrinter();
+        $proxy = new ResultPrinterProxy($printer);
+        $this->assert($proxy->getResultPrinter(), is_the_same_as, $printer);
+    }
 }
