@@ -52,6 +52,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         ++$this->getResultPrinter()->riskyCount;
+        $this->getResultPrinter()->addRiskyTest($test, $e, $time);
     }
 
     protected function printHeader()
