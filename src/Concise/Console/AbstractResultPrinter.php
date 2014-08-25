@@ -8,4 +8,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
         return 0;
     }
+
+    public function getFailureCount()
+    {
+        return 0;
+    }
 }
