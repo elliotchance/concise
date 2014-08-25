@@ -31,4 +31,9 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->getFailureCount(), exactly_equals, 0);
     }
+
+    public function testDefaultErrorsIsZero()
+    {
+        $this->assert($this->resultPrinter->getErrorCount(), exactly_equals, 0);
+    }
 }

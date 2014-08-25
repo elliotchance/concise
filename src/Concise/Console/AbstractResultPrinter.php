@@ -13,4 +13,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
         return 0;
     }
+
+    public function getErrorCount()
+    {
+        return 0;
+    }
 }
