@@ -41,4 +41,13 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->addError($test, $e, 0);
         $this->assert($proxy->getResultPrinter()->getErrorCount(), equals, 1);
     }
+
+    public function testAddIncompleteWillIncrementCount()
+    {
+        $proxy = new ResultPrinterProxy();
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $e = $this->mock('Exception')->done();
+        $proxy->addIncompleteTest($test, $e, 0);
+        $this->assert($proxy->getResultPrinter()->getIncompleteCount(), equals, 1);
+    }
 }

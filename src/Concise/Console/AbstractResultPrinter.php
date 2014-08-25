@@ -8,6 +8,8 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public $errorCount = 0;
 
+    public $incompleteCount = 0;
+
     public function getSuccessCount()
     {
         return 0;
@@ -25,7 +27,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function getIncompleteCount()
     {
-        return 0;
+        return $this->incompleteCount;
     }
 
     public function getRiskyCount()
