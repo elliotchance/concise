@@ -6,6 +6,9 @@ class Command extends \PHPUnit_TextUI_Command
 {
     protected function createRunner()
     {
-        return new TestRunner();
+        $testRunner = new TestRunner();
+        $testRunner->setPrinter(new ResultPrinterProxy());
+
+        return $testRunner;
     }
 }

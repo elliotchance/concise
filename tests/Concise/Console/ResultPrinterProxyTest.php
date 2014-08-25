@@ -4,7 +4,7 @@ namespace Concise\Console;
 
 use \Concise\TestCase;
 
-class ResultPrinterProxy extends TestCase
+class ResultPrinterProxyTest extends TestCase
 {
     public function testProxyExtendsPHPUnit()
     {
