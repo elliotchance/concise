@@ -13,4 +13,6 @@ interface ResultPrinterInterface
     public function getIncompleteCount();
 
     public function getRiskyCount();
+
+    public function getSkippedCount();
 }

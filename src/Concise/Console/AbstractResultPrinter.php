@@ -28,4 +28,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
         return 0;
     }
+
+    public function getSkippedCount()
+    {
+        return 0;
+    }
 }

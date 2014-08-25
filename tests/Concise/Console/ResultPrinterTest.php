@@ -46,4 +46,9 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->getRiskyCount(), exactly_equals, 0);
     }
+
+    public function testDefaultSkippedCountIsZero()
+    {
+        $this->assert($this->resultPrinter->getSkippedCount(), exactly_equals, 0);
+    }
 }
