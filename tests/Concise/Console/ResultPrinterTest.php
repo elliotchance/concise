@@ -36,4 +36,9 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->getErrorCount(), exactly_equals, 0);
     }
+
+    public function testDefaultIncompleteIsZero()
+    {
+        $this->assert($this->resultPrinter->getIncompleteCount(), exactly_equals, 0);
+    }
 }

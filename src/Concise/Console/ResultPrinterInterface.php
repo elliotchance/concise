@@ -9,4 +9,6 @@ interface ResultPrinterInterface
     public function getFailureCount();
 
     public function getErrorCount();
+
+    public function getIncompleteCount();
 }
