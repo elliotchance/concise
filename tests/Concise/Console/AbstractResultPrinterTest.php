@@ -100,4 +100,11 @@ class AbstractResultPrinterTest extends TestCase
         $this->resultPrinter->incompleteCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
+
+    public function testSuccessCountWillNotIncludeRiskyTests()
+    {
+        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->riskyCount = 10;
+        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+    }
 }
