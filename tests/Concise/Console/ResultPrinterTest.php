@@ -52,8 +52,13 @@ class ResultPrinterTest extends TestCase
         $this->assert($this->resultPrinter->getSkippedCount(), exactly_equals, 0);
     }
 
-    public function testDefaultTotalCountIsZero()
+    public function testDefaultTestCountIsZero()
     {
         $this->assert($this->resultPrinter->getTestCount(), exactly_equals, 0);
+    }
+
+    public function testDefaultTotalTestCountIsZero()
+    {
+        $this->assert($this->resultPrinter->getTotalTestCount(), exactly_equals, 0);
     }
 }
