@@ -200,4 +200,15 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 2);
     }
+
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->stub(['getNumAssertions' => 123])
+                         ->done();
+        $proxy = new ResultPrinterProxy();
+        $proxy->endTest($testCase, 0);
+        $proxy->endTest($testCase, 0);
+        $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 246);
+    }
 }

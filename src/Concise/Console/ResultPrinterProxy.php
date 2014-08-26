@@ -85,7 +85,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     {
         ++$this->getResultPrinter()->testCount;
         if (is_subclass_of($test, "PHPUnit_Framework_TestCase")) {
-            $this->getResultPrinter()->assertionCount = $test->getNumAssertions();
+            $this->getResultPrinter()->assertionCount += $test->getNumAssertions();
         } else {
             ++$this->getResultPrinter()->assertionCount;
         }
