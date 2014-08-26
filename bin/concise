@@ -3,14 +3,14 @@
 
 require_once('vendor/autoload.php');
 
-use \Concise\Console\AbstractResultPrinter;
+use \Concise\Console\ResultPrinter;
 use \Concise\Console\TestRunner;
 use \Concise\Console\ResultPrinterProxy;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
-class Concise_ResultPrinter extends AbstractResultPrinter
+class Concise_ResultPrinter extends ResultPrinter
 {
     protected $width = 79;
 
@@ -28,9 +28,7 @@ class Concise_ResultPrinter extends AbstractResultPrinter
 
     protected $issueCount = 1;
 
-    protected $numTestsWidth = 4;
-
-    protected $numTests = 1000;
+    protected $numTestsWidth;
 
     public function __construct()
     {
@@ -48,26 +46,26 @@ class Concise_ResultPrinter extends AbstractResultPrinter
     public function update()
     {
         $echo = '';
-        $assertionString = $this->numAssertions . ' assertion' . ($this->numAssertions == 1 ? '' : 's');
+        $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
         $echo .= $assertionString . $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
-        $done = $this->numTestsRun / $this->numTests;
+        $done = $this->numTestsRun / $this->getTotalTestCount();
         $echo .= sprintf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
-            $this->numTestsRun, $this->numTests, floor($done * 100));
+            $this->numTestsRun, $this->getTotalTestCount(), floor($done * 100));
 
         $successes = $this->numTestsRun;
         $skipped = $incomplete = $failures = 0;
         if($this->numTestsFailed || $this->numTestsErrors) {
             $total = $this->numTestsFailed + $this->numTestsErrors;
-            $failures = ceil($this->width * $total / $this->numTests);
+            $failures = ceil($this->width * $total / $this->getTotalTestCount());
             $successes -= $this->numTestsFailed + $this->numTestsErrors;
         }
         if($this->numTestsIncomplete || $this->numTestsRisky) {
             $total = $this->numTestsIncomplete + $this->numTestsRisky;
-            $incomplete = ceil($this->width * $total / $this->numTests);
+            $incomplete = ceil($this->width * $total / $this->getTotalTestCount());
             $successes -= $this->numTestsIncomplete + $this->numTestsRisky;
         }
         if($this->numTestsSkipped) {
-            $skipped = ceil($this->width * $this->numTestsSkipped / $this->numTests);
+            $skipped = ceil($this->width * $this->numTestsSkipped / $this->getTotalTestCount());
             $successes -= $this->numTestsSkipped;
         }
         $successes = ceil($this->width * $done) - $failures - $incomplete - $skipped;
@@ -174,6 +172,12 @@ class Concise_ResultPrinter extends AbstractResultPrinter
 
         ++$this->numTestsRun;
         $this->update();
+    }
+
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        parent::startTestSuite($suite);
+        $this->numTestsWidth = strlen($this->getTotalTestCount());
     }
 }
 

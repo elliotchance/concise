@@ -102,4 +102,8 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
         echo $string;
     }
+
+    public function finish()
+    {
+    }
 }

@@ -72,4 +72,10 @@ class ResultPrinterTest extends TestCase
         $this->expectOutputString('foobar');
         $this->resultPrinter->write('foobar');
     }
+
+    public function testWillPrintThreeBlankLinesAtTheEndOfTheTestSuite()
+    {
+        $this->expectOutputString("\n\n\n");
+        $this->resultPrinter->finish();
+    }
 }
