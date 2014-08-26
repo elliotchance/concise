@@ -222,4 +222,18 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->startTestSuite($suite);
         $this->assert($proxy->getResultPrinter()->getTotalTestCount(), equals, 123);
     }
+
+    public function testStartTestSuiteWillCallResultPrinterMultipleTimes()
+    {
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
+                              ->stub(['count' => 0])
+                              ->done();
+
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
+                              ->expect('startTestSuite')->with($suite)->twice()
+                              ->done();
+        $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->startTestSuite($suite);
+        $proxy->startTestSuite($suite);
+    }
 }

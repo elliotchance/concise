@@ -98,8 +98,8 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     {
         if (!$this->startedTestSuite) {
             $this->getResultPrinter()->totalTestCount = count($suite);
-            $this->getResultPrinter()->startTestSuite($suite);
             $this->startedTestSuite = true;
         }
+        $this->getResultPrinter()->startTestSuite($suite);
     }
 }
