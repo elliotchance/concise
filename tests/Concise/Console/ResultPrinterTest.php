@@ -61,4 +61,9 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->getTotalTestCount(), exactly_equals, 0);
     }
+
+    public function testDefaultAssertionsIsZero()
+    {
+        $this->assert($this->resultPrinter->getAssertionsCount(), exactly_equals, 0);
+    }
 }

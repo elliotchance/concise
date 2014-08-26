@@ -179,41 +179,6 @@ class Concise_ResultPrinter extends AbstractResultPrinter
 
 class Concise_ResultPrinterProxy extends ResultPrinterProxy
 {
-    public function write($buffer)
-    {
-        if(substr($buffer, 0, 7) !== 'PHPUnit') {
-            return parent::write($buffer);
-        }
-    }
-
-    protected function printFooter(PHPUnit_Framework_TestResult $result)
-    {
-    	if (count($result) === 0) {
-    		$message = 'No tests executed!';
-            echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-        else if ($result->wasSuccessful() &&
-                 $result->allHarmless() &&
-                 $result->allCompletelyImplemented() &&
-                 $result->noneSkipped()) {
-    		$message = 'OK';
-	        echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-        else if ((!$result->allCompletelyImplemented() ||
-                  !$result->allHarmless() ||
-                  !$result->noneSkipped()) &&
-                 $result->wasSuccessful()) {
-    		$message = 'OK, but incomplete, skipped, or risky tests!';
-	        echo "\033[0;30m\033[42m{$message}\033[0m";
-        }
-
-		parent::printHeader();
-    }
-
-    public function printResult(PHPUnit_Framework_TestResult $result)
-    {
-        echo "\n\n\n";
-    }
 }
 
 class Concise_Command extends PHPUnit_TextUI_Command
