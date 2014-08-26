@@ -12,6 +12,8 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 {
     protected $resultPrinter;
 
+    protected $startedTestSuite = false;
+
     public function __construct(ResultPrinterInterface $resultPrinter = null)
     {
         parent::__construct();
@@ -94,7 +96,10 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
-        $this->getResultPrinter()->totalTestCount = count($suite);
-        $this->getResultPrinter()->startTestSuite($suite);
+        if (!$this->startedTestSuite) {
+            $this->getResultPrinter()->totalTestCount = count($suite);
+            $this->getResultPrinter()->startTestSuite($suite);
+            $this->startedTestSuite = true;
+        }
     }
 }

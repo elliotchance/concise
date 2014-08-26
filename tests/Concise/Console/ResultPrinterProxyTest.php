@@ -211,4 +211,15 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 246);
     }
+
+    public function testWillNotUpdateTheTotalTestIfMultipleTestSuitesStart()
+    {
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
+                      ->stub('count')->andReturn(123, 456)
+                      ->done();
+        $proxy = new ResultPrinterProxy();
+        $proxy->startTestSuite($suite);
+        $proxy->startTestSuite($suite);
+        $this->assert($proxy->getResultPrinter()->getTotalTestCount(), equals, 123);
+    }
 }
