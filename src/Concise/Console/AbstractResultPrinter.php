@@ -5,6 +5,7 @@ namespace Concise\Console;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
+use PHPUnit_Framework_TestSuite;
 
 abstract class AbstractResultPrinter implements ResultPrinterInterface
 {

@@ -5,6 +5,7 @@ namespace Concise\Console;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
+use PHPUnit_Framework_TestSuite;
 
 class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 {
@@ -71,5 +72,10 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
     {
         ++$this->getResultPrinter()->testCount;
         $this->getResultPrinter()->endTest($test, $time);
+    }
+
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        $this->getResultPrinter()->startTestSuite($suite);
     }
 }
