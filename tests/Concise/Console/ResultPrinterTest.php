@@ -66,4 +66,10 @@ class ResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->getAssertionCount(), exactly_equals, 0);
     }
+
+    public function testWritingWillEchoDirectly()
+    {
+        $this->expectOutputString('foobar');
+        $this->resultPrinter->write('foobar');
+    }
 }
