@@ -69,6 +69,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
+        ++$this->getResultPrinter()->testCount;
         $this->getResultPrinter()->endTest($test, $time);
     }
 }

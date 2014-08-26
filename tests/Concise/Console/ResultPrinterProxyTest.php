@@ -139,4 +139,13 @@ class ResultPrinterProxyTest extends TestCase
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->endTest($test, 0.1);
     }
+
+    public function testEndTestWillIncrementTestCount()
+    {
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+
+        $proxy = new ResultPrinterProxy();
+        $proxy->endTest($test, 0.1);
+        $this->assert($proxy->getResultPrinter()->getTestCount(), equals, 1);
+    }
 }
