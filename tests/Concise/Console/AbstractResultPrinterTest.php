@@ -79,4 +79,11 @@ class AbstractResultPrinterTest extends TestCase
         $this->resultPrinter->skippedCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
+
+    public function testSuccessCountWillNotIncludeFailures()
+    {
+        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->failureCount = 10;
+        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+    }
 }
