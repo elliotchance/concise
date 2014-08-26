@@ -27,7 +27,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function getSuccessCount()
     {
-        return 0;
+        return $this->getTotalTestCount();
     }
 
     public function getFailureCount()

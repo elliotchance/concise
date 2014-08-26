@@ -99,6 +99,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
         if ($this->startedTestSuite === 0) {
             $this->getResultPrinter()->totalTestCount = count($suite);
         }
+
         ++$this->startedTestSuite;
         $this->getResultPrinter()->startTestSuite($suite);
     }
