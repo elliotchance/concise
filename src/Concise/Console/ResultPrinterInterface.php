@@ -25,7 +25,7 @@ interface ResultPrinterInterface
 
     public function getTotalTestCount();
 
-    public function getAssertionsCount();
+    public function getAssertionCount();
 
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time);
 

@@ -23,6 +23,8 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public $totalTestCount = 0;
 
+    public $assertionCount = 0;
+
     public function getSuccessCount()
     {
         return 0;
@@ -63,9 +65,9 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
         return $this->totalTestCount;
     }
 
-    public function getAssertionsCount()
+    public function getAssertionCount()
     {
-        return 0;
+        return $this->assertionCount;
     }
 
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)

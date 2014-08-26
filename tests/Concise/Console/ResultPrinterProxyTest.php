@@ -171,4 +171,13 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->startTestSuite($suite);
         $this->assert($proxy->getResultPrinter()->getTotalTestCount(), equals, 123);
     }
+
+    public function testEndTestWillIncrementAssertionsByOneIfLegacyPhptIsUsed()
+    {
+        $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')->disableConstructor()
+                         ->done();
+        $proxy = new ResultPrinterProxy();
+        $proxy->endTest($testCase, 0);
+        $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 1);
+    }
 }
