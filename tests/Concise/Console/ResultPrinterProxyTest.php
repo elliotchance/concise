@@ -236,4 +236,16 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->startTestSuite($suite);
         $proxy->startTestSuite($suite);
     }
+
+    public function testFinishWillBeCalledWithEndTestSuite()
+    {
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
+                      ->stub(['count' => 0])
+                      ->done();
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
+                              ->expect('finish')
+                              ->done();
+        $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->endTestSuite($suite);
+    }
 }

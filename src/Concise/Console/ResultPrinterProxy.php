@@ -102,4 +102,9 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
         }
         $this->getResultPrinter()->startTestSuite($suite);
     }
+
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        $this->getResultPrinter()->finish();
+    }
 }

@@ -98,6 +98,10 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
     }
 
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+    }
+
     public function write($string)
     {
         echo $string;

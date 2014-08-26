@@ -41,6 +41,8 @@ interface ResultPrinterInterface
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite);
 
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite);
+
     /**
      * Is invoked once at the very end.
      */
