@@ -2,7 +2,8 @@
 
 namespace Concise\Console;
 
-use \Concise\TestCase;
+use Concise\TestCase;
+use Exception;
 
 class ResultPrinterProxyTest extends TestCase
 {
@@ -135,7 +136,7 @@ class ResultPrinterProxyTest extends TestCase
 
         $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
                               ->expect('endTest')->with($test, 0.1)
-                              ->stub('addSuccess')
+                              ->stub(['addSuccess' => null, 'getSuccessCount' => 0])
                               ->done();
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->endTest($test, 0.1);
@@ -299,13 +300,25 @@ class ResultPrinterProxyTest extends TestCase
     public function testProxyWillCallAddSuccess()
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->expect('getNumAssertions')->andReturn(1)
+                         ->stub(['getNumAssertions' => 1])
                          ->done();
-        $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter')
                               ->expect('addSuccess')->with($testCase, 0.1)
-                              ->stub('endTest')
                               ->done();
         $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->endTest($testCase, 0.1);
+    }
+
+    public function testProxyWillCallAddSuccessOnlyIfTheTestWasSuccessful()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->stub(['getNumAssertions' => 1])
+                         ->done();
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter')
+                              ->expect('addSuccess')->never()
+                              ->done();
+        $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->addSkippedTest($testCase, new Exception(), 0.1);
         $proxy->endTest($testCase, 0.1);
     }
 }
