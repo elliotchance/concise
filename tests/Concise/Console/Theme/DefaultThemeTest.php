@@ -6,15 +6,26 @@ use \Concise\TestCase;
 
 class DefaultThemeTest extends TestCase
 {
+    protected $theme;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->theme = new DefaultTheme();
+    }
+
     public function testThemeHasSuccess()
     {
-        $theme = new DefaultTheme();
-        $this->assert($theme->getTheme(), has_key, 'success');
+        $this->assert($this->theme->getTheme(), has_key, 'success');
     }
 
     public function testThemeHasFailure()
     {
-        $theme = new DefaultTheme();
-        $this->assert($theme->getTheme(), has_key, 'failure');
+        $this->assert($this->theme->getTheme(), has_key, 'failure');
+    }
+
+    public function testThemeHasError()
+    {
+        $this->assert($this->theme->getTheme(), has_key, 'error');
     }
 }

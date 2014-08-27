@@ -9,6 +9,7 @@ class DefaultTheme
         return [
             'success' => 'green',
             'failure' => 'red',
+            'error'   => 'red',
         ];
     }
 }
