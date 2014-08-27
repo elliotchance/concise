@@ -28,4 +28,9 @@ class DefaultThemeTest extends TestCase
     {
         $this->assert($this->theme->getTheme(), has_key, 'error');
     }
+
+    public function testThemeHasSkipped()
+    {
+        $this->assert($this->theme->getTheme(), has_key, 'skipped');
+    }
 }

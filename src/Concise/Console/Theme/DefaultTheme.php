@@ -10,6 +10,7 @@ class DefaultTheme
             'success' => 'green',
             'failure' => 'red',
             'error'   => 'red',
+            'skipped' => 'blue',
         ];
     }
 }
