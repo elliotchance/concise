@@ -38,4 +38,9 @@ class DefaultThemeTest extends TestCase
     {
         $this->assert($this->theme->getTheme(), has_key, 'incomplete');
     }
+
+    public function testThemeHasRisky()
+    {
+        $this->assert($this->theme->getTheme(), has_key, 'risky');
+    }
 }

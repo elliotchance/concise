@@ -12,6 +12,7 @@ class DefaultTheme
             'error'      => 'red',
             'skipped'    => 'blue',
             'incomplete' => 'yellow',
+            'risky'      => 'yellow',
         ];
     }
 }
