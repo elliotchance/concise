@@ -33,4 +33,9 @@ class DefaultThemeTest extends TestCase
     {
         $this->assert($this->theme->getTheme(), has_key, 'skipped');
     }
+
+    public function testThemeHasIncomplete()
+    {
+        $this->assert($this->theme->getTheme(), has_key, 'incomplete');
+    }
 }

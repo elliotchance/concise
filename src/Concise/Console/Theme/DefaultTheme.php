@@ -7,10 +7,11 @@ class DefaultTheme
     public function getTheme()
     {
         return [
-            'success' => 'green',
-            'failure' => 'red',
-            'error'   => 'red',
-            'skipped' => 'blue',
+            'success'    => 'green',
+            'failure'    => 'red',
+            'error'      => 'red',
+            'skipped'    => 'blue',
+            'incomplete' => 'yellow',
         ];
     }
 }
