@@ -135,6 +135,7 @@ class ResultPrinterProxyTest extends TestCase
 
         $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
                               ->expect('endTest')->with($test, 0.1)
+                              ->stub('addSuccess')
                               ->done();
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->endTest($test, 0.1);
@@ -293,5 +294,18 @@ class ResultPrinterProxyTest extends TestCase
         $proxy->startTestSuite($suite);
         $proxy->endTestSuite($suite);
         $proxy->endTestSuite($suite);
+    }
+
+    public function testProxyWillCallAddSuccess()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->expect('getNumAssertions')->andReturn(1)
+                         ->done();
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinterInterface')
+                              ->expect('addSuccess')->with($testCase, 0.1)
+                              ->stub('endTest')
+                              ->done();
+        $proxy = new ResultPrinterProxy($resultPrinter);
+        $proxy->endTest($testCase, 0.1);
     }
 }

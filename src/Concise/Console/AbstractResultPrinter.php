@@ -91,6 +91,10 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     {
     }
 
+    public function addSuccess(PHPUnit_Framework_Test $test, $time)
+    {
+    }
+
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
     }

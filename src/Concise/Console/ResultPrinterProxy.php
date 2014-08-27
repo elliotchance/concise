@@ -92,6 +92,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
             ++$this->getResultPrinter()->assertionCount;
         }
         $this->getResultPrinter()->endTest($test, $time);
+        $this->getResultPrinter()->addSuccess($test, $time);
     }
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
