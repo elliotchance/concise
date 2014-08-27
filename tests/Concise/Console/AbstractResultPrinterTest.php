@@ -3,6 +3,7 @@
 namespace Concise\Console;
 
 use \Concise\TestCase;
+use PHPUnit_Runner_BaseTestRunner;
 
 class AbstractResultPrinterTest extends TestCase
 {
@@ -106,5 +107,17 @@ class AbstractResultPrinterTest extends TestCase
         $this->resultPrinter->totalTestCount = 20;
         $this->resultPrinter->riskyCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+    }
+
+    public function testAddSuccessCallsAdd()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->stub(['getNumAssertions' => 1])
+                         ->done();
+
+        $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
+                              ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $testCase, 0.1)
+                              ->done();
+        $resultPrinter->addSuccess($testCase, 0.1);
     }
 }

@@ -6,6 +6,7 @@ use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
+use PHPUnit_Runner_BaseTestRunner;
 
 abstract class AbstractResultPrinter implements ResultPrinterInterface
 {
@@ -93,6 +94,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function addSuccess(PHPUnit_Framework_Test $test, $time)
     {
+        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, $time);
     }
 
     public function endTest(PHPUnit_Framework_Test $test, $time)
@@ -104,6 +106,10 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     }
 
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+    }
+
+    public function add($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
     }
 
