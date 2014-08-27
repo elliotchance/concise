@@ -5,6 +5,7 @@ namespace Concise\Console;
 use Concise\TestCase;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit_Framework_AssertionFailedError;
 
 class AbstractResultPrinterTest extends TestCase
 {
@@ -133,5 +134,18 @@ class AbstractResultPrinterTest extends TestCase
                               ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $testCase, 0.1, $exception)
                               ->done();
         $resultPrinter->addSkippedTest($testCase, $exception, 0.1);
+    }
+
+    public function testAddFailureCallsAdd()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->stub(['getNumAssertions' => 1])
+                         ->done();
+        $exception = new PHPUnit_Framework_AssertionFailedError();
+
+        $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
+                              ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $testCase, 0.1, $exception)
+                              ->done();
+        $resultPrinter->addFailure($testCase, $exception, 0.1);
     }
 }

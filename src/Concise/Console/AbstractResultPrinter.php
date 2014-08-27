@@ -74,6 +74,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
+        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, $time, $e);
     }
 
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
