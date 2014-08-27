@@ -14,16 +14,6 @@ class Concise_ResultPrinter extends ResultPrinter
 {
     protected $width = 79;
 
-    protected $numTestsFailed = 0;
-
-    protected $numTestsErrors = 0;
-
-    protected $numTestsIncomplete = 0;
-
-    protected $numTestsRisky = 0;
-
-    protected $numTestsSkipped = 0;
-
     protected $lastUpdate;
 
     protected $issueCount = 1;
@@ -43,39 +33,36 @@ class Concise_ResultPrinter extends ResultPrinter
         return str_repeat($string, $times);
     }
 
+    protected function testsToBars($tests)
+    {
+        if ($tests <= 0) {
+            return 0;
+        }
+        $done = $this->getTestCount() / $this->getTotalTestCount();
+        return $tests / $this->getTotalTestCount() * $this->width * $done;
+    }
+
     public function update()
     {
-        $echo = '';
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $echo .= $assertionString . $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
-        $done = $this->numTestsRun / $this->getTotalTestCount();
-        $echo .= sprintf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
-            $this->numTestsRun, $this->getTotalTestCount(), floor($done * 100));
+        echo $assertionString . $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
+        $done = $this->getTestCount() / $this->getTotalTestCount();
+        printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
+            $this->getTestCount(), $this->getTotalTestCount(), floor($done * 100));
 
-        $successes = $this->numTestsRun;
-        $skipped = $incomplete = $failures = 0;
-        if($this->numTestsFailed || $this->numTestsErrors) {
-            $total = $this->numTestsFailed + $this->numTestsErrors;
-            $failures = ceil($this->width * $total / $this->getTotalTestCount());
-            $successes -= $this->numTestsFailed + $this->numTestsErrors;
-        }
-        if($this->numTestsIncomplete || $this->numTestsRisky) {
-            $total = $this->numTestsIncomplete + $this->numTestsRisky;
-            $incomplete = ceil($this->width * $total / $this->getTotalTestCount());
-            $successes -= $this->numTestsIncomplete + $this->numTestsRisky;
-        }
-        if($this->numTestsSkipped) {
-            $skipped = ceil($this->width * $this->numTestsSkipped / $this->getTotalTestCount());
-            $successes -= $this->numTestsSkipped;
-        }
-        $successes = ceil($this->width * $done) - $failures - $incomplete - $skipped;
-        $echo .= "\033[42m" . $this->repeat(' ', $successes);
-        $echo .= "\033[101m" . $this->repeat(' ', $failures);
-        $echo .= "\033[103m" . $this->repeat(' ', $incomplete);
-        $echo .= "\033[104m" . $this->repeat(' ', $skipped);
-        $echo .= "\033[0m" . $this->repeat('_', $this->width - $successes - $failures - $incomplete - $skipped) . "\n";
+        $skipped = ceil($this->testsToBars($this->getSkippedCount()));
+        $incomplete = ceil($this->testsToBars($this->getIncompleteCount() + $this->getRiskyCount()));
+        $failures = ceil($this->testsToBars($this->getFailureCount() + $this->getErrorCount()));
+        $nonsuccesses = $skipped - $incomplete - $failures;
+        $successes = ceil($this->testsToBars($this->getSuccessCount())) - $nonsuccesses;
 
-        echo $echo . "\033[2F";
+        echo "\033[102m" . $this->repeat(' ', $successes);
+        echo "\033[101m" . $this->repeat(' ', $failures);
+        echo "\033[103m" . $this->repeat(' ', $incomplete);
+        echo "\033[104m" . $this->repeat(' ', $skipped);
+        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";
+
+        echo "\033[2F";
     }
 
     protected function getFilePath($absolutePath)
@@ -128,31 +115,26 @@ class Concise_ResultPrinter extends ResultPrinter
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
         $this->add($test, $e, 1);
-        ++$this->numTestsFailed;
     }
 
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->add($test, $e, 1);
-        ++$this->numTestsErrors;
     }
 
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->add($test, $e, 3);
-        ++$this->numTestsIncomplete;
     }
 
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->add($test, $e, 3);
-        ++$this->numTestsRisky;
     }
 
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->add($test, $e, 4);
-        ++$this->numTestsSkipped;
     }
 
     public function appendTextAbove($text)
@@ -163,14 +145,7 @@ class Concise_ResultPrinter extends ResultPrinter
 
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
-        if ($test instanceof PHPUnit_Framework_TestCase) {
-            $this->numAssertions += $test->getNumAssertions();
-        }
-        else if ($test instanceof PHPUnit_Extensions_PhptTestCase) {
-            $this->numAssertions++;
-        }
-
-        ++$this->numTestsRun;
+        parent::endTest($test, $time);
         $this->update();
     }
 
