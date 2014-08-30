@@ -113,9 +113,7 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testAddSuccessCallsAdd()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->stub(['getNumAssertions' => 1])
-                         ->done();
+        $testCase = $this->getTestCaseMock();
 
         $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
                               ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $testCase, 0.1)
@@ -125,9 +123,7 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testAddSkippedCallsAdd()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->stub(['getNumAssertions' => 1])
-                         ->done();
+        $testCase = $this->getTestCaseMock();
         $exception = new Exception();
 
         $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
@@ -138,9 +134,7 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testAddFailureCallsAdd()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->stub(['getNumAssertions' => 1])
-                         ->done();
+        $testCase = $this->getTestCaseMock();
         $exception = new PHPUnit_Framework_AssertionFailedError();
 
         $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
@@ -151,14 +145,30 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testAddRiskyCallsAdd()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->stub(['getNumAssertions' => 1])
-                         ->done();
+        $testCase = $this->getTestCaseMock();
         $exception = new Exception();
 
         $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
                               ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY, $testCase, 0.1, $exception)
                               ->done();
         $resultPrinter->addRiskyTest($testCase, $exception, 0.1);
+    }
+
+    public function testAddIncompleteCallsAdd()
+    {
+        $testCase = $this->getTestCaseMock();
+        $exception = new Exception();
+
+        $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
+                              ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, $testCase, 0.1, $exception)
+                              ->done();
+        $resultPrinter->addIncompleteTest($testCase, $exception, 0.1);
+    }
+
+    protected function getTestCaseMock()
+    {
+        return $this->mock('PHPUnit_Framework_TestCase')
+                    ->stub(['getNumAssertions' => 1])
+                    ->done();
     }
 }

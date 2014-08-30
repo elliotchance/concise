@@ -83,6 +83,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
+        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, $test, $time, $e);
     }
 
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
