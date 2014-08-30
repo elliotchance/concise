@@ -165,6 +165,17 @@ class AbstractResultPrinterTest extends TestCase
         $resultPrinter->addIncompleteTest($testCase, $exception, 0.1);
     }
 
+    public function testAddErrorCallsAdd()
+    {
+        $testCase = $this->getTestCaseMock();
+        $exception = new Exception();
+
+        $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
+                              ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, $testCase, 0.1, $exception)
+                              ->done();
+        $resultPrinter->addError($testCase, $exception, 0.1);
+    }
+
     protected function getTestCaseMock()
     {
         return $this->mock('PHPUnit_Framework_TestCase')
