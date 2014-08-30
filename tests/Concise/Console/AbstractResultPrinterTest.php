@@ -148,4 +148,17 @@ class AbstractResultPrinterTest extends TestCase
                               ->done();
         $resultPrinter->addFailure($testCase, $exception, 0.1);
     }
+
+    public function testAddRiskyCallsAdd()
+    {
+        $testCase = $this->mock('PHPUnit_Framework_TestCase')
+                         ->stub(['getNumAssertions' => 1])
+                         ->done();
+        $exception = new Exception();
+
+        $resultPrinter = $this->niceMock('Concise\Console\AbstractResultPrinter')
+                              ->expect('add')->with(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY, $testCase, 0.1, $exception)
+                              ->done();
+        $resultPrinter->addRiskyTest($testCase, $exception, 0.1);
+    }
 }

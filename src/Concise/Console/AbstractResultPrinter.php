@@ -92,6 +92,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
 
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
+        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY, $test, $time, $e);
     }
 
     public function addSuccess(PHPUnit_Framework_Test $test, $time)
