@@ -16,7 +16,7 @@ class CommandTest extends TestCase
         $command = $this->niceMock('Concise\Console\Command')
                         ->expose('createRunner')
                         ->done();
-        $this->assert($command->createRunner(), instance_of, 'Concise\Console\TestRunner');
+        $this->assert($command->createRunner(), instance_of, 'Concise\Console\TestRunner\DefaultTestRunner');
     }
 
     public function testPrinterUsesProxy()
@@ -24,6 +24,6 @@ class CommandTest extends TestCase
         $command = $this->niceMock('Concise\Console\Command')
                         ->expose('createRunner')
                         ->done();
-        $this->assert($command->createRunner()->getPrinter(), instance_of, 'Concise\Console\ResultPrinterProxy');
+        $this->assert($command->createRunner()->getPrinter(), instance_of, 'Concise\Console\ResultPrinter\ResultPrinterProxy');
     }
 }

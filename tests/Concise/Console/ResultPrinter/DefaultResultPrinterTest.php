@@ -1,15 +1,15 @@
 <?php
 
-namespace Concise\Console;
+namespace Concise\Console\ResultPrinter;
 
 use \Concise\TestCase;
 
-class ResultPrinterTest extends TestCase
+class DefaultResultPrinterTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->resultPrinter = new ResultPrinter();
+        $this->resultPrinter = new DefaultResultPrinter();
     }
 
     public function testWritingWillEchoDirectly()
@@ -21,6 +21,6 @@ class ResultPrinterTest extends TestCase
     public function testWillPrintThreeBlankLinesAtTheEndOfTheTestSuite()
     {
         $this->expectOutputString("\n\n\n");
-        $this->resultPrinter->finish();
+        $this->resultPrinter->end();
     }
 }

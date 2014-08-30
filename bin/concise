@@ -3,14 +3,14 @@
 
 require_once('vendor/autoload.php');
 
-use \Concise\Console\ResultPrinter;
-use \Concise\Console\TestRunner;
-use \Concise\Console\ResultPrinterProxy;
+use \Concise\Console\ResultPrinter\DefaultResultPrinter;
+use \Concise\Console\TestRunner\DefaultTestRunner;
+use \Concise\Console\ResultPrinter\ResultPrinterProxy;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
-class Concise_ResultPrinter extends ResultPrinter
+class Concise_ResultPrinter extends DefaultResultPrinter
 {
     protected $width = 79;
 
@@ -39,7 +39,26 @@ class Concise_ResultPrinter extends ResultPrinter
             return 0;
         }
         $done = $this->getTestCount() / $this->getTotalTestCount();
-        return $tests / $this->getTotalTestCount() * $this->width * $done;
+        return ceil($tests / $this->getTotalTestCount() * $this->width * $done);
+    }
+
+    protected function drawProgressBar()
+    {
+        $skipped = $this->testsToBars($this->getSkippedCount());
+        $incomplete = $this->testsToBars($this->getIncompleteCount() + $this->getRiskyCount());
+        $failures = $this->testsToBars($this->getFailureCount() + $this->getErrorCount());
+        $nonsuccesses = $skipped + $incomplete + $failures;
+        $successes = min($this->testsToBars($this->getSuccessCount()) - $nonsuccesses, $this->width);
+
+        if ($this->getTestCount() === $this->getTotalTestCount()) {
+            $successes += $this->width - $successes - $nonsuccesses;
+        }
+
+        echo "\033[102m" . $this->repeat(' ', $successes);
+        echo "\033[101m" . $this->repeat(' ', $failures);
+        echo "\033[103m" . $this->repeat(' ', $incomplete);
+        echo "\033[104m" . $this->repeat(' ', $skipped);
+        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";
     }
 
     public function update()
@@ -50,17 +69,7 @@ class Concise_ResultPrinter extends ResultPrinter
         printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
             $this->getTestCount(), $this->getTotalTestCount(), floor($done * 100));
 
-        $skipped = ceil($this->testsToBars($this->getSkippedCount()));
-        $incomplete = ceil($this->testsToBars($this->getIncompleteCount() + $this->getRiskyCount()));
-        $failures = ceil($this->testsToBars($this->getFailureCount() + $this->getErrorCount()));
-        $nonsuccesses = $skipped - $incomplete - $failures;
-        $successes = ceil($this->testsToBars($this->getSuccessCount())) - $nonsuccesses;
-
-        echo "\033[102m" . $this->repeat(' ', $successes);
-        echo "\033[101m" . $this->repeat(' ', $failures);
-        echo "\033[103m" . $this->repeat(' ', $incomplete);
-        echo "\033[104m" . $this->repeat(' ', $skipped);
-        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";
+        $this->drawProgressBar();
 
         echo "\033[2F";
     }
@@ -112,40 +121,30 @@ class Concise_ResultPrinter extends ResultPrinter
         ++$this->issueCount;
     }
 
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
-    {
-        $this->add($test, $e, 1);
-    }
-
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add($test, $e, 1);
-    }
-
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add($test, $e, 3);
-    }
-
-    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add($test, $e, 3);
-    }
-
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add($test, $e, 4);
-    }
-
     public function appendTextAbove($text)
     {
         echo str_replace("\n", "\033[K\n", $text);
         $this->update();
     }
 
-    public function endTest(PHPUnit_Framework_Test $test, $time)
+    public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
-        parent::endTest($test, $time);
+        parent::endTest($status, $test, $time, $e);
+        switch ($status) {
+            case PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_ERROR:
+                $this->add($test, $e, 1);
+                break;
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
+                $this->add($test, $e, 3);
+                break;
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
+                $this->add($test, $e, 4);
+                break;
+        }
         $this->update();
     }
 
@@ -153,6 +152,7 @@ class Concise_ResultPrinter extends ResultPrinter
     {
         parent::startTestSuite($suite);
         $this->numTestsWidth = strlen($this->getTotalTestCount());
+        $this->update();
     }
 }
 
@@ -164,7 +164,7 @@ class Concise_Command extends PHPUnit_TextUI_Command
 {
     protected function createRunner()
     {
-        $runner = new TestRunner();
+        $runner = new DefaultTestRunner();
         $runner->setPrinter(new Concise_ResultPrinterProxy(new Concise_ResultPrinter()));
         return $runner;
     }

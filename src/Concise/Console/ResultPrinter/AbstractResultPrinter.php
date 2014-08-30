@@ -1,14 +1,13 @@
 <?php
 
-namespace Concise\Console;
+namespace Concise\Console\ResultPrinter;
 
 use Exception;
-use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
-use PHPUnit_Runner_BaseTestRunner;
+use Concise\Console\TestRunner\TestResultDelegateInterface;
 
-abstract class AbstractResultPrinter implements ResultPrinterInterface
+abstract class AbstractResultPrinter implements TestResultDelegateInterface, StatisticsInterface
 {
     public $failureCount = 0;
 
@@ -72,37 +71,7 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
         return $this->assertionCount;
     }
 
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, $time, $e);
-    }
-
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, $test, $time, $e);
-    }
-
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, $test, $time, $e);
-    }
-
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, $time, $e);
-    }
-
-    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY, $test, $time, $e);
-    }
-
-    public function addSuccess(PHPUnit_Framework_Test $test, $time)
-    {
-        $this->add(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, $time);
-    }
-
-    public function endTest(PHPUnit_Framework_Test $test, $time)
+    public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
     }
 
@@ -111,10 +80,6 @@ abstract class AbstractResultPrinter implements ResultPrinterInterface
     }
 
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
-    {
-    }
-
-    public function add($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
     }
 
