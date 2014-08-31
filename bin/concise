@@ -14,18 +14,9 @@ echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n"
 
 class Concise_ResultPrinter extends DefaultResultPrinter
 {
-    protected $width = 79;
-
-    protected $lastUpdate;
-
     protected $issueCount = 1;
 
     protected $numTestsWidth;
-
-    public function __construct()
-    {
-        $this->width = exec('tput cols');
-    }
 
     protected function repeat($string, $times)
     {
@@ -33,15 +24,6 @@ class Concise_ResultPrinter extends DefaultResultPrinter
             return '';
         }
         return str_repeat($string, $times);
-    }
-
-    protected function testsToBars($tests)
-    {
-        if ($tests <= 0) {
-            return 0;
-        }
-        $done = $this->getTestCount() / $this->getTotalTestCount();
-        return ceil($tests / $this->getTotalTestCount() * $this->width * $done);
     }
 
     protected function drawProgressBar()

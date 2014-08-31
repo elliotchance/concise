@@ -4,12 +4,20 @@ namespace Concise\Console\ResultPrinter;
 
 use \Concise\TestCase;
 
+class DefaultResultPrinterStub extends DefaultResultPrinter
+{
+    public function getWidth()
+    {
+        return $this->width;
+    }
+}
+
 class DefaultResultPrinterTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->resultPrinter = new DefaultResultPrinter();
+        $this->resultPrinter = new DefaultResultPrinterStub();
     }
 
     public function testWritingWillEchoDirectly()
@@ -22,5 +30,10 @@ class DefaultResultPrinterTest extends TestCase
     {
         $this->expectOutputString("\n\n\n");
         $this->resultPrinter->end();
+    }
+
+    public function testWillGetConsoleWidthOnStartup()
+    {
+        $this->assert($this->resultPrinter->getWidth(), equals, exec('tput cols'));
     }
 }
