@@ -22,6 +22,7 @@ class TraceSimplifierTest extends TestCase
         $this->assert($this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/foo.php',
+                'function' => 'myFunction',
             ),
         )), contains_string, 'foo.php');
     }
@@ -31,6 +32,7 @@ class TraceSimplifierTest extends TestCase
         $this->assert($this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/bin/concise',
+                'function' => 'myFunction',
             ),
         )), equals, '');
     }
@@ -40,6 +42,7 @@ class TraceSimplifierTest extends TestCase
         $this->assert($this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/vendor/a',
+                'function' => 'myFunction',
             ),
         )), equals, '');
     }
@@ -48,6 +51,7 @@ class TraceSimplifierTest extends TestCase
     {
         $this->assert($this->simplifier->render(array(
             array(
+                'function' => 'myFunction',
             ),
         )), contains_string, '(unknown file)');
     }
@@ -56,6 +60,7 @@ class TraceSimplifierTest extends TestCase
     {
         $this->assert($this->simplifier->render(array(
             array(
+                'function' => 'myFunction',
             ),
         )), contains_string, 'Line ?');
     }
@@ -65,6 +70,7 @@ class TraceSimplifierTest extends TestCase
         $this->assert($this->simplifier->render(array(
             array(
                 'line' => 123,
+                'function' => 'myFunction',
             ),
         )), contains_string, 'Line 123');
     }
@@ -74,11 +80,22 @@ class TraceSimplifierTest extends TestCase
         $result = $this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/foo.php',
+                'function' => 'myFunction',
             ),
             array(
                 'file' => getcwd() . '/foo.php',
+                'function' => 'myFunction',
             ),
         ));
         $this->assert(substr_count($result, 'foo.php'), equals, 1);
+    }
+
+    public function testWillIncludeTheFunctionName()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+                'function' => 'myFunction',
+            ),
+        )), contains_string, 'myFunction()');
     }
 }
