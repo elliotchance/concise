@@ -98,4 +98,14 @@ class TraceSimplifierTest extends TestCase
             ),
         )), contains_string, 'myFunction()');
     }
+
+    public function testWillIncludeClassIfAvailable()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+                'function' => 'myFunction',
+                'class'    => 'MyClass',
+            ),
+        )), contains_string, 'MyClass');
+    }
 }
