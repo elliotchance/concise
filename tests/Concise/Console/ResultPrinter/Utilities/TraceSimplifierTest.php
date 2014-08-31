@@ -43,4 +43,12 @@ class TraceSimplifierTest extends TestCase
             ),
         )), equals, '');
     }
+
+    public function testUsesUnknownFileIfNotSpecified()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+            ),
+        )), contains_string, '(unknown file)');
+    }
 }

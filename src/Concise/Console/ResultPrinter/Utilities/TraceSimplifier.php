@@ -10,6 +10,10 @@ class TraceSimplifier
         $message = '';
 
         foreach ($trace as $line) {
+            if (!array_key_exists('file', $line)) {
+                $line['file'] = '(unknown file)';
+            }
+
             $path = $simplifier->process($line['file']);
             if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 continue;
