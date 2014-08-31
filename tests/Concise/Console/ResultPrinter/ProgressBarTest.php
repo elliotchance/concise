@@ -27,4 +27,15 @@ class ProgressBarTest extends TestCase
         ));
         $this->assert($result, equals, (string) $c('   ')->highlight('green') . (string) $c('   ')->highlight('red'));
     }
+
+    public function testPartsMustBeProportionalToTheTotal()
+    {
+        $c = new Color();
+        $progressBar = new ProgressBar();
+        $result = $progressBar->render(5, array(
+            'green' => 60,
+            'red'   => 40,
+        ));
+        $this->assert($result, equals, (string) $c('   ')->highlight('green') . (string) $c('  ')->highlight('red'));
+    }
 }
