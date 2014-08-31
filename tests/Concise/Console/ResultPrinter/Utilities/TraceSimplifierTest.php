@@ -68,4 +68,17 @@ class TraceSimplifierTest extends TestCase
             ),
         )), contains_string, 'Line 123');
     }
+
+    public function testWillGroupLinesUnderTheSameHeadingIfTheyAreTheSameFile()
+    {
+        $result = $this->simplifier->render(array(
+            array(
+                'file' => getcwd() . '/foo.php',
+            ),
+            array(
+                'file' => getcwd() . '/foo.php',
+            ),
+        ));
+        $this->assert(substr_count($result, 'foo.php'), equals, 1);
+    }
 }

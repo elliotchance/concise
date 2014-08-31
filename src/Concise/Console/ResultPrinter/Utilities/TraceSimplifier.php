@@ -23,6 +23,7 @@ class TraceSimplifier
     public function render(array $trace)
     {
         $message = '';
+        $lastFile = '';
 
         foreach ($trace as $line) {
             if (!array_key_exists('line', $line)) {
@@ -33,8 +34,11 @@ class TraceSimplifier
             if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 continue;
             }
-            $message .= $path;
+            if ($lastFile != $path) {
+                $message .= "$path\n";
+            }
             $message .= "    Line {$line['line']}: ";
+            $lastFile = $path;
         }
 
         return $message;
