@@ -6,16 +6,20 @@ use Concise\TestCase;
 
 class TraceSimplifierTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->simplifier = new TraceSimplifier();
+    }
+
     public function testZeroItemsInTraceWillNotRenderAnything()
     {
-        $simplifier = new TraceSimplifier();
-        $this->assert($simplifier->render(array()), equals, '');
+        $this->assert($this->simplifier->render(array()), equals, '');
     }
 
     public function testOneItemWillPrintSimplifiedFile()
     {
-        $simplifier = new TraceSimplifier();
-        $this->assert($simplifier->render(array(
+        $this->assert($this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/foo.php',
             ),
@@ -24,10 +28,18 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillSkipTraceLineIfItsTheConciseExecutable()
     {
-        $simplifier = new TraceSimplifier();
-        $this->assert($simplifier->render(array(
+        $this->assert($this->simplifier->render(array(
             array(
                 'file' => getcwd() . '/bin/concise',
+            ),
+        )), equals, '');
+    }
+
+    public function testWillSkipTraceLineIfThePathIsInTheVendorFolder()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+                'file' => getcwd() . '/vendor/a',
             ),
         )), equals, '');
     }

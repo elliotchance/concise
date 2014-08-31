@@ -11,7 +11,7 @@ class TraceSimplifier
 
         foreach ($trace as $line) {
             $path = $simplifier->process($line['file']);
-            if ($path == 'bin/concise') {
+            if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 continue;
             }
             $message .= $simplifier->process($line['file']);
