@@ -6,10 +6,17 @@ class TraceSimplifier
 {
     public function render(array $trace)
     {
-        if ($trace) {
-            $simplifier = new FilePathSimplifier();
+        $simplifier = new FilePathSimplifier();
+        $message = '';
 
-            return $simplifier->process($trace[0]['file']);
+        foreach ($trace as $line) {
+            $path = $simplifier->process($line['file']);
+            if ($path == 'bin/concise') {
+                continue;
+            }
+            $message .= $simplifier->process($line['file']);
         }
+
+        return $message;
     }
 }

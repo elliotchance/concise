@@ -17,8 +17,18 @@ class TraceSimplifierTest extends TestCase
         $simplifier = new TraceSimplifier();
         $this->assert($simplifier->render(array(
             array(
-                'file' => __DIR__ . '/foo.php',
+                'file' => getcwd() . '/foo.php',
             ),
         )), contains_string, 'foo.php');
+    }
+
+    public function testWillSkipTraceLineIfItsTheConciseExecutable()
+    {
+        $simplifier = new TraceSimplifier();
+        $this->assert($simplifier->render(array(
+            array(
+                'file' => getcwd() . '/bin/concise',
+            ),
+        )), equals, '');
     }
 }

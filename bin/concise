@@ -77,6 +77,21 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
+    protected function renderTraceLine(array $line, $path, $lastFile)
+    {
+        $message = '';
+        if($lastFile != $line['file']) {
+            $message .= " \033[90m$path\033[0m\n";
+        }
+        $message .= "    \033[90mLine {$line['line']}: ";
+        if(array_key_exists('class', $line)) {
+            $message .= "{$line['class']}{$line['type']}";
+        }
+        $message .= "{$line['function']}()\033[0m\n";
+
+        return $message;
+    }
+
     protected function renderTrace(Exception $e)
     {
         $simplifier = new FilePathSimplifier();
@@ -91,18 +106,11 @@ class Concise_ResultPrinter extends DefaultResultPrinter
             }
 
             $path = $simplifier->process($line['file']);
-            if($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
+            if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 $lastFile = $line['file'];
                 continue;
             }
-            if($lastFile != $line['file']) {
-                $message .= " \033[90m$path\033[0m\n";
-            }
-            $message .= "    \033[90mLine {$line['line']}: ";
-            if(array_key_exists('class', $line)) {
-                $message .= "{$line['class']}{$line['type']}";
-            }
-            $message .= "{$line['function']}()\033[0m\n";
+            $message .= $this->renderTraceLine($line, $path, $lastFile);
             $lastFile = $line['file'];
         }
         return $message;
