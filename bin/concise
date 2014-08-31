@@ -7,6 +7,7 @@ use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
+use Concise\Console\ResultPrinter\Utilities\FilePathSimplifier;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
@@ -73,11 +74,8 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
     protected function getFilePath($absolutePath)
     {
-        $cwd = getcwd();
-        if (substr($absolutePath, 0, strlen($cwd)) === $cwd) {
-            return substr($absolutePath, strlen($cwd) + 1);
-        }
-        return $absolutePath;
+        $simplifier = new FilePathSimplifier();
+        return $simplifier->process($absolutePath);
     }
 
     protected function prefixLines($prefix, $lines)
