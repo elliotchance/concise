@@ -18,7 +18,7 @@ class RenderIssueTest extends TestCase
         parent::setUp();
         $this->issue = new RenderIssue();
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
-                           ->stub(['getName' => 'foo'])
+                           ->stub(array('getName' => 'foo'))
                            ->done();
         $this->exception = new Exception('foo bar');
     }

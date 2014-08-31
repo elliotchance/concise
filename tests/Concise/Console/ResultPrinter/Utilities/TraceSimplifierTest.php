@@ -59,4 +59,13 @@ class TraceSimplifierTest extends TestCase
             ),
         )), contains_string, 'Line ?');
     }
+
+    public function testWillIncludeLineNumber()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+                'line' => 123,
+            ),
+        )), contains_string, 'Line 123');
+    }
 }

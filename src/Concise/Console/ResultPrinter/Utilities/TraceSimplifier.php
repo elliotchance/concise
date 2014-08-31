@@ -4,22 +4,37 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 class TraceSimplifier
 {
+    protected $simplifier;
+
+    public function __construct()
+    {
+        $this->simplifier = new FilePathSimplifier();
+    }
+
+    protected function getFile(array $line)
+    {
+        if (!array_key_exists('file', $line)) {
+            $line['file'] = '(unknown file)';
+        }
+
+        return $this->simplifier->process($line['file']);
+    }
+
     public function render(array $trace)
     {
-        $simplifier = new FilePathSimplifier();
         $message = '';
 
         foreach ($trace as $line) {
-            if (!array_key_exists('file', $line)) {
-                $line['file'] = '(unknown file)';
+            if (!array_key_exists('line', $line)) {
+                $line['line'] = '?';
             }
 
-            $path = $simplifier->process($line['file']);
+            $path = $this->getFile($line);
             if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 continue;
             }
-            $message .= $simplifier->process($line['file']);
-            $message .= "    Line ?: ";
+            $message .= $path;
+            $message .= "    Line {$line['line']}: ";
         }
 
         return $message;
