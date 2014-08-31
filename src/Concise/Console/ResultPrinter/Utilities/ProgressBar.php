@@ -14,7 +14,7 @@ class ProgressBar
 
     protected function valueToBars($value)
     {
-        return $value / $this->total * $this->size;
+        return ceil($value / $this->total * $this->size);
     }
 
     protected function calculateTotal(array $parts)
@@ -22,12 +22,21 @@ class ProgressBar
         $this->total = array_sum($parts);
     }
 
-    protected function fillToSize($currentProgressBar, Color $c)
+    protected function colorSpaces($length, $colorName)
+    {
+        $c = new Color();
+
+        return (string) $c(str_repeat(' ', $length))->highlight($colorName);
+    }
+
+    protected function fillToSize($currentProgressBar)
     {
         reset($this->parts);
         $fill = $this->size - substr_count($currentProgressBar, ' ');
-        if ($fill) {
-            $currentProgressBar = (string) $c(str_repeat(' ', $fill))->highlight(key($this->parts)) . (string) $currentProgressBar;
+        if ($fill > 0) {
+            $currentProgressBar = $this->colorSpaces($fill, key($this->parts)) . (string) $currentProgressBar;
+        } elseif ($fill < 0) {
+            $currentProgressBar = preg_replace('/\s\s/', ' ', $currentProgressBar, -$fill);
         }
 
         return $currentProgressBar;
@@ -39,15 +48,14 @@ class ProgressBar
         $this->size = $size;
         $this->parts = $parts;
 
-        $c = new Color();
         $r = '';
 
         foreach ($parts as $color => $x) {
             $bars = $this->valueToBars($x);
-            $r .= $c(str_repeat(' ', $bars))->highlight($color);
+            $r .= $this->colorSpaces($bars, $color);
         }
 
-        $r = $this->fillToSize($r, $c);
+        $r = $this->fillToSize($r);
 
         return $r;
     }
