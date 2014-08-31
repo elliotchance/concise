@@ -14,7 +14,7 @@ class ProgressBar
 
     protected function valueToBars($value)
     {
-        if ($value === 0) {
+        if ($value <= 0) {
             return 0;
         }
 

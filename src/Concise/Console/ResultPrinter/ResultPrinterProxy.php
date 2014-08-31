@@ -96,7 +96,7 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
             ++$this->getResultPrinter()->assertionCount;
         }
 
-        if ($this->totalSuccesses === $this->getResultPrinter()->getSuccessCount()) {
+        if ($this->totalSuccesses < $this->getResultPrinter()->getSuccessCount()) {
             $this->getResultPrinter()->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, $time);
         }
         $this->totalSuccesses = $this->getResultPrinter()->getSuccessCount();

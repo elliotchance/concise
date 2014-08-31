@@ -64,4 +64,13 @@ class ProgressBarTest extends ProgressBarTestCase
         ));
         $this->assert($result, equals, $this->color(0, 'yellow') . $this->color(5, 'blue'));
     }
+
+    public function testNegativeValuesAreAllowed()
+    {
+        $result = $this->progressBar->render(5, array(
+            'yellow' => -5,
+            'blue'   => 19,
+        ));
+        $this->assert($result, equals, $this->color(0, 'yellow') . $this->color(5, 'blue'));
+    }
 }

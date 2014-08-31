@@ -62,43 +62,43 @@ class AbstractResultPrinterTest extends TestCase
         $this->assert($this->resultPrinter->getAssertionCount(), exactly_equals, 0);
     }
 
-    public function testSuccessCountIsTheTotalTestCount()
+    public function testSuccessCountIsTheTestCount()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 20);
     }
 
     public function testSuccessCountWillNotIncludeSkipped()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->resultPrinter->skippedCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
 
     public function testSuccessCountWillNotIncludeFailures()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->resultPrinter->failureCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
 
     public function testSuccessCountWillNotIncludeErrors()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->resultPrinter->errorCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
 
     public function testSuccessCountWillNotIncludeIncompleteTests()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->resultPrinter->incompleteCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
 
     public function testSuccessCountWillNotIncludeRiskyTests()
     {
-        $this->resultPrinter->totalTestCount = 20;
+        $this->resultPrinter->testCount = 20;
         $this->resultPrinter->riskyCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
