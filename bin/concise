@@ -45,24 +45,8 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
     protected function drawProgressBar()
     {
-        /*$skipped = $this->testsToBars($this->getSkippedCount());
-        $incomplete = $this->testsToBars($this->getIncompleteCount() + $this->getRiskyCount());
-        $failures = $this->testsToBars($this->getFailureCount() + $this->getErrorCount());
-        $nonsuccesses = $skipped + $incomplete + $failures;
-        $successes = min($this->testsToBars($this->getSuccessCount()) - $nonsuccesses, $this->width);
-
-        if ($this->getTestCount() === $this->getTotalTestCount()) {
-            $successes += $this->width - $successes - $nonsuccesses;
-        }
-
-        echo "\033[102m" . $this->repeat(' ', $successes);
-        echo "\033[101m" . $this->repeat(' ', $failures);
-        echo "\033[103m" . $this->repeat(' ', $incomplete);
-        echo "\033[104m" . $this->repeat(' ', $skipped);
-        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";*/
-
         $progressBar = new ProportionalProgressBar();
-        echo $progressBar->renderProportional($this->width, $this->getTotalTestCount(), array(
+        return $progressBar->renderProportional($this->width, $this->getTotalTestCount(), array(
             'green'   => $this->getSuccessCount(),
             'yellow'  => $this->getIncompleteCount() + $this->getRiskyCount(),
             'blue'    => $this->getSkippedCount(),
@@ -70,16 +54,20 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         )) . "\n";
     }
 
-    public function update()
+    protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        echo $assertionString . $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
         $done = $this->getTestCount() / $this->getTotalTestCount();
-        printf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
+        $assertionString .= $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
+        $assertionString .= sprintf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
             $this->getTestCount(), $this->getTotalTestCount(), floor($done * 100));
+        return $assertionString;
+    }
 
-        $this->drawProgressBar();
-
+    public function update()
+    {
+        echo $this->getAssertionString();
+        echo $this->drawProgressBar();
         echo "\033[2F";
     }
 
