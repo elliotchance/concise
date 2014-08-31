@@ -9,7 +9,12 @@ class ProgressBar
     public function render($size, array $parts)
     {
         $c = new Color();
+        $r = '';
 
-        return $c(str_repeat(' ', $size))->bg_green;
+        foreach ($parts as $color => $x) {
+            $r .= $c(str_repeat(' ', $x))->highlight($color);
+        }
+
+        return $r;
     }
 }
