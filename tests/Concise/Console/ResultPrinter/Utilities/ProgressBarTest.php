@@ -2,10 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\TestCase;
-use Colors\Color;
-
-class ProgressBarTest extends TestCase
+class ProgressBarTest extends ProgressBarTestCase
 {
     protected $progressBar;
 
@@ -59,10 +56,12 @@ class ProgressBarTest extends TestCase
         $this->assert($result, equals, $this->color(1, 'yellow') . $this->color(4, 'blue'));
     }
 
-    protected function color($size, $color)
+    public function testZeroIsAllowed()
     {
-        $c = new Color();
-
-        return (string) $c(str_repeat(' ', $size))->highlight($color);
+        $result = $this->progressBar->render(5, array(
+            'yellow' => 0,
+            'blue'   => 19,
+        ));
+        $this->assert($result, equals, $this->color(0, 'yellow') . $this->color(5, 'blue'));
     }
 }

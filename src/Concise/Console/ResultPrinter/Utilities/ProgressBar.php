@@ -14,6 +14,10 @@ class ProgressBar
 
     protected function valueToBars($value)
     {
+        if ($value === 0) {
+            return 0;
+        }
+
         return ceil($value / $this->total * $this->size);
     }
 

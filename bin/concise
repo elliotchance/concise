@@ -3,9 +3,10 @@
 
 require_once('vendor/autoload.php');
 
-use \Concise\Console\ResultPrinter\DefaultResultPrinter;
-use \Concise\Console\TestRunner\DefaultTestRunner;
-use \Concise\Console\ResultPrinter\ResultPrinterProxy;
+use Concise\Console\ResultPrinter\DefaultResultPrinter;
+use Concise\Console\TestRunner\DefaultTestRunner;
+use Concise\Console\ResultPrinter\ResultPrinterProxy;
+use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
@@ -44,7 +45,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
     protected function drawProgressBar()
     {
-        $skipped = $this->testsToBars($this->getSkippedCount());
+        /*$skipped = $this->testsToBars($this->getSkippedCount());
         $incomplete = $this->testsToBars($this->getIncompleteCount() + $this->getRiskyCount());
         $failures = $this->testsToBars($this->getFailureCount() + $this->getErrorCount());
         $nonsuccesses = $skipped + $incomplete + $failures;
@@ -58,7 +59,15 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         echo "\033[101m" . $this->repeat(' ', $failures);
         echo "\033[103m" . $this->repeat(' ', $incomplete);
         echo "\033[104m" . $this->repeat(' ', $skipped);
-        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";
+        echo "\033[0m" . $this->repeat('_', $this->width - $successes - $nonsuccesses) . "\n";*/
+
+        $progressBar = new ProportionalProgressBar();
+        echo $progressBar->renderProportional($this->width, $this->getTotalTestCount(), array(
+            'green'   => $this->getSuccessCount(),
+            'yellow'  => $this->getIncompleteCount() + $this->getRiskyCount(),
+            'blue'    => $this->getSkippedCount(),
+            'red'     => $this->getFailureCount() + $this->getErrorCount(),
+        )) . "\n";
     }
 
     public function update()
