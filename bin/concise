@@ -83,7 +83,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
-    protected function add(PHPUnit_Framework_Test $test, Exception $e, $color)
+    protected function add(PHPUnit_Framework_TestCase $test, Exception $e, $color)
     {
         $top = "{$this->issueCount}. \033[9{$color};4m" . get_class($test) . "::" . $test->getName() . "\n";
         $message = " " . $e->getMessage() . "\n\n";

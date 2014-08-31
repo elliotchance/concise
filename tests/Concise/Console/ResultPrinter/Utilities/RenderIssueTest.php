@@ -6,18 +6,28 @@ use Concise\TestCase;
 
 class RenderIssueTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->issue = new RenderIssue();
+        $this->test = $this->mock('PHPUnit_Framework_TestCase')
+                           ->stub(['getName' => 'foo'])
+                           ->done();
+    }
+
     public function testStartsWithTheIssueNumber()
     {
-        $issue = new RenderIssue();
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
-        $this->assert($issue->render(123, $test), starts_with, '123. ');
+        $this->assert($this->issue->render(123, $this->test), starts_with, '123. ');
     }
 
     public function testIncludesTestClass()
     {
-        $issue = new RenderIssue();
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
-        $class = get_class($test);
-        $this->assert($issue->render(123, $test), contains_string, $class);
+        $class = get_class($this->test);
+        $this->assert($this->issue->render(123, $this->test), contains_string, $class);
+    }
+
+    public function testIncludesTheMethodName()
+    {
+        $this->assert($this->issue->render(123, $this->test), contains_string, 'foo');
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use PHPUnit_Framework_Test;
+use PHPUnit_Framework_TestCase;
 
 class RenderIssue
 {
-    public function render($issueNumber, PHPUnit_Framework_Test $test)
+    public function render($issueNumber, PHPUnit_Framework_TestCase $test)
     {
-        return "$issueNumber. " . get_class($test);
+        return "$issueNumber. " . get_class($test) . '::' . $test->getName();
     }
 }
