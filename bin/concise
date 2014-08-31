@@ -72,21 +72,15 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         echo "\033[2F";
     }
 
-    protected function getFilePath($absolutePath)
-    {
-        $simplifier = new FilePathSimplifier();
-        return $simplifier->process($absolutePath);
-    }
-
     protected function prefixLines($prefix, $lines)
     {
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
-    protected function add(PHPUnit_Framework_TestCase $test, Exception $e, $color)
+    protected function renderTrace(Exception $e)
     {
-        $top = "{$this->issueCount}. \033[9{$color};4m" . get_class($test) . "::" . $test->getName() . "\n";
-        $message = " " . $e->getMessage() . "\n\n";
+        $simplifier = new FilePathSimplifier();
+        $message = '';
         $lastFile = '';
         foreach($e->getTrace() as $line) {
             if(!array_key_exists('file', $line)) {
@@ -96,7 +90,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
                 $line['line'] = '?';
             }
 
-            $path = $this->getFilePath($line['file']);
+            $path = $simplifier->process($line['file']);
             if($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
                 continue;
             }
@@ -110,6 +104,15 @@ class Concise_ResultPrinter extends DefaultResultPrinter
             $message .= "{$line['function']}()\033[0m\n";
             $lastFile = $line['file'];
         }
+        return $message;
+    }
+
+    protected function add(PHPUnit_Framework_TestCase $test, Exception $e, $color)
+    {
+        $top = "{$this->issueCount}. \033[9{$color};4m" . get_class($test) . "::" . $test->getName() . "\n";
+        $message = " " . $e->getMessage() . "\n\n";
+        $message .= $this->renderTrace($e);
+        
         $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m";
         $message = $this->prefixLines($prefix, rtrim($message, "\n"));
         $this->appendTextAbove("$top\n$message\n\n");

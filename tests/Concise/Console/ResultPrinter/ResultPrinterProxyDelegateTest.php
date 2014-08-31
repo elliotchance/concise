@@ -16,7 +16,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testStartTestSuiteWillCallResultPrinter()
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
-                              ->stub(array('count' => 0)
+                              ->stub(array('count' => 0))
                               ->done();
 
         $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
@@ -115,7 +115,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testFinishWillBeCalledWithEndTestSuite()
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
-                      ->stub(array('count' => 0)
+                      ->stub(array('count' => 0))
                       ->done();
         $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
                               ->expect('end')
@@ -130,7 +130,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testEndTestSuiteWillBeCalledInResultPrinter()
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
-                      ->stub(array('count' => 0)
+                      ->stub(array('count' => 0))
                       ->done();
         $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
                               ->expect('endTestSuite')->with($suite)
@@ -145,7 +145,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testFinishWillBeOnlyBeCalledOnce()
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
-                      ->stub(array('count' => 0)
+                      ->stub(array('count' => 0))
                       ->done();
         $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
                               ->expect('end')
