@@ -92,6 +92,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
             $path = $simplifier->process($line['file']);
             if($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
+                $lastFile = $line['file'];
                 continue;
             }
             if($lastFile != $line['file']) {

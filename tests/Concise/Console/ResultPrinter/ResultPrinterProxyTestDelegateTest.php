@@ -17,7 +17,7 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
 
     protected function getProxyThatExpectsStatus($expectedStatus)
     {
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('endTest')->with($expectedStatus, $this->test, 0.1, $this->e)
                               ->done();
 

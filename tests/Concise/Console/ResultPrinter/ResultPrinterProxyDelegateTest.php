@@ -68,7 +68,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')
-                         ->stub(['getNumAssertions' => 123])
+                         ->stub(array('getNumAssertions' => 123))
                          ->done();
         $proxy = new ResultPrinterProxy();
         $proxy->endTest($testCase, 0);
