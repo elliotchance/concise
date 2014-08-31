@@ -57,7 +57,7 @@ class TraceSimplifier
         }
         $this->message .= "    Line {$line['line']}: ";
         if (array_key_exists('class', $line)) {
-            $this->message .= "{$line['class']}";
+            $this->message .= "{$line['class']}{$line['type']}";
         }
         $this->message .= "{$line['function']}()\n";
         $this->lastFile = $path;

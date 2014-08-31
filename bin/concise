@@ -7,7 +7,7 @@ use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
-use Concise\Console\ResultPrinter\Utilities\FilePathSimplifier;
+use Concise\Console\ResultPrinter\Utilities\TraceSimplifier;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
@@ -77,52 +77,14 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
-    protected function renderTraceLine(array $line, $path, $lastFile)
-    {
-        $message = '';
-        if($lastFile != $line['file']) {
-            $message .= " \033[90m$path\033[0m\n";
-        }
-        $message .= "    \033[90mLine {$line['line']}: ";
-        if(array_key_exists('class', $line)) {
-            $message .= "{$line['class']}{$line['type']}";
-        }
-        $message .= "{$line['function']}()\033[0m\n";
-
-        return $message;
-    }
-
-    protected function renderTrace(Exception $e)
-    {
-        $simplifier = new FilePathSimplifier();
-        $message = '';
-        $lastFile = '';
-        foreach($e->getTrace() as $line) {
-            if(!array_key_exists('file', $line)) {
-                $line['file'] = '(unknown file)';
-            }
-            if(!array_key_exists('line', $line)) {
-                $line['line'] = '?';
-            }
-
-            $path = $simplifier->process($line['file']);
-            if ($path == 'bin/concise' || substr($path, 0, 7) == 'vendor/') {
-                $lastFile = $line['file'];
-                continue;
-            }
-            $message .= $this->renderTraceLine($line, $path, $lastFile);
-            $lastFile = $line['file'];
-        }
-        return $message;
-    }
-
     protected function add(PHPUnit_Framework_TestCase $test, Exception $e, $color)
     {
         $top = "{$this->issueCount}. \033[9{$color};4m" . get_class($test) . "::" . $test->getName() . "\n";
-        $message = " " . $e->getMessage() . "\n\n";
-        $message .= $this->renderTrace($e);
+        $message = $e->getMessage() . "\n\n";
+        $simplifier = new TraceSimplifier();
+        $message .= $this->prefixLines("\033[90m", $simplifier->render($e->getTrace())) . "\033[0m";
         
-        $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m";
+        $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m ";
         $message = $this->prefixLines($prefix, rtrim($message, "\n"));
         $this->appendTextAbove("$top\n$message\n\n");
         ++$this->issueCount;
