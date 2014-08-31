@@ -51,4 +51,12 @@ class TraceSimplifierTest extends TestCase
             ),
         )), contains_string, '(unknown file)');
     }
+
+    public function testWillUseAQuestionMarkIfTheLineIsNotSpecified()
+    {
+        $this->assert($this->simplifier->render(array(
+            array(
+            ),
+        )), contains_string, 'Line ?');
+    }
 }

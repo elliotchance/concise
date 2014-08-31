@@ -19,6 +19,7 @@ class TraceSimplifier
                 continue;
             }
             $message .= $simplifier->process($line['file']);
+            $message .= "    Line ?: ";
         }
 
         return $message;
