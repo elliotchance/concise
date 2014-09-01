@@ -17,11 +17,16 @@ class RenderIssue
         $this->traceSimplifier = $traceSimplifier;
     }
 
+    protected function prefixLines($prefix, $lines)
+    {
+        return $prefix . str_replace("\n", "\n$prefix", $lines);
+    }
+
     public function render($issueNumber, PHPUnit_Framework_TestCase $test, Exception $e)
     {
         $message = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n";
         $message .= " " . $e->getMessage() . "\n\n";
-        $message .= "\033[90m" . $this->traceSimplifier->render($e->getTrace());
+        $message .= $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace()));
 
         return $message;
     }
