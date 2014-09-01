@@ -54,4 +54,11 @@ class DefaultResultPrinterTest extends TestCase
         $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, 0, null);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 2);
     }
+
+    public function testEndTestWillNotIncrementIssueNumberOnSuccess()
+    {
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
+        $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
+    }
 }
