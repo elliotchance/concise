@@ -82,4 +82,10 @@ class RenderIssueTest extends TestCase
         $result = $this->render();
         $this->assert($result, contains_string, "bar\033[0m");
     }
+
+    public function testPrefixAllLinesWithAColor()
+    {
+        $result = $this->render();
+        $this->assert($result, contains_string, "\033[41m  \033[0m ");
+    }
 }

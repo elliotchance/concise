@@ -24,10 +24,10 @@ class RenderIssue
 
     public function render($issueNumber, PHPUnit_Framework_TestCase $test, Exception $e)
     {
-        $message = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n";
-        $message .= " " . $e->getMessage() . "\n\n";
+        $top = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n";
+        $message = $e->getMessage() . "\n\n";
         $message .= $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
 
-        return $message;
+        return $top . $this->prefixLines("\033[41m  \033[0m ", $message);
     }
 }
