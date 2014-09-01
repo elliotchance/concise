@@ -5,6 +5,7 @@ namespace Concise\Console\ResultPrinter;
 use Concise\Console\Theme\DefaultTheme;
 use Exception;
 use PHPUnit_Framework_Test;
+use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
@@ -12,10 +13,13 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected $theme;
 
-    public function __construct()
+    public function __construct($theme = null)
     {
         $this->width = exec('tput cols');
-        $this->theme = new DefaultTheme();
+        if (!$theme) {
+            $theme = new DefaultTheme();
+        }
+        $this->theme = $theme;
     }
 
     public function end()
@@ -30,6 +34,9 @@ class DefaultResultPrinter extends AbstractResultPrinter
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
         $colors = $this->theme->getTheme();
-        $this->add($test, $colors['failure'], $e);
+        if ($status === PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE) {
+            $this->add($test, $colors['failure'], $e);
+        }
+        $this->add($test, $colors['error'], $e);
     }
 }
