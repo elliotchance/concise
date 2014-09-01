@@ -2,7 +2,8 @@
 
 namespace Concise\Console\Theme;
 
-use \Concise\TestCase;
+use Concise\TestCase;
+use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultThemeTest extends TestCase
 {
@@ -16,31 +17,31 @@ class DefaultThemeTest extends TestCase
 
     public function testThemeHasSuccess()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'success');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_PASSED);
     }
 
     public function testThemeHasFailure()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'failure');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE);
     }
 
     public function testThemeHasError()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'error');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_ERROR);
     }
 
     public function testThemeHasSkipped()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'skipped');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
     }
 
     public function testThemeHasIncomplete()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'incomplete');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE);
     }
 
     public function testThemeHasRisky()
     {
-        $this->assert($this->theme->getTheme(), has_key, 'risky');
+        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_RISKY);
     }
 }

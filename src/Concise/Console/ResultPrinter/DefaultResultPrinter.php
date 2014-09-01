@@ -27,23 +27,14 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->write("\n\n\n");
     }
 
-    protected function add(PHPUnit_Framework_Test $test, $color, Exception $e = null)
+    protected function add($status, PHPUnit_Framework_Test $test, Exception $e = null)
     {
     }
 
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
-        $colors = $this->theme->getTheme();
-        $statuses = array(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE    => $colors['failure'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR      => $colors['error'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => $colors['skipped'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => $colors['incomplete'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => $colors['risky'],
-        );
-
-        if (array_key_exists($status, $statuses)) {
-            $this->add($test, $statuses[$status], $e);
+        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
+            $this->add($status, $test, $e);
         }
     }
 }

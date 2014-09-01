@@ -4,6 +4,7 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 use Concise\TestCase;
 use Exception;
+use PHPUnit_Runner_BaseTestRunner;
 
 class RenderIssueTest extends TestCase
 {
@@ -25,23 +26,23 @@ class RenderIssueTest extends TestCase
 
     public function testStartsWithTheIssueNumber()
     {
-        $this->assert($this->issue->render(123, $this->test, $this->exception), starts_with, '123. ');
+        $this->assert($this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 123, $this->test, $this->exception), starts_with, '123. ');
     }
 
     public function testIncludesTestClass()
     {
         $class = get_class($this->test);
-        $this->assert($this->issue->render(123, $this->test, $this->exception), contains_string, $class);
+        $this->assert($this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 123, $this->test, $this->exception), contains_string, $class);
     }
 
     public function testIncludesTheMethodName()
     {
-        $this->assert($this->issue->render(123, $this->test, $this->exception), contains_string, 'foo');
+        $this->assert($this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 123, $this->test, $this->exception), contains_string, 'foo');
     }
 
     public function testIncludesExceptionMessage()
     {
-        $this->assert($this->issue->render(123, $this->test, $this->exception), contains_string, $this->exception->getMessage());
+        $this->assert($this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 123, $this->test, $this->exception), contains_string, $this->exception->getMessage());
     }
 
     protected function getTraceSimplifier()
@@ -51,12 +52,12 @@ class RenderIssueTest extends TestCase
                     ->done();
     }
 
-    protected function render()
+    protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE)
     {
         $simplifier = $this->getTraceSimplifier();
         $issue = new RenderIssue($simplifier);
 
-        return $issue->render(0, $this->test, $this->exception);
+        return $issue->render($status, 0, $this->test, $this->exception);
     }
 
     public function testWillRenderSimplifiedTraceUnderneathTheTitle()
@@ -87,5 +88,11 @@ class RenderIssueTest extends TestCase
     {
         $result = $this->render();
         $this->assert($result, contains_string, "\033[41m  \033[0m ");
+    }
+
+    public function testPrefixAllLinesWithTheSameColorAsTheTitle()
+    {
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
+        $this->assert($result, contains_string, "\033[44m  \033[0m ");
     }
 }

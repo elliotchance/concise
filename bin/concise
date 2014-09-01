@@ -52,21 +52,10 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         echo "\033[2F";
     }
 
-    protected function prefixLines($prefix, $lines)
-    {
-        return $prefix . str_replace("\n", "\n$prefix", $lines);
-    }
-
-    protected function add(PHPUnit_Framework_Test $test, Exception $e, $color)
+    protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
         $renderIssue = new RenderIssue();
-        $message = $renderIssue->render($this->issueCount, $test, $e);
-
-        $simplifier = new TraceSimplifier();
-        $message .= $this->prefixLines("\033[90m", $simplifier->render($e->getTrace())) . "\033[0m";
-        
-        $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m ";
-        $message = $this->prefixLines($prefix, rtrim($message, "\n"));
+        $message = $renderIssue->render($status, $this->issueCount, $test, $e);
         $this->appendTextAbove("$message\n\n");
 
         ++$this->issueCount;
@@ -80,21 +69,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
-        switch ($status) {
-            case PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE:
-            case PHPUnit_Runner_BaseTestRunner::STATUS_ERROR:
-                $this->add($test, $e, 1);
-                break;
-
-            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
-            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
-                $this->add($test, $e, 3);
-                break;
-
-            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
-                $this->add($test, $e, 4);
-                break;
-        }
+        parent::endTest($status, $test, $time, $e);
         $this->update();
     }
 

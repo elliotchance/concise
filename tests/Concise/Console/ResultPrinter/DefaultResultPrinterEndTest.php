@@ -20,12 +20,12 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         return $this->mock('Concise\Console\Theme\DefaultTheme')
                     ->stub(array('getTheme' => array(
-                        'success'    => 'success_color',
-                        'failure'    => 'failure_color',
-                        'error'      => 'error_color',
-                        'skipped'    => 'skipped_color',
-                        'incomplete' => 'incomplete_color',
-                        'risky'      => 'risky_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_PASSED     => 'success_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE    => 'failure_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_ERROR      => 'error_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => 'skipped_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete_color',
+                        PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => 'risky_color',
                     )))
                     ->done();
     }
@@ -47,7 +47,7 @@ class DefaultResultPrinterEndTest extends TestCase
     public function testEndTestWillCallAdd($status, $color)
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
-                              ->expects('add')->with($this->test, $color, $this->e)
+                              ->expects('add')->with($status, $this->test, $this->e)
                               ->done();
         $resultPrinter->endTest($status, $this->test, 1.23, $this->e);
     }
