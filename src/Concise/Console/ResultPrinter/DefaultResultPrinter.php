@@ -35,9 +35,10 @@ class DefaultResultPrinter extends AbstractResultPrinter
     {
         $colors = $this->theme->getTheme();
         $statuses = array(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => $colors['failure'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR   => $colors['error'],
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => $colors['skipped'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE    => $colors['failure'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR      => $colors['error'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => $colors['skipped'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => $colors['incomplete'],
         );
 
         if (array_key_exists($status, $statuses)) {

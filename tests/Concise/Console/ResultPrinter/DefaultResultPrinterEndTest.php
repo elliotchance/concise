@@ -33,9 +33,10 @@ class DefaultResultPrinterEndTest extends TestCase
     public function endTestColorData()
     {
         return array(
-            'failure' => array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'failure_color'),
-            'error'   => array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, 'error_color'),
-            'skipped' => array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, 'skipped_color'),
+            'failure'    => array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'failure_color'),
+            'error'      => array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, 'error_color'),
+            'skipped'    => array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, 'skipped_color'),
+            'incomplete' => array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, 'incomplete_color'),
         );
     }
 
