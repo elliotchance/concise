@@ -8,6 +8,7 @@ use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\TraceSimplifier;
+use Concise\Console\ResultPrinter\Utilities\RenderIssue;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
@@ -58,14 +59,16 @@ class Concise_ResultPrinter extends DefaultResultPrinter
 
     protected function add(PHPUnit_Framework_Test $test, Exception $e, $color)
     {
-        $top = "{$this->issueCount}. \033[9{$color};4m" . get_class($test) . "::" . $test->getName() . "\n";
-        $message = $e->getMessage() . "\n\n";
+        $renderIssue = new RenderIssue();
+        $message = $renderIssue->render($this->issueCount, $test, $e);
+
         $simplifier = new TraceSimplifier();
         $message .= $this->prefixLines("\033[90m", $simplifier->render($e->getTrace())) . "\033[0m";
         
         $prefix = "\033[4{$color}m " . str_repeat(' ', strlen($this->issueCount)) . "\033[0m ";
         $message = $this->prefixLines($prefix, rtrim($message, "\n"));
-        $this->appendTextAbove("$top\n$message\n\n");
+        $this->appendTextAbove("$message\n\n");
+
         ++$this->issueCount;
     }
 

@@ -43,4 +43,14 @@ class RenderIssueTest extends TestCase
     {
         $this->assert($this->issue->render(123, $this->test, $this->exception), contains_string, $this->exception->getMessage());
     }
+
+    public function testWillRenderSimplifiedTraceUnderneathTheTitle()
+    {
+        $simplifier = $this->mock('Concise\Console\ResultPrinter\Utilities\TraceSimplifier')
+                           ->expect('render')->with($this->exception->getTrace())->andReturn("foo\nbar")
+                           ->done();
+        $issue = new RenderIssue($simplifier);
+        $result = $issue->render(0, $this->test, $this->exception);
+        $this->assert($result, contains_string, "foo");
+    }
 }
