@@ -38,5 +38,6 @@ class DefaultResultPrinter extends AbstractResultPrinter
         if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
             $this->add($status, $test, $e);
         }
+        ++$this->issueNumber;
     }
 }

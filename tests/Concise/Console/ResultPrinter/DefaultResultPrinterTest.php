@@ -2,7 +2,8 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use \Concise\TestCase;
+use Concise\TestCase;
+use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultResultPrinterStub extends DefaultResultPrinter
 {
@@ -45,5 +46,12 @@ class DefaultResultPrinterTest extends TestCase
     public function testFirstIssueNumberIsOne()
     {
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
+    }
+
+    public function testEndTestWillIncrementIssueNumber()
+    {
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, 0, null);
+        $this->assert($this->resultPrinter->getIssueNumber(), equals, 2);
     }
 }
