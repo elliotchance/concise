@@ -10,6 +10,11 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
     {
         return $this->width;
     }
+
+    public function getIssueNumber()
+    {
+        return $this->issueNumber;
+    }
 }
 
 class DefaultResultPrinterTest extends TestCase
@@ -35,5 +40,10 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillGetConsoleWidthOnStartup()
     {
         $this->assert($this->resultPrinter->getWidth(), equals, exec('tput cols'));
+    }
+
+    public function testFirstIssueNumberIsOne()
+    {
+        $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
     }
 }

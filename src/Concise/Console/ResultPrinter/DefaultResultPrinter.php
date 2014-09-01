@@ -13,6 +13,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected $theme;
 
+    protected $issueNumber = 1;
+
     public function __construct($theme = null)
     {
         $this->width = exec('tput cols');
