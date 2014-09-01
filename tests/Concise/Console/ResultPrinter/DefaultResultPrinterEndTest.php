@@ -49,4 +49,12 @@ class DefaultResultPrinterEndTest extends TestCase
                               ->done();
         $resultPrinter->endTest($status, $this->test, 1.23, $this->e);
     }
+
+    public function testEndTestWithUnknownStatusWillNotCallAdd()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
+                              ->expects('add')->never()
+                              ->done();
+        $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $this->test, 1.23, $this->e);
+    }
 }
