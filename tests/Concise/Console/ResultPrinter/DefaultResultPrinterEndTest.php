@@ -20,29 +20,32 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         return $this->mock('Concise\Console\Theme\DefaultTheme')
                     ->stub(array('getTheme' => array(
-                        'success'    => 'success',
-                        'failure'    => 'failure',
-                        'error'      => 'error',
-                        'skipped'    => 'skipped',
-                        'incomplete' => 'incomplete',
-                        'risky'      => 'risky',
+                        'success'    => 'success_color',
+                        'failure'    => 'failure_color',
+                        'error'      => 'error_color',
+                        'skipped'    => 'skipped_color',
+                        'incomplete' => 'incomplete_color',
+                        'risky'      => 'risky_color',
                     )))
                     ->done();
     }
 
-    public function testEndTestFailureWillCallAdd()
+    public function endTestColorData()
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
-                              ->expects('add')->with($this->test, 'failure', $this->e)
-                              ->done();
-        $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $this->test, 1.23, $this->e);
+        return array(
+            'failure' => array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'failure_color'),
+            'error'   => array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, 'error_color'),
+        );
     }
 
-    public function testEndTestErrorWillCallAdd()
+    /**
+     * @dataProvider endTestColorData
+     */
+    public function testEndTestWillCallAdd($status, $color)
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
-                              ->expects('add')->with($this->test, 'error', $this->e)
+                              ->expects('add')->with($this->test, $color, $this->e)
                               ->done();
-        $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, $this->test, 1.23, $this->e);
+        $resultPrinter->endTest($status, $this->test, 1.23, $this->e);
     }
 }
