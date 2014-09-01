@@ -34,9 +34,14 @@ class DefaultResultPrinter extends AbstractResultPrinter
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
         $colors = $this->theme->getTheme();
-        if ($status === PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE) {
-            $this->add($test, $colors['failure'], $e);
+        $statuses = array(
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => $colors['failure'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR   => $colors['error'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => $colors['skipped'],
+        );
+
+        if (array_key_exists($status, $statuses)) {
+            $this->add($test, $statuses[$status], $e);
         }
-        $this->add($test, $colors['error'], $e);
     }
 }

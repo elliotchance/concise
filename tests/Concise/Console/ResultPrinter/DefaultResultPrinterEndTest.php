@@ -35,6 +35,7 @@ class DefaultResultPrinterEndTest extends TestCase
         return array(
             'failure' => array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'failure_color'),
             'error'   => array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR, 'error_color'),
+            'skipped' => array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, 'skipped_color'),
         );
     }
 
