@@ -21,7 +21,7 @@ class RenderIssue
     {
         $message = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n";
         $message .= " " . $e->getMessage() . "\n\n";
-        $message .= $this->traceSimplifier->render($e->getTrace());
+        $message .= "\033[90m" . $this->traceSimplifier->render($e->getTrace());
 
         return $message;
     }
