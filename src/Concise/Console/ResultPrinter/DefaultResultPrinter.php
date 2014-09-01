@@ -39,6 +39,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
             PHPUnit_Runner_BaseTestRunner::STATUS_ERROR      => $colors['error'],
             PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => $colors['skipped'],
             PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => $colors['incomplete'],
+            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => $colors['risky'],
         );
 
         if (array_key_exists($status, $statuses)) {
