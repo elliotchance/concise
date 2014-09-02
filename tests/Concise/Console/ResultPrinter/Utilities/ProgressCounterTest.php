@@ -47,4 +47,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(100, true);
         $this->assert($counter->render(5), equals, '5 / 100 (  5%)');
     }
+
+    public function testDivideByZeroWillYieldZeroPercent()
+    {
+        $counter = new ProgressCounter(0, true);
+        $this->assert($counter->render(0), equals, '0 / 0 (  0%)');
+    }
 }

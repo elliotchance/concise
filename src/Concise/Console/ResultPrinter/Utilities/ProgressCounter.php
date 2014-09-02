@@ -18,7 +18,8 @@ class ProgressCounter
     {
         $r = $value . ' / ' . $this->total;
         if ($this->showPercentage) {
-            $r .= sprintf(' (%3s%%)', floor($value / $this->total * 100));
+            $percentage = (0 === $this->total) ? 0 : floor($value / $this->total * 100);
+            $r .= sprintf(' (%3s%%)', $percentage);
         }
 
         return $r;
