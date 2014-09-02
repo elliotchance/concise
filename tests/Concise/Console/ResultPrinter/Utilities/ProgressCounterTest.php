@@ -35,4 +35,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(10, true);
         $this->assert($counter->render(5), equals, '5 / 10 ( 50%)');
     }
+
+    public function testPercentageIsAlwaysShownAsAWholeNumber()
+    {
+        $counter = new ProgressCounter(9, true);
+        $this->assert($counter->render(5), equals, '5 / 9 ( 55%)');
+    }
 }

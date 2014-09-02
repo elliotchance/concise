@@ -16,7 +16,7 @@ class ProgressCounter
 
     public function render($value = 0)
     {
-        $percentage = $value / $this->total * 100;
+        $percentage = floor($value / $this->total * 100);
         if ($percentage < 100) {
             $percentage = " $percentage";
         }
