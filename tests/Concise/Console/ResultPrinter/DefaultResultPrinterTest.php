@@ -61,4 +61,13 @@ class DefaultResultPrinterTest extends TestCase
         $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
     }
+
+    public function testEndTestWillUpdateProgress()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expects('update')
+                              ->done();
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
+    }
 }

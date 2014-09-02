@@ -39,5 +39,10 @@ class DefaultResultPrinter extends AbstractResultPrinter
             $this->add($status, $test, $e);
             ++$this->issueNumber;
         }
+        $this->update();
+    }
+
+    protected function update()
+    {
     }
 }

@@ -58,12 +58,6 @@ class Concise_ResultPrinter extends DefaultResultPrinter
         $this->update();
     }
 
-    public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
-    {
-        parent::endTest($status, $test, $time, $e);
-        $this->update();
-    }
-
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         parent::startTestSuite($suite);
