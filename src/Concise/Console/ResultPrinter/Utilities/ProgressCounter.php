@@ -2,6 +2,8 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use DomainException;
+
 class ProgressCounter
 {
     protected $total;
@@ -10,6 +12,10 @@ class ProgressCounter
 
     public function __construct($total, $showPercentage = false)
     {
+        if ($total < 0) {
+            throw new DomainException("Total must be at least zero.");
+        }
+
         $this->total = $total;
         $this->showPercentage = $showPercentage;
     }

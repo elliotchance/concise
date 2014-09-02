@@ -9,18 +9,14 @@ use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\TraceSimplifier;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
+use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
 class Concise_ResultPrinter extends DefaultResultPrinter
 {
-    protected $numTestsWidth;
-
-    protected function repeat($string, $times)
-    {
-        return str_repeat($string, max(0, $times));
-    }
+    protected $counter;
 
     protected function drawProgressBar()
     {
@@ -36,11 +32,10 @@ class Concise_ResultPrinter extends DefaultResultPrinter
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $done = $this->getTestCount() / $this->getTotalTestCount();
-        $assertionString .= $this->repeat(' ', $this->width - (2 * $this->numTestsWidth) - 11 - strlen($assertionString));
-        $assertionString .= sprintf(' %' . $this->numTestsWidth . 'd / %' . $this->numTestsWidth . "d (%3s%%)\n",
-            $this->getTestCount(), $this->getTotalTestCount(), floor($done * 100));
-        return $assertionString;
+        $counterString = $this->counter->render($this->getTestCount());
+        $pad = $this->width - strlen($assertionString) - strlen($counterString);
+
+        return sprintf("%s%s%s\n", $assertionString, str_repeat(' ', $pad), $counterString);
     }
 
     public function update()
@@ -72,7 +67,7 @@ class Concise_ResultPrinter extends DefaultResultPrinter
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         parent::startTestSuite($suite);
-        $this->numTestsWidth = strlen($this->getTotalTestCount());
+        $this->counter = new ProgressCounter($this->getTotalTestCount(), true);
         $this->update();
     }
 }

@@ -53,4 +53,13 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(0, true);
         $this->assert($counter->render(0), equals, '0 / 0 (  0%)');
     }
+
+    /**
+     * @expectedException \DomainException
+     * @expectedExceptionMessage Total must be at least zero.
+     */
+    public function testTotalMustBeAtLeastZero()
+    {
+        new ProgressCounter(-1);
+    }
 }
