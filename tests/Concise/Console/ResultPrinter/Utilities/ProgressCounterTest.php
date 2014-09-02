@@ -72,4 +72,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(0);
         $counter->render(-1);
     }
+
+    public function testValueGreaterThanTotalWillCreateNewTotal()
+    {
+        $counter = new ProgressCounter(10);
+        $this->assert($counter->render(15), equals, '15 / 15');
+    }
 }
