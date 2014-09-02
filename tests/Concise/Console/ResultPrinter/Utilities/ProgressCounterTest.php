@@ -23,4 +23,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(5);
         $this->assert($counter->render(3), equals, '3 / 5');
     }
+
+    public function testPercentageCanBeActivatedWithConstructor()
+    {
+        $counter = new ProgressCounter(5, true);
+        $this->assert($counter->render(5), equals, '5 / 5 (100%)');
+    }
 }
