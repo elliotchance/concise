@@ -15,8 +15,6 @@ echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n"
 
 class Concise_ResultPrinter extends DefaultResultPrinter
 {
-    protected $issueCount = 1;
-
     protected $numTestsWidth;
 
     protected function repeat($string, $times)
@@ -55,10 +53,8 @@ class Concise_ResultPrinter extends DefaultResultPrinter
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
         $renderIssue = new RenderIssue();
-        $message = $renderIssue->render($status, $this->issueCount, $test, $e);
+        $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove("$message\n\n");
-
-        ++$this->issueCount;
     }
 
     public function appendTextAbove($text)
