@@ -41,4 +41,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(9, true);
         $this->assert($counter->render(5), equals, '5 / 9 ( 55%)');
     }
+
+    public function testPercentageMayBeOneDigit()
+    {
+        $counter = new ProgressCounter(100, true);
+        $this->assert($counter->render(5), equals, '5 / 100 (  5%)');
+    }
 }
