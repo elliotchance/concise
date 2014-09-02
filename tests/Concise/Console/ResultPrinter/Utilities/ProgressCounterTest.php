@@ -78,4 +78,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(10);
         $this->assert($counter->render(15), equals, '15 / 15');
     }
+
+    public function testPercentageMaximumValueIs100()
+    {
+        $counter = new ProgressCounter(10, true);
+        $this->assert($counter->render(15), equals, '15 / 15 (100%)');
+    }
 }
