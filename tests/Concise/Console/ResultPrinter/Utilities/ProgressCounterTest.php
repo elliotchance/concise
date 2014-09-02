@@ -29,4 +29,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(5, true);
         $this->assert($counter->render(5), equals, '5 / 5 (100%)');
     }
+
+    public function testPercentageIsCalculatedBasedOnValue()
+    {
+        $counter = new ProgressCounter(10, true);
+        $this->assert($counter->render(5), equals, '5 / 10 ( 50%)');
+    }
 }

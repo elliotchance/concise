@@ -16,6 +16,11 @@ class ProgressCounter
 
     public function render($value = 0)
     {
-        return $value . ' / ' . $this->total . ($this->showPercentage ? ' (100%)' : '');
+        $percentage = $value / $this->total * 100;
+        if ($percentage < 100) {
+            $percentage = " $percentage";
+        }
+
+        return $value . ' / ' . $this->total . ($this->showPercentage ? " ($percentage%)" : '');
     }
 }
