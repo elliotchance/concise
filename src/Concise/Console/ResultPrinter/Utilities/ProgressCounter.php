@@ -10,18 +10,23 @@ class ProgressCounter
 
     protected $showPercentage;
 
+    protected function atLeastZero($value, $name)
+    {
+        if ($value < 0) {
+            throw new DomainException("$name must be at least zero.");
+        }
+    }
+
     public function __construct($total, $showPercentage = false)
     {
-        if ($total < 0) {
-            throw new DomainException("Total must be at least zero.");
-        }
-
+        $this->atLeastZero($total, 'Total');
         $this->total = $total;
         $this->showPercentage = $showPercentage;
     }
 
     public function render($value = 0)
     {
+        $this->atLeastZero($value, 'Value');
         $r = $value . ' / ' . $this->total;
         if ($this->showPercentage) {
             $percentage = (0 === $this->total) ? 0 : floor($value / $this->total * 100);

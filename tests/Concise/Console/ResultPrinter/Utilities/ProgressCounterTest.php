@@ -62,4 +62,14 @@ class ProgressCounterTest extends TestCase
     {
         new ProgressCounter(-1);
     }
+
+    /**
+     * @expectedException \DomainException
+     * @expectedExceptionMessage Value must be at least zero.
+     */
+    public function testValueMustBeAtLeastZero()
+    {
+        $counter = new ProgressCounter(0);
+        $counter->render(-1);
+    }
 }
