@@ -11,4 +11,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(1);
         $this->assert($counter->render(), equals, '0 / 1');
     }
+
+    public function testCounterTotalIsSetThroughTheConstructor()
+    {
+        $counter = new ProgressCounter(5);
+        $this->assert($counter->render(), equals, '0 / 5');
+    }
 }
