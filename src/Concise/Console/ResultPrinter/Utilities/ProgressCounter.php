@@ -11,8 +11,8 @@ class ProgressCounter
         $this->total = $total;
     }
 
-    public function render()
+    public function render($value = 0)
     {
-        return '0 / ' . $this->total;
+        return $value . ' / ' . $this->total;
     }
 }

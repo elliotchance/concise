@@ -17,4 +17,10 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(5);
         $this->assert($counter->render(), equals, '0 / 5');
     }
+
+    public function testRenderCanTakeANumber()
+    {
+        $counter = new ProgressCounter(5);
+        $this->assert($counter->render(3), equals, '3 / 5');
+    }
 }
