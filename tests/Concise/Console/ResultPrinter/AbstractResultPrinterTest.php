@@ -108,4 +108,10 @@ class AbstractResultPrinterTest extends TestCase
         $test = $this->mock('PHPUnit_Framework_Test')->done();
         $this->assert($this->resultPrinter->endTest(0, $test, 0.0, null), is_null);
     }
+
+    public function testEndTestSuiteReturnsNull()
+    {
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()->done();
+        $this->assert($this->resultPrinter->endTestSuite($suite), is_null);
+    }
 }
