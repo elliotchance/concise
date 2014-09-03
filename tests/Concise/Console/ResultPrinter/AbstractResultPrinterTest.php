@@ -102,4 +102,10 @@ class AbstractResultPrinterTest extends TestCase
         $this->resultPrinter->riskyCount = 10;
         $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
     }
+
+    public function testEndTestReturnsNull()
+    {
+        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $this->assert($this->resultPrinter->endTest(0, $test, 0.0, null), is_null);
+    }
 }
