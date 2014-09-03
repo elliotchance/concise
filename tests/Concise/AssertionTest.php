@@ -3,7 +3,6 @@
 namespace Concise;
 
 use Concise\Matcher\Equals;
-use \Concise\Syntax\Code;
 use \Concise\Syntax\MatcherParser;
 use \Concise\Matcher\True;
 use \Concise\Matcher\False;
@@ -112,7 +111,7 @@ class AssertionTest extends TestCase
             $assertion->setFailureMessage('foo');
             $assertion->run();
             $this->fail('Did not fail.');
-        } catch(\PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert($e->getMessage(), equals, 'foo');
         }
     }

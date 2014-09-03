@@ -24,4 +24,25 @@ class VersionTest extends TestCase
     {
         $this->assert($this->version->getConciseVersion(), equals, $this->version->getVersionForPackage('elliotchance/concise'));
     }
+
+    public function testFindingVendorFolder()
+    {
+        $this->assert($this->version->findVendorFolder(), ends_with, '/vendor');
+    }
+
+    public function testReturnEmptyStringIfVendorFolderCannotBeFound()
+    {
+        $version = $this->niceMock('Concise\Version')
+                        ->stub('findVendorFolder')
+                        ->done();
+        $this->assert($version->getConciseVersion(), is_blank);
+    }
+
+    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound()
+    {
+        $version = $this->niceMock('Concise\Version')
+                        ->expose('findVendorFolder')
+                        ->done();
+        $this->assert($version->findVendorFolder('/tmp'), is_null);
+    }
 }
