@@ -83,4 +83,13 @@ class ResultPrinterProxyTest extends TestCase
     {
         $this->assert($this->proxy->write('nothing'), is_null);
     }
+
+    public function testPrintResultReturnsNull()
+    {
+        $result = $this->mock('PHPUnit_Framework_TestResult')->done();
+        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
+                      ->expose('printResult')
+                      ->done();
+        $this->assert($proxy->printResult($result), is_null);
+    }
 }
