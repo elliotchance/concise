@@ -24,4 +24,9 @@ class VersionTest extends TestCase
     {
         $this->assert($this->version->getConciseVersion(), equals, $this->version->getVersionForPackage('elliotchance/concise'));
     }
+
+    public function testFindingVendorFolder()
+    {
+        $this->assert($this->version->findVendorFolder(), ends_with, '/vendor');
+    }
 }
