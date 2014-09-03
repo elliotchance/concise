@@ -78,4 +78,9 @@ class ResultPrinterProxyTest extends TestCase
                       ->done();
         $this->assert($proxy->printFooter($result), is_null);
     }
+
+    public function testWriteWillNotPrintAnything()
+    {
+        $this->assert($this->proxy->write('nothing'), is_null);
+    }
 }
