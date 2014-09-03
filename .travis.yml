@@ -12,13 +12,16 @@ matrix:
   include:
     - php: hhvm
       env: COMPOSER=composer-hhvm.json
+    - php: 5.6
+      env: PHPUNIT_OPTIONS="--coverage-clover build/logs/clover.xml"
 
 install:
   - composer install
+script:
+  - phpunit $PHPUNIT_OPTIONS
 
 after_script:
-  - echo $TRAVIS_PHP_VERSION
-  - "if [[ ! -f vendor/bin/coveralls ]] ; then exit 0; fi"
+  - "if [[ ! -f build/logs/clover.xml ]] ; then exit 0; fi"
   - php vendor/bin/coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
