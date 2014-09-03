@@ -21,7 +21,7 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
     {
     }
 
-    public function write()
+    public function write($buffer)
     {
     }
 }
