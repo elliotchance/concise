@@ -48,7 +48,7 @@ class DefaultResultPrinterEndTest extends TestCase
      */
     public function testEndTestWillCallAdd($status, $color)
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', array($this->getTheme()))
                               ->expects('add')->with($status, $this->test, $this->e)
                               ->stub('update')
                               ->done();
@@ -57,7 +57,7 @@ class DefaultResultPrinterEndTest extends TestCase
 
     public function testEndTestWithUnknownStatusWillNotCallAdd()
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', array($this->getTheme()))
                               ->expects('add')->never()
                               ->stub('update')
                               ->done();
