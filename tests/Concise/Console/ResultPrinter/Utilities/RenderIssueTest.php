@@ -52,12 +52,12 @@ class RenderIssueTest extends TestCase
                     ->done();
     }
 
-    protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE)
+    protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $issueNumber = 0)
     {
         $simplifier = $this->getTraceSimplifier();
         $issue = new RenderIssue($simplifier);
 
-        return $issue->render($status, 0, $this->test, $this->exception);
+        return $issue->render($status, $issueNumber, $this->test, $this->exception);
     }
 
     public function testWillRenderSimplifiedTraceUnderneathTheTitle()
@@ -94,5 +94,11 @@ class RenderIssueTest extends TestCase
     {
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
         $this->assert($result, contains_string, "\033[44m  \033[0m ");
+    }
+
+    public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned()
+    {
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "\033[41m  \033[0m  ");
     }
 }

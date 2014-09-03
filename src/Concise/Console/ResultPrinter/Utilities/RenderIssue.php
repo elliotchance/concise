@@ -32,7 +32,8 @@ class RenderIssue
         $top = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n\n";
         $message = $e->getMessage() . "\n\n";
         $message .= $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
+        $pad = str_repeat(' ', strlen($issueNumber));
 
-        return $top . $this->prefixLines($c("  ")->highlight($colors[$status]) . ' ', rtrim($message));
+        return $top . $this->prefixLines($c("  ")->highlight($colors[$status]) . $pad, rtrim($message));
     }
 }
