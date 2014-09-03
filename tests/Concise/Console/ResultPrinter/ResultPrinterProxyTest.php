@@ -48,8 +48,16 @@ class ResultPrinterProxyTest extends TestCase
     public function testPrintHeaderReturnsNull()
     {
         $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                            ->expose('printHeader')
-                            ->done();
+                      ->expose('printHeader')
+                      ->done();
         $this->assert($proxy->printHeader(), is_null);
+    }
+
+    public function testPrintDefectsReturnsNull()
+    {
+        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
+                      ->expose('printDefects')
+                      ->done();
+        $this->assert($proxy->printDefects(array(), null), is_null);
     }
 }
