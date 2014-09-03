@@ -44,4 +44,12 @@ class ResultPrinterProxyTest extends TestCase
         $this->proxy->endTest($test, 0.1);
         $this->assert($this->proxy->getResultPrinter()->getTestCount(), equals, 1);
     }
+
+    public function testPrintHeaderReturnsNull()
+    {
+        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
+                            ->expose('printHeader')
+                            ->done();
+        $this->assert($proxy->printHeader(), is_null);
+    }
 }

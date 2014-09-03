@@ -37,9 +37,7 @@ class ProgressBar
     {
         reset($this->parts);
         $fill = $this->size - substr_count($currentProgressBar, ' ');
-        if ($fill > 0) {
-            $currentProgressBar = $this->colorSpaces($fill, key($this->parts)) . (string) $currentProgressBar;
-        } elseif ($fill < 0) {
+        if ($fill < 0) {
             $currentProgressBar = preg_replace('/\s\s/', ' ', $currentProgressBar, -$fill);
         }
 
