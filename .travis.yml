@@ -6,10 +6,17 @@ php:
   - 5.5
   - 5.6
 
+matrix:
+  include:
+    - php: hhvm
+      env: COMPOSER=composer-hhvm.json
+
 install:
   - composer install
 
 after_script:
+  - echo $TRAVIS_PHP_VERSION
+  - "if [[ ! -f vendor/bin/coveralls ]] ; then exit 0; fi"
   - php vendor/bin/coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
