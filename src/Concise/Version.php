@@ -14,8 +14,6 @@ class Version
             }
             $path .= "/..";
         }
-
-        return null;
     }
 
     public function getVersionForPackage($packageName)
