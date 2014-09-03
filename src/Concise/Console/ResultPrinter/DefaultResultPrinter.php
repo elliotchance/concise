@@ -9,6 +9,7 @@ use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
 use PHPUnit_Framework_Test;
+use PHPUnit_Framework_TestSuite;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
@@ -27,7 +28,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
             $theme = new DefaultTheme();
         }
         $this->theme = $theme;
-        $this->counter = new ProgressCounter($this->getTotalTestCount(), true);
+        $this->counter = new ProgressCounter(0, true);
     }
 
     public function end()
@@ -80,6 +81,13 @@ class DefaultResultPrinter extends AbstractResultPrinter
     public function appendTextAbove($text)
     {
         $this->write(str_replace("\n", "\033[K\n", $text));
+        $this->update();
+    }
+
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        parent::startTestSuite($suite);
+        $this->counter = new ProgressCounter($this->getTotalTestCount(), true);
         $this->update();
     }
 }

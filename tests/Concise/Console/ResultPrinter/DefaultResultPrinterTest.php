@@ -82,4 +82,15 @@ class DefaultResultPrinterTest extends TestCase
                               ->done();
         $resultPrinter->update();
     }
+
+    public function testStartSuiteWillUpdateProgress()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expects('update')
+                              ->done();
+        $suite = $this->niceMock('PHPUnit_Framework_TestSuite')
+                      ->stub(array('getName' => ''))
+                      ->done();
+        $resultPrinter->startTestSuite($suite);
+    }
 }

@@ -3,37 +3,10 @@
 
 require_once('vendor/autoload.php');
 
-use Concise\Console\ResultPrinter\DefaultResultPrinter;
-use Concise\Console\TestRunner\DefaultTestRunner;
-use Concise\Console\ResultPrinter\ResultPrinterProxy;
-use Concise\Console\ResultPrinter\Utilities\TraceSimplifier;
+use Concise\Console\Command;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
-class Concise_ResultPrinter extends DefaultResultPrinter
-{
-
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
-    {
-        parent::startTestSuite($suite);
-        $this->update();
-    }
-}
-
-class Concise_ResultPrinterProxy extends ResultPrinterProxy
-{
-}
-
-class Concise_Command extends PHPUnit_TextUI_Command
-{
-    protected function createRunner()
-    {
-        $runner = new DefaultTestRunner();
-        $runner->setPrinter(new Concise_ResultPrinterProxy(new Concise_ResultPrinter()));
-        return $runner;
-    }
-}
-
-$command = new Concise_Command();
+$command = new Command();
 $command->run($_SERVER['argv'], true);

@@ -31,7 +31,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
                       ->expect('count')->andReturn(123)
                       ->done();
-        $proxy = new ResultPrinterProxy();
+        $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->startTestSuite($suite);
         $this->assert($proxy->getResultPrinter()->getTotalTestCount(), equals, 123);
     }
