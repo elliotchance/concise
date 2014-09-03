@@ -10,21 +10,19 @@ class DefaultResultPrinterWriteStub extends DefaultResultPrinter
 
 class DefaultResultPrinterWriteTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-        $this->resultPrinter = new DefaultResultPrinterWriteStub();
-    }
-
     public function testWritingWillEchoDirectly()
     {
+        $resultPrinter = new DefaultResultPrinterWriteStub();
         $this->expectOutputString('foobar');
-        $this->resultPrinter->write('foobar');
+        $resultPrinter->write('foobar');
     }
 
     public function testWillPrintThreeBlankLinesAtTheEndOfTheTestSuite()
     {
         $this->expectOutputString("\n\n\n");
-        $this->resultPrinter->end();
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->stub('update')
+                              ->done();
+        $resultPrinter->end();
     }
 }

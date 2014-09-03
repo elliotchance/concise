@@ -93,4 +93,13 @@ class DefaultResultPrinterTest extends TestCase
                       ->done();
         $resultPrinter->startTestSuite($suite);
     }
+
+    public function testEndWillUpdateProgress()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expects('update')
+                              ->stub('write')
+                              ->done();
+        $resultPrinter->end();
+    }
 }

@@ -33,6 +33,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function end()
     {
+        $this->update();
         $this->write("\n\n\n");
     }
 
