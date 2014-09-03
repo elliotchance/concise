@@ -1,6 +1,16 @@
 {
     "name": "elliotchance/concise",
+    "type": "library",
     "description": "Concise is test framework for using plain English and minimal code, built on PHPUnit.",
+    "keywords": ["unit testing", "unit", "test", "phpunit", "tdd", "mocking", "mock", "assert", "assertion"],
+    "homepage": "https://github.com/elliotchance/concise",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elliot Chance",
+            "email": "elliotchance@gmail.com"
+        }
+    ],
     "bin": ["bin/concise"],
     "require": {
         "php": ">=5.3.0",
