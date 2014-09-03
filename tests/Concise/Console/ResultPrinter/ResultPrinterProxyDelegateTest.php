@@ -36,11 +36,18 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $this->assert($proxy->getResultPrinter()->getTotalTestCount(), equals, 123);
     }
 
+    protected function getMuteResultPrinter()
+    {
+        return $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                    ->stub('write')
+                    ->done();
+    }
+
     public function testEndTestWillIncrementAssertionsByOneIfLegacyPhptIsUsed()
     {
         $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')->disableConstructor()
                          ->done();
-        $proxy = new ResultPrinterProxy();
+        $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 1);
     }
@@ -50,7 +57,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $testCase = $this->mock('PHPUnit_Framework_TestCase')
                          ->expect('getNumAssertions')->andReturn(123)
                          ->done();
-        $proxy = new ResultPrinterProxy();
+        $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 123);
     }
@@ -59,7 +66,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')->disableConstructor()
                          ->done();
-        $proxy = new ResultPrinterProxy();
+        $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 2);
@@ -70,7 +77,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $testCase = $this->mock('PHPUnit_Framework_TestCase')
                          ->stub(array('getNumAssertions' => 123))
                          ->done();
-        $proxy = new ResultPrinterProxy();
+        $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
         $this->assert($proxy->getResultPrinter()->getAssertionCount(), equals, 246);

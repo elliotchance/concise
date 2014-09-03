@@ -6,62 +6,17 @@ require_once('vendor/autoload.php');
 use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
-use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\TraceSimplifier;
-use Concise\Console\ResultPrinter\Utilities\RenderIssue;
-use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 
 $version = new \Concise\Version();
 echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
 
 class Concise_ResultPrinter extends DefaultResultPrinter
 {
-    protected $counter;
-
-    protected function drawProgressBar()
-    {
-        $progressBar = new ProportionalProgressBar();
-        return $progressBar->renderProportional($this->width, $this->getTotalTestCount(), array(
-            'green'   => $this->getSuccessCount(),
-            'yellow'  => $this->getIncompleteCount() + $this->getRiskyCount(),
-            'blue'    => $this->getSkippedCount(),
-            'red'     => $this->getFailureCount() + $this->getErrorCount(),
-        )) . "\n";
-    }
-
-    protected function getAssertionString()
-    {
-        $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString);
-
-        return sprintf("%s%s%s\n", $assertionString, str_repeat(' ', $pad), $counterString);
-    }
-
-    public function update()
-    {
-        echo $this->getAssertionString();
-        echo $this->drawProgressBar();
-        echo "\033[2F";
-    }
-
-    protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
-    {
-        $renderIssue = new RenderIssue();
-        $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
-        $this->appendTextAbove("$message\n\n");
-    }
-
-    public function appendTextAbove($text)
-    {
-        echo str_replace("\n", "\033[K\n", $text);
-        $this->update();
-    }
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         parent::startTestSuite($suite);
-        $this->counter = new ProgressCounter($this->getTotalTestCount(), true);
         $this->update();
     }
 }

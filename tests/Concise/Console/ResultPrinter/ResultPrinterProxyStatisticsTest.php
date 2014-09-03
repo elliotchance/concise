@@ -16,9 +16,18 @@ class ResultPrinterProxyStatisticsTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->proxy = new ResultPrinterProxy();
-        $this->test = $this->mock('PHPUnit_Framework_Test')->done();
+        $this->proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
+        $this->test = $this->mock('PHPUnit_Framework_TestCase')
+                           ->stub('getName')
+                           ->done();
         $this->e = $this->mock('Exception')->done();
+    }
+
+    protected function getMuteResultPrinter()
+    {
+        return $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                    ->stub('write')
+                    ->done();
     }
 
     public function testAddFailureWillIncrementCount()

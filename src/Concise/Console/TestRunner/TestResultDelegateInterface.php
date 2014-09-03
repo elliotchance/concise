@@ -3,8 +3,8 @@
 namespace Concise\Console\TestRunner;
 
 use Exception;
-use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
+use PHPUnit_Framework_Test;
 
 interface TestResultDelegateInterface
 {

@@ -13,7 +13,9 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         parent::setUp();
         $this->e = new Exception();
-        $this->test = $this->mock('PHPUnit_Framework_Test')->done();
+        $this->test = $this->mock('PHPUnit_Framework_TestCase')
+                           ->stub('getName')
+                           ->done();
     }
 
     protected function getTheme()
@@ -48,6 +50,7 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
                               ->expects('add')->with($status, $this->test, $this->e)
+                              ->stub('update')
                               ->done();
         $resultPrinter->endTest($status, $this->test, 1.23, $this->e);
     }
@@ -56,6 +59,7 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', [ $this->getTheme() ])
                               ->expects('add')->never()
+                              ->stub('update')
                               ->done();
         $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $this->test, 1.23, $this->e);
     }

@@ -3,9 +3,9 @@
 namespace Concise\Console\ResultPrinter;
 
 use Exception;
-use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
 use Concise\Console\TestRunner\TestResultDelegateInterface;
+use PHPUnit_Framework_Test;
 
 abstract class AbstractResultPrinter implements TestResultDelegateInterface, StatisticsInterface
 {
@@ -88,7 +88,7 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
         echo $string;
     }
 
-    public function finish()
+    public function end()
     {
     }
 }

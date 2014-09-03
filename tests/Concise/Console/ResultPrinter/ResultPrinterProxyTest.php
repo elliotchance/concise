@@ -11,7 +11,14 @@ class ResultPrinterProxyTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->proxy = new ResultPrinterProxy();
+        $this->proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
+    }
+
+    protected function getMuteResultPrinter()
+    {
+        return $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                    ->stub('write')
+                    ->done();
     }
 
     public function testProxyExtendsPHPUnit()

@@ -16,6 +16,14 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
     {
         return $this->issueNumber;
     }
+
+    public function update()
+    {
+    }
+
+    public function write()
+    {
+    }
 }
 
 class DefaultResultPrinterTest extends TestCase
@@ -24,18 +32,6 @@ class DefaultResultPrinterTest extends TestCase
     {
         parent::setUp();
         $this->resultPrinter = new DefaultResultPrinterStub();
-    }
-
-    public function testWritingWillEchoDirectly()
-    {
-        $this->expectOutputString('foobar');
-        $this->resultPrinter->write('foobar');
-    }
-
-    public function testWillPrintThreeBlankLinesAtTheEndOfTheTestSuite()
-    {
-        $this->expectOutputString("\n\n\n");
-        $this->resultPrinter->end();
     }
 
     public function testWillGetConsoleWidthOnStartup()
@@ -50,14 +46,19 @@ class DefaultResultPrinterTest extends TestCase
 
     public function testEndTestWillIncrementIssueNumber()
     {
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
-        $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, 0, null);
+        $test = $this->mock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
+        $exception = $this->mock('Exception')->done();
+        $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, 0, $exception);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 2);
     }
 
     public function testEndTestWillNotIncrementIssueNumberOnSuccess()
     {
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $test = $this->mock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
         $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
     }
@@ -67,7 +68,18 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expects('update')
                               ->done();
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $test = $this->mock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
         $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
+    }
+
+    public function testUpdateWillPrintProgress()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expose('update')
+                              ->expect('write')
+                              ->done();
+        $resultPrinter->update();
     }
 }
