@@ -4,9 +4,11 @@ namespace Concise;
 
 class Version
 {
-    public function findVendorFolder()
+    public function findVendorFolder($path = null)
     {
-        $path = __DIR__;
+        if (null === $path) {
+            $path = __DIR__;
+        }
         for ($i = 0; $i < 10; ++$i) {
             $dir = scandir($path);
             if (in_array('vendor', $dir)) {
@@ -14,6 +16,8 @@ class Version
             }
             $path .= "/..";
         }
+
+        return null;
     }
 
     public function getVersionForPackage($packageName)
