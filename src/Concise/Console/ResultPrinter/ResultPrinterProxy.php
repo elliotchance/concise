@@ -9,6 +9,7 @@ use PHPUnit_Framework_TestResult;
 use PHPUnit_Framework_TestSuite;
 use Concise\Console\TestRunner\TestResultDelegateInterface;
 use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit_Framework_TestFailure;
 
 class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 {

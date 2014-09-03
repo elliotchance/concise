@@ -60,4 +60,13 @@ class ResultPrinterProxyTest extends TestCase
                       ->done();
         $this->assert($proxy->printDefects(array(), null), is_null);
     }
+
+    public function testPrintDefectReturnsNull()
+    {
+        $failure = $this->mock('PHPUnit_Framework_TestFailure')->disableConstructor()->done();
+        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
+                      ->expose('printDefect')
+                      ->done();
+        $this->assert($proxy->printDefect($failure, null), is_null);
+    }
 }
