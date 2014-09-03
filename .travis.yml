@@ -4,14 +4,8 @@ php:
   - 5.3
   - 5.4
   - 5.5
-  - 5.6
-env:
-  - COMPOSER=composer.json
-  - COMPOSER=composer-37.json
 matrix:
   include:
-    - php: hhvm
-      env: COMPOSER=composer-hhvm.json
     - php: 5.6
       env: PHPUNIT_OPTIONS="--coverage-clover build/logs/clover.xml"
 
