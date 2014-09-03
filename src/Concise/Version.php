@@ -21,6 +21,10 @@ class Version
     public function getVersionForPackage($packageName)
     {
         $vendor = $this->findVendorFolder(__DIR__);
+        if (!$vendor) {
+            return '';
+        }
+
         $packages = json_decode(file_get_contents("$vendor/composer/installed.json"));
         foreach ($packages as $package) {
             if ($package->name === $packageName) {

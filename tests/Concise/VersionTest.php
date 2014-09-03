@@ -29,4 +29,12 @@ class VersionTest extends TestCase
     {
         $this->assert($this->version->findVendorFolder(), ends_with, '/vendor');
     }
+
+    public function testReturnEmptyStringIfVendorFolderCannotBeFound()
+    {
+        $version = $this->niceMock('Concise\Version')
+                        ->stub('findVendorFolder')
+                        ->done();
+        $this->assert($version->getConciseVersion(), is_blank);
+    }
 }
