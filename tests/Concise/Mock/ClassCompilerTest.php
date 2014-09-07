@@ -90,4 +90,11 @@ class ClassCompilerTest extends TestCase
         $compiler->setCustomClassName('\MyCustomClass');
         $this->assert(get_class($compiler->newInstance()), equals, 'MyCustomClass');
     }
+
+    public function testWillIgnorePreceedingBackslashForCustomClassName()
+    {
+        $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
+        $compiler->setCustomClassName('\Concise\Mock\ClassCompilerMock2Foo');
+        $this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
+    }
 }

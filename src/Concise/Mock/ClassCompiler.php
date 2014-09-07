@@ -110,11 +110,12 @@ class ClassCompiler
             $realMethod = new ReflectionMethod($this->className, $method);
             $this->finalMethodsCanNotBeMocked($realMethod);
             $this->privateMethodsCanNotBeMocked($realMethod);
-        } catch(ReflectionException $e) {
+        } catch (ReflectionException $e) {
             if (!method_exists($this->className, '__call')) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -125,8 +126,9 @@ class ClassCompiler
         $prototypeBuilder->hideAbstract = true;
         try {
             $realMethod = new ReflectionMethod($this->className, $method);
+
             return $prototypeBuilder->getPrototype($realMethod);
-        } catch(ReflectionException $e) {
+        } catch (ReflectionException $e) {
             return $prototypeBuilder->getPrototypeForNonExistantMethod($method);
         }
     }
@@ -255,6 +257,7 @@ EOF;
         if ($this->getMockNamespaceName()) {
             return "namespace " . $this->getMockNamespaceName() . "; ";
         }
+
         return '';
     }
 
@@ -263,6 +266,7 @@ EOF;
         if ($refClass->isInterface()) {
             return 'implements';
         }
+
         return 'extends';
     }
 
@@ -297,6 +301,7 @@ EOF;
         $code = $this->getNamespaceCode();
         $methods = implode("\n", $this->methods);
         $superWord = $this->getSuperWord($refClass);
+
         return $code . "class {$this->getMockName()} $superWord \\{$this->className} { public static \$_methodCalls = array(); $methods }";
     }
 
@@ -321,6 +326,7 @@ EOF;
     protected function isInterface()
     {
         $refClass = new ReflectionClass($this->className);
+
         return $refClass->isInterface();
     }
 
@@ -333,9 +339,10 @@ EOF;
         $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
         $reflect = eval($this->generateCode() . $getInstance);
 
-        if($this->isInterface()) {
+        if ($this->isInterface()) {
             return $reflect->newInstance();
         }
+
         return $reflect->newInstanceArgs($this->constructorArgs);
     }
 
@@ -350,6 +357,9 @@ EOF;
 
     public function setCustomClassName($className)
     {
+        if (substr($className, 0, 1) === '\\') {
+            $className = substr($className, 1);
+        }
         if (strpos($className, '\\') === false) {
             $className = $this->getNamespaceName() . '\\' . $className;
         }
