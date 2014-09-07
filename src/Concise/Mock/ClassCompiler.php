@@ -357,11 +357,14 @@ EOF;
 
     public function setCustomClassName($className)
     {
+        if (strpos($className, '\\') === false) {
+            $className = $this->getNamespaceName() . '\\' . $className;
+        }
         if (substr($className, 0, 1) === '\\') {
             $className = substr($className, 1);
         }
-        if (strpos($className, '\\') === false) {
-            $className = $this->getNamespaceName() . '\\' . $className;
+        if (class_exists($className)) {
+            throw new InvalidArgumentException("You cannot use '$className' because a class with that name already exists.");
         }
         $this->customClassName = $className;
     }
