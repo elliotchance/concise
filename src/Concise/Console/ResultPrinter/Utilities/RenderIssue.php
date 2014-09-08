@@ -29,7 +29,8 @@ class RenderIssue
         $c = new Color();
         $theme = new DefaultTheme();
         $colors = $theme->getTheme();
-        $top = "$issueNumber. " . get_class($test) . '::' . $test->getName() . "\n\n";
+        $color = $colors[$status];
+        $top = "$issueNumber. " . $c(get_class($test) . '::' . $test->getName())->$color . "\n\n";
         $message = $e->getMessage() . "\n\n";
         $message .= $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
         $pad = str_repeat(' ', strlen($issueNumber));
