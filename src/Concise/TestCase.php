@@ -124,7 +124,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $args = $this->renderArguments($rule['with']);
         $converter = new NumberToTimesConverter();
         $msg = sprintf(
-            "Expected $method($args) to be called %s, but it was called %s.",
+            "Expected $method(%s) to be called %s, but it was called %s.",
+            $args,
             $converter->convert($rule['times']),
             $converter->convert($actualTimes)
         );
