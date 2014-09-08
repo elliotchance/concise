@@ -2,8 +2,6 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-
 final class MockFinalClass
 {
     public $constructorRun = false;
@@ -32,7 +30,7 @@ final class MockFinalClass
     {
     }
 
-    static public function myStaticMethod()
+    public static function myStaticMethod()
     {
         return 'foo';
     }
@@ -371,5 +369,11 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testAbstractMethodsCanHaveRulesAttached();
+    }
+
+    public function testCanSetCustomClassName()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testCanSetCustomClassName();
     }
 }

@@ -74,6 +74,12 @@ class MockBuilder
     protected $isExpecting = false;
 
     /**
+     * You may set a customer class name for this mock.
+     * @var string
+     */
+    protected $customClassName = '';
+
+    /**
 	 * @param string   $className
 	 * @param boolean  $niceMock
 	 * @param TestCase $testCase
@@ -137,6 +143,9 @@ class MockBuilder
     public function done()
     {
         $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
+        if ($this->customClassName) {
+            $compiler->setCustomClassName($this->customClassName);
+        }
         $compiler->setRules($this->rules);
         foreach ($this->expose as $method) {
             $compiler->addExpose($method);
@@ -189,10 +198,11 @@ class MockBuilder
 	 */
     public function andReturn()
     {
-        if($this->methodIsNeverExpected()) {
+        if ($this->methodIsNeverExpected()) {
             throw new Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
         }
         $values = func_get_args();
+
         return $this->setAction(new Action\ReturnValueAction($values));
     }
 
@@ -312,6 +322,7 @@ class MockBuilder
     protected function isInterface()
     {
         $refClass = new \ReflectionClass($this->className);
+
         return $refClass->isInterface();
     }
 
@@ -351,5 +362,12 @@ class MockBuilder
     public function andDo(\Closure $action)
     {
         return $this->setAction(new Action\DoAction($action));
+    }
+
+    public function setCustomClassName($customClassName)
+    {
+        $this->customClassName = $customClassName;
+
+        return $this;
     }
 }

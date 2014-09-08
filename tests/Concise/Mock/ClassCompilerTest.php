@@ -90,4 +90,21 @@ class ClassCompilerTest extends TestCase
         $compiler->setCustomClassName('\MyCustomClass');
         $this->assert(get_class($compiler->newInstance()), equals, 'MyCustomClass');
     }
+
+    public function testWillIgnorePreceedingBackslashForCustomClassName()
+    {
+        $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
+        $compiler->setCustomClassName('\Concise\Mock\ClassCompilerMock2Foo');
+        $this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock2');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage You cannot use 'DateTime' because a class with that name already exists.
+     */
+    public function testCustomClassNameCannotBeUsedIfTheClassAlreadyExists()
+    {
+        $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+        $compiler->setCustomClassName('\DateTime');
+    }
 }
