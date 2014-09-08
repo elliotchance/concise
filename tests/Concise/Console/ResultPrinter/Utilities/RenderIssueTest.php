@@ -113,4 +113,13 @@ class RenderIssueTest extends TestCase
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, (string) $c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red());
     }
+
+    public function testCanAcceptATestSuite()
+    {
+        $this->test = $this->mock('\PHPUnit_Framework_TestSuite')->disableConstructor()
+                           ->stub(array('getName' => 'foo'))
+                           ->done();
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "foo");
+    }
 }
