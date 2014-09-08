@@ -18,6 +18,7 @@ class MockBuilderFailuresTest extends TestCase
         'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called 3 times.',
         'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called once, but it was called never.',
         'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
+        'testWithArgumentsMayContainPercentageThatWasntCalled' => 'Expected myMethod("%d") to be called once, but it was called never.',
     );
 
     public function testFailedToFulfilExpectationWillThrowException()
@@ -91,6 +92,13 @@ class MockBuilderFailuresTest extends TestCase
         $this->mock->myMethod('foo');
         $this->mock->myMethod('foo');
         $this->mock->myMethod('foo');
+    }
+
+    public function testWithArgumentsMayContainPercentageThatWasntCalled()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with('%d')
+                     ->done();
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
