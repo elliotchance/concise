@@ -5,6 +5,7 @@ namespace Concise\Console\ResultPrinter\Utilities;
 use Concise\TestCase;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
+use Colors\Color;
 
 class RenderIssueTest extends TestCase
 {
@@ -100,5 +101,16 @@ class RenderIssueTest extends TestCase
     {
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "\033[41m  \033[0m  ");
+    }
+
+    public function testTestTitilesAreColored()
+    {
+        $c = new Color();
+        $this->test = $this->mock('PHPUnit_Framework_TestCase')
+                           ->setCustomClassName('PHPUnit_Framework_TestCase_57c3cc10')
+                           ->stub(array('getName' => 'foo'))
+                           ->done();
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, (string) $c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red());
     }
 }
