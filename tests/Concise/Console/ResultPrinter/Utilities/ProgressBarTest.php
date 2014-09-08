@@ -73,4 +73,12 @@ class ProgressBarTest extends ProgressBarTestCase
         ));
         $this->assert($result, equals, $this->color(0, 'yellow') . $this->color(5, 'blue'));
     }
+
+    public function testTotalIsZero()
+    {
+        $result = $this->progressBar->render(5, array(
+            'yellow' => 0,
+        ));
+        $this->assert($result, equals, $this->color(0, 'yellow'));
+    }
 }
