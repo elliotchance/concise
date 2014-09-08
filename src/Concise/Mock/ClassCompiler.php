@@ -363,6 +363,9 @@ EOF;
         if (substr($className, 0, 1) === '\\') {
             $className = substr($className, 1);
         }
+        if (!preg_match("/^(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+$/", $className)) {
+            throw new InvalidArgumentException("Invalid class name '$className'.");
+        }
         if (class_exists($className)) {
             throw new InvalidArgumentException("You cannot use '$className' because a class with that name already exists.");
         }
