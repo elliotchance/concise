@@ -17,7 +17,7 @@ class ProgressBar
         if ($value <= 0) {
             return 0;
         }
-        if ($this->total === 0) {
+        if ($this->total == 0) {
             return 0;
         }
 
