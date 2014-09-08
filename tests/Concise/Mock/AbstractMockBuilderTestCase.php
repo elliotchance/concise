@@ -572,4 +572,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->setCustomClassName('123')
                      ->done();
     }
+
+    public function testCanSetCustomClassName()
+    {
+        $rand = "Concise\\Mock\\Temp" . md5(rand());
+        $mock = $this->mockBuilder()
+                     ->setCustomClassName($rand)
+                     ->done();
+        $this->assert(get_class($mock), equals, $rand);
+    }
 }

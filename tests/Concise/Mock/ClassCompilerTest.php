@@ -100,11 +100,11 @@ class ClassCompilerTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot use 'MyCustomClass' because a class with that name already exists.
+     * @expectedExceptionMessage You cannot use 'DateTime' because a class with that name already exists.
      */
     public function testCustomClassNameCannotBeUsedIfTheClassAlreadyExists()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-        $compiler->setCustomClassName('\MyCustomClass');
+        $compiler->setCustomClassName('\DateTime');
     }
 }
