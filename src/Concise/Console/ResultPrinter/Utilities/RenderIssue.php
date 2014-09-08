@@ -2,10 +2,10 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use PHPUnit_Framework_TestCase;
 use Exception;
 use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
+use PHPUnit_Framework_Test;
 
 class RenderIssue
 {
@@ -24,7 +24,7 @@ class RenderIssue
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
-    public function render($status, $issueNumber, PHPUnit_Framework_TestCase $test, Exception $e)
+    public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {
         $c = new Color();
         $theme = new DefaultTheme();
