@@ -116,7 +116,7 @@ class MockBuilderFailuresTest extends TestCase
         $mock = $this->mock('\Concise\Mock\Mock1')
                      ->expects('myMethod')->with(array('DateTime', '__set_state'))
                      ->done();
-        $mock->myMethod(['DateTime', 'getLastErrors']);
+        $mock->myMethod(array('DateTime', 'getLastErrors'));
     }
 
     public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException()
