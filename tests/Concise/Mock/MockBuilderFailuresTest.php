@@ -20,6 +20,7 @@ class MockBuilderFailuresTest extends TestCase
         'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
         'testWithArgumentsMayContainPercentageThatWasntCalled' => 'Expected myMethod("%d") to be called once, but it was called never.',
         'testWithArgumentsWillNotMistakeAnArrayForACallback' => 'Expected myMethod(["DateTime","getLastErrors"]) to be called once, but it was called never.',
+        'testWithArgumentsUsingDifferentCallback' => 'Expected myMethod(["DateTime","__set_state"]) to be called once, but it was called never.',
     );
 
     public function testFailedToFulfilExpectationWillThrowException()
@@ -107,6 +108,14 @@ class MockBuilderFailuresTest extends TestCase
         $mock = $this->mock('\Concise\Mock\Mock1')
                      ->expects('myMethod')->with(['DateTime', 'getLastErrors'])
                      ->done();
+    }
+
+    public function testWithArgumentsUsingDifferentCallback()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with(['DateTime', '__set_state'])
+                     ->done();
+        $mock->myMethod(['DateTime', 'getLastErrors']);
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
