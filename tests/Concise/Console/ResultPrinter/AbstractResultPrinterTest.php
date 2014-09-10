@@ -119,4 +119,9 @@ class AbstractResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->end(), is_null);
     }
+
+    public function testVerbosityCanBeSet()
+    {
+        $this->assert($this->resultPrinter->setVerbose(false), is_null);
+    }
 }
