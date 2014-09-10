@@ -106,14 +106,14 @@ class MockBuilderFailuresTest extends TestCase
     public function testWithArgumentsWillNotMistakeAnArrayForACallback()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with(['DateTime', 'getLastErrors'])
+                     ->expects('myMethod')->with(array('DateTime', 'getLastErrors'))
                      ->done();
     }
 
     public function testWithArgumentsUsingDifferentCallback()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with(['DateTime', '__set_state'])
+                     ->expects('myMethod')->with(array('DateTime', '__set_state'))
                      ->done();
         $mock->myMethod(['DateTime', 'getLastErrors']);
     }
