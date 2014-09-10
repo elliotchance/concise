@@ -124,4 +124,9 @@ class AbstractResultPrinterTest extends TestCase
     {
         $this->assert($this->resultPrinter->setVerbose(false), is_null);
     }
+
+    public function testDefaultVerboseIsOff()
+    {
+        $this->assert($this->resultPrinter->isVerbose(), is_false);
+    }
 }

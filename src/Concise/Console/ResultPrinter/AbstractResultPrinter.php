@@ -95,4 +95,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
     public function setVerbose($verbose)
     {
     }
+
+    public function isVerbose()
+    {
+        return false;
+    }
 }
