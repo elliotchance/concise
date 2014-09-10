@@ -2,6 +2,8 @@
 
 namespace Concise\Services;
 
+use Closure;
+
 class ValueRenderer
 {
     protected function shouldBeJsonEncoded($value)
@@ -15,7 +17,7 @@ class ValueRenderer
 	 */
     public function render($value)
     {
-        if (is_callable($value)) {
+        if ($value instanceof Closure) {
             return 'function';
         }
         if (is_object($value)) {
