@@ -52,4 +52,16 @@ class MockBuilderForAbstractClassTest extends AbstractMockBuilderTestCase
     {
         return '\Concise\Mock\MockAbstractClass';
     }
+
+    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
+    {
+        $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingAnAbstractMethodWithNoRuleThrowsException();
+    }
+
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
+    }
 }

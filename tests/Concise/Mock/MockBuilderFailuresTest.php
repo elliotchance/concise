@@ -19,6 +19,9 @@ class MockBuilderFailuresTest extends TestCase
         'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called once, but it was called never.',
         'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
         'testWithArgumentsMayContainPercentageThatWasntCalled' => 'Expected myMethod("%d") to be called once, but it was called never.',
+        'testWithArgumentsWillNotMistakeAnArrayForACallback' => 'Expected myMethod(["DateTime","getLastErrors"]) to be called once, but it was called never.',
+        'testWithArgumentsUsingDifferentCallback' => 'Expected myMethod(["DateTime","__set_state"]) to be called once, but it was called never.',
+        'testAbstractMethodOnANiceMockThatHasNoActionWillThrowException' => 'myMethod() is abstract and has no associated action.',
     );
 
     public function testFailedToFulfilExpectationWillThrowException()
@@ -99,6 +102,28 @@ class MockBuilderFailuresTest extends TestCase
         $mock = $this->mock('\Concise\Mock\Mock1')
                      ->expects('myMethod')->with('%d')
                      ->done();
+    }
+
+    public function testWithArgumentsWillNotMistakeAnArrayForACallback()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with(array('DateTime', 'getLastErrors'))
+                     ->done();
+    }
+
+    public function testWithArgumentsUsingDifferentCallback()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with(array('DateTime', '__set_state'))
+                     ->done();
+        $mock->myMethod(array('DateTime', 'getLastErrors'));
+    }
+
+    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException()
+    {
+        $mock = $this->niceMock('\Concise\Mock\AbstractMock1')
+                     ->done();
+        $mock->myMethod();
     }
 
     protected function onNotSuccessfulTest(\Exception $e)

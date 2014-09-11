@@ -146,9 +146,13 @@ class ClassCompiler
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
         $prototype = $this->getPublicPrototype($method->getName());
+        $message = "{$method->getName()}() does not have an associated action - consider a niceMock()?";
+        if ($method->isAbstract()) {
+            $message = "{$method->getName()}() is abstract and has no associated action.";
+        }
         $this->methods[$method->getName()] = <<<EOF
 $prototype {
-	throw new \\Exception("{$method->getName()}() does not have an associated action - consider a niceMock()?");
+	throw new \\Exception("$message");
 }
 EOF;
     }
