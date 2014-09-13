@@ -110,8 +110,16 @@ class DefaultResultPrinterTest extends TestCase
         $hide = 0;
 
         return array(
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, true,  $show),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, false, $hide),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,    true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,    false, $hide),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, false, $hide),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,    true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,    false, $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,      true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,      false, $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,      true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,      false, $hide),
         );
     }
 
