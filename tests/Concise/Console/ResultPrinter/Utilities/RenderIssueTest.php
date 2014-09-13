@@ -123,9 +123,20 @@ class RenderIssueTest extends TestCase
         $this->assert($result, contains_string, "foo");
     }
 
+    protected function getComparisonFailure()
+    {
+        // PHPUnit 4.0
+        if (class_exists('PHPUnit_Framework_ComparisonFailure')) {
+            return 'PHPUnit_Framework_ComparisonFailure';
+        }
+
+        // PHPUnit 4.1+
+        return 'SebastianBergmann\Comparator\ComparisonFailure';
+    }
+
     public function testPHPUnitDiffsAreShown()
     {
-        $failure = $this->mock('SebastianBergmann\Comparator\ComparisonFailure', array('foo', 'bar', 'foo', 'bar'))
+        $failure = $this->mock($this->getComparisonFailure(), array('foo', 'bar', 'foo', 'bar'))
                         ->expect('getDiff')->andReturn('foobar')
                         ->done();
         $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', $failure);
