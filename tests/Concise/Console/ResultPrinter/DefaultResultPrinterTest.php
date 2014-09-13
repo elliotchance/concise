@@ -104,28 +104,30 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter->end();
     }
 
-    public function testSkippedItemsAreNotPrintedWhenVerboseIsTurnedOff()
+    public function verboseDataSet()
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
-                              ->expect('appendTextAbove')->never()
-                              ->expose('add')
-                              ->done();
-        $test = $this->niceMock('PHPUnit_Framework_TestCase')
-                     ->stub(array('getName' => ''))
-                     ->done();
-        $resultPrinter->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, new Exception());
+        $show = 1;
+        $hide = 0;
+
+        return array(
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, false, $hide),
+        );
     }
 
-    public function testSkippedItemsArePrintedWhenVerboseIsTurnedOn()
+    /**
+     * @dataProvider verboseDataSet
+     */
+    public function testVerbosePrintsIssues($status, $isVerbose, $willBePrinted)
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
-                              ->expect('appendTextAbove')
+                              ->expect('appendTextAbove')->exactly($willBePrinted)
                               ->expose('add')
                               ->done();
-        $resultPrinter->setVerbose(true);
+        $resultPrinter->setVerbose($isVerbose);
         $test = $this->niceMock('PHPUnit_Framework_TestCase')
                      ->stub(array('getName' => ''))
                      ->done();
-        $resultPrinter->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, new Exception());
+        $resultPrinter->add($status, $test, new Exception());
     }
 }
