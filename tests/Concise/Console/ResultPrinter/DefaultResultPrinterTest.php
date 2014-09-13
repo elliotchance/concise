@@ -115,4 +115,17 @@ class DefaultResultPrinterTest extends TestCase
                      ->done();
         $resultPrinter->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, new Exception());
     }
+
+    public function testSkippedItemsArePrintedWhenVerboseIsTurnedOn()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expect('appendTextAbove')
+                              ->expose('add')
+                              ->done();
+        $resultPrinter->setVerbose(true);
+        $test = $this->niceMock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
+        $resultPrinter->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, new Exception());
+    }
 }

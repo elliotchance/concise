@@ -74,7 +74,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
-        if ($status === PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED) {
+        if (!$this->isVerbose() && $status === PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED) {
             return;
         }
         $renderIssue = new RenderIssue();
