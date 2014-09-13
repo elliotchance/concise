@@ -122,4 +122,15 @@ class RenderIssueTest extends TestCase
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "foo");
     }
+
+    public function testPHPUnitDiffsAreShown()
+    {
+        $failure = $this->mock('SebastianBergmann\Comparator\ComparisonFailure', array('foo', 'bar', 'foo', 'bar'))
+                        ->expect('getDiff')->andReturn('foobar')
+                        ->done();
+        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', $failure);
+
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "foobar");
+    }
 }
