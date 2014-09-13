@@ -4,6 +4,7 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
+use Exception;
 
 class DefaultResultPrinterStub extends DefaultResultPrinter
 {
@@ -101,5 +102,17 @@ class DefaultResultPrinterTest extends TestCase
                               ->stub('write')
                               ->done();
         $resultPrinter->end();
+    }
+
+    public function testSkippedItemsAreNotPrintedWhenVerboseIsTurnedOff()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expect('appendTextAbove')->never()
+                              ->expose('add')
+                              ->done();
+        $test = $this->niceMock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
+        $resultPrinter->add(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED, $test, new Exception());
     }
 }
