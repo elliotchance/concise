@@ -74,6 +74,15 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
+        switch ($status) {
+            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
+                if (!$this->isVerbose()) {
+                    return;
+                }
+        }
+
         $renderIssue = new RenderIssue();
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove("$message\n\n");

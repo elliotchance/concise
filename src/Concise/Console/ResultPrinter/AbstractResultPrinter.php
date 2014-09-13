@@ -25,6 +25,8 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
 
     public $assertionCount = 0;
 
+    protected $verbose = false;
+
     public function getSuccessCount()
     {
         return $this->getTestCount() - $this->getFailureCount() - $this->getErrorCount()
@@ -90,5 +92,15 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
 
     public function end()
     {
+    }
+
+    public function setVerbose($verbose)
+    {
+        $this->verbose = $verbose;
+    }
+
+    public function isVerbose()
+    {
+        return $this->verbose;
     }
 }

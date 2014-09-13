@@ -19,14 +19,10 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 
     protected $totalSuccesses = 0;
 
-    public function __construct(TestResultDelegateInterface $resultPrinter = null)
+    public function __construct(TestResultDelegateInterface $resultPrinter)
     {
         parent::__construct();
-        if ($resultPrinter) {
-            $this->resultPrinter = $resultPrinter;
-        } else {
-            $this->resultPrinter = new DefaultResultPrinter();
-        }
+        $this->resultPrinter = $resultPrinter;
     }
 
     public function getResultPrinter()

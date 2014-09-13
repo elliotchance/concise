@@ -4,6 +4,7 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
+use Exception;
 
 class DefaultResultPrinterStub extends DefaultResultPrinter
 {
@@ -101,5 +102,40 @@ class DefaultResultPrinterTest extends TestCase
                               ->stub('write')
                               ->done();
         $resultPrinter->end();
+    }
+
+    public function verboseDataSet()
+    {
+        $show = 1;
+        $hide = 0;
+
+        return array(
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,    true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,    false, $hide),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE, false, $hide),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,    true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,    false, $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,      true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,      false, $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,      true,  $show),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,      false, $hide),
+        );
+    }
+
+    /**
+     * @dataProvider verboseDataSet
+     */
+    public function testVerbosePrintsIssues($status, $isVerbose, $willBePrinted)
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+                              ->expect('appendTextAbove')->exactly($willBePrinted)
+                              ->expose('add')
+                              ->done();
+        $resultPrinter->setVerbose($isVerbose);
+        $test = $this->niceMock('PHPUnit_Framework_TestCase')
+                     ->stub(array('getName' => ''))
+                     ->done();
+        $resultPrinter->add($status, $test, new Exception());
     }
 }

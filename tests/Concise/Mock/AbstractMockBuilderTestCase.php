@@ -6,9 +6,9 @@ use \Concise\TestCase;
 
 abstract class AbstractMockBuilderTestCase extends TestCase
 {
-    protected function expectFailure($message)
+    protected function expectFailure($message, $exceptionClass = '\InvalidArgumentException')
     {
-        $this->setExpectedException('\InvalidArgumentException', $message);
+        $this->setExpectedException($exceptionClass, $message);
     }
 
     protected function notApplicable()
