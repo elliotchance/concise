@@ -50,4 +50,11 @@ class CommandTest extends TestCase
         $command->setArgument('verbose', true);
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_true);
     }
+
+    public function testVerboseIsNotTurnedOnIfItExistsButIfNotTrue()
+    {
+        $command = $this->getCommandMock();
+        $command->setArgument('verbose', false);
+        $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
+    }
 }
