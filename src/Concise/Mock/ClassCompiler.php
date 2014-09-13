@@ -2,10 +2,10 @@
 
 namespace Concise\Mock;
 
-use \InvalidArgumentException;
-use \ReflectionException;
-use \ReflectionMethod;
-use \ReflectionClass;
+use InvalidArgumentException;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionClass;
 
 class ClassCompiler
 {
@@ -339,11 +339,11 @@ EOF;
         $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
         $reflect = eval($this->generateCode() . $getInstance);
 
-        if ($this->isInterface()) {
+        try {
+            return $reflect->newInstanceArgs($this->constructorArgs);
+        } catch (ReflectionException $e) {
             return $reflect->newInstance();
         }
-
-        return $reflect->newInstanceArgs($this->constructorArgs);
     }
 
     /**
