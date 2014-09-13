@@ -13,7 +13,7 @@ class IsABoolean extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return $data[0] === true;
+        return is_bool($data[0]);
     }
 
     public function getTags()

@@ -19,4 +19,9 @@ class IsABooleanTest extends AbstractMatcherTestCase
     {
         $this->assertFailure("true", is_a_boolean);
     }
+
+    public function testFalseIsABoolean()
+    {
+        $this->assert(false, is_a_boolean);
+    }
 }
