@@ -11,6 +11,9 @@ class Command extends \PHPUnit_TextUI_Command
     protected function createRunner()
     {
         $resultPrinter = new DefaultResultPrinter();
+        if (array_key_exists('verbose', $this->arguments)) {
+            $resultPrinter->setVerbose(true);
+        }
         $testRunner = new DefaultTestRunner();
         $testRunner->setPrinter(new ResultPrinterProxy($resultPrinter));
 

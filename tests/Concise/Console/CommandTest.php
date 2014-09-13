@@ -4,6 +4,14 @@ namespace Concise\Console;
 
 use \Concise\TestCase;
 
+class CommandStub extends Command
+{
+    public function setArgument($name, $value)
+    {
+        $this->arguments[$name] = $value;
+    }
+}
+
 class CommandTest extends TestCase
 {
     public function testCommandExtendsPHPUnit()
@@ -13,7 +21,7 @@ class CommandTest extends TestCase
 
     protected function getCommandMock()
     {
-        return $this->niceMock('Concise\Console\Command')
+        return $this->niceMock('Concise\Console\CommandStub')
                     ->expose('createRunner')
                     ->done();
     }
@@ -34,5 +42,12 @@ class CommandTest extends TestCase
     {
         $command = $this->getCommandMock();
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
+    }
+
+    public function testVerboseIsTurnedOnIfItExistsAndHasBeenSet()
+    {
+        $command = $this->getCommandMock();
+        $command->setArgument('verbose', true);
+        $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_true);
     }
 }
