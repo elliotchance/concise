@@ -6,6 +6,7 @@ use Exception;
 use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
 use PHPUnit_Framework_Test;
+use PHPUnit_Framework_ExpectationFailedException;
 
 class RenderIssue
 {
@@ -31,8 +32,13 @@ class RenderIssue
         $colors = $theme->getTheme();
         $color = $colors[$status];
         $top = "$issueNumber. " . $c(get_class($test) . '::' . $test->getName())->$color . "\n\n";
-        $message = $e->getMessage() . "\n\n";
-        $message .= $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
+        $message = $e->getMessage() . "\n";
+
+        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
+            $message .= $e->getComparisonFailure()->getDiff();
+        }
+
+        $message .= "\n" . $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
         $pad = str_repeat(' ', strlen($issueNumber));
 
         return $top . $this->prefixLines($c("  ")->highlight($colors[$status]) . $pad, rtrim($message));
