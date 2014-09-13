@@ -323,13 +323,6 @@ EOF;
         return $this->getNamespaceName($this->customClassName);
     }
 
-    protected function isInterface()
-    {
-        $refClass = new ReflectionClass($this->className);
-
-        return $refClass->isInterface();
-    }
-
     /**
 	 * Create a new instance of the mocked class. There is no need to generate the code before invoking this.
 	 * @return object
