@@ -24,4 +24,9 @@ class IsABooleanTest extends AbstractMatcherTestCase
     {
         $this->assert(false, is_a_boolean);
     }
+
+    public function testAlternativeShorterSyntax()
+    {
+        $this->assert(true, is_a_bool);
+    }
 }

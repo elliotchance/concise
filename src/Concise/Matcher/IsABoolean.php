@@ -8,6 +8,7 @@ class IsABoolean extends AbstractMatcher
     {
         return array(
             '? is a boolean' => 'Assert a value is true or false.',
+            '? is a bool' => 'Assert a value is true or false.',
         );
     }
 
