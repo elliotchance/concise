@@ -114,7 +114,11 @@ Matchers
 ### Booleans
 
 * `false` - Always fail.
+* `? is a boolean` - Assert a value is true or false.
+  * `? is a bool`
 * `? is false` - Assert value is false.
+* `? is not a boolean` - Assert a value is not true or false.
+  * `? is not a bool`
 * `? is true` - Assert a value is true.
 * `true` - Always pass.
 
