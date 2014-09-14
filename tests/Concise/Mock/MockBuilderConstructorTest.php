@@ -33,7 +33,7 @@ class MockBuilderConstructorTest extends TestCase
     public function testMocksWillCallConstructorByDefault()
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor1')
-                     ->done();
+                     ->get();
         $this->assert($mock->constructorRun);
     }
 
@@ -41,7 +41,7 @@ class MockBuilderConstructorTest extends TestCase
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor1')
                      ->disableConstructor()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor1');
     }
 
@@ -49,7 +49,7 @@ class MockBuilderConstructorTest extends TestCase
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor2')
                      ->disableConstructor()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor2');
     }
 }

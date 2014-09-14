@@ -33,6 +33,6 @@ class MockBuilderExposeTest extends TestCase
     {
         $this->niceMock('\Concise\Mock\MockExpose')
              ->expose('baz')
-             ->done();
+             ->get();
     }
 }

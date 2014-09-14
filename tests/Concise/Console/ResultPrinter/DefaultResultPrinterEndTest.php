@@ -15,7 +15,7 @@ class DefaultResultPrinterEndTest extends TestCase
         $this->e = new Exception();
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->stub('getName')
-                           ->done();
+                           ->get();
     }
 
     protected function getTheme()
@@ -29,7 +29,7 @@ class DefaultResultPrinterEndTest extends TestCase
                         PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete_color',
                         PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => 'risky_color',
                     )))
-                    ->done();
+                    ->get();
     }
 
     public function endTestColorData()
@@ -51,7 +51,7 @@ class DefaultResultPrinterEndTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', array($this->getTheme()))
                               ->expects('add')->with($status, $this->test, $this->e)
                               ->stub('update')
-                              ->done();
+                              ->get();
         $resultPrinter->endTest($status, $this->test, 1.23, $this->e);
     }
 
@@ -60,7 +60,7 @@ class DefaultResultPrinterEndTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter', array($this->getTheme()))
                               ->expects('add')->never()
                               ->stub('update')
-                              ->done();
+                              ->get();
         $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $this->test, 1.23, $this->e);
     }
 }
