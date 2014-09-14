@@ -414,7 +414,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->stub(array('myMethod' => 123))
              ->done();
 
-        $mock = end($this->_mocks);
+        $mock = end($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 0);
     }
 
@@ -426,7 +426,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
         $mock->myMethod();
 
-        $mock = end($this->_mocks);
+        $mock = end($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 1);
     }
 
@@ -439,7 +439,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
         $mock->myMethod();
 
-        $mock = end($this->_mocks);
+        $mock = end($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
     }
 

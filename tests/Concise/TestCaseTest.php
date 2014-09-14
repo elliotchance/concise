@@ -125,26 +125,26 @@ class TestCaseTest extends TestCase
 
     public function testMocksAreResetInTheSetup()
     {
-        $this->assert($this->_mocks, exactly_equals, array());
+        $this->assert($this->getMockManager()->getMocks(), exactly_equals, array());
     }
 
     public function testCreatingAMockAddsItToTheMocks()
     {
         $this->mock()->done();
-        $this->assert(count($this->_mocks), equals, 1);
+        $this->assert(count($this->getMockManager()->getMocks()), equals, 1);
     }
 
     public function testCreatingANiceMockAddsItToTheMocks()
     {
         $this->niceMock()->done();
-        $this->assert(count($this->_mocks), equals, 1);
+        $this->assert(count($this->getMockManager()->getMocks()), equals, 1);
     }
 
     public function testCreatingMultipleMocksAddsAllToMocks()
     {
         $this->mock()->done();
         $this->niceMock()->done();
-        $this->assert(count($this->_mocks), equals, 2);
+        $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 
     public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
@@ -152,6 +152,6 @@ class TestCaseTest extends TestCase
         $mockTemplate = $this->mock();
         $mockTemplate->done();
         $mockTemplate->done();
-        $this->assert(count($this->_mocks), equals, 2);
+        $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 }
