@@ -40,8 +40,9 @@ class ValueRenderer
 	 */
     public function render($value)
     {
+        $c = new Color();
         if ($value instanceof Closure) {
-            return 'function';
+            return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
         }
         if (is_object($value)) {
             return get_class($value) . ':' . json_encode($value);

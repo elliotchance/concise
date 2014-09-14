@@ -122,4 +122,12 @@ class ValueRendererTest extends \Concise\TestCase
         $c = new Color();
         $this->assert($this->renderer->render("12.3"), equals, (string) $c("\"12.3\"")->green);
     }
+
+    public function testClosureWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue('value.closure', 'blue');
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render(function () {}), equals, (string) $c("function")->blue);
+    }
 }
