@@ -586,4 +586,66 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->get();
         $this->assert(get_class($mock), equals, $rand);
     }
+
+    // ReturnCallback
+
+    public function testAReturnCallbackCanBeSet()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function () {})
+                     ->get();
+        $this->assert($mock->myMethod(), is_null);
+    }
+
+    public function testAReturnCallbackWillBeEvaluatedForItsReturnValue()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function () {
+                        return 'foo';
+                    })
+                     ->get();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
+
+    public function testAReturnCallbackMustNotBeExecutedIfTheMethodWasNeverInvoked()
+    {
+        $count = 0;
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function () use (&$count) {
+                        ++$count;
+                    })
+                     ->get();
+        $this->assert($count, equals, 0);
+    }
+
+    public function testAReturnCallbackWillBeProvidedACountThatStartsAt1()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function ($count) {
+                        return $count;
+                    })
+                     ->get();
+        $this->assert($mock->myMethod(), equals, 1);
+    }
+
+    public function testAReturnCallbackWillBeProvidedACountThatIncrementsWithInvocations()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function ($count) {
+                        return $count;
+                    })
+                     ->get();
+        $mock->myMethod();
+        $this->assert($mock->myMethod(), equals, 2);
+    }
+
+    public function testAReturnCallbackWillBeProvidedWithOriginalArgs()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function ($count, array $args) {
+                        return $args;
+                    })
+                     ->get();
+        $this->assert($mock->myMethod('hello'), equals, array('hello'));
+    }
 }
