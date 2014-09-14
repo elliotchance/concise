@@ -34,27 +34,32 @@ class ValueRenderer
         return (string) $value;
     }
 
+    protected function jsonEncodeCallback(array $values, Closure $callback)
+    {
+        $r = '';
+        foreach ($values as $k => $v) {
+            if ($r) {
+                $r .= ',';
+            }
+            $r .= $callback($k, $v);
+        }
+
+        return $r;
+    }
+
     protected function jsonEncode($value)
     {
         if (is_object($value)) {
-            $r = '';
-            foreach ((array) $value as $k => $v) {
-                if ($r) {
-                    $r .= ',';
-                }
-                $r .= $this->colorize("\"$k\"") . ':' . $this->render($v);
-            }
+            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
+                return $this->colorize("\"$k\"") . ':' . $this->render($v);
+            });
 
             return "{" . $r . "}";
         }
         if (is_array($value)) {
-            $r = '';
-            foreach ($value as $k => $v) {
-                if ($r) {
-                    $r .= ',';
-                }
-                $r .= $this->render($v);
-            }
+            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
+                return $this->render($v);
+            });
 
             return "[$r]";
         }

@@ -167,4 +167,9 @@ class ValueRendererTest extends \Concise\TestCase
         $obj->b = 456;
         $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123,"b":456}');
     }
+
+    public function testMultipleArrayValuesRendersAsJson()
+    {
+        $this->assert($this->renderer->render([1,2]), equals, '[1,2]');
+    }
 }
