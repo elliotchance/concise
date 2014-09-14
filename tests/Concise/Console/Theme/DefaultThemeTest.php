@@ -28,6 +28,8 @@ class DefaultThemeTest extends TestCase
             array('value.float'),
             array('value.string'),
             array('value.closure'),
+            array('value.null'),
+            array('value.boolean'),
         );
     }
 
