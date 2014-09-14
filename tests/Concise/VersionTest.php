@@ -34,7 +34,7 @@ class VersionTest extends TestCase
     {
         $version = $this->niceMock('Concise\Version')
                         ->stub('findVendorFolder')
-                        ->done();
+                        ->get();
         $this->assert($version->getConciseVersion(), is_blank);
     }
 
@@ -42,7 +42,7 @@ class VersionTest extends TestCase
     {
         $version = $this->niceMock('Concise\Version')
                         ->expose('findVendorFolder')
-                        ->done();
+                        ->get();
         $this->assert($version->findVendorFolder('/tmp'), is_null);
     }
 }

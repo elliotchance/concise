@@ -19,20 +19,20 @@ class ResultPrinterProxyStatisticsTest extends TestCase
         $this->proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->stub('getName')
-                           ->done();
-        $this->e = $this->mock('Exception')->done();
+                           ->get();
+        $this->e = $this->mock('Exception')->get();
     }
 
     protected function getMuteResultPrinter()
     {
         return $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                     ->stub('write')
-                    ->done();
+                    ->get();
     }
 
     public function testAddFailureWillIncrementCount()
     {
-        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->done();
+        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->get();
         $this->proxy->addFailure($this->test, $this->e, 0);
         $this->assert($this->proxy->getResultPrinter()->getFailureCount(), equals, 1);
     }

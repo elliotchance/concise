@@ -92,7 +92,7 @@ class TestCaseTest extends TestCase
                                 'true',
                             )
                          ))
-                         ->done();
+                         ->get();
 
         return $testCase->getAssertionsForMethod('abc');
     }
@@ -130,28 +130,28 @@ class TestCaseTest extends TestCase
 
     public function testCreatingAMockAddsItToTheMocks()
     {
-        $this->mock()->done();
+        $this->mock()->get();
         $this->assert(count($this->getMockManager()->getMocks()), equals, 1);
     }
 
     public function testCreatingANiceMockAddsItToTheMocks()
     {
-        $this->niceMock()->done();
+        $this->niceMock()->get();
         $this->assert(count($this->getMockManager()->getMocks()), equals, 1);
     }
 
     public function testCreatingMultipleMocksAddsAllToMocks()
     {
-        $this->mock()->done();
-        $this->niceMock()->done();
+        $this->mock()->get();
+        $this->niceMock()->get();
         $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 
     public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
     {
         $mockTemplate = $this->mock();
-        $mockTemplate->done();
-        $mockTemplate->done();
+        $mockTemplate->get();
+        $mockTemplate->get();
         $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 }

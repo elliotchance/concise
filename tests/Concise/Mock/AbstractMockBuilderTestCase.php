@@ -29,7 +29,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     public function testMockCanBeCreatedFromAnObjectThatExists()
     {
         $mock = $this->mockBuilder()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
@@ -40,21 +40,21 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
     {
         $mock = $this->mockBuilder()
-                     ->done();
+                     ->get();
         $mock->myMethod();
     }
 
     public function testNiceMockCanBeCreatedFromAnObjectThatExists()
     {
         $mock = $this->niceMockBuilder()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
     public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
     {
         $mock = $this->niceMockBuilder()
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
 
@@ -66,21 +66,21 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mock($this->getClassName())
                      ->disableConstructor()
-                     ->done();
+                     ->get();
         $this->assert($mock->constructorRun, is_false);
     }
 
     public function testMockReceivesConstructorArguments()
     {
         $mock = $this->mockBuilder()
-                     ->done();
+                     ->get();
         $this->assert($mock->constructorRun, equals, 2);
     }
 
     public function testNiceMockReceivesConstructorArguments()
     {
         $mock = $this->niceMockBuilder()
-                     ->done();
+                     ->get();
         $this->assert($mock->constructorRun, equals, 2);
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andDo(function () {})
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, null);
     }
 
@@ -101,7 +101,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andDo(function () use (&$a) {
                          $a = 456;
                      })
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $this->assert($a, equals, 456);
     }
@@ -113,7 +113,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->stub('myMethod')->andDo(function () use (&$a) {
                  $a = 456;
              })
-             ->done();
+             ->get();
         $this->assert($a, equals, 123);
     }
 
@@ -123,7 +123,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->expect('myMethod')->once()->andReturn(null)
-                     ->done();
+                     ->get();
         $mock->myMethod();
     }
 
@@ -131,7 +131,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->expect('myMethod')->twice()->andReturn(null)
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $mock->myMethod();
     }
@@ -144,21 +144,21 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->expect('myMethod')->never()->andReturn(null)
-             ->done();
+             ->get();
     }
 
     public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
     {
         $this->mockBuilder()
              ->expect('myMethod')->never()
-             ->done();
+             ->get();
     }
 
     public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
     {
         $mock = $this->mockBuilder()
                      ->expect('myMethod')->exactly(3)->andReturn(null)
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $mock->myMethod();
         $mock->myMethod();
@@ -168,14 +168,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->expect('myMethod')->exactly(0)
-             ->done();
+             ->get();
     }
 
     public function testDefaultExpectationIsOnce()
     {
         $mock = $this->mockBuilder()
                      ->expect('myMethod')->andReturn(null)
-                     ->done();
+                     ->get();
         $mock->myMethod();
     }
 
@@ -183,7 +183,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->expect('myMethod')->with('foo')->andReturn('bar')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod('foo'), equals, 'bar');
     }
 
@@ -191,7 +191,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->expects('myMethod')
-                     ->done();
+                     ->get();
         $mock->myMethod();
     }
 
@@ -201,7 +201,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->niceMockBuilder()
                      ->expose('mySecretMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
 
@@ -213,14 +213,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->niceMockBuilder()
              ->expose('baz')
-             ->done();
+             ->get();
     }
 
     public function testExposeTwoMethodsWithSeparateParameters()
     {
         $mock = $this->niceMockBuilder()
                      ->expose('myMethod', 'mySecondMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
@@ -228,7 +228,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->niceMockBuilder()
                      ->expose('myMethod')->expose('mySecondMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
 
@@ -236,7 +236,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->niceMockBuilder()
                      ->expose(array('myMethod', 'mySecondMethod'))
-                     ->done();
+                     ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
@@ -250,7 +250,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->stub(array('myPrivateMethod' => 'bar'))
-             ->done();
+             ->get();
     }
 
     // ReturnSelf
@@ -259,7 +259,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturnSelf()
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_the_same_as, $mock);
     }
 
@@ -269,7 +269,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn('foo')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
@@ -277,7 +277,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
@@ -285,7 +285,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 'bar');
     }
@@ -294,7 +294,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn('foo')
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 'foo');
@@ -308,7 +308,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $mock->myMethod();
         $mock->myMethod();
@@ -320,7 +320,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub(array('myStaticMethod' => 'foo'))
-                     ->done();
+                     ->get();
         $this->assert($mock->myStaticMethod(), equals, 'foo');
     }
 
@@ -330,7 +330,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub(array('myMethod' => 123))
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 123);
     }
 
@@ -338,7 +338,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub(array('myMethod' => 123, 'mySecondMethod' => 'bar'))
-                     ->done();
+                     ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
@@ -350,14 +350,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->stub(array())
-             ->done();
+             ->get();
     }
 
     public function testCallingMethodOnNiceMockWithStub()
     {
         $mock = $this->niceMockBuilder()
                      ->stub(array('myMethod' => 123))
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 123);
     }
 
@@ -365,7 +365,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn(123)
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 123);
     }
 
@@ -373,7 +373,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_null);
     }
 
@@ -381,7 +381,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturn(null)
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_null);
     }
 
@@ -393,7 +393,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andThrow(new \Exception('whatever'))
-                     ->done();
+                     ->get();
         $mock->myMethod();
     }
 
@@ -405,14 +405,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->stub('myMethod')->andReturn(123)->andReturn(456)
-             ->done();
+             ->get();
     }
 
     public function testMockSetsActualCallsToZeroWhenRuleIsCreated()
     {
         $this->mockBuilder()
              ->stub(array('myMethod' => 123))
-             ->done();
+             ->get();
 
         $mock = end($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 0);
@@ -422,7 +422,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub(array('myMethod' => 123))
-                     ->done();
+                     ->get();
 
         $mock->myMethod();
 
@@ -434,7 +434,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub(array('myMethod' => 123))
-                     ->done();
+                     ->get();
 
         $mock->myMethod();
         $mock->myMethod();
@@ -450,7 +450,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('a')->andReturn('foo')
                                            ->with('b')->andReturn('bar')
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, $this->getClassName());
     }
 
@@ -459,7 +459,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('a')->andReturn('foo')
                                            ->with('b')->andReturn('bar')
-                     ->done();
+                     ->get();
         $this->assert($mock->myWithMethod('b'), equals, 'bar');
     }
 
@@ -468,7 +468,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('a')->andReturn('foo')
                                            ->with('b')->andReturn('bar')
-                     ->done();
+                     ->get();
         $this->assert($mock->myWithMethod('a'), equals, 'foo');
     }
 
@@ -476,7 +476,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('a')->twice()->andReturn('foo')
-                     ->done();
+                     ->get();
         $mock->myWithMethod('a');
         $this->assert($mock->myWithMethod('a'), equals, 'foo');
     }
@@ -485,7 +485,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('"foo"')
-                     ->done();
+                     ->get();
         $this->assert($mock->myWithMethod('"foo"'), is_null);
     }
 
@@ -493,7 +493,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myWithMethod')->with('a$b')
-                     ->done();
+                     ->get();
         $this->assert($mock->myWithMethod('a$b'), is_null);
     }
 
@@ -503,7 +503,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_null);
     }
 
@@ -511,7 +511,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->niceMockBuilder()
                      ->stub('myMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_null);
     }
 
@@ -523,7 +523,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')
-                     ->done();
+                     ->get();
         $mock->myAbstractMethod();
     }
 
@@ -535,7 +535,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->niceMockBuilder()
                      ->stub('myMethod')
-                     ->done();
+                     ->get();
         $mock->myAbstractMethod();
     }
 
@@ -543,7 +543,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myAbstractMethod')
-                     ->done();
+                     ->get();
         $this->assert($mock->myAbstractMethod(), is_null);
     }
 
@@ -557,7 +557,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $this->mockBuilder()
              ->stub('myFinalMethod')
-             ->done();
+             ->get();
     }
 
     // Custom Class Name
@@ -570,7 +570,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->setCustomClassName('123')
-                     ->done();
+                     ->get();
     }
 
     public function testCanSetCustomClassName()
@@ -578,7 +578,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $rand = "Concise\\Mock\\Temp" . md5(rand());
         $mock = $this->mockBuilder()
                      ->setCustomClassName($rand)
-                     ->done();
+                     ->get();
         $this->assert(get_class($mock), equals, $rand);
     }
 }

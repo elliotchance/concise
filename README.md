@@ -48,7 +48,7 @@ $calculator = $this->mock('\My\Calculator')
                    ->expect('add')->with(3, 5)->andReturn(8)
                    ->stub('clear')->andThrow(new \CantClearException())
                    ->expect('subtract')->never()
-                   ->done();
+                   ->get();
 ```
 
 Mocks will throw an exception for any method that is called that isn't told what to do. So maybe you need a
@@ -58,7 +58,7 @@ methods:
 ```php
 $calculator = $this->niceMock('\My\Calculator')
                    ->stub(['add' => 8])          // always return 8 for add()
-                   ->done();
+                   ->get();
 ```
 
 You can read more on the [Mocking](https://github.com/elliotchance/concise/wiki/Mocking) wiki page.
