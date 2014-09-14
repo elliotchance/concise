@@ -10,11 +10,6 @@ class ValueRenderer
 {
     protected $theme;
 
-    protected function shouldBeJsonEncoded($value)
-    {
-        return is_array($value) || is_object($value) || is_bool($value);
-    }
-
     protected function colorize($value)
     {
         $c = new Color();
@@ -96,9 +91,6 @@ class ValueRenderer
         }
         if (is_array($value)) {
             return $this->jsonEncode($value);
-        }
-        if ($this->shouldBeJsonEncoded($value)) {
-            return json_encode($value);
         }
         if (is_string($value)) {
             return $this->colorize('"' . $value . '"');
