@@ -182,4 +182,12 @@ class ValueRendererTest extends \Concise\TestCase
     {
         $this->assert($this->renderer->render([123 => 'bar']), equals, '{"123":"bar"}');
     }
+
+    public function testNestedObjectsHideTypeHint()
+    {
+        $obj = new \stdClass();
+        $obj->a = new \stdClass();
+        $obj->a->b = 456;
+        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":{"b":456}}');
+    }
 }

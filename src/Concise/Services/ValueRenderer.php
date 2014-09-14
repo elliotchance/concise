@@ -51,14 +51,14 @@ class ValueRenderer
     {
         if (is_object($value) || (is_array($value) && $this->isAssociativeArray($value))) {
             $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
-                return $this->colorize("\"$k\"") . ':' . $this->render($v);
+                return $this->colorize("\"$k\"") . ':' . $this->render($v, false);
             });
 
             return "{" . $r . "}";
         }
         if (is_array($value)) {
             $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
-                return $this->render($v);
+                return $this->render($v, false);
             });
 
             return "[$r]";
@@ -76,14 +76,14 @@ class ValueRenderer
 	 * @param  mixed $value
 	 * @return string
 	 */
-    public function render($value)
+    public function render($value, $showTypeHint = true)
     {
         $c = new Color();
         if ($value instanceof Closure) {
             return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
         }
         if (is_object($value)) {
-            return get_class($value) . ':' . $this->jsonEncode($value);
+            return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value);
         }
         if (is_array($value)) {
             return $this->jsonEncode($value);
