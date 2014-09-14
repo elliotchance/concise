@@ -28,11 +28,8 @@ class ValueRenderer
         if (is_float($value)) {
             return (string) $c($value)->{$this->theme['value.float']};
         }
-        if (is_string($value)) {
-            return (string) $c($value)->{$this->theme['value.string']};
-        }
 
-        return (string) $value;
+        return (string) $c($value)->{$this->theme['value.string']};
     }
 
     protected function jsonEncodeCallback(array $values, Closure $callback)
@@ -57,15 +54,12 @@ class ValueRenderer
 
             return "{" . $r . "}";
         }
-        if (is_array($value)) {
-            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
-                return $this->render($v, false);
-            });
 
-            return "[$r]";
-        }
+        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
+            return $this->render($v, false);
+        });
 
-        return json_encode($value);
+        return "[$r]";
     }
 
     protected function isAssociativeArray(array $a)

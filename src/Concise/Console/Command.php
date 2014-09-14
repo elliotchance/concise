@@ -20,6 +20,9 @@ class Command extends \PHPUnit_TextUI_Command
         return $testRunner;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function handleArguments(array $argv)
     {
         $this->longOptions['test-colors'] = null;
