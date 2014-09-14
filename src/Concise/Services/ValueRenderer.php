@@ -12,14 +12,17 @@ class ValueRenderer
 
     protected function shouldBeJsonEncoded($value)
     {
-        return is_null($value) || is_array($value) || is_object($value) || is_bool($value);
+        return is_array($value) || is_object($value) || is_bool($value);
     }
 
     protected function colorize($value)
     {
         $c = new Color();
         if (!$this->theme) {
-            return (string) $value;
+            return is_null($value) ? 'null' : (string) $value;
+        }
+        if (is_null($value)) {
+            return (string) $c('null')->{$this->theme['value.null']};
         }
         if (is_int($value)) {
             return (string) $c($value)->{$this->theme['value.integer']};
@@ -79,6 +82,9 @@ class ValueRenderer
     public function render($value, $showTypeHint = true)
     {
         $c = new Color();
+        if (is_null($value)) {
+            return $this->colorize(null);
+        }
         if ($value instanceof Closure) {
             return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
         }

@@ -190,4 +190,13 @@ class ValueRendererTest extends \Concise\TestCase
         $obj->a->b = 456;
         $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":{"b":456}}');
     }
+
+    public function testNullWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.null' => 'green'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $this->assert($this->renderer->render(null), contains_string, (string) $c('null')->green);
+    }
 }
