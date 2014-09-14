@@ -44,6 +44,17 @@ class ValueRenderer
 
             return "$r}";
         }
+        if (is_array($value)) {
+            $r = '';
+            foreach ($value as $k => $v) {
+                if ($r) {
+                    $r .= ',';
+                }
+                $r .= $this->render($v);
+            }
+
+            return "[$r]";
+        }
 
         return json_encode($value);
     }
@@ -60,6 +71,9 @@ class ValueRenderer
         }
         if (is_object($value)) {
             return get_class($value) . ':' . $this->jsonEncode($value);
+        }
+        if (is_array($value)) {
+            return $this->jsonEncode($value);
         }
         if ($this->shouldBeJsonEncoded($value)) {
             return json_encode($value);
