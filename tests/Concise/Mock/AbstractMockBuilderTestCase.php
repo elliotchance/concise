@@ -588,7 +588,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $mock = $this->mockBuilder()
                      ->stub('myMethod')->andReturnCallback(function () {})
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), is_null);
     }
 
@@ -598,7 +598,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andReturnCallback(function () {
                         return 'foo';
                     })
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
@@ -609,7 +609,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andReturnCallback(function () use (&$count) {
                         ++$count;
                     })
-                     ->done();
+                     ->get();
         $this->assert($count, equals, 0);
     }
 
@@ -619,7 +619,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andReturnCallback(function ($count) {
                         return $count;
                     })
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod(), equals, 1);
     }
 
@@ -629,7 +629,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andReturnCallback(function ($count) {
                         return $count;
                     })
-                     ->done();
+                     ->get();
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 2);
     }
@@ -640,7 +640,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myMethod')->andReturnCallback(function ($count, array $args) {
                         return $args;
                     })
-                     ->done();
+                     ->get();
         $this->assert($mock->myMethod('hello'), equals, array('hello'));
     }
 }
