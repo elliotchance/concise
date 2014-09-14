@@ -39,7 +39,7 @@ class ValueRenderer
         if (is_object($value)) {
             $r = '{';
             foreach ((array) $value as $k => $v) {
-                $r .= $this->colorize("\"$k\"") . ':' . $this->jsonEncode($v);
+                $r .= $this->colorize("\"$k\"") . ':' . $this->render($v);
             }
 
             return "$r}";
