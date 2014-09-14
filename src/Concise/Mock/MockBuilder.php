@@ -376,4 +376,16 @@ class MockBuilder
     {
         return $this->setAction(new Action\ReturnCallbackAction($returnCallback));
     }
+
+    /**
+     * @return MockBuilder
+     */
+    public function andReturnProperty($property)
+    {
+        if ($this->isInterface()) {
+            throw new InvalidArgumentException("You cannot return a property from an interface ({$this->className}).");
+        }
+
+        return $this->setAction(new Action\ReturnPropertyAction($property));
+    }
 }

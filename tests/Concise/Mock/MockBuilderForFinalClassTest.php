@@ -6,6 +6,8 @@ final class MockFinalClass
 {
     public $constructorRun = false;
 
+    protected $hidden = 'foo';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = true;
@@ -411,5 +413,11 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testAReturnCallbackWillBeProvidedWithOriginalArgs();
+    }
+
+    public function testAReturnPropertyCanBeSet()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAReturnPropertyCanBeSet();
     }
 }

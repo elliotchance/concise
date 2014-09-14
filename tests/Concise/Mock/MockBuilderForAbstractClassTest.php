@@ -6,6 +6,8 @@ abstract class MockAbstractClass
 {
     public $constructorRun = false;
 
+    protected $hidden = 'foo';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = $b;

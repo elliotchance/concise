@@ -2,11 +2,11 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-
 class MockClass
 {
     public $constructorRun = false;
+
+    protected $hidden = 'foo';
 
     public function __construct($a, $b)
     {
@@ -32,7 +32,7 @@ class MockClass
     {
     }
 
-    static public function myStaticMethod()
+    public static function myStaticMethod()
     {
         return 'foo';
     }

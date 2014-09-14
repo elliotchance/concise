@@ -643,4 +643,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->get();
         $this->assert($mock->myMethod('hello'), equals, array('hello'));
     }
+
+    // ReturnProperty
+
+    public function testAReturnPropertyCanBeSet()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnProperty('hidden')
+                     ->get();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
 }
