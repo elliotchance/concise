@@ -595,7 +595,9 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     public function testAReturnCallbackWillBeEvaluatedForItsReturnValue()
     {
         $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturnCallback(function () { return 'foo'; })
+                     ->stub('myMethod')->andReturnCallback(function () {
+                        return 'foo';
+                    })
                      ->done();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
@@ -604,8 +606,20 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     {
         $count = 0;
         $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturnCallback(function () use (&$count) { ++$count; })
+                     ->stub('myMethod')->andReturnCallback(function () use (&$count) {
+                        ++$count;
+                    })
                      ->done();
         $this->assert($count, equals, 0);
+    }
+
+    public function testAReturnCallbackWillBeProvidedACountThatStartsAt1()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function ($count) {
+                        return $count;
+                    })
+                     ->done();
+        $this->assert($mock->myMethod(), equals, 1);
     }
 }

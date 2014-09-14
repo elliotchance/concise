@@ -16,6 +16,6 @@ class ReturnCallbackAction extends AbstractCachingAction
 
     public function getActionCode()
     {
-        return parent::getActionCode() . "return \$v();";
+        return parent::getActionCode() . "return \$v(1);";
     }
 }
