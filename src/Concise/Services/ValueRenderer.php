@@ -27,6 +27,9 @@ class ValueRenderer
         if (is_float($value)) {
             return (string) $c($value)->{$this->theme['value.float']};
         }
+        if (is_string($value)) {
+            return (string) $c($value)->{$this->theme['value.string']};
+        }
 
         return (string) $value;
     }
@@ -47,7 +50,7 @@ class ValueRenderer
             return json_encode($value);
         }
         if (is_string($value)) {
-            return '"' . $value . '"';
+            return $this->colorize('"' . $value . '"');
         }
 
         return $this->colorize($value);

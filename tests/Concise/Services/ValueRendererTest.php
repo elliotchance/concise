@@ -90,17 +90,36 @@ class ValueRendererTest extends \Concise\TestCase
         $this->assert($this->renderer->renderAll(array('foo')), equals, '"foo"');
     }
 
+    protected function getThemeForValue($name, $color)
+    {
+        return $this->mock('Concise\Console\Theme\DefaultTheme')
+                      ->stub(array('getTheme' => array(
+                        $name => $color,
+                        )))
+                      ->get();
+    }
+
     public function testIntegersWillBeColoredWhenAThemeIsSpecified()
     {
-        $this->renderer->setTheme(new DefaultTheme());
+        $theme = $this->getThemeForValue('value.integer', 'magenta');
+        $this->renderer->setTheme($theme);
         $c = new Color();
         $this->assert($this->renderer->render(123), equals, (string) $c(123)->magenta);
     }
 
     public function testFloatingPointsWillBeColoredWhenAThemeIsSpecified()
     {
-        $this->renderer->setTheme(new DefaultTheme());
+        $theme = $this->getThemeForValue('value.float', 'red');
+        $this->renderer->setTheme($theme);
         $c = new Color();
-        $this->assert($this->renderer->render(12.3), equals, (string) $c(12.3)->magenta);
+        $this->assert($this->renderer->render(12.3), equals, (string) $c(12.3)->red);
+    }
+
+    public function testStringsWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue('value.string', 'green');
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render("12.3"), equals, (string) $c("\"12.3\"")->green);
     }
 }
