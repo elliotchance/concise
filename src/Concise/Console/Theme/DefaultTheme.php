@@ -17,6 +17,7 @@ class DefaultTheme
             PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => 'yellow',
             'value.integer'                                  => 'red',
             'value.float'                                    => 'red',
+            'value.string'                                   => 'yellow',
         );
     }
 }

@@ -26,6 +26,7 @@ class DefaultThemeTest extends TestCase
             array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY),
             array('value.integer'),
             array('value.float'),
+            array('value.string'),
         );
     }
 
