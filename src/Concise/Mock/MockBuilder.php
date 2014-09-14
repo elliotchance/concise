@@ -141,7 +141,7 @@ class MockBuilder
 	 * Compiler the mock into a usable instance.
 	 * @return object
 	 */
-    public function done()
+    public function get()
     {
         $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
         if ($this->customClassName) {

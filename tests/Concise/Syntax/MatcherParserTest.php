@@ -122,7 +122,7 @@ class MatcherParserTest extends TestCase
     {
         $parser = $this->niceMock('\Concise\Syntax\MatcherParser')
                        ->expect('getRawKeywords')->once()->andReturn(array('a'))
-                       ->done();
+                       ->get();
 
         $parser->getKeywords();
         $parser->getKeywords();
@@ -165,7 +165,7 @@ class MatcherParserTest extends TestCase
     {
         return $this->mock('\Concise\Matcher\AbstractMatcher')
                     ->stub(array('supportedSyntaxes' => $supportedSyntaxes))
-                    ->done();
+                    ->get();
     }
 
     public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()

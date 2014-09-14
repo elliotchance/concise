@@ -21,7 +21,7 @@ class RenderIssueTest extends TestCase
         $this->issue = new RenderIssue();
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $this->exception = new Exception('foo bar');
     }
 
@@ -50,7 +50,7 @@ class RenderIssueTest extends TestCase
     {
         return $this->mock('Concise\Console\ResultPrinter\Utilities\TraceSimplifier')
                     ->expect('render')->with($this->exception->getTrace())->andReturn("foo\nbar")
-                    ->done();
+                    ->get();
     }
 
     protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $issueNumber = 0)
@@ -109,7 +109,7 @@ class RenderIssueTest extends TestCase
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->setCustomClassName('PHPUnit_Framework_TestCase_57c3cc10')
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, (string) $c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red());
     }
@@ -118,7 +118,7 @@ class RenderIssueTest extends TestCase
     {
         $this->test = $this->mock('\PHPUnit_Framework_TestSuite')->disableConstructor()
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "foo");
     }
@@ -138,7 +138,7 @@ class RenderIssueTest extends TestCase
     {
         $failure = $this->mock($this->getComparisonFailure(), array('foo', 'bar', 'foo', 'bar'))
                         ->expect('getDiff')->andReturn('foobar')
-                        ->done();
+                        ->get();
         $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', $failure);
 
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);

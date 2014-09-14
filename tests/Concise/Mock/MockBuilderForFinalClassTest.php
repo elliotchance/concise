@@ -61,7 +61,7 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     public function testFinalMethodsWillNotBeOverriddenInChildClasses()
     {
         $mock = $this->mock('\Concise\Mock\MockFinalClass2')
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
