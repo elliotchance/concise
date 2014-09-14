@@ -17,13 +17,18 @@ class ValueRenderer
 
     protected function colorize($value)
     {
-        if (!$this->theme || !is_int($value)) {
+        $c = new Color();
+        if (!$this->theme) {
             return (string) $value;
         }
+        if (is_int($value)) {
+            return (string) $c($value)->{$this->theme['value.integer']};
+        }
+        if (is_float($value)) {
+            return (string) $c($value)->{$this->theme['value.float']};
+        }
 
-        $c = new Color();
-
-        return (string) $c($value)->{$this->theme['value.integer']};
+        return (string) $value;
     }
 
     /**

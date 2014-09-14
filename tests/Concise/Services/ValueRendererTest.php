@@ -94,6 +94,13 @@ class ValueRendererTest extends \Concise\TestCase
     {
         $this->renderer->setTheme(new DefaultTheme());
         $c = new Color();
-        $this->assert($this->renderer->render(123), equals, (string) $c(123)->red);
+        $this->assert($this->renderer->render(123), equals, (string) $c(123)->magenta);
+    }
+
+    public function testFloatingPointsWillBeColoredWhenAThemeIsSpecified()
+    {
+        $this->renderer->setTheme(new DefaultTheme());
+        $c = new Color();
+        $this->assert($this->renderer->render(12.3), equals, (string) $c(12.3)->magenta);
     }
 }
