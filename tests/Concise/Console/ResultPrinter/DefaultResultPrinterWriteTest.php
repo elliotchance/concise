@@ -22,7 +22,7 @@ class DefaultResultPrinterWriteTest extends TestCase
         $this->expectOutputString("\n\n\n");
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->stub('update')
-                              ->done();
+                              ->get();
         $resultPrinter->end();
     }
 }

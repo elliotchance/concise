@@ -75,7 +75,7 @@ class AssertionTest extends TestCase
     {
         return $this->niceMock('\Concise\Assertion', array('true', new True()))
                     ->stub(array('getData' => $data))
-                    ->done();
+                    ->get();
     }
 
     public function testDoNotShowPHPUnitPropertiesOnError()
