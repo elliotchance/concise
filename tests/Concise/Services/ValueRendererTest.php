@@ -159,4 +159,12 @@ class ValueRendererTest extends \Concise\TestCase
 
         $this->assert($this->renderer->render(array('bar')), contains_string, (string) $c('"bar"')->green);
     }
+
+    public function testMultipleObjectValuesRendersAsJson()
+    {
+        $obj = new \stdClass();
+        $obj->a = 123;
+        $obj->b = 456;
+        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123,"b":456}');
+    }
 }

@@ -37,12 +37,15 @@ class ValueRenderer
     protected function jsonEncode($value)
     {
         if (is_object($value)) {
-            $r = '{';
+            $r = '';
             foreach ((array) $value as $k => $v) {
+                if ($r) {
+                    $r .= ',';
+                }
                 $r .= $this->colorize("\"$k\"") . ':' . $this->render($v);
             }
 
-            return "$r}";
+            return "{" . $r . "}";
         }
         if (is_array($value)) {
             $r = '';
