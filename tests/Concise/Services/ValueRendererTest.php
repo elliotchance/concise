@@ -2,6 +2,9 @@
 
 namespace Concise\Services;
 
+use Colors\Color;
+use Concise\Console\Theme\DefaultTheme;
+
 class ValueRendererTest extends \Concise\TestCase
 {
     /** @var ValueRenderer */
@@ -85,5 +88,12 @@ class ValueRendererTest extends \Concise\TestCase
     public function testRenderAllWithStrings()
     {
         $this->assert($this->renderer->renderAll(array('foo')), equals, '"foo"');
+    }
+
+    public function testIntegersWillBeColoredWhenAThemeIsSpecified()
+    {
+        $this->renderer->setTheme(new DefaultTheme());
+        $c = new Color();
+        $this->assert($this->renderer->render(123), equals, (string) $c(123)->red);
     }
 }

@@ -3,12 +3,27 @@
 namespace Concise\Services;
 
 use Closure;
+use Concise\Console\Theme\DefaultTheme;
+use Colors\Color;
 
 class ValueRenderer
 {
+    protected $theme;
+
     protected function shouldBeJsonEncoded($value)
     {
         return is_null($value) || is_array($value) || is_object($value) || is_bool($value);
+    }
+
+    protected function colorize($value)
+    {
+        if (!$this->theme || !is_int($value)) {
+            return (string) $value;
+        }
+
+        $c = new Color();
+
+        return (string) $c($value)->{$this->theme['value.integer']};
     }
 
     /**
@@ -30,11 +45,16 @@ class ValueRenderer
             return '"' . $value . '"';
         }
 
-        return (string) $value;
+        return $this->colorize($value);
     }
 
     public function renderAll(array $items)
     {
         return implode(', ', array_map(array($this, 'render'), $items));
+    }
+
+    public function setTheme(DefaultTheme $theme)
+    {
+        $this->theme = $theme->getTheme();
     }
 }
