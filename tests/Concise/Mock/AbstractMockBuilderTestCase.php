@@ -622,4 +622,15 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->done();
         $this->assert($mock->myMethod(), equals, 1);
     }
+
+    public function testAReturnCallbackWillBeProvidedACountThatIncrementsWithInvocations()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnCallback(function ($count) {
+                        return $count;
+                    })
+                     ->done();
+        $mock->myMethod();
+        $this->assert($mock->myMethod(), equals, 2);
+    }
 }
