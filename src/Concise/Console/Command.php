@@ -19,4 +19,20 @@ class Command extends \PHPUnit_TextUI_Command
 
         return $testRunner;
     }
+
+    protected function handleArguments(array $argv)
+    {
+        $this->longOptions['test-colors'] = null;
+        parent::handleArguments($argv);
+
+        foreach ($this->options[0] as $option) {
+            switch ($option[0]) {
+                case '--test-colors':
+                    $testColors = new TestColors(new DefaultTheme());
+                    echo $testColors->renderAll();
+                    exit(0);
+                    break;
+            }
+        }
+    }
 }
