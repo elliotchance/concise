@@ -199,4 +199,13 @@ class ValueRendererTest extends \Concise\TestCase
 
         $this->assert($this->renderer->render(null), contains_string, (string) $c('null')->green);
     }
+
+    public function testBooleanWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.boolean' => 'red'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $this->assert($this->renderer->render(true), contains_string, (string) $c('true')->red);
+    }
 }

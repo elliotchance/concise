@@ -19,10 +19,13 @@ class ValueRenderer
     {
         $c = new Color();
         if (!$this->theme) {
-            return is_null($value) ? 'null' : (string) $value;
+            return (is_null($value) || is_bool($value)) ? json_encode($value) : (string) $value;
         }
         if (is_null($value)) {
             return (string) $c('null')->{$this->theme['value.null']};
+        }
+        if (is_bool($value)) {
+            return (string) $c(json_encode($value))->{$this->theme['value.boolean']};
         }
         if (is_int($value)) {
             return (string) $c($value)->{$this->theme['value.integer']};
@@ -82,8 +85,8 @@ class ValueRenderer
     public function render($value, $showTypeHint = true)
     {
         $c = new Color();
-        if (is_null($value)) {
-            return $this->colorize(null);
+        if (is_null($value) || is_bool($value)) {
+            return $this->colorize($value);
         }
         if ($value instanceof Closure) {
             return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
