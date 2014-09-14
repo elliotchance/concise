@@ -15,33 +15,24 @@ class DefaultThemeTest extends TestCase
         $this->theme = new DefaultTheme();
     }
 
-    public function testThemeHasSuccess()
+    public function keysProvider()
     {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_PASSED);
+        return array(
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE),
+            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY),
+            array('value.integer'),
+        );
     }
 
-    public function testThemeHasFailure()
+    /**
+     * @dataProvider keysProvider
+     */
+    public function testThemeHasSuccess($expectedKey)
     {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE);
-    }
-
-    public function testThemeHasError()
-    {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_ERROR);
-    }
-
-    public function testThemeHasSkipped()
-    {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
-    }
-
-    public function testThemeHasIncomplete()
-    {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE);
-    }
-
-    public function testThemeHasRisky()
-    {
-        $this->assert($this->theme->getTheme(), has_key, PHPUnit_Runner_BaseTestRunner::STATUS_RISKY);
+        $this->assert($this->theme->getTheme(), has_key, $expectedKey);
     }
 }
