@@ -374,6 +374,6 @@ class MockBuilder
 
     public function andReturnCallback(Closure $returnCallback)
     {
-        return $this->andReturn($returnCallback());
+        return $this->setAction(new Action\ReturnCallbackAction($returnCallback));
     }
 }
