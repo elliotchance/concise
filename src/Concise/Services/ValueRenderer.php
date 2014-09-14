@@ -49,7 +49,7 @@ class ValueRenderer
 
     protected function jsonEncode($value)
     {
-        if (is_object($value)) {
+        if (is_object($value) || (is_array($value) && $this->isAssociativeArray($value))) {
             $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
                 return $this->colorize("\"$k\"") . ':' . $this->render($v);
             });
@@ -65,6 +65,11 @@ class ValueRenderer
         }
 
         return json_encode($value);
+    }
+
+    protected function isAssociativeArray(array $a)
+    {
+        return array_keys($a) !== range(0, count($a) - 1);
     }
 
     /**

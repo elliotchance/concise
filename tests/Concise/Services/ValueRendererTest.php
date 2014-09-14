@@ -172,4 +172,9 @@ class ValueRendererTest extends \Concise\TestCase
     {
         $this->assert($this->renderer->render([1,2]), equals, '[1,2]');
     }
+
+    public function testAssociativeArrayRendersAsJson()
+    {
+        $this->assert($this->renderer->render(['foo' => 'bar']), equals, '{"foo":"bar"}');
+    }
 }
