@@ -177,4 +177,9 @@ class ValueRendererTest extends \Concise\TestCase
     {
         $this->assert($this->renderer->render(['foo' => 'bar']), equals, '{"foo":"bar"}');
     }
+
+    public function testNumericArrayKeysAlwaysRenderAsStrings()
+    {
+        $this->assert($this->renderer->render([123 => 'bar']), equals, '{"123":"bar"}');
+    }
 }
