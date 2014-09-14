@@ -18,6 +18,7 @@ class DefaultTheme
             'value.integer'                                  => 'magenta',
             'value.float'                                    => 'magenta',
             'value.string'                                   => 'yellow',
+            'value.closure'                                  => 'blue',
         );
     }
 }

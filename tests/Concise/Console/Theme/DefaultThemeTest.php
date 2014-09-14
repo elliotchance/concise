@@ -27,6 +27,7 @@ class DefaultThemeTest extends TestCase
             array('value.integer'),
             array('value.float'),
             array('value.string'),
+            array('value.closure'),
         );
     }
 
