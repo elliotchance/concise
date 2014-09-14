@@ -130,4 +130,15 @@ class ValueRendererTest extends \Concise\TestCase
         $c = new Color();
         $this->assert($this->renderer->render(function () {}), equals, (string) $c("function")->blue);
     }
+
+    public function testObjectKeysWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue('value.string', 'green');
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $obj = new \stdClass();
+        $obj->a = 123;
+        $this->assert($this->renderer->render($obj), contains_string, (string) $c('"a"')->green);
+    }
 }

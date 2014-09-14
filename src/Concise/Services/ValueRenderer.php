@@ -34,6 +34,20 @@ class ValueRenderer
         return (string) $value;
     }
 
+    protected function jsonEncode($value)
+    {
+        if (is_object($value)) {
+            $r = '{';
+            foreach ((array) $value as $k => $v) {
+                $r .= $this->colorize("\"$k\"") . ':' . $this->jsonEncode($v);
+            }
+
+            return "$r}";
+        }
+
+        return json_encode($value);
+    }
+
     /**
 	 * @param  mixed $value
 	 * @return string
@@ -45,7 +59,7 @@ class ValueRenderer
             return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
         }
         if (is_object($value)) {
-            return get_class($value) . ':' . json_encode($value);
+            return get_class($value) . ':' . $this->jsonEncode($value);
         }
         if ($this->shouldBeJsonEncoded($value)) {
             return json_encode($value);
