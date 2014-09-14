@@ -2,12 +2,13 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-use \Concise\Services\NumberToTimesConverter;
-use \Concise\Services\ValueRenderer;
-use \InvalidArgumentException;
-use \Exception;
-use \ReflectionClass;
+use Concise\TestCase;
+use Concise\Services\NumberToTimesConverter;
+use Concise\Services\ValueRenderer;
+use InvalidArgumentException;
+use Exception;
+use ReflectionClass;
+use Closure;
 
 class MockBuilder
 {
@@ -368,6 +369,11 @@ class MockBuilder
     {
         $this->customClassName = $customClassName;
 
+        return $this;
+    }
+
+    public function andReturnCallback(Closure $returnCallback)
+    {
         return $this;
     }
 }
