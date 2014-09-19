@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class IsFalsy extends AbstractMatcher
+class IsFalsy extends IsTruthy
 {
     public function supportedSyntaxes()
     {
@@ -13,11 +13,6 @@ class IsFalsy extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return !(bool) $data[0];
-    }
-
-    public function getTags()
-    {
-        return array(Tag::BOOLEANS);
+        return !parent::match(null, $data);
     }
 }

@@ -19,4 +19,9 @@ class IsTruthyTest extends AbstractMatcherTestCase
     {
         $this->assert(true, is_truthy);
     }
+
+    public function testOneIsTruthy()
+    {
+        $this->assert(1, is_truthy);
+    }
 }

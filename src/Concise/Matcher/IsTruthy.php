@@ -13,7 +13,7 @@ class IsTruthy extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return $data[0] === true;
+        return (bool) $data[0];
     }
 
     public function getTags()

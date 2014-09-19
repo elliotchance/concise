@@ -117,9 +117,11 @@ Matchers
 * `? is a boolean` - Assert a value is true or false.
   * `? is a bool`
 * `? is false` - Assert value is false.
+* `? is falsy` - Assert a value is a false-like value.
 * `? is not a boolean` - Assert a value is not true or false.
   * `? is not a bool`
 * `? is true` - Assert a value is true.
+* `? is truthy` - Assert a value is a non false-like value.
 * `true` - Always pass.
 
 ### Exceptions
