@@ -7,7 +7,7 @@ class IsFalsyTest extends AbstractMatcherTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new IsTrue();
+        $this->matcher = new IsFalsy();
     }
 
     public function testFalseIsFalsy()
