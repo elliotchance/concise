@@ -12,12 +12,18 @@ class RenderIssue
 {
     protected $traceSimplifier;
 
+    protected $theme;
+
+    protected $colours;
+
     public function __construct(TraceSimplifier $traceSimplifier = null)
     {
         if (!$traceSimplifier) {
             $traceSimplifier = new TraceSimplifier();
         }
         $this->traceSimplifier = $traceSimplifier;
+        $this->theme = new DefaultTheme();
+        $this->colors = $this->theme->getTheme();
     }
 
     protected function prefixLines($prefix, $lines)
@@ -25,22 +31,35 @@ class RenderIssue
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
+    protected function getPHPUnitDiff(Exception $e)
+    {
+        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
+            $comparisonFailure = $e->getComparisonFailure();
+            if ($comparisonFailure) {
+                return $comparisonFailure->getDiff();
+            }
+        }
+
+        return '';
+    }
+
+    protected function getHeading($status, $issueNumber, PHPUnit_Framework_Test $test)
+    {
+        $c = new Color();
+        $color = $this->colors[$status];
+
+        return "$issueNumber. " . $c(get_class($test) . '::' . $test->getName())->$color . "\n\n";
+    }
+
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {
         $c = new Color();
-        $theme = new DefaultTheme();
-        $colors = $theme->getTheme();
-        $color = $colors[$status];
-        $top = "$issueNumber. " . $c(get_class($test) . '::' . $test->getName())->$color . "\n\n";
+        $top = $this->getHeading($status, $issueNumber, $test);
         $message = $e->getMessage() . "\n";
-
-        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
-            $message .= $e->getComparisonFailure()->getDiff();
-        }
-
+        $message .= $this->getPHPUnitDiff($e);
         $message .= "\n" . $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
         $pad = str_repeat(' ', strlen($issueNumber));
 
-        return $top . $this->prefixLines($c("  ")->highlight($colors[$status]) . $pad, rtrim($message));
+        return $top . $this->prefixLines($c("  ")->highlight($this->colors[$status]) . $pad, rtrim($message));
     }
 }
