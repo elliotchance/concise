@@ -15,24 +15,26 @@ Simple Example
 ```php
 class AttributeTest extends TestCase
 {
-	public function testEquality()
-	{
-		// the entire assertion can be string
-		$this->assert('123 equals "123"');
+    public function testAssertionsCanBeBuiltWithChaining()
+    {
+        $result = 100 + 23;
+        $this->assert($result, exactly_equals, 123);
 
-		// it will understand when you mean an attribute
-		$this->foo = 'bar';
-		$this->assert('foo is the same as "bar"');
+        $a = ['foo' => 'bar'];
+        $this->assert($a, is_an_associative_array);
+        $this->assert($a, has_key, 'foo', with_value, 'bar');
+    }
 
-		// or you can create your assertion by chaining
-		$this->assert($result, exactly_equals, 123);
-	}
+    public function testAssertionsAreJustStrings()
+    {
+        $this->assert('123 equals "123"');
+    }
 
-	// the assertion can be taken directly from the method name
-	public function test_adding3and5_equals_8()
-	{
-		$this->adding3and5 = $this->calc->add(3, 5);
-	}
+    public function testAttributesAreNativelyUnderstood()
+    {
+        $this->foo = 'bar';
+        $this->assert('foo is the same as "bar"');
+    }
 }
 ```
 
