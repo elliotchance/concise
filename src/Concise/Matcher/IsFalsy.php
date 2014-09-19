@@ -13,7 +13,7 @@ class IsFalsy extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return true;
+        return $data[0] === false;
     }
 
     public function getTags()

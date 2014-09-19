@@ -14,4 +14,9 @@ class IsFalsyTest extends AbstractMatcherTestCase
     {
         $this->assert(false, is_falsy);
     }
+
+    public function testTrueIsNotFalsy()
+    {
+        $this->assertFailure(true, is_falsy);
+    }
 }
