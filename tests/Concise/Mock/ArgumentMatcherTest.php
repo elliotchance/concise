@@ -11,4 +11,10 @@ class ArgumentMatcherTest extends TestCase
         $matcher = new ArgumentMatcher();
         $this->assert($matcher->match(array(), array()));
     }
+
+    public function testMatchingArraysOfDifferentSizesReturnsFalse()
+    {
+        $matcher = new ArgumentMatcher();
+        $this->assert($matcher->match(array(), array('a')), is_false);
+    }
 }

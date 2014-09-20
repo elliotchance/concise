@@ -6,6 +6,6 @@ class ArgumentMatcher
 {
     public function match(array $a, array $b)
     {
-        return true;
+        return count($a) === count($b);
     }
 }
