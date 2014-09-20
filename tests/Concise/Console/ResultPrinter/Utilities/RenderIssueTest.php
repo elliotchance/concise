@@ -49,7 +49,7 @@ class RenderIssueTest extends TestCase
     protected function getTraceSimplifier()
     {
         return $this->mock('Concise\Console\ResultPrinter\Utilities\TraceSimplifier')
-                    ->expect('render')->with($this->exception->getTrace())->andReturn("foo\nbar")
+                    ->expect('render')->andReturn("foo\nbar")
                     ->get();
     }
 
@@ -143,5 +143,13 @@ class RenderIssueTest extends TestCase
 
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "foobar");
+    }
+
+    public function testPHPUnitDiffsAreShownOnlyIfAvailable()
+    {
+        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', null);
+
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "10.");
     }
 }
