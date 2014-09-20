@@ -653,4 +653,16 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Property 'doesnt_exist' does not exist for
+     */
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnProperty('doesnt_exist')
+                     ->get();
+        $mock->myMethod();
+    }
 }

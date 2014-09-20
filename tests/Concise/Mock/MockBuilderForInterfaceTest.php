@@ -131,4 +131,10 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
         parent::testAReturnPropertyCanBeSet();
     }
+
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
+        parent::testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime();
+    }
 }

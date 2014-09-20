@@ -13,6 +13,12 @@ class ReturnPropertyAction extends AbstractAction
 
     public function getActionCode()
     {
-        return "return \$this->{$this->property};";
+        return
+"
+if (property_exists(\$this, \"{$this->property}\")) {
+	return \$this->{$this->property};
+}
+throw new \RuntimeException(\"Property '{$this->property}' does not exist for \" . get_class(\$this));
+";
     }
 }
