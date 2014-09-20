@@ -45,11 +45,11 @@ class ValueRenderer
         return $r;
     }
 
-    protected function jsonEncode($value)
+    protected function jsonEncode($value, $depth)
     {
         if (is_object($value) || (is_array($value) && $this->isAssociativeArray($value))) {
-            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
-                return $this->colorize("\"$k\"") . ':' . $this->render($v, false);
+            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth) {
+                return $this->colorize("\"$k\"") . ':' . $this->render($v, false, $depth + 1);
             });
 
             return "{" . $r . "}";
@@ -71,8 +71,12 @@ class ValueRenderer
 	 * @param  mixed $value
 	 * @return string
 	 */
-    public function render($value, $showTypeHint = true)
+    public function render($value, $showTypeHint = true, $depth = 0)
     {
+        if ($depth >= $this->getMaximumDepth()) {
+            return "...";
+        }
+
         $c = new Color();
         if (is_null($value) || is_bool($value)) {
             return $this->colorize($value);
@@ -81,10 +85,10 @@ class ValueRenderer
             return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
         }
         if (is_object($value)) {
-            return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value);
+            return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value, $depth);
         }
         if (is_array($value)) {
-            return $this->jsonEncode($value);
+            return $this->jsonEncode($value, $depth);
         }
         if (is_string($value)) {
             return $this->colorize('"' . $value . '"');
