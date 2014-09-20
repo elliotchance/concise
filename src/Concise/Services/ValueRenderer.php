@@ -3,6 +3,7 @@
 namespace Concise\Services;
 
 use Closure;
+use Concise\TestCase;
 
 class ValueRenderer
 {
@@ -27,6 +28,10 @@ class ValueRenderer
             return json_encode($value);
         }
         if (is_string($value)) {
+            if ($value === TestCase::ANYTHING) {
+                return '<ANYTHING>';
+            }
+
             return '"' . $value . '"';
         }
 
