@@ -125,4 +125,16 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
         parent::testCallingAnAbstractMethodWithNoRuleThrowsException();
     }
+
+    public function testAReturnPropertyCanBeSet()
+    {
+        $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
+        parent::testAReturnPropertyCanBeSet();
+    }
+
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
+        parent::testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime();
+    }
 }
