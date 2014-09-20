@@ -170,7 +170,7 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testMultipleArrayValuesRendersAsJson()
     {
-        $this->assert($this->renderer->render([1,2]), equals, '[1,2]');
+        $this->assert($this->renderer->render(array(1, 2)), equals, '[1,2]');
     }
 
     public function testAssociativeArrayRendersAsJson()
