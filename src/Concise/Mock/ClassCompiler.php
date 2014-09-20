@@ -186,6 +186,7 @@ EOF;
         $this->methodMustBeMockable($method);
         $actionCode = '';
         $defaultActionCode = '';
+
         foreach ($withs as $withKey => $rule) {
             $action = $rule['action'];
             if (null === $rule['with']) {
@@ -194,7 +195,8 @@ EOF;
                 $args = addslashes(json_encode($rule['with']));
                 $args = str_replace('$', '\\$', $args);
                 $actionCode .= <<<EOF
-if (json_encode(func_get_args()) == "$args") { {$action->getActionCode()}
+\$matcher = new \Concise\Mock\ArgumentMatcher();
+if (\$matcher->match(json_decode("$args"), func_get_args())) { {$action->getActionCode()}
 }
 EOF;
             }

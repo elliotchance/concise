@@ -5,6 +5,7 @@ namespace Concise\Services;
 use Closure;
 use Concise\Console\Theme\DefaultTheme;
 use Colors\Color;
+use Concise\TestCase;
 
 class ValueRenderer
 {
@@ -91,6 +92,10 @@ class ValueRenderer
             return $this->jsonEncode($value, $depth);
         }
         if (is_string($value)) {
+            if ($value === TestCase::ANYTHING) {
+                return '<ANYTHING>';
+            }
+
             return $this->colorize('"' . $value . '"');
         }
 

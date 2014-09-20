@@ -408,13 +408,18 @@ abstract class AbstractMockBuilderTestCase extends TestCase
              ->get();
     }
 
+    protected function getLastElement(array $a)
+    {
+        return $a[count($a) - 1];
+    }
+
     public function testMockSetsActualCallsToZeroWhenRuleIsCreated()
     {
         $this->mockBuilder()
              ->stub(array('myMethod' => 123))
              ->get();
 
-        $mock = end($this->_mocks);
+        $mock = $this->getLastElement($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 0);
     }
 
@@ -426,7 +431,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
         $mock->myMethod();
 
-        $mock = end($this->_mocks);
+        $mock = $this->getLastElement($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 1);
     }
 
@@ -439,7 +444,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
         $mock->myMethod();
 
-        $mock = end($this->_mocks);
+        $mock = $this->getLastElement($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
     }
 
@@ -642,5 +647,23 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                     })
                      ->get();
         $this->assert($mock->myMethod('hello'), equals, array('hello'));
+    }
+
+    // ANYTHING
+
+    public function testWithParameterCanAcceptAnything()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
+                     ->get();
+        $this->assert($mock->myMethod(null), equals, 'foo');
+    }
+
+    public function testWithParameterCanAcceptAnythingElse()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
+                     ->get();
+        $this->assert($mock->myMethod(123), equals, 'foo');
     }
 }

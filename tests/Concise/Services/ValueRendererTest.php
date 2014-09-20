@@ -231,4 +231,9 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
         $this->assert($renderer->render($obj), equals, '{"a":{"a":...}}');
     }
+
+    public function testRenderAnythingConstant()
+    {
+        $this->assert($this->renderer->render(self::ANYTHING), equals, '<ANYTHING>');
+    }
 }
