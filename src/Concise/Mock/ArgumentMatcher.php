@@ -2,6 +2,8 @@
 
 namespace Concise\Mock;
 
+use Concise\TestCase;
+
 class ArgumentMatcher
 {
     public function match(array $a, array $b)
@@ -16,6 +18,9 @@ class ArgumentMatcher
 
         $r = true;
         for ($i = 0; $i < $aLen; ++$i) {
+            if ($a[$i] === TestCase::ANYTHING) {
+                continue;
+            }
             $r = $r && $a[$i] == $b[$i];
         }
 
