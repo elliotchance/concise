@@ -5,15 +5,31 @@ namespace Concise;
 use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
-use Concise\Services\ValueRenderer;
-use Concise\Services\NumberToTimesConverter;
+use Concise\Mock\MockManager;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var array
+     * Used as a placeholder for with() clauses where the parameter is unrestrictive. For the curious, this is the
+     * SHA1('a') with an extra 'a' on the end.
+     */
+    const ANYTHING = '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8a';
+
+    /**
+	 * @var Concise\Mock\MockManager
 	 */
-    protected $_mocks = array();
+    protected $mockManager;
+
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->mockManager = new MockManager($this);
+    }
+
+    public function getMockManager()
+    {
+        return $this->mockManager;
+    }
 
     /**
 	 * @return \Concise\Syntax\MatcherParser
@@ -105,89 +121,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $assertion->run();
     }
 
-    protected function renderArguments(array $args = null)
-    {
-        if (null === $args) {
-            return '';
-        }
-
-        $valueRenderer = new ValueRenderer();
-
-        return $valueRenderer->renderAll($args);
-    }
-
-    protected function validateSingleWith(array $rule, $actualTimes, $method)
-    {
-        if ($rule['times'] == $actualTimes) {
-            return;
-        }
-        $args = $this->renderArguments($rule['with']);
-        $converter = new NumberToTimesConverter();
-        $msg = sprintf(
-            "Expected $method(%s) to be called %s, but it was called %s.",
-            $args,
-            $converter->convert($rule['times']),
-            $converter->convert($actualTimes)
-        );
-        throw new \PHPUnit_Framework_AssertionFailedError($msg);
-    }
-
-    protected function validateMultiWith($method, array $rule, array $mock)
-    {
-        $callGraph = array();
-        foreach ($mock['instance']->getCallsForMethod($method) as $call) {
-            $key = md5(json_encode($call));
-            if (!array_key_exists($key, $callGraph)) {
-                $callGraph[$key] = 0;
-            }
-            ++$callGraph[$key];
-        }
-        $key = md5(json_encode($rule['with']));
-        if (!array_key_exists($key, $callGraph)) {
-            $this->validateSingleWith($rule, 0, $method);
-        }
-        $this->validateSingleWith($rule, $callGraph[$key], $method);
-    }
-
-    protected function validateExpectation($mock, $method, array $rule)
-    {
-        if (null === $rule['with']) {
-            $this->validateSingleWith($rule, count($mock['instance']->getCallsForMethod($method)), $method);
-        } else {
-            $this->validateMultiWith($method, $rule, $mock);
-        }
-        $this->assert(true);
-    }
-
-    protected function validateMock(array $mock)
-    {
-        foreach ($mock['mockBuilder']->getRules() as $method => $methodWiths) {
-            foreach ($methodWiths as $withKey => $rule) {
-                // Negative times means it is a stub.
-                if ($rule['times'] < 0) {
-                    continue;
-                }
-
-                $this->validateExpectation($mock, $method, $rule);
-            }
-        }
-    }
-
-    protected function validateMocks()
-    {
-        foreach ($this->_mocks as $mock) {
-            $this->validateMock($mock);
-        }
-    }
-
     public function tearDown()
     {
-        if (substr($this->getName(), 4, 1) === '_') {
-            $assertion = str_replace("_", " ", substr($this->getName(), 5));
-            $this->assert($assertion);
-        }
-        $this->validateMocks();
-
+        $this->mockManager->validateMocks();
         parent::tearDown();
     }
 
@@ -209,18 +145,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function niceMock($className = '\stdClass', array $constructorArgs = array())
     {
         return new MockBuilder($this, $className, true, $constructorArgs);
-    }
-
-    /**
-	 * @param MockBuilder $mockBuilder
-	 * @param object      $mockInstance
-	 */
-    public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
-    {
-        $this->_mocks[] = array(
-            'mockBuilder' => $mockBuilder,
-            'instance' => $mockInstance,
-        );
     }
 
     protected function loadKeywords()
@@ -252,5 +176,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $this->loadKeywords();
             define('__KEYWORDS_LOADED', 1);
         }
+    }
+
+    /**
+     * @param MockBuilder $mockBuilder
+     * @param object      $mockInstance
+     */
+    public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
+    {
+        $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
     }
 }

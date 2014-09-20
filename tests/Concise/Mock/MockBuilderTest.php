@@ -30,28 +30,28 @@ class MockBuilderTest extends TestCase
 	 */
     public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
     {
-        $this->mock('\Abc')->done();
+        $this->mock('\Abc')->get();
     }
 
     public function testMockingAMethodThatDoesNotExistIfThereIsAMagicCallMethod()
     {
         $mock = $this->mock('\Concise\Mock\MockMagicCall')
                      ->stub('nothing')
-                     ->done();
+                     ->get();
         $this->assert($mock->nothing(), is_null);
     }
 
     public function testMockClassDefaultsToStdClass()
     {
         $mock = $this->mock()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, '\stdClass');
     }
 
     public function testNiceMockClassDefaultsToStdClass()
     {
         $mock = $this->niceMock()
-                     ->done();
+                     ->get();
         $this->assert($mock, instance_of, '\stdClass');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Concise\Mock;
 
-use \InvalidArgumentException;
-use \ReflectionException;
-use \ReflectionMethod;
-use \ReflectionClass;
+use InvalidArgumentException;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionClass;
 
 class ClassCompiler
 {
@@ -186,6 +186,7 @@ EOF;
         $this->methodMustBeMockable($method);
         $actionCode = '';
         $defaultActionCode = '';
+
         foreach ($withs as $withKey => $rule) {
             $action = $rule['action'];
             if (null === $rule['with']) {
@@ -194,7 +195,8 @@ EOF;
                 $args = addslashes(json_encode($rule['with']));
                 $args = str_replace('$', '\\$', $args);
                 $actionCode .= <<<EOF
-if (json_encode(func_get_args()) == "$args") { {$action->getActionCode()}
+\$matcher = new \Concise\Mock\ArgumentMatcher();
+if (\$matcher->match(json_decode("$args"), func_get_args())) { {$action->getActionCode()}
 }
 EOF;
             }
@@ -327,13 +329,6 @@ EOF;
         return $this->getNamespaceName($this->customClassName);
     }
 
-    protected function isInterface()
-    {
-        $refClass = new ReflectionClass($this->className);
-
-        return $refClass->isInterface();
-    }
-
     /**
 	 * Create a new instance of the mocked class. There is no need to generate the code before invoking this.
 	 * @return object
@@ -343,11 +338,11 @@ EOF;
         $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
         $reflect = eval($this->generateCode() . $getInstance);
 
-        if ($this->isInterface()) {
+        try {
+            return $reflect->newInstanceArgs($this->constructorArgs);
+        } catch (ReflectionException $e) {
             return $reflect->newInstance();
         }
-
-        return $reflect->newInstanceArgs($this->constructorArgs);
     }
 
     /**

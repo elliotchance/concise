@@ -2,12 +2,13 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-use \Concise\Services\NumberToTimesConverter;
-use \Concise\Services\ValueRenderer;
-use \InvalidArgumentException;
-use \Exception;
-use \ReflectionClass;
+use Concise\TestCase;
+use Concise\Services\NumberToTimesConverter;
+use Concise\Services\ValueRenderer;
+use InvalidArgumentException;
+use Exception;
+use ReflectionClass;
+use Closure;
 
 class MockBuilder
 {
@@ -140,7 +141,7 @@ class MockBuilder
 	 * Compiler the mock into a usable instance.
 	 * @return object
 	 */
-    public function done()
+    public function get()
     {
         $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
         if ($this->customClassName) {
@@ -369,5 +370,10 @@ class MockBuilder
         $this->customClassName = $customClassName;
 
         return $this;
+    }
+
+    public function andReturnCallback(Closure $returnCallback)
+    {
+        return $this->setAction(new Action\ReturnCallbackAction($returnCallback));
     }
 }

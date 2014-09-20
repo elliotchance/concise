@@ -23,7 +23,7 @@ class CommandTest extends TestCase
     {
         return $this->niceMock('Concise\Console\CommandStub')
                     ->expose('createRunner')
-                    ->done();
+                    ->get();
     }
 
     public function testCreateRunnerReturnsAConciseRunner()

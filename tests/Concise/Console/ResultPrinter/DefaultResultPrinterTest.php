@@ -49,8 +49,8 @@ class DefaultResultPrinterTest extends TestCase
     {
         $test = $this->mock('PHPUnit_Framework_TestCase')
                      ->stub(array('getName' => ''))
-                     ->done();
-        $exception = $this->mock('Exception')->done();
+                     ->get();
+        $exception = $this->mock('Exception')->get();
         $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $test, 0, $exception);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 2);
     }
@@ -59,7 +59,7 @@ class DefaultResultPrinterTest extends TestCase
     {
         $test = $this->mock('PHPUnit_Framework_TestCase')
                      ->stub(array('getName' => ''))
-                     ->done();
+                     ->get();
         $this->resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
         $this->assert($this->resultPrinter->getIssueNumber(), equals, 1);
     }
@@ -68,10 +68,10 @@ class DefaultResultPrinterTest extends TestCase
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expects('update')
-                              ->done();
+                              ->get();
         $test = $this->mock('PHPUnit_Framework_TestCase')
                      ->stub(array('getName' => ''))
-                     ->done();
+                     ->get();
         $resultPrinter->endTest(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED, $test, 0, null);
     }
 
@@ -80,7 +80,7 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expose('update')
                               ->expect('write')
-                              ->done();
+                              ->get();
         $resultPrinter->update();
     }
 
@@ -88,10 +88,10 @@ class DefaultResultPrinterTest extends TestCase
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expects('update')
-                              ->done();
+                              ->get();
         $suite = $this->niceMock('PHPUnit_Framework_TestSuite')
                       ->stub(array('getName' => ''))
-                      ->done();
+                      ->get();
         $resultPrinter->startTestSuite($suite);
     }
 
@@ -100,7 +100,7 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expects('update')
                               ->stub('write')
-                              ->done();
+                              ->get();
         $resultPrinter->end();
     }
 
@@ -131,11 +131,11 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expect('appendTextAbove')->exactly($willBePrinted)
                               ->expose('add')
-                              ->done();
+                              ->get();
         $resultPrinter->setVerbose($isVerbose);
         $test = $this->niceMock('PHPUnit_Framework_TestCase')
                      ->stub(array('getName' => ''))
-                     ->done();
+                     ->get();
         $resultPrinter->add($status, $test, new Exception());
     }
 }

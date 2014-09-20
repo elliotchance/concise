@@ -22,6 +22,6 @@ class MockBuilderPrivateTest extends TestCase
     {
         $this->mock('\Concise\Mock\MockPrivate')
              ->stub(array('myMethod' => 'bar'))
-             ->done();
+             ->get();
     }
 }
