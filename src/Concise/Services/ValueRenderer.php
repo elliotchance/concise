@@ -55,8 +55,8 @@ class ValueRenderer
             return "{" . $r . "}";
         }
 
-        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) {
-            return $this->render($v, false);
+        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth) {
+            return $this->render($v, false, $depth + 1);
         });
 
         return "[$r]";

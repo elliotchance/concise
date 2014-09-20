@@ -222,4 +222,13 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
         $this->assert($renderer->render($obj), equals, 'stdClass:{"a":{"a":...}}');
     }
+
+    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays()
+    {
+        $renderer = $this->niceMock('Concise\Services\ValueRenderer')
+                         ->stub(array('getMaximumDepth' => 2))
+                         ->get();
+        $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
+        $this->assert($renderer->render($obj), equals, '{"a":{"a":...}}');
+    }
 }
