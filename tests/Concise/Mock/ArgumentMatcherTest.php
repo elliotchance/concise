@@ -17,4 +17,10 @@ class ArgumentMatcherTest extends TestCase
         $matcher = new ArgumentMatcher();
         $this->assert($matcher->match(array(), array('a')), is_false);
     }
+
+    public function testMatchingWithOneValueThatIsDifferentReturnsFalse()
+    {
+        $matcher = new ArgumentMatcher();
+        $this->assert($matcher->match(array('b'), array('a')), is_false);
+    }
 }
