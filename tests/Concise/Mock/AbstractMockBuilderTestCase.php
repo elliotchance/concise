@@ -648,4 +648,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->get();
         $this->assert($mock->myMethod('hello'), equals, array('hello'));
     }
+
+    // ANYTHING
+
+    public function testWithParameterCanAcceptAnything()
+    {
+        $mock = $this->mockBuilder()
+                     ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
+                     ->get();
+        $this->assert($mock->myMethod(null), equals, 'foo');
+    }
 }

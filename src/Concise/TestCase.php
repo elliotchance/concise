@@ -10,6 +10,11 @@ use Concise\Mock\MockManager;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Used as a placeholder for with() clauses where the parameter is unrestrictive.
+     */
+    const ANYTHING = null;
+
+    /**
 	 * @var Concise\Mock\MockManager
 	 */
     protected $mockManager;
