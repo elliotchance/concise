@@ -22,6 +22,7 @@ class MockBuilderFailuresTest extends TestCase
         'testWithArgumentsWillNotMistakeAnArrayForACallback' => 'Expected myMethod(["DateTime","getLastErrors"]) to be called once, but it was called never.',
         'testWithArgumentsUsingDifferentCallback' => 'Expected myMethod(["DateTime","__set_state"]) to be called once, but it was called never.',
         'testAbstractMethodOnANiceMockThatHasNoActionWillThrowException' => 'myMethod() is abstract and has no associated action.',
+        'testAnythingIsRenderedCorrectly' => 'Expected myMethod(<ANYTHING>, "foo") to be called once, but it was called never.',
     );
 
     public function testFailedToFulfilExpectationWillThrowException()
@@ -124,6 +125,13 @@ class MockBuilderFailuresTest extends TestCase
         $mock = $this->niceMock('\Concise\Mock\AbstractMock1')
                      ->get();
         $mock->myMethod();
+    }
+
+    public function testAnythingIsRenderedCorrectly()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with(self::ANYTHING, 'foo')
+                     ->get();
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
