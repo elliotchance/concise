@@ -93,6 +93,11 @@ class ValueRenderer
         return $this->colorize($value);
     }
 
+    public function getMaximumDepth()
+    {
+        return 10;
+    }
+
     public function renderAll(array $items)
     {
         return implode(', ', array_map(array($this, 'render'), $items));

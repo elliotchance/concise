@@ -208,4 +208,9 @@ class ValueRendererTest extends \Concise\TestCase
 
         $this->assert($this->renderer->render(true), contains_string, (string) $c('true')->red);
     }
+
+    public function testDefaultMaximumDepthIsTen()
+    {
+        $this->assert($this->renderer->getMaximumDepth(), equals, 10);
+    }
 }
