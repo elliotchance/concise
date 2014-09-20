@@ -86,4 +86,9 @@ class ValueRendererTest extends \Concise\TestCase
     {
         $this->assert($this->renderer->renderAll(array('foo')), equals, '"foo"');
     }
+
+    public function testRenderAnythingConstant()
+    {
+        $this->assert($this->renderer->render(self::ANYTHING), equals, '<ANYTHING>');
+    }
 }

@@ -10,6 +10,12 @@ use Concise\Mock\MockManager;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Used as a placeholder for with() clauses where the parameter is unrestrictive. For the curious, this is the
+     * SHA1('a') with an extra 'a' on the end.
+     */
+    const ANYTHING = '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8a';
+
+    /**
 	 * @var Concise\Mock\MockManager
 	 */
     protected $mockManager;
