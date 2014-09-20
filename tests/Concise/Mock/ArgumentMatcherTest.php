@@ -6,27 +6,36 @@ use Concise\TestCase;
 
 class ArgumentMatcherTest extends TestCase
 {
+    protected $matcher;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->matcher = new ArgumentMatcher();
+    }
+
     public function testMatchingZeroArgumentsReturnsTrue()
     {
-        $matcher = new ArgumentMatcher();
-        $this->assert($matcher->match(array(), array()));
+        $this->assert($this->matcher->match(array(), array()));
     }
 
     public function testMatchingArraysOfDifferentSizesReturnsFalse()
     {
-        $matcher = new ArgumentMatcher();
-        $this->assert($matcher->match(array(), array('a')), is_false);
+        $this->assert($this->matcher->match(array(), array('a')), is_false);
     }
 
     public function testMatchingWithOneValueThatIsDifferentReturnsFalse()
     {
-        $matcher = new ArgumentMatcher();
-        $this->assert($matcher->match(array('b'), array('a')), is_false);
+        $this->assert($this->matcher->match(array('b'), array('a')), is_false);
     }
 
     public function testMatchingIsNotExact()
     {
-        $matcher = new ArgumentMatcher();
-        $this->assert($matcher->match(array(0), array(false)), is_true);
+        $this->assert($this->matcher->match(array(0), array(false)), is_true);
+    }
+
+    public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse()
+    {
+        $this->assert($this->matcher->match(array('a', 'b'), array('a', 'a')), is_false);
     }
 }

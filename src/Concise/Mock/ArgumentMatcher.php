@@ -6,13 +6,19 @@ class ArgumentMatcher
 {
     public function match(array $a, array $b)
     {
-        if (count($a) + count($b) === 0) {
+        $aLen = count($a);
+        if ($aLen + count($b) === 0) {
             return true;
         }
-        if (count($a) !== count($b)) {
+        if ($aLen !== count($b)) {
             return false;
         }
 
-        return $a[0] == $b[0];
+        $r = true;
+        for ($i = 0; $i < $aLen; ++$i) {
+            $r = $r && $a[$i] == $b[$i];
+        }
+
+        return $r;
     }
 }
