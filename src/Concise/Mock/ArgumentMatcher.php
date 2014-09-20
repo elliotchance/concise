@@ -13,6 +13,6 @@ class ArgumentMatcher
             return false;
         }
 
-        return $a[0] === $b[0];
+        return $a[0] == $b[0];
     }
 }

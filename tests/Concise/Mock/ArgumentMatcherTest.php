@@ -23,4 +23,10 @@ class ArgumentMatcherTest extends TestCase
         $matcher = new ArgumentMatcher();
         $this->assert($matcher->match(array('b'), array('a')), is_false);
     }
+
+    public function testMatchingIsNotExact()
+    {
+        $matcher = new ArgumentMatcher();
+        $this->assert($matcher->match(array(0), array(false)), is_true);
+    }
 }
