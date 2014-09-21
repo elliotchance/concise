@@ -137,4 +137,13 @@ class DataTypeCheckerTest extends \Concise\TestCase
     {
         $this->dataTypeChecker->check(array('regex'), 123);
     }
+
+    /**
+     * @expectedException \Concise\Validation\DataTypeMismatchException
+     * @expectedExceptionMessage integer not found in regex
+     */
+    public function testDataTypeMismatchExceptionIsThrown()
+    {
+        $this->dataTypeChecker->check(array('regex'), 123);
+    }
 }
