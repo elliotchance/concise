@@ -89,7 +89,8 @@ class MockBuilder
 	 */
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
-        ArgumentChecker::check($className, 'string');
+        ArgumentChecker::check($className, 'string', 2);
+        ArgumentChecker::check($niceMock,  'boolean', 3);
 
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
