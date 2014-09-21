@@ -12,7 +12,7 @@ class FilePathSimplifier
 	 */
     public function process($filePath)
     {
-        ArgumentChecker::check($filePath, 'string', 1);
+        ArgumentChecker::check($filePath, 'string');
 
         $cwd = getcwd();
         if (substr($filePath, 0, strlen($cwd)) === $cwd) {

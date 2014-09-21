@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 class ArgumentChecker
 {
-    public static function check($value, $types, $argumentNumber)
+    public static function check($value, $types, $argumentNumber = 1)
     {
         $checker = new DataTypeChecker();
 

@@ -19,4 +19,13 @@ class ArgumentCheckerTest extends TestCase
     {
         ArgumentChecker::check(123, 'string', 1);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testDefaultArgumentIsOne()
+    {
+        ArgumentChecker::check(123, 'string');
+    }
 }
