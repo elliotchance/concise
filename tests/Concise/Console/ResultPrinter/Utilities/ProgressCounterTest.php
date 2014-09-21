@@ -94,4 +94,13 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(10, true);
         $counter->render('foo');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testTotalMustBeAnInteger()
+    {
+        new ProgressCounter('foo');
+    }
 }
