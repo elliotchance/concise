@@ -125,4 +125,13 @@ class ClassCompilerTest extends TestCase
     {
         new ClassCompiler('Concise\Mock\ClassCompilerMock1', 123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected boolean, but got integer for argument 4
+     */
+    public function testDisableConstructorMustBeABoolean()
+    {
+        new ClassCompiler('Concise\Mock\ClassCompilerMock1', true, array(), 123);
+    }
 }
