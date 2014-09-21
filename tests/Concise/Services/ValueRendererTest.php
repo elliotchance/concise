@@ -175,12 +175,12 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testAssociativeArrayRendersAsJson()
     {
-        $this->assert($this->renderer->render(['foo' => 'bar']), equals, '{"foo":"bar"}');
+        $this->assert($this->renderer->render(array('foo' => 'bar')), equals, '{"foo":"bar"}');
     }
 
     public function testNumericArrayKeysAlwaysRenderAsStrings()
     {
-        $this->assert($this->renderer->render([123 => 'bar']), equals, '{"123":"bar"}');
+        $this->assert($this->renderer->render(array(123 => 'bar')), equals, '{"123":"bar"}');
     }
 
     public function testNestedObjectsHideTypeHint()
