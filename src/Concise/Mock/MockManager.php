@@ -8,10 +8,19 @@ use Concise\Services\ValueRenderer;
 
 class MockManager
 {
+    /**
+     * @var array
+     */
     protected $mocks = array();
 
+    /**
+     * @var \Concise\TestCase
+     */
     protected $testCase;
 
+    /**
+     * @var array
+     */
     protected $callGraph = array();
 
     public function __construct(TestCase $testCase)

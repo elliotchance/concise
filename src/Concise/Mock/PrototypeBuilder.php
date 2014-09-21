@@ -2,15 +2,21 @@
 
 namespace Concise\Mock;
 
+use Reflection;
+use ReflectionParameter;
+use ReflectionMethod;
+use Concise\Validation\ArgumentChecker;
+
 class PrototypeBuilder
 {
     /**
-	 * If this is `true` then the `abstract` keyword will not be outputted in the prototypes.
+	 * If this is `true` then the `abstract` keyword will not be outputted in
+     * the prototypes.
 	 * @var boolean
 	 */
     public $hideAbstract = false;
 
-    protected function getDefaultValue(\ReflectionParameter $p)
+    protected function getDefaultValue(ReflectionParameter $p)
     {
         if ($p->isOptional()) {
             try {
@@ -21,33 +27,35 @@ class PrototypeBuilder
         }
     }
 
-    protected function getTypeHint(\ReflectionParameter $p)
+    protected function getTypeHint(ReflectionParameter $p)
     {
         if ($p->getClass()) {
             return '\\' . $p->getClass()->name . ' ';
         } elseif ($p->isArray()) {
             return 'array ';
         }
+
         return '';
     }
 
-    protected function getName(\ReflectionParameter $p)
+    protected function getName(ReflectionParameter $p)
     {
         $param = '$' . $p->getName();
         if ($p->isPassedbyReference()) {
             $param = '&' . $param;
         }
+
         return $param;
     }
 
     /**
 	 * Get the prototype for the method.
-	 * @param  \ReflectionMethod $method
+	 * @param  ReflectionMethod $method
 	 * @return string
 	 */
-    public function getPrototype(\ReflectionMethod $method)
+    public function getPrototype(ReflectionMethod $method)
     {
-        $modifiers = implode(' ', \Reflection::getModifierNames($method->getModifiers()));
+        $modifiers = implode(' ', Reflection::getModifierNames($method->getModifiers()));
         if ($this->hideAbstract) {
             $modifiers = str_replace('abstract ', '', $modifiers);
         }
@@ -62,8 +70,13 @@ class PrototypeBuilder
         return $modifiers . ' function ' . $method->getName() . "(" . implode(', ', $parameters) . ")";
     }
 
+    /**
+     * @param string $method
+     */
     public function getPrototypeForNonExistantMethod($method)
     {
+        ArgumentChecker::check($method, 'string');
+
         return "public function $method()";
     }
 }
