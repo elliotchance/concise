@@ -38,6 +38,6 @@ class DataTypeMismatchExceptionTest extends TestCase
     public function testMessage()
     {
         $e = new DataTypeMismatchException('string', array('int', 'float'));
-        $this->assert($e->getMessage(), equals, 'Expected int or float, but got string.');
+        $this->assert($e->getMessage(), equals, 'Expected int or float, but got string');
     }
 }

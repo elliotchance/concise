@@ -13,7 +13,7 @@ class ArgumentCheckerTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument 1: integer not found in string
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
      */
     public function testFailureThrowsInvalidArgumentException()
     {

@@ -79,8 +79,7 @@ class DataTypeChecker
 
             return $value;
         }
-        $accepts = implode(' or ', $acceptedTypes);
-        throw new DataTypeMismatchException($this->getType($value) . " $message " . $accepts);
+        throw new DataTypeMismatchException($this->getType($value), $acceptedTypes);
     }
 
     /**
