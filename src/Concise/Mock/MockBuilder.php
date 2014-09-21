@@ -215,7 +215,7 @@ class MockBuilder
 	 * @param \Exception $exception
 	 * @return MockBuilder
 	 */
-    public function andThrow($exception)
+    public function andThrow(Exception $exception)
     {
         return $this->setAction(new Action\ThrowAction($exception));
     }
@@ -235,6 +235,8 @@ class MockBuilder
 	 */
     public function expect($method)
     {
+        ArgumentChecker::check($method, 'string');
+
         $this->reset();
         $this->isExpecting = true;
         $this->addRule($method, new Action\ReturnValueAction(array(null)));

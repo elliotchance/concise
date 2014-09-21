@@ -72,4 +72,14 @@ class MockBuilderTest extends TestCase
     {
         new MockBuilder($this, 'stdClass', 123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testExpectMustBeAString()
+    {
+        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock->expect(123);
+    }
 }
