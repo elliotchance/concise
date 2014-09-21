@@ -17,4 +17,9 @@ class DataTypeMismatchException extends InvalidArgumentException
     {
         $this->expectedTypes = $expectedTypes;
     }
+
+    public function getActualType()
+    {
+        return '';
+    }
 }

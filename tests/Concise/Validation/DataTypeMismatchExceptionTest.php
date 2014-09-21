@@ -23,4 +23,10 @@ class DataTypeMismatchExceptionTest extends TestCase
         $e->setExpectedTypes(array('a'));
         $this->assert($e->getExpectedTypes(), equals, array('a'));
     }
+
+    public function testActualTypeReturnsEmptyIfUnknown()
+    {
+        $e = new DataTypeMismatchException();
+        $this->assert($e->getActualType(), is_blank);
+    }
 }
