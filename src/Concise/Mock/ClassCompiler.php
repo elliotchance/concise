@@ -397,6 +397,8 @@ EOF;
 	 */
     public function addExpose($method)
     {
+        ArgumentChecker::check($method, 'string');
+
         $this->methodMustBeMockable($method);
         $this->expose[$method] = true;
     }
