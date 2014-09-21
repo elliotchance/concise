@@ -54,4 +54,13 @@ class MockBuilderTest extends TestCase
                      ->get();
         $this->assert($mock, instance_of, '\stdClass');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testClassNameMustBeAString()
+    {
+        $this->mock(123);
+    }
 }

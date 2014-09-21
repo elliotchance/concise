@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Exception;
 use ReflectionClass;
 use Closure;
+use Concise\Validation\ArgumentChecker;
 
 class MockBuilder
 {
@@ -88,6 +89,8 @@ class MockBuilder
 	 */
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
+        ArgumentChecker::check($className, 'string');
+
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
             throw new Exception("Class or interface '$className' does not exist.");
