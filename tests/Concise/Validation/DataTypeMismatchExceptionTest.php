@@ -19,21 +19,25 @@ class DataTypeMismatchExceptionTest extends TestCase
 
     public function testExpectedTypesCanBeSet()
     {
-        $e = new DataTypeMismatchException();
-        $e->setExpectedTypes(array('a'));
+        $e = new DataTypeMismatchException('int', array('a'));
         $this->assert($e->getExpectedTypes(), equals, array('a'));
     }
 
-    public function testActualTypeReturnsEmptyIfUnknown()
+    public function testActualTypeReturnsUnknownIfUnknown()
     {
         $e = new DataTypeMismatchException();
-        $this->assert($e->getActualType(), is_blank);
+        $this->assert($e->getActualType(), equals, 'unknown');
     }
 
     public function testActualTypeCanBeSet()
     {
-        $e = new DataTypeMismatchException();
-        $e->setActualType('int');
+        $e = new DataTypeMismatchException('int');
         $this->assert($e->getActualType(), equals, 'int');
+    }
+
+    public function testMessage()
+    {
+        $e = new DataTypeMismatchException('string', array('int', 'float'));
+        $this->assert($e->getMessage(), equals, 'Expected int or float, but got string.');
     }
 }
