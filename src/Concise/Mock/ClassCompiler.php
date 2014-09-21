@@ -363,8 +363,13 @@ EOF;
         $this->rules = $rules;
     }
 
+    /**
+     * @param string $className
+     */
     public function setCustomClassName($className)
     {
+        ArgumentChecker::check($className, 'string');
+
         if (strpos($className, '\\') === false) {
             $className = $this->getNamespaceName() . '\\' . $className;
         }

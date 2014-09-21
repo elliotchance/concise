@@ -134,4 +134,14 @@ class ClassCompilerTest extends TestCase
     {
         new ClassCompiler('Concise\Mock\ClassCompilerMock1', true, array(), 123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testSetCustomClassNameMustBeAString()
+    {
+        $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
+        $compiler->setCustomClassName(123);
+    }
 }
