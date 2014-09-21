@@ -8,6 +8,8 @@ class DataTypeMismatchException extends InvalidArgumentException
 {
     protected $expectedTypes = array();
 
+    protected $actualType = '';
+
     public function getExpectedTypes()
     {
         return $this->expectedTypes;
@@ -20,6 +22,11 @@ class DataTypeMismatchException extends InvalidArgumentException
 
     public function getActualType()
     {
-        return '';
+        return $this->actualType;
+    }
+
+    public function setActualType($actualType)
+    {
+        $this->actualType = $actualType;
     }
 }

@@ -29,4 +29,11 @@ class DataTypeMismatchExceptionTest extends TestCase
         $e = new DataTypeMismatchException();
         $this->assert($e->getActualType(), is_blank);
     }
+
+    public function testActualTypeCanBeSet()
+    {
+        $e = new DataTypeMismatchException();
+        $e->setActualType('int');
+        $this->assert($e->getActualType(), equals, 'int');
+    }
 }
