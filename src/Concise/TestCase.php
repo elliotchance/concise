@@ -196,4 +196,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         return $property->getValue($object);
     }
+
+    public function setProperty($object, $property, $value)
+    {
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+
+        $property->setValue($object, $value);
+    }
 }
