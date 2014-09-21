@@ -688,4 +688,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->get();
         $this->assert($mock->myMethod(123), equals, 'foo');
     }
+
+    // exposeAttribute
+
+    public function testExposeASingleAttribute()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->get();
+        $this->assert($this->getProperty($mock, 'hidden'), equals, 'foo');
+    }
 }
