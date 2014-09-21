@@ -9,6 +9,7 @@ class ProportionalProgressBar extends ProgressBar
     public function renderProportional($size, $total, array $parts)
     {
         ArgumentChecker::check($size, 'integer');
+        ArgumentChecker::check($total, 'integer', 2);
 
         $this->calculateTotal($parts);
         if (0 === $total) {
