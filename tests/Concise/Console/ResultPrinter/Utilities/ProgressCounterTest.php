@@ -103,4 +103,13 @@ class ProgressCounterTest extends TestCase
     {
         new ProgressCounter('foo');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected boolean, but got string for argument 2
+     */
+    public function testShowPercentageMustBeAnInteger()
+    {
+        new ProgressCounter(123, 'foo');
+    }
 }

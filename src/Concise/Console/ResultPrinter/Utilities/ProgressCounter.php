@@ -31,7 +31,8 @@ class ProgressCounter
      */
     public function __construct($total, $showPercentage = false)
     {
-        ArgumentChecker::check($total, 'integer');
+        ArgumentChecker::check($total, 'integer', 1);
+        ArgumentChecker::check($showPercentage, 'boolean', 2);
 
         $this->atLeastZero($total, 'Total');
         $this->total = $total;
