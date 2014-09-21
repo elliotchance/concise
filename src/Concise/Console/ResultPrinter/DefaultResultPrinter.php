@@ -23,7 +23,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function __construct($theme = null)
     {
-        $this->width = exec('tput cols');
+        $this->width = (int) exec('tput cols');
         if (!$theme) {
             $theme = new DefaultTheme();
         }

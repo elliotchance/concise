@@ -30,4 +30,14 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
         $result = $progressBar->renderProportional(10, 0, array());
         $this->assert($result, equals, '__________');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testSizeMustBeAnInteger()
+    {
+        $progressBar = new ProportionalProgressBar();
+        $progressBar->renderProportional('foo', 0, array());
+    }
 }

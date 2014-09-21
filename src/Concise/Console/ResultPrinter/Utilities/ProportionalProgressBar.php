@@ -2,10 +2,14 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Validation\ArgumentChecker;
+
 class ProportionalProgressBar extends ProgressBar
 {
     public function renderProportional($size, $total, array $parts)
     {
+        ArgumentChecker::check($size, 'integer');
+
         $this->calculateTotal($parts);
         if (0 === $total) {
             $total = $this->total;
