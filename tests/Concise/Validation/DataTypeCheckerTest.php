@@ -1,9 +1,9 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Validation;
 
-use \Concise\Syntax\Token\Attribute;
-use \Concise\Syntax\Token\Regexp;
+use Concise\Syntax\Token\Attribute;
+use Concise\Syntax\Token\Regexp;
 
 class DataTypeCheckerTest extends \Concise\TestCase
 {

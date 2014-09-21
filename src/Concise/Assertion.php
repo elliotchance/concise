@@ -2,10 +2,10 @@
 
 namespace Concise;
 
-use \Concise\Syntax\Lexer;
-use \Concise\Services\ValueRenderer;
-use \Concise\Services\ValueDescriptor;
-use \Concise\Services\DataTypeChecker;
+use Concise\Syntax\Lexer;
+use Concise\Services\ValueRenderer;
+use Concise\Services\ValueDescriptor;
+use Concise\Validation\DataTypeChecker;
 
 class Assertion
 {
@@ -123,6 +123,7 @@ class Assertion
         if ('' !== $this->originalSyntax) {
             $args = $this->checkDataTypes($args);
         }
+
         return $args;
     }
 
@@ -132,6 +133,7 @@ class Assertion
         if (!$message) {
             $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
         }
+
         return $message;
     }
 
@@ -150,6 +152,7 @@ class Assertion
         }
 
         $args = $this->checkDataTypesIfOriginalSyntaxWasProvided($args);
+
         return $args;
     }
 
