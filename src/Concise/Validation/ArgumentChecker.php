@@ -11,7 +11,7 @@ class ArgumentChecker
         $checker = new DataTypeChecker();
 
         try {
-            return $checker->check(array($types), $value);
+            return $checker->check(explode(',', $types), $value);
         } catch (DataTypeMismatchException $e) {
             throw new InvalidArgumentException($e->getMessage() . " for argument {$argumentNumber}");
         }

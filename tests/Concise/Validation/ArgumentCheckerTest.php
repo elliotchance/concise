@@ -28,4 +28,9 @@ class ArgumentCheckerTest extends TestCase
     {
         ArgumentChecker::check(123, 'string');
     }
+
+    public function testMultipleTypesCanBeCommaSeparated()
+    {
+        $this->assert(ArgumentChecker::check(123, 'int,float'), exactly_equals, 123);
+    }
 }
