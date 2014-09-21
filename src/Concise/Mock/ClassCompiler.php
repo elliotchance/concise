@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionClass;
+use Concise\Validation\ArgumentChecker;
 
 class ClassCompiler
 {
@@ -56,16 +57,22 @@ class ClassCompiler
 	 */
     protected $expose = array();
 
+    /**
+     * @var array
+     */
     protected $methods = array();
 
     /*
 	 * @param string  $className
 	 * @param boolean $niceMock
 	 * @param array   $constructorArgs
+     * @param boolean $disableConstructor
 	 */
     public function __construct($className, $niceMock = false, array $constructorArgs = array(),
                                 $disableConstructor = false)
     {
+        ArgumentChecker::check($className, 'string');
+
         if (!class_exists($className) && !interface_exists($className)) {
             throw new InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
         }

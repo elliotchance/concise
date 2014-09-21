@@ -13,10 +13,19 @@ use PHPUnit_Framework_TestFailure;
 
 class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
 {
+    /**
+     * @var TestResultDelegateInterface
+     */
     protected $resultPrinter;
 
+    /**
+     * @var integer
+     */
     protected $startedTestSuite = 0;
 
+    /**
+     * @var integer
+     */
     protected $totalSuccesses = 0;
 
     public function __construct(TestResultDelegateInterface $resultPrinter)
@@ -25,6 +34,9 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
         $this->resultPrinter = $resultPrinter;
     }
 
+    /**
+     * @return TestResultDelegateInterface
+     */
     public function getResultPrinter()
     {
         return $this->resultPrinter;

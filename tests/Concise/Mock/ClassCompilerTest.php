@@ -107,4 +107,13 @@ class ClassCompilerTest extends TestCase
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('\DateTime');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testClassNameMustBeAString()
+    {
+        new ClassCompiler(123);
+    }
 }
