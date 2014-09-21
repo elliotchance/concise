@@ -72,6 +72,7 @@ class ClassCompiler
                                 $disableConstructor = false)
     {
         ArgumentChecker::check($className, 'string');
+        ArgumentChecker::check($niceMock,  'boolean', 2);
 
         if (!class_exists($className) && !interface_exists($className)) {
             throw new InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
