@@ -3,11 +3,19 @@
 namespace Concise\Console\ResultPrinter\Utilities;
 
 use DomainException;
+use Concise\Validation\ArgumentChecker;
 
 class ProgressCounter
 {
+    /**
+     * Total value
+     * @var integer
+     */
     protected $total;
 
+    /**
+     * @var boolean
+     */
     protected $showPercentage;
 
     protected function atLeastZero($value, $name)
@@ -17,6 +25,10 @@ class ProgressCounter
         }
     }
 
+    /**
+     * @param integer $total
+     * @param boolean $showPercentage
+     */
     public function __construct($total, $showPercentage = false)
     {
         $this->atLeastZero($total, 'Total');
@@ -26,6 +38,8 @@ class ProgressCounter
 
     public function render($value = 0)
     {
+        ArgumentChecker::check($value, 'integer');
+
         $this->atLeastZero($value, 'Value');
         $r = $value . ' / ' . max($value, $this->total);
         if ($this->showPercentage) {

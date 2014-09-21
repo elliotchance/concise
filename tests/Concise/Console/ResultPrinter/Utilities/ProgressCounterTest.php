@@ -84,4 +84,14 @@ class ProgressCounterTest extends TestCase
         $counter = new ProgressCounter(10, true);
         $this->assert($counter->render(15), equals, '15 / 15 (100%)');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testTotalMustBeAnInteger()
+    {
+        $counter = new ProgressCounter(10, true);
+        $counter->render('foo');
+    }
 }
