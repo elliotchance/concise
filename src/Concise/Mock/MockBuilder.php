@@ -368,13 +368,14 @@ class MockBuilder
         return $this->setAction(new Action\ReturnSelfAction());
     }
 
-    public function andDo(\Closure $action)
+    public function andDo(Closure $action)
     {
         return $this->setAction(new Action\DoAction($action));
     }
 
     public function setCustomClassName($customClassName)
     {
+        ArgumentChecker::check($customClassName, 'string');
         $this->customClassName = $customClassName;
 
         return $this;
