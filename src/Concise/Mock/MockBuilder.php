@@ -279,6 +279,8 @@ class MockBuilder
 	 */
     public function exactly($times)
     {
+        ArgumentChecker::check($times, 'integer');
+
         $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
         if ($times === 0) {
             $this->andReturn(array(null));
