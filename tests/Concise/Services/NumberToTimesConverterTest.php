@@ -29,11 +29,6 @@ class NumberToTimesConverterTest extends TestCase
         $this->assert($this->converter->convert(2), equals, 'twice');
     }
 
-    public function testStringsThatLookLikeNumbersAreAllowed()
-    {
-        $this->assert($this->converter->convert('2'), equals, 'twice');
-    }
-
     public function testAnyOtherNumberIsPluralized()
     {
         $this->assert($this->converter->convert(123), equals, '123 times');
@@ -49,11 +44,6 @@ class NumberToTimesConverterTest extends TestCase
         $this->assert($this->converter->convertToMethod(2), equals, 'twice()');
     }
 
-    public function testMethodAcceptsStringsThatLookLikeNumbers()
-    {
-        $this->assert($this->converter->convertToMethod('2'), equals, 'twice()');
-    }
-
     public function testMethodDefaultsToExactly()
     {
         $this->assert($this->converter->convertToMethod(123), equals, 'exactly(123)');
@@ -62,5 +52,14 @@ class NumberToTimesConverterTest extends TestCase
     public function testMethodForZeroIsNever()
     {
         $this->assert($this->converter->convertToMethod(0), equals, 'never()');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testNumberMustBeAnInteger()
+    {
+        $this->converter->convertToMethod('foo');
     }
 }
