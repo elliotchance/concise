@@ -391,6 +391,8 @@ class MockBuilder
      */
     public function andReturnProperty($property)
     {
+        ArgumentChecker::check($property, 'string');
+
         if ($this->isInterface()) {
             throw new InvalidArgumentException("You cannot return a property from an interface ({$this->className}).");
         }

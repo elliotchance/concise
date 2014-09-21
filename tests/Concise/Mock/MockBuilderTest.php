@@ -102,4 +102,14 @@ class MockBuilderTest extends TestCase
         $mock = new MockBuilder($this, 'stdClass', true);
         $mock->setCustomClassName(123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testAndReturnPropertyMustBeAString()
+    {
+        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock->andReturnProperty(123);
+    }
 }
