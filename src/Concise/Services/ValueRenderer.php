@@ -48,16 +48,17 @@ class ValueRenderer
 
     protected function jsonEncode($value, $depth)
     {
+        $self = $this;
         if (is_object($value) || (is_array($value) && $this->isAssociativeArray($value))) {
-            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth) {
-                return $this->colorize("\"$k\"") . ':' . $this->render($v, false, $depth + 1);
+            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth, $self) {
+                return $self->colorize("\"$k\"") . ':' . $self->render($v, false, $depth + 1);
             });
 
             return "{" . $r . "}";
         }
 
-        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth) {
-            return $this->render($v, false, $depth + 1);
+        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth, $self) {
+            return $self->render($v, false, $depth + 1);
         });
 
         return "[$r]";
