@@ -6,6 +6,7 @@ use Concise\Syntax\Lexer;
 use Concise\Services\ValueRenderer;
 use Concise\Services\ValueDescriptor;
 use Concise\Validation\DataTypeChecker;
+use Concise\Validation\ArgumentChecker;
 
 class Assertion
 {
@@ -48,6 +49,8 @@ class Assertion
 	 */
     public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
     {
+        ArgumentChecker::check($assertionString, 'string');
+
         $this->assertionString = $assertionString;
         $this->matcher = $matcher;
         $this->data = $data;

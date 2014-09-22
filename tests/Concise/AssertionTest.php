@@ -115,4 +115,13 @@ class AssertionTest extends TestCase
             $this->assert($e->getMessage(), equals, 'foo');
         }
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testAssertionMustBeAString()
+    {
+        new Assertion(123, new True());
+    }
 }
