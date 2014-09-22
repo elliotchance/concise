@@ -17,4 +17,14 @@ class FilePathSimplifierTest extends TestCase
         $simplifier = new FilePathSimplifier();
         $this->assert($simplifier->process(getcwd() . '/foo/bar'), equals, 'foo/bar');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testFilePathMustBeAString()
+    {
+        $simplifier = new FilePathSimplifier();
+        $simplifier->process(123);
+    }
 }

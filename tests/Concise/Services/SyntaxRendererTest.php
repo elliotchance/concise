@@ -15,4 +15,14 @@ class SyntaxRendererTest extends TestCase
         $expected = (string) $c('1')->red . ' is ' . (string) $c('"2"')->yellow . ' bla ' . (string) $c(3.1)->magenta;
         $this->assert($expected, equals, $renderer->render('? is ? bla ?', $data));
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testSyntaxMustBeAString()
+    {
+        $renderer = new SyntaxRenderer();
+        $renderer->render(123);
+    }
 }

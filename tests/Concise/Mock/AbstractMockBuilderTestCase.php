@@ -649,6 +649,28 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->myMethod('hello'), equals, array('hello'));
     }
 
+    // ReturnProperty
+
+    public function testAReturnPropertyCanBeSet()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnProperty('hidden')
+                     ->get();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Property 'doesnt_exist' does not exist for
+     */
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $mock = $this->mockBuilder()
+                     ->stub('myMethod')->andReturnProperty('doesnt_exist')
+                     ->get();
+        $mock->myMethod();
+    }
+
     // ANYTHING
 
     public function testWithParameterCanAcceptAnything()
@@ -665,5 +687,22 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
                      ->get();
         $this->assert($mock->myMethod(123), equals, 'foo');
+    }
+
+    // getProperty
+
+    public function testGetAProptectedProperty()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->get();
+        $this->assert($this->getProperty($mock, 'hidden'), equals, 'foo');
+    }
+
+    public function testSetAProptectedProperty()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->get();
+        $this->setProperty($mock, 'hidden', 'bar');
+        $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
     }
 }

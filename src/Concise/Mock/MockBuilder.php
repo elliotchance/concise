@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Exception;
 use ReflectionClass;
 use Closure;
+use Concise\Validation\ArgumentChecker;
 
 class MockBuilder
 {
@@ -88,6 +89,9 @@ class MockBuilder
 	 */
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
+        ArgumentChecker::check($className, 'string', 2);
+        ArgumentChecker::check($niceMock,  'boolean', 3);
+
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
             throw new Exception("Class or interface '$className' does not exist.");
@@ -211,7 +215,7 @@ class MockBuilder
 	 * @param \Exception $exception
 	 * @return MockBuilder
 	 */
-    public function andThrow($exception)
+    public function andThrow(Exception $exception)
     {
         return $this->setAction(new Action\ThrowAction($exception));
     }
@@ -231,6 +235,8 @@ class MockBuilder
 	 */
     public function expect($method)
     {
+        ArgumentChecker::check($method, 'string');
+
         $this->reset();
         $this->isExpecting = true;
         $this->addRule($method, new Action\ReturnValueAction(array(null)));
@@ -273,6 +279,8 @@ class MockBuilder
 	 */
     public function exactly($times)
     {
+        ArgumentChecker::check($times, 'integer');
+
         $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
         if ($times === 0) {
             $this->andReturn(array(null));
@@ -360,13 +368,14 @@ class MockBuilder
         return $this->setAction(new Action\ReturnSelfAction());
     }
 
-    public function andDo(\Closure $action)
+    public function andDo(Closure $action)
     {
         return $this->setAction(new Action\DoAction($action));
     }
 
     public function setCustomClassName($customClassName)
     {
+        ArgumentChecker::check($customClassName, 'string');
         $this->customClassName = $customClassName;
 
         return $this;
@@ -375,5 +384,19 @@ class MockBuilder
     public function andReturnCallback(Closure $returnCallback)
     {
         return $this->setAction(new Action\ReturnCallbackAction($returnCallback));
+    }
+
+    /**
+     * @return MockBuilder
+     */
+    public function andReturnProperty($property)
+    {
+        ArgumentChecker::check($property, 'string');
+
+        if ($this->isInterface()) {
+            throw new InvalidArgumentException("You cannot return a property from an interface ({$this->className}).");
+        }
+
+        return $this->setAction(new Action\ReturnPropertyAction($property));
     }
 }

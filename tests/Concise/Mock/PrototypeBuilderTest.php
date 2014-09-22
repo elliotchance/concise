@@ -106,4 +106,13 @@ class PrototypeBuilderTest extends TestCase
     {
         $this->assert($this->builder->getPrototypeForNonExistantMethod('foo'), equals, 'public function foo()');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testMethodMustBeAString()
+    {
+        $this->builder->getPrototypeForNonExistantMethod(123);
+    }
 }

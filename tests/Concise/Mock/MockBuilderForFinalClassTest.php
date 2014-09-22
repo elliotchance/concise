@@ -6,6 +6,8 @@ final class MockFinalClass
 {
     public $constructorRun = false;
 
+    protected $hidden = 'foo';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = true;
@@ -413,6 +415,18 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         parent::testAReturnCallbackWillBeProvidedWithOriginalArgs();
     }
 
+    public function testAReturnPropertyCanBeSet()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAReturnPropertyCanBeSet();
+    }
+
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime();
+    }
+
     public function testWithParameterCanAcceptAnything()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
@@ -423,5 +437,17 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testWithParameterCanAcceptAnythingElse();
+    }
+
+    public function testGetAProptectedProperty()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testGetAProptectedProperty();
+    }
+
+    public function testSetAProptectedProperty()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testSetAProptectedProperty();
     }
 }

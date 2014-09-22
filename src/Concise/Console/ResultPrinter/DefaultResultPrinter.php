@@ -13,17 +13,29 @@ use PHPUnit_Framework_TestSuite;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
+    /**
+     * @var integer
+     */
     protected $width;
 
+    /**
+     * @var DefaultTheme
+     */
     protected $theme;
 
+    /**
+     * @var integer
+     */
     protected $issueNumber = 1;
 
+    /**
+     * @var ProgressCounter
+     */
     protected $counter;
 
-    public function __construct($theme = null)
+    public function __construct(DefaultTheme $theme = null)
     {
-        $this->width = exec('tput cols');
+        $this->width = (int) exec('tput cols');
         if (!$theme) {
             $theme = new DefaultTheme();
         }

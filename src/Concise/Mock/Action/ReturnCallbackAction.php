@@ -15,6 +15,9 @@ class ReturnCallbackAction extends AbstractCachingAction
         self::$cache[$this->cacheKey . 'i'] = 1;
     }
 
+    /**
+     * @return string
+     */
     public function getActionCode()
     {
         return parent::getActionCode() . "return \$v(\Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}i']++, func_get_args());";

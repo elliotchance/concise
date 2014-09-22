@@ -5,7 +5,7 @@ namespace Concise\Services;
 class MatcherSyntaxAndDescription
 {
     /**
-	 * @param  array  $syntaxes
+	 * @param  array $syntaxes
 	 * @return array
 	 */
     public function process(array $syntaxes)

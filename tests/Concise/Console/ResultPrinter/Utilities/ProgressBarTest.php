@@ -82,4 +82,13 @@ class ProgressBarTest extends ProgressBarTestCase
         ));
         $this->assert($result, equals, $this->color(0, 'yellow') . $this->color(0, 'blue'));
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testSizeMustBeAnInteger()
+    {
+        $this->progressBar->render('abc', array());
+    }
 }
