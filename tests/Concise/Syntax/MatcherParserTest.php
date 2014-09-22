@@ -240,4 +240,14 @@ class MatcherParserTest extends TestCase
         $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo', 'bar'));
         $this->assert($matcher['on_error'], equals, 'bar');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testSyntaxMustBeAString()
+    {
+        $parser = new MatcherParser();
+        $parser->getMatcherForSyntax(123);
+    }
 }
