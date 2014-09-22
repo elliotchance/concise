@@ -6,6 +6,7 @@ use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
+use ReflectionClass;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -185,5 +186,23 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
     {
         $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
+    }
+
+    public function getProperty($object, $property)
+    {
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+
+        return $property->getValue($object);
+    }
+
+    public function setProperty($object, $property, $value)
+    {
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+
+        $property->setValue($object, $value);
     }
 }

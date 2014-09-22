@@ -13,6 +13,9 @@ class ReturnValueAction extends AbstractCachingAction
         self::$cache[$this->cacheKey . 'i'] = 0;
     }
 
+    /**
+     * @return string
+     */
     public function getActionCode()
     {
         return <<<EOF

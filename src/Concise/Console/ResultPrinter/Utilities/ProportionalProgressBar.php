@@ -2,10 +2,15 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Validation\ArgumentChecker;
+
 class ProportionalProgressBar extends ProgressBar
 {
     public function renderProportional($size, $total, array $parts)
     {
+        ArgumentChecker::check($size, 'integer');
+        ArgumentChecker::check($total, 'integer', 2);
+
         $this->calculateTotal($parts);
         if (0 === $total) {
             $total = $this->total;
@@ -14,7 +19,7 @@ class ProportionalProgressBar extends ProgressBar
             return str_repeat('_', $size);
         }
         $barSize = $size * $this->total / $total;
-        $bar = parent::render($barSize, $parts);
+        $bar = parent::render((int) $barSize, $parts);
         $spaces = $size - substr_count($bar, ' ');
 
         return $bar . str_repeat('_', $spaces);

@@ -7,13 +7,23 @@ use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_ExpectationFailedException;
+use Concise\Validation\ArgumentChecker;
 
 class RenderIssue
 {
+    /**
+     * @var TraceSimplifier
+     */
     protected $traceSimplifier;
 
+    /**
+     * @var DefaultTheme
+     */
     protected $theme;
 
+    /**
+     * @var array
+     */
     protected $colours;
 
     public function __construct(TraceSimplifier $traceSimplifier = null)
@@ -53,6 +63,8 @@ class RenderIssue
 
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {
+        ArgumentChecker::check($issueNumber, 'integer');
+
         $c = new Color();
         $top = $this->getHeading($status, $issueNumber, $test);
         $message = $e->getMessage() . "\n";

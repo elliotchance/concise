@@ -6,6 +6,9 @@ use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultTheme
 {
+    /**
+     * @return array
+     */
     public function getTheme()
     {
         return array(

@@ -2,11 +2,18 @@
 
 namespace Concise\Services;
 
+use Concise\Validation\ArgumentChecker;
+
 class NumberToTimesConverter
 {
+    /**
+     * @param  integer $number
+     * @return string
+     */
     public function convert($number)
     {
-        $number = (int) $number;
+        ArgumentChecker::check($number, 'integer');
+
         if ($number === 0) {
             return 'never';
         }

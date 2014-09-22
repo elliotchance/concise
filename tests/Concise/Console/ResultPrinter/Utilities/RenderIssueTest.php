@@ -152,4 +152,13 @@ class RenderIssueTest extends TestCase
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "10.");
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testIssueNumberMustBeAnInteger()
+    {
+        $this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'foo', $this->test, $this->exception);
+    }
 }
