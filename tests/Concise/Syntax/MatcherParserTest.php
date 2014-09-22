@@ -250,4 +250,14 @@ class MatcherParserTest extends TestCase
         $parser = new MatcherParser();
         $parser->getMatcherForSyntax(123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testCompileSyntaxMustBeAString()
+    {
+        $parser = new MatcherParser();
+        $parser->compile(123);
+    }
 }
