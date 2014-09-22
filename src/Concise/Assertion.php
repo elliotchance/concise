@@ -61,6 +61,8 @@ class Assertion
 	 */
     public function setOriginalSyntax($originalSyntax)
     {
+        ArgumentChecker::check($originalSyntax, 'string');
+
         $this->originalSyntax = $originalSyntax;
     }
 

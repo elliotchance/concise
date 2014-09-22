@@ -124,4 +124,14 @@ class AssertionTest extends TestCase
     {
         new Assertion(123, new True());
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testOriginalSyntaxMustBeAString()
+    {
+        $assertion = new Assertion('true', new True());
+        $assertion->setOriginalSyntax(123);
+    }
 }
