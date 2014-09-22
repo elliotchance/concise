@@ -3,6 +3,7 @@
 namespace Concise\Syntax;
 
 use Concise\Services\CharacterConverter;
+use Concise\Validation\ArgumentChecker;
 
 class Lexer
 {
@@ -69,7 +70,7 @@ class Lexer
     }
 
     /**
-     * @param  array $tokens
+     * @param array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
@@ -82,7 +83,7 @@ class Lexer
     }
 
     /**
-     * @param  array $tokens
+     * @param array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
@@ -95,7 +96,7 @@ class Lexer
     }
 
     /**
-     * @param  array $tokens
+     * @param array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
@@ -125,7 +126,7 @@ class Lexer
     }
 
     /**
-     * @param  array $tokens
+     * @param array $tokens
 	 * @param  string $string
 	 * @param  integer $startIndex
 	 * @return string
@@ -142,6 +143,7 @@ class Lexer
                     $startIndex += $i;
 
                     $tokens[] = new Token\Value($value);
+
                     return;
                 }
             }
@@ -156,6 +158,7 @@ class Lexer
         $this->consumeClassname($tokens, $string, $startIndex);
         $this->consumeRegexp($tokens, $string, $startIndex);
         $this->consumeJson($tokens, $string, $startIndex);
+
         return $currentTokens !== count($tokens);
     }
 
@@ -240,6 +243,8 @@ class Lexer
 	 */
     public function parse($string)
     {
+        ArgumentChecker::check($string, 'string');
+
         return array(
             'tokens' => $this->getTokens($string),
             'syntax' => $this->getSyntax($string),
