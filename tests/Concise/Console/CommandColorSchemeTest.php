@@ -35,4 +35,10 @@ class CommandColorSchemeTest extends TestCase
         $this->setProperty($this->command, 'colorScheme', 'Foo\Bar');
         $this->command->getColorScheme();
     }
+
+    public function testColorSchemeCanBeAClassNameFoundInTheDefaultNamespace()
+    {
+        $this->setProperty($this->command, 'colorScheme', 'Default');
+        $this->assert($this->command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
+    }
 }

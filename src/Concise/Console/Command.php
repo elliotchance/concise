@@ -24,13 +24,31 @@ class Command extends \PHPUnit_TextUI_Command
         return $testRunner;
     }
 
+    protected function getThemeForClass($class)
+    {
+        if (class_exists($class)) {
+            return new $class();
+        }
+
+        return null;
+    }
+
+    protected function findTheme()
+    {
+        $candidates = array($this->colorScheme, "Concise\\Console\\Theme\\{$this->colorScheme}Theme");
+        foreach ($candidates as $class) {
+            if ($r = $this->getThemeForClass($class)) {
+                return $r;
+            }
+        }
+
+        throw new Exception("No such color scheme '{$this->colorScheme}'.");
+    }
+
     public function getColorScheme()
     {
         if ($this->colorScheme) {
-            if (class_exists($this->colorScheme)) {
-                return new $this->colorScheme();
-            }
-            throw new Exception("No such color scheme '{$this->colorScheme}'.");
+            return $this->findTheme();
         }
 
         return new DefaultTheme();
