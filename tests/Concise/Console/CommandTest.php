@@ -57,29 +57,4 @@ class CommandTest extends TestCase
         $command->setArgument('verbose', false);
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
     }
-
-    public function testDefaultColorSchemeIsSet()
-    {
-        $command = new Command();
-        $this->assert($command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
-    }
-
-    public function testColorSchemeCanBeAClassName()
-    {
-        $command = new Command();
-        $theme = $this->mock('Concise\Console\Theme\DefaultTheme')->get();
-        $this->setProperty($command, 'colorScheme', get_class($theme));
-        $this->assert(get_class($command->getColorScheme()), equals, get_class($theme));
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage No such color scheme 'Foo\Bar'.
-     */
-    public function testColorSchemeWillThrowExceptionIfColorSchemeClassDoesNotExist()
-    {
-        $command = new Command();
-        $this->setProperty($command, 'colorScheme', 'Foo\Bar');
-        $command->getColorScheme();
-    }
 }
