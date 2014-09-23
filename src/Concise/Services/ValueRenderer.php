@@ -11,7 +11,7 @@ class ValueRenderer
 {
     protected $theme;
 
-    protected function colorize($value)
+    public function colorize($value)
     {
         $c = new Color();
         if (!$this->theme) {
