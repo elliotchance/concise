@@ -41,4 +41,10 @@ class CommandColorSchemeTest extends TestCase
         $this->setProperty($this->command, 'colorScheme', 'Default');
         $this->assert($this->command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
     }
+
+    public function testColorSchemeWithLowerCase()
+    {
+        $this->setProperty($this->command, 'colorScheme', 'default');
+        $this->assert($this->command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
+    }
 }
