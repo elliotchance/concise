@@ -57,4 +57,10 @@ class CommandTest extends TestCase
         $command->setArgument('verbose', false);
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
     }
+
+    public function testDefaultColorSchemeIsSet()
+    {
+        $command = new Command();
+        $this->assert($command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
+    }
 }
