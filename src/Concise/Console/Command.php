@@ -6,6 +6,7 @@ use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\Theme\DefaultTheme;
+use Exception;
 
 class Command extends \PHPUnit_TextUI_Command
 {
@@ -26,7 +27,10 @@ class Command extends \PHPUnit_TextUI_Command
     public function getColorScheme()
     {
         if ($this->colorScheme) {
-            return new $this->colorScheme();
+            if (class_exists($this->colorScheme)) {
+                return new $this->colorScheme();
+            }
+            throw new Exception("No such color scheme '{$this->colorScheme}'.");
         }
 
         return new DefaultTheme();

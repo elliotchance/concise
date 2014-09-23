@@ -68,7 +68,18 @@ class CommandTest extends TestCase
     {
         $command = new Command();
         $theme = $this->mock('Concise\Console\Theme\DefaultTheme')->get();
-        $this->setProperty($command, 'colorScheme', $theme);
+        $this->setProperty($command, 'colorScheme', get_class($theme));
         $this->assert(get_class($command->getColorScheme()), equals, get_class($theme));
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such color scheme 'Foo\Bar'.
+     */
+    public function testColorSchemeWillThrowExceptionIfColorSchemeClassDoesNotExist()
+    {
+        $command = new Command();
+        $this->setProperty($command, 'colorScheme', 'Foo\Bar');
+        $command->getColorScheme();
     }
 }
