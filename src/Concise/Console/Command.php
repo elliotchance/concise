@@ -25,6 +25,10 @@ class Command extends \PHPUnit_TextUI_Command
 
     public function getColorScheme()
     {
+        if ($this->colorScheme) {
+            return new $this->colorScheme();
+        }
+
         return new DefaultTheme();
     }
 
@@ -39,14 +43,14 @@ class Command extends \PHPUnit_TextUI_Command
 
         foreach ($this->options[0] as $option) {
             switch ($option[0]) {
-                case '--test-colors':
+                case '--test-theme':
                     $testColors = new TestColors(new DefaultTheme());
                     echo $testColors->renderAll();
                     exit(0);
                     break;
 
                 case '--color-scheme':
-                    $this->colorScheme = $option[1];
+                    $this->colorTheme = $option[1];
                     break;
             }
         }

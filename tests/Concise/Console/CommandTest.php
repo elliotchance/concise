@@ -63,4 +63,12 @@ class CommandTest extends TestCase
         $command = new Command();
         $this->assert($command->getColorScheme(), instance_of, 'Concise\Console\Theme\DefaultTheme');
     }
+
+    public function testColorSchemeCanBeAClassName()
+    {
+        $command = new Command();
+        $theme = $this->mock('Concise\Console\Theme\DefaultTheme')->get();
+        $this->setProperty($command, 'colorScheme', $theme);
+        $this->assert(get_class($command->getColorScheme()), equals, get_class($theme));
+    }
 }
