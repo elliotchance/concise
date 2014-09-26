@@ -61,18 +61,24 @@ class Command extends \PHPUnit_TextUI_Command
     {
         $this->longOptions['test-colors'] = null;
         $this->longOptions['color-scheme='] = null;
+        $this->longOptions['list-color-schemes'] = null;
         parent::handleArguments($argv);
 
         foreach ($this->options[0] as $option) {
             switch ($option[0]) {
-                case '--test-theme':
-                    $testColors = new TestColors(new DefaultTheme());
+                case '--test-colors':
+                    $testColors = new TestColors($this->getColorScheme());
                     echo $testColors->renderAll();
                     exit(0);
                     break;
 
                 case '--color-scheme':
                     $this->colorTheme = $option[1];
+                    break;
+
+                case '--list-color-schemes':
+                    echo "Color Schemes:\n  default\n\n";
+                    exit(0);
                     break;
             }
         }
