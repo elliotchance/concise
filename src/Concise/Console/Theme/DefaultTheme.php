@@ -4,7 +4,7 @@ namespace Concise\Console\Theme;
 
 use PHPUnit_Runner_BaseTestRunner;
 
-class DefaultTheme
+class DefaultTheme implements ThemeInterface
 {
     /**
      * @return array

@@ -40,4 +40,9 @@ class DefaultThemeTest extends TestCase
     {
         $this->assert($this->theme->getTheme(), has_key, $expectedKey);
     }
+
+    public function testMustImplementColorScheme()
+    {
+        $this->assert($this->theme, instance_of, 'Concise\Console\Theme\ThemeInterface');
+    }
 }
