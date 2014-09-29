@@ -2,6 +2,8 @@
 
 namespace Concise\Services;
 
+use Closure;
+
 class DataTypeChecker
 {
     /**
@@ -118,7 +120,7 @@ class DataTypeChecker
         if ($this->isAttribute($value)) {
             return $this->getType($this->getAttribute($value->getValue()));
         }
-        if (is_callable($value)) {
+        if ($value instanceof Closure) {
             return 'callable';
         }
 
