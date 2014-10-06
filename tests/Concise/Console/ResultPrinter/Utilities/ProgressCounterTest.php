@@ -112,4 +112,10 @@ class ProgressCounterTest extends TestCase
     {
         new ProgressCounter(123, 'foo');
     }
+
+    public function testCanGetPercentage()
+    {
+        $counter = new ProgressCounter(5);
+        $this->assert($counter->getPercentage(1), equals, 20);
+    }
 }
