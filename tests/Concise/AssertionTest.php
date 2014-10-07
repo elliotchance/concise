@@ -75,7 +75,7 @@ class AssertionTest extends TestCase
     {
         return $this->niceMock('\Concise\Assertion', array('true', new True()))
                     ->stub(array('getData' => $data))
-                    ->done();
+                    ->get();
     }
 
     public function testDoNotShowPHPUnitPropertiesOnError()
@@ -114,5 +114,24 @@ class AssertionTest extends TestCase
         } catch (\PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert($e->getMessage(), equals, 'foo');
         }
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testAssertionMustBeAString()
+    {
+        new Assertion(123, new True());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testOriginalSyntaxMustBeAString()
+    {
+        $assertion = new Assertion('true', new True());
+        $assertion->setOriginalSyntax(123);
     }
 }

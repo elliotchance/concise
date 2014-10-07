@@ -15,24 +15,26 @@ Simple Example
 ```php
 class AttributeTest extends TestCase
 {
-	public function testEquality()
-	{
-		// the entire assertion can be string
-		$this->assert('123 equals "123"');
+    public function testAssertionsCanBeBuiltWithChaining()
+    {
+        $result = 100 + 23;
+        $this->assert($result, exactly_equals, 123);
 
-		// it will understand when you mean an attribute
-		$this->foo = 'bar';
-		$this->assert('foo is the same as "bar"');
+        $a = ['foo' => 'bar'];
+        $this->assert($a, is_an_associative_array);
+        $this->assert($a, has_key, 'foo', with_value, 'bar');
+    }
 
-		// or you can create your assertion by chaining
-		$this->assert($result, exactly_equals, 123);
-	}
+    public function testAssertionsAreJustStrings()
+    {
+        $this->assert('123 equals "123"');
+    }
 
-	// the assertion can be taken directly from the method name
-	public function test_adding3and5_equals_8()
-	{
-		$this->adding3and5 = $this->calc->add(3, 5);
-	}
+    public function testAttributesAreNativelyUnderstood()
+    {
+        $this->foo = 'bar';
+        $this->assert('foo is the same as "bar"');
+    }
 }
 ```
 
@@ -46,7 +48,7 @@ $calculator = $this->mock('\My\Calculator')
                    ->expect('add')->with(3, 5)->andReturn(8)
                    ->stub('clear')->andThrow(new \CantClearException())
                    ->expect('subtract')->never()
-                   ->done();
+                   ->get();
 ```
 
 Mocks will throw an exception for any method that is called that isn't told what to do. So maybe you need a
@@ -56,7 +58,7 @@ methods:
 ```php
 $calculator = $this->niceMock('\My\Calculator')
                    ->stub(['add' => 8])          // always return 8 for add()
-                   ->done();
+                   ->get();
 ```
 
 You can read more on the [Mocking](https://github.com/elliotchance/concise/wiki/Mocking) wiki page.
@@ -114,8 +116,14 @@ Matchers
 ### Booleans
 
 * `false` - Always fail.
+* `? is a boolean` - Assert a value is true or false.
+  * `? is a bool`
 * `? is false` - Assert value is false.
+* `? is falsy` - Assert a value is a false-like value.
+* `? is not a boolean` - Assert a value is not true or false.
+  * `? is not a bool`
 * `? is true` - Assert a value is true.
+* `? is truthy` - Assert a value is a non false-like value.
 * `true` - Always pass.
 
 ### Exceptions

@@ -1,9 +1,9 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Validation;
 
-use \Concise\Syntax\Token\Attribute;
-use \Concise\Syntax\Token\Regexp;
+use Concise\Syntax\Token\Attribute;
+use Concise\Syntax\Token\Regexp;
 
 class DataTypeCheckerTest extends \Concise\TestCase
 {
@@ -132,10 +132,28 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
     /**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage integer not found in regex
+	 * @expectedExceptionMessage Expected regex, but got integer
 	 */
     public function testNonStringsWillNotBeAcceptedForRegex()
     {
         $this->dataTypeChecker->check(array('regex'), 123);
+    }
+
+    /**
+     * @expectedException \Concise\Validation\DataTypeMismatchException
+     * @expectedExceptionMessage Expected regex, but got integer
+     */
+    public function testDataTypeMismatchExceptionIsThrown()
+    {
+        $this->dataTypeChecker->check(array('regex'), 123);
+    }
+
+    public function testDataTypeMismatchExceptionHasCorrectActualType()
+    {
+        try {
+            $this->dataTypeChecker->check(array('regex'), 123);
+        } catch (DataTypeMismatchException $e) {
+            $this->assert($e->getActualType(), equals, 'integer');
+        }
     }
 }

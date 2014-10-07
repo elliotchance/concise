@@ -2,9 +2,10 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Assertion;
-use \Concise\Services\MatcherSyntaxAndDescription;
-use \Concise\Matcher\AbstractMatcher;
+use Concise\Assertion;
+use Concise\Services\MatcherSyntaxAndDescription;
+use Concise\Matcher\AbstractMatcher;
+use Concise\Validation\ArgumentChecker;
 
 class MatcherParser
 {
@@ -59,6 +60,8 @@ class MatcherParser
 	 */
     public function getMatcherForSyntax($syntax, array $data = array())
     {
+        ArgumentChecker::check($syntax, 'string');
+
         $rawSyntax = $this->getRawSyntax($syntax);
         $endsWith = ' on error ?';
         $options = array();
@@ -191,6 +194,7 @@ class MatcherParser
                 }
             }
         }
+
         return $r;
     }
 

@@ -24,6 +24,9 @@ class AbstractCachingAction extends AbstractAction
         self::$cache[$this->cacheKey] = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getActionCode()
     {
         return "\$v = \Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}'];";

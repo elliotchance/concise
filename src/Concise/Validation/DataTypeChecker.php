@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Validation;
 
 use Closure;
 
@@ -31,15 +31,11 @@ class DataTypeChecker
 	 */
     public function check(array $acceptedTypes, $value)
     {
-        if ($this->excludeMode === true) {
-            return $this->throwInvalidArgumentException($acceptedTypes, $value, false, "must not be");
-        }
-
         if (count($acceptedTypes) === 0) {
             return $value;
         }
 
-        return $this->throwInvalidArgumentException($acceptedTypes, $value, true, "not found in");
+        return $this->throwInvalidArgumentException($acceptedTypes, $value, !$this->excludeMode);
     }
 
     /**
@@ -62,10 +58,9 @@ class DataTypeChecker
 	 * @param  array  $acceptedTypes
 	 * @param  mixed  $value
 	 * @param  bool   $expecting
-	 * @param  string $message
 	 * @return mixed
 	 */
-    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting, $message)
+    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if ($expecting === $match) {
@@ -81,8 +76,7 @@ class DataTypeChecker
 
             return $value;
         }
-        $accepts = implode(' or ', $acceptedTypes);
-        throw new \InvalidArgumentException($this->getType($value) . " $message " . $accepts);
+        throw new DataTypeMismatchException($this->getType($value), $acceptedTypes);
     }
 
     /**

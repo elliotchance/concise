@@ -122,7 +122,7 @@ class MatcherParserTest extends TestCase
     {
         $parser = $this->niceMock('\Concise\Syntax\MatcherParser')
                        ->expect('getRawKeywords')->once()->andReturn(array('a'))
-                       ->done();
+                       ->get();
 
         $parser->getKeywords();
         $parser->getKeywords();
@@ -165,7 +165,7 @@ class MatcherParserTest extends TestCase
     {
         return $this->mock('\Concise\Matcher\AbstractMatcher')
                     ->stub(array('supportedSyntaxes' => $supportedSyntaxes))
-                    ->done();
+                    ->get();
     }
 
     public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
@@ -239,5 +239,25 @@ class MatcherParserTest extends TestCase
         $parser = MatcherParser::getInstance();
         $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo', 'bar'));
         $this->assert($matcher['on_error'], equals, 'bar');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testSyntaxMustBeAString()
+    {
+        $parser = new MatcherParser();
+        $parser->getMatcherForSyntax(123);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testCompileSyntaxMustBeAString()
+    {
+        $parser = new MatcherParser();
+        $parser->compile(123);
     }
 }

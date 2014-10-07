@@ -146,4 +146,14 @@ class LexerTest extends TestCase
         $lexer = new Lexer();
         $lexer->parse('[abc:123]');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testSyntaxMustBeAString()
+    {
+        $lexer = new Lexer();
+        $lexer->parse(123);
+    }
 }
