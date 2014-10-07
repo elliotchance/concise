@@ -4,8 +4,6 @@ namespace Concise\Validation;
 
 use Closure;
 
-use Closure;
-
 class DataTypeChecker
 {
     /**
