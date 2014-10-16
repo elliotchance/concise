@@ -14,4 +14,9 @@ class CIResultPrinter extends DefaultResultPrinter
             $this->lastPercentage = $percentage;
         }
     }
+
+    public function appendTextAbove($text)
+    {
+        parent::appendTextAbove("\n$text");
+    }
 }
