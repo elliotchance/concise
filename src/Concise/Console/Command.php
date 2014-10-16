@@ -13,11 +13,7 @@ class Command extends \PHPUnit_TextUI_Command
 
     protected function createRunner()
     {
-        if ($this->ci) {
-            $resultPrinter = new CIResultPrinter();
-        } else {
-            $resultPrinter = new DefaultResultPrinter();
-        }
+        $resultPrinter = $this->getResultPrinter();
         if (array_key_exists('verbose', $this->arguments) && $this->arguments['verbose']) {
             $resultPrinter->setVerbose(true);
         }
@@ -25,6 +21,15 @@ class Command extends \PHPUnit_TextUI_Command
         $testRunner->setPrinter(new ResultPrinterProxy($resultPrinter));
 
         return $testRunner;
+    }
+
+    public function getResultPrinter()
+    {
+        if ($this->ci) {
+            return new CIResultPrinter();
+        }
+
+        return new DefaultResultPrinter();
     }
 
     /**
