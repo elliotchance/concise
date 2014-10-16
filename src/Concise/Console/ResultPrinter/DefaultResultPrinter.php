@@ -53,7 +53,6 @@ class DefaultResultPrinter extends AbstractResultPrinter
     {
         if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
             $this->add($status, $test, $e);
-            ++$this->issueNumber;
         }
         $this->update();
     }
@@ -95,6 +94,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
                 }
         }
 
+        ++$this->issueNumber;
         $renderIssue = new RenderIssue();
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove("$message\n\n");

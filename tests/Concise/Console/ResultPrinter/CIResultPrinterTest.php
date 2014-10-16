@@ -13,4 +13,13 @@ class CIResultPrinterTest extends TestCase
                               ->get();
         $resultPrinter->update();
     }
+
+    public function testAppendTextAbovePrintsANewLineAbove()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
+                              ->expect('write')
+                              ->stub('update')
+                              ->get();
+        $resultPrinter->appendTextAbove('a');
+    }
 }

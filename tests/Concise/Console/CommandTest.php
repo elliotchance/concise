@@ -10,6 +10,11 @@ class CommandStub extends Command
     {
         $this->arguments[$name] = $value;
     }
+
+    public function setCI($ci)
+    {
+        $this->ci = $ci;
+    }
 }
 
 class CommandTest extends TestCase
@@ -56,5 +61,27 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setArgument('verbose', false);
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
+    }
+
+    public function testCIResultPrinterIsUsedIfCIIsTrue()
+    {
+        $command = $this->getCommandMock();
+        $command->setCI(true);
+
+        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\CIResultPrinter');
+    }
+
+    public function testDefaultResultPrinterIsNotUsedIfCIIsFalse()
+    {
+        $command = $this->getCommandMock();
+        $command->setCI(false);
+
+        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
+    }
+
+    public function testDefaultResultPrinterIsUsedByDefault()
+    {
+        $command = $this->getCommandMock();
+        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 }
