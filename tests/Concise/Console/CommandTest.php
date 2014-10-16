@@ -78,4 +78,10 @@ class CommandTest extends TestCase
 
         $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
+
+    public function testDefaultResultPrinterIsUsedByDefault()
+    {
+        $command = $this->getCommandMock();
+        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
+    }
 }
