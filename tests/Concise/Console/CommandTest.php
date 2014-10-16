@@ -63,11 +63,19 @@ class CommandTest extends TestCase
         $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
     }
 
-    public function testCIResultPrinterIsUsedIfCIIsSet()
+    public function testCIResultPrinterIsUsedIfCIIsTrue()
     {
         $command = $this->getCommandMock();
         $command->setCI(true);
 
         $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\CIResultPrinter');
+    }
+
+    public function testDefaultResultPrinterIsNotUsedIfCIIsFalse()
+    {
+        $command = $this->getCommandMock();
+        $command->setCI(false);
+
+        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 }
