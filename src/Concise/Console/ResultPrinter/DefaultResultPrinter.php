@@ -94,10 +94,10 @@ class DefaultResultPrinter extends AbstractResultPrinter
                 }
         }
 
-        ++$this->issueNumber;
         $renderIssue = new RenderIssue();
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove("$message\n\n");
+        ++$this->issueNumber;
     }
 
     public function appendTextAbove($text)
