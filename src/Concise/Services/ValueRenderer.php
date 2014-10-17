@@ -30,38 +30,49 @@ class ValueRenderer
             return (string) $c($value)->{$this->theme['value.float']};
         }
 
-        return (string) $c($value)->{$this->theme['value.string']};
+        $lines = explode("\n", $value);
+        $string = array();
+        foreach ($lines as $line) {
+            $string[] = (string) $c($line)->{$this->theme['value.string']};
+        }
+
+        return implode("\n", $string);
     }
 
-    protected function jsonEncodeCallback(array $values, Closure $callback)
+    protected function jsonEncodeCallback(array $values, $depth, Closure $callback)
     {
         $r = '';
         foreach ($values as $k => $v) {
             if ($r) {
-                $r .= ',';
+                $r .= ",\n";
             }
-            $r .= $callback($k, $v);
+            $r .= $this->createIndent($depth) . $callback($k, $v);
         }
 
         return $r;
+    }
+
+    protected function createIndent($depth)
+    {
+        return str_repeat('  ', $depth);
     }
 
     protected function jsonEncode($value, $depth)
     {
         $self = $this;
         if (is_object($value) || (is_array($value) && $this->isAssociativeArray($value))) {
-            $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth, $self) {
+            $r = $this->jsonEncodeCallback((array) $value, $depth + 1, function ($k, $v) use ($depth, $self) {
                 return $self->colorize("\"$k\"") . ':' . $self->render($v, false, $depth + 1);
             });
 
-            return "{" . $r . "}";
+            return "{\n" . $r . "\n" . $this->createIndent($depth) . "}";
         }
 
-        $r = $this->jsonEncodeCallback((array) $value, function ($k, $v) use ($depth, $self) {
+        $r = $this->jsonEncodeCallback((array) $value, $depth + 1, function ($k, $v) use ($depth, $self) {
             return $self->render($v, false, $depth + 1);
         });
 
-        return "[$r]";
+        return "[\n$r\n" . $this->createIndent($depth) . "]";
     }
 
     protected function isAssociativeArray(array $a)
