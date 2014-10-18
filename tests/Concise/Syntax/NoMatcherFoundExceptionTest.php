@@ -10,4 +10,10 @@ class NoMatcherFoundExceptionTest extends TestCase
     {
         $this->assert(new NoMatcherFoundException(), instance_of, '\Exception');
     }
+
+    public function testSyntaxIsNullIfNotSet()
+    {
+        $e = new NoMatcherFoundException();
+        $this->assert($e->getSyntax(), is_null);
+    }
 }

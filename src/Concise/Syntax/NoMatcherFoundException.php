@@ -6,4 +6,8 @@ use Exception;
 
 class NoMatcherFoundException extends Exception
 {
+    public function getSyntax()
+    {
+        return null;
+    }
 }
