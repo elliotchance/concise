@@ -2,8 +2,9 @@
 
 namespace Concise\Services;
 
-use \Concise\Syntax\MatcherParser;
-use \Concise\Assertion;
+use Concise\Syntax\MatcherParser;
+use Concise\Assertion;
+use Exception;
 
 class AssertionBuilder
 {
@@ -50,6 +51,20 @@ class AssertionBuilder
         return implode(' ', $syntax);
     }
 
+    protected function getAlternateSyntaxString()
+    {
+        $syntax = array($this->args[0]);
+        $argc = count($this->args);
+        for ($i = 1; $i < $argc; $i += 2) {
+            $syntax[] = $this->getArgName($i - 1);
+            if ($i < $argc - 1) {
+                $syntax[] = $this->args[$i + 1];
+            }
+        }
+
+        return implode(' ', $syntax);
+    }
+
     /**
 	 * @return Assertion
 	 */
@@ -63,6 +78,12 @@ class AssertionBuilder
         $syntaxString = $this->getSyntaxString();
         $data = $this->getData();
 
-        return $matcherParser->compile($syntaxString, $data);
+        try {
+            return $matcherParser->compile($syntaxString, $data);
+        } catch (Exception $e) {
+            $syntaxString = $this->getAlternateSyntaxString();
+
+            return $matcherParser->compile($syntaxString, $data);
+        }
     }
 }

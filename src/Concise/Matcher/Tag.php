@@ -12,4 +12,5 @@ abstract class Tag
     const NUMBERS = 'Numbers';
     const OBJECTS = 'Objects';
     const STRINGS = 'Strings';
+    const TIMESTAMPS = 'Timestamps';
 }
