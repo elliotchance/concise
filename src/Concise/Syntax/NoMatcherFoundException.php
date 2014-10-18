@@ -10,6 +10,7 @@ class NoMatcherFoundException extends Exception
 
     public function __construct($syntax = null)
     {
+        parent::__construct("No such matcher for syntax '$syntax'.");
         $this->syntax = $syntax;
     }
 

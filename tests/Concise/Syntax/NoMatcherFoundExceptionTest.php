@@ -22,4 +22,10 @@ class NoMatcherFoundExceptionTest extends TestCase
         $e = new NoMatcherFoundException('? foo ?');
         $this->assert($e->getSyntax(), equals, '? foo ?');
     }
+
+    public function testExceptionMessage()
+    {
+        $e = new NoMatcherFoundException('? foo ?');
+        $this->assert($e->getMessage(), equals, "No such matcher for syntax '? foo ?'.");
+    }
 }
