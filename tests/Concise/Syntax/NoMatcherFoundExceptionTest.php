@@ -16,4 +16,10 @@ class NoMatcherFoundExceptionTest extends TestCase
         $e = new NoMatcherFoundException();
         $this->assert($e->getSyntax(), is_null);
     }
+
+    public function testSyntaxCanBeSetInConstructor()
+    {
+        $e = new NoMatcherFoundException('? foo ?');
+        $this->assert($e->getSyntax(), equals, '? foo ?');
+    }
 }
