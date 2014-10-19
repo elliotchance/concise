@@ -6,16 +6,23 @@ use Exception;
 
 class NoMatcherFoundException extends Exception
 {
-    protected $syntax;
+    /**
+     * @var array
+     */
+    protected $syntaxes;
 
-    public function __construct($syntax = null)
+    public function __construct(array $syntaxes)
     {
-        parent::__construct("No such matcher for syntax '$syntax'.");
-        $this->syntax = $syntax;
+        $message = "No such matcher for syntax '" . implode("' or '", $syntaxes) . "'.";
+        parent::__construct($message);
+        $this->syntaxes = $syntaxes;
     }
 
-    public function getSyntax()
+    /**
+     * @return array
+     */
+    public function getSyntaxes()
     {
-        return $this->syntax;
+        return $this->syntaxes;
     }
 }

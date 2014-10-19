@@ -4,7 +4,7 @@ namespace Concise\Services;
 
 use Concise\Syntax\MatcherParser;
 use Concise\Assertion;
-use Exception;
+use Concise\Syntax\NoMatcherFoundException;
 
 class AssertionBuilder
 {
@@ -65,6 +65,19 @@ class AssertionBuilder
         return implode(' ', $syntax);
     }
 
+    protected function getSyntaxStrings()
+    {
+        $syntaxes = array(
+            $this->getSyntaxString(),
+        );
+
+        if (is_string($this->args[0])) {
+            $syntaxes[] = $this->getAlternateSyntaxString();
+        }
+
+        return $syntaxes;
+    }
+
     /**
 	 * @return Assertion
 	 */
@@ -75,15 +88,19 @@ class AssertionBuilder
             return $matcherParser->compile($this->args[0] ? 'true' : 'false');
         }
 
-        $syntaxString = $this->getSyntaxString();
+        $syntaxStrings = $this->getSyntaxStrings();
         $data = $this->getData();
 
-        try {
-            return $matcherParser->compile($syntaxString, $data);
-        } catch (Exception $e) {
-            $syntaxString = $this->getAlternateSyntaxString();
-
-            return $matcherParser->compile($syntaxString, $data);
+        $syntaxes = [];
+        foreach ($syntaxStrings as $syntaxString) {
+            try {
+                return $matcherParser->compile($syntaxString, $data);
+            } catch (NoMatcherFoundException $e) {
+                // Syntax could not be compiled, try the next one.
+                $syntaxes = array_merge($syntaxes, $e->getSyntaxes());
+            }
         }
+
+        throw new NoMatcherFoundException($syntaxes);
     }
 }
