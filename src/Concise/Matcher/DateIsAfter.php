@@ -28,6 +28,6 @@ class DateIsAfter extends IsGreaterThan
 
     public function getTags()
     {
-        return array(Tag::TIMESTAMPS);
+        return array(Tag::DATE_AND_TIME);
     }
 }

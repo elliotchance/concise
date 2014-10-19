@@ -126,6 +126,11 @@ Matchers
 * `? is truthy` - Assert a value is a non false-like value.
 * `true` - Always pass.
 
+### Date and Time
+
+* `date ?:int,string,DateTime is after ?:int,string,DateTime` - A date/time is after another date/time.
+* `date ?:int,string,DateTime is before ?:int,string,DateTime` - A date/time is before another date/time.
+
 ### Exceptions
 
 * `?:callable does not throw ?:class` - Assert that a specific exception is not thrown.

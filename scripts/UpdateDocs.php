@@ -78,6 +78,7 @@ function updateWikiAssertions()
     foreach ($matchers as $tag => $syntaxes) {
         ksort($syntaxes);
         $matchersDoc = generateMarkdownList($syntaxes);
+        $tag = str_replace(' ', '-', $tag);
 
         $wikiFile = __DIR__ . "/../wiki/Assertions-for-$tag.md";
         if (file_exists($wikiFile)) {

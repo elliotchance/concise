@@ -28,6 +28,6 @@ class DateIsBefore extends IsLessThan
 
     public function getTags()
     {
-        return array(Tag::TIMESTAMPS);
+        return array(Tag::DATE_AND_TIME);
     }
 }
