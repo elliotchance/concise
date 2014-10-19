@@ -63,6 +63,13 @@ class DataTypeChecker
     protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
+        if (is_object($value)) {
+            foreach ($acceptedTypes as $type) {
+                if (get_class($value) == $type) {
+                    return $value;
+                }
+            }
+        }
         if ($expecting === $match) {
             if (is_object($value) && $value instanceof \Concise\Syntax\Token\Attribute) {
                 $value = $this->getAttribute($value->getValue());

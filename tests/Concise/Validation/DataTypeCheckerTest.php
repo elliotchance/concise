@@ -4,6 +4,7 @@ namespace Concise\Validation;
 
 use Concise\Syntax\Token\Attribute;
 use Concise\Syntax\Token\Regexp;
+use DateTime;
 
 class DataTypeCheckerTest extends \Concise\TestCase
 {
@@ -32,23 +33,24 @@ class DataTypeCheckerTest extends \Concise\TestCase
     public function dataTypes()
     {
         return array(
-            array(array("int"), 123),
-            array(array("integer"), 123),
-            array(array("float"), 1.23),
-            array(array("double"), 1.23),
-            array(array("string"), 'abc'),
-            array(array("array"), array()),
-            array(array("resource"), fopen('.', 'r')),
-            array(array("object"), new \stdClass()),
-            array(array("callable"), function () {}),
-            array(array("int", "float"), 1.23),
-            array(array("regex"), new Regexp('abc')),
-            array(array("class"), 'Concise\Syntax\Token\Regexp'),
-            array(array("number"), 123),
-            array(array("number"), 12.3),
-            array(array("number"), '12.3'),
-            array(array("bool"), true),
-            array(array("string"), 'count'),
+            'int' => array(array("int"), 123),
+            'integer' => array(array("integer"), 123),
+            'float' => array(array("float"), 1.23),
+            'double' => array(array("double"), 1.23),
+            'string' => array(array("string"), 'abc'),
+            'array' => array(array("array"), array()),
+            'resource' => array(array("resource"), fopen('.', 'r')),
+            'object' => array(array("object"), new \stdClass()),
+            'callable' => array(array("callable"), function () {}),
+            'multiple' => array(array("int", "float"), 1.23),
+            'regex' => array(array("regex"), new Regexp('abc')),
+            'class' => array(array("class"), 'Concise\Syntax\Token\Regexp'),
+            'integer number' => array(array("number"), 123),
+            'float number' => array(array("number"), 12.3),
+            'string number' => array(array("number"), '12.3'),
+            'bool' => array(array("bool"), true),
+            'string function' => array(array("string"), 'count'),
+            'specific object' => array(array('DateTime'), new DateTime()),
         );
     }
 
