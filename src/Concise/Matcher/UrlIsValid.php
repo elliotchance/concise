@@ -13,7 +13,7 @@ class UrlIsValid extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return false;
+        return filter_var($data[0], FILTER_VALIDATE_URL) !== false;
     }
 
     public function getTags()

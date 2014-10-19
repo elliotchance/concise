@@ -14,4 +14,9 @@ class UrlIsValidTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(url, 'foo', is_valid);
     }
+
+    public function testValidURL()
+    {
+        $this->assert(url, 'http://www.google.com', is_valid);
+    }
 }
