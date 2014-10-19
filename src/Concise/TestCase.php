@@ -154,7 +154,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $all = array();
         foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
+            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
             foreach (explode('?', $simpleSyntax) as $part) {
                 $p = trim($part);
                 $all[str_replace(' ', '_', $p)] = $p;

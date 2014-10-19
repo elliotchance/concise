@@ -74,7 +74,7 @@ class MatcherParser
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             return $this->syntaxCache[$rawSyntax] + $options;
         }
-        throw new \Exception("No such matcher for syntax '$syntax'.");
+        throw new NoMatcherFoundException(array($syntax));
     }
 
     /**
@@ -159,7 +159,11 @@ class MatcherParser
     protected function autoloadAllMatchers()
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
-            if (substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
+            if (substr($file, 0, 1) === '.' || in_array($file, array(
+                    'DidNotMatchException.php',
+                    'AbstractMatcher.php',
+                    'Tag.php'
+                ))) {
                 continue;
             }
             $class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
