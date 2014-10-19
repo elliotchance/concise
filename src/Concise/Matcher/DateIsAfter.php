@@ -5,12 +5,12 @@ namespace Concise\Matcher;
 use DateTime;
 use Concise\Services\TimestampToEpochConverter;
 
-class DateIsBefore extends IsLessThan
+class DateIsAfter extends IsGreaterThan
 {
     public function supportedSyntaxes()
     {
         return array(
-            'date ?:int,string,DateTime is before ?:int,string,DateTime' => 'A date/time is before another date/time.',
+            'date ?:int,string,DateTime is after ?:int,string,DateTime' => 'A date/time is after another date/time.',
         );
     }
 
