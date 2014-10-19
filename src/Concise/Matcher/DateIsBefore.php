@@ -9,7 +9,7 @@ class DateIsBefore extends AbstractMatcher
     public function supportedSyntaxes()
     {
         return array(
-            'date ?:int,string,DateTime is before ?:string,DateTime' => 'A date/time is before another date/time',
+            'date ?:int,string,DateTime is before ?:int,string,DateTime' => 'A date/time is before another date/time',
         );
     }
 
