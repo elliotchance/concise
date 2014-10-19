@@ -11,24 +11,23 @@ class DateIsBefore extends AbstractMatcher
     public function supportedSyntaxes()
     {
         return array(
-            'date ? is before ?' => 'A date/time is before another date/time',
+            'date ?:string,object is before ?:string,object' => 'A date/time is before another date/time',
         );
     }
 
     public function match($syntax, array $data = array())
     {
-        if ($data[0] instanceof DateTime) {
-            $data[0] = $data[0]->format('c');
-        }
-        if ($data[1] instanceof DateTime) {
-            $data[1] = $data[1]->format('c');
-        }
-        $left = strtotime($data[0]);
-        if (!$left) {
-            return false;
+        foreach ($data as &$d) {
+            if ($d instanceof DateTime) {
+                $d = $d->format('c');
+            }
+            $d = strtotime($d);
+            if (!$d) {
+                return false;
+            }
         }
 
-        return $left < strtotime($data[1]);
+        return $data[0] < $data[1];
     }
 
     public function getTags()

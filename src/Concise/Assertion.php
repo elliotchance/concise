@@ -7,6 +7,8 @@ use Concise\Services\ValueRenderer;
 use Concise\Services\ValueDescriptor;
 use Concise\Validation\DataTypeChecker;
 use Concise\Validation\ArgumentChecker;
+use InvalidArgumentException;
+use Exception;
 
 class Assertion
 {
@@ -47,7 +49,8 @@ class Assertion
 	 * @param Matcher\AbstractMatcher $matcher
 	 * @param array                   $data
 	 */
-    public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
+    public function __construct($assertionString, Matcher\AbstractMatcher $matcher,
+        array $data = array())
     {
         ArgumentChecker::check($assertionString, 'string');
 
@@ -114,9 +117,11 @@ class Assertion
         for ($i = 0; $i < $len; ++$i) {
             try {
                 $r[] = $checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
-            } catch (\InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 $acceptedTypes = implode(" or ", $args[$i]->getAcceptedTypes());
-                throw new \Exception("Argument " . ($i + 1) . " (" . $arguments[$i] . ") must be $acceptedTypes.");
+                $message = sprintf("Argument %d (%s) must be %s.", $i + 1, $arguments[$i],
+                    $acceptedTypes);
+                throw new Exception($message);
             }
         }
 
