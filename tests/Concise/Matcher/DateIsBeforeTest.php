@@ -20,6 +20,8 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
             'timezone after' => array('2005-08-15T15:52:01+10:00', '2005-08-15T15:52:01+00:00', true),
             'timezone equal' => array('2005-08-15T15:52:01+00:00', '2005-08-15T05:52:01-10:00', false),
             'invalid left' => array('foo', '2014-02-02', false),
+            'invalid right' => array('2014-02-02', 'foo', false),
+            'invalid both' => array('foo', 'bar', false),
         );
     }
 
