@@ -55,21 +55,28 @@ class DataTypeChecker
     }
 
     /**
-	 * @param  array  $acceptedTypes
-	 * @param  mixed  $value
-	 * @param  bool   $expecting
-	 * @return mixed
-	 */
-    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
+     * Will check to see if the value is an object and its class is listed in the accepted types.
+     * @param  array       $acceptedTypes Accepted types.
+     * @param  mixed       $value         Value to test.
+     * @return null|object
+     */
+    protected function checkSpecificObject(array $acceptedTypes, $value)
     {
-        $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if (is_object($value)) {
             foreach ($acceptedTypes as $type) {
-                if (get_class($value) == $type) {
+                $c = get_class($value);
+                if ($c == $type || "\\$c" == $type) {
                     return $value;
                 }
             }
         }
+
+        return null;
+    }
+
+    protected function checkExpecting(array $acceptedTypes, $value, $expecting)
+    {
+        $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if ($expecting === $match) {
             if (is_object($value) && $value instanceof \Concise\Syntax\Token\Attribute) {
                 $value = $this->getAttribute($value->getValue());
@@ -83,7 +90,23 @@ class DataTypeChecker
 
             return $value;
         }
+
         throw new DataTypeMismatchException($this->getType($value), $acceptedTypes);
+    }
+
+    /**
+	 * @param  array  $acceptedTypes
+	 * @param  mixed  $value
+	 * @param  bool   $expecting
+	 * @return mixed
+	 */
+    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
+    {
+        if (($r = $this->checkSpecificObject($acceptedTypes, $value))) {
+            return $r;
+        }
+
+        return $this->checkExpecting($acceptedTypes, $value, $expecting);
     }
 
     /**

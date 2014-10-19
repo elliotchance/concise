@@ -51,6 +51,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'bool' => array(array("bool"), true),
             'string function' => array(array("string"), 'count'),
             'specific object' => array(array('DateTime'), new DateTime()),
+            'specific object backslash' => array(array('\DateTime'), new DateTime()),
         );
     }
 

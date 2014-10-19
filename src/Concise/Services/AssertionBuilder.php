@@ -90,7 +90,7 @@ class AssertionBuilder
             return $matcherParser->compile($this->args[0] ? 'true' : 'false');
         }
 
-        $syntaxes = [];
+        $syntaxes = array();
         foreach ($this->getSyntaxes() as $syntax) {
             try {
                 return $matcherParser->compile($syntax['syntax'], $syntax['data']);
