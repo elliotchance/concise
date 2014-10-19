@@ -14,4 +14,9 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
     {
         $this->assert(date, '2014-01-02', is_before, '2014-02-02');
     }
+
+    public function testDateIsNotBeforeAnotherDate()
+    {
+        $this->assertFailure(date, '2014-03-02', is_before, '2014-02-02');
+    }
 }

@@ -15,7 +15,7 @@ class DateIsBefore extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return true;
+        return strtotime($data[0]) < strtotime($data[1]);
     }
 
     public function getTags()
