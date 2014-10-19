@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use DateTime;
+
 class DateIsBefore extends AbstractMatcher
 {
     const DESCRIPTION = 'A number must be between two values (inclusive).';
@@ -15,6 +17,9 @@ class DateIsBefore extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
+        if ($data[0] instanceof DateTime) {
+            $data[0] = $data[0]->format('c');
+        }
         $left = strtotime($data[0]);
         if (!$left) {
             return false;

@@ -48,7 +48,8 @@ class AssertionBuilder
         for ($i = $offset; $i < $argc; $i += 2) {
             $syntax[] = $this->getArgName($i - $offset);
             if ($i < $argc - 1) {
-                $syntax[] = $this->args[$i + 1];
+                $v = $this->args[$i + 1];
+                $syntax[] = is_object($v) ? '<object>' : $v;
             }
         }
 

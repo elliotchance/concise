@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use DateTime;
+
 class DateIsBeforeTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -22,6 +24,7 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
             'invalid left' => array('foo', '2014-02-02', false),
             'invalid right' => array('2014-02-02', 'foo', false),
             'invalid both' => array('foo', 'bar', false),
+            'datetime left' => array(new DateTime('2014-01-02'), '2014-02-02', true),
         );
     }
 
