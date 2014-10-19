@@ -10,13 +10,24 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
         $this->matcher = new DateIsBefore();
     }
 
-    public function testDateIsBeforeAnotherDate()
+    public function dataProvider()
     {
-        $this->assert(date, '2014-01-02', is_before, '2014-02-02');
+        return array(
+            'before' => array('2014-01-02', '2014-02-02', true),
+            'after' => array('2014-03-02', '2014-02-02', false),
+            'equal' => array('2014-02-02', '2014-02-02', false),
+        );
     }
 
-    public function testDateIsNotBeforeAnotherDate()
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testDateIsBefore($left, $right, $shouldPass)
     {
-        $this->assertFailure(date, '2014-03-02', is_before, '2014-02-02');
+        if ($shouldPass) {
+            $this->assert(date, $left, is_before, $right);
+        } else {
+            $this->assertFailure(date, $left, is_before, $right);
+        }
     }
 }
