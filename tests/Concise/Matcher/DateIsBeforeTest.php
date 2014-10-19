@@ -25,6 +25,7 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
             'invalid right' => array('2014-02-02', 'foo', false),
             'invalid both' => array('foo', 'bar', false),
             'datetime left' => array(new DateTime('2014-01-02'), '2014-02-02', true),
+            'datetime right' => array('2014-01-02', new DateTime('2014-02-02'), true),
         );
     }
 

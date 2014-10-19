@@ -20,6 +20,9 @@ class DateIsBefore extends AbstractMatcher
         if ($data[0] instanceof DateTime) {
             $data[0] = $data[0]->format('c');
         }
+        if ($data[1] instanceof DateTime) {
+            $data[1] = $data[1]->format('c');
+        }
         $left = strtotime($data[0]);
         if (!$left) {
             return false;
