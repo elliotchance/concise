@@ -6,22 +6,21 @@ use DateTime;
 
 class DateIsBefore extends AbstractMatcher
 {
-    const DESCRIPTION = 'A number must be between two values (inclusive).';
-
     public function supportedSyntaxes()
     {
         return array(
-            'date ?:string,object is before ?:string,object' => 'A date/time is before another date/time',
+            'date ?:int,string,DateTime is before ?:string,DateTime' => 'A date/time is before another date/time',
         );
     }
 
     public function match($syntax, array $data = array())
     {
         foreach ($data as &$d) {
-            if ($d instanceof DateTime) {
-                $d = $d->format('c');
+            if (is_string($d)) {
+                $d = strtotime($d);
+            } elseif ($d instanceof DateTime) {
+                $d = $d->getTimestamp();
             }
-            $d = strtotime($d);
             if (!$d) {
                 return false;
             }

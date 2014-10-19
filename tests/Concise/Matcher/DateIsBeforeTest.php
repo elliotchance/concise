@@ -27,6 +27,7 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
             'datetime left' => array(new DateTime('2014-01-02'), '2014-02-02', true),
             'datetime right' => array('2014-01-02', new DateTime('2014-02-02'), true),
             'datetime both' => array(new DateTime('2014-01-02'), new DateTime('2014-02-02'), true),
+            'epoch left' => array(1413705413, '2014-12-19', true),
         );
     }
 
