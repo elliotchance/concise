@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 use DateTime;
 
-class DateIsBefore extends AbstractMatcher
+class DateIsBefore extends IsLessThan
 {
     public function supportedSyntaxes()
     {
@@ -26,7 +26,7 @@ class DateIsBefore extends AbstractMatcher
             }
         }
 
-        return $data[0] < $data[1];
+        return parent::match(null, $data);
     }
 
     public function getTags()
