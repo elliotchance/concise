@@ -15,12 +15,14 @@ class UrlHasPart extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        if (strpos($syntax, 'port')) {
-            return true;
-        }
-
-        if (strpos($syntax, 'host')) {
-            return parse_url($data[0], PHP_URL_HOST) == $data[1];
+        $parts = [
+            'port' => PHP_URL_PORT,
+            'host' => PHP_URL_HOST,
+        ];
+        foreach ($parts as $kw => $part) {
+            if (strpos($syntax, $kw)) {
+                return parse_url($data[0], $part) == $data[1];
+            }
         }
 
         return parse_url($data[0], PHP_URL_SCHEME) == $data[1];
