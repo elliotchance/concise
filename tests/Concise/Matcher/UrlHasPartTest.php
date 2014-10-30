@@ -39,4 +39,14 @@ class UrlHasPartTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(url, 'http://foo:123', has_port, 456);
     }
+
+    public function testUrlHasUser()
+    {
+        $this->assert(url, 'http://foo@google.com', has_user, 'foo');
+    }
+
+    public function testUrlDoesNotHaveUser()
+    {
+        $this->assertFailure(url, 'http://foo@google.com', has_user, 'bar');
+    }
 }

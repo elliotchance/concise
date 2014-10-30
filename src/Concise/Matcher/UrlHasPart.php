@@ -10,6 +10,7 @@ class UrlHasPart extends AbstractMatcher
             'url ?:string has scheme ?:string' => 'URL has scheme.',
             'url ?:string has host ?:string' => 'URL has host.',
             'url ?:string has port ?:int' => 'URL has port.',
+            'url ?:string has user ?:string' => 'URL has user.',
         );
     }
 
@@ -18,6 +19,7 @@ class UrlHasPart extends AbstractMatcher
         $parts = [
             'port' => PHP_URL_PORT,
             'host' => PHP_URL_HOST,
+            'user' => PHP_URL_USER,
         ];
         foreach ($parts as $kw => $part) {
             if (strpos($syntax, $kw)) {
