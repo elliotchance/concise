@@ -20,8 +20,13 @@ class UrlHasPartTest extends AbstractMatcherTestCase
         $this->assertFailure(url, 'http://google.com', has_scheme, 'https');
     }
 
-    public function testUrlHasDomain()
+    public function testUrlHasHost()
     {
-        $this->assert(url, 'http://google.com', has_domain, 'google.com');
+        $this->assert(url, 'http://google.com', has_host, 'google.com');
+    }
+
+    public function testUrlDoesNotHaveHost()
+    {
+        $this->assertFailure(url, 'http://google.com', has_host, 'foo.com');
     }
 }

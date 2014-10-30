@@ -8,17 +8,17 @@ class UrlHasPart extends AbstractMatcher
     {
         return array(
             'url ?:string has scheme ?:string' => 'URL has scheme.',
-            'url ?:string has domain ?:string' => 'URL has domain.',
+            'url ?:string has host ?:string' => 'URL has host.',
         );
     }
 
     public function match($syntax, array $data = array())
     {
-        if (strpos($syntax, 'domain')) {
-            return true;
+        if (strpos($syntax, 'host')) {
+            return parse_url($data[0], PHP_URL_HOST) == $data[1];
         }
 
-        return parse_url($data[0], PHP_URL_SCHEME) === $data[1];
+        return parse_url($data[0], PHP_URL_SCHEME) == $data[1];
     }
 
     public function getTags()
