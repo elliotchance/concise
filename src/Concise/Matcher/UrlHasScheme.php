@@ -13,7 +13,7 @@ class UrlHasScheme extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return true;
+        return parse_url($data[0], PHP_URL_SCHEME) === $data[1];
     }
 
     public function getTags()

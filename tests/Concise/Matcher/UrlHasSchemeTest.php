@@ -14,4 +14,9 @@ class UrlHasSchemeTest extends AbstractMatcherTestCase
     {
         $this->assert(url, 'http://google.com', has_scheme, 'http');
     }
+
+    public function testUrlDoesNotHaveScheme()
+    {
+        $this->assertFailure(url, 'http://google.com', has_scheme, 'https');
+    }
 }
