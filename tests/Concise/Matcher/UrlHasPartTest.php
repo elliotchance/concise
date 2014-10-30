@@ -29,4 +29,9 @@ class UrlHasPartTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(url, 'http://google.com', has_host, 'foo.com');
     }
+
+    public function testUrlHasPort()
+    {
+        $this->assert(url, 'http://foo:123', has_port, 123);
+    }
 }
