@@ -2,12 +2,12 @@
 
 namespace Concise\Matcher;
 
-class UrlHasSchemeTest extends AbstractMatcherTestCase
+class UrlHasPartTest extends AbstractMatcherTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new UrlHasScheme();
+        $this->matcher = new UrlHasPart();
     }
 
     public function testUrlHasScheme()
@@ -18,5 +18,10 @@ class UrlHasSchemeTest extends AbstractMatcherTestCase
     public function testUrlDoesNotHaveScheme()
     {
         $this->assertFailure(url, 'http://google.com', has_scheme, 'https');
+    }
+
+    public function testUrlHasDomain()
+    {
+        $this->assert(url, 'http://google.com', has_domain, 'google.com');
     }
 }
