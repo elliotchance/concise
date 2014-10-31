@@ -9,6 +9,9 @@ use Concise\Mock\MockManager;
 use ReflectionClass;
 use Concise\Keywords;
 
+// Load the keyword cache before the test suite begins.
+Keywords::load();
+
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -149,14 +152,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
+    /**
+     * This looks uselsss but we need to change the visibility of setUp() to public.
+     */
     public function setUp()
     {
         parent::setUp();
-
-        if (!defined('__KEYWORDS_LOADED')) {
-            Keywords::load();
-            define('__KEYWORDS_LOADED', 1);
-        }
     }
 
     /**
