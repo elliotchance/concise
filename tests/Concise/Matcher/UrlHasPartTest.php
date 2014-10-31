@@ -40,6 +40,10 @@ class UrlHasPartTest extends AbstractMatcherTestCase
             'query 1' => ['http://foo.com/abc?foo', 'has query', 'foo', true],
             'query 2' => ['http://foo.com/abc?foo', 'has query', 'bar', false],
             'query 3' => ['http://foo.com', 'has query', '', true],
+
+            'fragment 1' => ['http://foo.com/abc#foo', 'has fragment', 'foo', true],
+            'fragment 2' => ['http://foo.com/abc#foo', 'has fragment', 'bar', false],
+            'fragment 3' => ['http://foo.com', 'has fragment', '', true],
         ];
     }
 

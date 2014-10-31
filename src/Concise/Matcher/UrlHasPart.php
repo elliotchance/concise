@@ -13,7 +13,8 @@ class UrlHasPart extends AbstractMatcher
             'url ?:string has user ?:string' => 'URL has user.',
             'url ?:string has password ?:string' => 'URL has password.',
             'url ?:string has path ?:string' => 'URL has path.',
-            'url ?:string has query ?:string' => 'URL has path.',
+            'url ?:string has query ?:string' => 'URL has query.',
+            'url ?:string has fragment ?:string' => 'URL has fragment.',
         );
     }
 
@@ -27,6 +28,7 @@ class UrlHasPart extends AbstractMatcher
             'password' => PHP_URL_PASS,
             'path' => PHP_URL_PATH,
             'query' => PHP_URL_QUERY,
+            'fragment' => PHP_URL_FRAGMENT,
         ];
         $url = parse_url($data[0]);
         foreach ($parts as $kw => $part) {
