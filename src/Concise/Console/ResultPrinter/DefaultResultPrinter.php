@@ -13,17 +13,29 @@ use PHPUnit_Framework_TestSuite;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
+    /**
+     * @var integer
+     */
     protected $width;
 
+    /**
+     * @var DefaultTheme
+     */
     protected $theme;
 
+    /**
+     * @var integer
+     */
     protected $issueNumber = 1;
 
+    /**
+     * @var ProgressCounter
+     */
     protected $counter;
 
-    public function __construct($theme = null)
+    public function __construct(DefaultTheme $theme = null)
     {
-        $this->width = exec('tput cols');
+        $this->width = (int) exec('tput cols');
         if (!$theme) {
             $theme = new DefaultTheme();
         }
@@ -41,7 +53,6 @@ class DefaultResultPrinter extends AbstractResultPrinter
     {
         if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
             $this->add($status, $test, $e);
-            ++$this->issueNumber;
         }
         $this->update();
     }
@@ -74,9 +85,19 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
+        switch ($status) {
+            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
+            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
+                if (!$this->isVerbose()) {
+                    return;
+                }
+        }
+
         $renderIssue = new RenderIssue();
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove("$message\n\n");
+        ++$this->issueNumber;
     }
 
     public function appendTextAbove($text)

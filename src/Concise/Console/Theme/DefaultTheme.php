@@ -6,6 +6,9 @@ use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultTheme
 {
+    /**
+     * @return array
+     */
     public function getTheme()
     {
         return array(
@@ -15,6 +18,12 @@ class DefaultTheme
             PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => 'blue',
             PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'yellow',
             PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => 'yellow',
+            'value.integer'                                  => 'red',
+            'value.float'                                    => 'magenta',
+            'value.string'                                   => 'yellow',
+            'value.closure'                                  => 'cyan',
+            'value.null'                                     => 'blue',
+            'value.boolean'                                  => 'green',
         );
     }
 }

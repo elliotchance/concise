@@ -9,7 +9,7 @@ class AbstractResultPrinterTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\AbstractResultPrinter')->done();
+        $this->resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\AbstractResultPrinter')->get();
     }
 
     public function testResultPrinterImplementsTestResultDelegateInterface()
@@ -105,18 +105,34 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testEndTestReturnsNull()
     {
-        $test = $this->mock('PHPUnit_Framework_Test')->done();
+        $test = $this->mock('PHPUnit_Framework_Test')->get();
         $this->assert($this->resultPrinter->endTest(0, $test, 0.0, null), is_null);
     }
 
     public function testEndTestSuiteReturnsNull()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()->done();
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()->get();
         $this->assert($this->resultPrinter->endTestSuite($suite), is_null);
     }
 
     public function testEndReturnsNull()
     {
         $this->assert($this->resultPrinter->end(), is_null);
+    }
+
+    public function testVerbosityCanBeSet()
+    {
+        $this->assert($this->resultPrinter->setVerbose(false), is_null);
+    }
+
+    public function testDefaultVerboseIsOff()
+    {
+        $this->assert($this->resultPrinter->isVerbose(), is_false);
+    }
+
+    public function testGetVerbose()
+    {
+        $this->resultPrinter->setVerbose(true);
+        $this->assert($this->resultPrinter->isVerbose(), is_true);
     }
 }

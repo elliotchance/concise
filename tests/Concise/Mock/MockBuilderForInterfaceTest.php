@@ -113,4 +113,40 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->notApplicable();
     }
+
+    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
+    {
+        $this->expectFailure('myMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingMethodThatHasNoAssociatedActionWillThrowAnException();
+    }
+
+    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
+    {
+        $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingAnAbstractMethodWithNoRuleThrowsException();
+    }
+
+    public function testAReturnPropertyCanBeSet()
+    {
+        $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
+        parent::testAReturnPropertyCanBeSet();
+    }
+
+    public function testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime()
+    {
+        $this->expectFailure('You cannot return a property from an interface (\Concise\Mock\MockInterface).');
+        parent::testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime();
+    }
+
+    public function testGetAProptectedProperty()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testGetAProptectedProperty();
+    }
+
+    public function testSetAProptectedProperty()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockInterface).');
+        parent::testSetAProptectedProperty();
+    }
 }

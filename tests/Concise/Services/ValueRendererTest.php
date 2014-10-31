@@ -2,6 +2,9 @@
 
 namespace Concise\Services;
 
+use Colors\Color;
+use Concise\Console\Theme\DefaultTheme;
+
 class ValueRendererTest extends \Concise\TestCase
 {
     /** @var ValueRenderer */
@@ -30,14 +33,14 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testArrayValueRendersAsJson()
     {
-        $this->assert($this->renderer->render(array(123, "abc")), equals, '[123,"abc"]');
+        $this->assert($this->renderer->render(array(123, "abc")), equals, "[\n  123,\n  \"abc\"\n]");
     }
 
     public function testObjectValueRendersAsJson()
     {
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123}');
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":123\n}");
     }
 
     public function testTrueValueRendersAsTrue()
@@ -85,5 +88,152 @@ class ValueRendererTest extends \Concise\TestCase
     public function testRenderAllWithStrings()
     {
         $this->assert($this->renderer->renderAll(array('foo')), equals, '"foo"');
+    }
+
+    protected function getThemeForValue(array $colors)
+    {
+        return $this->mock('Concise\Console\Theme\DefaultTheme')
+                      ->stub(array('getTheme' => $colors))
+                      ->get();
+    }
+
+    public function testIntegersWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.integer' => 'magenta'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render(123), equals, (string) $c(123)->magenta);
+    }
+
+    public function testFloatingPointsWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.float' => 'red'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render(12.3), equals, (string) $c(12.3)->red);
+    }
+
+    public function testStringsWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.string' => 'green'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render("12.3"), equals, (string) $c("\"12.3\"")->green);
+    }
+
+    public function testClosureWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.closure' => 'blue'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+        $this->assert($this->renderer->render(function () {}), equals, (string) $c("function")->blue);
+    }
+
+    public function testObjectKeysWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.string' => 'green', 'value.integer' => 'yellow'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $obj = new \stdClass();
+        $obj->a = 123;
+        $this->assert($this->renderer->render($obj), contains_string, (string) $c('"a"')->green);
+    }
+
+    public function testObjectValuesWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.string' => 'yellow', 'value.integer' => 'green'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $obj = new \stdClass();
+        $obj->a = 123;
+        $this->assert($this->renderer->render($obj), contains_string, (string) $c(123)->green);
+    }
+
+    public function testArrayKeysWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.string' => 'green'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $this->assert($this->renderer->render(array('bar')), contains_string, (string) $c('"bar"')->green);
+    }
+
+    public function testMultipleObjectValuesRendersAsJson()
+    {
+        $obj = new \stdClass();
+        $obj->a = 123;
+        $obj->b = 456;
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":123,\n  \"b\":456\n}");
+    }
+
+    public function testMultipleArrayValuesRendersAsJson()
+    {
+        $this->assert($this->renderer->render(array(1, 2)), equals, "[\n  1,\n  2\n]");
+    }
+
+    public function testAssociativeArrayRendersAsJson()
+    {
+        $this->assert($this->renderer->render(array('foo' => 'bar')), equals, "{\n  \"foo\":\"bar\"\n}");
+    }
+
+    public function testNumericArrayKeysAlwaysRenderAsStrings()
+    {
+        $this->assert($this->renderer->render(array(123 => 'bar')), equals, "{\n  \"123\":\"bar\"\n}");
+    }
+
+    public function testNestedObjectsHideTypeHint()
+    {
+        $obj = new \stdClass();
+        $obj->a = new \stdClass();
+        $obj->a->b = 456;
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":{\n    \"b\":456\n  }\n}");
+    }
+
+    public function testNullWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.null' => 'green'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $this->assert($this->renderer->render(null), contains_string, (string) $c('null')->green);
+    }
+
+    public function testBooleanWillBeColoredWhenAThemeIsSpecified()
+    {
+        $theme = $this->getThemeForValue(array('value.boolean' => 'red'));
+        $this->renderer->setTheme($theme);
+        $c = new Color();
+
+        $this->assert($this->renderer->render(true), contains_string, (string) $c('true')->red);
+    }
+
+    public function testDefaultMaximumDepthIsTen()
+    {
+        $this->assert($this->renderer->getMaximumDepth(), equals, 10);
+    }
+
+    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemory()
+    {
+        $renderer = $this->niceMock('Concise\Services\ValueRenderer')
+                         ->stub(array('getMaximumDepth' => 2))
+                         ->get();
+        $obj = json_decode('{"a":{"a":{"a":"b"}}}');
+        $this->assert($renderer->render($obj), equals, "stdClass:{\n  \"a\":{\n    \"a\":...\n  }\n}");
+    }
+
+    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays()
+    {
+        $renderer = $this->niceMock('Concise\Services\ValueRenderer')
+                         ->stub(array('getMaximumDepth' => 2))
+                         ->get();
+        $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
+        $this->assert($renderer->render($obj), equals, "{\n  \"a\":{\n    \"a\":...\n  }\n}");
+    }
+
+    public function testRenderAnythingConstant()
+    {
+        $this->assert($this->renderer->render(self::ANYTHING), equals, '<ANYTHING>');
     }
 }

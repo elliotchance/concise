@@ -6,6 +6,8 @@ abstract class MockAbstractClass
 {
     public $constructorRun = false;
 
+    protected $hidden = 'foo';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = $b;
@@ -51,5 +53,17 @@ class MockBuilderForAbstractClassTest extends AbstractMockBuilderTestCase
     public function getClassName()
     {
         return '\Concise\Mock\MockAbstractClass';
+    }
+
+    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
+    {
+        $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingAnAbstractMethodWithNoRuleThrowsException();
+    }
+
+    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
+    {
+        $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
+        parent::testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException();
     }
 }

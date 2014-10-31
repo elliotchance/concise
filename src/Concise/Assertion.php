@@ -2,10 +2,11 @@
 
 namespace Concise;
 
-use \Concise\Syntax\Lexer;
-use \Concise\Services\ValueRenderer;
-use \Concise\Services\ValueDescriptor;
-use \Concise\Services\DataTypeChecker;
+use Concise\Syntax\Lexer;
+use Concise\Services\ValueRenderer;
+use Concise\Services\ValueDescriptor;
+use Concise\Validation\DataTypeChecker;
+use Concise\Validation\ArgumentChecker;
 
 class Assertion
 {
@@ -48,6 +49,8 @@ class Assertion
 	 */
     public function __construct($assertionString, Matcher\AbstractMatcher $matcher, array $data = array())
     {
+        ArgumentChecker::check($assertionString, 'string');
+
         $this->assertionString = $assertionString;
         $this->matcher = $matcher;
         $this->data = $data;
@@ -58,6 +61,8 @@ class Assertion
 	 */
     public function setOriginalSyntax($originalSyntax)
     {
+        ArgumentChecker::check($originalSyntax, 'string');
+
         $this->originalSyntax = $originalSyntax;
     }
 
@@ -123,6 +128,7 @@ class Assertion
         if ('' !== $this->originalSyntax) {
             $args = $this->checkDataTypes($args);
         }
+
         return $args;
     }
 
@@ -132,6 +138,7 @@ class Assertion
         if (!$message) {
             $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
         }
+
         return $message;
     }
 
@@ -150,6 +157,7 @@ class Assertion
         }
 
         $args = $this->checkDataTypesIfOriginalSyntaxWasProvided($args);
+
         return $args;
     }
 

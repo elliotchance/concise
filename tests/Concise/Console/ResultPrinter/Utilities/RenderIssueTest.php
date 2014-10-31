@@ -21,7 +21,7 @@ class RenderIssueTest extends TestCase
         $this->issue = new RenderIssue();
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $this->exception = new Exception('foo bar');
     }
 
@@ -49,8 +49,8 @@ class RenderIssueTest extends TestCase
     protected function getTraceSimplifier()
     {
         return $this->mock('Concise\Console\ResultPrinter\Utilities\TraceSimplifier')
-                    ->expect('render')->with($this->exception->getTrace())->andReturn("foo\nbar")
-                    ->done();
+                    ->expect('render')->andReturn("foo\nbar")
+                    ->get();
     }
 
     protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $issueNumber = 0)
@@ -109,7 +109,7 @@ class RenderIssueTest extends TestCase
         $this->test = $this->mock('PHPUnit_Framework_TestCase')
                            ->setCustomClassName('PHPUnit_Framework_TestCase_57c3cc10')
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, (string) $c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red());
     }
@@ -118,8 +118,47 @@ class RenderIssueTest extends TestCase
     {
         $this->test = $this->mock('\PHPUnit_Framework_TestSuite')->disableConstructor()
                            ->stub(array('getName' => 'foo'))
-                           ->done();
+                           ->get();
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "foo");
+    }
+
+    protected function getComparisonFailure()
+    {
+        // PHPUnit 4.0
+        if (class_exists('PHPUnit_Framework_ComparisonFailure')) {
+            return 'PHPUnit_Framework_ComparisonFailure';
+        }
+
+        // PHPUnit 4.1+
+        return 'SebastianBergmann\Comparator\ComparisonFailure';
+    }
+
+    public function testPHPUnitDiffsAreShown()
+    {
+        $failure = $this->mock($this->getComparisonFailure(), array('foo', 'bar', 'foo', 'bar'))
+                        ->expect('getDiff')->andReturn('foobar')
+                        ->get();
+        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', $failure);
+
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "foobar");
+    }
+
+    public function testPHPUnitDiffsAreShownOnlyIfAvailable()
+    {
+        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', null);
+
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assert($result, contains_string, "10.");
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected integer, but got string for argument 1
+     */
+    public function testIssueNumberMustBeAnInteger()
+    {
+        $this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'foo', $this->test, $this->exception);
     }
 }

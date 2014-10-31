@@ -2,10 +2,11 @@
 
 namespace Concise\Mock;
 
-use \InvalidArgumentException;
-use \ReflectionException;
-use \ReflectionMethod;
-use \ReflectionClass;
+use InvalidArgumentException;
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionClass;
+use Concise\Validation\ArgumentChecker;
 
 class ClassCompiler
 {
@@ -56,16 +57,24 @@ class ClassCompiler
 	 */
     protected $expose = array();
 
+    /**
+     * @var array
+     */
     protected $methods = array();
 
     /*
 	 * @param string  $className
 	 * @param boolean $niceMock
 	 * @param array   $constructorArgs
+     * @param boolean $disableConstructor
 	 */
     public function __construct($className, $niceMock = false, array $constructorArgs = array(),
                                 $disableConstructor = false)
     {
+        ArgumentChecker::check($className,           'string');
+        ArgumentChecker::check($niceMock,            'boolean', 2);
+        ArgumentChecker::check($disableConstructor,  'boolean', 4);
+
         if (!class_exists($className) && !interface_exists($className)) {
             throw new InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
         }
@@ -146,9 +155,13 @@ class ClassCompiler
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
         $prototype = $this->getPublicPrototype($method->getName());
+        $message = "{$method->getName()}() does not have an associated action - consider a niceMock()?";
+        if ($method->isAbstract()) {
+            $message = "{$method->getName()}() is abstract and has no associated action.";
+        }
         $this->methods[$method->getName()] = <<<EOF
 $prototype {
-	throw new \\Exception("{$method->getName()}() does not have an associated action - consider a niceMock()?");
+	throw new \\Exception("$message");
 }
 EOF;
     }
@@ -182,6 +195,7 @@ EOF;
         $this->methodMustBeMockable($method);
         $actionCode = '';
         $defaultActionCode = '';
+
         foreach ($withs as $withKey => $rule) {
             $action = $rule['action'];
             if (null === $rule['with']) {
@@ -190,7 +204,8 @@ EOF;
                 $args = addslashes(json_encode($rule['with']));
                 $args = str_replace('$', '\\$', $args);
                 $actionCode .= <<<EOF
-if (json_encode(func_get_args()) == "$args") { {$action->getActionCode()}
+\$matcher = new \Concise\Mock\ArgumentMatcher();
+if (\$matcher->match(json_decode("$args"), func_get_args())) { {$action->getActionCode()}
 }
 EOF;
             }
@@ -323,13 +338,6 @@ EOF;
         return $this->getNamespaceName($this->customClassName);
     }
 
-    protected function isInterface()
-    {
-        $refClass = new ReflectionClass($this->className);
-
-        return $refClass->isInterface();
-    }
-
     /**
 	 * Create a new instance of the mocked class. There is no need to generate the code before invoking this.
 	 * @return object
@@ -339,11 +347,11 @@ EOF;
         $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
         $reflect = eval($this->generateCode() . $getInstance);
 
-        if ($this->isInterface()) {
+        try {
+            return $reflect->newInstanceArgs($this->constructorArgs);
+        } catch (ReflectionException $e) {
             return $reflect->newInstance();
         }
-
-        return $reflect->newInstanceArgs($this->constructorArgs);
     }
 
     /**
@@ -355,8 +363,13 @@ EOF;
         $this->rules = $rules;
     }
 
+    /**
+     * @param string $className
+     */
     public function setCustomClassName($className)
     {
+        ArgumentChecker::check($className, 'string');
+
         if (strpos($className, '\\') === false) {
             $className = $this->getNamespaceName() . '\\' . $className;
         }
@@ -384,6 +397,8 @@ EOF;
 	 */
     public function addExpose($method)
     {
+        ArgumentChecker::check($method, 'string');
+
         $this->methodMustBeMockable($method);
         $this->expose[$method] = true;
     }

@@ -11,22 +11,22 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->test = $this->mock('PHPUnit_Framework_Test')->done();
-        $this->e = $this->mock('Exception')->done();
+        $this->test = $this->mock('PHPUnit_Framework_Test')->get();
+        $this->e = $this->mock('Exception')->get();
     }
 
     protected function getProxyThatExpectsStatus($expectedStatus)
     {
         $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('endTest')->with($expectedStatus, $this->test, 0.1, $this->e)
-                              ->done();
+                              ->get();
 
         return new ResultPrinterProxy($resultPrinter);
     }
 
     public function testAddFailureWillCallResultPrinter()
     {
-        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->done();
+        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->get();
         $proxy = $this->getProxyThatExpectsStatus(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE);
         $proxy->addFailure($this->test, $this->e, 0.1);
     }

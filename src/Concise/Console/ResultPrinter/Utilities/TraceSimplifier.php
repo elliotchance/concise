@@ -4,11 +4,20 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 class TraceSimplifier
 {
+    /**
+     * @var FilePathSimplifier
+     */
     protected $simplifier;
 
-    protected $lastFile;
+    /**
+     * @var string
+     */
+    protected $lastFile = '';
 
-    protected $message;
+    /**
+     * @var string
+     */
+    protected $message = '';
 
     public function __construct()
     {
