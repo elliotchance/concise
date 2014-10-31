@@ -13,25 +13,29 @@ class UrlHasPartTest extends AbstractMatcherTestCase
     public function data()
     {
         return [
-            'has scheme 1' => ['http://google.com', 'has scheme', 'http', true],
-            'has scheme 2' => ['http://google.com', 'has scheme', 'https', false],
-            'has scheme 3' => ['google.com', 'has scheme', '', true],
+            'scheme 1' => ['http://google.com', 'has scheme', 'http', true],
+            'scheme 2' => ['http://google.com', 'has scheme', 'https', false],
+            'scheme 3' => ['google.com', 'has scheme', '', true],
 
-            'has host 1' => ['http://google.com', 'has host', 'google.com', true],
-            'has host 2' => ['http://google.com', 'has host', 'foo.com', false],
-            'has host 3' => ['http://?abc', 'has host', '', true],
+            'host 1' => ['http://google.com', 'has host', 'google.com', true],
+            'host 2' => ['http://google.com', 'has host', 'foo.com', false],
+            'host 3' => ['http://?abc', 'has host', '', true],
 
-            'has port 1' => ['http://foo:123', 'has port', 123, true],
-            'has port 2' => ['http://foo:123', 'has port', 456, false],
-            'has port 3' => ['http://foo:123', 'has port', 0, false],
+            'port 1' => ['http://foo:123', 'has port', 123, true],
+            'port 2' => ['http://foo:123', 'has port', 456, false],
+            'port 3' => ['http://foo:123', 'has port', 0, false],
 
-            'has user 1' => ['http://foo@bar', 'has user', 'foo', true],
-            'has user 2' => ['http://foo@bar', 'has user', 'bar', false],
-            'has user 3' => ['http://bar.com', 'has user', '', true],
+            'user 1' => ['http://foo@bar', 'has user', 'foo', true],
+            'user 2' => ['http://foo@bar', 'has user', 'bar', false],
+            'user 3' => ['http://bar.com', 'has user', '', true],
 
-            'has pass 1' => ['http://foo:baz@bar', 'has password', 'baz', true],
-            'has pass 2' => ['http://foo:bar@bar', 'has password', 'baz', false],
-            'has pass 3' => ['http://bar.com', 'has password', '', true],
+            'pass 1' => ['http://foo:baz@bar', 'has password', 'baz', true],
+            'pass 2' => ['http://foo:bar@bar', 'has password', 'baz', false],
+            'pass 3' => ['http://bar.com', 'has password', '', true],
+
+            'path 1' => ['http://foo.com/abc', 'has path', '/abc', true],
+            'path 2' => ['http://foo.com/abc', 'has path', '/def', false],
+            'path 3' => ['http://foo.com', 'has path', '', true],
         ];
     }
 

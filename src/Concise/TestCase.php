@@ -114,10 +114,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
         if ($this instanceof TestCase) {
             $assertion->setTestCase($this);
-        } else {
-            // It is important that we use assert_that() becuase it will make sure the setUp() and tearDown() are
-            // wrapped around the assertion.
-            return assert_that($assertionString);
         }
         $assertion->run();
     }

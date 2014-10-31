@@ -12,6 +12,7 @@ class UrlHasPart extends AbstractMatcher
             'url ?:string has port ?:int' => 'URL has port.',
             'url ?:string has user ?:string' => 'URL has user.',
             'url ?:string has password ?:string' => 'URL has password.',
+            'url ?:string has path ?:string' => 'URL has path.',
         );
     }
 
@@ -23,7 +24,9 @@ class UrlHasPart extends AbstractMatcher
             'user' => PHP_URL_USER,
             'scheme' => PHP_URL_SCHEME,
             'password' => PHP_URL_PASS,
+            'path' => PHP_URL_PATH,
         ];
+        $url = parse_url($data[0]);
         foreach ($parts as $kw => $part) {
             if (strpos($syntax, $kw)) {
                 return parse_url($data[0], $part) == $data[1];

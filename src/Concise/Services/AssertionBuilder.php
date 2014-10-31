@@ -5,6 +5,7 @@ namespace Concise\Services;
 use Concise\Syntax\MatcherParser;
 use Concise\Assertion;
 use Concise\Syntax\NoMatcherFoundException;
+use Exception;
 
 class AssertionBuilder
 {
@@ -97,6 +98,10 @@ class AssertionBuilder
             } catch (NoMatcherFoundException $e) {
                 // Syntax could not be compiled, try the next one.
                 $syntaxes = array_merge($syntaxes, $e->getSyntaxes());
+            } catch (Exception $e) {
+                // This is likely caused by a lexer issue. Which means we couldn't pass the syntax
+                // anyway.
+                $syntaxes = array_merge($syntaxes, array($syntax['syntax']));
             }
         }
 
