@@ -36,6 +36,10 @@ class UrlHasPartTest extends AbstractMatcherTestCase
             'path 1' => ['http://foo.com/abc', 'has path', '/abc', true],
             'path 2' => ['http://foo.com/abc', 'has path', '/def', false],
             'path 3' => ['http://foo.com', 'has path', '', true],
+
+            'query 1' => ['http://foo.com/abc?foo', 'has query', 'foo', true],
+            'query 2' => ['http://foo.com/abc?foo', 'has query', 'bar', false],
+            'query 3' => ['http://foo.com', 'has query', '', true],
         ];
     }
 
