@@ -71,27 +71,27 @@ Matchers
 ### Arrays
 
 * `?:array does not have key ?:string with value ?` - Assert an array does not have key and value item.
-  * `?:array does not have item ?:array`
+* `?:array does not have item ?:array` - Assert an array does not have key and value item.
 * `?:array does not have key ?:int,string` - Assert an array does not have a key.
 * `?:array does not have keys ?:array` - Assert an array does not contain any keys.
 * `?:array does not have value ?` - Assert an array does not have any occurrences of the given value.
-  * `?:array does not contain ?`
+* `?:array does not contain ?` - Assert an array does not have any occurrences of the given value.
 * `?:array has key ?:string with value ?` - Assert an array has key and value item.
-  * `?:array has item ?:array`
+* `?:array has item ?:array` - Assert an array has key and value item.
 * `?:array has items ?:array` - Assert an array has all key and value items.
 * `?:array has key ?:int,string` - Assert an array has key.
 * `?:array has keys ?:array` - Assert an array has several keys in any order.
 * `?:array has value ?` - Assert an array has at least one occurrence of the given value.
-  * `?:array contains ?`
+* `?:array contains ?` - Assert an array has at least one occurrence of the given value.
 * `?:array has values ?:array` - Assert an array has several values in any order.
 * `? is an array` - Assert a value is an array.
 * `?:array is an associative array` - Assert an array is associative.
 * `?:array is empty array` - Assert an array is empty (no elements).
-  * `?:array is an empty array`
+* `?:array is an empty array` - Assert an array is empty (no elements).
 * `? is not an array` - Assert a value is not an array.
 * `?:array is not an associative array` - Assert an array is associative.
 * `?:array is not empty array` - Assert an array is not empty (at least one element).
-  * `?:array is not an empty array`
+* `?:array is not an empty array` - Assert an array is not empty (at least one element).
 * `?:array is not unique` - Assert that an array only has at least one element that is repeated.
 * `?:array is unique` - Assert that an array only contains unique values.
 
@@ -99,29 +99,29 @@ Matchers
 
 * `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
 * `? equals ?` - Assert values with no regard to exact data types.
-  * `? is equal to ?`
+* `? is equal to ?` - Assert values with no regard to exact data types.
 * `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is exactly equal to ?` - Assert two values match data type and value.
-  * `? exactly equals ?`
-  * `? is the same as ?`
+* `? exactly equals ?` - Assert two values match data type and value.
+* `? is the same as ?` - Assert two values match data type and value.
 * `? is not null` - Assert a value is not null.
 * `? is null` - Assert a value is null.
 * `? not equals ?` - Assert two value do not match with no regard to type.
-  * `? is not equal to ?`
-  * `? does not equal ?`
+* `? is not equal to ?` - Assert two value do not match with no regard to type.
+* `? does not equal ?` - Assert two value do not match with no regard to type.
 * `? is not exactly equal to ?` - Assert two values are of exactly the same type and value.
-  * `? does not exactly equal ?`
-  * `? is not the same as ?`
+* `? does not exactly equal ?` - Assert two values are of exactly the same type and value.
+* `? is not the same as ?` - Assert two values are of exactly the same type and value.
 
 ### Booleans
 
 * `false` - Always fail.
 * `? is a boolean` - Assert a value is true or false.
-  * `? is a bool`
+* `? is a bool` - Assert a value is true or false.
 * `? is false` - Assert value is false.
 * `? is falsy` - Assert a value is a false-like value.
 * `? is not a boolean` - Assert a value is not true or false.
-  * `? is not a bool`
+* `? is not a bool` - Assert a value is not true or false.
 * `? is true` - Assert a value is true.
 * `? is truthy` - Assert a value is a non false-like value.
 * `true` - Always pass.
@@ -148,31 +148,31 @@ Matchers
 ### Numbers
 
 * `?:number is between ?:number and ?:number` - A number must be between two values (inclusive).
-  * `?:number between ?:number and ?:number`
+* `?:number between ?:number and ?:number` - A number must be between two values (inclusive).
 * `?:number does not equal ?:number within ?:number` - Assert two values are not close to each other.
 * `?:number equals ?:number within ?:number` - Assert two values are close to each other.
 * `? is a number` - Assert that a value is an integer or floating-point.
 * `? is an int` - Assert value is an integer type.
-  * `? is an integer`
+* `? is an integer` - Assert value is an integer type.
 * `?:number is greater than ?:number` - A number is greater than another number.
-  * `?:number greater than ?:number`
-  * `?:number gt ?:number`
+* `?:number greater than ?:number` - A number is greater than another number.
+* `?:number gt ?:number` - A number is greater than another number.
 * `?:number is greater than or equal to ?:number` - A number is greater than or equal to another number.
-  * `?:number greater than or equal ?:number`
-  * `?:number gte ?:number`
+* `?:number greater than or equal ?:number` - A number is greater than or equal to another number.
+* `?:number gte ?:number` - A number is greater than or equal to another number.
 * `?:number is less than ?:number` - A number is less than another number.
-  * `?:number less than ?:number`
-  * `?:number lt ?:number`
+* `?:number less than ?:number` - A number is less than another number.
+* `?:number lt ?:number` - A number is less than another number.
 * `?:number is less than or equal to ?:number` - A number is less than or equal to another number.
-  * `?:number less than or equal ?:number`
-  * `?:number lte ?:number`
+* `?:number less than or equal ?:number` - A number is less than or equal to another number.
+* `?:number lte ?:number` - A number is less than or equal to another number.
 * `? is not a number` - Assert that a value is not an integer or floating-point.
 * `? is not an int` - Assert a value is not an integer type.
-  * `? is not an integer`
+* `? is not an integer` - Assert a value is not an integer type.
 * `? is not numeric` - Assert value is not a number or string that represents a number.
 * `? is numeric` - Assert value is a number or string that represents a number.
 * `?:number is not between ?:number and ?:number` - A number must not be between two values (inclusive).
-  * `?:number not between ?:number and ?:number`
+* `?:number not between ?:number and ?:number` - A number must not be between two values (inclusive).
 
 ### Objects
 
@@ -182,12 +182,12 @@ Matchers
 * `?:object has property ?:string with value ?` - Assert that an object has a property with a specific value.
 * `? is an object` - Assert value is an object.
 * `?:object is an instance of ?:class` - Assert an objects class or subclass.
-  * `?:object is instance of ?:class`
-  * `?:object instance of ?:class`
+* `?:object is instance of ?:class` - Assert an objects class or subclass.
+* `?:object instance of ?:class` - Assert an objects class or subclass.
 * `? is not an object` - Assert a value is not an object.
 * `?:object is not an instance of ?:class` - Assert than an object is not a class or subclass.
-  * `?:object is not instance of ?:class`
-  * `?:object not instance of ?:class`
+* `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:object not instance of ?:class` - Assert than an object is not a class or subclass.
 
 ### Strings
 
@@ -196,21 +196,33 @@ Matchers
 * `?:string does not contain string ?:string` - A string does not contain a substring.
 * `?:string does not contain string ?:string ignoring case` - A string does not contain a substring (ignoring case-sensitivity)
 * `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
-  * `?:string doesnt match regular expression ?:regex`
-  * `?:string does not match regex ?:regex`
-  * `?:string doesnt match regex ?:regex`
+* `?:string doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `?:string does not match regex ?:regex` - Assert a string does not match a regular expression.
+* `?:string doesnt match regex ?:regex` - Assert a string does not match a regular expression.
 * `? is a string` - Assert value is a string.
 * `?:string is blank` - Assert a string is zero length.
 * `? is not a string` - Assert a value is not a string.
 * `?:string is not blank` - Assert a string has at least one character.
 * `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
-  * `?:string matches regex ?:regex`
+* `?:string matches regex ?:regex` - Assert a string matches a regular expression
 * `? does not end with ?` - Assert a string does not end with another string.
 * `?:string does not equal file ?:string` - Compare string value with the contents of a file.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
 * `?:string ends with ?:string` - Assert a string ends with another string.
 * `?:string equals file ?:string` - Compare string value with the contents of a file.
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
+
+### URLs
+
+* `url ?:string has scheme ?:string` - URL has scheme.
+* `url ?:string has host ?:string` - URL has host.
+* `url ?:string has port ?:int` - URL has port.
+* `url ?:string has user ?:string` - URL has user.
+* `url ?:string has password ?:string` - URL has password.
+* `url ?:string has path ?:string` - URL has path.
+* `url ?:string has query ?:string` - URL has query.
+* `url ?:string has fragment ?:string` - URL has fragment.
+* `url ?:string is valid` - Validate URL.
 
 
 <!-- end matchers -->
