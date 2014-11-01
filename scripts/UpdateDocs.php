@@ -2,8 +2,9 @@
 
 require_once 'vendor/autoload.php';
 
-use \Concise\Syntax\MatcherParser;
+use Concise\Syntax\MatcherParser;
 
+refreshKeywords();
 updateReadme();
 updateWikiAssertions();
 
@@ -87,4 +88,48 @@ function updateWikiAssertions()
         }
         file_put_contents($wikiFile, $matchersDoc);
     }
+}
+
+function refreshKeywords()
+{
+    $parser = MatcherParser::getInstance();
+    $defines = ['on_error' => 'on error'];
+
+    $all = array();
+    foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
+        $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
+        foreach (explode('?', $simpleSyntax) as $part) {
+            $p = trim($part);
+            $all[str_replace(' ', '_', $p)] = $p;
+        }
+    }
+
+    foreach ($all as $name => $value) {
+        $defines[$name] = $value;
+    }
+
+    unset($defines['']);
+    ksort($defines);
+    $d = var_export($defines, true);
+
+    $php = <<<EOF
+<?php
+
+namespace Concise;
+
+class Keywords
+{
+    public static \$defines = $d;
+
+    public static function load()
+    {
+        foreach (self::\$defines as \$k => \$v) {
+            if (!defined(\$k)) {
+                define(\$k, \$v);
+            }
+        }
+    }
+}
+EOF;
+    file_put_contents(__DIR__ . '/../src/Concise/Keywords.php', $php);
 }

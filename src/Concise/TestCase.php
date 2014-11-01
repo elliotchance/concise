@@ -7,6 +7,7 @@ use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
 use ReflectionClass;
+use Concise\Keywords;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -148,33 +149,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
-    protected function loadKeywords()
-    {
-        $parser = MatcherParser::getInstance();
-
-        $all = array();
-        foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
-            foreach (explode('?', $simpleSyntax) as $part) {
-                $p = trim($part);
-                $all[str_replace(' ', '_', $p)] = $p;
-            }
-        }
-
-        foreach ($all as $name => $value) {
-            if (!defined($name)) {
-                define($name, $value);
-            }
-        }
-        define('on_error', 'on error');
-    }
-
     public function setUp()
     {
         parent::setUp();
 
         if (!defined('__KEYWORDS_LOADED')) {
-            $this->loadKeywords();
+            Keywords::load();
             define('__KEYWORDS_LOADED', 1);
         }
     }
