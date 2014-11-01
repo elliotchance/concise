@@ -24,7 +24,6 @@ class UrlHasPart extends AbstractMatcher
             'port' => PHP_URL_PORT,
             'host' => PHP_URL_HOST,
             'user' => PHP_URL_USER,
-            'scheme' => PHP_URL_SCHEME,
             'password' => PHP_URL_PASS,
             'path' => PHP_URL_PATH,
             'query' => PHP_URL_QUERY,
@@ -36,6 +35,8 @@ class UrlHasPart extends AbstractMatcher
                 return parse_url($data[0], $part) == $data[1];
             }
         }
+
+        return parse_url($data[0], PHP_URL_SCHEME) == $data[1];
     }
 
     public function getTags()
