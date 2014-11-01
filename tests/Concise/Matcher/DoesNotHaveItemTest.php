@@ -29,4 +29,9 @@ class DoesNotHaveItemTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(array("foo" => 123, "bar" => "baz"), does_not_have_key, "foo", with_value, 123);
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

@@ -29,4 +29,9 @@ class HasValuesTest extends AbstractMatcherTestCase
     {
         $this->assert(array("a" => 123, "b" => 456), has_values, array(456));
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

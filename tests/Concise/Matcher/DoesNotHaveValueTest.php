@@ -19,4 +19,9 @@ class DoesNotHaveValueTest extends AbstractMatcherTestCase
     {
         $this->assert('["abc"] does not contain "def"');
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

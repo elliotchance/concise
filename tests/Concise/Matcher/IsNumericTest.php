@@ -39,4 +39,9 @@ class IsNumericTest extends AbstractMatcherTestCase
     {
         $this->assert('"12.3e-17" is numeric');
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS, Tag::TYPES);
+    }
 }

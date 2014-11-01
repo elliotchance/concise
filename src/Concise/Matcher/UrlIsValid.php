@@ -2,22 +2,22 @@
 
 namespace Concise\Matcher;
 
-class IsTruthy extends AbstractMatcher
+class UrlIsValid extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '? is truthy' => 'Assert a value is a non false-like value.',
+            'url ?:string is valid' => 'Validate URL.',
         );
     }
 
     public function match($syntax, array $data = array())
     {
-        return (bool) $data[0];
+        return filter_var($data[0], FILTER_VALIDATE_URL) !== false;
     }
 
     public function getTags()
     {
-        return array(Tag::BOOLEANS, Tag::TYPES);
+        return array(Tag::URLS);
     }
 }

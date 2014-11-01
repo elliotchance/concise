@@ -19,4 +19,9 @@ class NotEqualsTest extends AbstractMatcherTestCase
     {
         $this->assert('123 is not equal to 123.000001');
     }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
+    }
 }

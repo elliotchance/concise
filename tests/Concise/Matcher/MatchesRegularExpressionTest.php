@@ -19,4 +19,9 @@ class MatchesRegularExpressionTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"abc" matches regular expression /\\d+/');
     }
+
+    public function tags()
+    {
+        return array(Tag::REGEX);
+    }
 }

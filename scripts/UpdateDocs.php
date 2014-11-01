@@ -22,13 +22,13 @@ function getAssertionsByTag()
     return $matchers;
 }
 
-function generateMarkdownItem($syntax, $description, $indent = '*')
+function generateMarkdownItem($syntax, $description)
 {
     if (is_null($description)) {
-        return "$indent `$syntax`\n";
+        return "* `$syntax`\n";
     }
 
-    return "$indent `$syntax` - $description\n";
+    return "* `$syntax` - $description\n";
 }
 
 /**
@@ -38,9 +38,8 @@ function generateMarkdownList(array $matchers)
 {
     $matchersDoc = '';
     foreach ($matchers as $matcher => $syntaxes) {
-        $matchersDoc .= generateMarkdownItem($syntaxes[0][0], $syntaxes[0][1]);
-        for ($i = 1; $i < count($syntaxes); ++$i) {
-            $matchersDoc .= generateMarkdownItem($syntaxes[$i][0], null, '  *');
+        for ($i = 0; $i < count($syntaxes); ++$i) {
+            $matchersDoc .= generateMarkdownItem($syntaxes[$i][0], $syntaxes[$i][1]);
         }
     }
 

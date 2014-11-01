@@ -46,4 +46,9 @@ class DateIsAfterTest extends AbstractMatcherTestCase
             $this->assertFailure(date, $left, is_after, $right);
         }
     }
+
+    public function tags()
+    {
+        return array(Tag::DATE_AND_TIME);
+    }
 }

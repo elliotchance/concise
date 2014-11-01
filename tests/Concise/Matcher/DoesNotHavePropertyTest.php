@@ -29,4 +29,9 @@ class DoesNotHavePropertyTest extends AbstractMatcherTestCase
         $obj->foo = null;
         $this->assertFailure($obj, does_not_have_property, 'foo');
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS);
+    }
 }

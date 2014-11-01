@@ -46,4 +46,9 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
             $this->assertFailure(date, $left, is_before, $right);
         }
     }
+
+    public function tags()
+    {
+        return array(Tag::DATE_AND_TIME);
+    }
 }

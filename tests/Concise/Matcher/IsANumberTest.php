@@ -24,4 +24,9 @@ class IsANumberTest extends AbstractMatcherTestCase
     {
         $this->assert('12.3 is a number');
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS, Tag::TYPES);
+    }
 }

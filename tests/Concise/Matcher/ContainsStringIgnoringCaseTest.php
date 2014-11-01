@@ -24,4 +24,9 @@ class ContainsStringIgnoringCaseTest extends AbstractMatcherTestCase
     {
         $this->assert('foobar', contains_string, 'Foo', ignoring_case);
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

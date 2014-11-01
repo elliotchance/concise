@@ -55,4 +55,8 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
         $this->assertMatcherFailureMessage('? throws anything except ?', array($method, $expectedException), $failureMessage);
     }
 
+    public function tags()
+    {
+        return array(Tag::EXCEPTIONS);
+    }
 }

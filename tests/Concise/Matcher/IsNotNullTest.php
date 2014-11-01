@@ -29,4 +29,9 @@ class IsNotNullTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(null, is_not_null);
     }
+
+    public function tags()
+    {
+        return array(Tag::TYPES);
+    }
 }

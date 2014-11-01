@@ -24,4 +24,9 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('foobar', does_not_contain_string, 'Foo', ignoring_case);
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

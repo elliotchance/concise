@@ -24,4 +24,9 @@ class IsTruthyTest extends AbstractMatcherTestCase
     {
         $this->assert(1, is_truthy);
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
+    }
 }

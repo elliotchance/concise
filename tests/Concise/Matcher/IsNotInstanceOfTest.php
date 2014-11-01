@@ -24,4 +24,9 @@ class IsNotInstanceOfTest extends AbstractMatcherTestCase
     {
         $this->assert(new \stdClass(), is_not_instance_of, '\Concise\Matcher\IsNotInstanceOfTest');
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
+    }
 }

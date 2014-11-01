@@ -24,4 +24,9 @@ class IsGreaterThanTest extends AbstractMatcherTestCase
     {
         $this->assert(300, is_greater_than, 200);
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
+    }
 }
