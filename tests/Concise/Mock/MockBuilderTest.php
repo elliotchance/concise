@@ -22,6 +22,9 @@ class MockMagicCall
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderTest extends TestCase
 {
     /**

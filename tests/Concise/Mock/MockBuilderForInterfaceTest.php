@@ -15,6 +15,9 @@ interface MockInterface
     public function myAbstractMethod();
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
 {
     public function testNiceMockCanBeCreatedFromAnObjectThatExists()

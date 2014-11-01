@@ -12,6 +12,9 @@ class MockPrivate
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderPrivateTest extends TestCase
 {
     /**

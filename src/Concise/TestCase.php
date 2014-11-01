@@ -201,4 +201,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $property->setValue($object, $value);
     }
+
+    protected function verifyMock($mock)
+    {
+        return true;
+    }
 }
