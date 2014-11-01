@@ -24,4 +24,9 @@ class IsTrueTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('1 is true');
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
+    }
 }

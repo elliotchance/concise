@@ -189,28 +189,66 @@ Matchers
 * `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
 * `?:object not instance of ?:class` - Assert than an object is not a class or subclass.
 
+### Regular Expressions
+
+* `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `?:string doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
+* `?:string does not match regex ?:regex` - Assert a string does not match a regular expression.
+* `?:string doesnt match regex ?:regex` - Assert a string does not match a regular expression.
+* `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
+* `?:string matches regex ?:regex` - Assert a string matches a regular expression
+
 ### Strings
 
 * `?:string contains string ?:string` - A string contains a substring
 * `?:string contains string ?:string ignoring case` - A string contains a substring (ignoring case-sensitivity)
 * `?:string does not contain string ?:string` - A string does not contain a substring.
 * `?:string does not contain string ?:string ignoring case` - A string does not contain a substring (ignoring case-sensitivity)
-* `?:string does not match regular expression ?:regex` - Assert a string does not match a regular expression.
-* `?:string doesnt match regular expression ?:regex` - Assert a string does not match a regular expression.
-* `?:string does not match regex ?:regex` - Assert a string does not match a regular expression.
-* `?:string doesnt match regex ?:regex` - Assert a string does not match a regular expression.
 * `? is a string` - Assert value is a string.
 * `?:string is blank` - Assert a string is zero length.
 * `? is not a string` - Assert a value is not a string.
 * `?:string is not blank` - Assert a string has at least one character.
-* `?:string matches regular expression ?:regex` - Assert a string matches a regular expression
-* `?:string matches regex ?:regex` - Assert a string matches a regular expression
 * `? does not end with ?` - Assert a string does not end with another string.
 * `?:string does not equal file ?:string` - Compare string value with the contents of a file.
 * `? does not start with ?` - Assert a string does not not start (begin) with another string.
 * `?:string ends with ?:string` - Assert a string ends with another string.
 * `?:string equals file ?:string` - Compare string value with the contents of a file.
 * `?:string starts with ?:string` - Assert a string starts (begins) with another string.
+
+### Types
+
+* `? is a boolean` - Assert a value is true or false.
+* `? is a bool` - Assert a value is true or false.
+* `? is a number` - Assert that a value is an integer or floating-point.
+* `? is a string` - Assert value is a string.
+* `? is an array` - Assert a value is an array.
+* `?:array is an associative array` - Assert an array is associative.
+* `? is an int` - Assert value is an integer type.
+* `? is an integer` - Assert value is an integer type.
+* `? is an object` - Assert value is an object.
+* `? is false` - Assert value is false.
+* `? is falsy` - Assert a value is a false-like value.
+* `?:object is an instance of ?:class` - Assert an objects class or subclass.
+* `?:object is instance of ?:class` - Assert an objects class or subclass.
+* `?:object instance of ?:class` - Assert an objects class or subclass.
+* `? is not a boolean` - Assert a value is not true or false.
+* `? is not a bool` - Assert a value is not true or false.
+* `? is not a number` - Assert that a value is not an integer or floating-point.
+* `? is not a string` - Assert a value is not a string.
+* `? is not an array` - Assert a value is not an array.
+* `?:array is not an associative array` - Assert an array is associative.
+* `? is not an int` - Assert a value is not an integer type.
+* `? is not an integer` - Assert a value is not an integer type.
+* `? is not an object` - Assert a value is not an object.
+* `?:object is not an instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
+* `?:object not instance of ?:class` - Assert than an object is not a class or subclass.
+* `? is not null` - Assert a value is not null.
+* `? is not numeric` - Assert value is not a number or string that represents a number.
+* `? is null` - Assert a value is null.
+* `? is numeric` - Assert value is a number or string that represents a number.
+* `? is true` - Assert a value is true.
+* `? is truthy` - Assert a value is a non false-like value.
 
 ### URLs
 

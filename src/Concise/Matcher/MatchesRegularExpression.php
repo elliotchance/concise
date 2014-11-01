@@ -21,6 +21,6 @@ class MatchesRegularExpression extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::STRINGS);
+        return array(Tag::REGEX);
     }
 }

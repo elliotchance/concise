@@ -19,4 +19,9 @@ class IsNotAnArrayTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('[] is not an array');
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS, Tag::TYPES);
+    }
 }

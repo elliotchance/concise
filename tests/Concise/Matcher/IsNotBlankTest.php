@@ -19,4 +19,9 @@ class IsNotBlankTest extends AbstractMatcherTestCase
     {
         $this->assert('a', is_not_blank);
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

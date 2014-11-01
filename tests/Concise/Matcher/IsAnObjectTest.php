@@ -19,4 +19,9 @@ class IsAnObjectTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('123 is an object');
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
+    }
 }

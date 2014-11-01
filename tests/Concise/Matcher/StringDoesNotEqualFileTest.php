@@ -28,4 +28,9 @@ class StringDoesNotEqualFileTest extends AbstractFileTestCase
     {
         $this->assertFailure('baz', does_not_equal_file, $this->createTempFile());
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

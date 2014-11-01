@@ -24,4 +24,9 @@ class IsAStringTest extends AbstractMatcherTestCase
     {
         $this->assert('\My\Class is a string');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS, Tag::TYPES);
+    }
 }

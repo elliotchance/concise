@@ -24,4 +24,9 @@ class ContainsStringTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('foobar', contains_string, 'Foo');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

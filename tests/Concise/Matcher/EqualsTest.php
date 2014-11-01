@@ -31,4 +31,9 @@ class EqualsTest extends AbstractMatcherTestCase
     {
         $this->assertFailure("123 equals 124");
     }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
+    }
 }

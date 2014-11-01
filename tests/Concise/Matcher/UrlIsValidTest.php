@@ -19,4 +19,9 @@ class UrlIsValidTest extends AbstractMatcherTestCase
     {
         $this->assert(url, 'http://www.google.com', is_valid);
     }
+
+    public function tags()
+    {
+        return array(Tag::URLS);
+    }
 }

@@ -24,4 +24,9 @@ class IsLessThanTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(300, is_less_than, 200);
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
+    }
 }

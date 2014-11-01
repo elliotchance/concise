@@ -19,4 +19,9 @@ class IsUniqueTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(array(123, 456, 123), is_unique);
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

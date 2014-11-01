@@ -12,6 +12,8 @@ abstract class Tag
     const FILES = 'Files';
     const NUMBERS = 'Numbers';
     const OBJECTS = 'Objects';
+    const REGEX = 'Regular Expressions';
     const STRINGS = 'Strings';
+    const TYPES = 'Types';
     const URLS = 'URLs';
 }

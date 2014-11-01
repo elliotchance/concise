@@ -24,4 +24,9 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"abc" does not start with "abc"');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }
