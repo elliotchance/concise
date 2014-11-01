@@ -20,7 +20,7 @@ class UrlHasPart extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        $parts = [
+        $parts = array(
             'port' => PHP_URL_PORT,
             'host' => PHP_URL_HOST,
             'user' => PHP_URL_USER,
@@ -28,7 +28,7 @@ class UrlHasPart extends AbstractMatcher
             'path' => PHP_URL_PATH,
             'query' => PHP_URL_QUERY,
             'fragment' => PHP_URL_FRAGMENT,
-        ];
+        );
         $url = parse_url($data[0]);
         foreach ($parts as $kw => $part) {
             if (strpos($syntax, $kw)) {
