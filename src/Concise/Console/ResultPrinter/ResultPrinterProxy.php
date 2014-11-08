@@ -10,11 +10,12 @@ use PHPUnit_Framework_TestSuite;
 use Concise\Console\TestRunner\TestResultDelegateInterface;
 use PHPUnit_Runner_BaseTestRunner;
 use PHPUnit_Framework_TestFailure;
+use PHPUnit_TextUI_ResultPrinter;
 
-class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
+class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
 {
     /**
-     * @var TestResultDelegateInterface
+     * @var AbstractResultPrinter
      */
     protected $resultPrinter;
 
@@ -28,14 +29,17 @@ class ResultPrinterProxy extends \PHPUnit_TextUI_ResultPrinter
      */
     protected $totalSuccesses = 0;
 
-    public function __construct(TestResultDelegateInterface $resultPrinter)
+    /**
+     * @param AbstractResultPrinter $resultPrinter
+     */
+    public function __construct(AbstractResultPrinter $resultPrinter)
     {
         parent::__construct();
         $this->resultPrinter = $resultPrinter;
     }
 
     /**
-     * @return TestResultDelegateInterface
+     * @return AbstractResultPrinter
      */
     public function getResultPrinter()
     {

@@ -84,7 +84,8 @@ class MockManager
 
         $key = $this->getKeyForCall($rule['with'], $rule['with']);
         if (!array_key_exists($key, $this->callGraph)) {
-            return $this->validateSingleWith($rule, 0, $method);
+            $this->validateSingleWith($rule, 0, $method);
+            return;
         }
         $this->validateSingleWith($rule, $this->callGraph[$key], $method);
     }

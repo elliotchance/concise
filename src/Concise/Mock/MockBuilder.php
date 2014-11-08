@@ -14,7 +14,7 @@ use Concise\Validation\ArgumentChecker;
 class MockBuilder
 {
     /**
-	 * @var Concise\TestCase
+	 * @var TestCase
 	 */
     protected $testCase;
 
@@ -82,11 +82,12 @@ class MockBuilder
     protected $customClassName = '';
 
     /**
-	 * @param string   $className
-	 * @param boolean  $niceMock
-	 * @param TestCase $testCase
-	 * @param array    $constructorArgs
-	 */
+     * @param TestCase $testCase
+     * @param string $className
+     * @param boolean $niceMock
+     * @param array $constructorArgs
+     * @throws \Exception
+     */
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
@@ -121,9 +122,10 @@ class MockBuilder
     }
 
     /**
-	 * @param  array|string $arg
-	 * @return MockBuilder
-	 */
+     * @param  array|string $arg
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function stub($arg)
     {
         $this->reset();
@@ -180,9 +182,10 @@ class MockBuilder
     }
 
     /**
-	 * @param Action\AbstractAction $action
-	 * @return MockBuilder
-	 */
+     * @param Action\AbstractAction $action
+     * @throws \Exception
+     * @return MockBuilder
+     */
     protected function setAction(Action\AbstractAction $action)
     {
         if ($this->hasAction()) {
@@ -199,8 +202,9 @@ class MockBuilder
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function andReturn()
     {
         if ($this->methodIsNeverExpected()) {
@@ -301,9 +305,10 @@ class MockBuilder
     }
 
     /**
-	 * Expected arguments when invoking the mock.
-	 * @return MockBuilder
-	 */
+     * Expected arguments when invoking the mock.
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function with()
     {
         $this->currentWith = func_get_args();
@@ -336,8 +341,9 @@ class MockBuilder
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \InvalidArgumentException
+     * @return MockBuilder
+     */
     public function disableConstructor()
     {
         if ($this->isInterface()) {
@@ -387,6 +393,8 @@ class MockBuilder
     }
 
     /**
+     * @param string $property
+     * @throws \InvalidArgumentException
      * @return MockBuilder
      */
     public function andReturnProperty($property)

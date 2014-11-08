@@ -4,9 +4,13 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 use Concise\TestCase;
 use Exception;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Runner_BaseTestRunner;
 use Colors\Color;
 
+/**
+ * @group cli
+ */
 class RenderIssueTest extends TestCase
 {
     protected $issue;
@@ -139,7 +143,7 @@ class RenderIssueTest extends TestCase
         $failure = $this->mock($this->getComparisonFailure(), array('foo', 'bar', 'foo', 'bar'))
                         ->expect('getDiff')->andReturn('foobar')
                         ->get();
-        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', $failure);
+        $this->exception = new PHPUnit_Framework_ExpectationFailedException('', $failure);
 
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "foobar");
@@ -147,7 +151,7 @@ class RenderIssueTest extends TestCase
 
     public function testPHPUnitDiffsAreShownOnlyIfAvailable()
     {
-        $this->exception = new \PHPUnit_Framework_ExpectationFailedException('', null);
+        $this->exception = new PHPUnit_Framework_ExpectationFailedException('', null);
 
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert($result, contains_string, "10.");
@@ -160,5 +164,16 @@ class RenderIssueTest extends TestCase
     public function testIssueNumberMustBeAnInteger()
     {
         $this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 'foo', $this->test, $this->exception);
+    }
+
+    public function testNameIsNotAppendedIfItsNotATestCase()
+    {
+        $renderIssue = $this->niceMock('Concise\Console\ResultPrinter\Utilities\RenderIssue')
+            ->expose('getHeading')
+            ->get();
+
+        $test = $this->mock('PHPUnit_Framework_Test')->get();
+
+        $this->assert($renderIssue->getHeading(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 1, $test), does_not_contain_string, '::');
     }
 }

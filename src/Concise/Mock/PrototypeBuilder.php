@@ -10,8 +10,7 @@ use Concise\Validation\ArgumentChecker;
 class PrototypeBuilder
 {
     /**
-	 * If this is `true` then the `abstract` keyword will not be outputted in
-     * the prototypes.
+	 * If this is `true` then the `abstract` keyword will not be outputted in the prototypes.
 	 * @var boolean
 	 */
     public $hideAbstract = false;
@@ -25,6 +24,8 @@ class PrototypeBuilder
                 return ' = NULL';
             }
         }
+
+        return '';
     }
 
     protected function getTypeHint(ReflectionParameter $p)
@@ -72,6 +73,7 @@ class PrototypeBuilder
 
     /**
      * @param string $method
+     * @return string
      */
     public function getPrototypeForNonExistantMethod($method)
     {

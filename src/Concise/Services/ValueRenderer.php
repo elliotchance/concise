@@ -81,9 +81,11 @@ class ValueRenderer
     }
 
     /**
-	 * @param  mixed $value
-	 * @return string
-	 */
+     * @param  mixed $value
+     * @param bool $showTypeHint
+     * @param int $depth
+     * @return string
+     */
     public function render($value, $showTypeHint = true, $depth = 0)
     {
         if ($depth >= $this->getMaximumDepth()) {

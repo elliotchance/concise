@@ -6,6 +6,7 @@ use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\ResultPrinter\CIResultPrinter;
+use Concise\Console\Theme\DefaultTheme;
 
 class Command extends \PHPUnit_TextUI_Command
 {

@@ -4,6 +4,7 @@ namespace Concise\Syntax;
 
 use Concise\Services\CharacterConverter;
 use Concise\Validation\ArgumentChecker;
+use Exception;
 
 class Lexer
 {
@@ -13,7 +14,7 @@ class Lexer
     protected $matcherParser = null;
 
     /**
-	 * @return Concise\Syntax\MatcherParser
+	 * @return \Concise\Syntax\MatcherParser
 	 */
     protected function getMatcherParser()
     {
@@ -36,7 +37,7 @@ class Lexer
     protected function throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until)
     {
         if ($mustConsumeUntil) {
-            throw new \Exception("Expected $until before end of string.");
+            throw new Exception("Expected $until before end of string.");
         }
     }
 
@@ -127,10 +128,11 @@ class Lexer
 
     /**
      * @param array $tokens
-	 * @param  string $string
-	 * @param  integer $startIndex
-	 * @return string
-	 */
+     * @param  string $string
+     * @param  integer $startIndex
+     * @throws Exception
+     * @return string
+     */
     protected function consumeJson(array &$tokens, $string, &$startIndex)
     {
         if ($string[$startIndex] === '[' || $string[$startIndex] === '{') {
@@ -147,7 +149,7 @@ class Lexer
                     return;
                 }
             }
-            throw new \Exception("Invalid JSON: " . substr($string, $originalStartIndex));
+            throw new Exception("Invalid JSON: " . substr($string, $originalStartIndex));
         }
     }
 

@@ -365,6 +365,7 @@ EOF;
 
     /**
      * @param string $className
+     * @throws \InvalidArgumentException
      */
     public function setCustomClassName($className)
     {
