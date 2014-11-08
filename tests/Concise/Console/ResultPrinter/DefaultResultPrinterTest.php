@@ -83,6 +83,7 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expose('update')
                               ->expect('write')
+                              ->stub('restoreCursor')
                               ->get();
         $resultPrinter->update();
     }
@@ -154,5 +155,14 @@ class DefaultResultPrinterTest extends TestCase
             ->get();
         $resultPrinter->update();
         $this->assert($this->getProperty($resultPrinter, 'hasUpdated'), is_true);
+    }
+
+    public function testWillRestoreCursorWithWrite()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->update();
     }
 }

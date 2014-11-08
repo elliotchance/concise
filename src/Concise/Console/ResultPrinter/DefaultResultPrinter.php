@@ -83,10 +83,16 @@ class DefaultResultPrinter extends AbstractResultPrinter
         return sprintf("%s%s%s\n", $assertionString, str_repeat(' ', $pad), $counterString);
     }
 
+    protected function restoreCursor()
+    {
+        $this->write("\033[2F");
+    }
+
     public function update()
     {
+        $this->write($this->getAssertionString() . $this->drawProgressBar());
+        $this->restoreCursor();
         $this->hasUpdated = true;
-        $this->write($this->getAssertionString() . $this->drawProgressBar() . "\033[2F");
     }
 
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
