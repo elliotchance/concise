@@ -85,13 +85,15 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function restoreCursor()
     {
-        $this->write("\033[2F");
+        $this->write("\033[3F");
     }
 
     public function update()
     {
-        $this->write($this->getAssertionString() . $this->drawProgressBar());
-        $this->restoreCursor();
+        if ($this->hasUpdated) {
+            $this->restoreCursor();
+        }
+        $this->write($this->getAssertionString() . $this->drawProgressBar() . "\n");
         $this->hasUpdated = true;
     }
 
@@ -114,7 +116,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function appendTextAbove($text)
     {
-        $this->write(str_replace("\n", "\033[K\n", $text));
+        $this->restoreCursor();
+        $this->write(str_replace("\n", "\033[K\n", $text) . "\n");
         $this->update();
     }
 

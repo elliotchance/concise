@@ -157,12 +157,33 @@ class DefaultResultPrinterTest extends TestCase
         $this->assert($this->getProperty($resultPrinter, 'hasUpdated'), is_true);
     }
 
-    public function testWillRestoreCursorWithWrite()
+    public function testWillRestoreCursorWithUpdate()
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
             ->stub('write')
             ->expect('restoreCursor')
             ->get();
         $resultPrinter->update();
+        $resultPrinter->update();
+    }
+
+    public function testWillNotRestoreCursorWithFirstUpdate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')->never()
+            ->get();
+        $resultPrinter->update();
+    }
+
+    public function testAppendTextAboveMustRestoreTheCursorAlways()
+    {
+        /** @var $resultPrinter \Concise\Console\ResultPrinter\DefaultResultPrinter */
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->stub('update')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->appendTextAbove('');
     }
 }
