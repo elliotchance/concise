@@ -75,7 +75,7 @@ class PrototypeBuilder
      * @param string $method
      * @return string
      */
-    public function getPrototypeForNonExistantMethod($method)
+    public function getPrototypeForNonExistentMethod($method)
     {
         ArgumentChecker::check($method, 'string');
 

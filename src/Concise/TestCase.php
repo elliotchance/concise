@@ -171,7 +171,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * This looks uselsss but we need to change the visibility of setUp() to public.
+     * This looks useless but we need to change the visibility of setUp() to public.
      */
     public function setUp()
     {

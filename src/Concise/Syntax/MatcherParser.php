@@ -209,6 +209,7 @@ class MatcherParser
         $r = array('error', 'on');
         foreach ($this->getMatchers() as $matcher) {
             $service = new MatcherSyntaxAndDescription();
+            /** @var $matcher \Concise\Matcher\AbstractMatcher */
             $syntaxes = $service->process($matcher->supportedSyntaxes());
             $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
         }
@@ -238,8 +239,10 @@ class MatcherParser
         $r = array();
         $service = new MatcherSyntaxAndDescription();
         foreach ($this->getMatchers() as $matcher) {
+            /** @var $matcher \Concise\Matcher\AbstractMatcher */
             $syntaxes = $service->process($matcher->supportedSyntaxes());
             foreach ($syntaxes as &$syntax) {
+                /** @var $matcher \Concise\Matcher\AbstractMatcher */
                 $syntax = array(
                     'description' => $syntax,
                     'tags' => $matcher->getTags(),

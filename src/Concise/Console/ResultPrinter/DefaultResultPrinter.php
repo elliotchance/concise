@@ -35,6 +35,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function __construct(DefaultTheme $theme = null)
     {
+        /** @noinspection SpellCheckingInspection */
         $this->width = (int) exec('tput cols');
         if (!$theme) {
             $theme = new DefaultTheme();

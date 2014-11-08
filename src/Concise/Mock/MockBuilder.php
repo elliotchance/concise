@@ -316,8 +316,11 @@ class MockBuilder
             $renderer = new ValueRenderer();
             $converter = new NumberToTimesConverter();
             $args = $renderer->renderAll($this->currentWith);
-            throw new Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
-                $this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
+            $times = $this->rules[$this->currentRule][md5('null')]['times'];
+            $convertToMethod = $converter->convertToMethod($times);
+            throw new Exception(sprintf("%s:\n  ->expects('%s')->with(%s)->%s",
+                "When using with you must specify expectations for each with()",
+                $this->currentRule, $args, $convertToMethod));
         }
         $this->rules[$this->currentRule][md5('null')]['times'] = -1;
         $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);

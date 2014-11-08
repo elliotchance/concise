@@ -78,7 +78,9 @@ class MockManager
 
     protected function validateMultiWith($method, array $rule, array $mock)
     {
-        foreach ($mock['instance']->getCallsForMethod($method) as $call) {
+        /** @var $instance \Concise\Mock\MockInterface */
+        $instance = $mock['instance'];
+        foreach ($instance->getCallsForMethod($method) as $call) {
             $this->incrementCallGraphForCall($call, $rule['with']);
         }
 
@@ -93,7 +95,9 @@ class MockManager
     protected function validateExpectation($mock, $method, array $rule)
     {
         if (null === $rule['with']) {
-            $this->validateSingleWith($rule, count($mock['instance']->getCallsForMethod($method)), $method);
+            /** @var $instance \Concise\Mock\MockInterface */
+            $instance = $mock['instance'];
+            $this->validateSingleWith($rule, count($instance->getCallsForMethod($method)), $method);
         } else {
             $this->validateMultiWith($method, $rule, $mock);
         }
@@ -102,8 +106,10 @@ class MockManager
 
     protected function validateMock(array $mock)
     {
-        foreach ($mock['mockBuilder']->getRules() as $method => $methodWiths) {
-            foreach ($methodWiths as $withKey => $rule) {
+        /** @var $mockBuilder \Concise\Mock\MockBuilder */
+        $mockBuilder = $mock['mockBuilder'];
+        foreach ($mockBuilder->getRules() as $method => $methodWiths) {
+            foreach ($methodWiths as $rule) {
                 // Negative times means it is a stub.
                 if ($rule['times'] < 0) {
                     continue;

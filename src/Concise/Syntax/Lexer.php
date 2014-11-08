@@ -89,7 +89,7 @@ class Lexer
 	 * @param  integer $startIndex
 	 * @return string
 	 */
-    protected function consumeClassname(array &$tokens, $string, &$startIndex)
+    protected function consumeClassName(array &$tokens, $string, &$startIndex)
     {
         if ($string[$startIndex] === "\\") {
             $tokens[] = new Token\Value($this->consumeUntilToken($string, ' ', $startIndex, false));
