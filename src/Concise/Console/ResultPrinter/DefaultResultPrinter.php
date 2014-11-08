@@ -85,6 +85,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function update()
     {
+        $this->hasUpdated = true;
         $this->write($this->getAssertionString() . $this->drawProgressBar() . "\033[2F");
     }
 

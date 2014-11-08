@@ -146,4 +146,13 @@ class DefaultResultPrinterTest extends TestCase
     {
         $this->assert($this->getProperty($this->resultPrinter, 'hasUpdated'), is_false);
     }
+
+    public function testHasUpdatedIsTrueAfterUpdateIsCalled()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->get();
+        $resultPrinter->update();
+        $this->assert($this->getProperty($resultPrinter, 'hasUpdated'), is_true);
+    }
 }
