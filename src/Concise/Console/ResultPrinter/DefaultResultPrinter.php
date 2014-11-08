@@ -33,6 +33,11 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $counter;
 
+    /**
+     * @var bool
+     */
+    protected $hasUpdated = false;
+
     public function __construct(DefaultTheme $theme = null)
     {
         $this->width = (int) exec('tput cols');
