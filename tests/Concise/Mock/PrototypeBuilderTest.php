@@ -104,7 +104,7 @@ class PrototypeBuilderTest extends TestCase
 
     public function testPrototypeCanBeBuiltWithOnlyAMethodName()
     {
-        $this->assert($this->builder->getPrototypeForNonExistantMethod('foo'), equals, 'public function foo()');
+        $this->assert($this->builder->getPrototypeForNonExistentMethod('foo'), equals, 'public function foo()');
     }
 
     /**
@@ -113,6 +113,6 @@ class PrototypeBuilderTest extends TestCase
      */
     public function testMethodMustBeAString()
     {
-        $this->builder->getPrototypeForNonExistantMethod(123);
+        $this->builder->getPrototypeForNonExistentMethod(123);
     }
 }

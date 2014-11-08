@@ -25,6 +25,9 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 */
     protected $mockManager;
 
+    /**
+     * @var array
+     */
     protected $properties = array();
 
     /**

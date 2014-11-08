@@ -162,11 +162,10 @@ class MatcherParser
     protected function autoloadAllMatchers()
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
-            if (substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
-                continue;
-            }
             $class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-            $this->registerMatcher(new $class());
+            if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher')) {
+                $this->registerMatcher(new $class());
+            }
         }
     }
 
