@@ -42,7 +42,7 @@ class MockBuilder
 
     /**
 	 * Used internally as the active mocked method when using chained methods to builds the rules for this method.
-	 * @var string
+	 * @var array
 	 */
     protected $currentRules = array();
 
@@ -176,9 +176,13 @@ class MockBuilder
     /**
 	 * @return boolean
 	 */
-    protected function hasAction()
+    protected function hasAction($rule)
     {
-        $action = $this->rules[$this->currentRules[0]][$this->getWithKey()]['action'];
+        if (!array_key_exists($rule, $this->rules)) {
+            return false;
+        }
+
+        $action = $this->rules[$rule][$this->getWithKey()]['action'];
         if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
         }
@@ -192,10 +196,12 @@ class MockBuilder
 	 */
     protected function setAction(Action\AbstractAction $action)
     {
-        if ($this->hasAction()) {
-            throw new Exception("{$this->currentRules[0]}() has more than one action attached.");
+        foreach ($this->currentRules as $rule) {
+            if ($this->hasAction($rule)) {
+                throw new Exception("{$rule}() has more than one action attached.");
+            }
+            $this->rules[$rule][$this->getWithKey()]['action'] = $action;
         }
-        $this->rules[$this->currentRules[0]][$this->getWithKey()]['action'] = $action;
 
         return $this;
     }
@@ -299,12 +305,14 @@ class MockBuilder
 
     protected function setupWith(Action\AbstractAction $action, $times)
     {
-        $this->rules[$this->currentRules[0]][$this->getWithKey()] = array(
-            'action'      => $action,
-            'times'       => $times,
-            'with'        => $this->currentWith,
-            'hasSetTimes' => false,
-        );
+        foreach ($this->currentRules as $rule) {
+            $this->rules[$rule][$this->getWithKey()] = array(
+                'action'      => $action,
+                'times'       => $times,
+                'with'        => $this->currentWith,
+                'hasSetTimes' => false,
+            );
+        }
     }
 
     /**
