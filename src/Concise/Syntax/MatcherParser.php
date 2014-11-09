@@ -162,7 +162,7 @@ class MatcherParser
     protected function autoloadAllMatchers()
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
-            $class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
+            $class = "Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
             if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher')) {
                 $this->registerMatcher(new $class());
             }
