@@ -4,12 +4,26 @@ namespace Concise\Services;
 
 class TimeFormatter
 {
+    protected function pluralize($number, $word)
+    {
+        return "{$number} {$word}" . (($number == 1) ? '' : 's');
+    }
+
     public function format($seconds)
     {
-        if ($seconds >= 60) {
-            $minutes = ($seconds / 60);
-            return $minutes . ' minute' . (($minutes == 1) ? '' : 's');
+        if (0 == $seconds) {
+            return '0 seconds';
         }
-        return $seconds . ' second' . (($seconds == 1) ? '' : 's');
+
+        $r = [];
+        if ($seconds >= 60) {
+            $minutes = floor($seconds / 60);
+            $r[] = $this->pluralize($minutes, 'minute');
+            $seconds -= $minutes * 60;
+        }
+        if ($seconds != 0) {
+            $r[] = $this->pluralize($seconds, 'second');
+        }
+        return implode(' ', $r);
     }
 }
