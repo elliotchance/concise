@@ -6,6 +6,7 @@ use Concise\Assertion;
 use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Matcher\AbstractMatcher;
 use Concise\Validation\ArgumentChecker;
+use Exception;
 
 class MatcherParser
 {
@@ -55,9 +56,11 @@ class MatcherParser
     }
 
     /**
-	 * @param string $syntax
-	 * @return array
-	 */
+     * @param string $syntax
+     * @param array $data
+     * @throws Exception
+     * @return array
+     */
     public function getMatcherForSyntax($syntax, array $data = array())
     {
         ArgumentChecker::check($syntax, 'string');
@@ -74,7 +77,7 @@ class MatcherParser
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             return $this->syntaxCache[$rawSyntax] + $options;
         }
-        throw new \Exception("No such matcher for syntax '$syntax'.");
+        throw new Exception("No such matcher for syntax '$syntax'.");
     }
 
     /**
@@ -103,14 +106,14 @@ class MatcherParser
     protected function throwExceptionIfNotInLowerCase($rawSyntax)
     {
         if (strtolower($rawSyntax) != $rawSyntax) {
-            throw new \Exception("All assertions ('$rawSyntax') must be lower case.");
+            throw new Exception("All assertions ('$rawSyntax') must be lower case.");
         }
     }
 
     protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
     {
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            throw new \Exception("Syntax '$syntax' is already declared.");
+            throw new Exception("Syntax '$syntax' is already declared.");
         }
     }
 
@@ -159,18 +162,17 @@ class MatcherParser
     protected function autoloadAllMatchers()
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
-            if (substr($file, 0, 1) === '.' || in_array($file, array('DidNotMatchException.php', 'AbstractMatcher.php', 'Tag.php'))) {
-                continue;
+            $class = "Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
+            if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher')) {
+                $this->registerMatcher(new $class());
             }
-            $class = "\\Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-            $this->registerMatcher(new $class());
         }
     }
 
     protected function registerMatchers()
     {
         if (count($this->matchers) > 0) {
-            throw new \Exception("registerMatchers() can only be called once.");
+            throw new Exception("registerMatchers() can only be called once.");
         }
 
         $this->autoloadAllMatchers();
@@ -206,6 +208,7 @@ class MatcherParser
         $r = array('error', 'on');
         foreach ($this->getMatchers() as $matcher) {
             $service = new MatcherSyntaxAndDescription();
+            /** @var $matcher \Concise\Matcher\AbstractMatcher */
             $syntaxes = $service->process($matcher->supportedSyntaxes());
             $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
         }
@@ -235,8 +238,10 @@ class MatcherParser
         $r = array();
         $service = new MatcherSyntaxAndDescription();
         foreach ($this->getMatchers() as $matcher) {
+            /** @var $matcher \Concise\Matcher\AbstractMatcher */
             $syntaxes = $service->process($matcher->supportedSyntaxes());
             foreach ($syntaxes as &$syntax) {
+                /** @var $matcher \Concise\Matcher\AbstractMatcher */
                 $syntax = array(
                     'description' => $syntax,
                     'tags' => $matcher->getTags(),
