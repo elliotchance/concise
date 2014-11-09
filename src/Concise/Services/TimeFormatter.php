@@ -24,7 +24,7 @@ class TimeFormatter
             return '0 seconds';
         }
 
-        $r = [];
+        $r = array();
         $this->part($r, $seconds, 3600, 'hour');
         $this->part($r, $seconds, 60, 'minute');
         $this->part($r, $seconds, 1, 'second');
