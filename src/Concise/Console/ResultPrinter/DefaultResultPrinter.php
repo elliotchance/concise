@@ -81,15 +81,23 @@ class DefaultResultPrinter extends AbstractResultPrinter
         )) . "\n";
     }
 
+    protected function getRemainingSeconds()
+    {
+        return 10;
+    }
+
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
         $formatter = new TimeFormatter();
         $time = ', ' . $formatter->format(time() - $this->startTime);
+        $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
         $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
+        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
+            strlen($remaining);
 
-        return sprintf("%s%s%s%s\n", $assertionString, $time, str_repeat(' ', $pad), $counterString);
+        return sprintf("%s%s%s%s%s\n", $assertionString, $time, $remaining, str_repeat(' ', $pad),
+            $counterString);
     }
 
     protected function restoreCursor()
