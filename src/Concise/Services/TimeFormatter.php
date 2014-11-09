@@ -4,8 +4,8 @@ namespace Concise\Services;
 
 class TimeFormatter
 {
-    public function format()
+    public function format($seconds)
     {
-        return '0 seconds';
+        return $seconds . ' seconds';
     }
 }
