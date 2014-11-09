@@ -34,4 +34,9 @@ class NotBetweenTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(150, not_between, 123, 'and', 150);
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
+    }
 }

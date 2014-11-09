@@ -24,4 +24,9 @@ class IsNotAnObjectTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(new \stdClass(), is_not_an_object);
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
+    }
 }

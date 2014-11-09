@@ -8,6 +8,7 @@ use Concise\Console\Theme\DefaultTheme;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_ExpectationFailedException;
 use Concise\Validation\ArgumentChecker;
+use PHPUnit_Framework_TestCase;
 
 class RenderIssue
 {
@@ -58,7 +59,11 @@ class RenderIssue
         $c = new Color();
         $color = $this->colors[$status];
 
-        return "$issueNumber. " . $c(get_class($test) . '::' . $test->getName())->$color . "\n\n";
+        $message = get_class($test);
+        if ($test instanceof PHPUnit_Framework_TestCase) {
+            $message .= '::' . $test->getName();
+        }
+        return "$issueNumber. " . $c($message)->$color . "\n\n";
     }
 
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)

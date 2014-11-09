@@ -24,4 +24,9 @@ class HasKeyTest extends AbstractMatcherTestCase
     {
         $this->assert(array("abc" => 123), has_key, "abc");
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

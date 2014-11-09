@@ -10,7 +10,7 @@ class OtherException extends \Exception
 {
 }
 
-class AbstractExceptionTestCase extends AbstractMatcherTestCase
+abstract class AbstractExceptionTestCase extends AbstractMatcherTestCase
 {
     protected function createExceptionTests(array $data)
     {

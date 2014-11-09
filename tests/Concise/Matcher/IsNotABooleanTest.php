@@ -29,4 +29,9 @@ class IsNotABooleanTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(true, is_not_a_bool);
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
+    }
 }

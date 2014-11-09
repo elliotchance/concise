@@ -12,11 +12,16 @@ class DoesNotMatchRegularExpressionTest extends AbstractMatcherTestCase
 
     public function testDoesNotMatchRegularExpression()
     {
-        $this->assert('"abc" does not match regex /^f/');
+        $this->assert("abc", does_not_match_regex, '/^f/');
     }
 
     public function testDoesNotMatchRegularExpressionFailure()
     {
-        $this->assertFailure('"foo" does not match regex /^f/');
+        $this->assertFailure("foo", does_not_match_regex, '/^f/');
+    }
+
+    public function tags()
+    {
+        return array(Tag::REGEX);
     }
 }

@@ -7,9 +7,10 @@ use \Concise\Services\SyntaxRenderer;
 abstract class AbstractMatcher
 {
     /**
-	 * @param string $syntax
-	 * @return bool
-	 */
+     * @param string $syntax
+     * @param array $data
+     * @return bool
+     */
     abstract public function match($syntax, array $data = array());
 
     /**
@@ -18,9 +19,10 @@ abstract class AbstractMatcher
     abstract public function supportedSyntaxes();
 
     /**
-	 * @param string $syntax
-	 * @return string
-	 */
+     * @param string $syntax
+     * @param array $data
+     * @return string
+     */
     public function renderFailureMessage($syntax, array $data = array())
     {
         $renderer = new SyntaxRenderer();

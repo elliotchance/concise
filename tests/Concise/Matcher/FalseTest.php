@@ -14,4 +14,9 @@ class FalseTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('false');
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS);
+    }
 }

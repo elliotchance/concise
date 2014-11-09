@@ -32,4 +32,9 @@ class IsAnAssociativeArrayTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('[1,"foo"] is an associative array');
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS, Tag::TYPES);
+    }
 }

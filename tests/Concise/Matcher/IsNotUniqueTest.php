@@ -19,4 +19,9 @@ class IsNotUniqueTest extends AbstractMatcherTestCase
     {
         $this->assert(array(123, 456, 123), is_not_unique);
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

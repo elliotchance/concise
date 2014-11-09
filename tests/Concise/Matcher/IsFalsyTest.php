@@ -24,4 +24,9 @@ class IsFalsyTest extends AbstractMatcherTestCase
     {
         $this->assert(0, is_falsy);
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
+    }
 }

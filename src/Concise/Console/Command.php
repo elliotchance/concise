@@ -7,14 +7,17 @@ use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\Theme\DefaultTheme;
 use Exception;
+use Concise\Console\ResultPrinter\CIResultPrinter;
 
 class Command extends \PHPUnit_TextUI_Command
 {
     protected $colorScheme = null;
 
+    protected $ci = false;
+
     protected function createRunner()
     {
-        $resultPrinter = new DefaultResultPrinter();
+        $resultPrinter = $this->getResultPrinter();
         if (array_key_exists('verbose', $this->arguments) && $this->arguments['verbose']) {
             $resultPrinter->setVerbose(true);
         }
@@ -54,6 +57,15 @@ class Command extends \PHPUnit_TextUI_Command
         return new DefaultTheme();
     }
 
+    public function getResultPrinter()
+    {
+        if ($this->ci || `tput colors` < 2) {
+            return new CIResultPrinter();
+        }
+
+        return new DefaultResultPrinter();
+    }
+
     /**
      * @codeCoverageIgnore
      */
@@ -62,6 +74,7 @@ class Command extends \PHPUnit_TextUI_Command
         $this->longOptions['test-colors'] = null;
         $this->longOptions['color-scheme='] = null;
         $this->longOptions['list-color-schemes'] = null;
+        $this->longOptions['ci'] = null;
         parent::handleArguments($argv);
 
         foreach ($this->options[0] as $option) {
@@ -79,6 +92,9 @@ class Command extends \PHPUnit_TextUI_Command
                 case '--list-color-schemes':
                     echo "Color Schemes:\n  default\n\n";
                     exit(0);
+
+                case '--ci':
+                    $this->ci = true;
                     break;
             }
         }

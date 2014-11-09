@@ -46,10 +46,14 @@ class ProgressCounter
         $this->atLeastZero($value, 'Value');
         $r = $value . ' / ' . max($value, $this->total);
         if ($this->showPercentage) {
-            $percentage = (0 === $this->total) ? 0 : floor($value / $this->total * 100);
-            $r .= sprintf(' (%3s%%)', min(100, $percentage));
+            $r .= sprintf(' (%3s%%)', min(100, $this->getPercentage($value)));
         }
 
         return $r;
+    }
+
+    public function getPercentage($value)
+    {
+        return (0 === $this->total) ? 0 : floor($value / $this->total * 100);
     }
 }

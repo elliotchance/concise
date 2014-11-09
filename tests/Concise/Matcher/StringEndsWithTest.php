@@ -24,4 +24,9 @@ class StringEndsWithTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"abc" ends with "ab"');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

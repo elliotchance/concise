@@ -6,34 +6,51 @@ use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+// Load the keyword cache before the test suite begins.
+Keywords::load();
+
+class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * Used as a placeholder for with() clauses where the parameter is unrestrictive. For the curious, this is the
-     * SHA1('a') with an extra 'a' on the end.
+     * Used as a placeholder for with() clauses where the parameter is unrestrictive. For the
+     * curious, this is the SHA1('a') with an extra 'a' on the end.
      */
     const ANYTHING = '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8a';
 
     /**
-	 * @var Concise\Mock\MockManager
+	 * @var MockManager
 	 */
     protected $mockManager;
 
+    /**
+     * @var array
+     */
+    protected $properties = array();
+
+    /**
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     */
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->mockManager = new MockManager($this);
     }
 
+    /**
+     * @return MockManager
+     */
     public function getMockManager()
     {
         return $this->mockManager;
     }
 
     /**
-	 * @return \Concise\Syntax\MatcherParser
+	 * @return MatcherParser
 	 */
     protected function getMatcherParserInstance()
     {
@@ -41,29 +58,41 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * @param  string $name
-	 * @return mixed
-	 */
+     * @param  string $name
+     * @throws \Exception
+     * @return mixed
+     */
     public function __get($name)
     {
-        if (!isset($this->$name)) {
+        if (!array_key_exists($name, $this->properties)) {
             throw new \Exception("No such attribute '{$name}'.");
         }
 
-        return $this->$name;
+        return $this->properties[$name];
+    }
+
+    public function __isset($name)
+    {
+        return array_key_exists($name, $this->properties);
+    }
+
+    public function __unset($name)
+    {
+        unset($this->properties[$name]);
     }
 
     /**
-	 * @param string $name
-	 * @param mixed $value
-	 */
+     * @param string $name
+     * @param mixed $value
+     * @throws \Exception
+     */
     public function __set($name, $value)
     {
-        $parser = MatcherParser::getInstance();
+        $parser = $this->getMatcherParserInstance();
         if (in_array($name, $parser->getKeywords())) {
             throw new \Exception("You cannot assign an attribute with the keyword '$name'.");
         }
-        $this->$name = $value;
+        $this->properties[$name] = $value;
     }
 
     /**
@@ -71,7 +100,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 */
     public function getData()
     {
-        return get_object_vars($this);
+        return $this->properties + get_object_vars($this);
     }
 
     /**
@@ -114,10 +143,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
         if ($this instanceof TestCase) {
             $assertion->setTestCase($this);
-        } else {
-            // It is important that we use assert_that() becuase it will make sure the setUp() and tearDown() are
-            // wrapped around the assertion.
-            return assert_that($assertionString);
         }
         $assertion->run();
     }
@@ -154,7 +179,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $all = array();
         foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-]+)/', '?', $syntax);
+            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
             foreach (explode('?', $simpleSyntax) as $part) {
                 $p = trim($part);
                 $all[str_replace(' ', '_', $p)] = $p;
@@ -169,14 +194,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
         define('on_error', 'on error');
     }
 
+    /**
+     * This looks useless but we need to change the visibility of setUp() to public.
+     */
     public function setUp()
     {
         parent::setUp();
-
-        if (!defined('__KEYWORDS_LOADED')) {
-            $this->loadKeywords();
-            define('__KEYWORDS_LOADED', 1);
-        }
     }
 
     /**

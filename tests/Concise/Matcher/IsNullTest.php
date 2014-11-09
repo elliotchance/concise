@@ -19,4 +19,9 @@ class IsNullTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('123 is null');
     }
+
+    public function tags()
+    {
+        return array(Tag::TYPES);
+    }
 }
