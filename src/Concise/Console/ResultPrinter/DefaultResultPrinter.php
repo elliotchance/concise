@@ -33,6 +33,11 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $counter;
 
+    /**
+     * @var integer
+     */
+    protected $startTime;
+
     public function __construct(DefaultTheme $theme = null)
     {
         $this->width = (int) exec('tput cols');
@@ -41,6 +46,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         }
         $this->theme = $theme;
         $this->counter = new ProgressCounter(0, true);
+        $this->startTime = time();
     }
 
     public function end()

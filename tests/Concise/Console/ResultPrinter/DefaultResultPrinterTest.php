@@ -27,6 +27,9 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
     }
 }
 
+/**
+ * @group ci
+ */
 class DefaultResultPrinterTest extends TestCase
 {
     public function setUp()
@@ -137,5 +140,10 @@ class DefaultResultPrinterTest extends TestCase
                      ->stub(array('getName' => ''))
                      ->get();
         $resultPrinter->add($status, $test, new Exception());
+    }
+
+    public function testStartTimeIsNow()
+    {
+        $this->assert($this->getProperty($this->resultPrinter, 'startTime'), equals, time(), within, 1);
     }
 }
