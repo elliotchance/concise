@@ -19,7 +19,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
                               ->stub(array('count' => 0))
                               ->get();
 
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('startTestSuite')->with($suite)
                               ->get();
         $proxy = new ResultPrinterProxy($resultPrinter);
@@ -107,7 +107,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
                               ->stub(array('count' => 0))
                               ->get();
 
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('startTestSuite')->with($suite)->twice()
                               ->stub('endTestSuite')
                               ->stub('end')
@@ -124,7 +124,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
                       ->stub(array('count' => 0))
                       ->get();
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('end')
                               ->stub('startTestSuite')
                               ->stub('endTestSuite')
@@ -139,7 +139,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
                       ->stub(array('count' => 0))
                       ->get();
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('endTestSuite')->with($suite)
                               ->stub('end')
                               ->stub('startTestSuite')
@@ -154,7 +154,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()
                       ->stub(array('count' => 0))
                       ->get();
-        $resultPrinter = $this->mock('Concise\Console\TestRunner\TestResultDelegateInterface')
+        $resultPrinter = $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
                               ->expect('end')
                               ->stub('startTestSuite')
                               ->stub('endTestSuite')
