@@ -253,4 +253,15 @@ class DefaultResultPrinterTest extends TestCase
 
         $this->assert($resultPrinter->getAssertionString(), does_not_contain_string, ' remaining');
     }
+
+    public function testWillNotShowEstimateUntil5SecondsHaveElapsed()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->stub(array('getTotalTestCount' => 100, 'getTestCount' => 25))
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 3);
+
+        $this->assert($resultPrinter->getAssertionString(), does_not_contain_string, ' remaining');
+    }
 }

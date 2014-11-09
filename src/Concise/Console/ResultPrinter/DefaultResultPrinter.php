@@ -81,12 +81,17 @@ class DefaultResultPrinter extends AbstractResultPrinter
         )) . "\n";
     }
 
+    protected function getSecondsElapsed()
+    {
+        return time() - $this->startTime;
+    }
+
     protected function getRemainingSeconds()
     {
         if (0 == $this->getTestCount()) {
             return -1;
         }
-        $elapsed = time() - $this->startTime;
+        $elapsed = $this->getSecondsElapsed();
         $eta = ($this->getTotalTestCount() / $this->getTestCount()) * $elapsed - $elapsed;
         return $eta;
     }
@@ -95,9 +100,9 @@ class DefaultResultPrinter extends AbstractResultPrinter
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
         $formatter = new TimeFormatter();
-        $time = ', ' . $formatter->format(time() - $this->startTime);
+        $time = ', ' . $formatter->format($this->getSecondsElapsed());
         $remaining = '';
-        if ($this->getRemainingSeconds() > 0) {
+        if ($this->getSecondsElapsed() > 5 && $this->getRemainingSeconds() > 0) {
             $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
         }
         $counterString = $this->counter->render($this->getTestCount());
