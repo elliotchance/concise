@@ -25,7 +25,7 @@ class Command extends \PHPUnit_TextUI_Command
 
     public function getResultPrinter()
     {
-        if ($this->ci) {
+        if ($this->ci || `tput colors` < 2) {
             return new CIResultPrinter();
         }
 
