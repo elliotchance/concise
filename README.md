@@ -181,9 +181,9 @@ Matchers
 * `?:object has property ?:string with exact value ?` - Assert that an object has a property with a specific exact value.
 * `?:object has property ?:string with value ?` - Assert that an object has a property with a specific value.
 * `? is an object` - Assert value is an object.
-* `?:object is an instance of ?:class` - Assert an objects class or subclass.
-* `?:object is instance of ?:class` - Assert an objects class or subclass.
-* `?:object instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class is an instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class is instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class instance of ?:class` - Assert an objects class or subclass.
 * `? is not an object` - Assert a value is not an object.
 * `?:object is not an instance of ?:class` - Assert than an object is not a class or subclass.
 * `?:object is not instance of ?:class` - Assert than an object is not a class or subclass.
@@ -228,9 +228,9 @@ Matchers
 * `? is an object` - Assert value is an object.
 * `? is false` - Assert value is false.
 * `? is falsy` - Assert a value is a false-like value.
-* `?:object is an instance of ?:class` - Assert an objects class or subclass.
-* `?:object is instance of ?:class` - Assert an objects class or subclass.
-* `?:object instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class is an instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class is instance of ?:class` - Assert an objects class or subclass.
+* `?:object,class instance of ?:class` - Assert an objects class or subclass.
 * `? is not a boolean` - Assert a value is not true or false.
 * `? is not a bool` - Assert a value is not true or false.
 * `? is not a number` - Assert that a value is not an integer or floating-point.
