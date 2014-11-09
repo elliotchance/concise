@@ -155,4 +155,14 @@ class DefaultResultPrinterTest extends TestCase
 
         $this->assert($resultPrinter->getAssertionString(), contains_string, '0 seconds');
     }
+
+    public function testWillPrintCorrectTimeElasped()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 10);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '10 seconds');
+    }
 }

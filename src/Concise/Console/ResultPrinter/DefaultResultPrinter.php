@@ -78,7 +78,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $time = ', 0 seconds';
+        $time = ', ' . (time() - $this->startTime) . ' seconds';
         $counterString = $this->counter->render($this->getTestCount());
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
 
