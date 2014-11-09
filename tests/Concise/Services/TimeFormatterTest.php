@@ -17,4 +17,10 @@ class TimeFormatterTest extends TestCase
         $formatter = new TimeFormatter();
         $this->assert($formatter->format(2), equals, '2 seconds');
     }
+
+    public function testFormattingOneSecond()
+    {
+        $formatter = new TimeFormatter();
+        $this->assert($formatter->format(1), equals, '1 second');
+    }
 }
