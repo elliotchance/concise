@@ -258,6 +258,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
+    public function testMultipleExpectsThatAreNeverExpected()
+    {
+        $this->mockBuilder()
+            ->expect('myWithMethod', 'myMethod')->never()
+            ->get();
+    }
+
     // Private
 
     /**

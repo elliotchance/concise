@@ -41,7 +41,8 @@ class MockBuilder
     protected $className;
 
     /**
-	 * Used internally as the active mocked method when using chained methods to builds the rules for this method.
+	 * Used internally as the active mocked method when using chained methods to builds the rules
+     * for this method.
 	 * @var array
 	 */
     protected $currentRules = array();
@@ -88,7 +89,8 @@ class MockBuilder
      * @param array $constructorArgs
      * @throws \Exception
      */
-    public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
+    public function __construct(TestCase $testCase, $className, $niceMock,
+        array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
         ArgumentChecker::check($niceMock,  'boolean', 3);
@@ -151,7 +153,8 @@ class MockBuilder
 	 */
     public function get()
     {
-        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
+        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs,
+            $this->disableConstructor);
         if ($this->customClassName) {
             $compiler->setCustomClassName($this->customClassName);
         }
@@ -191,6 +194,10 @@ class MockBuilder
     protected function setAction(Action\AbstractAction $action)
     {
         foreach ($this->currentRules as $rule) {
+            if ($this->methodIsNeverExpected($rule)) {
+                $message = "You cannot assign an action to '{$rule}()' when it is never expected.";
+                throw new Exception($message);
+            }
             if ($this->hasAction($rule)) {
                 throw new Exception("{$rule}() has more than one action attached.");
             }
@@ -200,9 +207,13 @@ class MockBuilder
         return $this;
     }
 
-    protected function methodIsNeverExpected()
+    /**
+     * @param string $rule
+     * @return bool
+     */
+    protected function methodIsNeverExpected($rule)
     {
-        return $this->rules[$this->currentRules[0]][$this->getWithKey()]['times'] === 0;
+        return $this->rules[$rule][$this->getWithKey()]['times'] === 0;
     }
 
     /**
@@ -211,12 +222,7 @@ class MockBuilder
      */
     public function andReturn()
     {
-        if ($this->methodIsNeverExpected()) {
-            throw new Exception("You cannot assign an action to '{$this->currentRules[0]}()' when it is never expected.");
-        }
-        $values = func_get_args();
-
-        return $this->setAction(new Action\ReturnValueAction($values));
+        return $this->setAction(new Action\ReturnValueAction(func_get_args()));
     }
 
     /**
@@ -292,9 +298,6 @@ class MockBuilder
 
         foreach ($this->currentRules as $rule) {
             $this->rules[$rule][$this->getWithKey()]['hasSetTimes'] = true;
-            if ($times === 0) {
-                $this->andReturn(array(null));
-            }
             $this->rules[$rule][$this->getWithKey()]['times'] = $times;
         }
 
@@ -361,7 +364,8 @@ class MockBuilder
     public function disableConstructor()
     {
         if ($this->isInterface()) {
-            throw new InvalidArgumentException("You cannot disable the constructor of an interface ({$this->className}).");
+            $message = "You cannot disable the constructor of an interface ({$this->className}).";
+            throw new InvalidArgumentException($message);
         }
         $this->disableConstructor = true;
 
@@ -416,7 +420,8 @@ class MockBuilder
         ArgumentChecker::check($property, 'string');
 
         if ($this->isInterface()) {
-            throw new InvalidArgumentException("You cannot return a property from an interface ({$this->className}).");
+            $message = "You cannot return a property from an interface ({$this->className}).";
+            throw new InvalidArgumentException($message);
         }
 
         return $this->setAction(new Action\ReturnPropertyAction($property));

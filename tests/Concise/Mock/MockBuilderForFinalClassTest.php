@@ -454,54 +454,60 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     public function testStubbingMultipleMethodsWithMultipleArguments()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testStubbingMultipleMethodsWithMultipleArguments();
     }
 
     public function testFirstMethodOfMultipleStubsReceivesAction()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testFirstMethodOfMultipleStubsReceivesAction();
     }
 
     public function testSecondMethodOfMultipleStubsReceivesAction()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testSecondMethodOfMultipleStubsReceivesAction();
     }
 
     public function testMockImplementsMockInterface()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testMockImplementsMockInterface();
     }
 
     public function testExpectWithMultipleArguments()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testExpectWithMultipleArguments();
     }
 
     public function testExpectsWithMultipleArguments()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testExpectsWithMultipleArguments();
     }
 
     public function testWithOnMultipleMethods()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testWithOnMultipleMethods();
     }
 
     public function testMultipleExpectsUsingTheSameWith()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testMultipleExpectsUsingTheSameWith();
     }
 
     public function testMultipleExpectsUsingWith()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testMultipleExpectsUsingWith();
+    }
+
+    public function testMultipleExpectsThatAreNeverExpected()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testMultipleExpectsThatAreNeverExpected();
     }
 }
