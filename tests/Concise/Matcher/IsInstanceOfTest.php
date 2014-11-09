@@ -34,4 +34,13 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
     {
         $this->assert('\Concise\Matcher\IsInstanceOfTest', instance_of, '\Concise\TestCase');
     }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage No such class 'foobar'.
+     */
+    public function testClassNameThatDoesntExist()
+    {
+        $this->assert('\Concise\Matcher\IsInstanceOfTest', instance_of, '\foobar');
+    }
 }

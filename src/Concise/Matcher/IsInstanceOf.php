@@ -17,6 +17,10 @@ class IsInstanceOf extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
+        if (!class_exists($data[1])) {
+            throw new DidNotMatchException("No such class '{$data[1]}'.");
+        }
+
         $interfaces = class_implements($data[0]);
 
         if (is_string($data[0])) {
