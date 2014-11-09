@@ -96,7 +96,10 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
         $formatter = new TimeFormatter();
         $time = ', ' . $formatter->format(time() - $this->startTime);
-        $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
+        $remaining = '';
+        if ($this->getRemainingSeconds() > 0) {
+            $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
+        }
         $counterString = $this->counter->render($this->getTestCount());
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
             strlen($remaining);

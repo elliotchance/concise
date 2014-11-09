@@ -225,6 +225,7 @@ class DefaultResultPrinterTest extends TestCase
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
             ->expose('getAssertionString')
+            ->stub(array('getTotalTestCount' => 100, 'getTestCount' => 25))
             ->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
@@ -240,5 +241,16 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
         $this->assert($resultPrinter->getAssertionString(), contains_string, ' (3 minutes remaining)');
+    }
+
+    public function testWillNotShowEstimateIfETAIsZero()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->stub(array('getTotalTestCount' => 100, 'getTestCount' => 100))
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 60);
+
+        $this->assert($resultPrinter->getAssertionString(), does_not_contain_string, ' remaining');
     }
 }
