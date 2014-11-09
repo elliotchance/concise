@@ -544,6 +544,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->myWithMethod('a$b'), is_null);
     }
 
+    public function testWithOnMultipleMethods()
+    {
+        $mock = $this->mockBuilder()
+            ->stub('myWithMethod', 'myMethod')->with('foo')->andReturn('foobar')
+            ->get();
+        $this->assert($mock->myMethod('foo'), equals, 'foobar');
+    }
+
     // Abstract
 
     public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()

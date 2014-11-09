@@ -321,17 +321,19 @@ class MockBuilder
     public function with()
     {
         $this->currentWith = func_get_args();
-        if ($this->rules[$this->currentRules[0]][md5('null')]['hasSetTimes']) {
-            $renderer = new ValueRenderer();
-            $converter = new NumberToTimesConverter();
-            $args = $renderer->renderAll($this->currentWith);
-            $times = $this->rules[$this->currentRules[0]][md5('null')]['times'];
-            $convertToMethod = $converter->convertToMethod($times);
-            throw new Exception(sprintf("%s:\n  ->expects('%s')->with(%s)->%s",
-                "When using with you must specify expectations for each with()",
-                $this->currentRules[0], $args, $convertToMethod));
+        foreach ($this->currentRules as $rule) {
+            if ($this->rules[$rule][md5('null')]['hasSetTimes']) {
+                $renderer = new ValueRenderer();
+                $converter = new NumberToTimesConverter();
+                $args = $renderer->renderAll($this->currentWith);
+                $times = $this->rules[$rule][md5('null')]['times'];
+                $convertToMethod = $converter->convertToMethod($times);
+                throw new Exception(sprintf("%s:\n  ->expects('%s')->with(%s)->%s",
+                        "When using with you must specify expectations for each with()",
+                        $rule, $args, $convertToMethod));
+            }
+            $this->rules[$rule][md5('null')]['times'] = -1;
         }
-        $this->rules[$this->currentRules[0]][md5('null')]['times'] = -1;
         $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);
 
         return $this;
