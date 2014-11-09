@@ -3,6 +3,7 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Services\TimeFormatter;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
@@ -34,6 +35,11 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected $counter;
 
     /**
+     * @var integer
+     */
+    protected $startTime;
+
+    /**
      * @var bool
      */
     protected $hasUpdated = false;
@@ -47,6 +53,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         }
         $this->theme = $theme;
         $this->counter = new ProgressCounter(0, true);
+        $this->startTime = time();
     }
 
     public function end()
@@ -77,10 +84,12 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
+        $formatter = new TimeFormatter();
+        $time = ', ' . $formatter->format(time() - $this->startTime);
         $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString);
+        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
 
-        return sprintf("%s%s%s\n", $assertionString, str_repeat(' ', $pad), $counterString);
+        return sprintf("%s%s%s%s\n", $assertionString, $time, str_repeat(' ', $pad), $counterString);
     }
 
     protected function restoreCursor()

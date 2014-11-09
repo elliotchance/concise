@@ -143,6 +143,40 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter->add($status, $test, new Exception());
     }
 
+    public function testStartTimeIsNow()
+    {
+        $this->assert($this->getProperty($this->resultPrinter, 'startTime'), equals, time(), within, 1);
+    }
+
+    public function testAssertionStringIncludesTheRunTime()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '0 seconds');
+    }
+
+    public function testWillPrintCorrectTimeElapsed()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 10);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '10 seconds');
+    }
+
+    public function testUsesTimeFormatter()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 200);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '3 minutes 20 seconds');
+    }
+
     public function testHasUpdatedIsFalseByDefault()
     {
         $this->assert($this->getProperty($this->resultPrinter, 'hasUpdated'), is_false);
