@@ -562,6 +562,15 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod('foo');
     }
 
+    public function testMultipleExpectsUsingWith()
+    {
+        $mock = $this->mockBuilder()
+            ->expect('myWithMethod', 'myMethod')->with('foo')
+            ->get();
+        $mock->myWithMethod('foo');
+        $mock->myMethod('foo');
+    }
+
     // Abstract
 
     public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
