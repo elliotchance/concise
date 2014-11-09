@@ -102,7 +102,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $formatter = new TimeFormatter();
         $time = ', ' . $formatter->format($this->getSecondsElapsed());
         $remaining = '';
-        if ($this->getSecondsElapsed() > 5 && $this->getRemainingSeconds() > 0) {
+        if ($this->getSecondsElapsed() >= 5 && $this->getRemainingSeconds() > 0) {
             $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
         }
         $counterString = $this->counter->render($this->getTestCount());
