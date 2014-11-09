@@ -447,6 +447,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = $this->getLastElement($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
     }
+    
+    public function testStubbingMultipleMethodsWithMultipleArguments()
+    {
+        $mock = $this->niceMockBuilder()
+            ->stub('myMethod', 'mySecondMethod')
+            ->get();
+        $this->assert($mock->mySecondMethod(), is_null);
+    }
 
     // With
 

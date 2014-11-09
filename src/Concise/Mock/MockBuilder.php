@@ -127,6 +127,9 @@ class MockBuilder
     public function stub($arg)
     {
         $this->reset();
+        if (count(func_get_args()) > 1) {
+            return $this->stub(array_fill_keys(func_get_args(), null));
+        }
         if (is_array($arg)) {
             if (count($arg) === 0) {
                 throw new \Exception("stub() called with array must have at least 1 element.");
