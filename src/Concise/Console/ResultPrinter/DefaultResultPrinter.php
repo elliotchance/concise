@@ -51,7 +51,6 @@ class DefaultResultPrinter extends AbstractResultPrinter
     public function end()
     {
         $this->update();
-        $this->write("\n\n\n");
     }
 
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
@@ -110,14 +109,14 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
         $renderIssue = new RenderIssue();
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
-        $this->appendTextAbove("$message\n\n");
+        $this->appendTextAbove($message);
         ++$this->issueNumber;
     }
 
     public function appendTextAbove($text)
     {
         $this->restoreCursor();
-        $this->write(str_replace("\n", "\033[K\n", $text) . "\n");
+        $this->write(str_replace("\n", "\033[K\n", $text) . "\n\n\n\n\n");
         $this->update();
     }
 
