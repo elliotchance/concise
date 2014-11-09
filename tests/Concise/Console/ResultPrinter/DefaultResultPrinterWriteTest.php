@@ -16,13 +16,4 @@ class DefaultResultPrinterWriteTest extends TestCase
         $this->expectOutputString('foobar');
         $resultPrinter->write('foobar');
     }
-
-    public function testWillPrintThreeBlankLinesAtTheEndOfTheTestSuite()
-    {
-        $this->expectOutputString("\n\n\n");
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
-                              ->stub('update')
-                              ->get();
-        $resultPrinter->end();
-    }
 }

@@ -2,6 +2,9 @@
 
 namespace Concise;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Keywords
 {
     public static $defines = array (

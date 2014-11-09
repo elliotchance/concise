@@ -83,6 +83,7 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expose('update')
                               ->expect('write')
+                              ->stub('restoreCursor')
                               ->get();
         $resultPrinter->update();
     }
@@ -174,5 +175,49 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 200);
 
         $this->assert($resultPrinter->getAssertionString(), contains_string, '3 minutes 20 seconds');
+    }
+
+    public function testHasUpdatedIsFalseByDefault()
+    {
+        $this->assert($this->getProperty($this->resultPrinter, 'hasUpdated'), is_false);
+    }
+
+    public function testHasUpdatedIsTrueAfterUpdateIsCalled()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->get();
+        $resultPrinter->update();
+        $this->assert($this->getProperty($resultPrinter, 'hasUpdated'), is_true);
+    }
+
+    public function testWillRestoreCursorWithUpdate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->update();
+        $resultPrinter->update();
+    }
+
+    public function testWillNotRestoreCursorWithFirstUpdate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')->never()
+            ->get();
+        $resultPrinter->update();
+    }
+
+    public function testAppendTextAboveMustRestoreTheCursorAlways()
+    {
+        /** @var $resultPrinter \Concise\Console\ResultPrinter\DefaultResultPrinter */
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->stub('update')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->appendTextAbove('');
     }
 }
