@@ -33,14 +33,14 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testArrayValueRendersAsJson()
     {
-        $this->assert($this->renderer->render(array(123, "abc")), equals, '[123,"abc"]');
+        $this->assert($this->renderer->render(array(123, "abc")), equals, "[\n  123,\n  \"abc\"\n]");
     }
 
     public function testObjectValueRendersAsJson()
     {
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123}');
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":123\n}");
     }
 
     public function testTrueValueRendersAsTrue()
@@ -165,22 +165,22 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = new \stdClass();
         $obj->a = 123;
         $obj->b = 456;
-        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":123,"b":456}');
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":123,\n  \"b\":456\n}");
     }
 
     public function testMultipleArrayValuesRendersAsJson()
     {
-        $this->assert($this->renderer->render(array(1, 2)), equals, '[1,2]');
+        $this->assert($this->renderer->render(array(1, 2)), equals, "[\n  1,\n  2\n]");
     }
 
     public function testAssociativeArrayRendersAsJson()
     {
-        $this->assert($this->renderer->render(array('foo' => 'bar')), equals, '{"foo":"bar"}');
+        $this->assert($this->renderer->render(array('foo' => 'bar')), equals, "{\n  \"foo\":\"bar\"\n}");
     }
 
     public function testNumericArrayKeysAlwaysRenderAsStrings()
     {
-        $this->assert($this->renderer->render(array(123 => 'bar')), equals, '{"123":"bar"}');
+        $this->assert($this->renderer->render(array(123 => 'bar')), equals, "{\n  \"123\":\"bar\"\n}");
     }
 
     public function testNestedObjectsHideTypeHint()
@@ -188,7 +188,7 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = new \stdClass();
         $obj->a = new \stdClass();
         $obj->a->b = 456;
-        $this->assert($this->renderer->render($obj), equals, 'stdClass:{"a":{"b":456}}');
+        $this->assert($this->renderer->render($obj), equals, "stdClass:{\n  \"a\":{\n    \"b\":456\n  }\n}");
     }
 
     public function testNullWillBeColoredWhenAThemeIsSpecified()
@@ -220,7 +220,7 @@ class ValueRendererTest extends \Concise\TestCase
                          ->stub(array('getMaximumDepth' => 2))
                          ->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
-        $this->assert($renderer->render($obj), equals, 'stdClass:{"a":{"a":...}}');
+        $this->assert($renderer->render($obj), equals, "stdClass:{\n  \"a\":{\n    \"a\":...\n  }\n}");
     }
 
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays()
@@ -229,7 +229,7 @@ class ValueRendererTest extends \Concise\TestCase
                          ->stub(array('getMaximumDepth' => 2))
                          ->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
-        $this->assert($renderer->render($obj), equals, '{"a":{"a":...}}');
+        $this->assert($renderer->render($obj), equals, "{\n  \"a\":{\n    \"a\":...\n  }\n}");
     }
 
     public function testRenderAnythingConstant()
