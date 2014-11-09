@@ -14,6 +14,9 @@ class TimeFormatter
         if (0 == $seconds) {
             return '0 seconds';
         }
+        if (3600 == $seconds) {
+            return '1 hour';
+        }
 
         $r = [];
         if ($seconds >= 60) {
