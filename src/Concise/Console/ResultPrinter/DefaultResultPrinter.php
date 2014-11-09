@@ -83,7 +83,12 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function getRemainingSeconds()
     {
-        return 10;
+        if (0 == $this->getTestCount()) {
+            return -1;
+        }
+        $elapsed = time() - $this->startTime;
+        $eta = ($this->getTotalTestCount() / $this->getTestCount()) * $elapsed - $elapsed;
+        return $eta;
     }
 
     protected function getAssertionString()

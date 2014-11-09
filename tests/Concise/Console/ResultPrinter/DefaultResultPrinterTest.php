@@ -228,6 +228,17 @@ class DefaultResultPrinterTest extends TestCase
             ->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->assert($resultPrinter->getAssertionString(), contains_string, ' (10 seconds remaining)');
+        $this->assert($resultPrinter->getAssertionString(), contains_string, ' remaining');
+    }
+
+    public function testWillShowAccurateEstimate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->stub(array('getTotalTestCount' => 100, 'getTestCount' => 25))
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 60);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, ' (3 minutes remaining)');
     }
 }
