@@ -31,13 +31,4 @@ class DoActionTest extends TestCase
         $result = eval($action->getActionCode());
         $this->assert($result, equals, 'foo');
     }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage must be an instance of Closure
-     */
-    public function testConstructorWillOnlyAcceptClosure()
-    {
-        new DoAction('foo');
-    }
 }
