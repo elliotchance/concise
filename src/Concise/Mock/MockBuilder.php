@@ -131,20 +131,15 @@ class MockBuilder
     public function stub($arg)
     {
         $this->reset();
-        if (count(func_get_args()) > 1) {
-            $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
-            return $this;
-        }
-
         if (is_array($arg)) {
             if (count($arg) === 0) {
-                throw new \Exception("stub() called with array must have at least 1 element.");
+                throw new Exception("stub() called with array must have at least 1 element.");
             }
             foreach ($arg as $method => $value) {
                 $this->addRule(array($method), new Action\ReturnValueAction(array($value)));
             }
         } else {
-            $this->addRule(array($arg), new Action\ReturnValueAction(array(null)));
+            $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
         }
 
         return $this;
@@ -180,10 +175,6 @@ class MockBuilder
 	 */
     protected function hasAction($rule)
     {
-        if (!array_key_exists($rule, $this->rules)) {
-            return false;
-        }
-
         $action = $this->rules[$rule][$this->getWithKey()]['action'];
         if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
@@ -256,9 +247,11 @@ class MockBuilder
 
         $this->reset();
         $this->isExpecting = true;
-        $this->addRule(array($method), new Action\ReturnValueAction(array(null)));
+        $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
         $this->once();
-        $this->rules[$this->currentRules[0]][$this->getWithKey()]['hasSetTimes'] = false;
+        foreach (func_get_args() as $method) {
+            $this->rules[$method][$this->getWithKey()]['hasSetTimes'] = false;
+        }
 
         return $this;
     }
@@ -298,11 +291,13 @@ class MockBuilder
     {
         ArgumentChecker::check($times, 'integer');
 
-        $this->rules[$this->currentRules[0]][$this->getWithKey()]['hasSetTimes'] = true;
-        if ($times === 0) {
-            $this->andReturn(array(null));
+        foreach ($this->currentRules as $rule) {
+            $this->rules[$rule][$this->getWithKey()]['hasSetTimes'] = true;
+            if ($times === 0) {
+                $this->andReturn(array(null));
+            }
+            $this->rules[$rule][$this->getWithKey()]['times'] = $times;
         }
-        $this->rules[$this->currentRules[0]][$this->getWithKey()]['times'] = $times;
 
         return $this;
     }

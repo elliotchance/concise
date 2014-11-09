@@ -195,6 +195,15 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
     }
 
+    public function testExpectWithMultipleArguments()
+    {
+        $mock = $this->mockBuilder()
+            ->expect('myMethod', 'mySecondMethod')
+            ->get();
+        $mock->myMethod();
+        $mock->mySecondMethod();
+    }
+
     // Expose
 
     public function testExposeASingleMethod()
