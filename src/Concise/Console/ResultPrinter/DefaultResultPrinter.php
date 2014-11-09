@@ -3,6 +3,7 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Services\TimeFormatter;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
@@ -78,7 +79,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $time = ', ' . (time() - $this->startTime) . ' seconds';
+        $formatter = new TimeFormatter();
+        $time = ', ' . $formatter->format(time() - $this->startTime);
         $counterString = $this->counter->render($this->getTestCount());
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
 
