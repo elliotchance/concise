@@ -257,12 +257,11 @@ class MockBuilder
     }
 
     /**
-	 * @param string $method
 	 * @return MockBuilder
 	 */
-    public function expects($method)
+    public function expects()
     {
-        return $this->expect($method);
+        return call_user_func_array(array($this, 'expect'), func_get_args());
     }
 
     /**

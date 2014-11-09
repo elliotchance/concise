@@ -480,4 +480,10 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testSetAProptectedProperty();
     }
+
+    public function testExpectsWithMultipleArguments()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testSetAProptectedProperty();
+    }
 }
