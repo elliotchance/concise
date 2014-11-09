@@ -56,7 +56,7 @@ class MockManager
         throw new \PHPUnit_Framework_AssertionFailedError($msg);
     }
 
-    protected function getKeyForCall(array $arguments, array $expected)
+    protected function getKeyForCall($methodName, array $arguments, array $expected)
     {
         for ($i = 0; $i < count($expected); ++$i) {
             if ($expected[$i] === TestCase::ANYTHING) {
@@ -64,12 +64,12 @@ class MockManager
             }
         }
 
-        return md5(json_encode($arguments));
+        return md5($methodName . json_encode($arguments));
     }
 
-    protected function incrementCallGraphForCall(array $call, array $expected)
+    protected function incrementCallGraphForCall($methodName, array $call, array $expected)
     {
-        $key = $this->getKeyForCall($call, $expected);
+        $key = $this->getKeyForCall($methodName, $call, $expected);
         if (!array_key_exists($key, $this->callGraph)) {
             $this->callGraph[$key] = 0;
         }
@@ -81,10 +81,10 @@ class MockManager
         /** @var $instance \Concise\Mock\MockInterface */
         $instance = $mock['instance'];
         foreach ($instance->getCallsForMethod($method) as $call) {
-            $this->incrementCallGraphForCall($call, $rule['with']);
+            $this->incrementCallGraphForCall($method, $call, $rule['with']);
         }
 
-        $key = $this->getKeyForCall($rule['with'], $rule['with']);
+        $key = $this->getKeyForCall($method, $rule['with'], $rule['with']);
         if (!array_key_exists($key, $this->callGraph)) {
             $this->validateSingleWith($rule, 0, $method);
         }
