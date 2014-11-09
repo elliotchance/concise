@@ -14,7 +14,7 @@ use Concise\Validation\ArgumentChecker;
 class MockBuilder
 {
     /**
-	 * @var Concise\TestCase
+	 * @var TestCase
 	 */
     protected $testCase;
 
@@ -82,11 +82,12 @@ class MockBuilder
     protected $customClassName = '';
 
     /**
-	 * @param string   $className
-	 * @param boolean  $niceMock
-	 * @param TestCase $testCase
-	 * @param array    $constructorArgs
-	 */
+     * @param TestCase $testCase
+     * @param string $className
+     * @param boolean $niceMock
+     * @param array $constructorArgs
+     * @throws \Exception
+     */
     public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
@@ -123,9 +124,10 @@ class MockBuilder
     }
 
     /**
-	 * @param  array|string $arg
-	 * @return MockBuilder
-	 */
+     * @param  array|string $arg
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function stub($arg)
     {
         $this->reset();
@@ -191,9 +193,10 @@ class MockBuilder
     }
 
     /**
-	 * @param Action\AbstractAction $action
-	 * @return MockBuilder
-	 */
+     * @param Action\AbstractAction $action
+     * @throws \Exception
+     * @return MockBuilder
+     */
     protected function setAction(Action\AbstractAction $action)
     {
         foreach ($this->currentRules as $rule) {
@@ -212,8 +215,9 @@ class MockBuilder
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function andReturn()
     {
         if ($this->methodIsNeverExpected()) {
@@ -316,9 +320,10 @@ class MockBuilder
     }
 
     /**
-	 * Expected arguments when invoking the mock.
-	 * @return MockBuilder
-	 */
+     * Expected arguments when invoking the mock.
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function with()
     {
         $this->currentWith = func_get_args();
@@ -326,8 +331,11 @@ class MockBuilder
             $renderer = new ValueRenderer();
             $converter = new NumberToTimesConverter();
             $args = $renderer->renderAll($this->currentWith);
-            throw new Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
-                $this->currentRules[0], $args, $converter->convertToMethod($this->rules[$this->currentRules[0]][md5('null')]['times'])));
+            $times = $this->rules[$this->currentRules[0]][md5('null')]['times'];
+            $convertToMethod = $converter->convertToMethod($times);
+            throw new Exception(sprintf("%s:\n  ->expects('%s')->with(%s)->%s",
+                "When using with you must specify expectations for each with()",
+                $this->currentRules[0], $args, $convertToMethod));
         }
         $this->rules[$this->currentRules[0]][md5('null')]['times'] = -1;
         $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);
@@ -351,8 +359,9 @@ class MockBuilder
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \InvalidArgumentException
+     * @return MockBuilder
+     */
     public function disableConstructor()
     {
         if ($this->isInterface()) {
@@ -402,6 +411,8 @@ class MockBuilder
     }
 
     /**
+     * @param string $property
+     * @throws \InvalidArgumentException
      * @return MockBuilder
      */
     public function andReturnProperty($property)

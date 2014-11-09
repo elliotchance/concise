@@ -2,7 +2,9 @@
 
 namespace Concise\Console\TestRunner;
 
-class DefaultTestRunner extends \PHPUnit_TextUI_TestRunner
+use PHPUnit_TextUI_TestRunner;
+
+class DefaultTestRunner extends PHPUnit_TextUI_TestRunner
 {
     public function getPrinter()
     {

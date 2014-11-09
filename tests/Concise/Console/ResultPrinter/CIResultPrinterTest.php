@@ -19,6 +19,7 @@ class CIResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
                               ->expect('write')
                               ->stub('update')
+                              ->stub('restoreCursor')
                               ->get();
         $resultPrinter->appendTextAbove('a');
     }

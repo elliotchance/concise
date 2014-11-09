@@ -3,6 +3,8 @@
 namespace Concise\Validation;
 
 use Closure;
+use Concise\Syntax\Token\Attribute;
+use Exception;
 
 class DataTypeChecker
 {
@@ -78,7 +80,7 @@ class DataTypeChecker
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if ($expecting === $match) {
-            if (is_object($value) && $value instanceof \Concise\Syntax\Token\Attribute) {
+            if (is_object($value) && $value instanceof Attribute) {
                 $value = $this->getAttribute($value->getValue());
             }
             if (in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
@@ -116,7 +118,7 @@ class DataTypeChecker
     protected function getAttribute($name)
     {
         if (!array_key_exists($name, $this->context)) {
-            throw new \Exception("Attribute '$name' does not exist.");
+            throw new Exception("Attribute '$name' does not exist.");
         }
 
         return $this->context[$name];

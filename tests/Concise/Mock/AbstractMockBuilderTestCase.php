@@ -729,4 +729,12 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->setProperty($mock, 'hidden', 'bar');
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
     }
+
+    // MockInterface
+
+    public function testMockImplementsMockInterface()
+    {
+        $mock = $this->mockBuilder()->get();
+        $this->assert($mock, instance_of, '\Concise\Mock\MockInterface');
+    }
 }
