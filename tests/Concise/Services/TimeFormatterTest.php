@@ -51,4 +51,9 @@ class TimeFormatterTest extends TestCase
     {
         $this->assert($this->formatter->format(3600), equals, '1 hour');
     }
+
+    public function testFormattingTwoHours()
+    {
+        $this->assert($this->formatter->format(7200), equals, '2 hours');
+    }
 }
