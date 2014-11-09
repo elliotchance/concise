@@ -22,9 +22,8 @@ class DoesNotThrow extends Throws
                 $exceptionClass = get_class($exception);
                 throw new DidNotMatchException("Expected {$data[1]} not to be thrown, but $exceptionClass was thrown.");
             }
-
-            return true;
         }
-        throw new DidNotMatchException("Expected {$data[1]} not to be thrown, but nothing was thrown.");
+
+        return true;
     }
 }

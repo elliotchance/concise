@@ -19,4 +19,9 @@ class IsAnArrayTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('123 is an array');
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS, Tag::TYPES);
+    }
 }

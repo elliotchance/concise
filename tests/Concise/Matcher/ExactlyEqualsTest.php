@@ -24,4 +24,9 @@ class ExactlyEqualsTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('123 exactly equals "123"');
     }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
+    }
 }

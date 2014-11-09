@@ -34,4 +34,9 @@ class EqualsWithinTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(223, equals, 123, within, 5.0);
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
+    }
 }

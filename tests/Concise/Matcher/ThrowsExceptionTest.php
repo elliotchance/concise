@@ -45,4 +45,8 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
         }
     }
 
+    public function tags()
+    {
+        return array(Tag::EXCEPTIONS);
+    }
 }

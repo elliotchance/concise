@@ -34,4 +34,9 @@ class IsFalseTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(true, is_false);
     }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
+    }
 }

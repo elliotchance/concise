@@ -24,4 +24,9 @@ class DoesNotContainStringTest extends AbstractMatcherTestCase
     {
         $this->assert('foobar', does_not_contain_string, 'Foo');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

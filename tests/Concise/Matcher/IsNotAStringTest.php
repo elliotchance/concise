@@ -19,4 +19,9 @@ class IsNotAStringTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"123" is not a string');
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS, Tag::TYPES);
+    }
 }

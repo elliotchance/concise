@@ -21,6 +21,9 @@ if (!defined("contains")) {
 if (!defined("contains_string")) {
     define("contains_string", "contains string");
 }
+if (!defined("date")) {
+    define("date", "date");
+}
 if (!defined("does_not_contain")) {
     define("does_not_contain", "does not contain");
 }
@@ -102,6 +105,12 @@ if (!defined("gt")) {
 if (!defined("gte")) {
     define("gte", "gte");
 }
+if (!defined("has_fragment")) {
+    define("has_fragment", "has fragment");
+}
+if (!defined("has_host")) {
+    define("has_host", "has host");
+}
 if (!defined("has_item")) {
     define("has_item", "has item");
 }
@@ -114,8 +123,26 @@ if (!defined("has_key")) {
 if (!defined("has_keys")) {
     define("has_keys", "has keys");
 }
+if (!defined("has_password")) {
+    define("has_password", "has password");
+}
+if (!defined("has_path")) {
+    define("has_path", "has path");
+}
+if (!defined("has_port")) {
+    define("has_port", "has port");
+}
 if (!defined("has_property")) {
     define("has_property", "has property");
+}
+if (!defined("has_query")) {
+    define("has_query", "has query");
+}
+if (!defined("has_scheme")) {
+    define("has_scheme", "has scheme");
+}
+if (!defined("has_user")) {
+    define("has_user", "has user");
 }
 if (!defined("has_value")) {
     define("has_value", "has value");
@@ -141,6 +168,9 @@ if (!defined("is_a_number")) {
 if (!defined("is_a_string")) {
     define("is_a_string", "is a string");
 }
+if (!defined("is_after")) {
+    define("is_after", "is after");
+}
 if (!defined("is_an_array")) {
     define("is_an_array", "is an array");
 }
@@ -161,6 +191,9 @@ if (!defined("is_an_integer")) {
 }
 if (!defined("is_an_object")) {
     define("is_an_object", "is an object");
+}
+if (!defined("is_before")) {
+    define("is_before", "is before");
 }
 if (!defined("is_between")) {
     define("is_between", "is between");
@@ -279,6 +312,9 @@ if (!defined("is_truthy")) {
 if (!defined("is_unique")) {
     define("is_unique", "is unique");
 }
+if (!defined("is_valid")) {
+    define("is_valid", "is valid");
+}
 if (!defined("less_than")) {
     define("less_than", "less than");
 }
@@ -326,6 +362,9 @@ if (!defined("throws_exception")) {
 }
 if (!defined("true")) {
     define("true", "true");
+}
+if (!defined("url")) {
+    define("url", "url");
 }
 if (!defined("with_exact_value")) {
     define("with_exact_value", "with exact value");

@@ -16,9 +16,4 @@ class IsNotABoolean extends IsABoolean
     {
         return !parent::match(null, $data);
     }
-
-    public function getTags()
-    {
-        return array(Tag::BOOLEANS);
-    }
 }

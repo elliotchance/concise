@@ -29,4 +29,9 @@ class HasPropertyTest extends AbstractMatcherTestCase
         $obj->foo = null;
         $this->assert($obj, has_property, 'foo');
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS);
+    }
 }

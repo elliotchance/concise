@@ -4,7 +4,6 @@ namespace Concise\Matcher;
 
 class ThrowsTest extends AbstractExceptionTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -58,4 +57,8 @@ class ThrowsTest extends AbstractExceptionTestCase
         $this->assertMatcherFailureMessage('? throws ?', array($method, $expectedException), $failureMessage);
     }
 
+    public function tags()
+    {
+        return array(Tag::EXCEPTIONS);
+    }
 }

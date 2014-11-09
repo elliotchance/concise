@@ -14,11 +14,11 @@ class AssertionBuilderTest extends TestCase
 
     /**
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage No such matcher for syntax '? array ?'.
+	 * @expectedExceptionMessage No such matcher for syntax '? array ?' or 'equals ? string'.
 	 */
     public function testWillThrowExceptionIfAssertionCannotBeFound()
     {
-        $builder = new AssertionBuilder(array('foo', 'array', 123));
+        $builder = new AssertionBuilder(array('equals', 'array', 'string'));
         $builder->getAssertion();
     }
 
@@ -51,5 +51,14 @@ class AssertionBuilderTest extends TestCase
         $builder = new AssertionBuilder($args);
 
         return $builder->getAssertion();
+    }
+
+    /**
+     * @expectedException \Concise\Syntax\NoMatcherFoundException
+     */
+    public function testWillThrowNoMatcherFoundException()
+    {
+        $builder = new AssertionBuilder(array('foo', 'array', 123));
+        $builder->getAssertion();
     }
 }

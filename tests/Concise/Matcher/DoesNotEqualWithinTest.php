@@ -34,4 +34,9 @@ class DoesNotEqualWithinTest extends AbstractMatcherTestCase
     {
         $this->assert(223, does_not_equal, 123, within, 5.0);
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
+    }
 }

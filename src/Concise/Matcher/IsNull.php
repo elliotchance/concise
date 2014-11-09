@@ -18,6 +18,6 @@ class IsNull extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::BASIC);
+        return array(Tag::BASIC, Tag::TYPES);
     }
 }

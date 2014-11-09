@@ -27,6 +27,9 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
     }
 }
 
+/**
+ * @group ci
+ */
 class DefaultResultPrinterTest extends TestCase
 {
     public function setUp()
@@ -80,6 +83,7 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
                               ->expose('update')
                               ->expect('write')
+                              ->stub('restoreCursor')
                               ->get();
         $resultPrinter->update();
     }
@@ -137,5 +141,83 @@ class DefaultResultPrinterTest extends TestCase
                      ->stub(array('getName' => ''))
                      ->get();
         $resultPrinter->add($status, $test, new Exception());
+    }
+
+    public function testStartTimeIsNow()
+    {
+        $this->assert($this->getProperty($this->resultPrinter, 'startTime'), equals, time(), within, 1);
+    }
+
+    public function testAssertionStringIncludesTheRunTime()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '0 seconds');
+    }
+
+    public function testWillPrintCorrectTimeElapsed()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 10);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '10 seconds');
+    }
+
+    public function testUsesTimeFormatter()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getAssertionString')
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 200);
+
+        $this->assert($resultPrinter->getAssertionString(), contains_string, '3 minutes 20 seconds');
+    }
+
+    public function testHasUpdatedIsFalseByDefault()
+    {
+        $this->assert($this->getProperty($this->resultPrinter, 'hasUpdated'), is_false);
+    }
+
+    public function testHasUpdatedIsTrueAfterUpdateIsCalled()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->get();
+        $resultPrinter->update();
+        $this->assert($this->getProperty($resultPrinter, 'hasUpdated'), is_true);
+    }
+
+    public function testWillRestoreCursorWithUpdate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->update();
+        $resultPrinter->update();
+    }
+
+    public function testWillNotRestoreCursorWithFirstUpdate()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->expect('restoreCursor')->never()
+            ->get();
+        $resultPrinter->update();
+    }
+
+    public function testAppendTextAboveMustRestoreTheCursorAlways()
+    {
+        /** @var $resultPrinter \Concise\Console\ResultPrinter\DefaultResultPrinter */
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->stub('write')
+            ->stub('update')
+            ->expect('restoreCursor')
+            ->get();
+        $resultPrinter->appendTextAbove('');
     }
 }

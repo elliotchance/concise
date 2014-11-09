@@ -28,4 +28,9 @@ class StringEqualsFileTest extends AbstractFileTestCase
     {
         $this->assert('baz', equals_file, $this->createTempFile());
     }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
+    }
 }

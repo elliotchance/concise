@@ -24,4 +24,9 @@ class IsAnIntegerTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"123" is an integer');
     }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS, Tag::TYPES);
+    }
 }

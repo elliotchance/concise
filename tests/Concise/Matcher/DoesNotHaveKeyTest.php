@@ -24,4 +24,9 @@ class DoesNotHaveKeyTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(array("abc" => 123), does_not_have_key, "abc");
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }

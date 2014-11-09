@@ -24,4 +24,9 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(new \stdClass(), is_instance_of, '\Concise\Matcher\IsInstanceOfTest');
     }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
+    }
 }

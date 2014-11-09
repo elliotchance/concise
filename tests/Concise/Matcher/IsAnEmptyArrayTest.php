@@ -19,4 +19,9 @@ class IsAnEmptyArrayTest extends AbstractMatcherTestCase
     {
         $this->assertFailure(array('a'), is_empty_array);
     }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
+    }
 }
