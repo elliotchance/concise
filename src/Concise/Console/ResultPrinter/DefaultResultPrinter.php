@@ -78,10 +78,11 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
+        $time = ', 0 seconds';
         $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString);
+        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
 
-        return sprintf("%s%s%s\n", $assertionString, str_repeat(' ', $pad), $counterString);
+        return sprintf("%s%s%s%s\n", $assertionString, $time, str_repeat(' ', $pad), $counterString);
     }
 
     public function update()
