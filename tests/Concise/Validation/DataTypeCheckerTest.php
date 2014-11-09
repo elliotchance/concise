@@ -106,26 +106,26 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
     public function testWillTrimBackslashOffClass()
     {
-        $this->assert($this->dataTypeChecker->check(array('class'), '\My\Class'), equals, 'My\Class');
+        $this->assert($this->dataTypeChecker->check(array('class'), '\Concise\TestCase'), equals, 'Concise\TestCase');
     }
 
     public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass()
     {
-        $this->assert($this->dataTypeChecker->check(array('string'), '\My\Class'), equals, '\My\Class');
+        $this->assert($this->dataTypeChecker->check(array('string'), '\Concise\TestCase'), equals, '\Concise\TestCase');
     }
 
     public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
     {
-        $this->assert($this->dataTypeChecker->check(array(), '\My\Class'), equals, '\My\Class');
+        $this->assert($this->dataTypeChecker->check(array(), '\Concise\TestCase'), equals, '\Concise\TestCase');
     }
 
     public function testWillTrimBackslashOffClassWhenInAttribute()
     {
         $context = array(
-            'foo' => '\Bar',
+            'foo' => '\Concise\TestCase',
         );
         $this->dataTypeChecker->setContext($context);
-        $this->assert($this->dataTypeChecker->check(array('class'), new Attribute('foo')), equals, 'Bar');
+        $this->assert($this->dataTypeChecker->check(array('class'), new Attribute('foo')), equals, 'Concise\TestCase');
     }
 
     public function testStringsWillBeAcceptedForRegex()
@@ -158,5 +158,20 @@ class DataTypeCheckerTest extends \Concise\TestCase
         } catch (DataTypeMismatchException $e) {
             $this->assert($e->getActualType(), equals, 'integer');
         }
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such class or interface '\Concise\FooBar'
+     */
+    public function testBadClassName()
+    {
+        $this->dataTypeChecker->check(array('class'), '\Concise\FooBar');
+    }
+
+    public function testInterfaceIsAllowedForClassName()
+    {
+        $result = $this->dataTypeChecker->check(array('class'), '\Concise\Mock\MockInterface');
+        $this->assert($result, equals, 'Concise\Mock\MockInterface');
     }
 }
