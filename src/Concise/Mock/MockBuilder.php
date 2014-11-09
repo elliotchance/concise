@@ -44,7 +44,7 @@ class MockBuilder
 	 * Used internally as the active mocked method when using chained methods to builds the rules for this method.
 	 * @var string
 	 */
-    protected $currentRule;
+    protected $currentRules = array();
 
     /**
 	 * The arguments associated with this rule.
@@ -102,15 +102,17 @@ class MockBuilder
     }
 
     /**
-	 * @param string                $method
+	 * @param array                 $methods
 	 * @param Action\AbstractAction $action
 	 * @param integer               $times
 	 */
-    protected function addRule($method, Action\AbstractAction $action, $times = -1)
+    protected function addRule(array $methods, Action\AbstractAction $action, $times = -1)
     {
-        $this->currentRule = $method;
-        $this->mockedMethods[] = $method;
-        $this->rules[$method] = array();
+        $this->currentRules = $methods;
+        foreach ($methods as $method) {
+            $this->mockedMethods[] = $method;
+            $this->rules[$method] = array();
+        }
         $this->setupWith($action, $times);
     }
 
@@ -128,17 +130,19 @@ class MockBuilder
     {
         $this->reset();
         if (count(func_get_args()) > 1) {
-            return $this->stub(array_fill_keys(func_get_args(), null));
+            $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
+            return $this;
         }
+
         if (is_array($arg)) {
             if (count($arg) === 0) {
                 throw new \Exception("stub() called with array must have at least 1 element.");
             }
             foreach ($arg as $method => $value) {
-                $this->addRule($method, new Action\ReturnValueAction(array($value)));
+                $this->addRule(array($method), new Action\ReturnValueAction(array($value)));
             }
         } else {
-            $this->addRule($arg, new Action\ReturnValueAction(array(null)));
+            $this->addRule(array($arg), new Action\ReturnValueAction(array(null)));
         }
 
         return $this;
@@ -174,7 +178,7 @@ class MockBuilder
 	 */
     protected function hasAction()
     {
-        $action = $this->rules[$this->currentRule][$this->getWithKey()]['action'];
+        $action = $this->rules[$this->currentRules[0]][$this->getWithKey()]['action'];
         if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
         }
@@ -189,16 +193,16 @@ class MockBuilder
     protected function setAction(Action\AbstractAction $action)
     {
         if ($this->hasAction()) {
-            throw new Exception("{$this->currentRule}() has more than one action attached.");
+            throw new Exception("{$this->currentRules[0]}() has more than one action attached.");
         }
-        $this->rules[$this->currentRule][$this->getWithKey()]['action'] = $action;
+        $this->rules[$this->currentRules[0]][$this->getWithKey()]['action'] = $action;
 
         return $this;
     }
 
     protected function methodIsNeverExpected()
     {
-        return $this->rules[$this->currentRule][$this->getWithKey()]['times'] === 0;
+        return $this->rules[$this->currentRules[0]][$this->getWithKey()]['times'] === 0;
     }
 
     /**
@@ -207,7 +211,7 @@ class MockBuilder
     public function andReturn()
     {
         if ($this->methodIsNeverExpected()) {
-            throw new Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
+            throw new Exception("You cannot assign an action to '{$this->currentRules[0]}()' when it is never expected.");
         }
         $values = func_get_args();
 
@@ -242,9 +246,9 @@ class MockBuilder
 
         $this->reset();
         $this->isExpecting = true;
-        $this->addRule($method, new Action\ReturnValueAction(array(null)));
+        $this->addRule(array($method), new Action\ReturnValueAction(array(null)));
         $this->once();
-        $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = false;
+        $this->rules[$this->currentRules[0]][$this->getWithKey()]['hasSetTimes'] = false;
 
         return $this;
     }
@@ -284,18 +288,18 @@ class MockBuilder
     {
         ArgumentChecker::check($times, 'integer');
 
-        $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
+        $this->rules[$this->currentRules[0]][$this->getWithKey()]['hasSetTimes'] = true;
         if ($times === 0) {
             $this->andReturn(array(null));
         }
-        $this->rules[$this->currentRule][$this->getWithKey()]['times'] = $times;
+        $this->rules[$this->currentRules[0]][$this->getWithKey()]['times'] = $times;
 
         return $this;
     }
 
     protected function setupWith(Action\AbstractAction $action, $times)
     {
-        $this->rules[$this->currentRule][$this->getWithKey()] = array(
+        $this->rules[$this->currentRules[0]][$this->getWithKey()] = array(
             'action'      => $action,
             'times'       => $times,
             'with'        => $this->currentWith,
@@ -310,14 +314,14 @@ class MockBuilder
     public function with()
     {
         $this->currentWith = func_get_args();
-        if ($this->rules[$this->currentRule][md5('null')]['hasSetTimes']) {
+        if ($this->rules[$this->currentRules[0]][md5('null')]['hasSetTimes']) {
             $renderer = new ValueRenderer();
             $converter = new NumberToTimesConverter();
             $args = $renderer->renderAll($this->currentWith);
             throw new Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
-                $this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
+                $this->currentRules[0], $args, $converter->convertToMethod($this->rules[$this->currentRules[0]][md5('null')]['times'])));
         }
-        $this->rules[$this->currentRule][md5('null')]['times'] = -1;
+        $this->rules[$this->currentRules[0]][md5('null')]['times'] = -1;
         $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);
 
         return $this;

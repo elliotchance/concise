@@ -456,6 +456,14 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->mySecondMethod(), is_null);
     }
 
+    public function testFirstMethodOfMultipleStubsReceivesAction()
+    {
+        $mock = $this->niceMockBuilder()
+            ->stub('myMethod', 'mySecondMethod')->andReturn('foo')
+            ->get();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
+
     // With
 
     public function testMultipleWithIsAllowedForASingleMethod()
