@@ -23,13 +23,30 @@ function getAssertionsByTag()
     return $matchers;
 }
 
+function renderSyntax($syntax)
+{
+    return "**" . preg_replace_callback("/\\?:?([a-zA-Z_,]+)?/", function ($m) {
+            if ($m[0] == '?') {
+                return "[[mixed|Data Types]]";
+            }
+            $types = explode(",", $m[1]);
+            $r = array();
+            foreach ($types as $type) {
+                $r[] = "[[$type|Data Types]]";
+            }
+            return implode("|", $r);
+    }, $syntax) . "**";
+}
+
 function generateMarkdownItem($syntax, $description)
 {
+    $syntax = renderSyntax($syntax);
+
     if (is_null($description)) {
-        return "* `$syntax`\n";
+        return "* $syntax\n";
     }
 
-    return "* `$syntax` - $description\n";
+    return "* $syntax - $description\n";
 }
 
 /**
