@@ -70,197 +70,197 @@ Matchers
 
 ### Arrays
 
-* **[[array|Data Types]] does not have key [[string|Data Types]] with value [[mixed|Data Types]]** - Assert an array does not have key and value item.
-* **[[array|Data Types]] does not have item [[array|Data Types]]** - Assert an array does not have key and value item.
-* **[[array|Data Types]] does not have key [[int|Data Types]]|[[string|Data Types]]** - Assert an array does not have a key.
-* **[[array|Data Types]] does not have keys [[array|Data Types]]** - Assert an array does not contain any keys.
-* **[[array|Data Types]] does not have value [[mixed|Data Types]]** - Assert an array does not have any occurrences of the given value.
-* **[[array|Data Types]] does not contain [[mixed|Data Types]]** - Assert an array does not have any occurrences of the given value.
-* **[[array|Data Types]] has key [[string|Data Types]] with value [[mixed|Data Types]]** - Assert an array has key and value item.
-* **[[array|Data Types]] has item [[array|Data Types]]** - Assert an array has key and value item.
-* **[[array|Data Types]] has items [[array|Data Types]]** - Assert an array has all key and value items.
-* **[[array|Data Types]] has key [[int|Data Types]]|[[string|Data Types]]** - Assert an array has key.
-* **[[array|Data Types]] has keys [[array|Data Types]]** - Assert an array has several keys in any order.
-* **[[array|Data Types]] has value [[mixed|Data Types]]** - Assert an array has at least one occurrence of the given value.
-* **[[array|Data Types]] contains [[mixed|Data Types]]** - Assert an array has at least one occurrence of the given value.
-* **[[array|Data Types]] has values [[array|Data Types]]** - Assert an array has several values in any order.
-* **[[mixed|Data Types]] is an array** - Assert a value is an array.
-* **[[array|Data Types]] is an associative array** - Assert an array is associative.
-* **[[array|Data Types]] is empty array** - Assert an array is empty (no elements).
-* **[[array|Data Types]] is an empty array** - Assert an array is empty (no elements).
-* **[[mixed|Data Types]] is not an array** - Assert a value is not an array.
-* **[[array|Data Types]] is not an associative array** - Assert an array is associative.
-* **[[array|Data Types]] is not empty array** - Assert an array is not empty (at least one element).
-* **[[array|Data Types]] is not an empty array** - Assert an array is not empty (at least one element).
-* **[[array|Data Types]] is not unique** - Assert that an array only has at least one element that is repeated.
-* **[[array|Data Types]] is unique** - Assert that an array only contains unique values.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not have key [string](https://github.com/elliotchance/concise/wiki/Data-Types) with value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not have key and value item.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not have item [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not have key and value item.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not have key [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not have a key.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not have keys [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not contain any keys.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not have value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not have any occurrences of the given value.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) does not contain [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array does not have any occurrences of the given value.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has key [string](https://github.com/elliotchance/concise/wiki/Data-Types) with value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has key and value item.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has item [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has key and value item.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has items [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has all key and value items.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has key [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has key.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has keys [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has several keys in any order.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has at least one occurrence of the given value.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) contains [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has at least one occurrence of the given value.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) has values [array](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an array has several values in any order.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an array** - Assert a value is an array.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is an associative array** - Assert an array is associative.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is empty array** - Assert an array is empty (no elements).
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is an empty array** - Assert an array is empty (no elements).
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an array** - Assert a value is not an array.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is not an associative array** - Assert an array is associative.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is not empty array** - Assert an array is not empty (at least one element).
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is not an empty array** - Assert an array is not empty (at least one element).
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is not unique** - Assert that an array only has at least one element that is repeated.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is unique** - Assert that an array only contains unique values.
 
 ### Basic
 
-* **[[number|Data Types]] does not equal [[number|Data Types]] within [[number|Data Types]]** - Assert two values are not close to each other.
-* **[[mixed|Data Types]] equals [[mixed|Data Types]]** - Assert values with no regard to exact data types.
-* **[[mixed|Data Types]] is equal to [[mixed|Data Types]]** - Assert values with no regard to exact data types.
-* **[[number|Data Types]] equals [[number|Data Types]] within [[number|Data Types]]** - Assert two values are close to each other.
-* **[[mixed|Data Types]] is exactly equal to [[mixed|Data Types]]** - Assert two values match data type and value.
-* **[[mixed|Data Types]] exactly equals [[mixed|Data Types]]** - Assert two values match data type and value.
-* **[[mixed|Data Types]] is the same as [[mixed|Data Types]]** - Assert two values match data type and value.
-* **[[mixed|Data Types]] is not null** - Assert a value is not null.
-* **[[mixed|Data Types]] is null** - Assert a value is null.
-* **[[mixed|Data Types]] not equals [[mixed|Data Types]]** - Assert two value do not match with no regard to type.
-* **[[mixed|Data Types]] is not equal to [[mixed|Data Types]]** - Assert two value do not match with no regard to type.
-* **[[mixed|Data Types]] does not equal [[mixed|Data Types]]** - Assert two value do not match with no regard to type.
-* **[[mixed|Data Types]] is not exactly equal to [[mixed|Data Types]]** - Assert two values are of exactly the same type and value.
-* **[[mixed|Data Types]] does not exactly equal [[mixed|Data Types]]** - Assert two values are of exactly the same type and value.
-* **[[mixed|Data Types]] is not the same as [[mixed|Data Types]]** - Assert two values are of exactly the same type and value.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) does not equal [number](https://github.com/elliotchance/concise/wiki/Data-Types) within [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are not close to each other.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) equals [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert values with no regard to exact data types.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is equal to [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert values with no regard to exact data types.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) equals [number](https://github.com/elliotchance/concise/wiki/Data-Types) within [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are close to each other.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is exactly equal to [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values match data type and value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) exactly equals [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values match data type and value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is the same as [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values match data type and value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not null** - Assert a value is not null.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is null** - Assert a value is null.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) not equals [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two value do not match with no regard to type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not equal to [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two value do not match with no regard to type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) does not equal [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two value do not match with no regard to type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not exactly equal to [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are of exactly the same type and value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) does not exactly equal [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are of exactly the same type and value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not the same as [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are of exactly the same type and value.
 
 ### Booleans
 
 * **false** - Always fail.
-* **[[mixed|Data Types]] is a boolean** - Assert a value is true or false.
-* **[[mixed|Data Types]] is a bool** - Assert a value is true or false.
-* **[[mixed|Data Types]] is false** - Assert value is false.
-* **[[mixed|Data Types]] is falsy** - Assert a value is a false-like value.
-* **[[mixed|Data Types]] is not a boolean** - Assert a value is not true or false.
-* **[[mixed|Data Types]] is not a bool** - Assert a value is not true or false.
-* **[[mixed|Data Types]] is true** - Assert a value is true.
-* **[[mixed|Data Types]] is truthy** - Assert a value is a non false-like value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a boolean** - Assert a value is true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a bool** - Assert a value is true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is false** - Assert value is false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is falsy** - Assert a value is a false-like value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a boolean** - Assert a value is not true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a bool** - Assert a value is not true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is true** - Assert a value is true.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is truthy** - Assert a value is a non false-like value.
 * **true** - Always pass.
 
 ### Date and Time
 
-* **date [[int|Data Types]]|[[string|Data Types]]|[[DateTime|Data Types]] is after [[int|Data Types]]|[[string|Data Types]]|[[DateTime|Data Types]]** - A date/time is after another date/time.
-* **date [[int|Data Types]]|[[string|Data Types]]|[[DateTime|Data Types]] is before [[int|Data Types]]|[[string|Data Types]]|[[DateTime|Data Types]]** - A date/time is before another date/time.
+* **date [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)|[DateTime](https://github.com/elliotchance/concise/wiki/Data-Types) is after [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)|[DateTime](https://github.com/elliotchance/concise/wiki/Data-Types)** - A date/time is after another date/time.
+* **date [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)|[DateTime](https://github.com/elliotchance/concise/wiki/Data-Types) is before [int](https://github.com/elliotchance/concise/wiki/Data-Types)|[string](https://github.com/elliotchance/concise/wiki/Data-Types)|[DateTime](https://github.com/elliotchance/concise/wiki/Data-Types)** - A date/time is before another date/time.
 
 ### Exceptions
 
-* **[[callable|Data Types]] does not throw [[class|Data Types]]** - Assert that a specific exception is not thrown.
-* **[[callable|Data Types]] does not throw exception** - Assert that no exception is thrown.
-* **[[callable|Data Types]] throws [[class|Data Types]]** - Assert a specific exception was thrown.
-* **[[callable|Data Types]] throws anything except [[class|Data Types]]** - Assert any exception except a specific one was thrown.
-* **[[callable|Data Types]] throws exactly [[class|Data Types]]** - Assert a specific exception was thrown.
-* **[[callable|Data Types]] throws exception** - Assert an exception was thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) does not throw [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert that a specific exception is not thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) does not throw exception** - Assert that no exception is thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) throws [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a specific exception was thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) throws anything except [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert any exception except a specific one was thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) throws exactly [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a specific exception was thrown.
+* **[callable](https://github.com/elliotchance/concise/wiki/Data-Types) throws exception** - Assert an exception was thrown.
 
 ### Files
 
-* **[[string|Data Types]] does not equal file [[string|Data Types]]** - Compare string value with the contents of a file.
-* **[[string|Data Types]] equals file [[string|Data Types]]** - Compare string value with the contents of a file.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not equal file [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Compare string value with the contents of a file.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) equals file [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Compare string value with the contents of a file.
 
 ### Numbers
 
-* **[[number|Data Types]] is between [[number|Data Types]] and [[number|Data Types]]** - A number must be between two values (inclusive).
-* **[[number|Data Types]] between [[number|Data Types]] and [[number|Data Types]]** - A number must be between two values (inclusive).
-* **[[number|Data Types]] does not equal [[number|Data Types]] within [[number|Data Types]]** - Assert two values are not close to each other.
-* **[[number|Data Types]] equals [[number|Data Types]] within [[number|Data Types]]** - Assert two values are close to each other.
-* **[[mixed|Data Types]] is a number** - Assert that a value is an integer or floating-point.
-* **[[mixed|Data Types]] is an int** - Assert value is an integer type.
-* **[[mixed|Data Types]] is an integer** - Assert value is an integer type.
-* **[[number|Data Types]] is greater than [[number|Data Types]]** - A number is greater than another number.
-* **[[number|Data Types]] greater than [[number|Data Types]]** - A number is greater than another number.
-* **[[number|Data Types]] gt [[number|Data Types]]** - A number is greater than another number.
-* **[[number|Data Types]] is greater than or equal to [[number|Data Types]]** - A number is greater than or equal to another number.
-* **[[number|Data Types]] greater than or equal [[number|Data Types]]** - A number is greater than or equal to another number.
-* **[[number|Data Types]] gte [[number|Data Types]]** - A number is greater than or equal to another number.
-* **[[number|Data Types]] is less than [[number|Data Types]]** - A number is less than another number.
-* **[[number|Data Types]] less than [[number|Data Types]]** - A number is less than another number.
-* **[[number|Data Types]] lt [[number|Data Types]]** - A number is less than another number.
-* **[[number|Data Types]] is less than or equal to [[number|Data Types]]** - A number is less than or equal to another number.
-* **[[number|Data Types]] less than or equal [[number|Data Types]]** - A number is less than or equal to another number.
-* **[[number|Data Types]] lte [[number|Data Types]]** - A number is less than or equal to another number.
-* **[[mixed|Data Types]] is not a number** - Assert that a value is not an integer or floating-point.
-* **[[mixed|Data Types]] is not an int** - Assert a value is not an integer type.
-* **[[mixed|Data Types]] is not an integer** - Assert a value is not an integer type.
-* **[[mixed|Data Types]] is not numeric** - Assert value is not a number or string that represents a number.
-* **[[mixed|Data Types]] is numeric** - Assert value is a number or string that represents a number.
-* **[[number|Data Types]] is not between [[number|Data Types]] and [[number|Data Types]]** - A number must not be between two values (inclusive).
-* **[[number|Data Types]] not between [[number|Data Types]] and [[number|Data Types]]** - A number must not be between two values (inclusive).
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is between [number](https://github.com/elliotchance/concise/wiki/Data-Types) and [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number must be between two values (inclusive).
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) between [number](https://github.com/elliotchance/concise/wiki/Data-Types) and [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number must be between two values (inclusive).
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) does not equal [number](https://github.com/elliotchance/concise/wiki/Data-Types) within [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are not close to each other.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) equals [number](https://github.com/elliotchance/concise/wiki/Data-Types) within [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert two values are close to each other.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a number** - Assert that a value is an integer or floating-point.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an int** - Assert value is an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an integer** - Assert value is an integer type.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is greater than [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) greater than [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) gt [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is greater than or equal to [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than or equal to another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) greater than or equal [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than or equal to another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) gte [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is greater than or equal to another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is less than [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) less than [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) lt [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is less than or equal to [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than or equal to another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) less than or equal [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than or equal to another number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) lte [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number is less than or equal to another number.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a number** - Assert that a value is not an integer or floating-point.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an int** - Assert a value is not an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an integer** - Assert a value is not an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not numeric** - Assert value is not a number or string that represents a number.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is numeric** - Assert value is a number or string that represents a number.
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) is not between [number](https://github.com/elliotchance/concise/wiki/Data-Types) and [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number must not be between two values (inclusive).
+* **[number](https://github.com/elliotchance/concise/wiki/Data-Types) not between [number](https://github.com/elliotchance/concise/wiki/Data-Types) and [number](https://github.com/elliotchance/concise/wiki/Data-Types)** - A number must not be between two values (inclusive).
 
 ### Objects
 
-* **[[object|Data Types]] does not have property [[string|Data Types]]** - Assert that an object does not have a property.
-* **[[object|Data Types]] has property [[string|Data Types]]** - Assert that an object has a property.
-* **[[object|Data Types]] has property [[string|Data Types]] with exact value [[mixed|Data Types]]** - Assert that an object has a property with a specific exact value.
-* **[[object|Data Types]] has property [[string|Data Types]] with value [[mixed|Data Types]]** - Assert that an object has a property with a specific value.
-* **[[mixed|Data Types]] is an object** - Assert value is an object.
-* **[[object|Data Types]]|[[class|Data Types]] is an instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[object|Data Types]]|[[class|Data Types]] is instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[object|Data Types]]|[[class|Data Types]] instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[mixed|Data Types]] is not an object** - Assert a value is not an object.
-* **[[object|Data Types]] is not an instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
-* **[[object|Data Types]] is not instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
-* **[[object|Data Types]] not instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) does not have property [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert that an object does not have a property.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) has property [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert that an object has a property.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) has property [string](https://github.com/elliotchance/concise/wiki/Data-Types) with exact value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert that an object has a property with a specific exact value.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) has property [string](https://github.com/elliotchance/concise/wiki/Data-Types) with value [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert that an object has a property with a specific value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an object** - Assert value is an object.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) is an instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) is instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an object** - Assert a value is not an object.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) is not an instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) is not instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) not instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
 
 ### Regular Expressions
 
-* **[[string|Data Types]] does not match regular expression [[regex|Data Types]]** - Assert a string does not match a regular expression.
-* **[[string|Data Types]] doesnt match regular expression [[regex|Data Types]]** - Assert a string does not match a regular expression.
-* **[[string|Data Types]] does not match regex [[regex|Data Types]]** - Assert a string does not match a regular expression.
-* **[[string|Data Types]] doesnt match regex [[regex|Data Types]]** - Assert a string does not match a regular expression.
-* **[[string|Data Types]] matches regular expression [[regex|Data Types]]** - Assert a string matches a regular expression
-* **[[string|Data Types]] matches regex [[regex|Data Types]]** - Assert a string matches a regular expression
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not match regular expression [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not match a regular expression.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) doesnt match regular expression [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not match a regular expression.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not match regex [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not match a regular expression.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) doesnt match regex [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not match a regular expression.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) matches regular expression [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string matches a regular expression
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) matches regex [regex](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string matches a regular expression
 
 ### Strings
 
-* **[[string|Data Types]] contains string [[string|Data Types]]** - A string contains a substring
-* **[[string|Data Types]] contains string [[string|Data Types]] ignoring case** - A string contains a substring (ignoring case-sensitivity)
-* **[[string|Data Types]] does not contain string [[string|Data Types]]** - A string does not contain a substring.
-* **[[string|Data Types]] does not contain string [[string|Data Types]] ignoring case** - A string does not contain a substring (ignoring case-sensitivity)
-* **[[mixed|Data Types]] is a string** - Assert value is a string.
-* **[[string|Data Types]] is blank** - Assert a string is zero length.
-* **[[mixed|Data Types]] is not a string** - Assert a value is not a string.
-* **[[string|Data Types]] is not blank** - Assert a string has at least one character.
-* **[[mixed|Data Types]] does not end with [[mixed|Data Types]]** - Assert a string does not end with another string.
-* **[[string|Data Types]] does not equal file [[string|Data Types]]** - Compare string value with the contents of a file.
-* **[[mixed|Data Types]] does not start with [[mixed|Data Types]]** - Assert a string does not not start (begin) with another string.
-* **[[string|Data Types]] ends with [[string|Data Types]]** - Assert a string ends with another string.
-* **[[string|Data Types]] equals file [[string|Data Types]]** - Compare string value with the contents of a file.
-* **[[string|Data Types]] starts with [[string|Data Types]]** - Assert a string starts (begins) with another string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) contains string [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - A string contains a substring
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) contains string [string](https://github.com/elliotchance/concise/wiki/Data-Types) ignoring case** - A string contains a substring (ignoring case-sensitivity)
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not contain string [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - A string does not contain a substring.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not contain string [string](https://github.com/elliotchance/concise/wiki/Data-Types) ignoring case** - A string does not contain a substring (ignoring case-sensitivity)
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a string** - Assert value is a string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) is blank** - Assert a string is zero length.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a string** - Assert a value is not a string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) is not blank** - Assert a string has at least one character.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) does not end with [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not end with another string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) does not equal file [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Compare string value with the contents of a file.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) does not start with [mixed](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string does not not start (begin) with another string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) ends with [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string ends with another string.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) equals file [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Compare string value with the contents of a file.
+* **[string](https://github.com/elliotchance/concise/wiki/Data-Types) starts with [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert a string starts (begins) with another string.
 
 ### Types
 
-* **[[mixed|Data Types]] is a boolean** - Assert a value is true or false.
-* **[[mixed|Data Types]] is a bool** - Assert a value is true or false.
-* **[[mixed|Data Types]] is a number** - Assert that a value is an integer or floating-point.
-* **[[mixed|Data Types]] is a string** - Assert value is a string.
-* **[[mixed|Data Types]] is an array** - Assert a value is an array.
-* **[[array|Data Types]] is an associative array** - Assert an array is associative.
-* **[[mixed|Data Types]] is an int** - Assert value is an integer type.
-* **[[mixed|Data Types]] is an integer** - Assert value is an integer type.
-* **[[mixed|Data Types]] is an object** - Assert value is an object.
-* **[[mixed|Data Types]] is false** - Assert value is false.
-* **[[mixed|Data Types]] is falsy** - Assert a value is a false-like value.
-* **[[object|Data Types]]|[[class|Data Types]] is an instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[object|Data Types]]|[[class|Data Types]] is instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[object|Data Types]]|[[class|Data Types]] instance of [[class|Data Types]]** - Assert an objects class or subclass.
-* **[[mixed|Data Types]] is not a boolean** - Assert a value is not true or false.
-* **[[mixed|Data Types]] is not a bool** - Assert a value is not true or false.
-* **[[mixed|Data Types]] is not a number** - Assert that a value is not an integer or floating-point.
-* **[[mixed|Data Types]] is not a string** - Assert a value is not a string.
-* **[[mixed|Data Types]] is not an array** - Assert a value is not an array.
-* **[[array|Data Types]] is not an associative array** - Assert an array is associative.
-* **[[mixed|Data Types]] is not an int** - Assert a value is not an integer type.
-* **[[mixed|Data Types]] is not an integer** - Assert a value is not an integer type.
-* **[[mixed|Data Types]] is not an object** - Assert a value is not an object.
-* **[[object|Data Types]] is not an instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
-* **[[object|Data Types]] is not instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
-* **[[object|Data Types]] not instance of [[class|Data Types]]** - Assert than an object is not a class or subclass.
-* **[[mixed|Data Types]] is not null** - Assert a value is not null.
-* **[[mixed|Data Types]] is not numeric** - Assert value is not a number or string that represents a number.
-* **[[mixed|Data Types]] is null** - Assert a value is null.
-* **[[mixed|Data Types]] is numeric** - Assert value is a number or string that represents a number.
-* **[[mixed|Data Types]] is true** - Assert a value is true.
-* **[[mixed|Data Types]] is truthy** - Assert a value is a non false-like value.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a boolean** - Assert a value is true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a bool** - Assert a value is true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a number** - Assert that a value is an integer or floating-point.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is a string** - Assert value is a string.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an array** - Assert a value is an array.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is an associative array** - Assert an array is associative.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an int** - Assert value is an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an integer** - Assert value is an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is an object** - Assert value is an object.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is false** - Assert value is false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is falsy** - Assert a value is a false-like value.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) is an instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) is instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types)|[class](https://github.com/elliotchance/concise/wiki/Data-Types) instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert an objects class or subclass.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a boolean** - Assert a value is not true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a bool** - Assert a value is not true or false.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a number** - Assert that a value is not an integer or floating-point.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not a string** - Assert a value is not a string.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an array** - Assert a value is not an array.
+* **[array](https://github.com/elliotchance/concise/wiki/Data-Types) is not an associative array** - Assert an array is associative.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an int** - Assert a value is not an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an integer** - Assert a value is not an integer type.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not an object** - Assert a value is not an object.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) is not an instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) is not instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
+* **[object](https://github.com/elliotchance/concise/wiki/Data-Types) not instance of [class](https://github.com/elliotchance/concise/wiki/Data-Types)** - Assert than an object is not a class or subclass.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not null** - Assert a value is not null.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is not numeric** - Assert value is not a number or string that represents a number.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is null** - Assert a value is null.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is numeric** - Assert value is a number or string that represents a number.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is true** - Assert a value is true.
+* **[mixed](https://github.com/elliotchance/concise/wiki/Data-Types) is truthy** - Assert a value is a non false-like value.
 
 ### URLs
 
-* **url [[string|Data Types]] has scheme [[string|Data Types]]** - URL has scheme.
-* **url [[string|Data Types]] has host [[string|Data Types]]** - URL has host.
-* **url [[string|Data Types]] has port [[int|Data Types]]** - URL has port.
-* **url [[string|Data Types]] has user [[string|Data Types]]** - URL has user.
-* **url [[string|Data Types]] has password [[string|Data Types]]** - URL has password.
-* **url [[string|Data Types]] has path [[string|Data Types]]** - URL has path.
-* **url [[string|Data Types]] has query [[string|Data Types]]** - URL has query.
-* **url [[string|Data Types]] has fragment [[string|Data Types]]** - URL has fragment.
-* **url [[string|Data Types]] is valid** - Validate URL.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has scheme [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has scheme.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has host [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has host.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has port [int](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has port.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has user [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has user.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has password [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has password.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has path [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has path.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has query [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has query.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) has fragment [string](https://github.com/elliotchance/concise/wiki/Data-Types)** - URL has fragment.
+* **url [string](https://github.com/elliotchance/concise/wiki/Data-Types) is valid** - Validate URL.
 
 
 <!-- end matchers -->

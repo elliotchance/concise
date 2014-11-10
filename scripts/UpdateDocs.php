@@ -26,13 +26,14 @@ function getAssertionsByTag()
 function renderSyntax($syntax)
 {
     return "**" . preg_replace_callback("/\\?:?([a-zA-Z_,]+)?/", function ($m) {
+            $url = 'https://github.com/elliotchance/concise/wiki/Data-Types';
             if ($m[0] == '?') {
-                return "[[mixed|Data Types]]";
+                return "[mixed]($url)";
             }
             $types = explode(",", $m[1]);
             $r = array();
             foreach ($types as $type) {
-                $r[] = "[[$type|Data Types]]";
+                $r[] = "[$type]($url)";
             }
             return implode("|", $r);
     }, $syntax) . "**";
