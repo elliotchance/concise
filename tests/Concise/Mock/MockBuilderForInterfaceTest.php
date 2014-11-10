@@ -149,4 +149,22 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
         parent::testSetAProptectedProperty();
     }
+
+    public function testStubbingMultipleMethodsWithMultipleArguments()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
+        parent::testStubbingMultipleMethodsWithMultipleArguments();
+    }
+
+    public function testFirstMethodOfMultipleStubsReceivesAction()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
+        parent::testFirstMethodOfMultipleStubsReceivesAction();
+    }
+
+    public function testSecondMethodOfMultipleStubsReceivesAction()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
+        parent::testSecondMethodOfMultipleStubsReceivesAction();
+    }
 }
