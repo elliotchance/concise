@@ -20,7 +20,7 @@ class MockBuilderExpectTest extends TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage When using with you must specify expecations for each with():
+     * @expectedExceptionMessage When using with you must specify expectations for each with():
      * @expectedExceptionMessage ->expects('myMethod')->with("foo")->twice()
      */
     public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes()

@@ -14,7 +14,7 @@ use Concise\Validation\ArgumentChecker;
 class MockBuilder
 {
     /**
-	 * @var Concise\TestCase
+	 * @var TestCase
 	 */
     protected $testCase;
 
@@ -41,10 +41,11 @@ class MockBuilder
     protected $className;
 
     /**
-	 * Used internally as the active mocked method when using chained methods to builds the rules for this method.
-	 * @var string
+	 * Used internally as the active mocked method when using chained methods to builds the rules
+     * for this method.
+	 * @var array
 	 */
-    protected $currentRule;
+    protected $currentRules = array();
 
     /**
 	 * The arguments associated with this rule.
@@ -82,12 +83,14 @@ class MockBuilder
     protected $customClassName = '';
 
     /**
-	 * @param string   $className
-	 * @param boolean  $niceMock
-	 * @param TestCase $testCase
-	 * @param array    $constructorArgs
-	 */
-    public function __construct(TestCase $testCase, $className, $niceMock, array $constructorArgs = array())
+     * @param TestCase $testCase
+     * @param string $className
+     * @param boolean $niceMock
+     * @param array $constructorArgs
+     * @throws \Exception
+     */
+    public function __construct(TestCase $testCase, $className, $niceMock,
+        array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
         ArgumentChecker::check($niceMock,  'boolean', 3);
@@ -102,15 +105,17 @@ class MockBuilder
     }
 
     /**
-	 * @param string                $method
+	 * @param array                 $methods
 	 * @param Action\AbstractAction $action
 	 * @param integer               $times
 	 */
-    protected function addRule($method, Action\AbstractAction $action, $times = -1)
+    protected function addRule(array $methods, Action\AbstractAction $action, $times = -1)
     {
-        $this->currentRule = $method;
-        $this->mockedMethods[] = $method;
-        $this->rules[$method] = array();
+        $this->currentRules = $methods;
+        foreach ($methods as $method) {
+            $this->mockedMethods[] = $method;
+            $this->rules[$method] = array();
+        }
         $this->setupWith($action, $times);
     }
 
@@ -121,21 +126,22 @@ class MockBuilder
     }
 
     /**
-	 * @param  array|string $arg
-	 * @return MockBuilder
-	 */
+     * @param  array|string $arg
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function stub($arg)
     {
         $this->reset();
         if (is_array($arg)) {
             if (count($arg) === 0) {
-                throw new \Exception("stub() called with array must have at least 1 element.");
+                throw new Exception("stub() called with array must have at least 1 element.");
             }
             foreach ($arg as $method => $value) {
-                $this->addRule($method, new Action\ReturnValueAction(array($value)));
+                $this->addRule(array($method), new Action\ReturnValueAction(array($value)));
             }
         } else {
-            $this->addRule($arg, new Action\ReturnValueAction(array(null)));
+            $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
         }
 
         return $this;
@@ -147,7 +153,8 @@ class MockBuilder
 	 */
     public function get()
     {
-        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs, $this->disableConstructor);
+        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs,
+            $this->disableConstructor);
         if ($this->customClassName) {
             $compiler->setCustomClassName($this->customClassName);
         }
@@ -169,9 +176,9 @@ class MockBuilder
     /**
 	 * @return boolean
 	 */
-    protected function hasAction()
+    protected function hasAction($rule)
     {
-        $action = $this->rules[$this->currentRule][$this->getWithKey()]['action'];
+        $action = $this->rules[$rule][$this->getWithKey()]['action'];
         if ($action instanceof Action\ReturnValueAction && is_null(current($action->getValue()))) {
             return false;
         }
@@ -180,35 +187,42 @@ class MockBuilder
     }
 
     /**
-	 * @param Action\AbstractAction $action
-	 * @return MockBuilder
-	 */
+     * @param Action\AbstractAction $action
+     * @throws \Exception
+     * @return MockBuilder
+     */
     protected function setAction(Action\AbstractAction $action)
     {
-        if ($this->hasAction()) {
-            throw new Exception("{$this->currentRule}() has more than one action attached.");
+        foreach ($this->currentRules as $rule) {
+            if ($this->methodIsNeverExpected($rule)) {
+                $message = "You cannot assign an action to '{$rule}()' when it is never expected.";
+                throw new Exception($message);
+            }
+            if ($this->hasAction($rule)) {
+                throw new Exception("{$rule}() has more than one action attached.");
+            }
+            $this->rules[$rule][$this->getWithKey()]['action'] = $action;
         }
-        $this->rules[$this->currentRule][$this->getWithKey()]['action'] = $action;
 
         return $this;
     }
 
-    protected function methodIsNeverExpected()
+    /**
+     * @param string $rule
+     * @return bool
+     */
+    protected function methodIsNeverExpected($rule)
     {
-        return $this->rules[$this->currentRule][$this->getWithKey()]['times'] === 0;
+        return $this->rules[$rule][$this->getWithKey()]['times'] === 0;
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function andReturn()
     {
-        if ($this->methodIsNeverExpected()) {
-            throw new Exception("You cannot assign an action to '{$this->currentRule}()' when it is never expected.");
-        }
-        $values = func_get_args();
-
-        return $this->setAction(new Action\ReturnValueAction($values));
+        return $this->setAction(new Action\ReturnValueAction(func_get_args()));
     }
 
     /**
@@ -239,20 +253,21 @@ class MockBuilder
 
         $this->reset();
         $this->isExpecting = true;
-        $this->addRule($method, new Action\ReturnValueAction(array(null)));
+        $this->addRule(func_get_args(), new Action\ReturnValueAction(array(null)));
         $this->once();
-        $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = false;
+        foreach (func_get_args() as $method) {
+            $this->rules[$method][$this->getWithKey()]['hasSetTimes'] = false;
+        }
 
         return $this;
     }
 
     /**
-	 * @param string $method
 	 * @return MockBuilder
 	 */
-    public function expects($method)
+    public function expects()
     {
-        return $this->expect($method);
+        return call_user_func_array(array($this, 'expect'), func_get_args());
     }
 
     /**
@@ -281,40 +296,47 @@ class MockBuilder
     {
         ArgumentChecker::check($times, 'integer');
 
-        $this->rules[$this->currentRule][$this->getWithKey()]['hasSetTimes'] = true;
-        if ($times === 0) {
-            $this->andReturn(array(null));
+        foreach ($this->currentRules as $rule) {
+            $this->rules[$rule][$this->getWithKey()]['hasSetTimes'] = true;
+            $this->rules[$rule][$this->getWithKey()]['times'] = $times;
         }
-        $this->rules[$this->currentRule][$this->getWithKey()]['times'] = $times;
 
         return $this;
     }
 
     protected function setupWith(Action\AbstractAction $action, $times)
     {
-        $this->rules[$this->currentRule][$this->getWithKey()] = array(
-            'action'      => $action,
-            'times'       => $times,
-            'with'        => $this->currentWith,
-            'hasSetTimes' => false,
-        );
+        foreach ($this->currentRules as $rule) {
+            $this->rules[$rule][$this->getWithKey()] = array(
+                'action'      => $action,
+                'times'       => $times,
+                'with'        => $this->currentWith,
+                'hasSetTimes' => false,
+            );
+        }
     }
 
     /**
-	 * Expected arguments when invoking the mock.
-	 * @return MockBuilder
-	 */
+     * Expected arguments when invoking the mock.
+     * @throws \Exception
+     * @return MockBuilder
+     */
     public function with()
     {
         $this->currentWith = func_get_args();
-        if ($this->rules[$this->currentRule][md5('null')]['hasSetTimes']) {
-            $renderer = new ValueRenderer();
-            $converter = new NumberToTimesConverter();
-            $args = $renderer->renderAll($this->currentWith);
-            throw new Exception(sprintf("When using with you must specify expecations for each with():\n  ->expects('%s')->with(%s)->%s",
-                $this->currentRule, $args, $converter->convertToMethod($this->rules[$this->currentRule][md5('null')]['times'])));
+        foreach ($this->currentRules as $rule) {
+            if ($this->rules[$rule][md5('null')]['hasSetTimes']) {
+                $renderer = new ValueRenderer();
+                $converter = new NumberToTimesConverter();
+                $args = $renderer->renderAll($this->currentWith);
+                $times = $this->rules[$rule][md5('null')]['times'];
+                $convertToMethod = $converter->convertToMethod($times);
+                throw new Exception(sprintf("%s:\n  ->expects('%s')->with(%s)->%s",
+                        "When using with you must specify expectations for each with()",
+                        $rule, $args, $convertToMethod));
+            }
+            $this->rules[$rule][md5('null')]['times'] = -1;
         }
-        $this->rules[$this->currentRule][md5('null')]['times'] = -1;
         $this->setupWith(new Action\ReturnValueAction(array(null)), $this->isExpecting ? 1 : -1);
 
         return $this;
@@ -336,12 +358,14 @@ class MockBuilder
     }
 
     /**
-	 * @return MockBuilder
-	 */
+     * @throws \InvalidArgumentException
+     * @return MockBuilder
+     */
     public function disableConstructor()
     {
         if ($this->isInterface()) {
-            throw new InvalidArgumentException("You cannot disable the constructor of an interface ({$this->className}).");
+            $message = "You cannot disable the constructor of an interface ({$this->className}).";
+            throw new InvalidArgumentException($message);
         }
         $this->disableConstructor = true;
 
@@ -387,6 +411,8 @@ class MockBuilder
     }
 
     /**
+     * @param string $property
+     * @throws \InvalidArgumentException
      * @return MockBuilder
      */
     public function andReturnProperty($property)
@@ -394,7 +420,8 @@ class MockBuilder
         ArgumentChecker::check($property, 'string');
 
         if ($this->isInterface()) {
-            throw new InvalidArgumentException("You cannot return a property from an interface ({$this->className}).");
+            $message = "You cannot return a property from an interface ({$this->className}).";
+            throw new InvalidArgumentException($message);
         }
 
         return $this->setAction(new Action\ReturnPropertyAction($property));

@@ -2,13 +2,15 @@
 
 namespace Concise;
 
-use Concise\Syntax\Lexer;
-use Concise\Services\ValueRenderer;
 use Concise\Services\ValueDescriptor;
+use Concise\Services\ValueRenderer;
+use Concise\Syntax\Lexer;
+use Concise\Syntax\Token\Attribute;
 use Concise\Validation\DataTypeChecker;
 use Concise\Validation\ArgumentChecker;
-use InvalidArgumentException;
 use Exception;
+use InvalidArgumentException;
+use PHPUnit_Framework_AssertionFailedError;
 
 class Assertion
 {
@@ -102,15 +104,17 @@ class Assertion
     }
 
     /**
-	 * @param  array $arguments
-	 * @return array
-	 */
+     * @param  array $arguments
+     * @throws Exception
+     * @return array
+     */
     protected function checkDataTypes(array $arguments)
     {
         $checker = new DataTypeChecker();
         $checker->setContext($this->getData());
         $lexer = new Lexer();
         $parse = $lexer->parse($this->originalSyntax);
+        /** @var $args \Concise\Syntax\Token\Attribute[] */
         $args = $parse['arguments'];
         $len = count($args);
         $r = array();
@@ -154,7 +158,7 @@ class Assertion
         $len = count($arguments);
         for ($i = 0; $i < $len; ++$i) {
             $arg = $arguments[$i];
-            if ($arg instanceof \Concise\Syntax\Token\Attribute) {
+            if ($arg instanceof Attribute) {
                 $args[$i] = $data[(string) $arg];
             } else {
                 $args[$i] = $arg;
@@ -167,8 +171,9 @@ class Assertion
     }
 
     /**
-	 * @return void
-	 */
+     * @throws PHPUnit_Framework_AssertionFailedError
+     * @return void
+     */
     protected function executeAssertion()
     {
         $lexer = new Lexer();
@@ -177,7 +182,7 @@ class Assertion
         $answer = $this->getMatcher()->match($this->originalSyntax, $args);
         if (true !== $answer && null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
-            throw new \PHPUnit_Framework_AssertionFailedError($message);
+            throw new PHPUnit_Framework_AssertionFailedError($message);
         }
     }
 

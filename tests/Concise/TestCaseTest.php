@@ -2,6 +2,12 @@
 
 namespace Concise;
 
+// This must go outside of any testing code becuase we know that the constants are available before
+// test initialisation.
+if (!defined('has_key')) {
+    throw new \Exception("Constants not initalised.");
+}
+
 class TestCaseTest extends TestCase
 {
     public function testExtendsTestCase()

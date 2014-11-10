@@ -138,7 +138,7 @@ class ClassCompiler
 
             return $prototypeBuilder->getPrototype($realMethod);
         } catch (ReflectionException $e) {
-            return $prototypeBuilder->getPrototypeForNonExistantMethod($method);
+            return $prototypeBuilder->getPrototypeForNonExistentMethod($method);
         }
     }
 
@@ -196,7 +196,8 @@ EOF;
         $actionCode = '';
         $defaultActionCode = '';
 
-        foreach ($withs as $withKey => $rule) {
+        foreach ($withs as $rule) {
+            /** @var $action \Concise\Mock\Action\AbstractAction */
             $action = $rule['action'];
             if (null === $rule['with']) {
                 $defaultActionCode = $action->getActionCode();
@@ -317,7 +318,15 @@ EOF;
         $methods = implode("\n", $this->methods);
         $superWord = $this->getSuperWord($refClass);
 
-        return $code . "class {$this->getMockName()} $superWord \\{$this->className} { public static \$_methodCalls = array(); $methods }";
+        $class = "class {$this->getMockName()} $superWord \\{$this->className}";
+        if ('implements' === $superWord) {
+            $class .= ', ';
+        } else {
+            $class .= ' implements ';
+        }
+        $class .= '\Concise\Mock\MockInterface';
+
+        return $code . "$class { public static \$_methodCalls = array(); $methods }";
     }
 
     /**
@@ -333,6 +342,9 @@ EOF;
         return $this->getClassName() . $this->mockUnique;
     }
 
+    /**
+     * @return string
+     */
     protected function getMockNamespaceName()
     {
         return $this->getNamespaceName($this->customClassName);
@@ -344,8 +356,12 @@ EOF;
 	 */
     public function newInstance()
     {
-        $getInstance = "return new \\ReflectionClass('{$this->getMockNamespaceName()}\\{$this->getMockName()}');";
-        $reflect = eval($this->generateCode() . $getInstance);
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $name = "{$this->getMockNamespaceName()}\\{$this->getMockName()}";
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $code = $this->generateCode();
+        /** @var $reflect \ReflectionClass */
+        $reflect = eval("$code return new \\ReflectionClass('$name');");
 
         try {
             return $reflect->newInstanceArgs($this->constructorArgs);
@@ -365,6 +381,7 @@ EOF;
 
     /**
      * @param string $className
+     * @throws \InvalidArgumentException
      */
     public function setCustomClassName($className)
     {

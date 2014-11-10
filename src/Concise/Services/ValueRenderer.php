@@ -68,6 +68,7 @@ class ValueRenderer
             return "{\n" . $r . "\n" . $this->createIndent($depth) . "}";
         }
 
+        /** @noinspection PhpUnusedParameterInspection */
         $r = $this->jsonEncodeCallback((array) $value, $depth + 1, function ($k, $v) use ($depth, $self) {
             return $self->render($v, false, $depth + 1);
         });
@@ -81,9 +82,11 @@ class ValueRenderer
     }
 
     /**
-	 * @param  mixed $value
-	 * @return string
-	 */
+     * @param  mixed $value
+     * @param bool $showTypeHint
+     * @param int $depth
+     * @return string
+     */
     public function render($value, $showTypeHint = true, $depth = 0)
     {
         if ($depth >= $this->getMaximumDepth()) {
