@@ -23,13 +23,31 @@ function getAssertionsByTag()
     return $matchers;
 }
 
+function renderSyntax($syntax)
+{
+    return "**" . preg_replace_callback("/\\?:?([a-zA-Z_,]+)?/", function ($m) {
+            $url = 'https://github.com/elliotchance/concise/wiki/Data-Types';
+            if ($m[0] == '?') {
+                return "[mixed]($url)";
+            }
+            $types = explode(",", $m[1]);
+            $r = array();
+            foreach ($types as $type) {
+                $r[] = "[$type]($url)";
+            }
+            return implode("|", $r);
+    }, $syntax) . "**";
+}
+
 function generateMarkdownItem($syntax, $description)
 {
+    $syntax = renderSyntax($syntax);
+
     if (is_null($description)) {
-        return "* `$syntax`\n";
+        return "* $syntax\n";
     }
 
-    return "* `$syntax` - $description\n";
+    return "* $syntax - $description\n";
 }
 
 /**
@@ -110,26 +128,10 @@ function refreshKeywords()
 
     unset($defines['']);
     ksort($defines);
-    $d = var_export($defines, true);
 
-    $php = <<<EOF
-<?php
-
-namespace Concise;
-
-class Keywords
-{
-    public static \$defines = $d;
-
-    public static function load()
-    {
-        foreach (self::\$defines as \$k => \$v) {
-            if (!defined(\$k)) {
-                define(\$k, \$v);
-            }
-        }
+    $php = "<?php\n\nnamespace Concise;\n\nclass Keywords\n{\n    public static function load()\n    {    \n    }\n}\n\n";
+    foreach ($defines as $k => $v) {
+        $php .= "if (!defined(\"$k\")) {\n    define(\"$k\", \"$v\");\n}\n";
     }
-}
-EOF;
     file_put_contents(__DIR__ . '/../src/Concise/Keywords.php', $php);
 }
