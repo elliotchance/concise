@@ -173,28 +173,36 @@ class Assertion
 
     /**
      * @throws PHPUnit_Framework_AssertionFailedError
-     * @return void
+     * @return mixed
      */
     protected function executeAssertion()
     {
         $lexer = new Lexer();
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
+
         try {
             $answer = $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
             throw new PHPUnit_Framework_AssertionFailedError($e->getMessage());
         }
+
         if (true !== $answer && null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+
+        return $answer;
     }
 
+    /**
+     * @return mixed
+     */
     public function run()
     {
-        $this->executeAssertion();
+        $r = $this->executeAssertion();
         $this->testCase->assertTrue(true);
+        return $r;
     }
 
     /**

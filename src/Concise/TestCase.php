@@ -131,7 +131,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * @param  string $assertionString
+	 * @param string $assertionString
+     * @return mixed
 	 */
     public function assert($assertionString)
     {
@@ -144,7 +145,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         if ($this instanceof TestCase) {
             $assertion->setTestCase($this);
         }
-        $assertion->run();
+        return $assertion->run();
     }
 
     public function tearDown()
