@@ -163,7 +163,8 @@ class MatcherParser
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
             $class = "Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-            if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher')) {
+            if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher') &&
+                $class != 'Concise\Matcher\AbstractNestedMatcher') {
                 $this->registerMatcher(new $class());
             }
         }

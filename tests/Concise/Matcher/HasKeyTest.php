@@ -29,4 +29,9 @@ class HasKeyTest extends AbstractMatcherTestCase
     {
         return array(Tag::ARRAYS);
     }
+
+    public function testThisMatcherCanBeNested()
+    {
+        $this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractNestedMatcher');
+    }
 }

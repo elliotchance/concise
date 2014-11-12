@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class HasKey extends AbstractMatcher
+class HasKey extends AbstractNestedMatcher
 {
     const DESCRIPTION = 'Assert an array has key.';
 
