@@ -34,4 +34,12 @@ class HasKeyTest extends AbstractMatcherTestCase
     {
         $this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractNestedMatcher');
     }
+
+    /**
+     * @expectedException \Concise\Matcher\DidNotMatchException
+     */
+    public function testFailureThrowsException()
+    {
+        $this->matcher->match(null, array(array(), 'foo'));
+    }
 }

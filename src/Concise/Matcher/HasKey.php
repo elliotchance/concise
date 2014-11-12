@@ -15,7 +15,10 @@ class HasKey extends AbstractNestedMatcher
 
     public function match($syntax, array $data = array())
     {
-        return array_key_exists($data[1], $data[0]);
+        if (!array_key_exists($data[1], $data[0])) {
+            throw new DidNotMatchException();
+        }
+        return true;
     }
 
     public function getTags()

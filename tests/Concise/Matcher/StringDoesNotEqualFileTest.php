@@ -11,12 +11,12 @@ class StringDoesNotEqualFileTest extends AbstractFileTestCase
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \Concise\Matcher\DidNotMatchException
      * @expectedExceptionMessage File 'bar' does not exist.
      */
     public function testExceptionIsThrownIfFileDoesNotExist()
     {
-        $this->assert('foo', does_not_equal_file, 'bar');
+        $this->matcher->match(null, array('foo', 'bar'));
     }
 
     public function testWillFailIfStringDoesNotMatchFile()

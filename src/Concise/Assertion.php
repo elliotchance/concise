@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Matcher\DidNotMatchException;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
@@ -179,7 +180,11 @@ class Assertion
         $lexer = new Lexer();
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
-        $answer = $this->getMatcher()->match($this->originalSyntax, $args);
+        try {
+            $answer = $this->getMatcher()->match($this->originalSyntax, $args);
+        } catch (DidNotMatchException $e) {
+            throw new PHPUnit_Framework_AssertionFailedError($e->getMessage());
+        }
         if (true !== $answer && null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);

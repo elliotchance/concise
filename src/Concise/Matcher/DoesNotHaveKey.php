@@ -15,6 +15,9 @@ class DoesNotHaveKey extends HasKey
 
     public function match($syntax, array $data = array())
     {
-        return !parent::match(null, $data);
+        if (array_key_exists($data[1], $data[0])) {
+            throw new DidNotMatchException();
+        }
+        return true;
     }
 }
