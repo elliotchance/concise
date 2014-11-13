@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class DoesNotHaveKey extends HasKey
+class DoesNotHaveKey extends AbstractMatcher
 {
     const DESCRIPTION = 'Assert an array does not have a key.';
 
@@ -15,9 +15,11 @@ class DoesNotHaveKey extends HasKey
 
     public function match($syntax, array $data = array())
     {
-        if (array_key_exists($data[1], $data[0])) {
-            throw new DidNotMatchException();
-        }
-        return true;
+        return !array_key_exists($data[1], $data[0]);
+    }
+
+    public function getTags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

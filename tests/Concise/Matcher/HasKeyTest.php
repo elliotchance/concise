@@ -43,8 +43,13 @@ class HasKeyTest extends AbstractMatcherTestCase
         $this->matcher->match(null, array(array(), 'foo'));
     }
 
-    public function testNestedException()
+    public function testNestedAssertion()
     {
         $this->assert($this->assert(array("abc" => 123), has_key, "abc"), equals, 123);
+    }
+
+    public function testNestedFailureAssertion()
+    {
+        $this->assertFailure($this->assert(array("abc" => 123), has_key, "abc"), equals, 124);
     }
 }

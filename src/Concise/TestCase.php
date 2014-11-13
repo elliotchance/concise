@@ -130,24 +130,31 @@ class TestCase extends PHPUnit_Framework_TestCase
         );
     }
 
+    protected function createAssertion(array $args)
+    {
+        if (count($args) > 1 || is_bool($args[0])) {
+            $builder = new AssertionBuilder($args);
+            return $builder->getAssertion();
+        }
+
+        return $this->getMatcherParserInstance()->compile($args[0], $this->getData());
+    }
+
     /**
-	 * @param string $assertionString
      * @return mixed
 	 */
-    public function assert($assertionString)
+    public function assert()
     {
-        if (count(func_get_args()) > 1 || is_bool($assertionString)) {
-            $builder = new AssertionBuilder(func_get_args());
-            $assertion = $builder->getAssertion();
-        } else {
-            $assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
-        }
+        $assertion = $this->createAssertion(func_get_args());
         if ($this instanceof TestCase) {
             $assertion->setTestCase($this);
         }
         return $assertion->run();
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $this->mockManager->validateMocks();

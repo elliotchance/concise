@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Matcher\AbstractNestedMatcher;
 use Concise\Matcher\DidNotMatchException;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
@@ -184,10 +185,13 @@ class Assertion
         try {
             $answer = $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
+            // @test DidNotMatchExceptionIsConvertedIntoAssertionFailedError
+            // @test AnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError
             throw new PHPUnit_Framework_AssertionFailedError($e->getMessage());
         }
 
-        if (true !== $answer && null !== $answer) {
+        // @test
+        if (!$this->getMatcher() instanceof AbstractNestedMatcher && true !== $answer && null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
