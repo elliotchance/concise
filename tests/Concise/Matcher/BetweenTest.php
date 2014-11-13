@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class BetweenTest extends AbstractMatcherTestCase
+class BetweenTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {

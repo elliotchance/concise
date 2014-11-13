@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class HasKeyTest extends AbstractMatcherTestCase
+class HasKeyTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {
@@ -28,11 +28,6 @@ class HasKeyTest extends AbstractMatcherTestCase
     public function tags()
     {
         return array(Tag::ARRAYS);
-    }
-
-    public function testThisMatcherCanBeNested()
-    {
-        $this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractNestedMatcher');
     }
 
     /**
