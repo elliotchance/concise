@@ -39,4 +39,14 @@ class BetweenTest extends AbstractNestedMatcherTestCase
     {
         return array(Tag::NUMBERS);
     }
+
+    public function testNestedAssertionSuccess()
+    {
+        $this->assert($this->assert(5, between, 0, 'and', 10), exactly_equals, 5);
+    }
+
+    public function testNestedAssertionFailure()
+    {
+        $this->assertFailure($this->assert(5, between, 0, 'and', 10), exactly_equals, 6);
+    }
 }

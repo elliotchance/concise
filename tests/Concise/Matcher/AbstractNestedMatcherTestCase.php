@@ -8,4 +8,8 @@ abstract class AbstractNestedMatcherTestCase extends AbstractMatcherTestCase
     {
         $this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractNestedMatcher');
     }
+
+    abstract public function testNestedAssertionSuccess();
+
+    abstract public function testNestedAssertionFailure();
 }

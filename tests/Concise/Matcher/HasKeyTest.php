@@ -38,13 +38,13 @@ class HasKeyTest extends AbstractNestedMatcherTestCase
         $this->matcher->match(null, array(array(), 'foo'));
     }
 
-    public function testNestedAssertion()
+    public function testNestedAssertionSuccess()
     {
-        $this->assert($this->assert(array("abc" => 123), has_key, "abc"), equals, 123);
+        $this->assert($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 123);
     }
 
-    public function testNestedFailureAssertion()
+    public function testNestedAssertionFailure()
     {
-        $this->assertFailure($this->assert(array("abc" => 123), has_key, "abc"), equals, 124);
+        $this->assertFailure($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 124);
     }
 }
