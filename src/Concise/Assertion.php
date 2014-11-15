@@ -184,7 +184,6 @@ class Assertion
         try {
             return $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
-            // @test AnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError
             throw new PHPUnit_Framework_AssertionFailedError($e->getMessage());
         }
     }
