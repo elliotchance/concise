@@ -2,10 +2,11 @@
 
 namespace Concise;
 
-use Concise\Matcher\Equals;
-use \Concise\Syntax\MatcherParser;
-use \Concise\Matcher\True;
-use \Concise\Matcher\False;
+use Concise\Matcher\Between;
+use Concise\Syntax\MatcherParser;
+use Concise\Matcher\True;
+use Concise\Matcher\False;
+use PHPUnit_Framework_AssertionFailedError;
 
 class AssertionTest extends TestCase
 {
@@ -133,5 +134,22 @@ class AssertionTest extends TestCase
     {
         $assertion = new Assertion('true', new True());
         $assertion->setOriginalSyntax(123);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
+    {
+        $block = function () {
+            $assertion = $this->niceMock('Concise\Assertion')
+                ->disableConstructor()
+                ->expose('performMatch')
+                ->stub(array('getMatcher' => new Between()))
+                ->get();
+
+            $assertion->performMatch(array(10, 0, 5));
+        };
+        $this->assert($block, throws, '\PHPUnit_Framework_AssertionFailedError');
     }
 }
