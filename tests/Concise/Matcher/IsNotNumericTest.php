@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotNumericTest extends AbstractMatcherTestCase
 {
     public function setUp()

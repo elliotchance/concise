@@ -4,6 +4,9 @@ namespace Concise\Matcher;
 
 use DateTime;
 
+/**
+ * @group matcher
+ */
 class DateIsAfterTest extends AbstractMatcherTestCase
 {
     public function setUp()

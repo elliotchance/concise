@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsTruthyTest extends AbstractMatcherTestCase
 {
     public function setUp()

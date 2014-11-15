@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class ContainsStringTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
@@ -30,11 +33,17 @@ class ContainsStringTest extends AbstractNestedMatcherTestCase
         return array(Tag::STRINGS);
     }
 
+    /**
+     * @group #219
+     */
     public function testNestedAssertionSuccess()
     {
         $this->assert($this->assert('foobar', contains_string, 'oob'), exactly_equals, 'foobar');
     }
 
+    /**
+     * @group #219
+     */
     public function testNestedAssertionFailure()
     {
         $this->assertFailure($this->assert('foobar', contains_string, 'oob'), exactly_equals, 'Foo');

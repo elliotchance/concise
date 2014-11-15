@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotABooleanTest extends AbstractMatcherTestCase
 {
     public function setUp()

@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class StringEqualsFileTest extends AbstractFileTestCase
 {
     public function setUp()

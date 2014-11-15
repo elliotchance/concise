@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
@@ -30,11 +33,17 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
         return array(Tag::STRINGS);
     }
 
+    /**
+     * @group #219
+     */
     public function testNestedAssertionSuccess()
     {
         $this->assert($this->assert('foobar', does_not_contain_string, 'baz', ignoring_case), exactly_equals, 'foobar');
     }
 
+    /**
+     * @group #219
+     */
     public function testNestedAssertionFailure()
     {
         $this->assertFailure($this->assert('foobar', does_not_contain_string, 'baz', ignoring_case), exactly_equals, 'Foo');

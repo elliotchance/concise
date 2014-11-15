@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasKeyTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
