@@ -179,12 +179,13 @@ class Assertion
      * @param array $args
      * @return mixed
      */
-    protected function performMatch(array $args)
+    protected function performMatch($syntax, array $args)
     {
         try {
             return $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
-            throw new PHPUnit_Framework_AssertionFailedError($e->getMessage());
+            $message = $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
+            throw new PHPUnit_Framework_AssertionFailedError($message);
         }
     }
 
@@ -198,10 +199,10 @@ class Assertion
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
 
-        $answer = $this->performMatch($args);
+        $answer = $this->performMatch($result['syntax'], $args);
 
-        // @test
-        if (!$this->getMatcher() instanceof AbstractNestedMatcher && true !== $answer && null !== $answer) {
+        if (!$this->getMatcher() instanceof AbstractNestedMatcher && true !== $answer &&
+            null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }

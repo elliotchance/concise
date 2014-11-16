@@ -1,13 +1,17 @@
 concise
 =======
 
-[![Latest Stable Version](https://poser.pugx.org/elliotchance/concise/v/stable.svg)](https://packagist.org/packages/elliotchance/concise)
-[![Total Downloads](https://poser.pugx.org/elliotchance/concise/downloads.svg)](https://packagist.org/packages/elliotchance/concise)
+[![Build Status](https://travis-ci.org/elliotchance/concise.svg?branch=master)](https://travis-ci.org/elliotchance/concise) [![Coverage Status](https://img.shields.io/coveralls/elliotchance/concise.svg)](https://coveralls.io/r/elliotchance/concise?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elliotchance/concise/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elliotchance/concise/?branch=master)
 
-[![Build Status](https://travis-ci.org/elliotchance/concise.svg?branch=master)](https://travis-ci.org/elliotchance/concise) [![Coverage Status](https://img.shields.io/coveralls/elliotchance/concise.svg)](https://coveralls.io/r/elliotchance/concise?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elliotchance/concise/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elliotchance/concise/?branch=master)
+![](https://raw.githubusercontent.com/wiki/elliotchance/concise/image-concise-command.png)
 
 Concise is unit test framework for using plain English and minimal code, built on PHPUnit.
+
+Highlights include:
+
+ * 100% compatible with PHPUnit, no changes required. You may use as many features as you like.
+ * Much better mocking framework with a lot less typing.
+ * Huge array of assertions to save on boilerplate code.
 
 Simple Example
 --------------
@@ -41,7 +45,7 @@ class AttributeTest extends TestCase
 Mocking
 -------
 
-Mocking is much easier in concise, you no longer need to specify which method to mock:
+Mocking is much easier in concise:
 
 ```php
 $calculator = $this->mock('\My\Calculator')
@@ -264,46 +268,3 @@ Matchers
 
 
 <!-- end matchers -->
-
-### Adding Custom Matchers
-
-Create the matcher class:
-
-```php
-class MyMatcher extends \Concise\Matcher\AbstractMatcher
-{
-	/**
-	 * @return array All of the syntaxes this matcher will respond to.
-	 */
-	public function supportedSyntaxes()
-	{
-		return array(
-			'? equals ?',
-			'? is equal to ?'
-		);
-	}
-	
-	/**
-	 * Perform the match.
-	 * @param string $syntax The syntax that we are evaluating (like '? equals ?').
-	 * @param array $data Placeholders are matched to indicies of $data.
-	 * @return TRUE on success, FALSE for failure.
-	 */
-	public function match($syntax, array $data = array())
-	{
-		return ($data[0] == $data[1]);
-	}
-
-	public function getTags()
-	{
-		return array(\Concise\Matcher\Tag::BASIC);
-	}
-}
-```
-
-Somewhere in your test (or your bootstrap) you can get the default parser and register your class:
-
-```php
-$defaultParser = \Concise\Syntax\MatcherParser::getInstance();
-$defaultParser->registerMatcher(new MyMatcher());
-```

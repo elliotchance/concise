@@ -149,7 +149,7 @@ class AssertionTest extends TestCase
                 ->stub(array('getMatcher' => new Between()))
                 ->get();
 
-            $assertion->performMatch(array(10, 0, 5));
+            $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
         };
         $this->assert($block, throws, '\PHPUnit_Framework_AssertionFailedError');
     }
@@ -170,6 +170,26 @@ class AssertionTest extends TestCase
             ->stub(array('getMatcher' => $matcher))
             ->get();
 
-        $assertion->performMatch(array(10, 0, 5));
+        $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
+    }
+
+    /**
+     * @group #219
+     */
+    public function testDidNotMatchExceptionWithNoMessageWillUseSyntaxRenderer()
+    {
+        try {
+            $assertion = $this->niceMock('Concise\Assertion')
+                ->disableConstructor()
+                ->expose('performMatch')
+                ->stub(array('getMatcher' => new Between()))
+                ->get();
+
+            $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+            $this->assert($e->getMessage(), contains_string, 'is between');
+            return;
+        }
+        $this->assert(false);
     }
 }
