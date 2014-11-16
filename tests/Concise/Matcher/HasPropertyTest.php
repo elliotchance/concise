@@ -2,39 +2,57 @@
 
 namespace Concise\Matcher;
 
+use stdClass;
+
 /**
  * @group matcher
  */
-class HasPropertyTest extends AbstractMatcherTestCase
+class HasPropertyTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {
         parent::setUp();
         $this->matcher = new HasProperty();
+        $this->obj = new stdClass();
     }
 
     public function testObjectDoesNotHaveAProperty()
     {
-        $obj = new \stdClass();
-        $this->assertFailure($obj, has_property, 'foo');
+        $this->assertFailure($this->obj, has_property, 'foo');
     }
 
     public function testObjectDoesHaveAProperty()
     {
-        $obj = new \stdClass();
-        $obj->foo = 'bar';
-        $this->assert($obj, has_property, 'foo');
+        $this->obj->foo = 'bar';
+        $this->assert($this->obj, has_property, 'foo');
     }
 
     public function testObjectDoesHaveAPropertyWithAFalsyValue()
     {
-        $obj = new \stdClass();
-        $obj->foo = null;
-        $this->assert($obj, has_property, 'foo');
+        $this->obj->foo = null;
+        $this->assert($this->obj, has_property, 'foo');
     }
 
     public function tags()
     {
         return array(Tag::OBJECTS);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionSuccess()
+    {
+        $this->obj->foo = 'bar';
+        $this->assert($this->assert($this->obj, has_property, 'foo'), exactly_equals, 'bar');
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionFailure()
+    {
+        $this->obj->foo = 'bar';
+        $this->assertFailure($this->assert($this->obj, has_property, 'foo'), exactly_equals, 'baz');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Concise\Matcher;
 
-use Concise\Services\TimestampToEpochConverter;
-
 class DateIsBefore extends AbstractDateComparison
 {
     public function supportedSyntaxes()
