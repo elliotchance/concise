@@ -7,6 +7,8 @@ concise
 [![Build Status](https://travis-ci.org/elliotchance/concise.svg?branch=master)](https://travis-ci.org/elliotchance/concise) [![Coverage Status](https://img.shields.io/coveralls/elliotchance/concise.svg)](https://coveralls.io/r/elliotchance/concise?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elliotchance/concise/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elliotchance/concise/?branch=master)
 
+![](https://raw.githubusercontent.com/wiki/elliotchance/concise/image-concise-command.png)
+
 Concise is unit test framework for using plain English and minimal code, built on PHPUnit.
 
 Simple Example
