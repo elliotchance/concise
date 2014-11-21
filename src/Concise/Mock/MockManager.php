@@ -46,7 +46,7 @@ class MockManager
     protected function validateSingleWith(array $rule, $actualTimes, $method)
     {
         if ($rule['times'] == $actualTimes) {
-            return;
+            return null;
         }
         $args = $this->renderArguments($rule['with']);
         $converter = new NumberToTimesConverter();
