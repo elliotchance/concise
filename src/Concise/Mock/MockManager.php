@@ -40,6 +40,9 @@ class MockManager
         );
     }
 
+    /**
+     * @return null
+     */
     protected function validateSingleWith(array $rule, $actualTimes, $method)
     {
         if ($rule['times'] == $actualTimes) {
@@ -86,7 +89,7 @@ class MockManager
 
         $key = $this->getKeyForCall($method, $rule['with'], $rule['with']);
         if (!array_key_exists($key, $this->callGraph)) {
-            $this->validateSingleWith($rule, 0, $method);
+            return $this->validateSingleWith($rule, 0, $method);
         }
         $this->validateSingleWith($rule, $this->callGraph[$key], $method);
     }
