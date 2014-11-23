@@ -5,6 +5,7 @@ namespace Concise\Mock;
 use Concise\TestCase;
 use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
+use Concise\Mock\MockInterface;
 
 class MockManager
 {
@@ -37,6 +38,7 @@ class MockManager
         $this->mocks[] = array(
             'mockBuilder' => $mockBuilder,
             'instance' => $mockInstance,
+            'validated' => false,
         );
     }
 
@@ -106,8 +108,13 @@ class MockManager
         $this->testCase->assert(true);
     }
 
-    protected function validateMock(array $mock)
+    protected function validateMock(array &$mock)
     {
+        if ($mock['validated']) {
+            return;
+        }
+        $mock['validated'] = true;
+
         /** @var $mockBuilder \Concise\Mock\MockBuilder */
         $mockBuilder = $mock['mockBuilder'];
         foreach ($mockBuilder->getRules() as $method => $methodWiths) {
@@ -143,5 +150,10 @@ class MockManager
     public function getMocks()
     {
         return $this->mocks;
+    }
+
+    public function validateMockByInstance(MockInterface $mock)
+    {
+        $this->validateMock($this->mocks[0]);
     }
 }

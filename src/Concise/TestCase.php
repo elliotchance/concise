@@ -8,6 +8,7 @@ use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
+use Concise\Mock\MockInterface;
 
 // Load the keyword cache before the test suite begins.
 Keywords::load();
@@ -229,8 +230,14 @@ class TestCase extends PHPUnit_Framework_TestCase
         $property->setValue($object, $value);
     }
 
-    protected function verifyMock($mock)
+    /**
+     * Validate a mock now.
+     * @param  MockInterface $mock The mock instance to verify.
+     * @return bool
+     */
+    protected function assertMock(MockInterface $mock)
     {
+        $this->mockManager->validateMockByInstance($mock);
         return true;
     }
 }
