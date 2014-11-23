@@ -154,6 +154,6 @@ class MockManager
 
     public function validateMockByInstance(MockInterface $mock)
     {
-        $this->validateMock(array_pop($this->mocks));
+        $this->validateMock($this->mocks[count($this->mocks) - 1]);
     }
 }

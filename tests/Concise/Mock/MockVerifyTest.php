@@ -28,12 +28,20 @@ class MockVerifyTest extends TestCase
 
 	public function testAssertingASecondaryMock()
 	{
-		$mock1 = $this->mock()->get();
+		$this->mock()->get();
 		$mock2 = $this->mock('\DateTime')
 			->expect('getLastErrors')
 			->get();
 		$this->assert(function () use ($mock2) {
 			$this->assertMock($mock2);
 		}, throws, '\PHPUnit_Framework_AssertionFailedError');
+	}
+
+	public function testAssertingAMockDoesNotRemoveItFromTheManager()
+	{
+		$mock1 = $this->mock()->get();
+		$this->mock()->get();
+		$this->assertMock($mock1);
+		$this->assert(count($this->mockManager->getMocks()), equals, 2);
 	}
 }
