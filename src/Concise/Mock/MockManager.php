@@ -6,6 +6,7 @@ use Concise\TestCase;
 use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
 use Concise\Mock\MockInterface;
+use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
 {
@@ -159,6 +160,9 @@ class MockManager
     {
         foreach ($this->mocks as &$m) {
             if ($mock === $m['instance']) {
+                if ($m['validated']) {
+                    throw new PHPUnit_Framework_AssertionFailedError('You cannot assert a mock more than once.');
+                }
                 return $this->validateMock($m);
             }
         }

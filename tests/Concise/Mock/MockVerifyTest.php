@@ -56,4 +56,15 @@ class MockVerifyTest extends TestCase
 			$this->assertMock($mock2);
 		}, throws, '\PHPUnit_Framework_AssertionFailedError');
 	}
+
+	/**
+	 * @expectedException \PHPUnit_Framework_AssertionFailedError
+	 * @expectedExceptionMessage You cannot assert a mock more than once.
+	 */
+	public function testYouCannotAssertAMockTwice()
+	{
+		$mock = $this->mock()->get();
+		$this->assertMock($mock);
+		$this->assertMock($mock);
+	}
 }
