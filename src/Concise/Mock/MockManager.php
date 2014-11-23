@@ -131,7 +131,7 @@ class MockManager
 
     public function validateMocks()
     {
-        foreach ($this->mocks as $mock) {
+        foreach ($this->mocks as &$mock) {
             $this->validateMock($mock);
         }
     }
@@ -147,6 +147,9 @@ class MockManager
         return $valueRenderer->renderAll($args);
     }
 
+    /**
+     * @return array
+     */
     public function getMocks()
     {
         return $this->mocks;
@@ -154,6 +157,10 @@ class MockManager
 
     public function validateMockByInstance(MockInterface $mock)
     {
-        $this->validateMock($this->mocks[count($this->mocks) - 1]);
+        foreach ($this->mocks as &$m) {
+            if ($mock === $m['instance']) {
+                return $this->validateMock($m);
+            }
+        }
     }
 }

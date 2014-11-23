@@ -44,4 +44,16 @@ class MockVerifyTest extends TestCase
 		$this->assertMock($mock1);
 		$this->assert(count($this->mockManager->getMocks()), equals, 2);
 	}
+
+	public function testAssertingAMiddleMock()
+	{
+		$this->mock()->get();
+		$mock2 = $this->mock('\DateTime')
+			->expect('getLastErrors')
+			->get();
+		$this->mock()->get();
+		$this->assert(function () use ($mock2) {
+			$this->assertMock($mock2);
+		}, throws, '\PHPUnit_Framework_AssertionFailedError');
+	}
 }
