@@ -260,4 +260,13 @@ class MatcherParserTest extends TestCase
         $parser = new MatcherParser();
         $parser->compile(123);
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Argument 2 (null) must be regex.
+     */
+    public function testWillUseValueRendererForValuesInExceptionMessages()
+    {
+        $this->assert("abc", does_not_match_regex, null);
+    }
 }

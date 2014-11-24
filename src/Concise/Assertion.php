@@ -108,6 +108,15 @@ class Assertion
         return $this->matcher;
     }
 
+    protected function throwExceptionForInvalidArgument($arg, $index, $argument)
+    {
+        $renderer = new ValueRenderer();
+        $acceptedTypes = implode(" or ", $arg->getAcceptedTypes());
+        $message = sprintf("Argument %d (%s) must be %s.", $index, $renderer->render($argument),
+            $acceptedTypes);
+        throw new Exception($message);
+    }
+
     /**
      * @param  array $arguments
      * @throws Exception
@@ -127,10 +136,7 @@ class Assertion
             try {
                 $r[] = $checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
             } catch (InvalidArgumentException $e) {
-                $acceptedTypes = implode(" or ", $args[$i]->getAcceptedTypes());
-                $message = sprintf("Argument %d (%s) must be %s.", $i + 1, $arguments[$i],
-                    $acceptedTypes);
-                throw new Exception($message);
+                $this->throwExceptionForInvalidArgument($args[$i], $i + 1, $arguments[$i]);
             }
         }
 
