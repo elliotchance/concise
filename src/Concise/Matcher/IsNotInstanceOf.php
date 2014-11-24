@@ -9,9 +9,9 @@ class IsNotInstanceOf extends IsInstanceOf
     public function supportedSyntaxes()
     {
         return array(
-            '?:object is not an instance of ?:class' => self::DESCRIPTION,
-            '?:object is not instance of ?:class' => self::DESCRIPTION,
-            '?:object not instance of ?:class' => self::DESCRIPTION,
+            '?:object,class is not an instance of ?:class' => self::DESCRIPTION,
+            '?:object,class is not instance of ?:class' => self::DESCRIPTION,
+            '?:object,class not instance of ?:class' => self::DESCRIPTION,
         );
     }
 

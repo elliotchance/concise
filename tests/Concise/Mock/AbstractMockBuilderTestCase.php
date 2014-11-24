@@ -578,6 +578,32 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod('foo');
     }
 
+    /**
+     * @group #225
+     */
+    public function testMultipleWithsNotBeingFullfilled()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->expect('myMethod')->with('foo')
+                                         ->with('bar')->never()
+                     ->get();
+
+        $mock->myMethod('foo');
+    }
+
+    /**
+     * @group #225
+     */
+    public function testMultipleWithsNotBeingFullfilledInDifferentOrder()
+    {
+        $mock = $this->niceMockBuilder()
+                     ->expect('myMethod')->with('bar')->never()
+                                         ->with('foo')
+                     ->get();
+
+        $mock->myMethod('foo');
+    }
+
     // Abstract
 
     public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()

@@ -29,4 +29,9 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
     {
         return array(Tag::OBJECTS, Tag::TYPES);
     }
+
+    public function testStringsRepresentingClassNamesCanBeUsed()
+    {
+        $this->assert('\Concise\Matcher\IsInstanceOfTest', instance_of, '\Concise\TestCase');
+    }
 }

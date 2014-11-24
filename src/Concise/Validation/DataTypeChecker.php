@@ -83,8 +83,11 @@ class DataTypeChecker
             if (is_object($value) && $value instanceof Attribute) {
                 $value = $this->getAttribute($value->getValue());
             }
-            if (in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
-                return substr($value, 1);
+            if (in_array('class', $acceptedTypes) && is_string($value)) {
+                if (!class_exists($value) && !interface_exists($value)) {
+                    throw new Exception("No such class or interface '$value'.'");
+                }
+                return ltrim($value, '\\');
             }
             if (in_array('regex', $acceptedTypes)) {
                 return $value;
