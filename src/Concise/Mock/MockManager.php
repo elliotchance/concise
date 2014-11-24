@@ -5,6 +5,8 @@ namespace Concise\Mock;
 use Concise\TestCase;
 use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
+use Concise\Mock\MockInterface;
+use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
 {
@@ -42,6 +44,7 @@ class MockManager
         $this->mocks[] = array(
             'mockBuilder' => $mockBuilder,
             'instance' => $mockInstance,
+            'validated' => false,
         );
     }
 
@@ -65,7 +68,7 @@ class MockManager
     protected function validateSingleWith(array $rule, $actualTimes, $method)
     {
         if ($rule['times'] == $actualTimes) {
-            return;
+            return null;
         }
         $args = $this->renderArguments($rule['with']);
         $converter = new NumberToTimesConverter();
@@ -138,8 +141,13 @@ class MockManager
         $this->testCase->assert(true);
     }
 
-    protected function validateMock(array $mock)
+    protected function validateMock(array &$mock)
     {
+        if ($mock['validated']) {
+            return;
+        }
+        $mock['validated'] = true;
+
         /** @var $mockBuilder \Concise\Mock\MockBuilder */
         $mockBuilder = $mock['mockBuilder'];
         foreach ($mockBuilder->getRules() as $method => $methodWiths) {
@@ -156,7 +164,7 @@ class MockManager
 
     public function validateMocks()
     {
-        foreach ($this->mocks as $mock) {
+        foreach ($this->mocks as &$mock) {
             $this->validateMock($mock);
         }
     }
@@ -172,8 +180,25 @@ class MockManager
         return $valueRenderer->renderAll($args);
     }
 
+    /**
+     * @return array
+     */
     public function getMocks()
     {
         return $this->mocks;
+    }
+
+    public function validateMockByInstance(MockInterface $mock)
+    {
+        foreach ($this->mocks as &$m) {
+            if ($mock === $m['instance']) {
+                if ($m['validated']) {
+                    throw new PHPUnit_Framework_AssertionFailedError('You cannot assert a mock more than once.');
+                }
+                return $this->validateMock($m);
+            }
+        }
+
+        throw new PHPUnit_Framework_AssertionFailedError('No such mock in mock manager.');
     }
 }

@@ -17,6 +17,9 @@ class MockExpose
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderExposeTest extends TestCase
 {
     public function testExposeWillReturnSelfToAllowChaining()

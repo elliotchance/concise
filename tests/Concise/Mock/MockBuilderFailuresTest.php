@@ -4,6 +4,9 @@ namespace Concise\Mock;
 
 use \Concise\TestCase;
 
+/**
+ * @group mocking
+ */
 class MockBuilderFailuresTest extends TestCase
 {
     protected static $failures = array();
