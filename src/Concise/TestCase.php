@@ -235,7 +235,7 @@ class TestCase extends PHPUnit_Framework_TestCase
      * @param  MockInterface $mock The mock instance to verify.
      * @return bool
      */
-    protected function assertMock(MockInterface $mock)
+    public function assertMock(MockInterface $mock)
     {
         $this->mockManager->validateMockByInstance($mock);
         return true;
