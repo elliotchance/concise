@@ -92,8 +92,14 @@ class MockManager
         }
     }
 
+    protected function resetCallGraph()
+    {
+        $this->callGraph = array();
+    }
+
     protected function validateExpectation($mock, $method, array $rule)
     {
+        $this->resetCallGraph();
         if (null === $rule['with']) {
             /** @var $instance \Concise\Mock\MockInterface */
             $instance = $mock['instance'];
