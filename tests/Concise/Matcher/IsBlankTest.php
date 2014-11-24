@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsBlankTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsBlankTest extends AbstractMatcherTestCase
     public function testStringWithAtLeastOneCharacterIsNotBlank()
     {
         $this->assertFailure('a', is_blank);
+    }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
     }
 }

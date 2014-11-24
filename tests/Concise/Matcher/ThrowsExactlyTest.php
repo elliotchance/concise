@@ -2,9 +2,11 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class ThrowsExactlyTest extends AbstractExceptionTestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -59,4 +61,8 @@ class ThrowsExactlyTest extends AbstractExceptionTestCase
         $this->assertMatcherFailureMessage('? throws exactly ?', array($method, $expectedException), $failureMessage);
     }
 
+    public function tags()
+    {
+        return array(Tag::EXCEPTIONS);
+    }
 }

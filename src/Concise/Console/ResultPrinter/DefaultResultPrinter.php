@@ -81,15 +81,36 @@ class DefaultResultPrinter extends AbstractResultPrinter
         )) . "\n";
     }
 
+    protected function getSecondsElapsed()
+    {
+        return time() - $this->startTime;
+    }
+
+    protected function getRemainingSeconds()
+    {
+        if (0 == $this->getTestCount()) {
+            return -1;
+        }
+        $elapsed = $this->getSecondsElapsed();
+        $eta = ($this->getTotalTestCount() / $this->getTestCount()) * $elapsed - $elapsed;
+        return $eta;
+    }
+
     protected function getAssertionString()
     {
         $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
         $formatter = new TimeFormatter();
-        $time = ', ' . $formatter->format(time() - $this->startTime);
+        $time = ', ' . $formatter->format($this->getSecondsElapsed());
+        $remaining = '';
+        if ($this->getSecondsElapsed() >= 5 && $this->getRemainingSeconds() > 0) {
+            $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
+        }
         $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time);
+        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
+            strlen($remaining);
 
-        return sprintf("%s%s%s%s\n", $assertionString, $time, str_repeat(' ', $pad), $counterString);
+        return sprintf("%s%s%s%s%s\n", $assertionString, $time, $remaining, str_repeat(' ', $pad),
+            $counterString);
     }
 
     protected function restoreCursor()

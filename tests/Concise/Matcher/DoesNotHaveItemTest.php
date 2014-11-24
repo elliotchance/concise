@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotHaveItemTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -28,5 +31,10 @@ class DoesNotHaveItemTest extends AbstractMatcherTestCase
     public function testItemExistsInMultipleItems()
     {
         $this->assertFailure(array("foo" => 123, "bar" => "baz"), does_not_have_key, "foo", with_value, 123);
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

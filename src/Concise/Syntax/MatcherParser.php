@@ -7,6 +7,8 @@ use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Matcher\AbstractMatcher;
 use Concise\Validation\ArgumentChecker;
 use Exception;
+use ReflectionClass;
+use ReflectionException;
 
 class MatcherParser
 {
@@ -77,7 +79,7 @@ class MatcherParser
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             return $this->syntaxCache[$rawSyntax] + $options;
         }
-        throw new Exception("No such matcher for syntax '$syntax'.");
+        throw new NoMatcherFoundException(array($syntax));
     }
 
     /**
@@ -159,11 +161,27 @@ class MatcherParser
         return self::$instance;
     }
 
+    /**
+     * @param string $class
+     * @return bool
+     */
+    protected function isValidMatcher($class)
+    {
+        try {
+            $reflectionClass = new ReflectionClass($class);
+            return !$reflectionClass->isAbstract() &&
+                is_subclass_of($class, 'Concise\Matcher\AbstractMatcher') &&
+                $class != 'Concise\Matcher\AbstractNestedMatcher';
+        } catch (ReflectionException $e) {
+            return false;
+        }
+    }
+
     protected function autoloadAllMatchers()
     {
         foreach (scandir(__DIR__ . "/../Matcher") as $file) {
             $class = "Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-            if (is_subclass_of($class, 'Concise\Matcher\AbstractMatcher')) {
+            if ($this->isValidMatcher($class)) {
                 $this->registerMatcher(new $class());
             }
         }

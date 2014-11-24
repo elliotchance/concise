@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 {
     public function setUp()
@@ -45,4 +48,8 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
         }
     }
 
+    public function tags()
+    {
+        return array(Tag::EXCEPTIONS);
+    }
 }

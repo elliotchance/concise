@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasItemsTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -38,5 +41,10 @@ class HasItemsTest extends AbstractMatcherTestCase
     public function testSomeItemsAreInSubset()
     {
         $this->assertFailure(array("foo" => 123, "a" => "b", "bar" => "baz"), has_items, array("foo" => 123, "bart" => 123));
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

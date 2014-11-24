@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class NotBetweenTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -33,5 +36,10 @@ class NotBetweenTest extends AbstractMatcherTestCase
     public function testNumberIsOnTheUpperBound()
     {
         $this->assertFailure(150, not_between, 123, 'and', 150);
+    }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
     }
 }

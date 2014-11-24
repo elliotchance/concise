@@ -18,6 +18,6 @@ class IsAnArray extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::ARRAYS);
+        return array(Tag::ARRAYS, Tag::TYPES);
     }
 }

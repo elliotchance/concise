@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasPropertyWithValueTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -35,5 +38,10 @@ class HasPropertyWithValueTest extends AbstractMatcherTestCase
         $obj = new \stdClass();
         $obj->foo = 123;
         $this->assert($obj, has_property, 'foo', with_value, '123');
+    }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS);
     }
 }

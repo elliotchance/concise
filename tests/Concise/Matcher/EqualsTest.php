@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class EqualsTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -30,5 +33,10 @@ class EqualsTest extends AbstractMatcherTestCase
     public function testEqualsFailure()
     {
         $this->assertFailure("123 equals 124");
+    }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
     }
 }

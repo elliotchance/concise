@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsAStringTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class IsAStringTest extends AbstractMatcherTestCase
     public function testClassNameIsAString()
     {
         $this->assert('\My\Class is a string');
+    }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS, Tag::TYPES);
     }
 }

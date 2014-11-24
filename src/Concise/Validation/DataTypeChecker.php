@@ -57,21 +57,37 @@ class DataTypeChecker
     }
 
     /**
-     * @param  array $acceptedTypes
-     * @param  mixed $value
-     * @param  bool $expecting
-     * @throws DataTypeMismatchException
-     * @return mixed
+     * Will check to see if the value is an object and its class is listed in the accepted types.
+     * @param  array       $acceptedTypes Accepted types.
+     * @param  mixed       $value         Value to test.
+     * @return null|object
      */
-    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
+    protected function checkSpecificObject(array $acceptedTypes, $value)
+    {
+        if (is_object($value)) {
+            foreach ($acceptedTypes as $type) {
+                $c = get_class($value);
+                if ($c == $type || "\\$c" == $type) {
+                    return $value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected function checkExpecting(array $acceptedTypes, $value, $expecting)
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if ($expecting === $match) {
             if (is_object($value) && $value instanceof Attribute) {
                 $value = $this->getAttribute($value->getValue());
             }
-            if (in_array('class', $acceptedTypes) && is_string($value) && substr($value, 0, 1) === '\\') {
-                return substr($value, 1);
+            if (in_array('class', $acceptedTypes) && is_string($value)) {
+                if (!class_exists($value) && !interface_exists($value)) {
+                    throw new Exception("No such class or interface '$value'.'");
+                }
+                return ltrim($value, '\\');
             }
             if (in_array('regex', $acceptedTypes)) {
                 return $value;
@@ -79,14 +95,29 @@ class DataTypeChecker
 
             return $value;
         }
+
         throw new DataTypeMismatchException($this->getType($value), $acceptedTypes);
     }
 
     /**
-     * @param string $name
-     * @throws \Exception
-     * @return mixed
-     */
+	 * @param  array  $acceptedTypes
+	 * @param  mixed  $value
+	 * @param  bool   $expecting
+	 * @return mixed
+	 */
+    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
+    {
+        if (($r = $this->checkSpecificObject($acceptedTypes, $value))) {
+            return $r;
+        }
+
+        return $this->checkExpecting($acceptedTypes, $value, $expecting);
+    }
+
+    /**
+	 * @param string $name
+	 * @return mixed
+	 */
     protected function getAttribute($name)
     {
         if (!array_key_exists($name, $this->context)) {

@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsAnObjectTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsAnObjectTest extends AbstractMatcherTestCase
     public function testIsAnObjectFailure()
     {
         $this->assertFailure('123 is an object');
+    }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
     }
 }

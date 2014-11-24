@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotHaveKeyTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class DoesNotHaveKeyTest extends AbstractMatcherTestCase
     public function testArrayHasStringKey()
     {
         $this->assertFailure(array("abc" => 123), does_not_have_key, "abc");
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

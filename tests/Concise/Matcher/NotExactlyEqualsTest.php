@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class NotExactlyEqualsTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class NotExactlyEqualsTest extends AbstractMatcherTestCase
     public function testNotExactlyEqualsFailure()
     {
         $this->assertFailure('123 is not exactly equal to 123');
+    }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class TrueTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -13,5 +16,10 @@ class TrueTest extends AbstractMatcherTestCase
     public function testTrue()
     {
         $this->assert('true');
+    }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS);
     }
 }

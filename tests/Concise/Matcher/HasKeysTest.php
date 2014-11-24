@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasKeysTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -28,5 +31,10 @@ class HasKeysTest extends AbstractMatcherTestCase
     public function testArrayKeysCanBeASubset()
     {
         $this->assert(array("a" => 123, "b" => 456), has_keys, array("b"));
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

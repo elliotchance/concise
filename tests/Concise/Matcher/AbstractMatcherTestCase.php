@@ -5,7 +5,7 @@ namespace Concise\Matcher;
 use \Concise\TestCase;
 use \Concise\Syntax\MatcherParser;
 
-class AbstractMatcherTestCase extends TestCase
+abstract class AbstractMatcherTestCase extends TestCase
 {
     public function testExtendsAbstractMatcher()
     {
@@ -72,4 +72,11 @@ class AbstractMatcherTestCase extends TestCase
         }
         $this->fail("Assertion did not fail.");
     }
+
+    public function testTags()
+    {
+        $this->assert($this->matcher->getTags(), has_values, $this->tags());
+    }
+
+    abstract public function tags();
 }

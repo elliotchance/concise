@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsFalsyTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class IsFalsyTest extends AbstractMatcherTestCase
     public function testZeroIsFalsy()
     {
         $this->assert(0, is_falsy);
+    }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
     }
 }

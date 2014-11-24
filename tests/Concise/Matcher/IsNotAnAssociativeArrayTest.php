@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotAnAssociativeArrayTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -31,5 +34,10 @@ class IsNotAnAssociativeArrayTest extends AbstractMatcherTestCase
     public function testAnArrayIsNotAssociativeIfZeroIndexed()
     {
         $this->assert('[1,"foo"] is not an associative array');
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS, Tag::TYPES);
     }
 }

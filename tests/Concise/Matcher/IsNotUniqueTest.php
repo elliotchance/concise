@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotUniqueTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsNotUniqueTest extends AbstractMatcherTestCase
     public function testArrayIsNotUniqueIfAnyElementsAppearMoreThanOnce()
     {
         $this->assert(array(123, 456, 123), is_not_unique);
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

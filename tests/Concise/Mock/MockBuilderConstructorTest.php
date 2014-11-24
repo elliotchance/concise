@@ -28,6 +28,9 @@ class Mock3
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderConstructorTest extends TestCase
 {
     public function testMocksWillCallConstructorByDefault()

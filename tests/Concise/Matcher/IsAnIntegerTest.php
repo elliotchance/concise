@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsAnIntegerTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class IsAnIntegerTest extends AbstractMatcherTestCase
     public function testStringThatRepresentsAnIntegerIsNotAnInteger()
     {
         $this->assertFailure('"123" is an integer');
+    }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS, Tag::TYPES);
     }
 }

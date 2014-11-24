@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNumericTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -38,5 +41,10 @@ class IsNumericTest extends AbstractMatcherTestCase
     public function testStringThatRepresentsScientificNotationIsNumeric()
     {
         $this->assert('"12.3e-17" is numeric');
+    }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS, Tag::TYPES);
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Concise;
 
-use Concise\Matcher\Equals;
-use \Concise\Syntax\MatcherParser;
-use \Concise\Matcher\True;
-use \Concise\Matcher\False;
+use Concise\Matcher\Between;
+use Concise\Syntax\MatcherParser;
+use Concise\Matcher\True;
+use Concise\Matcher\False;
+use PHPUnit_Framework_AssertionFailedError;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class AssertionTest extends TestCase
 {
@@ -133,5 +135,62 @@ class AssertionTest extends TestCase
     {
         $assertion = new Assertion('true', new True());
         $assertion->setOriginalSyntax(123);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
+    {
+        $self = $this;
+        $block = function () use ($self) {
+            $assertion = $self->niceMock('Concise\Assertion')
+                ->disableConstructor()
+                ->expose('performMatch')
+                ->stub(array('getMatcher' => new Between()))
+                ->get();
+
+            $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
+        };
+        $this->assert($block, throws, '\PHPUnit_Framework_AssertionFailedError');
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage foobar
+     * @group #219
+     */
+    public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()
+    {
+        $matcher = $this->mock('\Concise\Matcher\AbstractMatcher')
+            ->stub('match')->andThrow(new \Exception('foobar'))
+            ->get();
+        $assertion = $this->niceMock('Concise\Assertion')
+            ->disableConstructor()
+            ->expose('performMatch')
+            ->stub(array('getMatcher' => $matcher))
+            ->get();
+
+        $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
+    }
+
+    /**
+     * @group #219
+     */
+    public function testDidNotMatchExceptionWithNoMessageWillUseSyntaxRenderer()
+    {
+        try {
+            $assertion = $this->niceMock('Concise\Assertion')
+                ->disableConstructor()
+                ->expose('performMatch')
+                ->stub(array('getMatcher' => new Between()))
+                ->get();
+
+            $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+            $this->assert($e->getMessage(), contains_string, 'is between');
+            return;
+        }
+        $this->assert(false);
     }
 }

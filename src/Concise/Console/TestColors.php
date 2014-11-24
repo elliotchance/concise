@@ -19,6 +19,6 @@ class TestColors
             $renderer->render('? is instance of ?', array(function () {}, 'Closure')),
         );
 
-        return "Some assertion examples:\n  " . implode("\n  ", $lines) . "\n\n";
+        return "Some assertion examples:\n\n" . implode("\n\n", $lines) . "\n\n";
     }
 }

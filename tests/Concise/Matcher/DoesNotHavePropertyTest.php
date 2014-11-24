@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotHavePropertyTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -28,5 +31,10 @@ class DoesNotHavePropertyTest extends AbstractMatcherTestCase
         $obj = new \stdClass();
         $obj->foo = null;
         $this->assertFailure($obj, does_not_have_property, 'foo');
+    }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS);
     }
 }

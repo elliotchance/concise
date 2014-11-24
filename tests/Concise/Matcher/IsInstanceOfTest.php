@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsInstanceOfTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,15 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
     public function testIsInstanceOfFailure()
     {
         $this->assertFailure(new \stdClass(), is_instance_of, '\Concise\Matcher\IsInstanceOfTest');
+    }
+
+    public function tags()
+    {
+        return array(Tag::OBJECTS, Tag::TYPES);
+    }
+
+    public function testStringsRepresentingClassNamesCanBeUsed()
+    {
+        $this->assert('\Concise\Matcher\IsInstanceOfTest', instance_of, '\Concise\TestCase');
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class MatchesRegularExpressionTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class MatchesRegularExpressionTest extends AbstractMatcherTestCase
     public function testMatchesRegularExpressionFailure()
     {
         $this->assertFailure('"abc" matches regular expression /\\d+/');
+    }
+
+    public function tags()
+    {
+        return array(Tag::REGEX);
     }
 }

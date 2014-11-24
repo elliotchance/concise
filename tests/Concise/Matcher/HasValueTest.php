@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasValueTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class HasValueTest extends AbstractMatcherTestCase
     public function testArrayValueDoesNotExist()
     {
         $this->assertFailure('["abc"] contains "def"');
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

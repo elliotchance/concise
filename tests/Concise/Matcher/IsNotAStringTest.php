@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotAStringTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsNotAStringTest extends AbstractMatcherTestCase
     public function testIsNotAStringFailure()
     {
         $this->assertFailure('"123" is not a string');
+    }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS, Tag::TYPES);
     }
 }

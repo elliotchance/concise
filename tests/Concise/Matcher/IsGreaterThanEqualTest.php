@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsGreaterThanEqualTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class IsGreaterThanEqualTest extends AbstractMatcherTestCase
     public function testGreaterThan()
     {
         $this->assert(300, is_greater_than_or_equal_to, 200);
+    }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
     }
 }

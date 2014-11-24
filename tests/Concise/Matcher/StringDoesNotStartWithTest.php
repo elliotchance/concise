@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -23,5 +26,10 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
     public function testStringDoesNotStartWithFailure()
     {
         $this->assertFailure('"abc" does not start with "abc"');
+    }
+
+    public function tags()
+    {
+        return array(Tag::STRINGS);
     }
 }

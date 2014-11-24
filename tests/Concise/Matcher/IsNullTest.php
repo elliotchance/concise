@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNullTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsNullTest extends AbstractMatcherTestCase
     public function testIsNullFailure()
     {
         $this->assertFailure('123 is null');
+    }
+
+    public function tags()
+    {
+        return array(Tag::TYPES);
     }
 }

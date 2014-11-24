@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class DoesNotEqualWithinTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -33,5 +36,10 @@ class DoesNotEqualWithinTest extends AbstractMatcherTestCase
     public function testComparingTwoValuesOutsideTheDeltainReverse()
     {
         $this->assert(223, does_not_equal, 123, within, 5.0);
+    }
+
+    public function tags()
+    {
+        return array(Tag::NUMBERS);
     }
 }

@@ -46,6 +46,9 @@ class MockClass
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderForClassTest extends AbstractMockBuilderTestCase
 {
     public function getClassName()

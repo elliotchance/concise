@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotAnEmptyArrayTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class IsNotAnEmptyArrayTest extends AbstractMatcherTestCase
     public function testArrayWithMoreThanZeroElements()
     {
         $this->assert(array('a'), is_not_empty_array);
+    }
+
+    public function tags()
+    {
+        return array(Tag::ARRAYS);
     }
 }

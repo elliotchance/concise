@@ -18,6 +18,6 @@ class IsAnObject extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::OBJECTS);
+        return array(Tag::OBJECTS, Tag::TYPES);
     }
 }

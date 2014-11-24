@@ -18,6 +18,6 @@ class IsTrue extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::BOOLEANS);
+        return array(Tag::BOOLEANS, Tag::TYPES);
     }
 }

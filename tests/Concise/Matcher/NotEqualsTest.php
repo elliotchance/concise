@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class NotEqualsTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -18,5 +21,10 @@ class NotEqualsTest extends AbstractMatcherTestCase
     public function testFloatingPointValuesThatDifferSlightlyAreNotEqual()
     {
         $this->assert('123 is not equal to 123.000001');
+    }
+
+    public function tags()
+    {
+        return array(Tag::BASIC);
     }
 }

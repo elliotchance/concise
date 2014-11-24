@@ -195,6 +195,24 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock->myMethod();
     }
 
+    public function testExpectWithMultipleArguments()
+    {
+        $mock = $this->mockBuilder()
+            ->expect('myMethod', 'mySecondMethod')
+            ->get();
+        $mock->myMethod();
+        $mock->mySecondMethod();
+    }
+
+    public function testExpectsWithMultipleArguments()
+    {
+        $mock = $this->mockBuilder()
+            ->expects('myMethod', 'mySecondMethod')
+            ->get();
+        $mock->myMethod();
+        $mock->mySecondMethod();
+    }
+
     // Expose
 
     public function testExposeASingleMethod()
@@ -238,6 +256,13 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->expose(array('myMethod', 'mySecondMethod'))
                      ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
+    }
+
+    public function testMultipleExpectsThatAreNeverExpected()
+    {
+        $this->mockBuilder()
+            ->expect('myWithMethod', 'myMethod')->never()
+            ->get();
     }
 
     // Private
@@ -447,6 +472,30 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $mock = $this->getLastElement($this->getMockManager()->getMocks());
         $this->assert(count($mock['instance']->getCallsForMethod('myMethod')), exactly_equals, 2);
     }
+    
+    public function testStubbingMultipleMethodsWithMultipleArguments()
+    {
+        $mock = $this->niceMockBuilder()
+            ->stub('myMethod', 'mySecondMethod')
+            ->get();
+        $this->assert($mock->mySecondMethod(), is_null);
+    }
+
+    public function testFirstMethodOfMultipleStubsReceivesAction()
+    {
+        $mock = $this->niceMockBuilder()
+            ->stub('myMethod', 'mySecondMethod')->andReturn('foo')
+            ->get();
+        $this->assert($mock->myMethod(), equals, 'foo');
+    }
+
+    public function testSecondMethodOfMultipleStubsReceivesAction()
+    {
+        $mock = $this->niceMockBuilder()
+            ->stub('myMethod', 'mySecondMethod')->andReturn('foo')
+            ->get();
+        $this->assert($mock->mySecondMethod(), equals, 'foo');
+    }
 
     // With
 
@@ -500,6 +549,33 @@ abstract class AbstractMockBuilderTestCase extends TestCase
                      ->stub('myWithMethod')->with('a$b')
                      ->get();
         $this->assert($mock->myWithMethod('a$b'), is_null);
+    }
+
+    public function testWithOnMultipleMethods()
+    {
+        $mock = $this->mockBuilder()
+            ->stub('myWithMethod', 'myMethod')->with('foo')->andReturn('foobar')
+            ->get();
+        $this->assert($mock->myMethod('foo'), equals, 'foobar');
+    }
+
+    public function testMultipleExpectsUsingTheSameWith()
+    {
+        $mock = $this->mockBuilder()
+            ->expect('myWithMethod')->with('foo')
+            ->expect('myMethod')->with('foo')
+            ->get();
+        $mock->myWithMethod('foo');
+        $mock->myMethod('foo');
+    }
+
+    public function testMultipleExpectsUsingWith()
+    {
+        $mock = $this->mockBuilder()
+            ->expect('myWithMethod', 'myMethod')->with('foo')
+            ->get();
+        $mock->myWithMethod('foo');
+        $mock->myMethod('foo');
     }
 
     /**

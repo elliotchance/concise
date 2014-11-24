@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotABooleanTest extends AbstractMatcherTestCase
 {
     public function setUp()
@@ -28,5 +31,10 @@ class IsNotABooleanTest extends AbstractMatcherTestCase
     public function testAlternativeShorterSyntax()
     {
         $this->assertFailure(true, is_not_a_bool);
+    }
+
+    public function tags()
+    {
+        return array(Tag::BOOLEANS, Tag::TYPES);
     }
 }
