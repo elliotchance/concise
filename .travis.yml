@@ -15,7 +15,7 @@ matrix:
 install:
   - composer install
 script:
-  - phpunit $PHPUNIT_OPTIONS
+  - vendor/bin/concise $PHPUNIT_OPTIONS
 
 after_script:
   - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"
