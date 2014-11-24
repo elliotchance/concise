@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsGreaterThanTest extends AbstractMatcherTestCase
 {
     public function setUp()

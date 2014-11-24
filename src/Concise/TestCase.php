@@ -131,23 +131,31 @@ class TestCase extends PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-	 * @param  string $assertionString
-	 */
-    public function assert($assertionString)
+    protected function createAssertion(array $args)
     {
-        if (count(func_get_args()) > 1 || is_bool($assertionString)) {
-            $builder = new AssertionBuilder(func_get_args());
-            $assertion = $builder->getAssertion();
-        } else {
-            $assertion = $this->getMatcherParserInstance()->compile($assertionString, $this->getData());
+        if (count($args) > 1 || is_bool($args[0])) {
+            $builder = new AssertionBuilder($args);
+            return $builder->getAssertion();
         }
+
+        return $this->getMatcherParserInstance()->compile($args[0], $this->getData());
+    }
+
+    /**
+     * @return mixed
+	 */
+    public function assert()
+    {
+        $assertion = $this->createAssertion(func_get_args());
         if ($this instanceof TestCase) {
             $assertion->setTestCase($this);
         }
-        $assertion->run();
+        return $assertion->run();
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $this->mockManager->validateMocks();
@@ -159,7 +167,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 * @param  array  $constructorArgs
 	 * @return MockBuilder
 	 */
-    protected function mock($className = '\stdClass', array $constructorArgs = array())
+    public function mock($className = '\stdClass', array $constructorArgs = array())
     {
         return new MockBuilder($this, $className, false, $constructorArgs);
     }
@@ -169,7 +177,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 * @param  array  $constructorArgs
 	 * @return MockBuilder
 	 */
-    protected function niceMock($className = '\stdClass', array $constructorArgs = array())
+    public function niceMock($className = '\stdClass', array $constructorArgs = array())
     {
         return new MockBuilder($this, $className, true, $constructorArgs);
     }

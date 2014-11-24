@@ -7,7 +7,7 @@ class ContainsStringIgnoringCase extends ContainsString
     public function supportedSyntaxes()
     {
         return array(
-            '?:string contains string ?:string ignoring case' => 'A string contains a substring (ignoring case-sensitivity)',
+            '?:string contains string ?:string ignoring case' => 'A string contains a substring (ignoring case-sensitivity). Returns original string.',
         );
     }
 

@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class ThrowsExceptionTest extends AbstractExceptionTestCase
 {
     public function setUp()

@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class NotBetween extends Between
+class NotBetween extends AbstractMatcher
 {
     const DESCRIPTION = 'A number must not be between two values (inclusive).';
 
@@ -16,6 +16,11 @@ class NotBetween extends Between
 
     public function match($syntax, array $data = array())
     {
-        return !parent::match(null, $data);
+        return $data[0] < $data[1] || $data[0] > $data[2];
+    }
+
+    public function getTags()
+    {
+        return array(Tag::NUMBERS);
     }
 }
