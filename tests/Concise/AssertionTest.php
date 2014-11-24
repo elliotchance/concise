@@ -142,8 +142,9 @@ class AssertionTest extends TestCase
      */
     public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
     {
-        $block = function () {
-            $assertion = $this->niceMock('Concise\Assertion')
+        $self = $this;
+        $block = function () use ($self) {
+            $assertion = $self->niceMock('Concise\Assertion')
                 ->disableConstructor()
                 ->expose('performMatch')
                 ->stub(array('getMatcher' => new Between()))
