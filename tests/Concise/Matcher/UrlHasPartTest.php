@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class UrlHasPartTest extends AbstractMatcherTestCase
 {
     public function setUp()

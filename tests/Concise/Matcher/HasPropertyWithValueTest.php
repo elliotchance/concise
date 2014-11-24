@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class HasPropertyWithValueTest extends AbstractMatcherTestCase
 {
     public function setUp()

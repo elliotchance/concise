@@ -2,7 +2,10 @@
 
 namespace Concise\Matcher;
 
-class HasKeyTest extends AbstractMatcherTestCase
+/**
+ * @group matcher
+ */
+class HasKeyTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {
@@ -28,5 +31,29 @@ class HasKeyTest extends AbstractMatcherTestCase
     public function tags()
     {
         return array(Tag::ARRAYS);
+    }
+
+    /**
+     * @expectedException \Concise\Matcher\DidNotMatchException
+     */
+    public function testFailureThrowsException()
+    {
+        $this->matcher->match(null, array(array(), 'foo'));
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionSuccess()
+    {
+        $this->assert($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 123);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionFailure()
+    {
+        $this->assertFailure($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 124);
     }
 }

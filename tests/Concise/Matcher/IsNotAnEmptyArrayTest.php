@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsNotAnEmptyArrayTest extends AbstractMatcherTestCase
 {
     public function setUp()

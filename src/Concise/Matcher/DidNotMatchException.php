@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
-class DidNotMatchException extends \Exception
+use Exception;
+
+class DidNotMatchException extends Exception
 {
 }

@@ -4,7 +4,10 @@ namespace Concise\Matcher;
 
 use DateTime;
 
-class DateIsBeforeTest extends AbstractMatcherTestCase
+/**
+ * @group matcher
+ */
+class DateIsBeforeTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {
@@ -50,5 +53,21 @@ class DateIsBeforeTest extends AbstractMatcherTestCase
     public function tags()
     {
         return array(Tag::DATE_AND_TIME);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionSuccess()
+    {
+        $this->assert($this->assert(date, '2014-01-02', is_before, '2014-02-02'), exactly_equals, '2014-01-02');
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionFailure()
+    {
+        $this->assertFailure($this->assert(date, '2014-01-02', is_before, '2014-02-02'), exactly_equals, '2014-01-01');
     }
 }

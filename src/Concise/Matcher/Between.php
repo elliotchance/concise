@@ -2,9 +2,9 @@
 
 namespace Concise\Matcher;
 
-class Between extends AbstractMatcher
+class Between extends AbstractNestedMatcher
 {
-    const DESCRIPTION = 'A number must be between two values (inclusive).';
+    const DESCRIPTION = 'A number must be between two values (inclusive), returns value.';
 
     public function supportedSyntaxes()
     {
@@ -16,7 +16,11 @@ class Between extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return $data[0] >= $data[1] && $data[0] <= $data[2];
+        if ($data[0] < $data[1] || $data[0] > $data[2]) {
+            throw new DidNotMatchException();
+        }
+
+        return $data[0];
     }
 
     public function getTags()

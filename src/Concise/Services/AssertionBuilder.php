@@ -22,6 +22,10 @@ class AssertionBuilder
         $this->args = $args;
     }
 
+    /**
+     * @param int $i
+     * @return string
+     */
     protected function getArgName($i)
     {
         return "arg" . ($i / 2);

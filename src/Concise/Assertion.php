@@ -2,6 +2,8 @@
 
 namespace Concise;
 
+use Concise\Matcher\AbstractNestedMatcher;
+use Concise\Matcher\DidNotMatchException;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
@@ -44,6 +46,9 @@ class Assertion
 	 */
     protected $originalSyntax = '';
 
+    /**
+     * @var string
+     */
     protected $failureMessage = '';
 
     /**
@@ -177,25 +182,48 @@ class Assertion
     }
 
     /**
+     * @param array $args
+     * @return mixed
+     */
+    protected function performMatch($syntax, array $args)
+    {
+        try {
+            return $this->getMatcher()->match($this->originalSyntax, $args);
+        } catch (DidNotMatchException $e) {
+            $message = $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
+            throw new PHPUnit_Framework_AssertionFailedError($message);
+        }
+    }
+
+    /**
      * @throws PHPUnit_Framework_AssertionFailedError
-     * @return void
+     * @return mixed
      */
     protected function executeAssertion()
     {
         $lexer = new Lexer();
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
-        $answer = $this->getMatcher()->match($this->originalSyntax, $args);
-        if (true !== $answer && null !== $answer) {
+
+        $answer = $this->performMatch($result['syntax'], $args);
+
+        if (!$this->getMatcher() instanceof AbstractNestedMatcher && true !== $answer &&
+            null !== $answer) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+
+        return $answer;
     }
 
+    /**
+     * @return mixed
+     */
     public function run()
     {
-        $this->executeAssertion();
+        $r = $this->executeAssertion();
         $this->testCase->assertTrue(true);
+        return $r;
     }
 
     /**

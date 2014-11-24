@@ -53,6 +53,9 @@ class MockFinalClass2
     }
 }
 
+/**
+ * @group mocking
+ */
 class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
 {
     public function getClassName()

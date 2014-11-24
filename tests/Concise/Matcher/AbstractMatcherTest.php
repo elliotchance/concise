@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class MyMatcher extends AbstractMatcher
 {
@@ -22,6 +22,9 @@ class MyMatcher extends AbstractMatcher
     }
 }
 
+/**
+ * @group matcher
+ */
 class AbstractMatcherTest extends TestCase
 {
     public function setUp()

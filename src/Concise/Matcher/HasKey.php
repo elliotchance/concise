@@ -2,20 +2,22 @@
 
 namespace Concise\Matcher;
 
-class HasKey extends AbstractMatcher
+class HasKey extends AbstractNestedMatcher
 {
-    const DESCRIPTION = 'Assert an array has key.';
-
     public function supportedSyntaxes()
     {
         return array(
-            '?:array has key ?:int,string' => self::DESCRIPTION,
+            '?:array has key ?:int,string' => 'Assert an array has key, returns value.',
         );
     }
 
     public function match($syntax, array $data = array())
     {
-        return array_key_exists($data[1], $data[0]);
+        if (!array_key_exists($data[1], $data[0])) {
+            throw new DidNotMatchException();
+        }
+
+        return $data[0][$data[1]];
     }
 
     public function getTags()

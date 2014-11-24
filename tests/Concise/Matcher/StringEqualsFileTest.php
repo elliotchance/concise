@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class StringEqualsFileTest extends AbstractFileTestCase
 {
     public function setUp()
@@ -16,7 +19,7 @@ class StringEqualsFileTest extends AbstractFileTestCase
      */
     public function testExceptionIsThrownIfFileDoesNotExist()
     {
-        $this->assert('foo', equals_file, 'bar');
+        $this->matcher->match(null, array('foo', 'bar'));
     }
 
     public function testWillFailIfStringDoesNotMatchFile()

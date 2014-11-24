@@ -2,6 +2,9 @@
 
 namespace Concise\Matcher;
 
+/**
+ * @group matcher
+ */
 class IsAnObjectTest extends AbstractMatcherTestCase
 {
     public function setUp()

@@ -2,7 +2,9 @@
 
 namespace Concise\Matcher;
 
-class DidNotMatchExceptionTest extends \Concise\TestCase
+use Concise\TestCase;
+
+class DidNotMatchExceptionTest extends TestCase
 {
     public function testIsATypeOfException()
     {

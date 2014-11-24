@@ -2,7 +2,10 @@
 
 namespace Concise\Matcher;
 
-class BetweenTest extends AbstractMatcherTestCase
+/**
+ * @group matcher
+ */
+class BetweenTest extends AbstractNestedMatcherTestCase
 {
     public function setUp()
     {
@@ -38,5 +41,21 @@ class BetweenTest extends AbstractMatcherTestCase
     public function tags()
     {
         return array(Tag::NUMBERS);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionSuccess()
+    {
+        $this->assert($this->assert(5, between, 0, 'and', 10), exactly_equals, 5);
+    }
+
+    /**
+     * @group #219
+     */
+    public function testNestedAssertionFailure()
+    {
+        $this->assertFailure($this->assert(5, between, 0, 'and', 10), exactly_equals, 6);
     }
 }

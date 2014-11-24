@@ -2,7 +2,7 @@
 
 namespace Concise\Matcher;
 
-class DoesNotHaveProperty extends HasProperty
+class DoesNotHaveProperty extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
@@ -13,7 +13,7 @@ class DoesNotHaveProperty extends HasProperty
 
     public function match($syntax, array $data = array())
     {
-        return !parent::match(null, $data);
+        return !array_key_exists($data[1], (array) $data[0]);
     }
 
     public function getTags()

@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use Exception;
+
 class ThrowsException extends AbstractMatcher
 {
     public function supportedSyntaxes()
@@ -15,7 +17,7 @@ class ThrowsException extends AbstractMatcher
     {
         try {
             $data[0]();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return true;
         }
         throw new DidNotMatchException("Expected exception to be thrown.");
