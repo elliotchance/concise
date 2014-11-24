@@ -166,7 +166,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 * @param  array  $constructorArgs
 	 * @return MockBuilder
 	 */
-    protected function mock($className = '\stdClass', array $constructorArgs = array())
+    public function mock($className = '\stdClass', array $constructorArgs = array())
     {
         return new MockBuilder($this, $className, false, $constructorArgs);
     }
@@ -176,7 +176,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 * @param  array  $constructorArgs
 	 * @return MockBuilder
 	 */
-    protected function niceMock($className = '\stdClass', array $constructorArgs = array())
+    public function niceMock($className = '\stdClass', array $constructorArgs = array())
     {
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
