@@ -87,12 +87,19 @@ class MockManager
         $key = $this->getKeyForCall($rule['with'], $rule['with']);
         if (!array_key_exists($key, $this->callGraph)) {
             $this->validateSingleWith($rule, 0, $method);
+        } else {
+            $this->validateSingleWith($rule, $this->callGraph[$key], $method);
         }
-        $this->validateSingleWith($rule, $this->callGraph[$key], $method);
+    }
+
+    protected function resetCallGraph()
+    {
+        $this->callGraph = array();
     }
 
     protected function validateExpectation($mock, $method, array $rule)
     {
+        $this->resetCallGraph();
         if (null === $rule['with']) {
             /** @var $instance \Concise\Mock\MockInterface */
             $instance = $mock['instance'];
