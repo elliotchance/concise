@@ -197,5 +197,7 @@ class MockManager
                 return $this->validateMock($m);
             }
         }
+
+        throw new PHPUnit_Framework_AssertionFailedError('No such mock in mock manager.');
     }
 }

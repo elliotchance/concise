@@ -4,6 +4,13 @@ namespace Concise\Mock;
 
 use Concise\TestCase;
 
+class DummyMock implements MockInterface
+{
+	public function getCallsForMethod($method)
+	{
+	}
+}
+
 /**
  * @group mocking
  * @group #155
@@ -21,8 +28,9 @@ class MockVerifyTest extends TestCase
 		$mock = $this->mock('\DateTime')
 			->expect('getLastErrors')
 			->get();
-		$this->assert(function () use ($mock) {
-			$this->assertMock($mock);
+		$self = $this;
+		$this->assert(function () use ($mock, $self) {
+			$self->assertMock($mock);
 		}, throws, '\PHPUnit_Framework_AssertionFailedError');
 	}
 
@@ -32,8 +40,9 @@ class MockVerifyTest extends TestCase
 		$mock2 = $this->mock('\DateTime')
 			->expect('getLastErrors')
 			->get();
-		$this->assert(function () use ($mock2) {
-			$this->assertMock($mock2);
+		$self = $this;
+		$this->assert(function () use ($mock2, $self) {
+			$self->assertMock($mock2);
 		}, throws, '\PHPUnit_Framework_AssertionFailedError');
 	}
 
@@ -52,8 +61,9 @@ class MockVerifyTest extends TestCase
 			->expect('getLastErrors')
 			->get();
 		$this->mock()->get();
-		$this->assert(function () use ($mock2) {
-			$this->assertMock($mock2);
+		$self = $this;
+		$this->assert(function () use ($mock2, $self) {
+			$self->assertMock($mock2);
 		}, throws, '\PHPUnit_Framework_AssertionFailedError');
 	}
 
@@ -66,5 +76,14 @@ class MockVerifyTest extends TestCase
 		$mock = $this->mock()->get();
 		$this->assertMock($mock);
 		$this->assertMock($mock);
+	}
+
+	/**
+	 * @expectedException \PHPUnit_Framework_AssertionFailedError
+	 * @expectedExceptionMessage No such mock in mock manager.
+	 */
+	public function testWillThrowExceptionIfMockBeingVerifiedDoesNotExist()
+	{
+		$this->assertMock(new DummyMock());
 	}
 }
