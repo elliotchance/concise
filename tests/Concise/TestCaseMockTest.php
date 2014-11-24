@@ -38,11 +38,4 @@ class TestCaseMockTest extends TestCase
         $mockTemplate->get();
         $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
-
-    public function testMockCanBeManuallyVerified()
-    {
-        $mock = $this->mock()->get();
-        $verify = $this->verifyMock($mock);
-        $this->assert($verify, is_true);
-    }
 }
