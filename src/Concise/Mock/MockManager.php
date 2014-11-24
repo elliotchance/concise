@@ -25,6 +25,11 @@ class MockManager
      */
     protected $callGraph = array();
 
+    /**
+     * @var array
+     */
+    protected $argumentsForCallKey = array();
+
     public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
@@ -43,6 +48,20 @@ class MockManager
         );
     }
 
+    protected function didReceive()
+    {
+        if (0 === count($this->callGraph)) {
+            return '';
+        }
+
+        $r = " Did receive:";
+        $converter = new NumberToTimesConverter();
+        foreach ($this->argumentsForCallKey as $key => $args) {
+            $r .= "\n\n" . $converter->convert($this->callGraph[$key]) . ": {$args['method']}(" . $this->renderArguments($args['args']) . ")";
+        }
+        return $r;
+    }
+
     /**
      * @return null
      */
@@ -54,10 +73,11 @@ class MockManager
         $args = $this->renderArguments($rule['with']);
         $converter = new NumberToTimesConverter();
         $msg = sprintf(
-            "Expected $method(%s) to be called %s, but it was called %s.",
+            "Expected $method(%s) to be called %s, but it was called %s.%s",
             $args,
             $converter->convert($rule['times']),
-            $converter->convert($actualTimes)
+            $converter->convert($actualTimes),
+            $this->didReceive()
         );
         throw new \PHPUnit_Framework_AssertionFailedError($msg);
     }
@@ -78,6 +98,10 @@ class MockManager
         $key = $this->getKeyForCall($methodName, $call, $expected);
         if (!array_key_exists($key, $this->callGraph)) {
             $this->callGraph[$key] = 0;
+            $this->argumentsForCallKey[$key] = array(
+                'method' => $methodName,
+                'args' => $call,
+            );
         }
         ++$this->callGraph[$key];
     }
@@ -97,8 +121,15 @@ class MockManager
         $this->validateSingleWith($rule, $this->callGraph[$key], $method);
     }
 
+    protected function resetCallGraph()
+    {
+        $this->callGraph = array();
+        $this->argumentsForCallKey = array();
+    }
+
     protected function validateExpectation($mock, $method, array $rule)
     {
+        $this->resetCallGraph();
         if (null === $rule['with']) {
             /** @var $instance \Concise\Mock\MockInterface */
             $instance = $mock['instance'];

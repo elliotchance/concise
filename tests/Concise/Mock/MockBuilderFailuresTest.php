@@ -13,19 +13,20 @@ class MockBuilderFailuresTest extends TestCase
 
     protected static $expectedFailures = array(
         'testFailedToFulfilExpectationWillThrowException' => 'Expected myMethod() to be called once, but it was called never.',
-        'testMethodCalledWithWrongArgumentValues' => 'Expected myMethod("foo") to be called once, but it was called never.',
-        'testMissingSecondWithExpectation' => 'Expected myMethod("foo") to be called once, but it was called never.',
-        'testExpectationsRenderMultipleArguments' => 'Expected myMethod("foo", "bar") to be called once, but it was called never.',
+        'testMethodCalledWithWrongArgumentValues' => "Expected myMethod(\"foo\") to be called once, but it was called never. Did receive:\n\nonce: myMethod(\"bar\")",
+        'testMissingSecondWithExpectation' => "Expected myMethod(\"foo\") to be called once, but it was called never. Did receive:\n\nonce: myMethod(\"bar\")",
+        'testExpectationsRenderMultipleArguments' => "Expected myMethod(\"foo\", \"bar\") to be called once, but it was called never. Did receive:\n\nonce: myMethod(\"bar\")",
         'testMissingAllExpectations' => 'Expected myMethod("foo") to be called once, but it was called never.',
-        'testLessTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called once.',
-        'testMoreTimesThanExpected' => 'Expected myMethod("foo") to be called twice, but it was called 3 times.',
+        'testLessTimesThanExpected' => "Expected myMethod(\"foo\") to be called twice, but it was called once. Did receive:\n\nonce: myMethod(\"foo\")",
+        'testMoreTimesThanExpected' => "Expected myMethod(\"foo\") to be called twice, but it was called 3 times. Did receive:\n\n3 times: myMethod(\"foo\")",
         'testExpectionThatIsNeverCalledWillFail' => 'Expected myMethod("foo") to be called once, but it was called never.',
-        'testExpectionMustBeCalledTheRequiredAmountOfTimes' => 'Expected myMethod("foo") to be called twice, but it was called once.',
+        'testExpectionMustBeCalledTheRequiredAmountOfTimes' => "Expected myMethod(\"foo\") to be called twice, but it was called once. Did receive:\n\nonce: myMethod(\"foo\")",
         'testWithArgumentsMayContainPercentageThatWasntCalled' => 'Expected myMethod("%d") to be called once, but it was called never.',
         'testWithArgumentsWillNotMistakeAnArrayForACallback' => "Expected myMethod([\n  \"DateTime\",\n  \"getLastErrors\"\n]) to be called once, but it was called never.",
-        'testWithArgumentsUsingDifferentCallback' => "Expected myMethod([\n  \"DateTime\",\n  \"__set_state\"\n]) to be called once, but it was called never.",
+        'testWithArgumentsUsingDifferentCallback' => "Expected myMethod([\n  \"DateTime\",\n  \"__set_state\"\n]) to be called once, but it was called never. Did receive:\n\nonce: myMethod([\n  \"DateTime\",\n  \"getLastErrors\"\n])",
         'testAbstractMethodOnANiceMockThatHasNoActionWillThrowException' => 'myMethod() is abstract and has no associated action.',
         'testAnythingIsRenderedCorrectly' => 'Expected myMethod(<ANYTHING>, "foo") to be called once, but it was called never.',
+        'testWithFailureWithDifferentArgs' => "Expected myMethod(\"foo\") to be called once, but it was called never. Did receive:\n\nonce: myMethod(\"bar\")",
     );
 
     public function testFailedToFulfilExpectationWillThrowException()
@@ -135,6 +136,18 @@ class MockBuilderFailuresTest extends TestCase
         $mock = $this->mock('\Concise\Mock\Mock1')
                      ->expects('myMethod')->with(self::ANYTHING, 'foo')
                      ->get();
+    }
+
+    /**
+     * @group #157
+     */
+    public function testWithFailureWithDifferentArgs()
+    {
+        $mock = $this->mock('\Concise\Mock\Mock1')
+                     ->expects('myMethod')->with('foo')
+                     ->get();
+
+        $mock->myMethod('bar');
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
