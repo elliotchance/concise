@@ -275,4 +275,22 @@ class DefaultResultPrinterTest extends TestCase
 
         $this->assert($resultPrinter->getAssertionString(), contains_string, ' remaining');
     }
+
+    /**
+     * @group #228
+     */
+    public function testWillNotRefreshEstimatedTimeMoreThanOncePerSecond()
+    {
+
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getRemainingTimeString')
+            ->stub(array('getTotalTestCount' => 100, 'getTestCount' => 25))
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 5);
+        $a = $resultPrinter->getRemainingTimeString();
+        $this->setProperty($resultPrinter, 'startTime', time() - 10);
+        $b = $resultPrinter->getRemainingTimeString();
+
+        $this->assert($a, equals, $b);
+    }
 }
