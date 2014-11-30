@@ -6,6 +6,10 @@ use Concise\Validation\ArgumentChecker;
 
 class ProportionalProgressBar extends ProgressBar
 {
+    /**
+     * @param integer $size
+     * @param integer $total
+     */
     public function renderProportional($size, $total, array $parts)
     {
         ArgumentChecker::check($size, 'integer');

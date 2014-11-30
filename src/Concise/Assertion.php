@@ -108,6 +108,10 @@ class Assertion
         return $this->matcher;
     }
 
+    /**
+     * @param Attribute $arg
+     * @param integer $index
+     */
     protected function throwExceptionForInvalidArgument($arg, $index, $argument)
     {
         $renderer = new ValueRenderer();
@@ -183,7 +187,8 @@ class Assertion
 
     /**
      * @param array $args
-     * @return mixed
+     * @param string $syntax
+     * @return boolean
      */
     protected function performMatch($syntax, array $args)
     {
@@ -197,7 +202,7 @@ class Assertion
 
     /**
      * @throws PHPUnit_Framework_AssertionFailedError
-     * @return mixed
+     * @return boolean
      */
     protected function executeAssertion()
     {
@@ -217,7 +222,7 @@ class Assertion
     }
 
     /**
-     * @return mixed
+     * @return boolean
      */
     public function run()
     {

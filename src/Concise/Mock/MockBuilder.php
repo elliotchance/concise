@@ -304,6 +304,9 @@ class MockBuilder
         return $this;
     }
 
+    /**
+     * @param integer $times
+     */
     protected function setupWith(Action\AbstractAction $action, $times)
     {
         foreach ($this->currentRules as $rule) {

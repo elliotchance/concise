@@ -52,6 +52,10 @@ class MatcherParser
         return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
     }
 
+    /**
+     * @param string $string
+     * @param string $substring
+     */
     protected function endsWith($string, $substring)
     {
         return (substr($string, strlen($string) - strlen($substring)) === $substring);
@@ -105,6 +109,9 @@ class MatcherParser
         $this->keywords = array();
     }
 
+    /**
+     * @param string $rawSyntax
+     */
     protected function throwExceptionIfNotInLowerCase($rawSyntax)
     {
         if (strtolower($rawSyntax) != $rawSyntax) {
@@ -112,6 +119,9 @@ class MatcherParser
         }
     }
 
+    /**
+     * @param string $rawSyntax
+     */
     protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
     {
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {

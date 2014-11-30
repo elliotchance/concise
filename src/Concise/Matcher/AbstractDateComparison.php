@@ -16,6 +16,9 @@ abstract class AbstractDateComparison extends AbstractNestedMatcher
         return ($n > 0) - ($n < 0);
     }
 
+    /**
+     * @param integer $sign
+     */
     public function compare(array $data, $sign)
     {
         $converter = new TimestampToEpochConverter();

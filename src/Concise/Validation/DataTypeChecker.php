@@ -76,6 +76,9 @@ class DataTypeChecker
         return null;
     }
 
+    /**
+     * @param boolean $expecting
+     */
     protected function checkExpecting(array $acceptedTypes, $value, $expecting)
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
