@@ -20,4 +20,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation();
         $this->assert($invocation->getArguments(), is_empty_array);
     }
+
+    public function testImplementsInvocationInterface()
+    {
+        $invocation = new Invocation();
+        $this->assert($invocation, instance_of, '\Concise\Mock\InvocationInterface');
+    }
 }
