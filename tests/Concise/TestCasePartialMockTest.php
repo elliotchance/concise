@@ -24,4 +24,11 @@ class TestCasePartialMockTest extends TestCase
     {
         $this->partialMock('foo');
     }
+
+    public function testPartialMockReturnsAnInstanceOfItself()
+    {
+        $instance = new DateTime();
+        $mock = $this->partialMock($instance)->get();
+        $this->assert($mock, instance_of, '\DateTime');
+    }
 }
