@@ -4,11 +4,18 @@ namespace Concise\Services;
 
 class TimeFormatter
 {
+    /**
+     * @param double $number
+     */
     protected function pluralize($number, $word)
     {
         return "{$number} {$word}" . (($number == 1) ? '' : 's');
     }
 
+    /**
+     * @param integer $size
+     * @param string $word
+     */
     protected function part(array &$r, &$seconds, $size, $word)
     {
         if ($seconds >= $size) {
@@ -18,6 +25,9 @@ class TimeFormatter
         }
     }
 
+    /**
+     * @param integer $seconds
+     */
     public function format($seconds)
     {
         if (0 == $seconds) {

@@ -18,6 +18,10 @@ class ProgressCounter
      */
     protected $showPercentage;
 
+    /**
+     * @param integer $value
+     * @param string $name
+     */
     protected function atLeastZero($value, $name)
     {
         if ($value < 0) {
@@ -52,6 +56,9 @@ class ProgressCounter
         return $r;
     }
 
+    /**
+     * @param integer $value
+     */
     public function getPercentage($value)
     {
         return (0 === $this->total) ? 0 : floor($value / $this->total * 100);

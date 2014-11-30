@@ -4,6 +4,9 @@ namespace Concise;
 
 class Version
 {
+    /**
+     * @param string $path
+     */
     public function findVendorFolder($path = null)
     {
         if (null === $path) {
@@ -20,6 +23,9 @@ class Version
         return null;
     }
 
+    /**
+     * @param string $packageName
+     */
     public function getVersionForPackage($packageName)
     {
         $vendor = $this->findVendorFolder(__DIR__);

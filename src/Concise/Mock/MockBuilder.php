@@ -168,6 +168,9 @@ class MockBuilder
         return $mockInstance;
     }
 
+    /**
+     * @return string
+     */
     protected function getWithKey()
     {
         return md5(json_encode($this->currentWith));
@@ -304,6 +307,9 @@ class MockBuilder
         return $this;
     }
 
+    /**
+     * @param integer $times
+     */
     protected function setupWith(Action\AbstractAction $action, $times)
     {
         foreach ($this->currentRules as $rule) {
@@ -350,15 +356,18 @@ class MockBuilder
         return $this->rules;
     }
 
+    /**
+     * @return bool
+     */
     protected function isInterface()
     {
-        $refClass = new \ReflectionClass($this->className);
+        $refClass = new ReflectionClass($this->className);
 
         return $refClass->isInterface();
     }
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return MockBuilder
      */
     public function disableConstructor()
@@ -372,6 +381,10 @@ class MockBuilder
         return $this;
     }
 
+    /**
+     * @param string ... A list of methods to expose.
+     * @return $this
+     */
     public function expose()
     {
         foreach (func_get_args() as $arg) {
@@ -392,11 +405,20 @@ class MockBuilder
         return $this->setAction(new Action\ReturnSelfAction());
     }
 
+    /**
+     * @param Closure $action
+     * @return MockBuilder
+     * @throws Exception
+     */
     public function andDo(Closure $action)
     {
         return $this->setAction(new Action\DoAction($action));
     }
 
+    /**
+     * @param string $customClassName
+     * @return $this
+     */
     public function setCustomClassName($customClassName)
     {
         ArgumentChecker::check($customClassName, 'string');
@@ -405,6 +427,11 @@ class MockBuilder
         return $this;
     }
 
+    /**
+     * @param Closure $returnCallback
+     * @return MockBuilder
+     * @throws Exception
+     */
     public function andReturnCallback(Closure $returnCallback)
     {
         return $this->setAction(new Action\ReturnCallbackAction($returnCallback));
@@ -412,7 +439,7 @@ class MockBuilder
 
     /**
      * @param string $property
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return MockBuilder
      */
     public function andReturnProperty($property)

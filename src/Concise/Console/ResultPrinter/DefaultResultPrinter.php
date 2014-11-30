@@ -44,6 +44,21 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $hasUpdated = false;
 
+    /**
+     * @var integer
+     */
+    protected $lastUpdatedRemainingSecondsAt = 0;
+
+    /**
+     * @var string
+     */
+    protected $remainingSecondsString = '';
+
+    /**
+     * @var TimeFormatter
+     */
+    protected $formatter;
+
     public function __construct(DefaultTheme $theme = null)
     {
         /** @noinspection SpellCheckingInspection */
@@ -54,6 +69,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->theme = $theme;
         $this->counter = new ProgressCounter(0, true);
         $this->startTime = time();
+        $this->formatter = new TimeFormatter();
     }
 
     public function end()
@@ -88,23 +104,37 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function getRemainingSeconds()
     {
-        if (0 == $this->getTestCount()) {
+        $testCount = $this->getTestCount();
+        if (0 == $testCount) {
             return -1;
         }
         $elapsed = $this->getSecondsElapsed();
-        $eta = ($this->getTotalTestCount() / $this->getTestCount()) * $elapsed - $elapsed;
+        $eta = ($this->getTotalTestCount() / $testCount) * $elapsed - $elapsed;
         return $eta;
+    }
+
+    protected function getRemainingTimeString()
+    {
+        if ($this->lastUpdatedRemainingSecondsAt == time()) {
+            return $this->remainingSecondsString;
+        }
+
+        $remainingSeconds = $this->getRemainingSeconds();
+        $this->remainingSecondsString = '';
+        if ($this->getSecondsElapsed() >= 5 && $remainingSeconds > 0) {
+            $this->remainingSecondsString = ' (' . $this->formatter->format($remainingSeconds) . ' remaining)';
+        }
+
+        $this->lastUpdatedRemainingSecondsAt = time();
+        return $this->remainingSecondsString;
     }
 
     protected function getAssertionString()
     {
-        $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $formatter = new TimeFormatter();
-        $time = ', ' . $formatter->format($this->getSecondsElapsed());
-        $remaining = '';
-        if ($this->getSecondsElapsed() >= 5 && $this->getRemainingSeconds() > 0) {
-            $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
-        }
+        $assertionString = $this->getAssertionCount() . ' assertion' .
+            ($this->getAssertionCount() == 1 ? '' : 's');
+        $time = ', ' . $this->formatter->format($this->getSecondsElapsed());
+        $remaining = $this->getRemainingTimeString();
         $counterString = $this->counter->render($this->getTestCount());
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
             strlen($remaining);
@@ -127,6 +157,9 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->hasUpdated = true;
     }
 
+    /**
+     * @param integer $status
+     */
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
         switch ($status) {

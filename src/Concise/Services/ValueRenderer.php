@@ -9,8 +9,31 @@ use Concise\TestCase;
 
 class ValueRenderer
 {
+    /**
+     * @var string
+     */
     protected $theme;
 
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function colorizeLines($value)
+    {
+        $c = new Color();
+        $lines = explode("\n", $value);
+        $string = array();
+        foreach ($lines as $line) {
+            $string[] = (string) $c($line)->{$this->theme['value.string']};
+        }
+
+        return implode("\n", $string);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
     public function colorize($value)
     {
         $c = new Color();
@@ -30,15 +53,12 @@ class ValueRenderer
             return (string) $c($value)->{$this->theme['value.float']};
         }
 
-        $lines = explode("\n", $value);
-        $string = array();
-        foreach ($lines as $line) {
-            $string[] = (string) $c($line)->{$this->theme['value.string']};
-        }
-
-        return implode("\n", $string);
+        return $this->colorizeLines($value);
     }
 
+    /**
+     * @param integer $depth
+     */
     protected function jsonEncodeCallback(array $values, $depth, Closure $callback)
     {
         $r = '';
@@ -57,6 +77,9 @@ class ValueRenderer
         return str_repeat('  ', $depth);
     }
 
+    /**
+     * @param integer $depth
+     */
     protected function jsonEncode($value, $depth)
     {
         $self = $this;
@@ -76,9 +99,40 @@ class ValueRenderer
         return "[\n$r\n" . $this->createIndent($depth) . "]";
     }
 
+    /**
+     * @param array $a
+     * @return bool
+     */
     protected function isAssociativeArray(array $a)
     {
         return array_keys($a) !== range(0, count($a) - 1);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function renderString($value)
+    {
+        if ($value === TestCase::ANYTHING) {
+            return '<ANYTHING>';
+        }
+
+        return $this->colorize('"' . $value . '"');
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderClosure()
+    {
+        $c = new Color();
+        return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
+    }
+
+    protected function renderObject($showTypeHint, $value, $depth)
+    {
+        return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value, $depth);
     }
 
     /**
@@ -92,26 +146,17 @@ class ValueRenderer
         if ($depth >= $this->getMaximumDepth()) {
             return "...";
         }
-
-        $c = new Color();
-        if (is_null($value) || is_bool($value)) {
-            return $this->colorize($value);
-        }
         if ($value instanceof Closure) {
-            return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
+            return $this->renderClosure($value);
         }
         if (is_object($value)) {
-            return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value, $depth);
+            return $this->renderObject($showTypeHint, $value, $depth);
         }
         if (is_array($value)) {
             return $this->jsonEncode($value, $depth);
         }
         if (is_string($value)) {
-            if ($value === TestCase::ANYTHING) {
-                return '<ANYTHING>';
-            }
-
-            return $this->colorize('"' . $value . '"');
+            return $this->renderString($value);
         }
 
         return $this->colorize($value);

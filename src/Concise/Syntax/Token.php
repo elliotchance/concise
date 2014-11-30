@@ -18,7 +18,7 @@ class Token
     }
 
     /**
-	 * @return mixed
+	 * @return string
 	 */
     public function getValue()
     {
