@@ -13,6 +13,12 @@ use Concise\Validation\ArgumentChecker;
 
 class MockBuilder
 {
+    const MOCK_NORMAL = 0;
+
+    const MOCK_NICE = 1;
+
+    const MOCK_PARTIAL = 2;
+
     /**
 	 * @var TestCase
 	 */
@@ -24,9 +30,9 @@ class MockBuilder
     protected $rules = array();
 
     /**
-	 * @var bool
+	 * @var int
 	 */
-    protected $niceMock;
+    protected $mockType;
 
     /**
 	 * The names of the methods to be mocked.
@@ -83,24 +89,29 @@ class MockBuilder
     protected $customClassName = '';
 
     /**
+     * @var object|null
+     */
+    protected $objectState;
+
+    /**
      * @param TestCase $testCase
      * @param string $className
-     * @param boolean $niceMock
+     * @param int $mockType One of the mock constants in this class.
      * @param array $constructorArgs
      * @throws \Exception
      */
-    public function __construct(TestCase $testCase, $className, $niceMock,
+    public function __construct(TestCase $testCase, $className, $mockType,
         array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
-        ArgumentChecker::check($niceMock,  'boolean', 3);
+        ArgumentChecker::check($mockType,  'int', 3);
 
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
             throw new Exception("Class or interface '$className' does not exist.");
         }
         $this->className = $className;
-        $this->niceMock = $niceMock;
+        $this->mockType = $mockType;
         $this->constructorArgs = $constructorArgs;
     }
 
@@ -153,7 +164,7 @@ class MockBuilder
 	 */
     public function get()
     {
-        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs,
+        $compiler = new ClassCompiler($this->className, $this->mockType, $this->constructorArgs,
             $this->disableConstructor);
         if ($this->customClassName) {
             $compiler->setCustomClassName($this->customClassName);
@@ -164,6 +175,13 @@ class MockBuilder
         }
         $mockInstance = $compiler->newInstance();
         $this->testCase->addMockInstance($this, $mockInstance);
+
+        if (self::MOCK_PARTIAL === $this->mockType) {
+            $state = json_decode(json_encode($this->objectState), true);
+            foreach ($state as $k => $v) {
+                $mockInstance->$k = $v;
+            }
+        }
 
         return $mockInstance;
     }
@@ -452,5 +470,13 @@ class MockBuilder
         }
 
         return $this->setAction(new Action\ReturnPropertyAction($property));
+    }
+
+    /**
+     * @param object $objectState
+     */
+    public function setObjectState($objectState)
+    {
+        $this->objectState = $objectState;
     }
 }

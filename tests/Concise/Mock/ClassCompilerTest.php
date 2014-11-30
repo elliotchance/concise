@@ -119,11 +119,11 @@ class ClassCompilerTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected boolean, but got integer for argument 2
+     * @expectedExceptionMessage Expected int, but got string for argument 2
      */
     public function testNiceMockMustBeABoolean()
     {
-        new ClassCompiler('Concise\Mock\ClassCompilerMock1', 123);
+        new ClassCompiler('Concise\Mock\ClassCompilerMock1', '123');
     }
 
     /**
@@ -132,7 +132,7 @@ class ClassCompilerTest extends TestCase
      */
     public function testDisableConstructorMustBeABoolean()
     {
-        new ClassCompiler('Concise\Mock\ClassCompilerMock1', true, array(), 123);
+        new ClassCompiler('Concise\Mock\ClassCompilerMock1', MockBuilder::MOCK_NORMAL, array(), 123);
     }
 
     /**

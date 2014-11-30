@@ -170,7 +170,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 */
     public function mock($className = '\stdClass', array $constructorArgs = array())
     {
-        return new MockBuilder($this, $className, false, $constructorArgs);
+        return new MockBuilder($this, $className, MockBuilder::MOCK_NORMAL, $constructorArgs);
     }
 
     /**
@@ -180,7 +180,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 */
     public function niceMock($className = '\stdClass', array $constructorArgs = array())
     {
-        return new MockBuilder($this, $className, true, $constructorArgs);
+        return new MockBuilder($this, $className, MockBuilder::MOCK_NICE, $constructorArgs);
     }
 
     /**
@@ -190,7 +190,9 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function partialMock($instance)
     {
         ArgumentChecker::check($instance, 'object');
-        return $this->mock(get_class($instance));
+        $mockBuilder = new MockBuilder($this, get_class($instance), MockBuilder::MOCK_PARTIAL, array());
+        $mockBuilder->setObjectState($instance);
+        return $mockBuilder;
     }
 
     protected function loadKeywords()

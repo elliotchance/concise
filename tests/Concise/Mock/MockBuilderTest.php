@@ -69,11 +69,11 @@ class MockBuilderTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected boolean, but got integer for argument 3
+     * @expectedExceptionMessage Expected int, but got string for argument 3
      */
     public function testNiceMockMustBeABoolean()
     {
-        new MockBuilder($this, 'stdClass', 123);
+        new MockBuilder($this, 'stdClass', '123');
     }
 
     /**
@@ -82,7 +82,7 @@ class MockBuilderTest extends TestCase
      */
     public function testExpectMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
         $mock->expect(123);
     }
 
@@ -92,7 +92,7 @@ class MockBuilderTest extends TestCase
      */
     public function testExactlyMustBeAnInteger()
     {
-        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
         $mock->exactly('foo');
     }
 
@@ -102,7 +102,7 @@ class MockBuilderTest extends TestCase
      */
     public function testSetCustomClassNameMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
         $mock->setCustomClassName(123);
     }
 
@@ -112,7 +112,7 @@ class MockBuilderTest extends TestCase
      */
     public function testAndReturnPropertyMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', true);
+        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
         $mock->andReturnProperty(123);
     }
 }

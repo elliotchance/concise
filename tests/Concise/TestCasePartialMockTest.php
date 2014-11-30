@@ -31,4 +31,11 @@ class TestCasePartialMockTest extends TestCase
         $mock = $this->partialMock($instance)->get();
         $this->assert($mock, instance_of, '\DateTime');
     }
+
+    public function testPartialMockWillInheritObjectValuesToMaintainState()
+    {
+        $instance = json_decode('{"foo":"bar"}');
+        $mock = $this->partialMock($instance)->get();
+        $this->assert($mock->foo, equals, 'bar');
+    }
 }
