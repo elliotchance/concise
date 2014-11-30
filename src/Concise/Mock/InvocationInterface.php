@@ -16,4 +16,9 @@ interface InvocationInterface
      * @return array
      */
     public function getArguments();
+
+    /**
+     * @return int
+     */
+    public function getArgumentCount();
 }

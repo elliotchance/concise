@@ -70,4 +70,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation();
         $invocation->getArgument(0);
     }
+
+    public function testDefaultArgumentCountIsZero()
+    {
+        $invocation = new Invocation();
+        $this->assert($invocation->getArgumentCount(), equals, 0);
+    }
 }

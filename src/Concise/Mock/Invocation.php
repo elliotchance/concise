@@ -50,4 +50,9 @@ class Invocation implements InvocationInterface
         }
         return $this->arguments[$index];
     }
+
+    public function getArgumentCount()
+    {
+        return 0;
+    }
 }
