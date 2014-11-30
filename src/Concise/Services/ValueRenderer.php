@@ -39,6 +39,9 @@ class ValueRenderer
         return implode("\n", $string);
     }
 
+    /**
+     * @param integer $depth
+     */
     protected function jsonEncodeCallback(array $values, $depth, Closure $callback)
     {
         $r = '';
@@ -57,6 +60,9 @@ class ValueRenderer
         return str_repeat('  ', $depth);
     }
 
+    /**
+     * @param integer $depth
+     */
     protected function jsonEncode($value, $depth)
     {
         $self = $this;

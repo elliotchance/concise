@@ -46,6 +46,9 @@ class ProgressBar
         return (string) $c(str_repeat(' ', $length))->highlight($colorName);
     }
 
+    /**
+     * @param string $currentProgressBar
+     */
     protected function fillToSize($currentProgressBar)
     {
         reset($this->parts);

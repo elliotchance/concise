@@ -39,6 +39,9 @@ class TraceSimplifier
         $this->lastFile = '';
     }
 
+    /**
+     * @param string $path
+     */
     protected function shouldSkipPath($path)
     {
         return $path == 'bin/concise' || substr($path, 0, 7) == 'vendor/';

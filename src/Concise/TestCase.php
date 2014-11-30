@@ -142,7 +142,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return mixed
+     * @return boolean
 	 */
     public function assert()
     {
