@@ -191,6 +191,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         ArgumentChecker::check($instance, 'object');
         $mockBuilder = new MockBuilder($this, get_class($instance), true, array());
+        $mockBuilder->disableConstructor();
         $mockBuilder->setObjectState($instance);
         return $mockBuilder;
     }

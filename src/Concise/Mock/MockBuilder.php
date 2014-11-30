@@ -484,4 +484,12 @@ class MockBuilder
     {
         $this->objectState = $objectState;
     }
+
+    /**
+     * @return string
+     */
+    public function getClassName()
+    {
+        return $this->className;
+    }
 }
