@@ -182,6 +182,11 @@ class TestCase extends PHPUnit_Framework_TestCase
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
+    public function partialMock($instance)
+    {
+        return $this->mock();
+    }
+
     protected function loadKeywords()
     {
         $parser = MatcherParser::getInstance();
