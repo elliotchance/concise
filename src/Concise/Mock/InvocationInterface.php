@@ -18,6 +18,12 @@ interface InvocationInterface
     public function getArguments();
 
     /**
+     * @param int $index
+     * @return mixed
+     */
+    public function getArgument($index);
+
+    /**
      * @return int
      */
     public function getArgumentCount();

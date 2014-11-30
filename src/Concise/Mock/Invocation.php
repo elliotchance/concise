@@ -41,6 +41,10 @@ class Invocation implements InvocationInterface
         return $this->arguments;
     }
 
+    /**
+     * @param int $index
+     * @return mixed
+     */
     public function getArgument($index)
     {
         $count = $this->getArgumentCount();
@@ -51,6 +55,9 @@ class Invocation implements InvocationInterface
         return $this->arguments[$index];
     }
 
+    /**
+     * @return int
+     */
     public function getArgumentCount()
     {
         return count($this->arguments);
