@@ -41,6 +41,6 @@ class Invocation implements InvocationInterface
 
     public function getArgument($index)
     {
-        return $this->arguments[0];
+        return $this->arguments[$index];
     }
 }
