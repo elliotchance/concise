@@ -117,6 +117,19 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($a, equals, 123);
     }
 
+    /**
+     * @group #182
+     */
+    public function testAndDoWillBeProvidedACountThatStartsAt1()
+    {
+        $mock = $this->mockBuilder()
+            ->stub('myMethod')->andDo(function ($count) {
+                    return $count;
+                })
+            ->get();
+        $this->assert($mock->myMethod(), equals, 1);
+    }
+
     // Expect
 
     public function testCanCreateAnExpectation()
@@ -712,11 +725,11 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     public function testAReturnCallbackMustNotBeExecutedIfTheMethodWasNeverInvoked()
     {
         $count = 0;
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturnCallback(function () use (&$count) {
-                        ++$count;
-                    })
-                     ->get();
+        $this->mockBuilder()
+             ->stub('myMethod')->andReturnCallback(function () use (&$count) {
+                ++$count;
+            })
+             ->get();
         $this->assert($count, equals, 0);
     }
 
