@@ -157,6 +157,9 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->hasUpdated = true;
     }
 
+    /**
+     * @param integer $status
+     */
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
         switch ($status) {

@@ -2,10 +2,7 @@
 
 namespace Concise;
 
-use \Concise\Syntax\Code;
-use \Concise\Syntax\MatcherParser;
-use \Concise\Matcher\True;
-use \Concise\Matcher\False;
+use PHPUnit_Framework_AssertionFailedError;
 
 class AssertionOnErrorTest extends TestCase
 {
@@ -24,8 +21,16 @@ class AssertionOnErrorTest extends TestCase
         try {
             $this->assert(123, equals, 124, on_error, 'foo');
             $this->fail('Did not fail.');
-        } catch(\PHPUnit_Framework_AssertionFailedError $e) {
+        } catch(PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert($e->getMessage(), equals, 'foo');
         }
+    }
+
+    /**
+     * @group #231
+     */
+    public function testOnErrorWorksWhenUsingItImmediatelyAfterAnotherConstant()
+    {
+        $this->assert(true, is_true, on_error, "Oops");
     }
 }

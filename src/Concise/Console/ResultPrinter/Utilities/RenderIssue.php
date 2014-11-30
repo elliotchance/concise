@@ -37,6 +37,10 @@ class RenderIssue
         $this->colors = $this->theme->getTheme();
     }
 
+    /**
+     * @param string $prefix
+     * @param string $lines
+     */
     protected function prefixLines($prefix, $lines)
     {
         return $prefix . str_replace("\n", "\n$prefix", $lines);
@@ -66,6 +70,9 @@ class RenderIssue
         return "$issueNumber. " . $c($message)->$color . "\n\n";
     }
 
+    /**
+     * @param integer $issueNumber
+     */
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {
         ArgumentChecker::check($issueNumber, 'integer');

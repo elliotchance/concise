@@ -139,6 +139,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
     {
     }
 
+    /**
+     * @param string $string
+     */
     public function write($string)
     {
         echo $string;
@@ -148,6 +151,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
     {
     }
 
+    /**
+     * @param boolean $verbose
+     */
     public function setVerbose($verbose)
     {
         $this->verbose = $verbose;

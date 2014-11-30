@@ -34,6 +34,10 @@ class Lexer
         return in_array($token, $this->getMatcherParser()->getKeywords());
     }
 
+    /**
+     * @param boolean $mustConsumeUntil
+     * @param string $until
+     */
     protected function throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until)
     {
         if ($mustConsumeUntil) {
@@ -153,6 +157,9 @@ class Lexer
         }
     }
 
+    /**
+     * @param string $string
+     */
     protected function consumeToken(array &$tokens, $string, &$startIndex)
     {
         $currentTokens = count($tokens);
@@ -164,6 +171,9 @@ class Lexer
         return $currentTokens !== count($tokens);
     }
 
+    /**
+     * @param string $token
+     */
     protected function addTokenIfNotEmpty(array &$tokens, $token)
     {
         $token = trim($token);
