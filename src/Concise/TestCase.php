@@ -6,6 +6,7 @@ use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
+use Concise\Validation\ArgumentChecker;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Concise\Mock\MockInterface;
@@ -184,6 +185,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     public function partialMock($instance)
     {
+        ArgumentChecker::check($instance, 'object');
         return $this->mock();
     }
 

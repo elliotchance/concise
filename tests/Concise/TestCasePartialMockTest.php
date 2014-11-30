@@ -15,4 +15,13 @@ class TestCasePartialMockTest extends TestCase
         $instance = new DateTime();
         $this->assert($this->partialMock($instance), instance_of, '\Concise\Mock\MockBuilder');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected object, but got string for argument 1
+     */
+    public function testPartialMockMustReceiveAnObject()
+    {
+        $this->partialMock('foo');
+    }
 }
