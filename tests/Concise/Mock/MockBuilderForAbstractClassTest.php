@@ -8,6 +8,8 @@ abstract class MockAbstractClass
 
     protected $hidden = 'foo';
 
+    private $secret = 'bar';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = $b;

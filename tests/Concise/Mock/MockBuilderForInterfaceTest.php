@@ -141,16 +141,16 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         parent::testAnExceptionIsThrownIfPropertyDoesNotExistAtRuntime();
     }
 
-    public function testGetAProptectedProperty()
+    public function testGetAProtectedProperty()
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testGetAProptectedProperty();
+        parent::testGetAProtectedProperty();
     }
 
-    public function testSetAProptectedProperty()
+    public function testSetAProtectedProperty()
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testSetAProptectedProperty();
+        parent::testSetAProtectedProperty();
     }
 
     public function testStubbingMultipleMethodsWithMultipleArguments()
@@ -181,5 +181,14 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
         parent::testMultipleWithsNotBeingFullfilledInDifferentOrder();
+    }
+
+    /**
+     * @group #182
+     */
+    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
+    {
+        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
+        parent::testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass();
     }
 }

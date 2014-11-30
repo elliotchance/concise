@@ -248,7 +248,11 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     public function setProperty($object, $property, $value)
     {
-        $reflection = new ReflectionClass($object);
+        $className = get_class($object);
+        if ($object instanceof MockInterface) {
+            $className = get_parent_class($object);
+        }
+        $reflection = new ReflectionClass($className);
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
 

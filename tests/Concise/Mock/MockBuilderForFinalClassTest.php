@@ -8,6 +8,8 @@ final class MockFinalClass
 
     protected $hidden = 'foo';
 
+    private $secret = 'bar';
+
     public function __construct($a, $b)
     {
         $this->constructorRun = true;
@@ -442,16 +444,16 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         parent::testWithParameterCanAcceptAnythingElse();
     }
 
-    public function testGetAProptectedProperty()
+    public function testGetAProtectedProperty()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testGetAProptectedProperty();
+        parent::testGetAProtectedProperty();
     }
 
-    public function testSetAProptectedProperty()
+    public function testSetAProtectedProperty()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSetAProptectedProperty();
+        parent::testSetAProtectedProperty();
     }
 
     public function testStubbingMultipleMethodsWithMultipleArguments()
@@ -524,5 +526,14 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testMultipleWithsNotBeingFullfilledInDifferentOrder();
+    }
+
+    /**
+     * @group #182
+     */
+    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass();
     }
 }

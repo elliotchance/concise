@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 abstract class AbstractMockBuilderTestCase extends TestCase
 {
@@ -34,7 +34,7 @@ abstract class AbstractMockBuilderTestCase extends TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
      */
     public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
@@ -791,21 +791,32 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($mock->myMethod(123), equals, 'foo');
     }
 
-    // getProperty
+    // getProperty / setProperty
 
-    public function testGetAProptectedProperty()
+    public function testGetAProtectedProperty()
     {
         $mock = $this->niceMockBuilder()
                      ->get();
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'foo');
     }
 
-    public function testSetAProptectedProperty()
+    public function testSetAProtectedProperty()
     {
         $mock = $this->niceMockBuilder()
                      ->get();
         $this->setProperty($mock, 'hidden', 'bar');
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
+    }
+
+    /**
+     * @group #182
+     */
+    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
+    {
+        $mock = $this->niceMockBuilder()
+            ->get();
+        $this->setProperty($mock, 'secret', 'ok');
+        $this->assert($this->getProperty($mock, 'secret'), equals, 'ok');
     }
 
     // MockInterface
