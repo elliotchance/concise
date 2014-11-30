@@ -77,7 +77,11 @@ class DataTypeChecker
     }
 
     /**
+     * @param array $acceptedTypes
+     * @param $value
      * @param boolean $expecting
+     * @throws Exception
+     * @return string
      */
     protected function checkExpecting(array $acceptedTypes, $value, $expecting)
     {

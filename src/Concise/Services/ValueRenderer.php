@@ -9,8 +9,31 @@ use Concise\TestCase;
 
 class ValueRenderer
 {
+    /**
+     * @var string
+     */
     protected $theme;
 
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function colorizeLines($value)
+    {
+        $c = new Color();
+        $lines = explode("\n", $value);
+        $string = array();
+        foreach ($lines as $line) {
+            $string[] = (string) $c($line)->{$this->theme['value.string']};
+        }
+
+        return implode("\n", $string);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
     public function colorize($value)
     {
         $c = new Color();
@@ -30,13 +53,7 @@ class ValueRenderer
             return (string) $c($value)->{$this->theme['value.float']};
         }
 
-        $lines = explode("\n", $value);
-        $string = array();
-        foreach ($lines as $line) {
-            $string[] = (string) $c($line)->{$this->theme['value.string']};
-        }
-
-        return implode("\n", $string);
+        return $this->colorizeLines($value);
     }
 
     /**
