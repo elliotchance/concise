@@ -30,10 +30,9 @@ class ClassCompiler
     protected $rules = array();
 
     /**
-	 * The type of mock to be generated
-	 * @var int
+	 * @var bool
 	 */
-    protected $mockType;
+    protected $niceMock;
 
     /**
 	 * Arguments to pass to the constructor for the mock.
@@ -68,24 +67,24 @@ class ClassCompiler
 	 * @param array   $constructorArgs
      * @param boolean $disableConstructor
 	 */
-    public function __construct($className, $mockType = MockBuilder::MOCK_NORMAL,
-        array $constructorArgs = array(), $disableConstructor = false)
+    public function __construct($className, $niceMock = false, array $constructorArgs = array(),
+        $disableConstructor = false)
     {
         ArgumentChecker::check($className, 'string');
-        ArgumentChecker::check($mockType, 'int', 2);
+        ArgumentChecker::check($niceMock, 'bool', 2);
         ArgumentChecker::check($disableConstructor, 'boolean', 4);
 
         if (!class_exists($className) && !interface_exists($className)) {
             $message = "The class '$className' is not loaded so it cannot be mocked.";
             throw new InvalidArgumentException($message);
         }
-        if (interface_exists($className) && $mockType === MockBuilder::MOCK_NICE) {
+        if (interface_exists($className) && $niceMock) {
             $message = "You cannot create a nice mock of an interface ($className).";
             throw new InvalidArgumentException($message);
         }
         $this->className = ltrim($className, '\\');
         $this->mockUnique = '_' . substr(md5(rand()), 24);
-        $this->mockType = $mockType;
+        $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
         $this->disableConstructor = $disableConstructor;
     }
@@ -308,7 +307,7 @@ EOF;
 
         $this->methods = array();
         $this->makeAllAbstractMethodsThrowException($refClass);
-        if ($this->mockType !== MockBuilder::MOCK_NICE || $refClass->isInterface()) {
+        if (!$this->niceMock || $refClass->isInterface()) {
             $this->makeAllMethodsThrowException($refClass);
         }
         $this->renderRules();

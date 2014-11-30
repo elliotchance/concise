@@ -28,7 +28,7 @@ class MockMagicCall
 class MockBuilderTest extends TestCase
 {
     /**
-	 * @expectedException Exception
+	 * @expectedException \Exception
 	 * @expectedExceptionMessage Class or interface '\Abc' does not exist.
 	 */
     public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
@@ -69,7 +69,7 @@ class MockBuilderTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected int, but got string for argument 3
+     * @expectedExceptionMessage Expected bool, but got string for argument 3
      */
     public function testNiceMockMustBeABoolean()
     {
@@ -82,7 +82,7 @@ class MockBuilderTest extends TestCase
      */
     public function testExpectMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
+        $mock = new MockBuilder($this, 'stdClass', true);
         $mock->expect(123);
     }
 
@@ -92,7 +92,7 @@ class MockBuilderTest extends TestCase
      */
     public function testExactlyMustBeAnInteger()
     {
-        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
+        $mock = new MockBuilder($this, 'stdClass', true);
         $mock->exactly('foo');
     }
 
@@ -102,7 +102,7 @@ class MockBuilderTest extends TestCase
      */
     public function testSetCustomClassNameMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
+        $mock = new MockBuilder($this, 'stdClass', true);
         $mock->setCustomClassName(123);
     }
 
@@ -112,7 +112,7 @@ class MockBuilderTest extends TestCase
      */
     public function testAndReturnPropertyMustBeAString()
     {
-        $mock = new MockBuilder($this, 'stdClass', MockBuilder::MOCK_NICE);
+        $mock = new MockBuilder($this, 'stdClass', true);
         $mock->andReturnProperty(123);
     }
 }

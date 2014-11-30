@@ -33,7 +33,7 @@ class ClassCompilerExposeTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', MockBuilder::MOCK_NICE);
+        $this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
     }
 
     public function testAMethodCanBeExposed()

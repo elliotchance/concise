@@ -170,7 +170,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 */
     public function mock($className = '\stdClass', array $constructorArgs = array())
     {
-        return new MockBuilder($this, $className, MockBuilder::MOCK_NORMAL, $constructorArgs);
+        return new MockBuilder($this, $className, false, $constructorArgs);
     }
 
     /**
@@ -180,7 +180,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 	 */
     public function niceMock($className = '\stdClass', array $constructorArgs = array())
     {
-        return new MockBuilder($this, $className, MockBuilder::MOCK_NICE, $constructorArgs);
+        return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
     /**
@@ -190,7 +190,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function partialMock($instance)
     {
         ArgumentChecker::check($instance, 'object');
-        $mockBuilder = new MockBuilder($this, get_class($instance), MockBuilder::MOCK_PARTIAL, array());
+        $mockBuilder = new MockBuilder($this, get_class($instance), true, array());
         $mockBuilder->setObjectState($instance);
         return $mockBuilder;
     }
@@ -233,7 +233,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
     }
 
-    public function getProperty($object, $property)
+    protected function getReflectionProperty($object, $property)
     {
         $className = get_class($object);
         if ($object instanceof MockInterface) {
@@ -243,19 +243,18 @@ class TestCase extends PHPUnit_Framework_TestCase
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
 
+        return $property;
+    }
+
+    public function getProperty($object, $property)
+    {
+        $property = $this->getReflectionProperty($object, $property);
         return $property->getValue($object);
     }
 
     public function setProperty($object, $property, $value)
     {
-        $className = get_class($object);
-        if ($object instanceof MockInterface) {
-            $className = get_parent_class($object);
-        }
-        $reflection = new ReflectionClass($className);
-        $property = $reflection->getProperty($property);
-        $property->setAccessible(true);
-
+        $property = $this->getReflectionProperty($object, $property);
         $property->setValue($object, $value);
     }
 

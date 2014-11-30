@@ -10,16 +10,9 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
-use ReflectionException;
 
 class MockBuilder
 {
-    const MOCK_NORMAL = 0;
-
-    const MOCK_NICE = 1;
-
-    const MOCK_PARTIAL = 2;
-
     /**
 	 * @var TestCase
 	 */
@@ -31,9 +24,9 @@ class MockBuilder
     protected $rules = array();
 
     /**
-	 * @var int
+	 * @var bool
 	 */
-    protected $mockType;
+    protected $niceMock;
 
     /**
 	 * The names of the methods to be mocked.
@@ -97,22 +90,22 @@ class MockBuilder
     /**
      * @param TestCase $testCase
      * @param string $className
-     * @param int $mockType One of the mock constants in this class.
+     * @param bool $niceMock
      * @param array $constructorArgs
      * @throws \Exception
      */
-    public function __construct(TestCase $testCase, $className, $mockType,
+    public function __construct(TestCase $testCase, $className, $niceMock,
         array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
-        ArgumentChecker::check($mockType,  'int', 3);
+        ArgumentChecker::check($niceMock,  'bool', 3);
 
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
             throw new Exception("Class or interface '$className' does not exist.");
         }
         $this->className = $className;
-        $this->mockType = $mockType;
+        $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
     }
 
@@ -182,7 +175,7 @@ class MockBuilder
 	 */
     public function get()
     {
-        $compiler = new ClassCompiler($this->className, $this->mockType, $this->constructorArgs,
+        $compiler = new ClassCompiler($this->className, $this->niceMock, $this->constructorArgs,
             $this->disableConstructor);
         if ($this->customClassName) {
             $compiler->setCustomClassName($this->customClassName);
