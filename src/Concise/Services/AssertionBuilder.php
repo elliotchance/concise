@@ -31,6 +31,10 @@ class AssertionBuilder
         return "arg" . ($i / 2);
     }
 
+    /**
+     * @param int $offset
+     * @return array
+     */
     protected function getData($offset = 0)
     {
         $data = array();
@@ -42,11 +46,31 @@ class AssertionBuilder
         return $data;
     }
 
+    /**
+     * @return array
+     */
     protected function getAlternateData()
     {
         return $this->getData(1);
     }
 
+    /**
+     * @return array
+     */
+    protected function getOnErrorData()
+    {
+        $data1 = $this->getData();
+        $data2 = $this->getAlternateData();
+        $arg = "arg" . (count($data1) - 1);
+        $data1[$arg] = $data2[$arg];
+        return $data1;
+    }
+
+    /**
+     * @param array $syntax
+     * @param int $offset
+     * @return string
+     */
     protected function getSyntaxString($syntax = array(), $offset = 0)
     {
         $argc = count($this->args);
@@ -61,11 +85,28 @@ class AssertionBuilder
         return implode(' ', $syntax);
     }
 
+    /**
+     * @return string
+     */
     protected function getAlternateSyntaxString()
     {
         return $this->getSyntaxString(array($this->args[0]), 1);
     }
 
+    /**
+     * @return string
+     */
+    protected function getOnErrorSyntaxString()
+    {
+        $syntax1 = explode(' ', $this->getSyntaxString());
+        $syntax2 = explode(' ', $this->getAlternateSyntaxString());
+        $syntax = array_merge(array_slice($syntax1, 0, count($syntax1) - 2), array_slice($syntax2, count($syntax1) - 3));
+        return implode(' ', $syntax);
+    }
+
+    /**
+     * @return array
+     */
     protected function getSyntaxes()
     {
         $syntaxes = array(
@@ -79,6 +120,13 @@ class AssertionBuilder
             $syntaxes[] = array(
                 'syntax' => $this->getAlternateSyntaxString(),
                 'data' => $this->getAlternateData(),
+            );
+        }
+
+        if (count($this->args) > 2 && 'on error' === $this->args[2]) {
+            $syntaxes[] = array(
+                'syntax' => $this->getOnErrorSyntaxString(),
+                'data' => $this->getOnErrorData(),
             );
         }
 
