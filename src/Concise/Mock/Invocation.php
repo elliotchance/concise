@@ -8,4 +8,9 @@ class Invocation
     {
         return 1;
     }
+
+    public function getArguments()
+    {
+        return array();
+    }
 }
