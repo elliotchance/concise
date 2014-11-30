@@ -26,4 +26,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation();
         $this->assert($invocation, instance_of, '\Concise\Mock\InvocationInterface');
     }
+
+    public function testConstructorCanInitialiseInvokeCount()
+    {
+        $invocation = new Invocation(123);
+        $this->assert($invocation->getInvokeCount(), equals, 123);
+    }
 }
