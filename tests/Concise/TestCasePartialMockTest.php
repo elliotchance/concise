@@ -4,6 +4,11 @@ namespace Concise;
 
 use DateTime;
 
+class TestCasePartialMockObject
+{
+    protected $foo = 'bar';
+}
+
 /**
  * @group mocking
  * @group #129
@@ -37,5 +42,12 @@ class TestCasePartialMockTest extends TestCase
         $instance = json_decode('{"foo":"bar"}');
         $mock = $this->partialMock($instance)->get();
         $this->assert($mock->foo, equals, 'bar');
+    }
+
+    public function testPartialMockWillInheritProtectedObjectValuesToMaintainState()
+    {
+        $instance = new TestCasePartialMockObject();
+        $mock = $this->partialMock($instance)->get();
+        $this->assert($this->getProperty($mock, 'foo'), equals, 'bar');
     }
 }
