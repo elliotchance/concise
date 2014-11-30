@@ -146,6 +146,21 @@ abstract class AbstractMockBuilderTestCase extends TestCase
         $this->assert($c, equals, 2);
     }
 
+    /**
+     * @group #182
+     */
+    public function testAndDoWillBeProvidedWithOriginalArgs()
+    {
+        $a = array();
+        $mock = $this->mockBuilder()
+            ->stub('myMethod')->andDo(function ($count, array $args) use (&$a) {
+                    $a = $args;
+                })
+            ->get();
+        $mock->myMethod('hello');
+        $this->assert($a, equals, array('hello'));
+    }
+
     // Expect
 
     public function testCanCreateAnExpectation()

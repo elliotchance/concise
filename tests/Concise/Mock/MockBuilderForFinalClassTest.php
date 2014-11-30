@@ -543,4 +543,13 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testAndDoWillBeProvidedACountThatIncrementsWithInvocations();
     }
+
+    /**
+     * @group #182
+     */
+    public function testAndDoWillBeProvidedWithOriginalArgs()
+    {
+        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
+        parent::testAndDoWillBeProvidedWithOriginalArgs();
+    }
 }
