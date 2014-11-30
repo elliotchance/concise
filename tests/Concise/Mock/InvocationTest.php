@@ -76,4 +76,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation();
         $this->assert($invocation->getArgumentCount(), equals, 0);
     }
+
+    public function testArgumentCountIsCorrect()
+    {
+        $invocation = new Invocation(1, array('foo', 'bar'));
+        $this->assert($invocation->getArgumentCount(), equals, 2);
+    }
 }

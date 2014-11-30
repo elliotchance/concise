@@ -43,7 +43,7 @@ class Invocation implements InvocationInterface
 
     public function getArgument($index)
     {
-        $count = count($this->arguments);
+        $count = $this->getArgumentCount();
         if ($index < 0 || $index >= $count) {
             $message = "Invalid argument index: $index (only $count arguments)";
             throw new InvalidArgumentException($message);
@@ -53,6 +53,6 @@ class Invocation implements InvocationInterface
 
     public function getArgumentCount()
     {
-        return 0;
+        return count($this->arguments);
     }
 }
