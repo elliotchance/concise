@@ -38,4 +38,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation(1, array('foo'));
         $this->assert($invocation->getArguments(), equals, array('foo'));
     }
+
+    public function testGetArgumentWillReturnFirstArgument()
+    {
+        $invocation = new Invocation(1, array('foo'));
+        $this->assert($invocation->getArgument(0), equals, 'foo');
+    }
 }
