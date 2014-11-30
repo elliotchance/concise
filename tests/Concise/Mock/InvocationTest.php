@@ -50,4 +50,14 @@ class InvocationTest extends TestCase
         $invocation = new Invocation(1, array('foo', 'bar'));
         $this->assert($invocation->getArgument(1), equals, 'bar');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid argument index: -1
+     */
+    public function testNegativeArgumentIndexWillThrowException()
+    {
+        $invocation = new Invocation();
+        $invocation->getArgument(-1);
+    }
 }

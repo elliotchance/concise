@@ -2,6 +2,8 @@
 
 namespace Concise\Mock;
 
+use InvalidArgumentException;
+
 class Invocation implements InvocationInterface
 {
     /**
@@ -41,6 +43,9 @@ class Invocation implements InvocationInterface
 
     public function getArgument($index)
     {
+        if ($index < 0) {
+            throw new InvalidArgumentException("Invalid argument index: $index");
+        }
         return $this->arguments[$index];
     }
 }
