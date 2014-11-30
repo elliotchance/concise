@@ -60,4 +60,14 @@ class InvocationTest extends TestCase
         $invocation = new Invocation();
         $invocation->getArgument(-1);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid argument index: 0 (only 0 arguments)
+     */
+    public function testArgumentIndexGreaterThanAvailableWillThrowException()
+    {
+        $invocation = new Invocation();
+        $invocation->getArgument(0);
+    }
 }
