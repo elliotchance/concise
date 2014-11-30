@@ -10,6 +10,7 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
+use ReflectionException;
 
 class MockBuilder
 {
@@ -158,6 +159,23 @@ class MockBuilder
         return $this;
     }
 
+    protected function restoreState($mockInstance)
+    {
+        if (null !== $this->objectState) {
+            $reflection = new ReflectionClass($this->objectState);
+            foreach ($reflection->getProperties() as $property) {
+                $property->setAccessible(true);
+                $name = $property->getName();
+                $value = $property->getValue($this->objectState);
+
+                $originalReflection = new ReflectionClass($this->className);
+                $originalProperty = $originalReflection->getProperty($name);
+                $originalProperty->setAccessible(true);
+                $originalProperty->setValue($mockInstance, $value);
+            }
+        }
+    }
+
     /**
 	 * Compiler the mock into a usable instance.
 	 * @return object
@@ -175,13 +193,7 @@ class MockBuilder
         }
         $mockInstance = $compiler->newInstance();
         $this->testCase->addMockInstance($this, $mockInstance);
-
-        if (self::MOCK_PARTIAL === $this->mockType) {
-            $state = json_decode(json_encode($this->objectState), true);
-            foreach ($state as $k => $v) {
-                $mockInstance->$k = $v;
-            }
-        }
+        $this->restoreState($mockInstance);
 
         return $mockInstance;
     }

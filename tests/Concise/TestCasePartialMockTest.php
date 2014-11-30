@@ -6,7 +6,18 @@ use DateTime;
 
 class TestCasePartialMockObject
 {
-    protected $foo = 'bar';
+    public $public;
+
+    protected $foo;
+
+    private $secret;
+
+    public function init()
+    {
+        $this->public = 'yes';
+        $this->foo = 'bar';
+        $this->secret = 'baz';
+    }
 }
 
 /**
@@ -39,15 +50,25 @@ class TestCasePartialMockTest extends TestCase
 
     public function testPartialMockWillInheritObjectValuesToMaintainState()
     {
-        $instance = json_decode('{"foo":"bar"}');
+        $instance = new TestCasePartialMockObject();
+        $instance->init();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($mock->foo, equals, 'bar');
+        $this->assert($this->getProperty($mock, 'public'), equals, 'yes');
     }
 
     public function testPartialMockWillInheritProtectedObjectValuesToMaintainState()
     {
         $instance = new TestCasePartialMockObject();
+        $instance->init();
         $mock = $this->partialMock($instance)->get();
         $this->assert($this->getProperty($mock, 'foo'), equals, 'bar');
+    }
+
+    public function testPartialMockWillInheritPrivateObjectValuesToMaintainState()
+    {
+        $instance = new TestCasePartialMockObject();
+        $instance->init();
+        $mock = $this->partialMock($instance)->get();
+        $this->assert($this->getProperty($mock, 'secret'), equals, 'baz');
     }
 }
