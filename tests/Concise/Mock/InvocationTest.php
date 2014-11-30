@@ -32,4 +32,10 @@ class InvocationTest extends TestCase
         $invocation = new Invocation(123);
         $this->assert($invocation->getInvokeCount(), equals, 123);
     }
+
+    public function testConstructorCanInitialiseArguments()
+    {
+        $invocation = new Invocation(1, array('foo'));
+        $this->assert($invocation->getArguments(), equals, array('foo'));
+    }
 }

@@ -10,11 +10,17 @@ class Invocation implements InvocationInterface
     protected $invokedCount;
 
     /**
+     * @var array
+     */
+    protected $arguments;
+
+    /**
      * @param int $invokedCount
      */
-    public function __construct($invokedCount = 1)
+    public function __construct($invokedCount = 1, array $arguments = array())
     {
         $this->invokedCount = $invokedCount;
+        $this->arguments = $arguments;
     }
 
     /**
@@ -30,6 +36,6 @@ class Invocation implements InvocationInterface
      */
     public function getArguments()
     {
-        return array();
+        return $this->arguments;
     }
 }
