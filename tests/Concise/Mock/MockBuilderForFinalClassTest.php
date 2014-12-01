@@ -456,9 +456,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         parent::testMultipleWithsNotBeingFullfilledInDifferentOrder();
     }
 
-    /**
-     * @group #182
-     */
     public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');

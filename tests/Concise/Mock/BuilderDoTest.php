@@ -43,4 +43,48 @@ class BuilderDoTest extends AbstractBuilderTestCase
             ->get();
         $this->assert($a, equals, 123);
     }
+
+    /**
+     * @group #182
+     * @dataProvider allBuilders
+     */
+    public function testAndDoWillBeProvidedACountThatStartsAt1(MockBuilder $builder)
+    {
+        $mock = $builder->stub('myMethod')->andDo(function (InvocationInterface $i) {
+                    return $i->getInvokeCount();
+                })
+            ->get();
+        $this->assert($mock->myMethod(), equals, 1);
+    }
+
+    /**
+     * @group #182
+     * @dataProvider allBuilders
+     */
+    public function testAndDoWillBeProvidedACountThatIncrementsWithInvocations(MockBuilder $builder)
+    {
+        $c = 0;
+        $mock = $builder->stub('myMethod')->andDo(function (InvocationInterface $i) use (&$c) {
+                    $c = $i->getInvokeCount();
+                })
+            ->get();
+        $mock->myMethod();
+        $mock->myMethod();
+        $this->assert($c, equals, 2);
+    }
+
+    /**
+     * @group #182
+     * @dataProvider allBuilders
+     */
+    public function testAndDoWillBeProvidedWithOriginalArgs(MockBuilder $builder)
+    {
+        $a = array();
+        $mock = $builder->stub('myMethod')->andDo(function (InvocationInterface $i) use (&$a) {
+                    $a = $i->getArguments();
+                })
+            ->get();
+        $mock->myMethod('hello');
+        $this->assert($a, equals, array('hello'));
+    }
 }

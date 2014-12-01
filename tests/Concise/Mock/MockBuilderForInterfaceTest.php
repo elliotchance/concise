@@ -149,9 +149,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         parent::testMultipleWithsNotBeingFullfilledInDifferentOrder();
     }
 
-    /**
-     * @group #182
-     */
     public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');

@@ -12,8 +12,8 @@ class BuilderExpectTest extends AbstractBuilderTestCase
      */
     public function testCanCreateAnExpectation(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->once()->andReturn(null)
-            ->get();
+        $builder->setTestCase($this);
+        $mock = $builder->expect('myMethod')->once()->andReturn(null)->get();
         $mock->myMethod();
     }
 
@@ -22,8 +22,8 @@ class BuilderExpectTest extends AbstractBuilderTestCase
      */
     public function testCanCreateAnExpectationOfTwice(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->twice()->andReturn(null)
-            ->get();
+        $builder->setTestCase($this);
+        $mock = $builder->expect('myMethod')->twice()->andReturn(null)->get();
         $mock->myMethod();
         $mock->myMethod();
     }

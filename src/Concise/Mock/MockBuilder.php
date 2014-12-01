@@ -503,4 +503,12 @@ class MockBuilder
     {
         return $this->className;
     }
+
+    /**
+     * @param TestCase $testCase
+     */
+    public function setTestCase(TestCase $testCase)
+    {
+        $this->testCase = $testCase;
+    }
 }
