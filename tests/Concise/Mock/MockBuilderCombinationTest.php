@@ -120,20 +120,45 @@ class MockBuilderCombinationTest extends TestCase
     {
         return array(
             'mock class' => array($this->mock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'mock class'),
-            'nice class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'nice class'),
             'mock abstract' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'mock abstract'),
-            'nice abstract' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'nice abstract'),
             'mock interface' => array($this->mock('\Concise\Mock\CombinationMockedInterface', array(1, 2)), 'mock interface'),
+        );
+    }
+
+    public function allBuilders()
+    {
+        return $this->mockBuilders() + array(
+            'nice class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'nice class'),
+            'nice abstract' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'nice abstract'),
             'partial' => array($this->partialMock(new CombinationMockClass(1, 2)), 'nice interface'),
         );
     }
 
+    protected function expectFailure($message, $exceptionClass = '\InvalidArgumentException')
+    {
+        $this->setExpectedException($exceptionClass, $message);
+    }
+
     /**
-     * @dataProvider mockBuilders
+     * @dataProvider allBuilders
      */
     public function testMockCanBeCreatedFromAnObjectThatExists(MockBuilder $builder)
     {
         $mock = $builder->get();
         $this->assert($mock, instance_of, $builder->getClassName());
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
+     * @dataProvider mockBuilders
+     */
+    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException(MockBuilder $builder, $type)
+    {
+        if ('mock interface' === $type) {
+            $this->expectFailure('myMethod() is abstract and has no associated action.', '\Exception');
+        }
+        $mock = $builder->get();
+        $mock->myMethod();
     }
 }

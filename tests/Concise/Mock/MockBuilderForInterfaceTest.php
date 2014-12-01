@@ -117,12 +117,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->notApplicable();
     }
 
-    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException()
-    {
-        $this->expectFailure('myMethod() is abstract and has no associated action.', '\Exception');
-        parent::testCallingMethodThatHasNoAssociatedActionWillThrowAnException();
-    }
-
     public function testCallingAnAbstractMethodWithNoRuleThrowsException()
     {
         $this->expectFailure('myAbstractMethod() is abstract and has no associated action.', '\Exception');
