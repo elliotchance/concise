@@ -125,13 +125,18 @@ abstract class AbstractBuilderTestCase extends TestCase
         );
     }
 
-    public function allBuilders()
+    public function niceMockBuilders()
     {
-        return $this->mockBuilders() + array(
+        return array(
             'nice class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'nice class'),
             'nice abstract' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'nice abstract'),
             'partial' => array($this->partialMock(new CombinationMockClass(1, 2)), 'partial'),
         );
+    }
+
+    public function allBuilders()
+    {
+        return $this->mockBuilders() + $this->niceMockBuilders();
     }
 
     protected function expectFailure($message, $exceptionClass = '\Exception')
