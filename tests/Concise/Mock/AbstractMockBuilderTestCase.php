@@ -30,13 +30,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     // Constructor
 
-    public function testMockReceivesConstructorArguments()
-    {
-        $mock = $this->mockBuilder()
-                     ->get();
-        $this->assert($mock->constructorRun, equals, 2);
-    }
-
     public function testNiceMockReceivesConstructorArguments()
     {
         $mock = $this->niceMockBuilder()

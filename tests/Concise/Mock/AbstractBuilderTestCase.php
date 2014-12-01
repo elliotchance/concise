@@ -143,4 +143,9 @@ abstract class AbstractBuilderTestCase extends TestCase
     {
         $this->setExpectedException($exceptionClass, $message);
     }
+
+    protected function notApplicable()
+    {
+        return $this->assert(true);
+    }
 }

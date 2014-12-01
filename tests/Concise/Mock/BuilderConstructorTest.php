@@ -20,4 +20,16 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
         $mock = $builder->disableConstructor()->get();
         $this->assert($mock->constructorRun, is_false);
     }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testMockReceivesConstructorArguments(MockBuilder $builder, $type)
+    {
+        if ('mock interface' === $type) {
+            return $this->notApplicable();
+        }
+        $mock = $builder->get();
+        $this->assert($mock->constructorRun, equals, 2);
+    }
 }
