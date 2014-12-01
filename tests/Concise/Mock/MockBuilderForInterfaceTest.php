@@ -37,12 +37,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         $this->notApplicable();
     }
 
-    public function testMocksCanHaveTheirConstructorDisabled()
-    {
-        $this->expectFailure('You cannot disable the constructor of an interface (\Concise\Mock\MockedInterface).');
-        parent::testMocksCanHaveTheirConstructorDisabled();
-    }
-
     public function testNiceMockReceivesConstructorArguments()
     {
         $this->notApplicable();

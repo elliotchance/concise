@@ -390,6 +390,14 @@ class MockBuilder
     }
 
     /**
+     * @return bool
+     */
+    protected function isPartialMock()
+    {
+        return null !== $this->objectState;
+    }
+
+    /**
      * @throws InvalidArgumentException
      * @return MockBuilder
      */
@@ -398,6 +406,9 @@ class MockBuilder
         if ($this->isInterface()) {
             $message = "You cannot disable the constructor of an interface ({$this->className}).";
             throw new InvalidArgumentException($message);
+        }
+        if ($this->isPartialMock()) {
+            throw new Exception("You cannot disable the constructor on a partial mock because any constructor would have already run ({$this->className}).");
         }
         $this->disableConstructor = true;
 

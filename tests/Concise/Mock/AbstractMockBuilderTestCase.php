@@ -44,14 +44,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     // Constructor
 
-    public function testMocksCanHaveTheirConstructorDisabled()
-    {
-        $mock = $this->mock($this->getClassName())
-                     ->disableConstructor()
-                     ->get();
-        $this->assert($mock->constructorRun, is_false);
-    }
-
     public function testMockReceivesConstructorArguments()
     {
         $mock = $this->mockBuilder()

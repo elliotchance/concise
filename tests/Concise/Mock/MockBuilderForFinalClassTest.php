@@ -84,12 +84,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         parent::testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal();
     }
 
-    public function testMocksCanHaveTheirConstructorDisabled()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMocksCanHaveTheirConstructorDisabled();
-    }
-
     public function testMockReceivesConstructorArguments()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');

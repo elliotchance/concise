@@ -114,7 +114,7 @@ interface CombinationMockedInterface
 /**
  * @group mocking
  */
-class MockBuilderCombinationTest extends TestCase
+abstract class AbstractBuilderTestCase extends TestCase
 {
     public function mockBuilders()
     {
@@ -130,35 +130,12 @@ class MockBuilderCombinationTest extends TestCase
         return $this->mockBuilders() + array(
             'nice class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'nice class'),
             'nice abstract' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'nice abstract'),
-            'partial' => array($this->partialMock(new CombinationMockClass(1, 2)), 'nice interface'),
+            'partial' => array($this->partialMock(new CombinationMockClass(1, 2)), 'partial'),
         );
     }
 
-    protected function expectFailure($message, $exceptionClass = '\InvalidArgumentException')
+    protected function expectFailure($message, $exceptionClass = '\Exception')
     {
         $this->setExpectedException($exceptionClass, $message);
-    }
-
-    /**
-     * @dataProvider allBuilders
-     */
-    public function testMockCanBeCreatedFromAnObjectThatExists(MockBuilder $builder)
-    {
-        $mock = $builder->get();
-        $this->assert($mock, instance_of, $builder->getClassName());
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage myMethod() does not have an associated action - consider a niceMock()?
-     * @dataProvider mockBuilders
-     */
-    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException(MockBuilder $builder, $type)
-    {
-        if ('mock interface' === $type) {
-            $this->expectFailure('myMethod() is abstract and has no associated action.', '\Exception');
-        }
-        $mock = $builder->get();
-        $mock->myMethod();
     }
 }
