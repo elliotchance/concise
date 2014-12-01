@@ -30,14 +30,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     // Expect
 
-    public function testCanCreateAnExpectation()
-    {
-        $mock = $this->mockBuilder()
-                     ->expect('myMethod')->once()->andReturn(null)
-                     ->get();
-        $mock->myMethod();
-    }
-
     public function testCanCreateAnExpectationOfTwice()
     {
         $mock = $this->mockBuilder()
