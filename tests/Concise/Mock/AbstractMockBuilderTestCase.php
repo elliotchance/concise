@@ -30,18 +30,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     // Do
 
-    public function testTheCallbackWillBeExecuted()
-    {
-        $a = 123;
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andDo(function () use (&$a) {
-                         $a = 456;
-                     })
-                     ->get();
-        $mock->myMethod();
-        $this->assert($a, equals, 456);
-    }
-
     public function testTheCallbackWillNotBeExecutedIfNotCalled()
     {
         $a = 123;

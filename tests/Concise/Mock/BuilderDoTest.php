@@ -16,4 +16,18 @@ class BuilderDoTest extends AbstractBuilderTestCase
             ->get();
         $this->assert($mock->myMethod(), equals, null);
     }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testTheCallbackWillBeExecuted(MockBuilder $builder)
+    {
+        $a = 123;
+        $mock = $builder->stub('myMethod')->andDo(function () use (&$a) {
+                    $a = 456;
+                })
+            ->get();
+        $mock->myMethod();
+        $this->assert($a, equals, 456);
+    }
 }
