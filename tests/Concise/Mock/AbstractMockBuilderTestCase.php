@@ -30,15 +30,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     // Expect
 
-    public function testCanCreateAnExpectationOfTwice()
-    {
-        $mock = $this->mockBuilder()
-                     ->expect('myMethod')->twice()->andReturn(null)
-                     ->get();
-        $mock->myMethod();
-        $mock->myMethod();
-    }
-
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage You cannot assign an action to 'myMethod()' when it is never expected.
