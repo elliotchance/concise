@@ -20,12 +20,6 @@ interface MockedInterface
  */
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
 {
-    public function testNiceMockCanBeCreatedFromAnObjectThatExists()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testNiceMockCanBeCreatedFromAnObjectThatExists();
-    }
-
     public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal()
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
