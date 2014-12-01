@@ -20,11 +20,6 @@ interface MockedInterface
  */
 class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
 {
-    public function testNiceMockReceivesConstructorArguments()
-    {
-        $this->notApplicable();
-    }
-
     public function getClassName()
     {
         return '\Concise\Mock\MockedInterface';

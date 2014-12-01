@@ -116,21 +116,33 @@ interface CombinationMockedInterface
  */
 abstract class AbstractBuilderTestCase extends TestCase
 {
+    const MOCK_CLASS = 1;
+
+    const MOCK_ABSTRACT_CLASS = 2;
+
+    const MOCK_INTERFACE = 3;
+
+    const NICE_MOCK_CLASS = 4;
+
+    const NICE_MOCK_ABSTRACT_CLASS = 5;
+
+    const MOCK_PARTIAL = 7;
+
     public function mockBuilders()
     {
         return array(
-            'mock class' => array($this->mock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'mock class'),
-            'mock abstract' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'mock abstract'),
-            'mock interface' => array($this->mock('\Concise\Mock\CombinationMockedInterface', array(1, 2)), 'mock interface'),
+            'mock class' => array($this->mock('\Concise\Mock\CombinationMockClass', array(1, 2)), self::MOCK_CLASS),
+            'mock abstract class' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::MOCK_ABSTRACT_CLASS),
+            'mock interface' => array($this->mock('\Concise\Mock\CombinationMockedInterface', array(1, 2)), self::MOCK_INTERFACE),
         );
     }
 
     public function niceMockBuilders()
     {
         return array(
-            'nice class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), 'nice class'),
-            'nice abstract' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), 'nice abstract'),
-            'partial' => array($this->partialMock(new CombinationMockClass(1, 2)), 'partial'),
+            'nice mock class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), self::NICE_MOCK_CLASS),
+            'nice mock abstract class' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::NICE_MOCK_ABSTRACT_CLASS),
+            'partial mock' => array($this->partialMock(new CombinationMockClass(1, 2)), self::MOCK_PARTIAL),
         );
     }
 

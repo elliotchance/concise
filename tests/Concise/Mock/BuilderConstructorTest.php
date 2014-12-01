@@ -12,9 +12,9 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
      */
     public function testMocksCanHaveTheirConstructorDisabled(MockBuilder $builder, $type)
     {
-        if ('mock interface' === $type) {
+        if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure('You cannot disable the constructor of an interface (\Concise\Mock\CombinationMockedInterface).');
-        } elseif ('partial' === $type) {
+        } elseif (self::MOCK_PARTIAL === $type) {
             $this->expectFailure('You cannot disable the constructor on a partial mock because any constructor would have already run (Concise\Mock\CombinationMockClass).');
         }
         $mock = $builder->disableConstructor()->get();
@@ -26,7 +26,7 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
      */
     public function testMockReceivesConstructorArguments(MockBuilder $builder, $type)
     {
-        if ('mock interface' === $type) {
+        if (self::MOCK_INTERFACE === $type) {
             return $this->notApplicable();
         }
         $mock = $builder->get();

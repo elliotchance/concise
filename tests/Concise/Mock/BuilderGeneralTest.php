@@ -22,7 +22,7 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException(MockBuilder $builder, $type)
     {
         $this->expectFailure("myMethod() does not have an associated action - consider a niceMock()?");
-        if ('mock interface' === $type) {
+        if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("myMethod() is abstract and has no associated action.");
         }
         $mock = $builder->get();

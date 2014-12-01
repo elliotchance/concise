@@ -72,12 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testNiceMockReceivesConstructorArguments()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testNiceMockReceivesConstructorArguments();
-    }
-
     public function testACallbackCanBeSet()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
