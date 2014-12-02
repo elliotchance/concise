@@ -28,19 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Private
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage cannot be mocked because it it private.
-     */
-    public function testMockingPrivateMethodWillThrowException()
-    {
-        $this->mockBuilder()
-             ->stub(array('myPrivateMethod' => 'bar'))
-             ->get();
-    }
-
     // ReturnSelf
 
     public function testMethodsCanReturnSelf()
