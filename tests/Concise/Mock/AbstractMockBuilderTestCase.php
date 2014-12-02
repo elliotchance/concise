@@ -28,24 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // ANYTHING
-
-    public function testWithParameterCanAcceptAnything()
-    {
-        $mock = $this->mockBuilder()
-                     ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
-                     ->get();
-        $this->assert($mock->myMethod(null), equals, 'foo');
-    }
-
-    public function testWithParameterCanAcceptAnythingElse()
-    {
-        $mock = $this->mockBuilder()
-                     ->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')
-                     ->get();
-        $this->assert($mock->myMethod(123), equals, 'foo');
-    }
-
     // getProperty / setProperty
 
     public function testGetAProtectedProperty()

@@ -72,18 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testWithParameterCanAcceptAnything()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testWithParameterCanAcceptAnything();
-    }
-
-    public function testWithParameterCanAcceptAnythingElse()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testWithParameterCanAcceptAnythingElse();
-    }
-
     public function testGetAProtectedProperty()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
