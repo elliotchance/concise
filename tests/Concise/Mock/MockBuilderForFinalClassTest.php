@@ -72,12 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testMethodsCanReturnSelf()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMethodsCanReturnSelf();
-    }
-
     public function testAndReturnWithASingleArgument()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');

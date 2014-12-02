@@ -28,16 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // ReturnSelf
-
-    public function testMethodsCanReturnSelf()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturnSelf()
-                     ->get();
-        $this->assert($mock->myMethod(), is_the_same_as, $mock);
-    }
-
     // Return
 
     public function testAndReturnWithASingleArgument()
