@@ -72,42 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testAReturnCallbackCanBeSet()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackCanBeSet();
-    }
-
-    public function testAReturnCallbackWillBeEvaluatedForItsReturnValue()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackWillBeEvaluatedForItsReturnValue();
-    }
-
-    public function testAReturnCallbackMustNotBeExecutedIfTheMethodWasNeverInvoked()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackMustNotBeExecutedIfTheMethodWasNeverInvoked();
-    }
-
-    public function testAReturnCallbackWillBeProvidedACountThatStartsAt1()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackWillBeProvidedACountThatStartsAt1();
-    }
-
-    public function testAReturnCallbackWillBeProvidedACountThatIncrementsWithInvocations()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackWillBeProvidedACountThatIncrementsWithInvocations();
-    }
-
-    public function testAReturnCallbackWillBeProvidedWithOriginalArgs()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testAReturnCallbackWillBeProvidedWithOriginalArgs();
-    }
-
     public function testAReturnPropertyCanBeSet()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
