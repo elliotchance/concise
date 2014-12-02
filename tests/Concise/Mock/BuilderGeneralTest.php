@@ -32,9 +32,18 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     /**
      * @dataProvider niceMockBuilders
      */
-    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal(MockBuilder $builder, $type)
+    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal(MockBuilder $builder)
     {
         $mock = $builder->get();
         $this->assert($mock->myMethod(), equals, 'abc');
+    }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testMockImplementsMockInterface(MockBuilder $builder)
+    {
+        $mock = $builder->get();
+        $this->assert($mock, instance_of, '\Concise\Mock\MockInterface');
     }
 }
