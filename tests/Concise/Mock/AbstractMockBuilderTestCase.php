@@ -28,56 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Abstract
-
-    public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')
-                     ->get();
-        $this->assert($mock->myMethod(), is_null);
-    }
-
-    public function testNiceMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->stub('myMethod')
-                     ->get();
-        $this->assert($mock->myMethod(), is_null);
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage myAbstractMethod() does not have an associated action - consider a niceMock()?
-     */
-    public function testCallingAnAbstractMethodWithNoRuleThrowsException()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')
-                     ->get();
-        $mock->myAbstractMethod();
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage myAbstractMethod() does not have an associated action - consider a niceMock()?
-     */
-    public function testCallingAnAbstractMethodOnANiceMockWithNoRuleThrowsException()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->stub('myMethod')
-                     ->get();
-        $mock->myAbstractMethod();
-    }
-
-    public function testAbstractMethodsCanHaveRulesAttached()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myAbstractMethod')
-                     ->get();
-        $this->assert($mock->myAbstractMethod(), is_null);
-    }
-
     // Final
 
     /**

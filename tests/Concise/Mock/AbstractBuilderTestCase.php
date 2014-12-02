@@ -146,6 +146,14 @@ abstract class AbstractBuilderTestCase extends TestCase
         );
     }
 
+    public function abstractBuilders()
+    {
+        return array(
+            'mock abstract class' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::MOCK_ABSTRACT_CLASS),
+            'nice mock abstract class' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::NICE_MOCK_ABSTRACT_CLASS),
+        );
+    }
+
     public function allBuilders()
     {
         return $this->mockBuilders() + $this->niceMockBuilders();
