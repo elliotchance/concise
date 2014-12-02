@@ -28,34 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // getProperty / setProperty
-
-    public function testGetAProtectedProperty()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->get();
-        $this->assert($this->getProperty($mock, 'hidden'), equals, 'foo');
-    }
-
-    public function testSetAProtectedProperty()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->get();
-        $this->setProperty($mock, 'hidden', 'bar');
-        $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
-    }
-
-    /**
-     * @group #182
-     */
-    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
-    {
-        $mock = $this->niceMockBuilder()
-            ->get();
-        $this->setProperty($mock, 'secret', 'ok');
-        $this->assert($this->getProperty($mock, 'secret'), equals, 'ok');
-    }
-
     // MockInterface
 
     public function testMockImplementsMockInterface()
