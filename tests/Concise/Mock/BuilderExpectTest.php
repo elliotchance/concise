@@ -118,4 +118,13 @@ class BuilderExpectTest extends AbstractBuilderTestCase
         $mock->myMethod();
         $mock->mySecondMethod();
     }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testMultipleExpectsThatAreNeverExpected(MockBuilder $builder)
+    {
+        $builder->expect('myWithMethod', 'myMethod')->never()
+            ->get();
+    }
 }

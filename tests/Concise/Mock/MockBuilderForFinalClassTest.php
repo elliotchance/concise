@@ -72,30 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testExposeASingleMethod()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExposeASingleMethod();
-    }
-
-    public function testExposeTwoMethodsWithSeparateParameters()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExposeTwoMethodsWithSeparateParameters();
-    }
-
-    public function testExposeTwoMethodsByCallingExposeTwice()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExposeTwoMethodsByCallingExposeTwice();
-    }
-
-    public function testExposeTwoMethodsWithArraySyntax()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExposeTwoMethodsWithArraySyntax();
-    }
-
     public function testMockingPrivateMethodWillThrowException()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
@@ -388,12 +364,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testMultipleExpectsUsingWith();
-    }
-
-    public function testMultipleExpectsThatAreNeverExpected()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleExpectsThatAreNeverExpected();
     }
 
     public function testMultipleWithsNotBeingFullfilled()

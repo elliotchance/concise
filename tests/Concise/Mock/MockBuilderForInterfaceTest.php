@@ -25,36 +25,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         return '\Concise\Mock\MockedInterface';
     }
 
-    public function testExposeASingleMethod()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testExposeASingleMethod();
-    }
-
-    public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testAnExceptionIsThrownIfTheMethodDoesNotExist();
-    }
-
-    public function testExposeTwoMethodsWithSeparateParameters()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testExposeTwoMethodsWithSeparateParameters();
-    }
-
-    public function testExposeTwoMethodsByCallingExposeTwice()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testExposeTwoMethodsByCallingExposeTwice();
-    }
-
-    public function testExposeTwoMethodsWithArraySyntax()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testExposeTwoMethodsWithArraySyntax();
-    }
-
     public function testMockingPrivateMethodWillThrowException()
     {
         $this->expectFailure('Method Concise\Mock\MockedInterface::myPrivateMethod() does not exist.');

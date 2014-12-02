@@ -421,6 +421,9 @@ class MockBuilder
      */
     public function expose()
     {
+        if (!$this->niceMock) {
+            throw new Exception("You cannot expose a method on a mock that is not nice.");
+        }
         foreach (func_get_args() as $arg) {
             if (!is_array($arg)) {
                 $arg = array($arg);

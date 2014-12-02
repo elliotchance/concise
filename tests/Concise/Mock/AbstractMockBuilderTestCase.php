@@ -28,58 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Expose
-
-    public function testExposeASingleMethod()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->expose('mySecretMethod')
-                     ->get();
-        $this->assert($mock->myMethod(), equals, 'abc');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage does not exist.
-     */
-    public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
-    {
-        $this->niceMockBuilder()
-             ->expose('baz')
-             ->get();
-    }
-
-    public function testExposeTwoMethodsWithSeparateParameters()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->expose('myMethod', 'mySecondMethod')
-                     ->get();
-        $this->assert($mock->mySecondMethod(), equals, 'bar');
-    }
-
-    public function testExposeTwoMethodsByCallingExposeTwice()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->expose('myMethod')->expose('mySecondMethod')
-                     ->get();
-        $this->assert($mock->myMethod(), equals, 'abc');
-    }
-
-    public function testExposeTwoMethodsWithArraySyntax()
-    {
-        $mock = $this->niceMockBuilder()
-                     ->expose(array('myMethod', 'mySecondMethod'))
-                     ->get();
-        $this->assert($mock->mySecondMethod(), equals, 'bar');
-    }
-
-    public function testMultipleExpectsThatAreNeverExpected()
-    {
-        $this->mockBuilder()
-            ->expect('myWithMethod', 'myMethod')->never()
-            ->get();
-    }
-
     // Private
 
     /**
