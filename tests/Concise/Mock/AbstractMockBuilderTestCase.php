@@ -28,16 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Static
-
-    public function testMocksCanMockStaticMethods()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub(array('myStaticMethod' => 'foo'))
-                     ->get();
-        $this->assert($mock->myStaticMethod(), equals, 'foo');
-    }
-
     // Stub
 
     public function testCanStubMethodWithAssociativeArray()
