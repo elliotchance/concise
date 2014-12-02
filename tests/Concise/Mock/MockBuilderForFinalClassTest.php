@@ -72,42 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testWeDoNotNeedToSpecifyAnActionForAnExpectationWeNeverWantToHappen();
-    }
-
-    public function testCanCreateAnExpectationOfASpecificAmountOfTimes()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testCanCreateAnExpectationOfASpecificAmountOfTimes();
-    }
-
-    public function testExactlyZeroIsTheSameAsNever()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExactlyZeroIsTheSameAsNever();
-    }
-
-    public function testDefaultExpectationIsOnce()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testDefaultExpectationIsOnce();
-    }
-
-    public function testCanCreateAnExpectationWithArgumentValues()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testCanCreateAnExpectationWithArgumentValues();
-    }
-
-    public function testCanUseExpectsInsteadOfExpect()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testCanUseExpectsInsteadOfExpect();
-    }
-
     public function testExposeASingleMethod()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
@@ -406,18 +370,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testMockImplementsMockInterface();
-    }
-
-    public function testExpectWithMultipleArguments()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExpectWithMultipleArguments();
-    }
-
-    public function testExpectsWithMultipleArguments()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testExpectsWithMultipleArguments();
     }
 
     public function testWithOnMultipleMethods()
