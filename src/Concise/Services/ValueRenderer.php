@@ -72,6 +72,9 @@ class ValueRenderer
         return $r;
     }
 
+    /**
+     * @param integer $depth
+     */
     protected function createIndent($depth)
     {
         return str_repeat('  ', $depth);
@@ -130,6 +133,10 @@ class ValueRenderer
         return ($this->theme ? $c('function')->{$this->theme['value.closure']} : 'function');
     }
 
+    /**
+     * @param boolean $showTypeHint
+     * @param integer $depth
+     */
     protected function renderObject($showTypeHint, $value, $depth)
     {
         return ($showTypeHint ? get_class($value) . ':' : '') . $this->jsonEncode($value, $depth);
