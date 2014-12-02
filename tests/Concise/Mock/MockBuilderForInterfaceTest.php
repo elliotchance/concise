@@ -25,12 +25,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
         return '\Concise\Mock\MockedInterface';
     }
 
-    public function testCallingMethodOnNiceMockWithStub()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testCallingMethodOnNiceMockWithStub();
-    }
-
     public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
     {
         $this->notApplicable();
@@ -81,24 +75,6 @@ class MockBuilderForInterfaceTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
         parent::testSetAProtectedProperty();
-    }
-
-    public function testStubbingMultipleMethodsWithMultipleArguments()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testStubbingMultipleMethodsWithMultipleArguments();
-    }
-
-    public function testFirstMethodOfMultipleStubsReceivesAction()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testFirstMethodOfMultipleStubsReceivesAction();
-    }
-
-    public function testSecondMethodOfMultipleStubsReceivesAction()
-    {
-        $this->expectFailure('You cannot create a nice mock of an interface (\Concise\Mock\MockedInterface).');
-        parent::testSecondMethodOfMultipleStubsReceivesAction();
     }
 
     public function testMultipleWithsNotBeingFullfilled()

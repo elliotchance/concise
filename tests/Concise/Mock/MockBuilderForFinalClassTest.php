@@ -72,66 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testCanStubMethodWithAssociativeArray()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testCanStubMethodWithAssociativeArray();
-    }
-
-    public function testStubbingWithAnArrayCanCreateMultipleStubs()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubbingWithAnArrayCanCreateMultipleStubs();
-    }
-
-    public function testCallingMethodOnNiceMockWithStub()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testCallingMethodOnNiceMockWithStub();
-    }
-
-    public function testStubsCanBeCreatedByChainingAnAction()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubsCanBeCreatedByChainingAnAction();
-    }
-
-    public function testStubWithNoActionWillReturnNull()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubWithNoActionWillReturnNull();
-    }
-
-    public function testStubCanReturnNull()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubCanReturnNull();
-    }
-
-    public function testStubCanThrowException()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubCanThrowException();
-    }
-
-    public function testMockSetsActualCallsToZeroWhenRuleIsCreated()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMockSetsActualCallsToZeroWhenRuleIsCreated();
-    }
-
-    public function testMockSetsCalledTimesToOneWhenMethodIsCalled()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMockSetsCalledTimesToOneWhenMethodIsCalled();
-    }
-
-    public function testMockSetsCalledTimesIncrementsWithMultipleCalls()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMockSetsCalledTimesIncrementsWithMultipleCalls();
-    }
-
     public function testMultipleWithIsAllowedForASingleMethod()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
@@ -274,24 +214,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testSetAProtectedProperty();
-    }
-
-    public function testStubbingMultipleMethodsWithMultipleArguments()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStubbingMultipleMethodsWithMultipleArguments();
-    }
-
-    public function testFirstMethodOfMultipleStubsReceivesAction()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testFirstMethodOfMultipleStubsReceivesAction();
-    }
-
-    public function testSecondMethodOfMultipleStubsReceivesAction()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSecondMethodOfMultipleStubsReceivesAction();
     }
 
     public function testMockImplementsMockInterface()
