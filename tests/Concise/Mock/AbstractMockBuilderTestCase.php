@@ -28,19 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Final
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage is final so it cannot be mocked
-     */
-    public function testFinalMethodsCanNotBeMocked()
-    {
-        $this->mockBuilder()
-             ->stub('myFinalMethod')
-             ->get();
-    }
-
     // Custom Class Name
 
     /**

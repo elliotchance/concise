@@ -111,6 +111,52 @@ interface CombinationMockedInterface
     public function myAbstractMethod();
 }
 
+final class CombinationMockFinalClass
+{
+    public $constructorRun = false;
+
+    protected $hidden = 'foo';
+
+    private $secret = 'bar';
+
+    public function __construct($a, $b)
+    {
+        $this->constructorRun = true;
+    }
+
+    public function myMethod()
+    {
+        return 'abc';
+    }
+
+    protected function mySecretMethod()
+    {
+        return 'abc';
+    }
+
+    public function mySecondMethod()
+    {
+        return 'bar';
+    }
+
+    private function myPrivateMethod()
+    {
+    }
+
+    public static function myStaticMethod()
+    {
+        return 'foo';
+    }
+
+    public function myWithMethod($a)
+    {
+    }
+
+    final public function myFinalMethod()
+    {
+    }
+}
+
 /**
  * @group mocking
  */
@@ -126,7 +172,11 @@ abstract class AbstractBuilderTestCase extends TestCase
 
     const NICE_MOCK_ABSTRACT_CLASS = 5;
 
-    const MOCK_PARTIAL = 7;
+    const MOCK_PARTIAL = 6;
+
+    const NICE_MOCK_FINAL_CLASS = 7;
+
+    const MOCK_FINAL_CLASS = 8;
 
     public function mockBuilders()
     {
@@ -151,6 +201,14 @@ abstract class AbstractBuilderTestCase extends TestCase
         return array(
             'mock abstract class' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::MOCK_ABSTRACT_CLASS),
             'nice mock abstract class' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::NICE_MOCK_ABSTRACT_CLASS),
+        );
+    }
+
+    public function finalBuilders()
+    {
+        return array(
+            'mock final class' => array($this->mock('\Concise\Mock\CombinationMockFinalClass', array(1, 2)), self::MOCK_FINAL_CLASS),
+            'nice mock final class' => array($this->niceMock('\Concise\Mock\CombinationMockFinalClass', array(1, 2)), self::NICE_MOCK_FINAL_CLASS),
         );
     }
 
