@@ -28,57 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Return
-
-    public function testAndReturnWithASingleArgument()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturn('foo')
-                     ->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
-    }
-
-    public function testAndReturnCanTakeMultipleArguments()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
-    }
-
-    public function testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->get();
-        $mock->myMethod();
-        $this->assert($mock->myMethod(), equals, 'bar');
-    }
-
-    public function testAndReturnWithASingleArgumentWillAlwaysReturnThatValue()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturn('foo')
-                     ->get();
-        $mock->myMethod();
-        $mock->myMethod();
-        $this->assert($mock->myMethod(), equals, 'foo');
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Only 2 return values have been provided.
-     */
-    public function testAndReturnWithMultipleArgumentsCanNotBeCalledMoreTimesThatReturnValues()
-    {
-        $mock = $this->mockBuilder()
-                     ->stub('myMethod')->andReturn('foo', 'bar')
-                     ->get();
-        $mock->myMethod();
-        $mock->myMethod();
-        $mock->myMethod();
-    }
-
     // Static
 
     public function testMocksCanMockStaticMethods()
