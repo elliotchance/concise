@@ -28,28 +28,6 @@ abstract class AbstractMockBuilderTestCase extends TestCase
 
     abstract public function getClassName();
 
-    // Custom Class Name
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid class name 'Concise\Mock\123'.
-     */
-    public function testWillThrowExceptionIfTheCustomNameIsNotValid()
-    {
-        $mock = $this->mockBuilder()
-                     ->setCustomClassName('123')
-                     ->get();
-    }
-
-    public function testCanSetCustomClassName()
-    {
-        $rand = "Concise\\Mock\\Temp" . md5(rand());
-        $mock = $this->mockBuilder()
-                     ->setCustomClassName($rand)
-                     ->get();
-        $this->assert(get_class($mock), equals, $rand);
-    }
-
     // ReturnCallback
 
     public function testAReturnCallbackCanBeSet()
