@@ -72,42 +72,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
         $this->assert($mock, instance_of, '\Concise\Mock\MockFinalClass2');
     }
 
-    public function testMultipleWithIsAllowedForASingleMethod()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleWithIsAllowedForASingleMethod();
-    }
-
-    public function testMultipleWithCanChangeTheActionOfTheMethod()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleWithCanChangeTheActionOfTheMethod();
-    }
-
-    public function testTheSecondWithActionWillNotOverrideTheFirstOne()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testTheSecondWithActionWillNotOverrideTheFirstOne();
-    }
-
-    public function testSingleWithWithMultipleTimes()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testSingleWithWithMultipleTimes();
-    }
-
-    public function testStringsInExpectedArgumentsMustBeEscapedCorrectly()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStringsInExpectedArgumentsMustBeEscapedCorrectly();
-    }
-
-    public function testStringsWithDollarCharacterMustBeEscaped()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testStringsWithDollarCharacterMustBeEscaped();
-    }
-
     public function testMockAbstractClassesThatDoNotHaveRulesForAllMethodsWillStillOperate()
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
@@ -220,36 +184,6 @@ class MockBuilderForFinalClassTest extends AbstractMockBuilderTestCase
     {
         $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
         parent::testMockImplementsMockInterface();
-    }
-
-    public function testWithOnMultipleMethods()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testWithOnMultipleMethods();
-    }
-
-    public function testMultipleExpectsUsingTheSameWith()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleExpectsUsingTheSameWith();
-    }
-
-    public function testMultipleExpectsUsingWith()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleExpectsUsingWith();
-    }
-
-    public function testMultipleWithsNotBeingFullfilled()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleWithsNotBeingFullfilled();
-    }
-
-    public function testMultipleWithsNotBeingFullfilledInDifferentOrder()
-    {
-        $this->expectFailure('Class Concise\Mock\MockFinalClass is final so it cannot be mocked.');
-        parent::testMultipleWithsNotBeingFullfilledInDifferentOrder();
     }
 
     public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass()
