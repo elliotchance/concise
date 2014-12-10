@@ -64,4 +64,12 @@ class TimeFormatterTest extends TestCase
     {
         $this->assert($this->formatter->format(0, true), equals, '0 secs');
     }
+
+    /**
+     * @group #239
+     */
+    public function testFormattingTwoSecondsShort()
+    {
+        $this->assert($this->formatter->format(2, true), equals, '2 secs');
+    }
 }
