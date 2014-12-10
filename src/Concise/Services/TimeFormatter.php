@@ -27,11 +27,13 @@ class TimeFormatter
 
     /**
      * @param integer $seconds
+     * @param bool $small Use shorter output, '3 mins 20 secs' instead of '3 minutes 20 seconds'
+     * @return string
      */
-    public function format($seconds)
+    public function format($seconds, $small = false)
     {
         if (0 == $seconds) {
-            return '0 seconds';
+            return $small ? '0 secs' : '0 seconds';
         }
 
         $r = array();
