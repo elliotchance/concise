@@ -121,7 +121,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
         $remainingSeconds = $this->getRemainingSeconds();
         $this->remainingSecondsString = '';
-        if ($this->getSecondsElapsed() >= 5 && $remainingSeconds > 0) {
+        if ($this->getSecondsElapsed() >= 5 && $remainingSeconds >= 1) {
             $this->remainingSecondsString = ' (' . $this->formatter->format($remainingSeconds, $short) . ' remaining)';
         }
 
