@@ -113,7 +113,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         return $eta;
     }
 
-    protected function getRemainingTimeString($short)
+    protected function getRemainingTimeString($short = false)
     {
         if ($this->lastUpdatedRemainingSecondsAt == time()) {
             return $this->remainingSecondsString;
