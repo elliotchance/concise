@@ -155,7 +155,6 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $assertionString = $this->getRealAssertionString(false);
         if (!$assertionString) {
             $assertionString = $this->getRealAssertionString(true);
-            var_dump($assertionString); exit;
         }
         return $assertionString;
     }
