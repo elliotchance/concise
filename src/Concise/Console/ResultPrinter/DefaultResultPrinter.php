@@ -113,7 +113,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         return $eta;
     }
 
-    protected function getRemainingTimeString()
+    protected function getRemainingTimeString($short)
     {
         if ($this->lastUpdatedRemainingSecondsAt == time()) {
             return $this->remainingSecondsString;
@@ -122,25 +122,42 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $remainingSeconds = $this->getRemainingSeconds();
         $this->remainingSecondsString = '';
         if ($this->getSecondsElapsed() >= 5 && $remainingSeconds > 0) {
-            $this->remainingSecondsString = ' (' . $this->formatter->format($remainingSeconds) . ' remaining)';
+            $this->remainingSecondsString = ' (' . $this->formatter->format($remainingSeconds, $short) . ' remaining)';
         }
 
         $this->lastUpdatedRemainingSecondsAt = time();
         return $this->remainingSecondsString;
     }
 
-    protected function getAssertionString()
+    /**
+     * @param bool $short
+     * @return string
+     */
+    protected function getRealAssertionString($short)
     {
         $assertionString = $this->getAssertionCount() . ' assertion' .
             ($this->getAssertionCount() == 1 ? '' : 's');
-        $time = ', ' . $this->formatter->format($this->getSecondsElapsed());
-        $remaining = $this->getRemainingTimeString();
-        $counterString = $this->counter->render($this->getTestCount());
+        $time = ', ' . $this->formatter->format($this->getSecondsElapsed(), $short);
+        $remaining = $this->getRemainingTimeString($short);
+        $counterString = $this->counter->render($this->getTestCount(), $short);
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
             strlen($remaining);
 
+        if ($pad < 0) {
+            return '';
+        }
         return sprintf("%s%s%s%s%s\n", $assertionString, $time, $remaining, str_repeat(' ', $pad),
             $counterString);
+    }
+
+    protected function getAssertionString()
+    {
+        $assertionString = $this->getRealAssertionString(false);
+        if (!$assertionString) {
+            $assertionString = $this->getRealAssertionString(true);
+            var_dump($assertionString); exit;
+        }
+        return $assertionString;
     }
 
     protected function restoreCursor()

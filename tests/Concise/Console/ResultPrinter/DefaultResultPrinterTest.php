@@ -293,4 +293,19 @@ class DefaultResultPrinterTest extends TestCase
 
         $this->assert($a, equals, $b);
     }
+
+    /**
+     * @group #239
+     */
+    public function testCanOutputShortenedAssertionString()
+    {
+        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
+            ->expose('getRealAssertionString')
+            ->stub(array('getTotalTestCount' => 1000, 'getTestCount' => 200))
+            ->get();
+        $this->setProperty($resultPrinter, 'startTime', time() - 4000);
+        $this->setProperty($resultPrinter, 'width', 80);
+
+        $this->assert($resultPrinter->getRealAssertionString(false), is_blank);
+    }
 }
