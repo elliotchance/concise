@@ -17,43 +17,35 @@ class TimeFormatterTest extends TestCase
         $this->formatter = new TimeFormatter();
     }
 
-    public function testFormattingZeroSeconds()
+    public function data()
     {
-        $this->assert($this->formatter->format(0), equals, '0 seconds');
+        return array(
+            array(0, '0 seconds', '0 sec'),
+            array(2, '2 seconds', '2 sec'),
+            array(1, '1 second', '1 sec'),
+            array(60, '1 minute', '1 min'),
+            array(120, '2 minutes', '2 min'),
+            array(80, '1 minute 20 seconds', '1 min 20 sec'),
+            array(3600, '1 hour', '1 hr'),
+            array(7200, '2 hours', '2 hr'),
+        );
     }
 
-    public function testFormattingTwoSeconds()
+    /**
+     * @group #239
+     * @dataProvider data
+     */
+    public function testFormattingLong($seconds, $expected)
     {
-        $this->assert($this->formatter->format(2), equals, '2 seconds');
+        $this->assert($this->formatter->format($seconds, false), equals, $expected);
     }
 
-    public function testFormattingOneSecond()
+    /**
+     * @group #239
+     * @dataProvider data
+     */
+    public function testFormattingShort($seconds, $_, $expected)
     {
-        $this->assert($this->formatter->format(1), equals, '1 second');
-    }
-
-    public function testFormattingOneMinute()
-    {
-        $this->assert($this->formatter->format(60), equals, '1 minute');
-    }
-
-    public function testFormattingTwoMinutes()
-    {
-        $this->assert($this->formatter->format(120), equals, '2 minutes');
-    }
-
-    public function testFormattingEightySeconds()
-    {
-        $this->assert($this->formatter->format(80), equals, '1 minute 20 seconds');
-    }
-
-    public function testFormattingOneHour()
-    {
-        $this->assert($this->formatter->format(3600), equals, '1 hour');
-    }
-
-    public function testFormattingTwoHours()
-    {
-        $this->assert($this->formatter->format(7200), equals, '2 hours');
+        $this->assert($this->formatter->format($seconds, true), equals, $expected);
     }
 }

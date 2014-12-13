@@ -5,8 +5,6 @@ concise
 
 ![](https://raw.githubusercontent.com/wiki/elliotchance/concise/image-concise-command.png)
 
-![](https://raw.githubusercontent.com/wiki/elliotchance/concise/image-concise-command.png)
-
 Concise is unit test framework for using plain English and minimal code, built on PHPUnit.
 
 Highlights include:
