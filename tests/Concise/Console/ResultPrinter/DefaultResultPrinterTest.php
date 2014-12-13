@@ -2,6 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
+use Concise\Mock\Invocation;
 use Concise\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
 use Exception;
@@ -311,13 +312,14 @@ class DefaultResultPrinterTest extends TestCase
 
     /**
      * @group #239
+     * @group #129
      */
     public function testWillUseShorterAssertionStringIfRequired()
     {
         $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
             ->expose('getAssertionString')
-            ->stub('getRealAssertionString')->andReturnCallback(function ($count, array $args) {
-                return $args[0] ? 'foo' : '';
+            ->stub('getRealAssertionString')->andReturnCallback(function (Invocation $invocation) {
+                return $invocation->getArgument(0) ? 'foo' : '';
             })
             ->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
