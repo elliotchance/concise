@@ -5,7 +5,6 @@ namespace Concise\Mock;
 use Concise\TestCase;
 use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
-use Concise\Mock\MockInterface;
 use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
@@ -13,7 +12,7 @@ class MockManager
     /**
      * @var array
      */
-    protected $mocks = array();
+    protected static $mocks = array();
 
     /**
      * @var \Concise\TestCase
@@ -41,7 +40,7 @@ class MockManager
 	 */
     public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
     {
-        $this->mocks[] = array(
+        self::$mocks[] = array(
             'mockBuilder' => $mockBuilder,
             'instance' => $mockInstance,
             'validated' => false,
@@ -141,10 +140,14 @@ class MockManager
         $this->testCase->assert(true);
     }
 
+    /**
+     * @param array $mock
+     * @return null
+     */
     protected function validateMock(array &$mock)
     {
         if ($mock['validated']) {
-            return;
+            return null;
         }
         $mock['validated'] = true;
 
@@ -160,13 +163,16 @@ class MockManager
                 $this->validateExpectation($mock, $method, $rule);
             }
         }
+
+        return null;
     }
 
     public function validateMocks()
     {
-        foreach ($this->mocks as &$mock) {
+        foreach (self::$mocks as &$mock) {
             $this->validateMock($mock);
         }
+        self::$mocks = array();
     }
 
     protected function renderArguments(array $args = null)
@@ -183,14 +189,14 @@ class MockManager
     /**
      * @return array
      */
-    public function getMocks()
+    public static function getMocks()
     {
-        return $this->mocks;
+        return self::$mocks;
     }
 
     public function validateMockByInstance(MockInterface $mock)
     {
-        foreach ($this->mocks as &$m) {
+        foreach (self::$mocks as &$m) {
             if ($mock === $m['instance']) {
                 if ($m['validated']) {
                     throw new PHPUnit_Framework_AssertionFailedError('You cannot assert a mock more than once.');

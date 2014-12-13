@@ -6,6 +6,7 @@ class TimeFormatter
 {
     /**
      * @param double $number
+     * @param string $word
      */
     protected function pluralize($number, $word)
     {

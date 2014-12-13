@@ -6,6 +6,8 @@ use Concise\Mock\MockBuilder;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
+use Concise\Validation\ArgumentChecker;
+use Exception;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Concise\Mock\MockInterface;
@@ -60,13 +62,13 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * @param  string $name
-     * @throws \Exception
+     * @throws Exception
      * @return mixed
      */
     public function __get($name)
     {
         if (!array_key_exists($name, $this->properties)) {
-            throw new \Exception("No such attribute '{$name}'.");
+            throw new Exception("No such attribute '{$name}'.");
         }
 
         return $this->properties[$name];
@@ -85,13 +87,13 @@ class TestCase extends PHPUnit_Framework_TestCase
     /**
      * @param string $name
      * @param mixed $value
-     * @throws \Exception
+     * @throws Exception
      */
     public function __set($name, $value)
     {
         $parser = $this->getMatcherParserInstance();
         if (in_array($name, $parser->getKeywords())) {
-            throw new \Exception("You cannot assign an attribute with the keyword '$name'.");
+            throw new Exception("You cannot assign an attribute with the keyword '$name'.");
         }
         $this->properties[$name] = $value;
     }
@@ -182,6 +184,19 @@ class TestCase extends PHPUnit_Framework_TestCase
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
+    /**
+     * @param object $instance
+     * @return MockBuilder
+     */
+    public function partialMock($instance)
+    {
+        ArgumentChecker::check($instance, 'object');
+        $mockBuilder = new MockBuilder($this, get_class($instance), true, array());
+        $mockBuilder->disableConstructor();
+        $mockBuilder->setObjectState($instance);
+        return $mockBuilder;
+    }
+
     protected function loadKeywords()
     {
         $parser = MatcherParser::getInstance();
@@ -220,21 +235,32 @@ class TestCase extends PHPUnit_Framework_TestCase
         $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
     }
 
-    public function getProperty($object, $property)
+    protected function getReflectionProperty($object, $property)
     {
-        $reflection = new ReflectionClass($object);
+        $className = get_class($object);
+        if ($object instanceof MockInterface) {
+            $className = get_parent_class($object);
+            if (!$className) {
+                $message = "You cannot set property on an interface (" . get_class($object) . ").";
+                throw new Exception($message);
+            }
+        }
+        $reflection = new ReflectionClass($className);
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
 
+        return $property;
+    }
+
+    public function getProperty($object, $property)
+    {
+        $property = $this->getReflectionProperty($object, $property);
         return $property->getValue($object);
     }
 
     public function setProperty($object, $property, $value)
     {
-        $reflection = new ReflectionClass($object);
-        $property = $reflection->getProperty($property);
-        $property->setAccessible(true);
-
+        $property = $this->getReflectionProperty($object, $property);
         $property->setValue($object, $value);
     }
 

@@ -83,9 +83,14 @@ class MockBuilder
     protected $customClassName = '';
 
     /**
+     * @var object|null
+     */
+    protected $objectState;
+
+    /**
      * @param TestCase $testCase
      * @param string $className
-     * @param boolean $niceMock
+     * @param bool $niceMock
      * @param array $constructorArgs
      * @throws \Exception
      */
@@ -93,7 +98,7 @@ class MockBuilder
         array $constructorArgs = array())
     {
         ArgumentChecker::check($className, 'string', 2);
-        ArgumentChecker::check($niceMock,  'boolean', 3);
+        ArgumentChecker::check($niceMock,  'bool', 3);
 
         $this->testCase = $testCase;
         if (!class_exists($className) && !interface_exists($className)) {
@@ -147,6 +152,23 @@ class MockBuilder
         return $this;
     }
 
+    protected function restoreState($mockInstance)
+    {
+        if (null !== $this->objectState) {
+            $reflection = new ReflectionClass($this->objectState);
+            foreach ($reflection->getProperties() as $property) {
+                $property->setAccessible(true);
+                $name = $property->getName();
+                $value = $property->getValue($this->objectState);
+
+                $originalReflection = new ReflectionClass($this->className);
+                $originalProperty = $originalReflection->getProperty($name);
+                $originalProperty->setAccessible(true);
+                $originalProperty->setValue($mockInstance, $value);
+            }
+        }
+    }
+
     /**
 	 * Compiler the mock into a usable instance.
 	 * @return object
@@ -164,6 +186,7 @@ class MockBuilder
         }
         $mockInstance = $compiler->newInstance();
         $this->testCase->addMockInstance($this, $mockInstance);
+        $this->restoreState($mockInstance);
 
         return $mockInstance;
     }
@@ -367,6 +390,14 @@ class MockBuilder
     }
 
     /**
+     * @return bool
+     */
+    protected function isPartialMock()
+    {
+        return null !== $this->objectState;
+    }
+
+    /**
      * @throws InvalidArgumentException
      * @return MockBuilder
      */
@@ -375,6 +406,9 @@ class MockBuilder
         if ($this->isInterface()) {
             $message = "You cannot disable the constructor of an interface ({$this->className}).";
             throw new InvalidArgumentException($message);
+        }
+        if ($this->isPartialMock()) {
+            throw new Exception("You cannot disable the constructor on a partial mock because any constructor would have already run ({$this->className}).");
         }
         $this->disableConstructor = true;
 
@@ -387,6 +421,9 @@ class MockBuilder
      */
     public function expose()
     {
+        if (!$this->niceMock) {
+            throw new Exception("You cannot expose a method on a mock that is not nice.");
+        }
         foreach (func_get_args() as $arg) {
             if (!is_array($arg)) {
                 $arg = array($arg);
@@ -452,5 +489,21 @@ class MockBuilder
         }
 
         return $this->setAction(new Action\ReturnPropertyAction($property));
+    }
+
+    /**
+     * @param object $objectState
+     */
+    public function setObjectState($objectState)
+    {
+        $this->objectState = $objectState;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassName()
+    {
+        return $this->className;
     }
 }
