@@ -50,16 +50,16 @@ class RenderIssueTest extends TestCase
         $this->assert($this->issue->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 123, $this->test, $this->exception), contains_string, $this->exception->getMessage());
     }
 
-    protected function getTraceSimplifier()
+    protected function getTraceSimplifier($return)
     {
         return $this->mock('Concise\Console\ResultPrinter\Utilities\TraceSimplifier')
-                    ->expect('render')->andReturn("foo\nbar")
+                    ->expect('render')->andReturn($return)
                     ->get();
     }
 
-    protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $issueNumber = 0)
+    protected function render($status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, $issueNumber = 0, $text = "foo\nbar")
     {
-        $simplifier = $this->getTraceSimplifier();
+        $simplifier = $this->getTraceSimplifier($text);
         $issue = new RenderIssue($simplifier);
 
         return $issue->render($status, $issueNumber, $this->test, $this->exception);
@@ -175,5 +175,14 @@ class RenderIssueTest extends TestCase
         $test = $this->mock('PHPUnit_Framework_Test')->get();
 
         $this->assert($renderIssue->getHeading(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 1, $test), does_not_contain_string, '::');
+    }
+
+    /**
+     * @group #238
+     */
+    public function testWillRemoveCarriageReturns()
+    {
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 0, "foo\n\rbar");
+        $this->assert($result, does_not_contain_string, "\r");
     }
 }

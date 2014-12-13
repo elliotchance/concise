@@ -43,6 +43,7 @@ class RenderIssue
      */
     protected function prefixLines($prefix, $lines)
     {
+        $lines = str_replace("\r", "", $lines);
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
