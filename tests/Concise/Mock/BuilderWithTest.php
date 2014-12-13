@@ -108,7 +108,7 @@ class BuilderWithTest extends AbstractBuilderTestCase
      * @group #225
      * @dataProvider allBuilders
      */
-    public function testMultipleWithsNotBeingFullfilled(MockBuilder $builder)
+    public function testMultipleWithsNotBeingFulfilled(MockBuilder $builder)
     {
         $mock = $builder->expect('myMethod')->with('foo')
             ->with('bar')->never()
@@ -121,12 +121,22 @@ class BuilderWithTest extends AbstractBuilderTestCase
      * @group #225
      * @dataProvider allBuilders
      */
-    public function testMultipleWithsNotBeingFullfilledInDifferentOrder(MockBuilder $builder)
+    public function testMultipleWithsNotBeingFulfilledInDifferentOrder(MockBuilder $builder)
     {
         $mock = $builder->expect('myMethod')->with('bar')->never()
             ->with('foo')
             ->get();
 
         $mock->myMethod('foo');
+    }
+
+    /**
+     * @group #168
+     * @dataProvider allBuilders
+     */
+    public function testWithUsingDefaultArguments(MockBuilder $builder)
+    {
+        $mock = $builder->expect('myWithMethodDefaults')->with('foo', 'bar')->andReturn(null)->get();
+        $mock->myWithMethodDefaults('foo', 'bar');
     }
 }
