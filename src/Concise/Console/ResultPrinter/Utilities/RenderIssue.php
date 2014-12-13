@@ -58,6 +58,9 @@ class RenderIssue
         return '';
     }
 
+    /**
+     * @param integer $issueNumber
+     */
     protected function getHeading($status, $issueNumber, PHPUnit_Framework_Test $test)
     {
         $c = new Color();
@@ -72,6 +75,7 @@ class RenderIssue
 
     /**
      * @param integer $issueNumber
+     * @param integer $status
      */
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {
