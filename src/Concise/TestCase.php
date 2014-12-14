@@ -274,4 +274,12 @@ class TestCase extends PHPUnit_Framework_TestCase
         $this->mockManager->validateMockByInstance($mock);
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function verify()
+    {
+        return true;
+    }
 }
