@@ -10,6 +10,8 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
+use ReflectionException;
+use ReflectionMethod;
 
 class MockBuilder
 {
@@ -345,6 +347,20 @@ class MockBuilder
         }
     }
 
+    public static function getMethodArgumentValues(array $didReceive, $method)
+    {
+        try {
+            $reflect = new ReflectionMethod($method);
+            $params = $reflect->getParameters();
+            if (count($didReceive) < count($params)) {
+                $didReceive[] = $params[count($params) - 1]->getDefaultValue();
+            }
+        } catch (ReflectionException $e) {
+            // Not sure how this should be handled, so let's ignore it for now.
+        }
+        return $didReceive;
+    }
+
     /**
      * Expected arguments when invoking the mock.
      * @throws \Exception
@@ -352,7 +368,7 @@ class MockBuilder
      */
     public function with()
     {
-        $this->currentWith = func_get_args();
+        $this->currentWith = $this->getMethodArgumentValues(func_get_args(), $this->getClassName() . "::" . $this->currentRules[0]);
         foreach ($this->currentRules as $rule) {
             if ($this->rules[$rule][md5('null')]['hasSetTimes']) {
                 $renderer = new ValueRenderer();
