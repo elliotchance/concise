@@ -12,12 +12,13 @@ Highlights include:
  * 100% compatible with PHPUnit, no changes required. You may use as many features as you like.
  * Much better mocking framework with a lot less typing.
  * Huge array of assertions to save on boilerplate code.
+ * Assert and [[Verify|verify]] supported.
 
 Simple Example
 --------------
 
 ```php
-class AttributeTest extends TestCase
+class MyTest extends TestCase
 {
     public function testAssertionsCanBeBuiltWithChaining()
     {
@@ -38,6 +39,21 @@ class AttributeTest extends TestCase
     {
         $this->foo = 'bar';
         $this->assert('foo is the same as "bar"');
+    }
+
+    public function testVerify()
+    {
+        $a = ['foo' => 'bar'];
+        $this->verify($a, has_key, 'foo', with_value, 'bar');
+        $this->verify($a, has_key, 'bar', with_value, 'baz');
+        // This test will always finish, all the failed verifications
+        // will be displayed at the end.
+    }
+
+    public function testNestedAssertion()
+    {
+        $a = ['foo' => 1.23];
+        $this->assert($this->assert($a, has_key, 'foo'), equals, 1.2, within, 0.1);
     }
 }
 ```
