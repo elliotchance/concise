@@ -10,7 +10,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $test = $this->mock('PHPUnit_Framework_Test')->get();
+        $this->mock('PHPUnit_Framework_Test')->get();
     }
 
     public function testStartTestSuiteWillCallResultPrinter()

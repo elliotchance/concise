@@ -2,6 +2,7 @@
 
 namespace Concise\Mock;
 
+use Concise\Services\MethodArguments;
 use Concise\TestCase;
 use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
@@ -10,6 +11,8 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
+use ReflectionException;
+use ReflectionMethod;
 
 class MockBuilder
 {
@@ -352,7 +355,8 @@ class MockBuilder
      */
     public function with()
     {
-        $this->currentWith = func_get_args();
+        $methodArguments = new MethodArguments();
+        $this->currentWith = $methodArguments->getMethodArgumentValues(func_get_args(), $this->getClassName() . "::" . $this->currentRules[0]);
         foreach ($this->currentRules as $rule) {
             if ($this->rules[$rule][md5('null')]['hasSetTimes']) {
                 $renderer = new ValueRenderer();

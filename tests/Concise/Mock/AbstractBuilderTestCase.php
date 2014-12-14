@@ -48,6 +48,10 @@ class CombinationMockClass
     final public function myFinalMethod()
     {
     }
+
+    public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
+    {
+    }
 }
 
 abstract class CombinationMockAbstractClass
@@ -96,6 +100,10 @@ abstract class CombinationMockAbstractClass
     final public function myFinalMethod()
     {
     }
+
+    public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
+    {
+    }
 }
 
 interface CombinationMockedInterface
@@ -109,6 +117,8 @@ interface CombinationMockedInterface
     public function myWithMethod($a);
 
     public function myAbstractMethod();
+
+    public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz');
 }
 
 final class CombinationMockFinalClass
@@ -153,6 +163,10 @@ final class CombinationMockFinalClass
     }
 
     final public function myFinalMethod()
+    {
+    }
+
+    public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
     {
     }
 }
