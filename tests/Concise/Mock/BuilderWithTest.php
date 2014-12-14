@@ -149,4 +149,14 @@ class BuilderWithTest extends AbstractBuilderTestCase
         $mock = $builder->expect('myWithMethodDefaults')->with('bar', 'foo', 'baz')->andReturn(null)->get();
         $mock->myWithMethodDefaults('bar', 'foo');
     }
+
+    /**
+     * @group #168
+     * @dataProvider allBuilders
+     */
+    public function testWithUsingMultipleDefaultArgumentNotProvided(MockBuilder $builder)
+    {
+        $mock = $builder->expect('myWithMethodDefaults')->with('bar', 'foo', 'baz')->andReturn(null)->get();
+        $mock->myWithMethodDefaults('bar');
+    }
 }
