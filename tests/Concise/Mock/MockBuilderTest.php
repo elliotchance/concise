@@ -28,7 +28,7 @@ class MockMagicCall
 class MockBuilderTest extends TestCase
 {
     /**
-	 * @expectedException Exception
+	 * @expectedException \Exception
 	 * @expectedExceptionMessage Class or interface '\Abc' does not exist.
 	 */
     public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
@@ -69,11 +69,11 @@ class MockBuilderTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected boolean, but got integer for argument 3
+     * @expectedExceptionMessage Expected bool, but got string for argument 3
      */
     public function testNiceMockMustBeABoolean()
     {
-        new MockBuilder($this, 'stdClass', 123);
+        new MockBuilder($this, 'stdClass', '123');
     }
 
     /**

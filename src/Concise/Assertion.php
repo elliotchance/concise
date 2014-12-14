@@ -156,6 +156,9 @@ class Assertion
         return $args;
     }
 
+    /**
+     * @param string $syntax
+     */
     protected function getFailureMessage($syntax, array $args)
     {
         $message = $this->failureMessage;

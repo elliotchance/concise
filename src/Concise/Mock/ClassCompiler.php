@@ -30,7 +30,6 @@ class ClassCompiler
     protected $rules = array();
 
     /**
-	 * If this is a nice mock.
 	 * @var bool
 	 */
     protected $niceMock;
@@ -69,17 +68,19 @@ class ClassCompiler
      * @param boolean $disableConstructor
 	 */
     public function __construct($className, $niceMock = false, array $constructorArgs = array(),
-                                $disableConstructor = false)
+        $disableConstructor = false)
     {
-        ArgumentChecker::check($className,           'string');
-        ArgumentChecker::check($niceMock,            'boolean', 2);
-        ArgumentChecker::check($disableConstructor,  'boolean', 4);
+        ArgumentChecker::check($className, 'string');
+        ArgumentChecker::check($niceMock, 'bool', 2);
+        ArgumentChecker::check($disableConstructor, 'boolean', 4);
 
         if (!class_exists($className) && !interface_exists($className)) {
-            throw new InvalidArgumentException("The class '$className' is not loaded so it cannot be mocked.");
+            $message = "The class '$className' is not loaded so it cannot be mocked.";
+            throw new InvalidArgumentException($message);
         }
         if (interface_exists($className) && $niceMock) {
-            throw new InvalidArgumentException("You cannot create a nice mock of an interface ($className).");
+            $message = "You cannot create a nice mock of an interface ($className).";
+            throw new InvalidArgumentException($message);
         }
         $this->className = ltrim($className, '\\');
         $this->mockUnique = '_' . substr(md5(rand()), 24);
@@ -205,9 +206,12 @@ EOF;
                 $args = addslashes(json_encode($rule['with']));
                 $args = str_replace('$', '\\$', $args);
                 $actionCode .= <<<EOF
-\$matcher = new \Concise\Mock\ArgumentMatcher();
-if (\$matcher->match(json_decode("$args"), func_get_args())) { {$action->getActionCode()}
-}
+    \$matcher = new \Concise\Mock\ArgumentMatcher();
+    \$methodArguments = new \Concise\Services\MethodArguments();
+    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName()}\\{$this->getClassName()}::$method");
+    if (\$matcher->match(json_decode("$args"), \$a)) {
+        {$action->getActionCode()}
+    }
 EOF;
             }
         }
@@ -218,7 +222,9 @@ $prototype {
 	if (!array_key_exists('$method', self::\$_methodCalls)) {
 		self::\$_methodCalls['$method'] = array();
 	}
-	self::\$_methodCalls['$method'][] = func_get_args();
+    \$methodArguments = new \Concise\Services\MethodArguments();
+    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName()}\\{$this->getClassName()}::$method");
+	self::\$_methodCalls['$method'][] = \$a;
 	$actionCode
 	$defaultActionCode
 }

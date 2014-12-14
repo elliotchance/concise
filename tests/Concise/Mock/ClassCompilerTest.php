@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class ClassCompilerMock1
 {
@@ -119,11 +119,11 @@ class ClassCompilerTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected boolean, but got integer for argument 2
+     * @expectedExceptionMessage Expected bool, but got string for argument 2
      */
     public function testNiceMockMustBeABoolean()
     {
-        new ClassCompiler('Concise\Mock\ClassCompilerMock1', 123);
+        new ClassCompiler('Concise\Mock\ClassCompilerMock1', '123');
     }
 
     /**
@@ -132,7 +132,7 @@ class ClassCompilerTest extends TestCase
      */
     public function testDisableConstructorMustBeABoolean()
     {
-        new ClassCompiler('Concise\Mock\ClassCompilerMock1', true, array(), 123);
+        new ClassCompiler('Concise\Mock\ClassCompilerMock1', false, array(), 123);
     }
 
     /**
