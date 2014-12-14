@@ -11,6 +11,7 @@ class VerifyFailuresTest extends TestCase
 
     protected static $expectedFailures = array(
         'testMultipleVerifyFailures' => "2 verify failures:\n\n10 equals 15\n\n15 equals 20",
+        'testSingleVerifyFailures' => "1 verify failure:\n\n10 equals 15",
     );
 
     /**
@@ -20,6 +21,14 @@ class VerifyFailuresTest extends TestCase
     {
         $this->verify(10, equals, 15);
         $this->verify(15, equals, 20);
+    }
+
+    /**
+     * @group #216
+     */
+    public function testSingleVerifyFailures()
+    {
+        $this->verify(10, equals, 15);
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
