@@ -8,6 +8,7 @@ use Concise\Syntax\MatcherParser;
 use Concise\Mock\MockManager;
 use Concise\Validation\ArgumentChecker;
 use Exception;
+use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Concise\Mock\MockInterface;
@@ -32,6 +33,11 @@ class TestCase extends PHPUnit_Framework_TestCase
      * @var array
      */
     protected $properties = array();
+
+    /**
+     * @var array
+     */
+    protected $verifyFailures = array();
 
     /**
      * @param string|null $name
@@ -161,6 +167,12 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->mockManager->validateMocks();
+        if ($this->verifyFailures) {
+            $count = count($this->verifyFailures);
+            $message = "$count verify failure" . ($count === 1 ? '' : 's') . ":";
+            $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
+            throw new PHPUnit_Framework_AssertionFailedError($message);
+        }
         parent::tearDown();
     }
 
@@ -218,12 +230,10 @@ class TestCase extends PHPUnit_Framework_TestCase
         define('on_error', 'on error');
     }
 
-    /**
-     * This looks useless but we need to change the visibility of setUp() to public.
-     */
     public function setUp()
     {
         parent::setUp();
+        $this->verifyFailures = array();
     }
 
     /**
@@ -273,5 +283,17 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         $this->mockManager->validateMockByInstance($mock);
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function verify()
+    {
+        try {
+            call_user_func_array(array($this, 'assert'), func_get_args());
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+            $this->verifyFailures[] = $e->getMessage();
+        }
     }
 }
