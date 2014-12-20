@@ -510,4 +510,12 @@ class MockBuilder
     {
         return $this->className;
     }
+
+    /**
+     * @return MockBuilder
+     */
+    public function exposeAll()
+    {
+        return $this;
+    }
 }
