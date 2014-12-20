@@ -89,6 +89,11 @@ class MockBuilder
     protected $objectState;
 
     /**
+     * @var string
+     */
+    protected $property;
+
+    /**
      * @param TestCase $testCase
      * @param string $className
      * @param bool $niceMock
@@ -188,6 +193,7 @@ class MockBuilder
         $mockInstance = $compiler->newInstance();
         $this->testCase->addMockInstance($this, $mockInstance);
         $this->restoreState($mockInstance);
+        $mockInstance->{$this->property[0]} = $this->property[1];
 
         return $mockInstance;
     }
@@ -512,11 +518,12 @@ class MockBuilder
     /**
      * @return MockBuilder
      */
-    public function setProperty()
+    public function setProperty($name, $value)
     {
         if ($this->isInterface()) {
             throw new Exception('You cannot set property on an interface.');
         }
+        $this->property = array($name, $value);
         return $this;
     }
 }
