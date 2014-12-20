@@ -70,4 +70,18 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $mock = $builder->setProperty('property', 'ok')->get();
         $this->assert($mock->property, equals, 'ok');
     }
+
+    /**
+     * @group #199
+     * @dataProvider allBuilders
+     */
+    public function testSettingMultipleProperty(MockBuilder $builder, $type)
+    {
+        if (self::MOCK_INTERFACE === $type) {
+            $this->expectFailure("You cannot set property on an interface.");
+        }
+        $mock = $builder->setProperty('property1', 'a')->setProperty('property2', 'b')->get();
+        $this->verify($mock->property1, equals, 'a');
+        $this->verify($mock->property2, equals, 'b');
+    }
 }
