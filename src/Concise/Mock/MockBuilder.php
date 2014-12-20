@@ -529,4 +529,12 @@ class MockBuilder
         $this->properties[$name] = $value;
         return $this;
     }
+
+    public function setProperties()
+    {
+        if ($this->isInterface()) {
+            throw new Exception('You cannot set property on an interface.');
+        }
+        return $this;
+    }
 }
