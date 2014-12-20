@@ -13,7 +13,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testGetAProtectedProperty(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface");
+            $this->expectFailure("You cannot set a property on an interface");
         }
         $mock = $builder->get();
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'foo');
@@ -25,7 +25,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSetAProtectedProperty(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface");
+            $this->expectFailure("You cannot set a property on an interface");
         }
         $mock = $builder->get();
         $this->setProperty($mock, 'hidden', 'bar');
@@ -39,7 +39,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface");
+            $this->expectFailure("You cannot set a property on an interface");
         }
         $mock = $builder->get();
         $this->setProperty($mock, 'secret', 'ok');
@@ -53,7 +53,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSettingAPropertyWhenCreatingAMockReturnsSelfForChaining(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface.");
+            $this->expectFailure("You cannot set a property on an interface.");
         }
         $this->assert($builder->setProperty('secret', 'ok'), equals, $builder);
     }
@@ -65,7 +65,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSettingASingleProperty(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface.");
+            $this->expectFailure("You cannot set a property on an interface.");
         }
         $mock = $builder->setProperty('property', 'ok')->get();
         $this->assert($mock->property, equals, 'ok');
@@ -78,7 +78,7 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSettingMultipleProperties(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface.");
+            $this->expectFailure("You cannot set a property on an interface.");
         }
         $mock = $builder->setProperty('property1', 'a')->setProperty('property2', 'b')->get();
         $this->verify($mock->property1, equals, 'a');
@@ -91,9 +91,6 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      */
     public function testSettingPropertiesWhenCreatingAMockReturnsSelfForChaining(MockBuilder $builder, $type)
     {
-        if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface.");
-        }
         $this->assert($builder->setProperties(array()), equals, $builder);
     }
 
@@ -104,10 +101,27 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testSettingMultiplePropertiesInOneStatement(MockBuilder $builder, $type)
     {
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("You cannot set property on an interface.");
+            $this->expectFailure("You cannot set a property on an interface.");
         }
         $mock = $builder->setProperties(array(
                 'property1' => 'a',
+                'property2' => 'b',
+            ))->get();
+        $this->verify($mock->property1, equals, 'a');
+        $this->verify($mock->property2, equals, 'b');
+    }
+
+    /**
+     * @group #199
+     * @dataProvider allBuilders
+     */
+    public function testSettingMultiplePropertiesInOneStatementWillNotOverrideOtherPropertiesSet(MockBuilder $builder, $type)
+    {
+        if (self::MOCK_INTERFACE === $type) {
+            $this->expectFailure("You cannot set a property on an interface.");
+        }
+        $mock = $builder->setProperty('property1', 'a')
+            ->setProperties(array(
                 'property2' => 'b',
             ))->get();
         $this->verify($mock->property1, equals, 'a');

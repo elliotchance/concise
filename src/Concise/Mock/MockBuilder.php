@@ -520,22 +520,35 @@ class MockBuilder
 
     /**
      * @return MockBuilder
+     * @throws Exception
      */
     public function setProperty($name, $value)
     {
-        if ($this->isInterface()) {
-            throw new Exception('You cannot set property on an interface.');
-        }
+        $this->propertiesCannotBeSetOnAnInterface();
         $this->properties[$name] = $value;
         return $this;
     }
 
+    /**
+     * @param array $properties
+     * @return MockBuilder
+     * @throws Exception
+     */
     public function setProperties(array $properties)
     {
-        if ($this->isInterface()) {
-            throw new Exception('You cannot set property on an interface.');
+        foreach ($properties as $name => $value) {
+            $this->setProperty($name, $value);
         }
-        $this->properties = $properties;
         return $this;
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function propertiesCannotBeSetOnAnInterface()
+    {
+        if ($this->isInterface()) {
+            throw new Exception('You cannot set a property on an interface.');
+        }
     }
 }
