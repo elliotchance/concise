@@ -45,4 +45,16 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $this->setProperty($mock, 'secret', 'ok');
         $this->assert($this->getProperty($mock, 'secret'), equals, 'ok');
     }
+
+    /**
+     * @group #199
+     * @dataProvider allBuilders
+     */
+    public function testSettingAPropertyWhenCreatingAMockReturnsSelfForChaining(MockBuilder $builder, $type)
+    {
+        if (self::MOCK_INTERFACE === $type) {
+            $this->expectFailure("You cannot set property on an interface.");
+        }
+        $this->assert($builder->setProperty('secret', 'ok'), equals, $builder);
+    }
 }

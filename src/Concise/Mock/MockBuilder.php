@@ -11,8 +11,6 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
-use ReflectionException;
-use ReflectionMethod;
 
 class MockBuilder
 {
@@ -509,5 +507,16 @@ class MockBuilder
     public function getClassName()
     {
         return $this->className;
+    }
+
+    /**
+     * @return MockBuilder
+     */
+    public function setProperty()
+    {
+        if ($this->isInterface()) {
+            throw new Exception('You cannot set property on an interface.');
+        }
+        return $this;
     }
 }
