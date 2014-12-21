@@ -62,6 +62,9 @@ class MockManager
     }
 
     /**
+     * @param array $rule
+     * @param int $actualTimes
+     * @param string $method
      * @return null
      */
     protected function validateSingleWith(array $rule, $actualTimes, $method)

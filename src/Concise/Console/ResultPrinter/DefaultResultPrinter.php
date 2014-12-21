@@ -175,6 +175,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     /**
      * @param integer $status
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception $e
      */
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {

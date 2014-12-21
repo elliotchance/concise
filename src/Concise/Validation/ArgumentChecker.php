@@ -7,7 +7,9 @@ use InvalidArgumentException;
 class ArgumentChecker
 {
     /**
-     * @param string $types
+     * @param mixed $value
+     * @param string $types comma-separated.
+     * @param int $argumentNumber
      */
     public static function check($value, $types, $argumentNumber = 1)
     {

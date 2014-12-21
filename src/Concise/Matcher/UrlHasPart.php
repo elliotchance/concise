@@ -29,7 +29,7 @@ class UrlHasPart extends AbstractMatcher
             'query' => PHP_URL_QUERY,
             'fragment' => PHP_URL_FRAGMENT,
         );
-        $url = parse_url($data[0]);
+        parse_url($data[0]);
         foreach ($parts as $kw => $part) {
             if (strpos($syntax, $kw)) {
                 return parse_url($data[0], $part) == $data[1];

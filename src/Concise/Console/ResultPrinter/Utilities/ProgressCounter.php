@@ -58,9 +58,10 @@ class ProgressCounter
 
     /**
      * @param integer $value
+     * @return int
      */
     public function getPercentage($value)
     {
-        return (0 === $this->total) ? 0 : floor($value / $this->total * 100);
+        return (0 === $this->total) ? 0 : (int) floor($value / $this->total * 100);
     }
 }

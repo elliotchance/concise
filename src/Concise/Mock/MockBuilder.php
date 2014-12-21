@@ -210,8 +210,9 @@ class MockBuilder
     }
 
     /**
-	 * @return boolean
-	 */
+     * @param string $rule
+     * @return boolean
+     */
     protected function hasAction($rule)
     {
         $action = $this->rules[$rule][$this->getWithKey()]['action'];
@@ -341,6 +342,7 @@ class MockBuilder
     }
 
     /**
+     * @param Action\AbstractAction $action
      * @param integer $times
      */
     protected function setupWith(Action\AbstractAction $action, $times)
@@ -409,17 +411,19 @@ class MockBuilder
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws Exception
      * @return MockBuilder
      */
     public function disableConstructor()
     {
         if ($this->isInterface()) {
             $message = "You cannot disable the constructor of an interface ({$this->className}).";
-            throw new InvalidArgumentException($message);
+            throw new Exception($message);
         }
         if ($this->isPartialMock()) {
-            throw new Exception("You cannot disable the constructor on a partial mock because any constructor would have already run ({$this->className}).");
+            $message = "You cannot disable the constructor on a partial mock because any " .
+                "constructor would have already run ({$this->className}).";
+            throw new Exception($message);
         }
         $this->disableConstructor = true;
 
@@ -427,7 +431,8 @@ class MockBuilder
     }
 
     /**
-     * @param string ... A list of methods to expose.
+     * @throws Exception trying to expose a method on a mock that is not nice.
+     * @internal param $string ... A list of methods to expose.
      * @return $this
      */
     public function expose()
@@ -519,9 +524,10 @@ class MockBuilder
     }
 
     /**
-     * @return MockBuilder
-<<<<<<< HEAD
+     * @param string $name
+     * @param mixed $value
      * @throws Exception
+     * @return MockBuilder
      */
     public function setProperty($name, $value)
     {

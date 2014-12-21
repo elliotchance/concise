@@ -40,6 +40,7 @@ class RenderIssue
     /**
      * @param string $prefix
      * @param string $lines
+     * @return string
      */
     protected function prefixLines($prefix, $lines)
     {
@@ -47,6 +48,10 @@ class RenderIssue
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
+    /**
+     * @param Exception $e
+     * @return string
+     */
     protected function getPHPUnitDiff(Exception $e)
     {
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
@@ -60,7 +65,10 @@ class RenderIssue
     }
 
     /**
+     * @param integer $status
      * @param integer $issueNumber
+     * @param PHPUnit_Framework_Test $test
+     * @return string
      */
     protected function getHeading($status, $issueNumber, PHPUnit_Framework_Test $test)
     {
@@ -75,8 +83,11 @@ class RenderIssue
     }
 
     /**
-     * @param integer $issueNumber
      * @param integer $status
+     * @param integer $issueNumber
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception $e
+     * @return string
      */
     public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
     {

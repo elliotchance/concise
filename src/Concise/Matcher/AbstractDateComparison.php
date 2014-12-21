@@ -17,7 +17,10 @@ abstract class AbstractDateComparison extends AbstractNestedMatcher
     }
 
     /**
+     * @param array $data
      * @param integer $sign
+     * @throws DidNotMatchException
+     * @return
      */
     public function compare(array $data, $sign)
     {

@@ -11,8 +11,14 @@ use Concise\Console\ResultPrinter\CIResultPrinter;
 
 class Command extends \PHPUnit_TextUI_Command
 {
-    protected $colorScheme = null;
+    /**
+     * @var string
+     */
+    protected $colorScheme = '';
 
+    /**
+     * @var bool
+     */
     protected $ci = false;
 
     protected function createRunner()
@@ -27,6 +33,10 @@ class Command extends \PHPUnit_TextUI_Command
         return $testRunner;
     }
 
+    /**
+     * @param string $class
+     * @return null|object
+     */
     protected function getThemeForClass($class)
     {
         if (class_exists($class)) {
@@ -36,6 +46,10 @@ class Command extends \PHPUnit_TextUI_Command
         return null;
     }
 
+    /**
+     * @throws Exception
+     * @return string
+     */
     protected function findTheme()
     {
         $candidates = array($this->colorScheme, "Concise\\Console\\Theme\\{$this->colorScheme}Theme");
@@ -68,6 +82,7 @@ class Command extends \PHPUnit_TextUI_Command
 
     /**
      * @codeCoverageIgnore
+     * @param array $argv
      */
     protected function handleArguments(array $argv)
     {
@@ -86,7 +101,7 @@ class Command extends \PHPUnit_TextUI_Command
                     break;
 
                 case '--color-scheme':
-                    $this->colorTheme = $option[1];
+                    $this->colorScheme = $option[1];
                     break;
 
                 case '--list-color-schemes':

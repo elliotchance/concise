@@ -48,6 +48,7 @@ class ProgressBar
 
     /**
      * @param string $currentProgressBar
+     * @return string
      */
     protected function fillToSize($currentProgressBar)
     {

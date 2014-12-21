@@ -57,7 +57,10 @@ class ValueRenderer
     }
 
     /**
+     * @param array $values
      * @param integer $depth
+     * @param callable $callback
+     * @return string
      */
     protected function jsonEncodeCallback(array $values, $depth, Closure $callback)
     {
@@ -74,6 +77,7 @@ class ValueRenderer
 
     /**
      * @param integer $depth
+     * @return string
      */
     protected function createIndent($depth)
     {
@@ -81,7 +85,9 @@ class ValueRenderer
     }
 
     /**
+     * @param mixed $value
      * @param integer $depth
+     * @return string
      */
     protected function jsonEncode($value, $depth)
     {
@@ -135,7 +141,9 @@ class ValueRenderer
 
     /**
      * @param boolean $showTypeHint
+     * @param object $value
      * @param integer $depth
+     * @return string
      */
     protected function renderObject($showTypeHint, $value, $depth)
     {
