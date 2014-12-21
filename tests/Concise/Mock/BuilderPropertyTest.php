@@ -127,4 +127,15 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $this->verify($mock->property1, equals, 'a');
         $this->verify($mock->property2, equals, 'b');
     }
+
+    /**
+     * @group #199
+     * @dataProvider allBuilders
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected string, but got integer for argument 1
+     */
+    public function testAPropertyNameMustBeAString(MockBuilder $builder, $type)
+    {
+        $builder->setProperty(123, 456);
+    }
 }

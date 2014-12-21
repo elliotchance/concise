@@ -524,6 +524,8 @@ class MockBuilder
      */
     public function setProperty($name, $value)
     {
+        ArgumentChecker::check($name, 'string');
+
         $this->propertiesCannotBeSetOnAnInterface();
         $this->properties[$name] = $value;
         return $this;
