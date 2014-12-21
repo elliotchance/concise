@@ -41,6 +41,7 @@ class TraceSimplifier
 
     /**
      * @param string $path
+     * @return bool
      */
     protected function shouldSkipPath($path)
     {

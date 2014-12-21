@@ -111,6 +111,8 @@ class Assertion
     /**
      * @param Attribute $arg
      * @param integer $index
+     * @param $argument
+     * @throws Exception
      */
     protected function throwExceptionForInvalidArgument($arg, $index, $argument)
     {
@@ -158,6 +160,8 @@ class Assertion
 
     /**
      * @param string $syntax
+     * @param array $args
+     * @return string
      */
     protected function getFailureMessage($syntax, array $args)
     {

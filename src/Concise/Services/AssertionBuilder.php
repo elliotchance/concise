@@ -134,8 +134,9 @@ class AssertionBuilder
     }
 
     /**
-	 * @return Assertion
-	 */
+     * @throws NoMatcherFoundException
+     * @return Assertion
+     */
     public function getAssertion()
     {
         $matcherParser = MatcherParser::getInstance();

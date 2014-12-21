@@ -7,6 +7,7 @@ class TimeFormatter
     /**
      * @param double $number
      * @param string $word
+     * @return string
      */
     protected function pluralize($number, $word)
     {
@@ -14,8 +15,11 @@ class TimeFormatter
     }
 
     /**
+     * @param array $r
+     * @param int $seconds
      * @param integer $size
      * @param string $word
+     * @param bool $pluralize
      */
     protected function part(array &$r, &$seconds, $size, $word, $pluralize)
     {

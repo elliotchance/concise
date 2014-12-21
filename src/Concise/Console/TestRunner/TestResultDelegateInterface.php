@@ -18,11 +18,13 @@ interface TestResultDelegateInterface
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null);
 
     /**
+     * @param PHPUnit_Framework_TestSuite $suite
      * @return void
      */
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite);
 
     /**
+     * @param PHPUnit_Framework_TestSuite $suite
      * @return void
      */
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite);
