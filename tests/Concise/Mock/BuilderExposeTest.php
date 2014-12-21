@@ -7,11 +7,23 @@ namespace Concise\Mock;
  */
 class BuilderExposeTest extends AbstractBuilderTestCase
 {
-    /**
-     * @dataProvider niceMockBuilders
-     */
-    public function testExposeASingleMethod(MockBuilder $builder)
+    protected function youCannotExposeAMethodOnAMockThatIsNotNice($type)
     {
+        switch ($type) {
+            case self::MOCK_INTERFACE:
+            case self::MOCK_CLASS:
+            case self::MOCK_ABSTRACT_CLASS:
+                $this->expectFailure("You cannot expose a method on a mock that is not nice.");
+        }
+    }
+
+    /**
+     * @group #189
+     * @dataProvider allBuilders
+     */
+    public function testExposeASingleMethod(MockBuilder $builder, $type)
+    {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('mySecretMethod')
             ->get();
         $this->assert($mock->myMethod(), equals, 'abc');
@@ -20,51 +32,70 @@ class BuilderExposeTest extends AbstractBuilderTestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage does not exist.
-     * @dataProvider niceMockBuilders
+     * @group #189
+     * @dataProvider allBuilders
      */
-    public function testAnExceptionIsThrownIfTheMethodDoesNotExist(MockBuilder $builder)
+    public function testAnExceptionIsThrownIfTheMethodDoesNotExist(MockBuilder $builder, $type)
     {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $builder->expose('baz')
             ->get();
     }
 
     /**
-     * @dataProvider niceMockBuilders
+     * @group #189
+     * @dataProvider allBuilders
      */
-    public function testExposeTwoMethodsWithSeparateParameters(MockBuilder $builder)
+    public function testExposeTwoMethodsWithSeparateParameters(MockBuilder $builder, $type)
     {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('myMethod', 'mySecondMethod')
             ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
     /**
-     * @dataProvider niceMockBuilders
+     * @group #189
+     * @dataProvider allBuilders
      */
-    public function testExposeTwoMethodsByCallingExposeTwice(MockBuilder $builder)
+    public function testExposeTwoMethodsByCallingExposeTwice(MockBuilder $builder, $type)
     {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('myMethod')->expose('mySecondMethod')
             ->get();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
 
     /**
-     * @dataProvider niceMockBuilders
+     * @group #189
+     * @dataProvider allBuilders
      */
-    public function testExposeTwoMethodsWithArraySyntax(MockBuilder $builder)
+    public function testExposeTwoMethodsWithArraySyntax(MockBuilder $builder, $type)
     {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose(array('myMethod', 'mySecondMethod'))
             ->get();
         $this->assert($mock->mySecondMethod(), equals, 'bar');
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage You cannot expose a method on a mock that is not nice.
-     * @dataProvider mockBuilders
+     * @group #189
+     * @dataProvider allBuilders
      */
-    public function testExposeIsNotAllowedOnAMock(MockBuilder $builder)
+    public function testExposeAllCanBeChained(MockBuilder $builder, $type)
     {
-        $builder->expose('myMethod')->get();
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
+        $this->assert($builder->exposeAll(), is_the_same_as, $builder);
+    }
+
+    /**
+     * @group #189
+     * @dataProvider allBuilders
+     */
+    public function testExposeAllMethodsWillExposeAllMethods(MockBuilder $builder, $type)
+    {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
+        $mock = $builder->exposeAll()->get();
+        $this->assert($mock->mySecretMethod(), equals, 'abc');
     }
 }
