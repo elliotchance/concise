@@ -520,6 +520,7 @@ class MockBuilder
 
     /**
      * @return MockBuilder
+<<<<<<< HEAD
      * @throws Exception
      */
     public function setProperty($name, $value)
@@ -552,5 +553,20 @@ class MockBuilder
         if ($this->isInterface()) {
             throw new Exception('You cannot set a property on an interface.');
         }
+    }
+
+    /**
+     * @return MockBuilder
+     * @throws Exception
+     */
+    public function exposeAll()
+    {
+        $reflection = new ReflectionClass($this->className);
+        foreach ($reflection->getMethods() as $method) {
+            if (!$method->isFinal() && !$method->isPrivate()) {
+                $this->expose($method->getName());
+            }
+        }
+        return $this;
     }
 }
