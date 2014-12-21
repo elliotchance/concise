@@ -59,7 +59,7 @@ class ValueRenderer
     /**
      * @param array $values
      * @param integer $depth
-     * @param callable $callback
+     * @param Closure $callback
      * @return string
      */
     protected function jsonEncodeCallback(array $values, $depth, Closure $callback)

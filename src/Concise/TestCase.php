@@ -286,7 +286,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return bool
+     * @return boolean|null
      */
     public function verify()
     {
