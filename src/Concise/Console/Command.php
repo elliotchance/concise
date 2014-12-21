@@ -11,8 +11,14 @@ use Concise\Console\ResultPrinter\CIResultPrinter;
 
 class Command extends \PHPUnit_TextUI_Command
 {
-    protected $colorScheme = null;
+    /**
+     * @var string
+     */
+    protected $colorScheme = '';
 
+    /**
+     * @var bool
+     */
     protected $ci = false;
 
     protected function createRunner()
@@ -27,6 +33,10 @@ class Command extends \PHPUnit_TextUI_Command
         return $testRunner;
     }
 
+    /**
+     * @param string $class
+     * @return null|object
+     */
     protected function getThemeForClass($class)
     {
         if (class_exists($class)) {
@@ -36,11 +46,16 @@ class Command extends \PHPUnit_TextUI_Command
         return null;
     }
 
+    /**
+     * @throws Exception
+     * @return string
+     */
     protected function findTheme()
     {
         $candidates = array($this->colorScheme, "Concise\\Console\\Theme\\{$this->colorScheme}Theme");
         foreach ($candidates as $class) {
-            if ($r = $this->getThemeForClass($class)) {
+            $r = $this->getThemeForClass($class);
+            if ($r) {
                 return $r;
             }
         }
@@ -68,6 +83,7 @@ class Command extends \PHPUnit_TextUI_Command
 
     /**
      * @codeCoverageIgnore
+     * @param array $argv
      */
     protected function handleArguments(array $argv)
     {
@@ -80,13 +96,12 @@ class Command extends \PHPUnit_TextUI_Command
         foreach ($this->options[0] as $option) {
             switch ($option[0]) {
                 case '--test-colors':
-                    $testColors = new TestColors($this->getColorScheme());
+                    $testColors = new TestColors();
                     echo $testColors->renderAll();
                     exit(0);
-                    break;
 
                 case '--color-scheme':
-                    $this->colorTheme = $option[1];
+                    $this->colorScheme = $option[1];
                     break;
 
                 case '--list-color-schemes':

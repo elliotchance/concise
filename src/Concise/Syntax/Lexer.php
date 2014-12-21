@@ -37,6 +37,7 @@ class Lexer
     /**
      * @param boolean $mustConsumeUntil
      * @param string $until
+     * @throws Exception
      */
     protected function throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until)
     {
@@ -158,7 +159,11 @@ class Lexer
     }
 
     /**
+     * @param array $tokens
      * @param string $string
+     * @param int $startIndex
+     * @throws Exception
+     * @return bool
      */
     protected function consumeToken(array &$tokens, $string, &$startIndex)
     {
@@ -172,6 +177,7 @@ class Lexer
     }
 
     /**
+     * @param array $tokens
      * @param string $token
      */
     protected function addTokenIfNotEmpty(array &$tokens, $token)

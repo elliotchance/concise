@@ -55,6 +55,7 @@ class MatcherParser
     /**
      * @param string $string
      * @param string $substring
+     * @return bool
      */
     protected function endsWith($string, $substring)
     {
@@ -111,6 +112,7 @@ class MatcherParser
 
     /**
      * @param string $rawSyntax
+     * @throws Exception if the assertion contains words that are not lower case.
      */
     protected function throwExceptionIfNotInLowerCase($rawSyntax)
     {
@@ -121,6 +123,8 @@ class MatcherParser
 
     /**
      * @param string $rawSyntax
+     * @param $syntax
+     * @throws Exception
      */
     protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
     {

@@ -9,6 +9,8 @@ class ProportionalProgressBar extends ProgressBar
     /**
      * @param integer $size
      * @param integer $total
+     * @param array $parts
+     * @return string
      */
     public function renderProportional($size, $total, array $parts)
     {

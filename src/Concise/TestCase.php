@@ -251,7 +251,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         if ($object instanceof MockInterface) {
             $className = get_parent_class($object);
             if (!$className) {
-                $message = "You cannot set property on an interface (" . get_class($object) . ").";
+                $message = "You cannot set a property on an interface (" . get_class($object) . ").";
                 throw new Exception($message);
             }
         }
@@ -286,7 +286,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return bool
+     * @return boolean|null
      */
     public function verify()
     {

@@ -29,7 +29,7 @@ class DataTypeChecker
     /**
 	 * @param  array $acceptedTypes
 	 * @param  mixed $value
-	 * @return bool
+	 * @return mixed
 	 */
     public function check(array $acceptedTypes, $value)
     {
@@ -122,9 +122,10 @@ class DataTypeChecker
     }
 
     /**
-	 * @param string $name
-	 * @return mixed
-	 */
+     * @param string $name
+     * @throws Exception if the attribute does not exist.
+     * @return mixed
+     */
     protected function getAttribute($name)
     {
         if (!array_key_exists($name, $this->context)) {

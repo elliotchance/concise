@@ -6,6 +6,7 @@ class Version
 {
     /**
      * @param string $path
+     * @return null|string
      */
     public function findVendorFolder($path = null)
     {
@@ -25,6 +26,7 @@ class Version
 
     /**
      * @param string $packageName
+     * @return string
      */
     public function getVersionForPackage($packageName)
     {

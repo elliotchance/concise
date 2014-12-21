@@ -11,8 +11,6 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
-use ReflectionException;
-use ReflectionMethod;
 
 class MockBuilder
 {
@@ -52,7 +50,7 @@ class MockBuilder
 
     /**
 	 * The arguments associated with this rule.
-	 * @var array
+	 * @var array|null
 	 */
     protected $currentWith = null;
 
@@ -89,6 +87,11 @@ class MockBuilder
      * @var object|null
      */
     protected $objectState;
+
+    /**
+     * @var array
+     */
+    protected $properties = array();
 
     /**
      * @param TestCase $testCase
@@ -191,6 +194,10 @@ class MockBuilder
         $this->testCase->addMockInstance($this, $mockInstance);
         $this->restoreState($mockInstance);
 
+        foreach ($this->properties as $name => $value) {
+            $mockInstance->$name = $value;
+        }
+
         return $mockInstance;
     }
 
@@ -203,8 +210,9 @@ class MockBuilder
     }
 
     /**
-	 * @return boolean
-	 */
+     * @param string $rule
+     * @return boolean
+     */
     protected function hasAction($rule)
     {
         $action = $this->rules[$rule][$this->getWithKey()]['action'];
@@ -334,6 +342,7 @@ class MockBuilder
     }
 
     /**
+     * @param Action\AbstractAction $action
      * @param integer $times
      */
     protected function setupWith(Action\AbstractAction $action, $times)
@@ -402,17 +411,19 @@ class MockBuilder
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws Exception
      * @return MockBuilder
      */
     public function disableConstructor()
     {
         if ($this->isInterface()) {
             $message = "You cannot disable the constructor of an interface ({$this->className}).";
-            throw new InvalidArgumentException($message);
+            throw new Exception($message);
         }
         if ($this->isPartialMock()) {
-            throw new Exception("You cannot disable the constructor on a partial mock because any constructor would have already run ({$this->className}).");
+            $message = "You cannot disable the constructor on a partial mock because any " .
+                "constructor would have already run ({$this->className}).";
+            throw new Exception($message);
         }
         $this->disableConstructor = true;
 
@@ -420,7 +431,8 @@ class MockBuilder
     }
 
     /**
-     * @param string ... A list of methods to expose.
+     * @throws Exception trying to expose a method on a mock that is not nice.
+     * @internal param $string ... A list of methods to expose.
      * @return $this
      */
     public function expose()
@@ -509,5 +521,58 @@ class MockBuilder
     public function getClassName()
     {
         return $this->className;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @throws Exception
+     * @return MockBuilder
+     */
+    public function setProperty($name, $value)
+    {
+        ArgumentChecker::check($name, 'string');
+
+        $this->propertiesCannotBeSetOnAnInterface();
+        $this->properties[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @param array $properties
+     * @return MockBuilder
+     * @throws Exception
+     */
+    public function setProperties(array $properties)
+    {
+        foreach ($properties as $name => $value) {
+            $this->setProperty($name, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function propertiesCannotBeSetOnAnInterface()
+    {
+        if ($this->isInterface()) {
+            throw new Exception('You cannot set a property on an interface.');
+        }
+    }
+
+    /**
+     * @return MockBuilder
+     * @throws Exception
+     */
+    public function exposeAll()
+    {
+        $reflection = new ReflectionClass($this->className);
+        foreach ($reflection->getMethods() as $method) {
+            if (!$method->isFinal() && !$method->isPrivate()) {
+                $this->expose($method->getName());
+            }
+        }
+        return $this;
     }
 }
