@@ -25,7 +25,7 @@ class RenderIssue
     /**
      * @var array
      */
-    protected $colours;
+    protected $colors;
 
     public function __construct(TraceSimplifier $traceSimplifier = null)
     {

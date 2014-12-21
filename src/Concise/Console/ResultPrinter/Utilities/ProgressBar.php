@@ -36,7 +36,7 @@ class ProgressBar
 
     protected function calculateTotal(array $parts)
     {
-        $this->total = array_sum($parts);
+        $this->total = (int) array_sum($parts);
     }
 
     protected function colorSpaces($length, $colorName)

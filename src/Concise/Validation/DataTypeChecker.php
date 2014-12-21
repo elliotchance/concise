@@ -29,7 +29,7 @@ class DataTypeChecker
     /**
 	 * @param  array $acceptedTypes
 	 * @param  mixed $value
-	 * @return bool
+	 * @return mixed
 	 */
     public function check(array $acceptedTypes, $value)
     {

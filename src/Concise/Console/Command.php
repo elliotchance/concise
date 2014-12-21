@@ -54,7 +54,8 @@ class Command extends \PHPUnit_TextUI_Command
     {
         $candidates = array($this->colorScheme, "Concise\\Console\\Theme\\{$this->colorScheme}Theme");
         foreach ($candidates as $class) {
-            if ($r = $this->getThemeForClass($class)) {
+            $r = $this->getThemeForClass($class);
+            if ($r) {
                 return $r;
             }
         }
@@ -95,10 +96,9 @@ class Command extends \PHPUnit_TextUI_Command
         foreach ($this->options[0] as $option) {
             switch ($option[0]) {
                 case '--test-colors':
-                    $testColors = new TestColors($this->getColorScheme());
+                    $testColors = new TestColors();
                     echo $testColors->renderAll();
                     exit(0);
-                    break;
 
                 case '--color-scheme':
                     $this->colorScheme = $option[1];

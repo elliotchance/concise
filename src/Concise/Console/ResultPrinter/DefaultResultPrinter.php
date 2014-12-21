@@ -79,7 +79,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
     {
-        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
+        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED && $e instanceof Exception) {
             $this->add($status, $test, $e);
         }
         $this->update();
@@ -139,7 +139,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
             ($this->getAssertionCount() == 1 ? '' : 's');
         $time = ', ' . $this->formatter->format($this->getSecondsElapsed(), $short);
         $remaining = $this->getRemainingTimeString($short);
-        $counterString = $this->counter->render($this->getTestCount(), $short);
+        $counterString = $this->counter->render($this->getTestCount());
         $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
             strlen($remaining);
 

@@ -50,7 +50,7 @@ class MockBuilder
 
     /**
 	 * The arguments associated with this rule.
-	 * @var array
+	 * @var array|null
 	 */
     protected $currentWith = null;
 

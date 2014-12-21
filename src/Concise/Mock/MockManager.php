@@ -86,7 +86,8 @@ class MockManager
 
     protected function getKeyForCall($methodName, array $arguments, array $expected)
     {
-        for ($i = 0; $i < count($expected); ++$i) {
+        $count = count($expected);
+        for ($i = 0; $i < $count; ++$i) {
             if ($expected[$i] === TestCase::ANYTHING) {
                 $arguments[$i] = TestCase::ANYTHING;
             }
