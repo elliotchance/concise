@@ -82,8 +82,20 @@ class BuilderExposeTest extends AbstractBuilderTestCase
      * @group #189
      * @dataProvider allBuilders
      */
-    public function testExposeAllCanBeChained(MockBuilder $builder)
+    public function testExposeAllCanBeChained(MockBuilder $builder, $type)
     {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $this->assert($builder->exposeAll(), is_the_same_as, $builder);
+    }
+
+    /**
+     * @group #189
+     * @dataProvider allBuilders
+     */
+    public function testExposeAllMethodsWillExposeAllMethods(MockBuilder $builder, $type)
+    {
+        $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
+        $mock = $builder->exposeAll()->get();
+        $this->assert($mock->mySecretMethod(), equals, 'abc');
     }
 }

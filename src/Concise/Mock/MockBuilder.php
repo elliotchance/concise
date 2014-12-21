@@ -11,8 +11,6 @@ use Exception;
 use ReflectionClass;
 use Closure;
 use Concise\Validation\ArgumentChecker;
-use ReflectionException;
-use ReflectionMethod;
 
 class MockBuilder
 {
@@ -516,6 +514,12 @@ class MockBuilder
      */
     public function exposeAll()
     {
+        $reflection = new ReflectionClass($this->className);
+        foreach ($reflection->getMethods() as $method) {
+            if (!$method->isFinal() && !$method->isPrivate()) {
+                $this->expose($method->getName());
+            }
+        }
         return $this;
     }
 }
