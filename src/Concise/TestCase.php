@@ -263,13 +263,19 @@ class TestCase extends PHPUnit_Framework_TestCase
         return $property;
     }
 
+    protected function shouldAccessProperty($object, $property)
+    {
+        return property_exists($object, $property)
+            || method_exists($object, '__get');
+    }
+
     public function getProperty($object, $property)
     {
         try {
             $property = $this->getReflectionProperty($object, $property);
             return $property->getValue($object);
         } catch (ReflectionException $e) {
-            if (property_exists($object, $property)) {
+            if ($this->shouldAccessProperty($object, $property)) {
                 return $object->$property;
             }
 
