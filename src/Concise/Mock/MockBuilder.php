@@ -195,7 +195,7 @@ class MockBuilder
         $this->restoreState($mockInstance);
 
         foreach ($this->properties as $name => $value) {
-            $mockInstance->$name = $value;
+            $this->testCase->setProperty($mockInstance, $name, $value);
         }
 
         return $mockInstance;

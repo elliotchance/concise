@@ -12,6 +12,7 @@ use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Concise\Mock\MockInterface;
+use ReflectionException;
 
 // Load the keyword cache before the test suite begins.
 Keywords::load();
@@ -262,16 +263,34 @@ class TestCase extends PHPUnit_Framework_TestCase
         return $property;
     }
 
-    public function getProperty($object, $property)
+    protected function shouldAccessProperty($object, $property)
     {
-        $property = $this->getReflectionProperty($object, $property);
-        return $property->getValue($object);
+        return property_exists($object, $property)
+            || method_exists($object, '__get');
     }
 
-    public function setProperty($object, $property, $value)
+    public function getProperty($object, $property)
     {
-        $property = $this->getReflectionProperty($object, $property);
-        $property->setValue($object, $value);
+        try {
+            $property = $this->getReflectionProperty($object, $property);
+            return $property->getValue($object);
+        } catch (ReflectionException $e) {
+            if ($this->shouldAccessProperty($object, $property)) {
+                return $object->$property;
+            }
+
+            throw $e;
+        }
+    }
+
+    public function setProperty($object, $name, $value)
+    {
+        try {
+            $property = $this->getReflectionProperty($object, $name);
+            $property->setValue($object, $value);
+        } catch (ReflectionException $e) {
+            $object->$name = $value;
+        }
     }
 
     /**

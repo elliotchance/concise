@@ -32,6 +32,8 @@ class PrototypeBuilder
     {
         if ($p->getClass()) {
             return '\\' . $p->getClass()->name . ' ';
+        } elseif (method_exists($p, 'isCallable') && $p->isCallable()) {
+            return 'callable ';
         } elseif ($p->isArray()) {
             return 'array ';
         }
