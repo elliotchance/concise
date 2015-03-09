@@ -151,4 +151,17 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
             ->get();
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
     }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testSetAPropertyThatDoesNotExistIsPermitted(MockBuilder $builder, $type)
+    {
+        if (self::MOCK_INTERFACE === $type) {
+            $this->expectFailure("You cannot set a property on an interface");
+        }
+        $mock = $builder->setProperty('does_not_exist', 'bar')
+            ->get();
+        $this->assert($this->getProperty($mock, 'does_not_exist'), equals, 'bar');
+    }
 }

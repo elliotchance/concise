@@ -265,8 +265,16 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     public function getProperty($object, $property)
     {
-        $property = $this->getReflectionProperty($object, $property);
-        return $property->getValue($object);
+        try {
+            $property = $this->getReflectionProperty($object, $property);
+            return $property->getValue($object);
+        } catch (ReflectionException $e) {
+            if (isset($object->$property)) {
+                return $object->$property;
+            }
+
+            throw $e;
+        }
     }
 
     public function setProperty($object, $name, $value)
