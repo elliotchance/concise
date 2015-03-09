@@ -4,6 +4,11 @@ namespace Concise\Mock;
 
 use \Concise\TestCase;
 
+// `callable` does not exist in PHP 5.3 and we need it for the prototype below.
+if (version_compare(phpversion(), '5.4', '<')) {
+    eval("class callable {}");
+}
+
 abstract class MyClass
 {
     public function foo()
@@ -25,6 +30,9 @@ abstract class MyClass
     abstract protected function e(\Closure $a);
 
     abstract protected function f($a = array());
+
+    abstract protected function g(callable $a);
+
 }
 
 class PrototypeBuilderTest extends TestCase
@@ -90,7 +98,7 @@ class PrototypeBuilderTest extends TestCase
         $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function d(array $a)');
     }
 
-    public function testCallableHint()
+    public function testClosureHint()
     {
         $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
         $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(\Closure $a)');
@@ -114,5 +122,14 @@ class PrototypeBuilderTest extends TestCase
     public function testMethodMustBeAString()
     {
         $this->builder->getPrototypeForNonExistentMethod(123);
+    }
+
+    /**
+     * @requires PHP 5.4
+     */
+    public function testCallableHint()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'g');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function g(callable $a)');
     }
 }
