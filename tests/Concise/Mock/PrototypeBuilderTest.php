@@ -25,6 +25,9 @@ abstract class MyClass
     abstract protected function e(\Closure $a);
 
     abstract protected function f($a = array());
+
+    abstract protected function g(callable $a);
+
 }
 
 class PrototypeBuilderTest extends TestCase
@@ -90,7 +93,7 @@ class PrototypeBuilderTest extends TestCase
         $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function d(array $a)');
     }
 
-    public function testCallableHint()
+    public function testClosureHint()
     {
         $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'e');
         $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function e(\Closure $a)');
@@ -114,5 +117,11 @@ class PrototypeBuilderTest extends TestCase
     public function testMethodMustBeAString()
     {
         $this->builder->getPrototypeForNonExistentMethod(123);
+    }
+
+    public function testCallableHint()
+    {
+        $method = new \ReflectionMethod('\Concise\Mock\MyClass', 'g');
+        $this->assert($this->builder->getPrototype($method), equals, 'abstract protected function g(callable $a)');
     }
 }
