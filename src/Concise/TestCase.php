@@ -269,7 +269,7 @@ class TestCase extends PHPUnit_Framework_TestCase
             $property = $this->getReflectionProperty($object, $property);
             return $property->getValue($object);
         } catch (ReflectionException $e) {
-            if (isset($object->$property)) {
+            if (property_exists($object, $property)) {
                 return $object->$property;
             }
 
