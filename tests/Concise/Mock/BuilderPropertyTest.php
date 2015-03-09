@@ -2,11 +2,19 @@
 
 namespace Concise\Mock;
 
-class MagicGetter
+class MagicProperty
 {
     public function __get($name)
     {
-        return 'foo';
+        if (!property_exists($this, $name)) {
+            return 'not_found';
+        }
+        return $this->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 }
 
@@ -188,6 +196,13 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
 
     public function testPropertiesAreAlwaysFoundIfClassHasMagicGet()
     {
-        $this->assert($this->getProperty(new MagicGetter(), 'does_not_exist'), equals, 'foo');
+        $this->assert($this->getProperty(new MagicProperty(), 'does_not_exist'), equals, 'not_found');
+    }
+
+    public function testPropertiesAreAlwaysSetIfClassHasMagicSet()
+    {
+        $object = new MagicProperty();
+        $this->setProperty($object, 'foo', 'bar');
+        $this->assert($this->getProperty($object, 'foo'), equals, 'bar');
     }
 }
