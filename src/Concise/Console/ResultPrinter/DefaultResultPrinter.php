@@ -161,7 +161,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function restoreCursor()
     {
-        $this->write("\033[3F");
+        $this->write("\033[3A");
     }
 
     public function update()
