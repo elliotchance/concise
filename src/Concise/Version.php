@@ -49,4 +49,9 @@ class Version
     {
         return $this->getVersionForPackage('elliotchance/concise');
     }
+
+    public function getVersionNameForVersion()
+    {
+        return '';
+    }
 }

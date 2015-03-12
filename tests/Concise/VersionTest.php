@@ -17,12 +17,20 @@ class VersionTest extends TestCase
 
     public function testVersionCanBeExtractedForAPackageName()
     {
-        $this->assert($this->version->getVersionForPackage('sebastian/version'), matches_regex, '/^\\d\.\\d+/');
+        $this->assert(
+            $this->version->getVersionForPackage('sebastian/version'),
+            matches_regex,
+            '/^\\d\.\\d+/'
+        );
     }
 
     public function testWeCanEasilyGetTheConciseVersion()
     {
-        $this->assert($this->version->getConciseVersion(), equals, $this->version->getVersionForPackage('elliotchance/concise'));
+        $this->assert(
+            $this->version->getConciseVersion(),
+            equals,
+            $this->version->getVersionForPackage('elliotchance/concise')
+        );
     }
 
     public function testFindingVendorFolder()
@@ -44,5 +52,13 @@ class VersionTest extends TestCase
                         ->expose('findVendorFolder')
                         ->get();
         $this->assert($version->findVendorFolder('/tmp'), is_null);
+    }
+
+    /**
+     * @group #257
+     */
+    public function testVersionNameForUnknownVersionIsBlank()
+    {
+        $this->assert($this->version->getVersionNameForVersion(''), is_blank);
     }
 }
