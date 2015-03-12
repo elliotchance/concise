@@ -60,6 +60,7 @@ class VersionTest extends TestCase
             // Edge cases.
             'unknown version is blank' => array('', ''),
             'version can be prefixed with v' => array('v1.1', 'Dark Matter'),
+            'patch version' => array('1.2.3', 'String Theory'),
 
             // Specific versions.
             array('1.0', 'Big Bang'),
