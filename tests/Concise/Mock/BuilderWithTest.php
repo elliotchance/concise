@@ -159,4 +159,16 @@ class BuilderWithTest extends AbstractBuilderTestCase
         $mock = $builder->expect('myWithMethodDefaults')->with('bar', 'foo', 'baz')->andReturn(null)->get();
         $mock->myWithMethodDefaults('bar');
     }
+
+    /**
+     * @group #248
+     * @dataProvider allBuilders
+     */
+    public function testWithIncludingSingleQuotes(MockBuilder $builder)
+    {
+        $mock = $builder->expect('myMethod')->with("foo'bar")
+            ->get();
+
+        $mock->myMethod("foo'bar");
+    }
 }
