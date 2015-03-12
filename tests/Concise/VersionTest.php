@@ -73,4 +73,16 @@ class VersionTest extends TestCase
             'Big Bang'
         );
     }
+
+    /**
+     * @group #257
+     */
+    public function testVersionDoesNotHaveToIncludePrefixingVCharacter()
+    {
+        $this->assert(
+            $this->version->getVersionNameForVersion('1.0'),
+            equals,
+            'Big Bang'
+        );
+    }
 }

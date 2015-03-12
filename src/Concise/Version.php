@@ -52,7 +52,7 @@ class Version
 
     public function getVersionNameForVersion($version)
     {
-        if ($version == 'v1.0') {
+        if (ltrim($version, 'v') == '1.0') {
             return 'Big Bang';
         }
         return '';
