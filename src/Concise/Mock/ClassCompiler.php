@@ -204,7 +204,7 @@ EOF;
                 $defaultActionCode = $action->getActionCode();
             } else {
                 $args = addslashes(json_encode($rule['with']));
-                $args = str_replace('$', '\\$', $args);
+                $args = str_replace(array('$', "\\'"), array('\\$', "'"), $args);
                 $actionCode .= <<<EOF
     \$matcher = new \Concise\Mock\ArgumentMatcher();
     \$methodArguments = new \Concise\Services\MethodArguments();
