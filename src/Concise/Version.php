@@ -55,7 +55,12 @@ class Version
         $names = array(
             'Big Bang',
             'Dark Matter',
-            'String Theory'
+            'String Theory',
+            'Supernova',
+            'Quantum',
+            'Antimatter',
+            'Entropy',
+            'Multiverse',
         );
 
         $version = ltrim($version, 'v');
