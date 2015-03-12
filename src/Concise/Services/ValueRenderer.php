@@ -52,6 +52,9 @@ class ValueRenderer
         if (is_float($value)) {
             return (string) $c($value)->{$this->theme['value.float']};
         }
+        if (is_resource($value)) {
+            return (string) $c((string) $value)->{$this->theme['value.string']};
+        }
 
         return $this->colorizeLines($value);
     }

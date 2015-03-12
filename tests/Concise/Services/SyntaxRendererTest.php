@@ -7,13 +7,28 @@ use Colors\Color;
 
 class SyntaxRendererTest extends TestCase
 {
+    /**
+     * @var SyntaxRenderer
+     */
+    protected $renderer;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->renderer = new SyntaxRenderer();
+    }
+
     public function testCanSubstituteValuesFromArrayIntoPlaceholders()
     {
-        $renderer = new SyntaxRenderer();
         $data = array(1, '2', 3.1);
         $c = new Color();
-        $expected = (string) $c('1')->red . ' is ' . (string) $c('"2"')->yellow . ' bla ' . (string) $c(3.1)->magenta;
-        $this->assert($expected, equals, $renderer->render('? is ? bla ?', $data));
+        $expected = (string) $c('1')->red . ' is ' . (string) $c('"2"')->yellow
+            . ' bla ' . (string) $c(3.1)->magenta;
+        $this->assert(
+            $expected,
+            equals,
+            $this->renderer->render('? is ? bla ?', $data)
+        );
     }
 
     /**
@@ -22,7 +37,18 @@ class SyntaxRendererTest extends TestCase
      */
     public function testSyntaxMustBeAString()
     {
-        $renderer = new SyntaxRenderer();
-        $renderer->render(123);
+        $this->renderer->render(123);
+    }
+
+    /**
+     * @group #250
+     */
+    public function testResourceRendering()
+    {
+        $this->assert(
+            $this->renderer->render('?', array(fopen('.', 'r'))),
+            matches_regex,
+            '/Resource id #\\d+/'
+        );
     }
 }
