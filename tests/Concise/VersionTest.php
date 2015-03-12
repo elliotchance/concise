@@ -85,7 +85,16 @@ class VersionTest extends TestCase
      */
     public function testVersionDarkMatter()
     {
-        $name = $this->version->getVersionNameForVersion('1.1');
+        $name = $this->version->getVersionNameForVersion('v1.1');
         $this->assert($name, equals, 'Dark Matter');
+    }
+
+    /**
+     * @group #257
+     */
+    public function testVersionStringTheory()
+    {
+        $name = $this->version->getVersionNameForVersion('v1.2');
+        $this->assert($name, equals, 'String Theory');
     }
 }

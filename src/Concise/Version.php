@@ -52,11 +52,17 @@ class Version
 
     public function getVersionNameForVersion($version)
     {
-        if (ltrim($version, 'v') == '1.0') {
-            return 'Big Bang';
-        } else if (ltrim($version, 'v') == '1.1') {
-            return 'Dark Matter';
+        $names = array(
+            'Big Bang',
+            'Dark Matter',
+            'String Theory'
+        );
+
+        $version = ltrim($version, 'v');
+        if (strlen($version) < 3) {
+            return '';
         }
-        return '';
+
+        return $names[substr($version, 2, 1)];
     }
 }
