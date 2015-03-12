@@ -67,11 +67,8 @@ class VersionTest extends TestCase
      */
     public function testVersionBigBang()
     {
-        $this->assert(
-            $this->version->getVersionNameForVersion('v1.0'),
-            equals,
-            'Big Bang'
-        );
+        $name = $this->version->getVersionNameForVersion('v1.0');
+        $this->assert($name, equals, 'Big Bang');
     }
 
     /**
@@ -79,10 +76,16 @@ class VersionTest extends TestCase
      */
     public function testVersionDoesNotHaveToIncludePrefixingVCharacter()
     {
-        $this->assert(
-            $this->version->getVersionNameForVersion('1.0'),
-            equals,
-            'Big Bang'
-        );
+        $name = $this->version->getVersionNameForVersion('1.0');
+        $this->assert($name, equals, 'Big Bang');
+    }
+
+    /**
+     * @group #257
+     */
+    public function testVersionDarkMatter()
+    {
+        $name = $this->version->getVersionNameForVersion('1.1');
+        $this->assert($name, equals, 'Dark Matter');
     }
 }

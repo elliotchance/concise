@@ -54,6 +54,8 @@ class Version
     {
         if (ltrim($version, 'v') == '1.0') {
             return 'Big Bang';
+        } else if (ltrim($version, 'v') == '1.1') {
+            return 'Dark Matter';
         }
         return '';
     }
