@@ -61,4 +61,16 @@ class VersionTest extends TestCase
     {
         $this->assert($this->version->getVersionNameForVersion(''), is_blank);
     }
+
+    /**
+     * @group #257
+     */
+    public function testVersionBigBang()
+    {
+        $this->assert(
+            $this->version->getVersionNameForVersion('v1.0'),
+            equals,
+            'Big Bang'
+        );
+    }
 }

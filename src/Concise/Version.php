@@ -50,8 +50,11 @@ class Version
         return $this->getVersionForPackage('elliotchance/concise');
     }
 
-    public function getVersionNameForVersion()
+    public function getVersionNameForVersion($version)
     {
+        if ($version == 'v1.0') {
+            return 'Big Bang';
+        }
         return '';
     }
 }
