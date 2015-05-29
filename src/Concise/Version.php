@@ -49,4 +49,25 @@ class Version
     {
         return $this->getVersionForPackage('elliotchance/concise');
     }
+
+    public function getVersionNameForVersion($version)
+    {
+        $names = array(
+            'Big Bang',
+            'Dark Matter',
+            'String Theory',
+            'Supernova',
+            'Quantum',
+            'Antimatter',
+            'Entropy',
+            'Multiverse',
+        );
+
+        $version = ltrim($version, 'v');
+        if (strlen($version) < 3) {
+            return '';
+        }
+
+        return $names[substr($version, 2, 1)];
+    }
 }
