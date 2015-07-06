@@ -58,4 +58,10 @@ class HasPropertyWithValueTest extends AbstractMatcherTestCase
         $obj = new SecretProperties();
         $this->assert($obj, has_property, 'a', with_value, 'foo');
     }
+
+    public function testObjectHasSecretPropertyWithIncorrectValue()
+    {
+        $obj = new SecretProperties();
+        $this->assertFailure($obj, has_property, 'a', with_value, 'bar');
+    }
 }
