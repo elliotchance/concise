@@ -2,7 +2,7 @@
 
 namespace Concise\Console;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class TestColorsTest extends TestCase
 {

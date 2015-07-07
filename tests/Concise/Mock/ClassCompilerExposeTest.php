@@ -2,8 +2,8 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
-use \Concise\Mock\Action\ReturnValueAction;
+use Concise\Mock\Action\ReturnValueAction;
+use Concise\TestCase;
 use ReflectionClass;
 
 class ClassCompilerMock3
@@ -33,7 +33,8 @@ class ClassCompilerExposeTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
+        $this->compiler =
+            new ClassCompiler('\Concise\Mock\ClassCompilerMock3', true);
     }
 
     public function testAMethodCanBeExposed()
@@ -45,14 +46,16 @@ class ClassCompilerExposeTest extends TestCase
 
     protected function setRulesForExposure()
     {
-        $this->compiler->setRules(array(
-            'hidden' => array(
-                array(
-                    'action' => new ReturnValueAction(array('bar')),
-                    'with'   => null,
+        $this->compiler->setRules(
+            array(
+                'hidden' => array(
+                    array(
+                        'action' => new ReturnValueAction(array('bar')),
+                        'with' => null,
+                    ),
                 ),
-            ),
-        ));
+            )
+        );
     }
 
     public function testAMethodThatHasARuleCanBeExposed()
@@ -67,7 +70,10 @@ class ClassCompilerExposeTest extends TestCase
     {
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
+        $this->assert(
+            $reflectionClass->getMethod('hidden')->isPublic(),
+            is_false
+        );
     }
 
     public function testExposingOneMethodWillNotExposeThemAll()
@@ -75,7 +81,10 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler->addExpose('hidden');
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert($reflectionClass->getMethod('hidden2')->isPublic(), is_false);
+        $this->assert(
+            $reflectionClass->getMethod('hidden2')->isPublic(),
+            is_false
+        );
     }
 
     public function testAddingARuleToAMethodWillNotExposeThemAll()
@@ -83,7 +92,10 @@ class ClassCompilerExposeTest extends TestCase
         $this->setRulesForExposure();
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert($reflectionClass->getMethod('hidden2')->isPublic(), is_false);
+        $this->assert(
+            $reflectionClass->getMethod('hidden2')->isPublic(),
+            is_false
+        );
     }
 
     public function testAddingARuleToAMethodWillNotExposeIt()
@@ -91,7 +103,10 @@ class ClassCompilerExposeTest extends TestCase
         $this->setRulesForExposure();
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
+        $this->assert(
+            $reflectionClass->getMethod('hidden')->isPublic(),
+            is_false
+        );
     }
 
     public function testMocksThatAreNotNiceWillNotExposeAMethod()
@@ -99,7 +114,10 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3');
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert($reflectionClass->getMethod('hidden')->isPublic(), is_false);
+        $this->assert(
+            $reflectionClass->getMethod('hidden')->isPublic(),
+            is_false
+        );
     }
 
     public function testTwoMethodsCanBeExposed()
@@ -118,18 +136,21 @@ class ClassCompilerExposeTest extends TestCase
     }
 
     /**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method Concise\Mock\ClassCompilerMock3::foo() does not exist.
-	 */
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Method Concise\Mock\ClassCompilerMock3::foo()
+     *     does not exist.
+     */
     public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
     {
         $this->compiler->addExpose('foo');
     }
 
     /**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method Concise\Mock\ClassCompilerMock3::superSecret() cannot be mocked because it it private.
-	 */
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Method
+     *     Concise\Mock\ClassCompilerMock3::superSecret() cannot be mocked
+     *     because it it private.
+     */
     public function testTryingToExposeAPrivateMethodThrowsException()
     {
         $this->compiler->addExpose('superSecret');

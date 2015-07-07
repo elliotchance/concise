@@ -19,7 +19,11 @@ class HasItems extends HasItem
             return true;
         }
         foreach ($data[1] as $key => $value) {
-            if (!parent::match($data[0], array($data[0], array($key => $value)))) {
+            if (!parent::match(
+                $data[0],
+                array($data[0], array($key => $value))
+            )
+            ) {
                 return false;
             }
         }

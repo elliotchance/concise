@@ -2,7 +2,7 @@
 
 namespace Concise\Services;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class CharacterConverterTest extends TestCase
 {
@@ -24,11 +24,15 @@ class CharacterConverterTest extends TestCase
     }
 
     /**
-	 * @dataProvider stringData
-	 */
+     * @dataProvider stringData
+     */
     public function testConvertingCharacterToEscapeCharacter($letter, $outcome)
     {
         $converter = new CharacterConverter();
-        $this->assert($converter->convertEscapedCharacter($letter), exactly_equals, $outcome);
+        $this->assert(
+            $converter->convertEscapedCharacter($letter),
+            exactly_equals,
+            $outcome
+        );
     }
 }

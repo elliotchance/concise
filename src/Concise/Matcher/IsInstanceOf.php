@@ -22,7 +22,9 @@ class IsInstanceOf extends AbstractMatcher
         if (is_string($data[0])) {
             return true;
         }
-        return (get_class($data[0]) === $data[1]) || is_subclass_of($data[0], $data[1]) || array_key_exists($data[1], $interfaces);
+        return (get_class($data[0]) === $data[1]) ||
+        is_subclass_of($data[0], $data[1]) ||
+        array_key_exists($data[1], $interfaces);
     }
 
     public function getTags()

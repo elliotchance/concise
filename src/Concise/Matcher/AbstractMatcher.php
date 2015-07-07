@@ -2,25 +2,25 @@
 
 namespace Concise\Matcher;
 
-use \Concise\Services\SyntaxRenderer;
+use Concise\Services\SyntaxRenderer;
 
 abstract class AbstractMatcher
 {
     /**
      * @param string $syntax
-     * @param array $data
+     * @param array  $data
      * @return bool
      */
     abstract public function match($syntax, array $data = array());
 
     /**
-	 * @return array Syntaxes this matcher can understand.
-	 */
+     * @return array Syntaxes this matcher can understand.
+     */
     abstract public function supportedSyntaxes();
 
     /**
      * @param string $syntax
-     * @param array $data
+     * @param array  $data
      * @return string
      */
     public function renderFailureMessage($syntax, array $data = array())
@@ -31,7 +31,7 @@ abstract class AbstractMatcher
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     abstract public function getTags();
 }

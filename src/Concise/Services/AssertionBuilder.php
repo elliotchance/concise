@@ -2,21 +2,21 @@
 
 namespace Concise\Services;
 
-use Concise\Syntax\MatcherParser;
 use Concise\Assertion;
+use Concise\Syntax\MatcherParser;
 use Concise\Syntax\NoMatcherFoundException;
 use Exception;
 
 class AssertionBuilder
 {
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $args;
 
     /**
-	 * @param array $args
-	 */
+     * @param array $args
+     */
     public function __construct(array $args)
     {
         $this->args = $args;
@@ -68,7 +68,7 @@ class AssertionBuilder
 
     /**
      * @param array $syntax
-     * @param int $offset
+     * @param int   $offset
      * @return string
      */
     protected function getSyntaxString($syntax = array(), $offset = 0)
@@ -100,7 +100,10 @@ class AssertionBuilder
     {
         $syntax1 = explode(' ', $this->getSyntaxString());
         $syntax2 = explode(' ', $this->getAlternateSyntaxString());
-        $syntax = array_merge(array_slice($syntax1, 0, count($syntax1) - 2), array_slice($syntax2, count($syntax1) - 3));
+        $syntax = array_merge(
+            array_slice($syntax1, 0, count($syntax1) - 2),
+            array_slice($syntax2, count($syntax1) - 3)
+        );
         return implode(' ', $syntax);
     }
 
@@ -147,7 +150,10 @@ class AssertionBuilder
         $syntaxes = array();
         foreach ($this->getSyntaxes() as $syntax) {
             try {
-                return $matcherParser->compile($syntax['syntax'], $syntax['data']);
+                return $matcherParser->compile(
+                    $syntax['syntax'],
+                    $syntax['data']
+                );
             } catch (NoMatcherFoundException $e) {
                 // Syntax could not be compiled, try the next one.
                 $syntaxes = array_merge($syntaxes, $e->getSyntaxes());

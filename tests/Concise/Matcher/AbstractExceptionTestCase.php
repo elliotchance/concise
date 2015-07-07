@@ -15,10 +15,17 @@ abstract class AbstractExceptionTestCase extends AbstractMatcherTestCase
     protected function createExceptionTests(array $data)
     {
         $throw = array(
-            'throwNothing' => function () {},
-            'throwException' => function () { throw new \Exception(); },
-            'throwMyException' => function () { throw new \Concise\Matcher\MyException(); },
-            'throwOtherException' => function () { throw new \Concise\Matcher\OtherException(); },
+            'throwNothing' => function () {
+            },
+            'throwException' => function () {
+                throw new \Exception();
+            },
+            'throwMyException' => function () {
+                throw new \Concise\Matcher\MyException();
+            },
+            'throwOtherException' => function () {
+                throw new \Concise\Matcher\OtherException();
+            },
         );
         $expect = array(
             'expectException' => 'Exception',

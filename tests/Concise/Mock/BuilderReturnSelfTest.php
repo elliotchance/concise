@@ -12,8 +12,7 @@ class BuilderReturnSelfTest extends AbstractBuilderTestCase
      */
     public function testMethodsCanReturnSelf(MockBuilder $builder)
     {
-        $mock = $builder->stub('myMethod')->andReturnSelf()
-            ->get();
+        $mock = $builder->stub('myMethod')->andReturnSelf()->get();
         $this->assert($mock->myMethod(), is_the_same_as, $mock);
     }
 }

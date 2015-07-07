@@ -2,13 +2,14 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use DomainException;
 use Concise\Validation\ArgumentChecker;
+use DomainException;
 
 class ProgressCounter
 {
     /**
      * Total value
+     *
      * @var integer
      */
     protected $total;
@@ -20,7 +21,7 @@ class ProgressCounter
 
     /**
      * @param integer $value
-     * @param string $name
+     * @param string  $name
      */
     protected function atLeastZero($value, $name)
     {
@@ -62,6 +63,10 @@ class ProgressCounter
      */
     public function getPercentage($value)
     {
-        return (0 === $this->total) ? 0 : (int) floor($value / $this->total * 100);
+        return (0 === $this->total)
+            ? 0
+            : (int)floor(
+                $value / $this->total * 100
+            );
     }
 }

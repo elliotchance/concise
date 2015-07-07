@@ -20,7 +20,9 @@ class DoesNotThrow extends Throws
         } catch (\Exception $exception) {
             if ($this->isKindOfClass($exception, $data[1])) {
                 $exceptionClass = get_class($exception);
-                throw new DidNotMatchException("Expected {$data[1]} not to be thrown, but $exceptionClass was thrown.");
+                throw new DidNotMatchException(
+                    "Expected {$data[1]} not to be thrown, but $exceptionClass was thrown."
+                );
             }
         }
 

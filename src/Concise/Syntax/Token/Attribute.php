@@ -7,13 +7,13 @@ use Concise\Syntax\Token;
 class Attribute extends Token
 {
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $acceptedTypes = array();
 
     /**
-	 * @param string $value
-	 */
+     * @param string $value
+     */
     public function __construct($value)
     {
         parent::__construct($value);
@@ -25,8 +25,8 @@ class Attribute extends Token
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getAcceptedTypes()
     {
         return $this->acceptedTypes;

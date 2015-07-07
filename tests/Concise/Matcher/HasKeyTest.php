@@ -46,7 +46,11 @@ class HasKeyTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionSuccess()
     {
-        $this->assert($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 123);
+        $this->assert(
+            $this->assert(array("abc" => 123), has_key, "abc"),
+            exactly_equals,
+            123
+        );
     }
 
     /**
@@ -54,6 +58,10 @@ class HasKeyTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionFailure()
     {
-        $this->assertFailure($this->assert(array("abc" => 123), has_key, "abc"), exactly_equals, 124);
+        $this->assertFailure(
+            $this->assert(array("abc" => 123), has_key, "abc"),
+            exactly_equals,
+            124
+        );
     }
 }

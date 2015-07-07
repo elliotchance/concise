@@ -18,7 +18,9 @@ class DoesNotThrowException extends AbstractMatcher
 
             return true;
         } catch (\Exception $exception) {
-            throw new DidNotMatchException("Expected exception not to be thrown.");
+            throw new DidNotMatchException(
+                "Expected exception not to be thrown."
+            );
         }
     }
 

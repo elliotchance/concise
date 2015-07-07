@@ -35,7 +35,8 @@ class Version
             return '';
         }
 
-        $packages = json_decode(file_get_contents("$vendor/composer/installed.json"));
+        $packages =
+            json_decode(file_get_contents("$vendor/composer/installed.json"));
         foreach ($packages as $package) {
             if ($package->name === $packageName) {
                 return $package->version;

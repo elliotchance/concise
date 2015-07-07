@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class TokenTest extends TestCase
 {
@@ -21,6 +21,6 @@ class TokenTest extends TestCase
     public function testRenderAsStringUsesValue()
     {
         $attribute = new Token\Value('abc');
-        $this->assert((string) $attribute, equals, 'abc');
+        $this->assert((string)$attribute, equals, 'abc');
     }
 }

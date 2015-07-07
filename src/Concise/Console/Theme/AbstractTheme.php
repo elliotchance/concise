@@ -12,18 +12,18 @@ abstract class AbstractTheme implements ThemeInterface
     public function getTheme()
     {
         return array(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED     => $this->getStatusPassedColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE    => $this->getStatusFailureColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR      => $this->getStatusErrorColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED    => $this->getStatusSkippedColor(),
+            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => $this->getStatusPassedColor(),
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => $this->getStatusFailureColor(),
+            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => $this->getStatusErrorColor(),
+            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => $this->getStatusSkippedColor(),
             PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => $this->getStatusIncompleteColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY      => $this->getStatusRiskyColor(),
-            'value.integer'                                  => $this->getValueIntegerColor(),
-            'value.float'                                    => $this->getValueFloatColor(),
-            'value.string'                                   => $this->getValueStringColor(),
-            'value.closure'                                  => $this->getValueClosureColor(),
-            'value.null'                                     => $this->getValueNullColor(),
-            'value.boolean'                                  => $this->getValueBooleanColor(),
+            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY => $this->getStatusRiskyColor(),
+            'value.integer' => $this->getValueIntegerColor(),
+            'value.float' => $this->getValueFloatColor(),
+            'value.string' => $this->getValueStringColor(),
+            'value.closure' => $this->getValueClosureColor(),
+            'value.null' => $this->getValueNullColor(),
+            'value.boolean' => $this->getValueBooleanColor(),
         );
     }
 

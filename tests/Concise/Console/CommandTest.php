@@ -2,7 +2,7 @@
 
 namespace Concise\Console;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class CommandStub extends Command
 {
@@ -26,41 +26,67 @@ class CommandTest extends TestCase
 
     protected function getCommandMock()
     {
-        return $this->niceMock('Concise\Console\CommandStub')
-                    ->expose('createRunner')
-                    ->get();
+        return $this->niceMock('Concise\Console\CommandStub')->expose(
+            'createRunner'
+        )->get();
     }
 
     public function testCreateRunnerReturnsAConciseRunner()
     {
         $command = $this->getCommandMock();
-        $this->assert($command->createRunner(), instance_of, 'Concise\Console\TestRunner\DefaultTestRunner');
+        $this->assert(
+            $command->createRunner(),
+            instance_of,
+            'Concise\Console\TestRunner\DefaultTestRunner'
+        );
     }
 
     public function testPrinterUsesProxy()
     {
         $command = $this->getCommandMock();
-        $this->assert($command->createRunner()->getPrinter(), instance_of, 'Concise\Console\ResultPrinter\ResultPrinterProxy');
+        $this->assert(
+            $command->createRunner()->getPrinter(),
+            instance_of,
+            'Concise\Console\ResultPrinter\ResultPrinterProxy'
+        );
     }
 
     public function testVerboseIsFalseByDefault()
     {
         $command = $this->getCommandMock();
-        $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
+        $this->assert(
+            $command->createRunner()
+                ->getPrinter()
+                ->getResultPrinter()
+                ->isVerbose(),
+            is_false
+        );
     }
 
     public function testVerboseIsTurnedOnIfItExistsAndHasBeenSet()
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', true);
-        $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_true);
+        $this->assert(
+            $command->createRunner()
+                ->getPrinter()
+                ->getResultPrinter()
+                ->isVerbose(),
+            is_true
+        );
     }
 
     public function testVerboseIsNotTurnedOnIfItExistsButIfNotTrue()
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', false);
-        $this->assert($command->createRunner()->getPrinter()->getResultPrinter()->isVerbose(), is_false);
+        $this->assert(
+            $command->createRunner()
+                ->getPrinter()
+                ->getResultPrinter()
+                ->isVerbose(),
+            is_false
+        );
     }
 
     public function testCIResultPrinterIsUsedIfCIIsTrue()
@@ -68,7 +94,11 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(true);
 
-        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\CIResultPrinter');
+        $this->assert(
+            $command->getResultPrinter(),
+            instance_of,
+            'Concise\Console\ResultPrinter\CIResultPrinter'
+        );
     }
 
     public function testDefaultResultPrinterIsNotUsedIfCIIsFalse()
@@ -76,12 +106,20 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(false);
 
-        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
+        $this->assert(
+            $command->getResultPrinter(),
+            instance_of,
+            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+        );
     }
 
     public function testDefaultResultPrinterIsUsedByDefault()
     {
         $command = $this->getCommandMock();
-        $this->assert($command->getResultPrinter(), instance_of, 'Concise\Console\ResultPrinter\DefaultResultPrinter');
+        $this->assert(
+            $command->getResultPrinter(),
+            instance_of,
+            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+        );
     }
 }

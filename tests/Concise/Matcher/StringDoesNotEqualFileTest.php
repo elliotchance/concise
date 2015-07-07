@@ -29,7 +29,11 @@ class StringDoesNotEqualFileTest extends AbstractFileTestCase
 
     public function testWillSucceedIfStringDoesMatchFile()
     {
-        $this->assertFailure('baz', does_not_equal_file, $this->createTempFile());
+        $this->assertFailure(
+            'baz',
+            does_not_equal_file,
+            $this->createTempFile()
+        );
     }
 
     public function tags()
