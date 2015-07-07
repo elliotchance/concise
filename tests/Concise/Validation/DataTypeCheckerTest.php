@@ -6,6 +6,10 @@ use Concise\Syntax\Token\Attribute;
 use Concise\Syntax\Token\Regexp;
 use DateTime;
 
+class SubDateTime extends DateTime
+{
+}
+
 class DataTypeCheckerTest extends \Concise\TestCase
 {
     /** @var DataTypeChecker */
@@ -62,6 +66,11 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'specific object backslash' => array(
                 array('\DateTime'),
                 new DateTime()
+            ),
+            'subclass object' => array(array('DateTime'), new SubDateTime()),
+            'subclass object backslash' => array(
+                array('\DateTime'),
+                new SubDateTime()
             ),
         );
     }

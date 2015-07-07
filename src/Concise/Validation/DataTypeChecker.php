@@ -73,7 +73,7 @@ class DataTypeChecker
         if (is_object($value)) {
             foreach ($acceptedTypes as $type) {
                 $c = get_class($value);
-                if ($c == $type || "\\$c" == $type) {
+                if ($c == ltrim($type, '\\') || is_subclass_of($c, $type)) {
                     return $value;
                 }
             }
@@ -198,8 +198,13 @@ class DataTypeChecker
     protected function matches($type, $value)
     {
         if ($type === 'number') {
-            return $this->singleMatch('int', $value) ||
-            $this->singleMatch('float', $value) || is_numeric($value);
+            return $this->singleMatch(
+                'int',
+                $value
+            ) || $this->singleMatch(
+                'float',
+                $value
+            ) || is_numeric($value);
         }
 
         return $this->singleMatch($this->simpleType($type), $value);
