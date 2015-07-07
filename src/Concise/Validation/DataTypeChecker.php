@@ -112,7 +112,8 @@ class DataTypeChecker
         }
 
         throw new DataTypeMismatchException(
-            $this->getType($value), $acceptedTypes
+            $this->getType($value),
+            $acceptedTypes
         );
     }
 

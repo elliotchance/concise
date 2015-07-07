@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 interface ClassCompilerMock4
 {
@@ -19,6 +19,10 @@ class ClassCompilerInterfaceTest extends TestCase
     public function testWillImplementAnInterface()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
-        $this->assert($compiler->newInstance(), instance_of, 'Concise\Mock\ClassCompilerMock4');
+        $this->assert(
+            $compiler->newInstance(),
+            instance_of,
+            'Concise\Mock\ClassCompilerMock4'
+        );
     }
 }

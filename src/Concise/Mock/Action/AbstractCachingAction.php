@@ -10,7 +10,9 @@ class AbstractCachingAction extends AbstractAction
     public static $cache = array();
 
     /**
-     * Each time a ReturnValueAction is instantiated it will generate a new cache key.
+     * Each time a ReturnValueAction is instantiated it will generate a new
+     * cache key.
+     *
      * @var string
      */
     protected $cacheKey;

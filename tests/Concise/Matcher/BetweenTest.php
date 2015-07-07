@@ -48,7 +48,11 @@ class BetweenTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionSuccess()
     {
-        $this->assert($this->assert(5, between, 0, 'and', 10), exactly_equals, 5);
+        $this->assert(
+            $this->assert(5, between, 0, 'and', 10),
+            exactly_equals,
+            5
+        );
     }
 
     /**
@@ -56,6 +60,10 @@ class BetweenTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionFailure()
     {
-        $this->assertFailure($this->assert(5, between, 0, 'and', 10), exactly_equals, 6);
+        $this->assertFailure(
+            $this->assert(5, between, 0, 'and', 10),
+            exactly_equals,
+            6
+        );
     }
 }

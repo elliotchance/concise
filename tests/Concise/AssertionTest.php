@@ -3,11 +3,10 @@
 namespace Concise;
 
 use Concise\Matcher\Between;
-use Concise\Syntax\MatcherParser;
-use Concise\Matcher\True;
 use Concise\Matcher\False;
+use Concise\Matcher\True;
+use Concise\Syntax\MatcherParser;
 use PHPUnit_Framework_AssertionFailedError;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class AssertionTest extends TestCase
 {
@@ -25,7 +24,11 @@ class AssertionTest extends TestCase
 
     public function testSettingDataWhenCreatingAssertion()
     {
-        $assertion = new Assertion('? equals ?', new Matcher\Equals(), array('abc', 'def'));
+        $assertion = new Assertion(
+            '? equals ?',
+            new Matcher\Equals(),
+            array('abc', 'def')
+        );
         $this->assert($assertion->getData(), equals, array('abc', 'def'));
     }
 
@@ -45,15 +48,20 @@ class AssertionTest extends TestCase
             'c' => 'xyz'
         );
         $assertion = new Assertion('a equals b', $matcher, $data);
-        $expected = "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
-        $this->assert((string) $assertion, equals, $expected);
+        $expected =
+            "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
+        $this->assert((string)$assertion, equals, $expected);
     }
 
     public function testCanSetDescriptiveString()
     {
         $assertion = new Assertion('? equals ?', new Matcher\Equals());
         $assertion->setDescription('my description');
-        $this->assert($assertion->getDescription(), equals, 'my description (? equals ?)');
+        $this->assert(
+            $assertion->getDescription(),
+            equals,
+            'my description (? equals ?)'
+        );
     }
 
     public function testDescriptionReturnsAssertionIfNotSet()
@@ -63,8 +71,8 @@ class AssertionTest extends TestCase
     }
 
     /**
-	 * @param string $theAssertion
-	 */
+     * @param string $theAssertion
+     */
     protected function compileAndRunAssertion($theAssertion)
     {
         $parser = MatcherParser::getInstance();
@@ -76,28 +84,32 @@ class AssertionTest extends TestCase
     protected function getStubForAssertionThatReturnsData(array $data)
     {
         return $this->niceMock('\Concise\Assertion', array('true', new True()))
-                    ->stub(array('getData' => $data))
-                    ->get();
+            ->stub(array('getData' => $data))
+            ->get();
     }
 
     public function testDoNotShowPHPUnitPropertiesOnError()
     {
-        $assertion = $this->getStubForAssertionThatReturnsData(self::getPHPUnitProperties());
-        $this->assert((string) $assertion, is_blank);
+        $assertion = $this->getStubForAssertionThatReturnsData(
+            self::getPHPUnitProperties()
+        );
+        $this->assert((string)$assertion, is_blank);
     }
 
     public function testDoNotShowDataSetOnError()
     {
-        $assertion = $this->getStubForAssertionThatReturnsData(array(
-            '__dataSet' => array()
-        ));
-        $this->assert((string) $assertion, is_blank);
+        $assertion = $this->getStubForAssertionThatReturnsData(
+            array(
+                '__dataSet' => array()
+            )
+        );
+        $this->assert((string)$assertion, is_blank);
     }
 
     public function testNoAttributesRendersAsAnEmptyString()
     {
         $assertion = $this->getStubForAssertionThatReturnsData(array());
-        $this->assert((string) $assertion, is_blank);
+        $this->assert((string)$assertion, is_blank);
     }
 
     public function testCanSetCustomFailureMessage()
@@ -152,7 +164,11 @@ class AssertionTest extends TestCase
 
             $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
         };
-        $this->assert($block, throws, '\PHPUnit_Framework_AssertionFailedError');
+        $this->assert(
+            $block,
+            throws,
+            '\PHPUnit_Framework_AssertionFailedError'
+        );
     }
 
     /**
@@ -163,13 +179,13 @@ class AssertionTest extends TestCase
     public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()
     {
         $matcher = $this->mock('\Concise\Matcher\AbstractMatcher')
-            ->stub('match')->andThrow(new \Exception('foobar'))
+            ->stub('match')
+            ->andThrow(new \Exception('foobar'))
             ->get();
-        $assertion = $this->niceMock('Concise\Assertion')
-            ->disableConstructor()
-            ->expose('performMatch')
-            ->stub(array('getMatcher' => $matcher))
-            ->get();
+        $assertion =
+            $this->niceMock('Concise\Assertion')->disableConstructor()->expose(
+                'performMatch'
+            )->stub(array('getMatcher' => $matcher))->get();
 
         $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
     }

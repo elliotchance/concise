@@ -2,6 +2,14 @@
 
 namespace Concise\Matcher;
 
+class SecretProperties
+{
+    public function __get($name)
+    {
+        return "foo";
+    }
+}
+
 /**
  * @group matcher
  */
@@ -43,5 +51,17 @@ class HasPropertyWithValueTest extends AbstractMatcherTestCase
     public function tags()
     {
         return array(Tag::OBJECTS);
+    }
+
+    public function testObjectHasSecretPropertyWithCorrectValue()
+    {
+        $obj = new SecretProperties();
+        $this->assert($obj, has_property, 'a', with_value, 'foo');
+    }
+
+    public function testObjectHasSecretPropertyWithIncorrectValue()
+    {
+        $obj = new SecretProperties();
+        $this->assertFailure($obj, has_property, 'a', with_value, 'bar');
     }
 }

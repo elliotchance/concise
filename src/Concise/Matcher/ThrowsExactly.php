@@ -18,12 +18,16 @@ class ThrowsExactly extends AbstractMatcher
         } catch (\Exception $exception) {
             $exceptionClass = get_class($exception);
             if ($exceptionClass !== $data[1]) {
-                throw new DidNotMatchException("Expected exactly {$data[1]} to be thrown, but $exceptionClass was thrown.");
+                throw new DidNotMatchException(
+                    "Expected exactly {$data[1]} to be thrown, but $exceptionClass was thrown."
+                );
             }
 
             return true;
         }
-        throw new DidNotMatchException("Expected exactly {$data[1]} to be thrown, but nothing was thrown.");
+        throw new DidNotMatchException(
+            "Expected exactly {$data[1]} to be thrown, but nothing was thrown."
+        );
     }
 
     public function getTags()

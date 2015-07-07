@@ -7,9 +7,9 @@ use InvalidArgumentException;
 class ArgumentChecker
 {
     /**
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $types comma-separated.
-     * @param int $argumentNumber
+     * @param int    $argumentNumber
      */
     public static function check($value, $types, $argumentNumber = 1)
     {
@@ -18,7 +18,9 @@ class ArgumentChecker
         try {
             return $checker->check(explode(',', $types), $value);
         } catch (DataTypeMismatchException $e) {
-            throw new InvalidArgumentException($e->getMessage() . " for argument {$argumentNumber}");
+            throw new InvalidArgumentException(
+                $e->getMessage() . " for argument {$argumentNumber}"
+            );
         }
     }
 }

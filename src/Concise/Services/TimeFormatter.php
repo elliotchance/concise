@@ -15,11 +15,11 @@ class TimeFormatter
     }
 
     /**
-     * @param array $r
-     * @param int $seconds
+     * @param array   $r
+     * @param int     $seconds
      * @param integer $size
-     * @param string $word
-     * @param bool $pluralize
+     * @param string  $word
+     * @param bool    $pluralize
      */
     protected function part(array &$r, &$seconds, $size, $word, $pluralize)
     {
@@ -32,7 +32,8 @@ class TimeFormatter
 
     /**
      * @param integer $seconds
-     * @param bool $small Use shorter output, '3 min 20 sec' instead of '3 minutes 20 seconds'
+     * @param bool    $small Use shorter output, '3 min 20 sec' instead of '3
+     *     minutes 20 seconds'
      * @return string
      */
     public function format($seconds, $small = false)

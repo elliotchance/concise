@@ -2,7 +2,7 @@
 
 namespace Concise;
 
-// This must go outside of any testing code becuase we know that the constants are available before
+    // This must go outside of any testing code becuase we know that the constants are available before
 // test initialisation.
 if (!defined('has_key')) {
     throw new \Exception("Constants not initalised.");
@@ -12,7 +12,11 @@ class TestCaseTest extends TestCase
 {
     public function testExtendsTestCase()
     {
-        $this->assert(new TestCase(), is_an_instance_of, '\PHPUnit_Framework_TestCase');
+        $this->assert(
+            new TestCase(),
+            is_an_instance_of,
+            '\PHPUnit_Framework_TestCase'
+        );
     }
 
     protected function assertAssertions(array $expected, array $actual)
@@ -32,9 +36,9 @@ class TestCaseTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
+     */
     public function testGetAttributeThatDoesNotExistThrowsException()
     {
         $this->noSuchAttribute;
@@ -62,9 +66,10 @@ class TestCaseTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage You cannot assign an attribute with the keyword 'not'.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage You cannot assign an attribute with the
+     *     keyword 'not'.
+     */
     public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
     {
         $this->not = 123;
@@ -90,15 +95,15 @@ class TestCaseTest extends TestCase
 
     protected function getAssertionsForFixtureTests()
     {
-        $testCase = $this->niceMock('\Concise\TestCase')
-                         ->stub(array(
-                             'getRawAssertionsForMethod' => array(
-                                'x equals b',
-                                'false',
-                                'true',
-                            )
-                         ))
-                         ->get();
+        $testCase = $this->niceMock('\Concise\TestCase')->stub(
+            array(
+                'getRawAssertionsForMethod' => array(
+                    'x equals b',
+                    'false',
+                    'true',
+                )
+            )
+        )->get();
 
         return $testCase->getAssertionsForMethod('abc');
     }

@@ -2,8 +2,8 @@
 
 namespace Concise\Services;
 
-use Concise\TestCase;
 use Colors\Color;
+use Concise\TestCase;
 
 class SyntaxRendererTest extends TestCase
 {
@@ -22,8 +22,8 @@ class SyntaxRendererTest extends TestCase
     {
         $data = array(1, '2', 3.1);
         $c = new Color();
-        $expected = (string) $c('1')->red . ' is ' . (string) $c('"2"')->yellow
-            . ' bla ' . (string) $c(3.1)->magenta;
+        $expected = (string)$c('1')->red . ' is ' . (string)$c('"2"')->yellow .
+            ' bla ' . (string)$c(3.1)->magenta;
         $this->assert(
             $expected,
             equals,

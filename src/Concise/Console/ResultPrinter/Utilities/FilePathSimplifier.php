@@ -7,9 +7,9 @@ use Concise\Validation\ArgumentChecker;
 class FilePathSimplifier
 {
     /**
-	 * @param  string $filePath
-	 * @return string
-	 */
+     * @param  string $filePath
+     * @return string
+     */
     public function process($filePath)
     {
         ArgumentChecker::check($filePath, 'string');

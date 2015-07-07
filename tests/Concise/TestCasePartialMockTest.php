@@ -29,7 +29,11 @@ class TestCasePartialMockTest extends TestCase
     public function testPartialMockReturnsMockBuilder()
     {
         $instance = new DateTime();
-        $this->assert($this->partialMock($instance), instance_of, '\Concise\Mock\MockBuilder');
+        $this->assert(
+            $this->partialMock($instance),
+            instance_of,
+            '\Concise\Mock\MockBuilder'
+        );
     }
 
     /**

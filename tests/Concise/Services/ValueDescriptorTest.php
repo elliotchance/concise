@@ -35,11 +35,19 @@ class ValueDescriptorTest extends \Concise\TestCase
 
     public function testDescriptionOfObject()
     {
-        $this->assert($this->descriptor->describe($this), equals, 'Concise\Services\ValueDescriptorTest');
+        $this->assert(
+            $this->descriptor->describe($this),
+            equals,
+            'Concise\Services\ValueDescriptorTest'
+        );
     }
 
     public function testDescriptionOfResource()
     {
-        $this->assert($this->descriptor->describe(fopen('.', 'r')), equals, 'resource');
+        $this->assert(
+            $this->descriptor->describe(fopen('.', 'r')),
+            equals,
+            'resource'
+        );
     }
 }

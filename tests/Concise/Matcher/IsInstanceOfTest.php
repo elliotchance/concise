@@ -15,17 +15,29 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 
     public function testIsInstanceOfWithSameClass()
     {
-        $this->assert(new self(), is_an_instance_of, '\Concise\Matcher\IsInstanceOfTest');
+        $this->assert(
+            new self(),
+            is_an_instance_of,
+            '\Concise\Matcher\IsInstanceOfTest'
+        );
     }
 
     public function testIsInstanceOfWithSuperClass()
     {
-        $this->assert(new self(), instance_of, '\Concise\Matcher\AbstractMatcherTestCase');
+        $this->assert(
+            new self(),
+            instance_of,
+            '\Concise\Matcher\AbstractMatcherTestCase'
+        );
     }
 
     public function testIsInstanceOfFailure()
     {
-        $this->assertFailure(new \stdClass(), is_instance_of, '\Concise\Matcher\IsInstanceOfTest');
+        $this->assertFailure(
+            new \stdClass(),
+            is_instance_of,
+            '\Concise\Matcher\IsInstanceOfTest'
+        );
     }
 
     public function tags()
@@ -35,6 +47,10 @@ class IsInstanceOfTest extends AbstractMatcherTestCase
 
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
-        $this->assert('\Concise\Matcher\IsInstanceOfTest', instance_of, '\Concise\TestCase');
+        $this->assert(
+            '\Concise\Matcher\IsInstanceOfTest',
+            instance_of,
+            '\Concise\TestCase'
+        );
     }
 }

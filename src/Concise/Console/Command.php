@@ -2,12 +2,12 @@
 
 namespace Concise\Console;
 
-use Concise\Console\TestRunner\DefaultTestRunner;
-use Concise\Console\ResultPrinter\ResultPrinterProxy;
+use Concise\Console\ResultPrinter\CIResultPrinter;
 use Concise\Console\ResultPrinter\DefaultResultPrinter;
+use Concise\Console\ResultPrinter\ResultPrinterProxy;
+use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
 use Exception;
-use Concise\Console\ResultPrinter\CIResultPrinter;
 
 class Command extends \PHPUnit_TextUI_Command
 {
@@ -24,7 +24,9 @@ class Command extends \PHPUnit_TextUI_Command
     protected function createRunner()
     {
         $resultPrinter = $this->getResultPrinter();
-        if (array_key_exists('verbose', $this->arguments) && $this->arguments['verbose']) {
+        if (array_key_exists('verbose', $this->arguments) &&
+            $this->arguments['verbose']
+        ) {
             $resultPrinter->setVerbose(true);
         }
         $testRunner = new DefaultTestRunner();
@@ -52,7 +54,10 @@ class Command extends \PHPUnit_TextUI_Command
      */
     protected function findTheme()
     {
-        $candidates = array($this->colorScheme, "Concise\\Console\\Theme\\{$this->colorScheme}Theme");
+        $candidates = array(
+            $this->colorScheme,
+            "Concise\\Console\\Theme\\{$this->colorScheme}Theme"
+        );
         foreach ($candidates as $class) {
             $r = $this->getThemeForClass($class);
             if ($r) {

@@ -26,7 +26,6 @@ class BuilderFinalTest extends AbstractBuilderTestCase
      */
     public function testFinalMethodsCanNotBeMocked(MockBuilder $builder)
     {
-        $builder->stub('myFinalMethod')
-            ->get();
+        $builder->stub('myFinalMethod')->get();
     }
 }

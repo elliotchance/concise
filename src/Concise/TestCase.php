@@ -3,15 +3,15 @@
 namespace Concise;
 
 use Concise\Mock\MockBuilder;
+use Concise\Mock\MockInterface;
+use Concise\Mock\MockManager;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
-use Concise\Mock\MockManager;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use Concise\Mock\MockInterface;
 use ReflectionException;
 
 // Load the keyword cache before the test suite begins.
@@ -20,14 +20,15 @@ Keywords::load();
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * Used as a placeholder for with() clauses where the parameter is unrestrictive. For the
-     * curious, this is the SHA1('a') with an extra 'a' on the end.
+     * Used as a placeholder for with() clauses where the parameter is
+     * unrestrictive. For the curious, this is the SHA1('a') with an extra 'a'
+     * on the end.
      */
     const ANYTHING = '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8a';
 
     /**
-	 * @var MockManager
-	 */
+     * @var MockManager
+     */
     protected $mockManager;
 
     /**
@@ -42,11 +43,14 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * @param string|null $name
-     * @param array $data
-     * @param string $dataName
+     * @param array       $data
+     * @param string      $dataName
      */
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
+    public function __construct(
+        $name = null,
+        array $data = array(),
+        $dataName = ''
+    ) {
         parent::__construct($name, $data, $dataName);
         $this->mockManager = new MockManager($this);
     }
@@ -60,8 +64,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * @return MatcherParser
-	 */
+     * @return MatcherParser
+     */
     protected function getMatcherParserInstance()
     {
         return MatcherParser::getInstance();
@@ -93,29 +97,31 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      * @throws Exception
      */
     public function __set($name, $value)
     {
         $parser = $this->getMatcherParserInstance();
         if (in_array($name, $parser->getKeywords())) {
-            throw new Exception("You cannot assign an attribute with the keyword '$name'.");
+            throw new Exception(
+                "You cannot assign an attribute with the keyword '$name'."
+            );
         }
         $this->properties[$name] = $value;
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getData()
     {
         return $this->properties + get_object_vars($this);
     }
 
     /**
-	 * @return string
-	 */
+     * @return string
+     */
     protected function getRealTestName()
     {
         $name = substr($this->getName(), 20);
@@ -125,9 +131,10 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * These attributes are provided by the base PHPUnit classes.
-	 * @return array
-	 */
+     * These attributes are provided by the base PHPUnit classes.
+     *
+     * @return array
+     */
     public static function getPHPUnitProperties()
     {
         return array(
@@ -147,12 +154,15 @@ class TestCase extends PHPUnit_Framework_TestCase
             return $builder->getAssertion();
         }
 
-        return $this->getMatcherParserInstance()->compile($args[0], $this->getData());
+        return $this->getMatcherParserInstance()->compile(
+            $args[0],
+            $this->getData()
+        );
     }
 
     /**
      * @return boolean
-	 */
+     */
     public function assert()
     {
         $assertion = $this->createAssertion(func_get_args());
@@ -170,7 +180,8 @@ class TestCase extends PHPUnit_Framework_TestCase
         $this->mockManager->validateMocks();
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
-            $message = "$count verify failure" . ($count === 1 ? '' : 's') . ":";
+            $message =
+                "$count verify failure" . ($count === 1 ? '' : 's') . ":";
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
@@ -178,22 +189,26 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * @param  string $className
-	 * @param  array  $constructorArgs
-	 * @return MockBuilder
-	 */
-    public function mock($className = '\stdClass', array $constructorArgs = array())
-    {
+     * @param  string $className
+     * @param  array  $constructorArgs
+     * @return MockBuilder
+     */
+    public function mock(
+        $className = '\stdClass',
+        array $constructorArgs = array()
+    ) {
         return new MockBuilder($this, $className, false, $constructorArgs);
     }
 
     /**
-	 * @param  string $className
-	 * @param  array  $constructorArgs
-	 * @return MockBuilder
-	 */
-    public function niceMock($className = '\stdClass', array $constructorArgs = array())
-    {
+     * @param  string $className
+     * @param  array  $constructorArgs
+     * @return MockBuilder
+     */
+    public function niceMock(
+        $className = '\stdClass',
+        array $constructorArgs = array()
+    ) {
         return new MockBuilder($this, $className, true, $constructorArgs);
     }
 
@@ -204,7 +219,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function partialMock($instance)
     {
         ArgumentChecker::check($instance, 'object');
-        $mockBuilder = new MockBuilder($this, get_class($instance), true, array());
+        $mockBuilder =
+            new MockBuilder($this, get_class($instance), true, array());
         $mockBuilder->disableConstructor();
         $mockBuilder->setObjectState($instance);
         return $mockBuilder;
@@ -216,7 +232,8 @@ class TestCase extends PHPUnit_Framework_TestCase
 
         $all = array();
         foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-            $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
+            $simpleSyntax =
+                preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
             foreach (explode('?', $simpleSyntax) as $part) {
                 $p = trim($part);
                 $all[str_replace(' ', '_', $p)] = $p;
@@ -252,7 +269,8 @@ class TestCase extends PHPUnit_Framework_TestCase
         if ($object instanceof MockInterface) {
             $className = get_parent_class($object);
             if (!$className) {
-                $message = "You cannot set a property on an interface (" . get_class($object) . ").";
+                $message = "You cannot set a property on an interface (" .
+                    get_class($object) . ").";
                 throw new Exception($message);
             }
         }
@@ -265,8 +283,8 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     protected function shouldAccessProperty($object, $property)
     {
-        return property_exists($object, $property)
-            || method_exists($object, '__get');
+        return property_exists($object, $property) ||
+        method_exists($object, '__get');
     }
 
     public function getProperty($object, $property)
@@ -295,6 +313,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Validate a mock now.
+     *
      * @param  MockInterface $mock The mock instance to verify.
      * @return bool
      */

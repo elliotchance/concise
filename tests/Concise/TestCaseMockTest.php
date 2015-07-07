@@ -9,7 +9,11 @@ class TestCaseMockTest extends TestCase
 {
     public function testMocksAreResetInTheSetup()
     {
-        $this->assert($this->getMockManager()->getMocks(), exactly_equals, array());
+        $this->assert(
+            $this->getMockManager()->getMocks(),
+            exactly_equals,
+            array()
+        );
     }
 
     public function testCreatingAMockAddsItToTheMocks()

@@ -12,12 +12,13 @@ class BuilderPrivateTest extends AbstractBuilderTestCase
      * @expectedExceptionMessage cannot be mocked because it it private.
      * @dataProvider allBuilders
      */
-    public function testMockingPrivateMethodWillThrowException(MockBuilder $builder, $type)
-    {
+    public function testMockingPrivateMethodWillThrowException(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure('does not exist.');
         }
-        $builder->stub(array('myPrivateMethod' => 'bar'))
-            ->get();
+        $builder->stub(array('myPrivateMethod' => 'bar'))->get();
     }
 }

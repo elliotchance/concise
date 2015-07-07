@@ -2,7 +2,7 @@
 
 namespace Concise\Services;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class NumberToTimesConverterTest extends TestCase
 {
@@ -46,7 +46,11 @@ class NumberToTimesConverterTest extends TestCase
 
     public function testMethodDefaultsToExactly()
     {
-        $this->assert($this->converter->convertToMethod(123), equals, 'exactly(123)');
+        $this->assert(
+            $this->converter->convertToMethod(123),
+            equals,
+            'exactly(123)'
+        );
     }
 
     public function testMethodForZeroIsNever()

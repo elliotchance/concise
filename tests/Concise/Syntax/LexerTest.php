@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class LexerTest extends TestCase
 {
@@ -36,8 +36,8 @@ class LexerTest extends TestCase
     }
 
     /**
-	 * @dataProvider tokenData
-	 */
+     * @dataProvider tokenData
+     */
     public function testReadKeywordToken($string, $expectedToken)
     {
         $lexer = new Lexer();
@@ -77,19 +77,23 @@ class LexerTest extends TestCase
     }
 
     /**
-	 * @dataProvider stringData
-	 */
+     * @dataProvider stringData
+     */
     public function testTokenizerUnderstandsStrings($string, $expected)
     {
         $lexer = new Lexer();
         $result = $lexer->parse($string);
-        $this->assert(array(new Token\Value($expected)), equals, $result['tokens']);
+        $this->assert(
+            array(new Token\Value($expected)),
+            equals,
+            $result['tokens']
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Expected " before end of string.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Expected " before end of string.
+     */
     public function testLexerThrowsExceptionIfDoubleQuotedStringIsNotClosed()
     {
         $lexer = new Lexer();
@@ -97,9 +101,9 @@ class LexerTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Expected ' before end of string.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Expected ' before end of string.
+     */
     public function testLexerThrowsExceptionIfSingleQuotedStringIsNotClosed()
     {
         $lexer = new Lexer();
@@ -107,9 +111,9 @@ class LexerTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Invalid JSON: [abc
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Invalid JSON: [abc
+     */
     public function testLexerThrowsExceptionIfArrayIsNotValid()
     {
         $lexer = new Lexer();
@@ -120,14 +124,22 @@ class LexerTest extends TestCase
     {
         $lexer = new Lexer();
         $result = $lexer->parse('?:int');
-        $this->assert($result['arguments'][0]->getAcceptedTypes(), equals, array('int'));
+        $this->assert(
+            $result['arguments'][0]->getAcceptedTypes(),
+            equals,
+            array('int')
+        );
     }
 
     public function testLexerCanExtractExpectedTypesFromSyntax()
     {
         $lexer = new Lexer();
         $result = $lexer->parse('?:int,float');
-        $this->assert($result['arguments'][0]->getAcceptedTypes(), equals, array('int', 'float'));
+        $this->assert(
+            $result['arguments'][0]->getAcceptedTypes(),
+            equals,
+            array('int', 'float')
+        );
     }
 
     public function testLexerWillNotPutExpectedTypesInAttributeValue()
@@ -138,9 +150,9 @@ class LexerTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Invalid JSON: [abc:123]
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Invalid JSON: [abc:123]
+     */
     public function testLexerThrowsExceptionIfAssociativeArrayIsNotValid()
     {
         $lexer = new Lexer();

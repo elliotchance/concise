@@ -12,8 +12,7 @@ class BuilderReturnTest extends AbstractBuilderTestCase
      */
     public function testAndReturnWithASingleArgument(MockBuilder $builder)
     {
-        $mock = $builder->stub('myMethod')->andReturn('foo')
-            ->get();
+        $mock = $builder->stub('myMethod')->andReturn('foo')->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
@@ -22,18 +21,17 @@ class BuilderReturnTest extends AbstractBuilderTestCase
      */
     public function testAndReturnCanTakeMultipleArguments(MockBuilder $builder)
     {
-        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')
-            ->get();
+        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
     /**
      * @dataProvider allBuilders
      */
-    public function testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')
-            ->get();
+    public function testAndReturnWithMultipleArgumentsCanBeCalledWithDifferentResults(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 'bar');
     }
@@ -41,10 +39,10 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     /**
      * @dataProvider allBuilders
      */
-    public function testAndReturnWithASingleArgumentWillAlwaysReturnThatValue(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myMethod')->andReturn('foo')
-            ->get();
+    public function testAndReturnWithASingleArgumentWillAlwaysReturnThatValue(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->stub('myMethod')->andReturn('foo')->get();
         $mock->myMethod();
         $mock->myMethod();
         $this->assert($mock->myMethod(), equals, 'foo');
@@ -55,10 +53,10 @@ class BuilderReturnTest extends AbstractBuilderTestCase
      * @expectedExceptionMessage Only 2 return values have been provided.
      * @dataProvider allBuilders
      */
-    public function testAndReturnWithMultipleArgumentsCanNotBeCalledMoreTimesThatReturnValues(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')
-            ->get();
+    public function testAndReturnWithMultipleArgumentsCanNotBeCalledMoreTimesThatReturnValues(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         $mock->myMethod();
         $mock->myMethod();
         $mock->myMethod();

@@ -10,8 +10,9 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     /**
      * @dataProvider allBuilders
      */
-    public function testMockCanBeCreatedFromAnObjectThatExists(MockBuilder $builder)
-    {
+    public function testMockCanBeCreatedFromAnObjectThatExists(
+        MockBuilder $builder
+    ) {
         $mock = $builder->get();
         $this->assert($mock, instance_of, $builder->getClassName());
     }
@@ -19,11 +20,17 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     /**
      * @dataProvider mockBuilders
      */
-    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException(MockBuilder $builder, $type)
-    {
-        $this->expectFailure("myMethod() does not have an associated action - consider a niceMock()?");
+    public function testCallingMethodThatHasNoAssociatedActionWillThrowAnException(
+        MockBuilder $builder,
+        $type
+    ) {
+        $this->expectFailure(
+            "myMethod() does not have an associated action - consider a niceMock()?"
+        );
         if (self::MOCK_INTERFACE === $type) {
-            $this->expectFailure("myMethod() is abstract and has no associated action.");
+            $this->expectFailure(
+                "myMethod() is abstract and has no associated action."
+            );
         }
         $mock = $builder->get();
         $mock->myMethod();
@@ -32,8 +39,9 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     /**
      * @dataProvider niceMockBuilders
      */
-    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal(MockBuilder $builder)
-    {
+    public function testCallingMethodThatHasNoAssociatedActionOnANiceMockWillUseOriginal(
+        MockBuilder $builder
+    ) {
         $mock = $builder->get();
         $this->assert($mock->myMethod(), equals, 'abc');
     }
@@ -50,7 +58,8 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     /**
      * @group #129
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot create a nice mock of an interface (\Concise\Mock\CombinationMockedInterface)
+     * @expectedExceptionMessage You cannot create a nice mock of an interface
+     *     (\Concise\Mock\CombinationMockedInterface)
      */
     public function testCannotCreateANiceMockOfAnInterface()
     {

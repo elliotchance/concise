@@ -12,7 +12,10 @@ class BuilderAnythingTest extends AbstractBuilderTestCase
      */
     public function testWithParameterCanAcceptAnything(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')->get();
+        $mock = $builder->expect('myMethod')
+            ->with(self::ANYTHING)
+            ->andReturn('foo')
+            ->get();
         $this->assert($mock->myMethod(null), equals, 'foo');
     }
 
@@ -21,7 +24,10 @@ class BuilderAnythingTest extends AbstractBuilderTestCase
      */
     public function testWithParameterCanAcceptAnythingElse(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->with(self::ANYTHING)->andReturn('foo')->get();
+        $mock = $builder->expect('myMethod')
+            ->with(self::ANYTHING)
+            ->andReturn('foo')
+            ->get();
         $this->assert($mock->myMethod(123), equals, 'foo');
     }
 }

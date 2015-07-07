@@ -18,7 +18,9 @@ class ThrowsAnythingExcept extends AbstractMatcher
         } catch (\Exception $exception) {
             $exceptionClass = get_class($exception);
             if ($exceptionClass === $data[1]) {
-                throw new DidNotMatchException("Expected any exception except {$data[1]} to be thrown, but $exceptionClass was thrown.");
+                throw new DidNotMatchException(
+                    "Expected any exception except {$data[1]} to be thrown, but $exceptionClass was thrown."
+                );
             }
 
             return false;

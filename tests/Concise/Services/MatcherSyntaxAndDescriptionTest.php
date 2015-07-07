@@ -13,34 +13,43 @@ class MatcherSyntaxAndDescriptionTest extends \Concise\TestCase
 
     public function testNoDescriptions()
     {
-        $this->assertProcess(array(
-            '? equals ?',
-            '? is equal to ?'
-        ), array(
-            '? equals ?'      => null,
-            '? is equal to ?' => null
-        ));
+        $this->assertProcess(
+            array(
+                '? equals ?',
+                '? is equal to ?'
+            ),
+            array(
+                '? equals ?' => null,
+                '? is equal to ?' => null
+            )
+        );
     }
 
     public function testAllDescriptions()
     {
-        $this->assertProcess(array(
-            '? equals ?'      => 'foo',
-            '? is equal to ?' => 'bar'
-        ), array(
-            '? equals ?'      => 'foo',
-            '? is equal to ?' => 'bar'
-        ));
+        $this->assertProcess(
+            array(
+                '? equals ?' => 'foo',
+                '? is equal to ?' => 'bar'
+            ),
+            array(
+                '? equals ?' => 'foo',
+                '? is equal to ?' => 'bar'
+            )
+        );
     }
 
     public function testMixedDescriptions()
     {
-        $this->assertProcess(array(
-            '? equals ?',
-            '? is equal to ?' => 'bar'
-        ), array(
-            '? equals ?'      => null,
-            '? is equal to ?' => 'bar'
-        ));
+        $this->assertProcess(
+            array(
+                '? equals ?',
+                '? is equal to ?' => 'bar'
+            ),
+            array(
+                '? equals ?' => null,
+                '? is equal to ?' => 'bar'
+            )
+        );
     }
 }

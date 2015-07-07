@@ -21,7 +21,7 @@ class AssertionOnErrorTest extends TestCase
         try {
             $this->assert(123, equals, 124, on_error, 'foo');
             $this->fail('Did not fail.');
-        } catch(PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert($e->getMessage(), equals, 'foo');
         }
     }

@@ -2,17 +2,19 @@
 
 namespace Concise\Mock;
 
-use Reflection;
-use ReflectionParameter;
-use ReflectionMethod;
 use Concise\Validation\ArgumentChecker;
+use Reflection;
+use ReflectionMethod;
+use ReflectionParameter;
 
 class PrototypeBuilder
 {
     /**
-	 * If this is `true` then the `abstract` keyword will not be outputted in the prototypes.
-	 * @var boolean
-	 */
+     * If this is `true` then the `abstract` keyword will not be outputted in
+     * the prototypes.
+     *
+     * @var boolean
+     */
     public $hideAbstract = false;
 
     protected function getDefaultValue(ReflectionParameter $p)
@@ -52,13 +54,15 @@ class PrototypeBuilder
     }
 
     /**
-	 * Get the prototype for the method.
-	 * @param  ReflectionMethod $method
-	 * @return string
-	 */
+     * Get the prototype for the method.
+     *
+     * @param  ReflectionMethod $method
+     * @return string
+     */
     public function getPrototype(ReflectionMethod $method)
     {
-        $modifiers = implode(' ', Reflection::getModifierNames($method->getModifiers()));
+        $modifiers =
+            implode(' ', Reflection::getModifierNames($method->getModifiers()));
         if ($this->hideAbstract) {
             $modifiers = str_replace('abstract ', '', $modifiers);
         }
@@ -70,7 +74,8 @@ class PrototypeBuilder
             $parameters[] = $param;
         }
 
-        return $modifiers . ' function ' . $method->getName() . "(" . implode(', ', $parameters) . ")";
+        return $modifiers . ' function ' . $method->getName() . "(" .
+        implode(', ', $parameters) . ")";
     }
 
     /**

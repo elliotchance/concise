@@ -5,8 +5,8 @@ namespace Concise\Mock\Action;
 class ReturnValueAction extends AbstractCachingAction
 {
     /**
-	 * @param array $values
-	 */
+     * @param array $values
+     */
     public function __construct(array $values)
     {
         parent::__construct($values);

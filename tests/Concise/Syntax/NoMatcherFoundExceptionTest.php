@@ -8,7 +8,11 @@ class NoMatcherFoundExceptionTest extends TestCase
 {
     public function testExtendsException()
     {
-        $this->assert(new NoMatcherFoundException(array()), instance_of, '\Exception');
+        $this->assert(
+            new NoMatcherFoundException(array()),
+            instance_of,
+            '\Exception'
+        );
     }
 
     public function testSyntaxCanBeSetInConstructor()
@@ -20,6 +24,10 @@ class NoMatcherFoundExceptionTest extends TestCase
     public function testExceptionMessage()
     {
         $e = new NoMatcherFoundException(array('? foo ?'));
-        $this->assert($e->getMessage(), equals, "No such matcher for syntax '? foo ?'.");
+        $this->assert(
+            $e->getMessage(),
+            equals,
+            "No such matcher for syntax '? foo ?'."
+        );
     }
 }
