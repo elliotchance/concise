@@ -34,8 +34,7 @@ class ArgumentMatcherTest extends TestCase
         $this->assert($this->matcher->match(array(0), array(false)), is_true);
     }
 
-    public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse(
-    )
+    public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse()
     {
         $this->assert(
             $this->matcher->match(array('a', 'b'), array('a', 'a')),

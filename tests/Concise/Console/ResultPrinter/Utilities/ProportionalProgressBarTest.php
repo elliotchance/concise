@@ -4,8 +4,7 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 class ProportionalProgressBarTest extends ProgressBarTestCase
 {
-    public function testAProportionalProgressBarWillScaleDownAndFillToTheTotalWidth(
-    )
+    public function testAProportionalProgressBarWillScaleDownAndFillToTheTotalWidth()
     {
         $progressBar = new ProportionalProgressBar();
         $result = $progressBar->renderProportional(

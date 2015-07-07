@@ -27,8 +27,8 @@ class CommandTest extends TestCase
     protected function getCommandMock()
     {
         return $this->niceMock('Concise\Console\CommandStub')->expose(
-                'createRunner'
-            )->get();
+            'createRunner'
+        )->get();
     }
 
     public function testCreateRunnerReturnsAConciseRunner()

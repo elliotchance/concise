@@ -66,12 +66,11 @@ class ResultPrinterProxyDelegateTest extends TestCase
         );
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase(
-    )
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase()
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')->expect(
-                'getNumAssertions'
-            )->andReturn(123)->get();
+            'getNumAssertions'
+        )->andReturn(123)->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $this->assert(
@@ -81,8 +80,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         );
     }
 
-    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed(
-    )
+    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed()
     {
         $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')
             ->disableConstructor()
@@ -97,12 +95,11 @@ class ResultPrinterProxyDelegateTest extends TestCase
         );
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases(
-    )
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getNumAssertions' => 123)
-            )->get();
+            array('getNumAssertions' => 123)
+        )->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
@@ -214,15 +211,15 @@ class ResultPrinterProxyDelegateTest extends TestCase
     public function testProxyWillCallAddSuccess()
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getNumAssertions' => 1)
-            )->get();
+            array('getNumAssertions' => 1)
+        )->get();
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expect('endTest')->with(
-                PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
-                $testCase,
-                0.1
-            )->get();
+            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
+            $testCase,
+            0.1
+        )->get();
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->endTest($testCase, 0.1);
     }

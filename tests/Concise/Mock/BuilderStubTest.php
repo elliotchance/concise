@@ -176,8 +176,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock =
-            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get(
-                );
+            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get();
         $this->assert($mock->myMethod(), equals, 'foo');
     }
 
@@ -188,8 +187,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock =
-            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get(
-                );
+            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get();
         $this->assert($mock->mySecondMethod(), equals, 'foo');
     }
 }

@@ -129,9 +129,9 @@ class MockBuilder
     }
 
     /**
-     * @param array $methods
+     * @param array                 $methods
      * @param Action\AbstractAction $action
-     * @param integer $times
+     * @param integer               $times
      */
     protected function addRule(
         array $methods,

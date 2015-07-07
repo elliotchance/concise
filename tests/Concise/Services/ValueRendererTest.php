@@ -111,8 +111,8 @@ class ValueRendererTest extends \Concise\TestCase
     protected function getThemeForValue(array $colors)
     {
         return $this->mock('Concise\Console\Theme\DefaultTheme')->stub(
-                array('getTheme' => $colors)
-            )->get();
+            array('getTheme' => $colors)
+        )->get();
     }
 
     public function testIntegersWillBeColoredWhenAThemeIsSpecified()
@@ -298,8 +298,8 @@ class ValueRendererTest extends \Concise\TestCase
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemory()
     {
         $renderer = $this->niceMock('Concise\Services\ValueRenderer')->stub(
-                array('getMaximumDepth' => 2)
-            )->get();
+            array('getMaximumDepth' => 2)
+        )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
         $this->assert(
             $renderer->render($obj),
@@ -308,12 +308,11 @@ class ValueRendererTest extends \Concise\TestCase
         );
     }
 
-    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays(
-    )
+    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays()
     {
         $renderer = $this->niceMock('Concise\Services\ValueRenderer')->stub(
-                array('getMaximumDepth' => 2)
-            )->get();
+            array('getMaximumDepth' => 2)
+        )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
         $this->assert(
             $renderer->render($obj),

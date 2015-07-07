@@ -127,8 +127,8 @@ class MatcherParserTest extends TestCase
     public function testGetKeywordsAreOnlyGeneratedOnce()
     {
         $parser = $this->niceMock('\Concise\Syntax\MatcherParser')->expect(
-                'getRawKeywords'
-            )->once()->andReturn(array('a'))->get();
+            'getRawKeywords'
+        )->once()->andReturn(array('a'))->get();
 
         $parser->getKeywords();
         $parser->getKeywords();
@@ -163,8 +163,7 @@ class MatcherParserTest extends TestCase
         $this->assert('"abc" does not match regex 123');
     }
 
-    public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword(
-    )
+    public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
     {
         $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(
             array('?:int foobar ?:float')
@@ -180,8 +179,8 @@ class MatcherParserTest extends TestCase
         $supportedSyntaxes
     ) {
         return $this->mock('\Concise\Matcher\AbstractMatcher')->stub(
-                array('supportedSyntaxes' => $supportedSyntaxes)
-            )->get();
+            array('supportedSyntaxes' => $supportedSyntaxes)
+        )->get();
     }
 
     public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()

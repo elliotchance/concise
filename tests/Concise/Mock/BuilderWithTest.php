@@ -15,8 +15,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
     ) {
         $mock =
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
-                    'b'
-                )->andReturn('bar')->get();
+                'b'
+            )->andReturn('bar')->get();
         $this->assert($mock, instance_of, $builder->getClassName());
     }
 
@@ -28,8 +28,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
     ) {
         $mock =
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
-                    'b'
-                )->andReturn('bar')->get();
+                'b'
+            )->andReturn('bar')->get();
         $this->assert($mock->myWithMethod('b'), equals, 'bar');
     }
 
@@ -41,8 +41,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
     ) {
         $mock =
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
-                    'b'
-                )->andReturn('bar')->get();
+                'b'
+            )->andReturn('bar')->get();
         $this->assert($mock->myWithMethod('a'), equals, 'foo');
     }
 

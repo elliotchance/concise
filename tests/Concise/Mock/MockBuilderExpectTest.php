@@ -23,8 +23,7 @@ class MockBuilderExpectTest extends TestCase
      *     for each with():
      * @expectedExceptionMessage ->expects('myMethod')->with("foo")->twice()
      */
-    public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes(
-    )
+    public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes()
     {
         $this->mock()->expects('myMethod')->twice()->with("foo");
     }

@@ -64,8 +64,8 @@ class MockManager
     }
 
     /**
-     * @param array $rule
-     * @param int $actualTimes
+     * @param array  $rule
+     * @param int    $actualTimes
      * @param string $method
      * @return null
      */

@@ -36,8 +36,7 @@ class BuilderReturnPropertyTest extends AbstractBuilderTestCase
             );
         }
         $mock =
-            $builder->stub('myMethod')->andReturnProperty('doesnt_exist')->get(
-            );
+            $builder->stub('myMethod')->andReturnProperty('doesnt_exist')->get();
         $mock->myMethod();
     }
 }

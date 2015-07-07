@@ -56,8 +56,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testEndTestWillIncrementIssueNumber()
     {
         $test = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getName' => '')
-            )->get();
+            array('getName' => '')
+        )->get();
         $exception = $this->mock('Exception')->get();
         $this->resultPrinter->endTest(
             PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
@@ -71,8 +71,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testEndTestWillNotIncrementIssueNumberOnSuccess()
     {
         $test = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getName' => '')
-            )->get();
+            array('getName' => '')
+        )->get();
         $this->resultPrinter->endTest(
             PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
             $test,
@@ -88,8 +88,8 @@ class DefaultResultPrinterTest extends TestCase
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expects('update')->get();
         $test = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getName' => '')
-            )->get();
+            array('getName' => '')
+        )->get();
         $resultPrinter->endTest(
             PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
             $test,
@@ -112,8 +112,8 @@ class DefaultResultPrinterTest extends TestCase
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expects('update')->get();
         $suite = $this->niceMock('PHPUnit_Framework_TestSuite')->stub(
-                array('getName' => '')
-            )->get();
+            array('getName' => '')
+        )->get();
         $resultPrinter->startTestSuite($suite);
     }
 
@@ -166,8 +166,8 @@ class DefaultResultPrinterTest extends TestCase
             ->get();
         $resultPrinter->setVerbose($isVerbose);
         $test = $this->niceMock('PHPUnit_Framework_TestCase')->stub(
-                array('getName' => '')
-            )->get();
+            array('getName' => '')
+        )->get();
         $resultPrinter->add($status, $test, new Exception());
     }
 
@@ -274,8 +274,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 25)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 25)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
         $this->assert(
@@ -290,8 +290,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 25)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 25)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
         $this->assert(
@@ -306,8 +306,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 100)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 100)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
         $this->assert(
@@ -322,8 +322,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 25)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 25)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 3);
 
         $this->assert(
@@ -338,8 +338,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 25)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 25)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 5);
 
         $this->assert(
@@ -358,8 +358,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getRemainingTimeString')->stub(
-                array('getTotalTestCount' => 100, 'getTestCount' => 25)
-            )->get();
+            array('getTotalTestCount' => 100, 'getTestCount' => 25)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 5);
         $a = $resultPrinter->getRemainingTimeString();
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
@@ -376,8 +376,8 @@ class DefaultResultPrinterTest extends TestCase
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getRealAssertionString')->stub(
-                array('getTotalTestCount' => 1000, 'getTestCount' => 200)
-            )->get();
+            array('getTotalTestCount' => 1000, 'getTestCount' => 200)
+        )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
         $this->setProperty($resultPrinter, 'width', 80);
 

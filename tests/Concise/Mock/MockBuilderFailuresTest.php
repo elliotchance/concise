@@ -57,9 +57,9 @@ class MockBuilderFailuresTest extends TestCase
     {
         $this->mock =
             $this->mock('\Concise\Mock\Mock1')->expect('myMethod')->with(
-                    'foo',
-                    'bar'
-                )->get();
+                'foo',
+                'bar'
+            )->get();
         $this->mock->myMethod('bar');
     }
 
@@ -127,20 +127,19 @@ class MockBuilderFailuresTest extends TestCase
     public function testWithArgumentsWillNotMistakeAnArrayForACallback()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
-                array('DateTime', 'getLastErrors')
-            )->get();
+            array('DateTime', 'getLastErrors')
+        )->get();
     }
 
     public function testWithArgumentsUsingDifferentCallback()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
-                array('DateTime', '__set_state')
-            )->get();
+            array('DateTime', '__set_state')
+        )->get();
         $mock->myMethod(array('DateTime', 'getLastErrors'));
     }
 
-    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException(
-    )
+    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException()
     {
         $mock = $this->niceMock('\Concise\Mock\AbstractMock1')->get();
         $mock->myMethod();
@@ -149,9 +148,9 @@ class MockBuilderFailuresTest extends TestCase
     public function testAnythingIsRenderedCorrectly()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
-                self::ANYTHING,
-                'foo'
-            )->get();
+            self::ANYTHING,
+            'foo'
+        )->get();
     }
 
     /**

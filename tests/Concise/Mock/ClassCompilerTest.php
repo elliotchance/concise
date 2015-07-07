@@ -87,8 +87,7 @@ class ClassCompilerTest extends TestCase
         $compiler->newInstance();
     }
 
-    public function testExtraBackslashesAtTheStartOfTheClassNameWillBeTrimmedOff(
-    )
+    public function testExtraBackslashesAtTheStartOfTheClassNameWillBeTrimmedOff()
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
         $this->assert(

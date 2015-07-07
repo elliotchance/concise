@@ -45,12 +45,10 @@ class VersionTest extends TestCase
         $this->assert($version->getConciseVersion(), is_blank);
     }
 
-    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
-    )
+    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound()
     {
         $version =
-            $this->niceMock('Concise\Version')->expose('findVendorFolder')->get(
-                );
+            $this->niceMock('Concise\Version')->expose('findVendorFolder')->get();
         $this->assert($version->findVendorFolder('/tmp'), is_null);
     }
 

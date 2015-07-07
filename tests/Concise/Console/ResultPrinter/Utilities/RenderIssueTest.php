@@ -24,8 +24,8 @@ class RenderIssueTest extends TestCase
         parent::setUp();
         $this->issue = new RenderIssue();
         $this->test = $this->mock('PHPUnit_Framework_TestCase')->stub(
-                array('getName' => 'foo')
-            )->get();
+            array('getName' => 'foo')
+        )->get();
         $this->exception = new Exception('foo bar');
     }
 
@@ -127,8 +127,7 @@ class RenderIssueTest extends TestCase
         $this->assert($result, contains_string, "\033[90mbar");
     }
 
-    public function testClearFormattingAfterStackTraceToPreventUnwantedTextFromBeingColored(
-    )
+    public function testClearFormattingAfterStackTraceToPreventUnwantedTextFromBeingColored()
     {
         $result = $this->render();
         $this->assert($result, contains_string, "bar\033[0m");
@@ -146,8 +145,7 @@ class RenderIssueTest extends TestCase
         $this->assert($result, contains_string, "\033[44m  \033[0m ");
     }
 
-    public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned(
-    )
+    public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned()
     {
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
@@ -159,8 +157,8 @@ class RenderIssueTest extends TestCase
         $c = new Color();
         $this->test =
             $this->mock('PHPUnit_Framework_TestCase')->setCustomClassName(
-                    'PHPUnit_Framework_TestCase_57c3cc10'
-                )->stub(array('getName' => 'foo'))->get();
+                'PHPUnit_Framework_TestCase_57c3cc10'
+            )->stub(array('getName' => 'foo'))->get();
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assert(

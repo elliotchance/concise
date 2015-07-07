@@ -60,8 +60,7 @@ class TestCasePartialMockTest extends TestCase
         $this->assert($this->getProperty($mock, 'public'), equals, 'yes');
     }
 
-    public function testPartialMockWillInheritProtectedObjectValuesToMaintainState(
-    )
+    public function testPartialMockWillInheritProtectedObjectValuesToMaintainState()
     {
         $instance = new TestCasePartialMockObject();
         $instance->init();
@@ -69,8 +68,7 @@ class TestCasePartialMockTest extends TestCase
         $this->assert($this->getProperty($mock, 'foo'), equals, 'bar');
     }
 
-    public function testPartialMockWillInheritPrivateObjectValuesToMaintainState(
-    )
+    public function testPartialMockWillInheritPrivateObjectValuesToMaintainState()
     {
         $instance = new TestCasePartialMockObject();
         $instance->init();

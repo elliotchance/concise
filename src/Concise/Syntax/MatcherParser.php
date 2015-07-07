@@ -90,7 +90,7 @@ class MatcherParser
     }
 
     /**
-     * @param array $data The data from the test case.
+     * @param array  $data The data from the test case.
      * @param string $string
      * @return \Concise\Assertion
      */

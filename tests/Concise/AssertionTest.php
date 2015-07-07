@@ -152,8 +152,7 @@ class AssertionTest extends TestCase
     /**
      * @group #219
      */
-    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError(
-    )
+    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
     {
         $self = $this;
         $block = function () use ($self) {
@@ -177,8 +176,7 @@ class AssertionTest extends TestCase
      * @expectedExceptionMessage foobar
      * @group #219
      */
-    public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError(
-    )
+    public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()
     {
         $matcher = $this->mock('\Concise\Matcher\AbstractMatcher')
             ->stub('match')
@@ -186,8 +184,8 @@ class AssertionTest extends TestCase
             ->get();
         $assertion =
             $this->niceMock('Concise\Assertion')->disableConstructor()->expose(
-                    'performMatch'
-                )->stub(array('getMatcher' => $matcher))->get();
+                'performMatch'
+            )->stub(array('getMatcher' => $matcher))->get();
 
         $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
     }

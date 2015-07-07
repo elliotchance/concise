@@ -152,10 +152,10 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
             $this->expectFailure("You cannot set a property on an interface.");
         }
         $mock = $builder->setProperty('property1', 'a')->setProperties(
-                array(
-                    'property2' => 'b',
-                )
-            )->get();
+            array(
+                'property2' => 'b',
+            )
+        )->get();
         $this->verify($mock->property1, equals, 'a');
         $this->verify($mock->property2, equals, 'b');
     }

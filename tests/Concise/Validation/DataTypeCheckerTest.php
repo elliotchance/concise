@@ -144,8 +144,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
         );
     }
 
-    public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass(
-    )
+    public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass()
     {
         $this->assert(
             $this->dataTypeChecker->check(array('string'), '\Concise\TestCase'),

@@ -96,14 +96,14 @@ class TestCaseTest extends TestCase
     protected function getAssertionsForFixtureTests()
     {
         $testCase = $this->niceMock('\Concise\TestCase')->stub(
-                array(
-                    'getRawAssertionsForMethod' => array(
-                        'x equals b',
-                        'false',
-                        'true',
-                    )
+            array(
+                'getRawAssertionsForMethod' => array(
+                    'x equals b',
+                    'false',
+                    'true',
                 )
-            )->get();
+            )
+        )->get();
 
         return $testCase->getAssertionsForMethod('abc');
     }

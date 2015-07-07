@@ -35,8 +35,7 @@ class TestCaseMockTest extends TestCase
         $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 
-    public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered(
-    )
+    public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
     {
         $mockTemplate = $this->mock();
         $mockTemplate->get();

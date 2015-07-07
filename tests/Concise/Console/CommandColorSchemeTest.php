@@ -38,8 +38,7 @@ class CommandColorSchemeTest extends TestCase
      * @expectedException \Exception
      * @expectedExceptionMessage No such color scheme 'Foo\Bar'.
      */
-    public function testColorSchemeWillThrowExceptionIfColorSchemeClassDoesNotExist(
-    )
+    public function testColorSchemeWillThrowExceptionIfColorSchemeClassDoesNotExist()
     {
         $this->setProperty($this->command, 'colorScheme', 'Foo\Bar');
         $this->command->getColorScheme();

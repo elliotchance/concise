@@ -9,10 +9,10 @@ use PHPUnit_Framework_TestSuite;
 interface TestResultDelegateInterface
 {
     /**
-     * @param int $status A status constant from PHPUnit_Runner_BaseTestRunner
+     * @param int                    $status A status constant from PHPUnit_Runner_BaseTestRunner
      * @param PHPUnit_Framework_Test $test The test that just finished.
-     * @param float $time The number of seconds the test took to execute.
-     * @param Exception $e The error (applies to all statuses except
+     * @param float                  $time The number of seconds the test took to execute.
+     * @param Exception              $e The error (applies to all statuses except
      *     STATUS_PASSED)
      * @return void
      */

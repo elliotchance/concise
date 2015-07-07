@@ -57,8 +57,7 @@ class AssertionBuilderTest extends TestCase
         );
     }
 
-    public function testAssertionBuilderWillAcceptFalseFollowedByOtherArguments(
-    )
+    public function testAssertionBuilderWillAcceptFalseFollowedByOtherArguments()
     {
         $assertion = $this->getAssertionWithArgs(array(false, 'is false'));
         $this->assert(
