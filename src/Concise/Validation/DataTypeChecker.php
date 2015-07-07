@@ -9,42 +9,46 @@ use Exception;
 class DataTypeChecker
 {
     /**
-	 * @var boolean
-	 */
+     * @var boolean
+     */
     protected $excludeMode = false;
 
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $context = array();
 
     /**
-	 * @param array $context
-	 */
+     * @param array $context
+     */
     public function setContext(array $context)
     {
         $this->context = $context;
     }
 
     /**
-	 * @param  array $acceptedTypes
-	 * @param  mixed $value
-	 * @return mixed
-	 */
+     * @param  array $acceptedTypes
+     * @param  mixed $value
+     * @return mixed
+     */
     public function check(array $acceptedTypes, $value)
     {
         if (count($acceptedTypes) === 0) {
             return $value;
         }
 
-        return $this->throwInvalidArgumentException($acceptedTypes, $value, !$this->excludeMode);
+        return $this->throwInvalidArgumentException(
+            $acceptedTypes,
+            $value,
+            !$this->excludeMode
+        );
     }
 
     /**
-	 * @param  array $acceptedTypes
-	 * @param  mixed $value
-	 * @return bool
-	 */
+     * @param  array $acceptedTypes
+     * @param  mixed $value
+     * @return bool
+     */
     protected function matchesInAcceptedTypes(array $acceptedTypes, $value)
     {
         foreach ($acceptedTypes as $acceptedType) {
@@ -57,9 +61,11 @@ class DataTypeChecker
     }
 
     /**
-     * Will check to see if the value is an object and its class is listed in the accepted types.
-     * @param  array       $acceptedTypes Accepted types.
-     * @param  mixed       $value         Value to test.
+     * Will check to see if the value is an object and its class is listed in
+     * the accepted types.
+     *
+     * @param  array $acceptedTypes Accepted types.
+     * @param  mixed $value Value to test.
      * @return null|object
      */
     protected function checkSpecificObject(array $acceptedTypes, $value)
@@ -67,7 +73,7 @@ class DataTypeChecker
         if (is_object($value)) {
             foreach ($acceptedTypes as $type) {
                 $c = get_class($value);
-                if ($c == $type || "\\$c" == $type) {
+                if ($c == ltrim($type, '\\') || is_subclass_of($c, $type)) {
                     return $value;
                 }
             }
@@ -77,8 +83,8 @@ class DataTypeChecker
     }
 
     /**
-     * @param array $acceptedTypes
-     * @param $value
+     * @param array   $acceptedTypes
+     * @param         $value
      * @param boolean $expecting
      * @throws Exception
      * @return string
@@ -92,7 +98,9 @@ class DataTypeChecker
             }
             if (in_array('class', $acceptedTypes) && is_string($value)) {
                 if (!class_exists($value) && !interface_exists($value)) {
-                    throw new Exception("No such class or interface '$value'.'");
+                    throw new Exception(
+                        "No such class or interface '$value'.'"
+                    );
                 }
                 return ltrim($value, '\\');
             }
@@ -103,17 +111,22 @@ class DataTypeChecker
             return $value;
         }
 
-        throw new DataTypeMismatchException($this->getType($value), $acceptedTypes);
+        throw new DataTypeMismatchException(
+            $this->getType($value), $acceptedTypes
+        );
     }
 
     /**
-	 * @param  array  $acceptedTypes
-	 * @param  mixed  $value
-	 * @param  bool   $expecting
-	 * @return mixed
-	 */
-    protected function throwInvalidArgumentException(array $acceptedTypes, $value, $expecting)
-    {
+     * @param  array $acceptedTypes
+     * @param  mixed $value
+     * @param  bool  $expecting
+     * @return mixed
+     */
+    protected function throwInvalidArgumentException(
+        array $acceptedTypes,
+        $value,
+        $expecting
+    ) {
         if (($r = $this->checkSpecificObject($acceptedTypes, $value))) {
             return $r;
         }
@@ -137,18 +150,20 @@ class DataTypeChecker
 
     protected function isRegex($value)
     {
-        return is_object($value) && get_class($value) === 'Concise\Syntax\Token\Regexp';
+        return is_object($value) &&
+        get_class($value) === 'Concise\Syntax\Token\Regexp';
     }
 
     protected function isAttribute($value)
     {
-        return is_object($value) && get_class($value) === 'Concise\Syntax\Token\Attribute';
+        return is_object($value) &&
+        get_class($value) === 'Concise\Syntax\Token\Attribute';
     }
 
     /**
-	 * @param  mixed $value
-	 * @return string
-	 */
+     * @param  mixed $value
+     * @return string
+     */
     protected function getType($value)
     {
         if ($this->isRegex($value)) {
@@ -165,41 +180,47 @@ class DataTypeChecker
     }
 
     /**
-	 * @param  string $type
-	 * @param  string $value
-	 * @return bool
-	 */
+     * @param  string $type
+     * @param  string $value
+     * @return bool
+     */
     protected function singleMatch($type, $value)
     {
         return $type === $this->simpleType($this->getType($value));
     }
 
     /**
-	 * @param  string $type
-	 * @param  mixed $value
-	 * @return bool
-	 */
+     * @param  string $type
+     * @param  mixed  $value
+     * @return bool
+     */
     protected function matches($type, $value)
     {
         if ($type === 'number') {
-            return $this->singleMatch('int', $value) || $this->singleMatch('float', $value) || is_numeric($value);
+            return $this->singleMatch(
+                'int',
+                $value
+            ) || $this->singleMatch(
+                'float',
+                $value
+            ) || is_numeric($value);
         }
 
         return $this->singleMatch($this->simpleType($type), $value);
     }
 
     /**
-	 * @param  string $type
-	 * @return string
-	 */
+     * @param  string $type
+     * @return string
+     */
     protected function simpleType($type)
     {
         $aliases = array(
             'integer' => 'int',
-            'double'  => 'float',
-            'class'   => 'string',
-            'bool'    => 'boolean',
-            'regex'   => 'string',
+            'double' => 'float',
+            'class' => 'string',
+            'bool' => 'boolean',
+            'regex' => 'string',
         );
         if (array_key_exists($type, $aliases)) {
             return $aliases[$type];
