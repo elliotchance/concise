@@ -19,7 +19,10 @@ class DoesNotHaveItem extends HasItem
     public function match($syntax, array $data = array())
     {
         if ($syntax === self::SPLIT_SYNTAX) {
-            return !parent::match(null, array($data[0], array($data[1] => $data[2])));
+            return !parent::match(
+                null,
+                array($data[0], array($data[1] => $data[2]))
+            );
         }
 
         return !parent::match(null, $data);

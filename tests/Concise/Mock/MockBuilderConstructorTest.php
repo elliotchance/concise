@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class MockConstructor1
 {
@@ -35,24 +35,23 @@ class MockBuilderConstructorTest extends TestCase
 {
     public function testMocksWillCallConstructorByDefault()
     {
-        $mock = $this->mock('\Concise\Mock\MockConstructor1')
-                     ->get();
+        $mock = $this->mock('\Concise\Mock\MockConstructor1')->get();
         $this->assert($mock->constructorRun);
     }
 
     public function testDisableConstructorCanBeChained()
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor1')
-                     ->disableConstructor()
-                     ->get();
+            ->disableConstructor()
+            ->get();
         $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor1');
     }
 
     public function testMocksCanHaveTheirConstructorDisabledWithArguments()
     {
         $mock = $this->mock('\Concise\Mock\MockConstructor2')
-                     ->disableConstructor()
-                     ->get();
+            ->disableConstructor()
+            ->get();
         $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor2');
     }
 }

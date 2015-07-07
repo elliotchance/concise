@@ -13,7 +13,7 @@ class HasProperty extends AbstractNestedMatcher
 
     public function match($syntax, array $data = array())
     {
-        if (!array_key_exists($data[1], (array) $data[0])) {
+        if (!array_key_exists($data[1], (array)$data[0])) {
             throw new DidNotMatchException();
         }
 

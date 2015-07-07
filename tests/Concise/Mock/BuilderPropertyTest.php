@@ -52,8 +52,10 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      * @group #182
      * @dataProvider allBuilders
      */
-    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass(MockBuilder $builder, $type)
-    {
+    public function testSetAPrivatePropertyOnAMockWillSetThePropertyOnTheNonMockedClass(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface");
         }
@@ -66,8 +68,10 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      * @group #199
      * @dataProvider allBuilders
      */
-    public function testSettingAPropertyWhenCreatingAMockReturnsSelfForChaining(MockBuilder $builder, $type)
-    {
+    public function testSettingAPropertyWhenCreatingAMockReturnsSelfForChaining(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface.");
         }
@@ -96,7 +100,10 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface.");
         }
-        $mock = $builder->setProperty('property1', 'a')->setProperty('property2', 'b')->get();
+        $mock = $builder->setProperty('property1', 'a')->setProperty(
+            'property2',
+            'b'
+        )->get();
         $this->verify($mock->property1, equals, 'a');
         $this->verify($mock->property2, equals, 'b');
     }
@@ -105,8 +112,10 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      * @group #199
      * @dataProvider allBuilders
      */
-    public function testSettingPropertiesWhenCreatingAMockReturnsSelfForChaining(MockBuilder $builder, $type)
-    {
+    public function testSettingPropertiesWhenCreatingAMockReturnsSelfForChaining(
+        MockBuilder $builder,
+        $type
+    ) {
         $this->assert($builder->setProperties(array()), equals, $builder);
     }
 
@@ -114,15 +123,19 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      * @group #199
      * @dataProvider allBuilders
      */
-    public function testSettingMultiplePropertiesInOneStatement(MockBuilder $builder, $type)
-    {
+    public function testSettingMultiplePropertiesInOneStatement(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface.");
         }
-        $mock = $builder->setProperties(array(
+        $mock = $builder->setProperties(
+            array(
                 'property1' => 'a',
                 'property2' => 'b',
-            ))->get();
+            )
+        )->get();
         $this->verify($mock->property1, equals, 'a');
         $this->verify($mock->property2, equals, 'b');
     }
@@ -131,15 +144,18 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
      * @group #199
      * @dataProvider allBuilders
      */
-    public function testSettingMultiplePropertiesInOneStatementWillNotOverrideOtherPropertiesSet(MockBuilder $builder, $type)
-    {
+    public function testSettingMultiplePropertiesInOneStatementWillNotOverrideOtherPropertiesSet(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface.");
         }
-        $mock = $builder->setProperty('property1', 'a')
-            ->setProperties(array(
-                'property2' => 'b',
-            ))->get();
+        $mock = $builder->setProperty('property1', 'a')->setProperties(
+                array(
+                    'property2' => 'b',
+                )
+            )->get();
         $this->verify($mock->property1, equals, 'a');
         $this->verify($mock->property2, equals, 'b');
     }
@@ -158,27 +174,33 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     /**
      * @dataProvider allBuilders
      */
-    public function testSetAProtectedPropertyWhenCreatingTheMock(MockBuilder $builder, $type)
-    {
+    public function testSetAProtectedPropertyWhenCreatingTheMock(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface");
         }
-        $mock = $builder->setProperty('hidden', 'bar')
-            ->get();
+        $mock = $builder->setProperty('hidden', 'bar')->get();
         $this->assert($this->getProperty($mock, 'hidden'), equals, 'bar');
     }
 
     /**
      * @dataProvider allBuilders
      */
-    public function testSetAPropertyThatDoesNotExistIsPermitted(MockBuilder $builder, $type)
-    {
+    public function testSetAPropertyThatDoesNotExistIsPermitted(
+        MockBuilder $builder,
+        $type
+    ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface");
         }
-        $mock = $builder->setProperty('does_not_exist', 'bar')
-            ->get();
-        $this->assert($this->getProperty($mock, 'does_not_exist'), equals, 'bar');
+        $mock = $builder->setProperty('does_not_exist', 'bar')->get();
+        $this->assert(
+            $this->getProperty($mock, 'does_not_exist'),
+            equals,
+            'bar'
+        );
     }
 
     /**
@@ -189,14 +211,17 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure("You cannot set a property on an interface");
         }
-        $mock = $builder->setProperty('does_not_exist', null)
-            ->get();
+        $mock = $builder->setProperty('does_not_exist', null)->get();
         $this->assert($this->getProperty($mock, 'does_not_exist'), is_null);
     }
 
     public function testPropertiesAreAlwaysFoundIfClassHasMagicGet()
     {
-        $this->assert($this->getProperty(new MagicProperty(), 'does_not_exist'), equals, 'not_found');
+        $this->assert(
+            $this->getProperty(new MagicProperty(), 'does_not_exist'),
+            equals,
+            'not_found'
+        );
     }
 
     public function testPropertiesAreAlwaysSetIfClassHasMagicSet()

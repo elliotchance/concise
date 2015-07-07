@@ -5,9 +5,9 @@ namespace Concise\Services;
 class ValueDescriptor
 {
     /**
-	 * @param  mixed $value
-	 * @return string
-	 */
+     * @param  mixed $value
+     * @return string
+     */
     public function describe($value)
     {
         if (is_object($value)) {

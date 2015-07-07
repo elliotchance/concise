@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 class MockExpose
 {
@@ -29,13 +29,12 @@ class MockBuilderExposeTest extends TestCase
     }
 
     /**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Method Concise\Mock\MockExpose::baz() does not exist.
-	 */
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Method Concise\Mock\MockExpose::baz() does not
+     *     exist.
+     */
     public function testAnExceptionIsThrownIfTheMethodDoesNotExist()
     {
-        $this->niceMock('\Concise\Mock\MockExpose')
-             ->expose('baz')
-             ->get();
+        $this->niceMock('\Concise\Mock\MockExpose')->expose('baz')->get();
     }
 }

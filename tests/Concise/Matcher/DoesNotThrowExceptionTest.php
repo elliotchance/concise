@@ -15,23 +15,29 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
 
     public function exceptionTests()
     {
-        $throwNothing = function () {};
-        $throwException = function () { throw new \Exception(); };
+        $throwNothing = function () {
+        };
+        $throwException = function () {
+            throw new \Exception();
+        };
 
         return array(
-            array($throwNothing,   false),
+            array($throwNothing, false),
             array($throwException, true),
         );
     }
 
     /**
-	 * @dataProvider exceptionTests
-	 */
+     * @dataProvider exceptionTests
+     */
     public function testDoesNotThrow(\Closure $method, $expectSuccess)
     {
         $success = false;
         try {
-            $success = $this->matcher->match('? does not throw exception', array($method));
+            $success = $this->matcher->match(
+                '? does not throw exception',
+                array($method)
+            );
         } catch (DidNotMatchException $e) {
             $success = false;
         }
@@ -41,10 +47,21 @@ class DoesNotThrowExceptionTest extends AbstractExceptionTestCase
     public function testDoesNotThrowMessage()
     {
         try {
-            $this->matcher->match('? does not throw exception', array(function () { throw new \Exception(); }));
+            $this->matcher->match(
+                '? does not throw exception',
+                array(
+                    function () {
+                        throw new \Exception();
+                    }
+                )
+            );
             $this->fail("Exception was not thrown.");
         } catch (DidNotMatchException $e) {
-            $this->assert("Expected exception not to be thrown.", equals, $e->getMessage());
+            $this->assert(
+                "Expected exception not to be thrown.",
+                equals,
+                $e->getMessage()
+            );
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 /**
  * @group mocking
@@ -14,18 +14,18 @@ class MockBuilderExpectTest extends TestCase
      */
     public function testUsingExpectationCountBeforeWithWillThrowException()
     {
-        $this->mock()
-             ->expects('myMethod')->once()->with('foo');
+        $this->mock()->expects('myMethod')->once()->with('foo');
     }
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage When using with you must specify expectations for each with():
+     * @expectedExceptionMessage When using with you must specify expectations
+     *     for each with():
      * @expectedExceptionMessage ->expects('myMethod')->with("foo")->twice()
      */
-    public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes()
+    public function testAnExceptionShouldCorrectExplainUsingWithAndExpectationTimes(
+    )
     {
-        $this->mock()
-             ->expects('myMethod')->twice()->with("foo");
+        $this->mock()->expects('myMethod')->twice()->with("foo");
     }
 }

@@ -15,7 +15,12 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
 
     public function testSuccessIfStringContainsASubstring()
     {
-        $this->assertFailure('foobar', does_not_contain_string, 'oob', ignoring_case);
+        $this->assertFailure(
+            'foobar',
+            does_not_contain_string,
+            'oob',
+            ignoring_case
+        );
     }
 
     public function testFailsIfSubstringDoesNotExistInString()
@@ -25,7 +30,12 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
 
     public function testIsNotSensitiveToCase()
     {
-        $this->assertFailure('foobar', does_not_contain_string, 'Foo', ignoring_case);
+        $this->assertFailure(
+            'foobar',
+            does_not_contain_string,
+            'Foo',
+            ignoring_case
+        );
     }
 
     public function tags()
@@ -38,7 +48,16 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionSuccess()
     {
-        $this->assert($this->assert('foobar', does_not_contain_string, 'baz', ignoring_case), exactly_equals, 'foobar');
+        $this->assert(
+            $this->assert(
+                'foobar',
+                does_not_contain_string,
+                'baz',
+                ignoring_case
+            ),
+            exactly_equals,
+            'foobar'
+        );
     }
 
     /**
@@ -46,6 +65,15 @@ class DoesNotContainStringIgnoringCaseTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionFailure()
     {
-        $this->assertFailure($this->assert('foobar', does_not_contain_string, 'baz', ignoring_case), exactly_equals, 'Foo');
+        $this->assertFailure(
+            $this->assert(
+                'foobar',
+                does_not_contain_string,
+                'baz',
+                ignoring_case
+            ),
+            exactly_equals,
+            'Foo'
+        );
     }
 }

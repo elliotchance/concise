@@ -38,7 +38,11 @@ class DoesNotContainStringTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionSuccess()
     {
-        $this->assert($this->assert('foobar', does_not_contain_string, 'baz'), exactly_equals, 'foobar');
+        $this->assert(
+            $this->assert('foobar', does_not_contain_string, 'baz'),
+            exactly_equals,
+            'foobar'
+        );
     }
 
     /**
@@ -46,6 +50,10 @@ class DoesNotContainStringTest extends AbstractNestedMatcherTestCase
      */
     public function testNestedAssertionFailure()
     {
-        $this->assertFailure($this->assert('foobar', does_not_contain_string, 'baz'), exactly_equals, 'Foo');
+        $this->assertFailure(
+            $this->assert('foobar', does_not_contain_string, 'baz'),
+            exactly_equals,
+            'Foo'
+        );
     }
 }

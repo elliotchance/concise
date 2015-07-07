@@ -40,17 +40,17 @@ class VersionTest extends TestCase
 
     public function testReturnEmptyStringIfVendorFolderCannotBeFound()
     {
-        $version = $this->niceMock('Concise\Version')
-                        ->stub('findVendorFolder')
-                        ->get();
+        $version =
+            $this->niceMock('Concise\Version')->stub('findVendorFolder')->get();
         $this->assert($version->getConciseVersion(), is_blank);
     }
 
-    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound()
+    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
+    )
     {
-        $version = $this->niceMock('Concise\Version')
-                        ->expose('findVendorFolder')
-                        ->get();
+        $version =
+            $this->niceMock('Concise\Version')->expose('findVendorFolder')->get(
+                );
         $this->assert($version->findVendorFolder('/tmp'), is_null);
     }
 
@@ -61,7 +61,6 @@ class VersionTest extends TestCase
             'unknown version is blank' => array('', ''),
             'version can be prefixed with v' => array('v1.1', 'Dark Matter'),
             'patch version' => array('1.2.3', 'String Theory'),
-
             // Specific versions.
             array('1.0', 'Big Bang'),
             array('1.1', 'Dark Matter'),

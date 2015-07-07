@@ -10,33 +10,39 @@ class BuilderWithTest extends AbstractBuilderTestCase
     /**
      * @dataProvider allBuilders
      */
-    public function testMultipleWithIsAllowedForASingleMethod(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myWithMethod')->with('a')->andReturn('foo')
-            ->with('b')->andReturn('bar')
-            ->get();
+    public function testMultipleWithIsAllowedForASingleMethod(
+        MockBuilder $builder
+    ) {
+        $mock =
+            $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
+                    'b'
+                )->andReturn('bar')->get();
         $this->assert($mock, instance_of, $builder->getClassName());
     }
 
     /**
      * @dataProvider allBuilders
      */
-    public function testMultipleWithCanChangeTheActionOfTheMethod(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myWithMethod')->with('a')->andReturn('foo')
-            ->with('b')->andReturn('bar')
-            ->get();
+    public function testMultipleWithCanChangeTheActionOfTheMethod(
+        MockBuilder $builder
+    ) {
+        $mock =
+            $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
+                    'b'
+                )->andReturn('bar')->get();
         $this->assert($mock->myWithMethod('b'), equals, 'bar');
     }
 
     /**
      * @dataProvider allBuilders
      */
-    public function testTheSecondWithActionWillNotOverrideTheFirstOne(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myWithMethod')->with('a')->andReturn('foo')
-            ->with('b')->andReturn('bar')
-            ->get();
+    public function testTheSecondWithActionWillNotOverrideTheFirstOne(
+        MockBuilder $builder
+    ) {
+        $mock =
+            $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
+                    'b'
+                )->andReturn('bar')->get();
         $this->assert($mock->myWithMethod('a'), equals, 'foo');
     }
 
@@ -45,7 +51,10 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testSingleWithWithMultipleTimes(MockBuilder $builder)
     {
-        $mock = $builder->stub('myWithMethod')->with('a')->twice()->andReturn('foo')
+        $mock = $builder->stub('myWithMethod')
+            ->with('a')
+            ->twice()
+            ->andReturn('foo')
             ->get();
         $mock->myWithMethod('a');
         $this->assert($mock->myWithMethod('a'), equals, 'foo');
@@ -54,20 +63,20 @@ class BuilderWithTest extends AbstractBuilderTestCase
     /**
      * @dataProvider allBuilders
      */
-    public function testStringsInExpectedArgumentsMustBeEscapedCorrectly(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myWithMethod')->with('"foo"')
-            ->get();
+    public function testStringsInExpectedArgumentsMustBeEscapedCorrectly(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->stub('myWithMethod')->with('"foo"')->get();
         $this->assert($mock->myWithMethod('"foo"'), is_null);
     }
 
     /**
      * @dataProvider allBuilders
      */
-    public function testStringsWithDollarCharacterMustBeEscaped(MockBuilder $builder)
-    {
-        $mock = $builder->stub('myWithMethod')->with('a$b')
-            ->get();
+    public function testStringsWithDollarCharacterMustBeEscaped(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->stub('myWithMethod')->with('a$b')->get();
         $this->assert($mock->myWithMethod('a$b'), is_null);
     }
 
@@ -76,8 +85,10 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testWithOnMultipleMethods(MockBuilder $builder)
     {
-        $mock = $builder->stub('myWithMethod', 'myMethod')->with('foo')->andReturn('foobar')
-            ->get();
+        $mock =
+            $builder->stub('myWithMethod', 'myMethod')->with('foo')->andReturn(
+                'foobar'
+            )->get();
         $this->assert($mock->myMethod('foo'), equals, 'foobar');
     }
 
@@ -86,8 +97,10 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testMultipleExpectsUsingTheSameWith(MockBuilder $builder)
     {
-        $mock = $builder->expect('myWithMethod')->with('foo')
-            ->expect('myMethod')->with('foo')
+        $mock = $builder->expect('myWithMethod')
+            ->with('foo')
+            ->expect('myMethod')
+            ->with('foo')
             ->get();
         $mock->myWithMethod('foo');
         $mock->myMethod('foo');
@@ -98,8 +111,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testMultipleExpectsUsingWith(MockBuilder $builder)
     {
-        $mock = $builder->expect('myWithMethod', 'myMethod')->with('foo')
-            ->get();
+        $mock =
+            $builder->expect('myWithMethod', 'myMethod')->with('foo')->get();
         $mock->myWithMethod('foo');
         $mock->myMethod('foo');
     }
@@ -110,8 +123,10 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testMultipleWithsNotBeingFulfilled(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->with('foo')
-            ->with('bar')->never()
+        $mock = $builder->expect('myMethod')
+            ->with('foo')
+            ->with('bar')
+            ->never()
             ->get();
 
         $mock->myMethod('foo');
@@ -121,9 +136,12 @@ class BuilderWithTest extends AbstractBuilderTestCase
      * @group #225
      * @dataProvider allBuilders
      */
-    public function testMultipleWithsNotBeingFulfilledInDifferentOrder(MockBuilder $builder)
-    {
-        $mock = $builder->expect('myMethod')->with('bar')->never()
+    public function testMultipleWithsNotBeingFulfilledInDifferentOrder(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->expect('myMethod')
+            ->with('bar')
+            ->never()
             ->with('foo')
             ->get();
 
@@ -136,7 +154,10 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testWithUsingDefaultArguments(MockBuilder $builder)
     {
-        $mock = $builder->expect('myWithMethodDefaults')->with('foo', 'bar')->andReturn(null)->get();
+        $mock = $builder->expect('myWithMethodDefaults')
+            ->with('foo', 'bar')
+            ->andReturn(null)
+            ->get();
         $mock->myWithMethodDefaults('foo', 'bar');
     }
 
@@ -144,9 +165,13 @@ class BuilderWithTest extends AbstractBuilderTestCase
      * @group #168
      * @dataProvider allBuilders
      */
-    public function testWithUsingSingleDefaultArgumentNotProvided(MockBuilder $builder)
-    {
-        $mock = $builder->expect('myWithMethodDefaults')->with('bar', 'foo', 'baz')->andReturn(null)->get();
+    public function testWithUsingSingleDefaultArgumentNotProvided(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->expect('myWithMethodDefaults')
+            ->with('bar', 'foo', 'baz')
+            ->andReturn(null)
+            ->get();
         $mock->myWithMethodDefaults('bar', 'foo');
     }
 
@@ -154,9 +179,13 @@ class BuilderWithTest extends AbstractBuilderTestCase
      * @group #168
      * @dataProvider allBuilders
      */
-    public function testWithUsingMultipleDefaultArgumentNotProvided(MockBuilder $builder)
-    {
-        $mock = $builder->expect('myWithMethodDefaults')->with('bar', 'foo', 'baz')->andReturn(null)->get();
+    public function testWithUsingMultipleDefaultArgumentNotProvided(
+        MockBuilder $builder
+    ) {
+        $mock = $builder->expect('myWithMethodDefaults')
+            ->with('bar', 'foo', 'baz')
+            ->andReturn(null)
+            ->get();
         $mock->myWithMethodDefaults('bar');
     }
 
@@ -166,8 +195,7 @@ class BuilderWithTest extends AbstractBuilderTestCase
      */
     public function testWithIncludingSingleQuotes(MockBuilder $builder)
     {
-        $mock = $builder->expect('myMethod')->with("foo'bar")
-            ->get();
+        $mock = $builder->expect('myMethod')->with("foo'bar")->get();
 
         $mock->myMethod("foo'bar");
     }

@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 /**
  * @group mocking
@@ -31,72 +31,86 @@ class MockBuilderFailuresTest extends TestCase
 
     public function testFailedToFulfilExpectationWillThrowException()
     {
-        $this->mock('\Concise\Mock\Mock1')
-             ->expect('myMethod')
-             ->get();
+        $this->mock('\Concise\Mock\Mock1')->expect('myMethod')->get();
     }
 
     public function testMethodCalledWithWrongArgumentValues()
     {
         $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo')
-                           ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->get();
         $this->mock->myMethod('bar');
     }
 
     public function testMissingSecondWithExpectation()
     {
         $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo')->with('bar')
-                           ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->with('bar')
+            ->get();
         $this->mock->myMethod('bar');
     }
 
     public function testExpectationsRenderMultipleArguments()
     {
-        $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo', 'bar')
-                           ->get();
+        $this->mock =
+            $this->mock('\Concise\Mock\Mock1')->expect('myMethod')->with(
+                    'foo',
+                    'bar'
+                )->get();
         $this->mock->myMethod('bar');
     }
 
     public function testMissingAllExpectations()
     {
         $this->mock('\Concise\Mock\Mock1')
-             ->expect('myMethod')->with('foo')->with('bar')
-             ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->with('bar')
+            ->get();
     }
 
     public function testLessTimesThanExpected()
     {
         $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo')->twice()
-                                               ->with('bar')
-                           ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->twice()
+            ->with('bar')
+            ->get();
         $this->mock->myMethod('foo');
     }
 
     public function testExpectionThatIsNeverCalledWillFail()
     {
         $this->mock('\Concise\Mock\Mock1')
-             ->expect('myMethod')->with('foo')->andReturn('bar')
-             ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->andReturn('bar')
+            ->get();
     }
 
     public function testExpectionMustBeCalledTheRequiredAmountOfTimes()
     {
         $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo')->twice()->andReturn('bar')
-                           ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->twice()
+            ->andReturn('bar')
+            ->get();
         $this->mock->myMethod('foo');
     }
 
     public function testMoreTimesThanExpected()
     {
         $this->mock = $this->mock('\Concise\Mock\Mock1')
-                           ->expect('myMethod')->with('foo')->twice()
-                                               ->with('bar')
-                           ->get();
+            ->expect('myMethod')
+            ->with('foo')
+            ->twice()
+            ->with('bar')
+            ->get();
         $this->mock->myMethod('foo');
         $this->mock->myMethod('foo');
         $this->mock->myMethod('foo');
@@ -105,37 +119,39 @@ class MockBuilderFailuresTest extends TestCase
     public function testWithArgumentsMayContainPercentageThatWasntCalled()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with('%d')
-                     ->get();
+            ->expects('myMethod')
+            ->with('%d')
+            ->get();
     }
 
     public function testWithArgumentsWillNotMistakeAnArrayForACallback()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with(array('DateTime', 'getLastErrors'))
-                     ->get();
+        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+                array('DateTime', 'getLastErrors')
+            )->get();
     }
 
     public function testWithArgumentsUsingDifferentCallback()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with(array('DateTime', '__set_state'))
-                     ->get();
+        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+                array('DateTime', '__set_state')
+            )->get();
         $mock->myMethod(array('DateTime', 'getLastErrors'));
     }
 
-    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException()
+    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException(
+    )
     {
-        $mock = $this->niceMock('\Concise\Mock\AbstractMock1')
-                     ->get();
+        $mock = $this->niceMock('\Concise\Mock\AbstractMock1')->get();
         $mock->myMethod();
     }
 
     public function testAnythingIsRenderedCorrectly()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with(self::ANYTHING, 'foo')
-                     ->get();
+        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+                self::ANYTHING,
+                'foo'
+            )->get();
     }
 
     /**
@@ -144,8 +160,9 @@ class MockBuilderFailuresTest extends TestCase
     public function testWithFailureWithDifferentArgs()
     {
         $mock = $this->mock('\Concise\Mock\Mock1')
-                     ->expects('myMethod')->with('foo')
-                     ->get();
+            ->expects('myMethod')
+            ->with('foo')
+            ->get();
 
         $mock->myMethod('bar');
     }
@@ -153,7 +170,11 @@ class MockBuilderFailuresTest extends TestCase
     protected function onNotSuccessfulTest(\Exception $e)
     {
         self::$failures[] = $this->getName();
-        $this->assert(self::$expectedFailures[$this->getName()], equals, $e->getMessage());
+        $this->assert(
+            self::$expectedFailures[$this->getName()],
+            equals,
+            $e->getMessage()
+        );
     }
 
     public static function tearDownAfterClass()

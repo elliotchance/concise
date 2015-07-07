@@ -13,7 +13,8 @@ class StringEndsWith extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return ((substr($data[0], strlen($data[0]) - strlen($data[1])) === $data[1]));
+        return ((substr($data[0], strlen($data[0]) - strlen($data[1])) ===
+            $data[1]));
     }
 
     public function getTags()

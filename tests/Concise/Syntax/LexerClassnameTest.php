@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\Syntax\Token\Attribute;
+use Concise\Syntax\Token\Attribute;
 
 class LexerClassnameTest extends LexerTestCase
 {

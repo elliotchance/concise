@@ -2,58 +2,63 @@
 
 namespace Concise\Mock;
 
+use Concise\Validation\ArgumentChecker;
 use InvalidArgumentException;
+use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use ReflectionClass;
-use Concise\Validation\ArgumentChecker;
 
 class ClassCompiler
 {
     /**
-	 * The fully qualified class name.
-	 * @var string
-	 */
+     * The fully qualified class name.
+     *
+     * @var string
+     */
     protected $className;
 
     /**
-	 * A unique string to be appended to the mock class name to make it unique (separate it from other mocks with the
-	 * same name)
-	 * @var string
-	 */
+     * A unique string to be appended to the mock class name to make it unique
+     * (separate it from other mocks with the same name)
+     *
+     * @var string
+     */
     protected $mockUnique;
 
     /**
-	 * The rules for the methods.
-	 * @var array
-	 */
+     * The rules for the methods.
+     *
+     * @var array
+     */
     protected $rules = array();
 
     /**
-	 * @var bool
-	 */
+     * @var bool
+     */
     protected $niceMock;
 
     /**
-	 * Arguments to pass to the constructor for the mock.
-	 * @var array
-	 */
+     * Arguments to pass to the constructor for the mock.
+     *
+     * @var array
+     */
     protected $constructorArgs;
 
     /**
-	 * @var boolean
-	 */
+     * @var boolean
+     */
     protected $disableConstructor;
 
     /**
-	 * You may specify a custom class name for the mock.
-	 * @var string
-	 */
+     * You may specify a custom class name for the mock.
+     *
+     * @var string
+     */
     protected $customClassName;
 
     /**
-	 * @var string[]
-	 */
+     * @var string[]
+     */
     protected $expose = array();
 
     /**
@@ -67,19 +72,24 @@ class ClassCompiler
 	 * @param array   $constructorArgs
      * @param boolean $disableConstructor
 	 */
-    public function __construct($className, $niceMock = false, array $constructorArgs = array(),
-        $disableConstructor = false)
-    {
+    public function __construct(
+        $className,
+        $niceMock = false,
+        array $constructorArgs = array(),
+        $disableConstructor = false
+    ) {
         ArgumentChecker::check($className, 'string');
         ArgumentChecker::check($niceMock, 'bool', 2);
         ArgumentChecker::check($disableConstructor, 'boolean', 4);
 
         if (!class_exists($className) && !interface_exists($className)) {
-            $message = "The class '$className' is not loaded so it cannot be mocked.";
+            $message =
+                "The class '$className' is not loaded so it cannot be mocked.";
             throw new InvalidArgumentException($message);
         }
         if (interface_exists($className) && $niceMock) {
-            $message = "You cannot create a nice mock of an interface ($className).";
+            $message =
+                "You cannot create a nice mock of an interface ($className).";
             throw new InvalidArgumentException($message);
         }
         $this->className = ltrim($className, '\\');
@@ -90,10 +100,11 @@ class ClassCompiler
     }
 
     /**
-	 * Get the namespace for the mocked class.
-	 * @param  string $className
-	 * @return string
-	 */
+     * Get the namespace for the mocked class.
+     *
+     * @param  string $className
+     * @return string
+     */
     protected function getNamespaceName($className = null)
     {
         $parts = explode('\\', $className ?: $this->className);
@@ -103,10 +114,12 @@ class ClassCompiler
     }
 
     /**
-	 * Get the class name (not including the namespace) of the class to be mocked.
-	 * @param  string $className
-	 * @return string
-	 */
+     * Get the class name (not including the namespace) of the class to be
+     * mocked.
+     *
+     * @param  string $className
+     * @return string
+     */
     protected function getClassName($className = null)
     {
         $parts = explode('\\', $className ?: $this->className);
@@ -156,9 +169,11 @@ class ClassCompiler
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
         $prototype = $this->getPublicPrototype($method->getName());
-        $message = "{$method->getName()}() does not have an associated action - consider a niceMock()?";
+        $message = "{$method->getName(
+        )}() does not have an associated action - consider a niceMock()?";
         if ($method->isAbstract()) {
-            $message = "{$method->getName()}() is abstract and has no associated action.";
+            $message = "{$method->getName(
+            )}() is abstract and has no associated action.";
         }
         $this->methods[$method->getName()] = <<<EOF
 $prototype {
@@ -180,14 +195,18 @@ EOF;
     protected function finalMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isFinal()) {
-            throw new InvalidArgumentException("Method {$this->className}::{$method->getName()}() is final so it cannot be mocked.");
+            throw new InvalidArgumentException(
+                "Method {$this->className}::{$method->getName()}() is final so it cannot be mocked."
+            );
         }
     }
 
     protected function privateMethodsCanNotBeMocked(\ReflectionMethod $method)
     {
         if ($method->isPrivate()) {
-            throw new InvalidArgumentException("Method {$this->className}::{$method->getName()}() cannot be mocked because it it private.");
+            throw new InvalidArgumentException(
+                "Method {$this->className}::{$method->getName()}() cannot be mocked because it it private."
+            );
         }
     }
 
@@ -204,11 +223,13 @@ EOF;
                 $defaultActionCode = $action->getActionCode();
             } else {
                 $args = addslashes(json_encode($rule['with']));
-                $args = str_replace(array('$', "\\'"), array('\\$', "'"), $args);
+                $args =
+                    str_replace(array('$', "\\'"), array('\\$', "'"), $args);
                 $actionCode .= <<<EOF
     \$matcher = new \Concise\Mock\ArgumentMatcher();
     \$methodArguments = new \Concise\Services\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName()}\\{$this->getClassName()}::$method");
+    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
+                )}\\{$this->getClassName()}::$method");
     if (\$matcher->match(json_decode("$args"), \$a)) {
         {$action->getActionCode()}
     }
@@ -223,7 +244,8 @@ $prototype {
 		self::\$_methodCalls['$method'] = array();
 	}
     \$methodArguments = new \Concise\Services\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName()}\\{$this->getClassName()}::$method");
+    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
+        )}\\{$this->getClassName()}::$method");
 	self::\$_methodCalls['$method'][] = \$a;
 	$actionCode
 	$defaultActionCode
@@ -252,7 +274,8 @@ EOF;
         foreach ($this->expose as $method => $value) {
             if (!array_key_exists($method, $this->methods)) {
                 $prototype = $this->getPublicPrototype($method);
-                $this->methods[$method] = "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
+                $this->methods[$method] =
+                    "$prototype { return call_user_func_array(\"parent::{$method}\", func_get_args()); }";
             }
         }
     }
@@ -260,7 +283,9 @@ EOF;
     protected function finalClassesCanNotBeMocked(\ReflectionClass $refClass)
     {
         if ($refClass->isFinal()) {
-            throw new InvalidArgumentException("Class {$this->className} is final so it cannot be mocked.");
+            throw new InvalidArgumentException(
+                "Class {$this->className} is final so it cannot be mocked."
+            );
         }
     }
 
@@ -292,8 +317,9 @@ EOF;
         return 'extends';
     }
 
-    public function makeAllAbstractMethodsThrowException(ReflectionClass $refClass)
-    {
+    public function makeAllAbstractMethodsThrowException(
+        ReflectionClass $refClass
+    ) {
         foreach ($refClass->getMethods() as $method) {
             if ($method->isAbstract()) {
                 $this->makeMethodThrowException($method);
@@ -302,9 +328,10 @@ EOF;
     }
 
     /**
-	 * Generate the PHP code for the mocked class.
-	 * @return string
-	 */
+     * Generate the PHP code for the mocked class.
+     *
+     * @return string
+     */
     public function generateCode()
     {
         $refClass = new ReflectionClass($this->className);
@@ -332,13 +359,15 @@ EOF;
         }
         $class .= '\Concise\Mock\MockInterface';
 
-        return $code . "$class { public static \$_methodCalls = array(); $methods }";
+        return $code .
+        "$class { public static \$_methodCalls = array(); $methods }";
     }
 
     /**
-	 * Get the name of the mocked class (not including the namespace).
-	 * @return string
-	 */
+     * Get the name of the mocked class (not including the namespace).
+     *
+     * @return string
+     */
     protected function getMockName()
     {
         if ($this->customClassName) {
@@ -357,9 +386,11 @@ EOF;
     }
 
     /**
-	 * Create a new instance of the mocked class. There is no need to generate the code before invoking this.
-	 * @return object
-	 */
+     * Create a new instance of the mocked class. There is no need to generate
+     * the code before invoking this.
+     *
+     * @return object
+     */
     public function newInstance()
     {
         /** @noinspection PhpUnusedLocalVariableInspection */
@@ -377,9 +408,10 @@ EOF;
     }
 
     /**
-	 * Set all the rules for the mock.
-	 * @param array $rules
-	 */
+     * Set all the rules for the mock.
+     *
+     * @param array $rules
+     */
     public function setRules(array $rules)
     {
         $this->rules = $rules;
@@ -399,11 +431,19 @@ EOF;
         if (substr($className, 0, 1) === '\\') {
             $className = substr($className, 1);
         }
-        if (!preg_match("/^(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+$/", $className)) {
-            throw new InvalidArgumentException("Invalid class name '$className'.");
+        if (!preg_match(
+            "/^(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+$/",
+            $className
+        )
+        ) {
+            throw new InvalidArgumentException(
+                "Invalid class name '$className'."
+            );
         }
         if (class_exists($className)) {
-            throw new InvalidArgumentException("You cannot use '$className' because a class with that name already exists.");
+            throw new InvalidArgumentException(
+                "You cannot use '$className' because a class with that name already exists."
+            );
         }
         $this->customClassName = $className;
     }
@@ -411,13 +451,15 @@ EOF;
     protected function methodMustBeMockable($method)
     {
         if (!$this->methodIsAllowedToBeMocked($method)) {
-            throw new InvalidArgumentException("Method {$this->className}::$method() does not exist.");
+            throw new InvalidArgumentException(
+                "Method {$this->className}::$method() does not exist."
+            );
         }
     }
 
     /**
-	 * @param string $method
-	 */
+     * @param string $method
+     */
     public function addExpose($method)
     {
         ArgumentChecker::check($method, 'string');

@@ -18,7 +18,9 @@ class ArgumentChecker
         try {
             return $checker->check(explode(',', $types), $value);
         } catch (DataTypeMismatchException $e) {
-            throw new InvalidArgumentException($e->getMessage() . " for argument {$argumentNumber}");
+            throw new InvalidArgumentException(
+                $e->getMessage() . " for argument {$argumentNumber}"
+            );
         }
     }
 }

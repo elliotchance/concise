@@ -25,12 +25,20 @@ class DoesNotHaveKeysTest extends AbstractMatcherTestCase
 
     public function testArrayKeysCanBeInAnyOrder()
     {
-        $this->assertFailure(array("a" => 123, "b" => 456), does_not_have_keys, array("b", "a"));
+        $this->assertFailure(
+            array("a" => 123, "b" => 456),
+            does_not_have_keys,
+            array("b", "a")
+        );
     }
 
     public function testArrayKeysCanBeASubset()
     {
-        $this->assertFailure(array("a" => 123, "b" => 456), does_not_have_keys, array("b"));
+        $this->assertFailure(
+            array("a" => 123, "b" => 456),
+            does_not_have_keys,
+            array("b")
+        );
     }
 
     public function tags()

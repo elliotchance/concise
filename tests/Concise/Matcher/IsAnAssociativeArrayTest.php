@@ -22,7 +22,8 @@ class IsAnAssociativeArrayTest extends AbstractMatcherTestCase
         $this->assert($x, is_an_associative_array);
     }
 
-    public function testAnArrayIsAssociativeIfAllIndexesAreIntegersButNotZeroIndexed()
+    public function testAnArrayIsAssociativeIfAllIndexesAreIntegersButNotZeroIndexed(
+    )
     {
         $x = array(
             5 => 123,

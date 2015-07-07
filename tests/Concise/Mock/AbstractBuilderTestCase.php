@@ -195,34 +195,93 @@ abstract class AbstractBuilderTestCase extends TestCase
     public function mockBuilders()
     {
         return array(
-            'mock class' => array($this->mock('\Concise\Mock\CombinationMockClass', array(1, 2)), self::MOCK_CLASS),
-            'mock abstract class' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::MOCK_ABSTRACT_CLASS),
-            'mock interface' => array($this->mock('\Concise\Mock\CombinationMockedInterface', array(1, 2)), self::MOCK_INTERFACE),
+            'mock class' => array(
+                $this->mock(
+                    '\Concise\Mock\CombinationMockClass',
+                    array(1, 2)
+                ),
+                self::MOCK_CLASS
+            ),
+            'mock abstract class' => array(
+                $this->mock(
+                    '\Concise\Mock\CombinationMockAbstractClass',
+                    array(1, 2)
+                ),
+                self::MOCK_ABSTRACT_CLASS
+            ),
+            'mock interface' => array(
+                $this->mock(
+                    '\Concise\Mock\CombinationMockedInterface',
+                    array(1, 2)
+                ),
+                self::MOCK_INTERFACE
+            ),
         );
     }
 
     public function niceMockBuilders()
     {
         return array(
-            'nice mock class' => array($this->niceMock('\Concise\Mock\CombinationMockClass', array(1, 2)), self::NICE_MOCK_CLASS),
-            'nice mock abstract class' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::NICE_MOCK_ABSTRACT_CLASS),
-            'partial mock' => array($this->partialMock(new CombinationMockClass(1, 2)), self::MOCK_PARTIAL),
+            'nice mock class' => array(
+                $this->niceMock(
+                    '\Concise\Mock\CombinationMockClass',
+                    array(1, 2)
+                ),
+                self::NICE_MOCK_CLASS
+            ),
+            'nice mock abstract class' => array(
+                $this->niceMock(
+                    '\Concise\Mock\CombinationMockAbstractClass',
+                    array(1, 2)
+                ),
+                self::NICE_MOCK_ABSTRACT_CLASS
+            ),
+            'partial mock' => array(
+                $this->partialMock(
+                    new CombinationMockClass(1, 2)
+                ),
+                self::MOCK_PARTIAL
+            ),
         );
     }
 
     public function abstractBuilders()
     {
         return array(
-            'mock abstract class' => array($this->mock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::MOCK_ABSTRACT_CLASS),
-            'nice mock abstract class' => array($this->niceMock('\Concise\Mock\CombinationMockAbstractClass', array(1, 2)), self::NICE_MOCK_ABSTRACT_CLASS),
+            'mock abstract class' => array(
+                $this->mock(
+                    '\Concise\Mock\CombinationMockAbstractClass',
+                    array(1, 2)
+                ),
+                self::MOCK_ABSTRACT_CLASS
+            ),
+            'nice mock abstract class' => array(
+                $this->niceMock(
+                    '\Concise\Mock\CombinationMockAbstractClass',
+                    array(1, 2)
+                ),
+                self::NICE_MOCK_ABSTRACT_CLASS
+            ),
         );
     }
 
     public function finalBuilders()
     {
         return array(
-            'mock final class' => array($this->mock('\Concise\Mock\CombinationMockFinalClass', array(1, 2)), self::MOCK_FINAL_CLASS),
-            'nice mock final class' => array($this->niceMock('\Concise\Mock\CombinationMockFinalClass', array(1, 2)), self::NICE_MOCK_FINAL_CLASS),
+            'mock final class' => array(
+                $this->mock(
+                    '\Concise\Mock\CombinationMockFinalClass',
+                    array(1, 2)
+                ),
+                self::MOCK_FINAL_CLASS
+            ),
+            'nice mock final class' => array(
+                $this->niceMock(
+                    '\Concise\Mock\CombinationMockFinalClass',
+                    array(1, 2)
+                ),
+                self::NICE_MOCK_FINAL_CLASS
+            ),
         );
     }
 

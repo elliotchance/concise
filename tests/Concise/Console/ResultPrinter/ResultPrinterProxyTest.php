@@ -16,19 +16,27 @@ class ResultPrinterProxyTest extends TestCase
 
     protected function getMuteResultPrinter()
     {
-        return $this->niceMock('Concise\Console\ResultPrinter\DefaultResultPrinter')
-                    ->stub('write')
-                    ->get();
+        return $this->niceMock(
+            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+        )->stub('write')->get();
     }
 
     public function testProxyExtendsPHPUnit()
     {
-        $this->assert($this->proxy, instance_of, 'PHPUnit_TextUI_ResultPrinter');
+        $this->assert(
+            $this->proxy,
+            instance_of,
+            'PHPUnit_TextUI_ResultPrinter'
+        );
     }
 
     public function testGetResultPrinterReturnsAResultPrinterInterface()
     {
-        $this->assert($this->proxy->getResultPrinter(), instance_of, 'Concise\Console\TestRunner\TestResultDelegateInterface');
+        $this->assert(
+            $this->proxy->getResultPrinter(),
+            instance_of,
+            'Concise\Console\TestRunner\TestResultDelegateInterface'
+        );
     }
 
     public function testResultPrinterIsSetViaConstructor()
@@ -42,40 +50,50 @@ class ResultPrinterProxyTest extends TestCase
     {
         $test = $this->mock('PHPUnit_Framework_Test')->get();
         $this->proxy->endTest($test, 0.1);
-        $this->assert($this->proxy->getResultPrinter()->getTestCount(), equals, 1);
+        $this->assert(
+            $this->proxy->getResultPrinter()->getTestCount(),
+            equals,
+            1
+        );
     }
 
     public function testPrintHeaderReturnsNull()
     {
-        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                      ->expose('printHeader')
-                      ->get();
+        $proxy = $this->niceMock(
+            'Concise\Console\ResultPrinter\ResultPrinterProxy',
+            array($this->getMuteResultPrinter())
+        )->expose('printHeader')->get();
         $this->assert($proxy->printHeader(), is_null);
     }
 
     public function testPrintDefectsReturnsNull()
     {
-        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                      ->expose('printDefects')
-                      ->get();
+        $proxy = $this->niceMock(
+            'Concise\Console\ResultPrinter\ResultPrinterProxy',
+            array($this->getMuteResultPrinter())
+        )->expose('printDefects')->get();
         $this->assert($proxy->printDefects(array(), null), is_null);
     }
 
     public function testPrintDefectReturnsNull()
     {
-        $failure = $this->mock('PHPUnit_Framework_TestFailure')->disableConstructor()->get();
-        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                      ->expose('printDefect')
-                      ->get();
+        $failure = $this->mock('PHPUnit_Framework_TestFailure')
+            ->disableConstructor()
+            ->get();
+        $proxy = $this->niceMock(
+            'Concise\Console\ResultPrinter\ResultPrinterProxy',
+            array($this->getMuteResultPrinter())
+        )->expose('printDefect')->get();
         $this->assert($proxy->printDefect($failure, 0), is_null);
     }
 
     public function testPrintFooterReturnsNull()
     {
         $result = $this->mock('PHPUnit_Framework_TestResult')->get();
-        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                      ->expose('printFooter')
-                      ->get();
+        $proxy = $this->niceMock(
+            'Concise\Console\ResultPrinter\ResultPrinterProxy',
+            array($this->getMuteResultPrinter())
+        )->expose('printFooter')->get();
         $this->assert($proxy->printFooter($result), is_null);
     }
 
@@ -87,9 +105,10 @@ class ResultPrinterProxyTest extends TestCase
     public function testPrintResultReturnsNull()
     {
         $result = $this->mock('PHPUnit_Framework_TestResult')->get();
-        $proxy = $this->niceMock('Concise\Console\ResultPrinter\ResultPrinterProxy', array($this->getMuteResultPrinter()))
-                      ->expose('printResult')
-                      ->get();
+        $proxy = $this->niceMock(
+            'Concise\Console\ResultPrinter\ResultPrinterProxy',
+            array($this->getMuteResultPrinter())
+        )->expose('printResult')->get();
         $this->assert($proxy->printResult($result), is_null);
     }
 }

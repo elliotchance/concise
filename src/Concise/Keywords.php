@@ -5,7 +5,7 @@ namespace Concise;
 class Keywords
 {
     public static function load()
-    {    
+    {
     }
 }
 

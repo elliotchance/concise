@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use \Concise\TestCase;
+use Concise\TestCase;
 
 abstract class LexerTestCase extends TestCase
 {
@@ -10,8 +10,8 @@ abstract class LexerTestCase extends TestCase
     protected $lexer;
 
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $parsed;
 
     public function setUp()
@@ -33,7 +33,11 @@ abstract class LexerTestCase extends TestCase
 
     public function testLexerWillReturnArgumentsForString()
     {
-        $this->assert($this->expectedArguments(), equals, $this->parsed['arguments']);
+        $this->assert(
+            $this->expectedArguments(),
+            equals,
+            $this->parsed['arguments']
+        );
     }
 
     abstract protected function expectedTokens();

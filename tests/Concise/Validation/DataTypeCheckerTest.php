@@ -19,12 +19,16 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
     public function testBlankAcceptsAnything()
     {
-        $this->assert($this->dataTypeChecker->check(array(), 123), exactly_equals, 123);
+        $this->assert(
+            $this->dataTypeChecker->check(array(), 123),
+            exactly_equals,
+            123
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 */
+     * @expectedException \Exception
+     */
     public function testSendingValueOfDifferentExpectedTypeThrowsException()
     {
         $this->dataTypeChecker->check(array("int"), 1.23);
@@ -41,7 +45,11 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'array' => array(array("array"), array()),
             'resource' => array(array("resource"), fopen('.', 'r')),
             'object' => array(array("object"), new \stdClass()),
-            'callable' => array(array("callable"), function () {}),
+            'callable' => array(
+                array("callable"),
+                function () {
+                }
+            ),
             'multiple' => array(array("int", "float"), 1.23),
             'regex' => array(array("regex"), new Regexp('abc')),
             'class' => array(array("class"), 'Concise\Syntax\Token\Regexp'),
@@ -51,29 +59,36 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'bool' => array(array("bool"), true),
             'string function' => array(array("string"), 'count'),
             'specific object' => array(array('DateTime'), new DateTime()),
-            'specific object backslash' => array(array('\DateTime'), new DateTime()),
+            'specific object backslash' => array(
+                array('\DateTime'),
+                new DateTime()
+            ),
         );
     }
 
     /**
-	 * @dataProvider dataTypes
-	 */
+     * @dataProvider dataTypes
+     */
     public function testDataTypes(array $types, $value)
     {
-        $this->assert($value, exactly_equals, $this->dataTypeChecker->check($types, $value));
+        $this->assert(
+            $value,
+            exactly_equals,
+            $this->dataTypeChecker->check($types, $value)
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 */
+     * @expectedException \Exception
+     */
     public function testSendingValueNotListedInExpectedTypesThrowsException()
     {
         $this->dataTypeChecker->check(array("int", "string"), 1.23);
     }
 
     /**
-	 * @expectedException \Exception
-	 */
+     * @expectedException \Exception
+     */
     public function testExcludeModeWillNotAllowType()
     {
         $this->dataTypeChecker->setExcludeMode();
@@ -86,13 +101,20 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'foo' => 'bar',
         );
         $this->dataTypeChecker->setContext($context);
-        $this->assert($this->dataTypeChecker->check(array('string'), new Attribute('foo')), exactly_equals, 'bar');
+        $this->assert(
+            $this->dataTypeChecker->check(
+                array('string'),
+                new Attribute('foo')
+            ),
+            exactly_equals,
+            'bar'
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Attribute 'foo' does not exist.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Attribute 'foo' does not exist.
+     */
     public function testWillThrowExceptionIfAttributeDoesNotExist()
     {
         $this->dataTypeChecker->check(array('string'), new Attribute('foo'));
@@ -106,17 +128,30 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
     public function testWillTrimBackslashOffClass()
     {
-        $this->assert($this->dataTypeChecker->check(array('class'), '\Concise\TestCase'), equals, 'Concise\TestCase');
+        $this->assert(
+            $this->dataTypeChecker->check(array('class'), '\Concise\TestCase'),
+            equals,
+            'Concise\TestCase'
+        );
     }
 
-    public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass()
+    public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass(
+    )
     {
-        $this->assert($this->dataTypeChecker->check(array('string'), '\Concise\TestCase'), equals, '\Concise\TestCase');
+        $this->assert(
+            $this->dataTypeChecker->check(array('string'), '\Concise\TestCase'),
+            equals,
+            '\Concise\TestCase'
+        );
     }
 
     public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
     {
-        $this->assert($this->dataTypeChecker->check(array(), '\Concise\TestCase'), equals, '\Concise\TestCase');
+        $this->assert(
+            $this->dataTypeChecker->check(array(), '\Concise\TestCase'),
+            equals,
+            '\Concise\TestCase'
+        );
     }
 
     public function testWillTrimBackslashOffClassWhenInAttribute()
@@ -125,18 +160,25 @@ class DataTypeCheckerTest extends \Concise\TestCase
             'foo' => '\Concise\TestCase',
         );
         $this->dataTypeChecker->setContext($context);
-        $this->assert($this->dataTypeChecker->check(array('class'), new Attribute('foo')), equals, 'Concise\TestCase');
+        $this->assert(
+            $this->dataTypeChecker->check(array('class'), new Attribute('foo')),
+            equals,
+            'Concise\TestCase'
+        );
     }
 
     public function testStringsWillBeAcceptedForRegex()
     {
-        $this->assertSame('/a/', $this->dataTypeChecker->check(array('regex'), '/a/'));
+        $this->assertSame(
+            '/a/',
+            $this->dataTypeChecker->check(array('regex'), '/a/')
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Expected regex, but got integer
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Expected regex, but got integer
+     */
     public function testNonStringsWillNotBeAcceptedForRegex()
     {
         $this->dataTypeChecker->check(array('regex'), 123);
@@ -171,7 +213,10 @@ class DataTypeCheckerTest extends \Concise\TestCase
 
     public function testInterfaceIsAllowedForClassName()
     {
-        $result = $this->dataTypeChecker->check(array('class'), '\Concise\Mock\MockInterface');
+        $result = $this->dataTypeChecker->check(
+            array('class'),
+            '\Concise\Mock\MockInterface'
+        );
         $this->assert($result, equals, 'Concise\Mock\MockInterface');
     }
 }

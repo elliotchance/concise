@@ -8,7 +8,11 @@ class DataTypeMismatchExceptionTest extends TestCase
 {
     public function testIsATypeOfInvalidArgumentException()
     {
-        $this->assert(new DataTypeMismatchException(), instance_of, '\InvalidArgumentException');
+        $this->assert(
+            new DataTypeMismatchException(),
+            instance_of,
+            '\InvalidArgumentException'
+        );
     }
 
     public function testExpectedTypesReturnsArray()
@@ -38,6 +42,10 @@ class DataTypeMismatchExceptionTest extends TestCase
     public function testMessage()
     {
         $e = new DataTypeMismatchException('string', array('int', 'float'));
-        $this->assert($e->getMessage(), equals, 'Expected int or float, but got string');
+        $this->assert(
+            $e->getMessage(),
+            equals,
+            'Expected int or float, but got string'
+        );
     }
 }

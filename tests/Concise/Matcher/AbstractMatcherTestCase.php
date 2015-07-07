@@ -2,14 +2,18 @@
 
 namespace Concise\Matcher;
 
-use \Concise\TestCase;
-use \Concise\Syntax\MatcherParser;
+use Concise\Syntax\MatcherParser;
+use Concise\TestCase;
 
 abstract class AbstractMatcherTestCase extends TestCase
 {
     public function testExtendsAbstractMatcher()
     {
-        $this->assert($this->matcher, is_instance_of, '\Concise\Matcher\AbstractMatcher');
+        $this->assert(
+            $this->matcher,
+            is_instance_of,
+            '\Concise\Matcher\AbstractMatcher'
+        );
     }
 
     public function testCanRegisterMatcher()
@@ -29,10 +33,13 @@ abstract class AbstractMatcherTestCase extends TestCase
     }
 
     /**
-	 * @param string $syntax
-	 */
-    protected function assertMatcherFailureMessage($syntax, array $args, $failureMessage)
-    {
+     * @param string $syntax
+     */
+    protected function assertMatcherFailureMessage(
+        $syntax,
+        array $args,
+        $failureMessage
+    ) {
         try {
             $this->matcher->match($syntax, $args);
             $this->fail("Expected assertion to fail.");
@@ -42,8 +49,8 @@ abstract class AbstractMatcherTestCase extends TestCase
     }
 
     /**
-	 * @param string $syntax
-	 */
+     * @param string $syntax
+     */
     protected function assertMatcherFailure($syntax, array $args = array())
     {
         try {
@@ -54,8 +61,8 @@ abstract class AbstractMatcherTestCase extends TestCase
     }
 
     /**
-	 * @param string $syntax
-	 */
+     * @param string $syntax
+     */
     protected function assertMatcherSuccess($syntax, array $args = array())
     {
         $this->assert($this->matcher->match($syntax, $args));

@@ -9,13 +9,13 @@ use Exception;
 class Lexer
 {
     /**
-	 * @var \Concise\Syntax\MatcherParser
-	 */
+     * @var \Concise\Syntax\MatcherParser
+     */
     protected $matcherParser = null;
 
     /**
-	 * @return \Concise\Syntax\MatcherParser
-	 */
+     * @return \Concise\Syntax\MatcherParser
+     */
     protected function getMatcherParser()
     {
         if (null === $this->matcherParser) {
@@ -26,9 +26,9 @@ class Lexer
     }
 
     /**
-	 * @param string $token
-	 * @return bool
-	 */
+     * @param string $token
+     * @return bool
+     */
     protected function isKeyword($token)
     {
         return in_array($token, $this->getMatcherParser()->getKeywords());
@@ -36,29 +36,38 @@ class Lexer
 
     /**
      * @param boolean $mustConsumeUntil
-     * @param string $until
+     * @param string  $until
      * @throws Exception
      */
-    protected function throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until)
-    {
+    protected function throwExceptionIfWeMustConsumeUntil(
+        $mustConsumeUntil,
+        $until
+    ) {
         if ($mustConsumeUntil) {
             throw new Exception("Expected $until before end of string.");
         }
     }
 
     /**
-	 * @param  string $string
-	 * @param  string $until A single character.
-	 * @param  integer $startIndex
-	 * @param  boolean $mustConsumeUntil
-	 * @return string
-	 */
-    protected function consumeUntilToken($string, $until, &$startIndex, $mustConsumeUntil = true)
-    {
+     * @param  string  $string
+     * @param  string  $until A single character.
+     * @param  integer $startIndex
+     * @param  boolean $mustConsumeUntil
+     * @return string
+     */
+    protected function consumeUntilToken(
+        $string,
+        $until,
+        &$startIndex,
+        $mustConsumeUntil = true
+    ) {
         $t = '';
         for ($i = $startIndex + 1; $string[$i] != $until; ++$i) {
             if ($i == strlen($string) - 1) {
-                $this->throwExceptionIfWeMustConsumeUntil($mustConsumeUntil, $until);
+                $this->throwExceptionIfWeMustConsumeUntil(
+                    $mustConsumeUntil,
+                    $until
+                );
                 $t .= $string[$i];
                 break;
             }
@@ -76,55 +85,66 @@ class Lexer
     }
 
     /**
-     * @param array $tokens
-	 * @param  string $string
-	 * @param  integer $startIndex
-	 * @return string
-	 */
+     * @param array    $tokens
+     * @param  string  $string
+     * @param  integer $startIndex
+     * @return string
+     */
     protected function consumeString(array &$tokens, $string, &$startIndex)
     {
         if ($string[$startIndex] === '"' || $string[$startIndex] === "'") {
-            $tokens[] = new Token\Value($this->consumeUntilToken($string, $string[$startIndex], $startIndex));
+            $tokens[] = new Token\Value(
+                $this->consumeUntilToken(
+                    $string,
+                    $string[$startIndex],
+                    $startIndex
+                )
+            );
         }
     }
 
     /**
-     * @param array $tokens
-	 * @param  string $string
-	 * @param  integer $startIndex
-	 * @return string
-	 */
+     * @param array    $tokens
+     * @param  string  $string
+     * @param  integer $startIndex
+     * @return string
+     */
     protected function consumeClassName(array &$tokens, $string, &$startIndex)
     {
         if ($string[$startIndex] === "\\") {
-            $tokens[] = new Token\Value($this->consumeUntilToken($string, ' ', $startIndex, false));
+            $tokens[] = new Token\Value(
+                $this->consumeUntilToken($string, ' ', $startIndex, false)
+            );
         }
     }
 
     /**
-     * @param array $tokens
-	 * @param  string $string
-	 * @param  integer $startIndex
-	 * @return string
-	 */
+     * @param array    $tokens
+     * @param  string  $string
+     * @param  integer $startIndex
+     * @return string
+     */
     protected function consumeRegexp(array &$tokens, $string, &$startIndex)
     {
         if ($string[$startIndex] === '/') {
-            $tokens[] = new Token\Regexp('/' . $this->consumeUntilToken($string, '/', $startIndex) . '/');
+            $tokens[] = new Token\Regexp(
+                '/' . $this->consumeUntilToken($string, '/', $startIndex) . '/'
+            );
         }
     }
 
     /**
-	 * @param string $t
-	 * @return Token
-	 */
+     * @param string $t
+     * @return Token
+     */
     protected function translateValue($t)
     {
         if ($this->isKeyword($t)) {
             return new Token\Keyword($t);
         }
-        if(preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $t) ||
-            preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $t)) {
+        if (preg_match('/^\-?[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?$/', $t) ||
+            preg_match('/^\-?[0-9]+([eE][\-+]?[0-9]+)?$/', $t)
+        ) {
             return new Token\Value($t * 1);
         }
 
@@ -132,8 +152,8 @@ class Lexer
     }
 
     /**
-     * @param array $tokens
-     * @param  string $string
+     * @param array    $tokens
+     * @param  string  $string
      * @param  integer $startIndex
      * @throws Exception
      * @return string
@@ -154,14 +174,16 @@ class Lexer
                     return;
                 }
             }
-            throw new Exception("Invalid JSON: " . substr($string, $originalStartIndex));
+            throw new Exception(
+                "Invalid JSON: " . substr($string, $originalStartIndex)
+            );
         }
     }
 
     /**
-     * @param array $tokens
+     * @param array  $tokens
      * @param string $string
-     * @param int $startIndex
+     * @param int    $startIndex
      * @throws Exception
      * @return bool
      */
@@ -177,7 +199,7 @@ class Lexer
     }
 
     /**
-     * @param array $tokens
+     * @param array  $tokens
      * @param string $token
      */
     protected function addTokenIfNotEmpty(array &$tokens, $token)
@@ -189,9 +211,9 @@ class Lexer
     }
 
     /**
-	 * @param  string $string
-	 * @return array
-	 */
+     * @param  string $string
+     * @return array
+     */
     protected function getTokens($string)
     {
         $r = array();
@@ -215,9 +237,9 @@ class Lexer
     }
 
     /**
-	 * @param  string $string
-	 * @return array
-	 */
+     * @param  string $string
+     * @return array
+     */
     protected function getAttributes($string)
     {
         $tokens = $this->getTokens($string);
@@ -237,9 +259,9 @@ class Lexer
     }
 
     /**
-	 * @param  string $string
-	 * @return string
-	 */
+     * @param  string $string
+     * @return string
+     */
     protected function getSyntax($string)
     {
         $tokens = $this->getTokens($string);
@@ -256,9 +278,9 @@ class Lexer
     }
 
     /**
-	 * @param  string $string
-	 * @return array
-	 */
+     * @param  string $string
+     * @return array
+     */
     public function parse($string)
     {
         ArgumentChecker::check($string, 'string');
@@ -271,8 +293,8 @@ class Lexer
     }
 
     /**
-	 * @param \Concise\Syntax\MatcherParser $matcherParser
-	 */
+     * @param \Concise\Syntax\MatcherParser $matcherParser
+     */
     public function setMatcherParser(MatcherParser $matcherParser)
     {
         $this->matcherParser = $matcherParser;

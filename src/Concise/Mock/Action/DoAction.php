@@ -17,6 +17,7 @@ class DoAction extends AbstractCachingAction
      */
     public function getActionCode()
     {
-        return parent::getActionCode() . "return \$v(new \Concise\Mock\Invocation(\Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}i']++, func_get_args()));";
+        return parent::getActionCode() .
+        "return \$v(new \Concise\Mock\Invocation(\Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}i']++, func_get_args()));";
     }
 }

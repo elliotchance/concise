@@ -2,8 +2,8 @@
 
 namespace Concise\Syntax;
 
-use \Concise\TestCase;
-use \Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\AbstractMatcher;
+use Concise\TestCase;
 
 class MatcherParserStub extends MatcherParser
 {
@@ -51,27 +51,33 @@ class MatcherParserTest extends TestCase
 
     public function testRegisteringANewMatcherReturnsTrue()
     {
-        $this->assert($this->parser->registerMatcher(new \Concise\Matcher\Equals()));
+        $this->assert(
+            $this->parser->registerMatcher(new \Concise\Matcher\Equals())
+        );
     }
 
     public function testGetInstanceIsASingleton()
     {
-        $this->assert(MatcherParser::getInstance(), exactly_equals, MatcherParser::getInstance());
+        $this->assert(
+            MatcherParser::getInstance(),
+            exactly_equals,
+            MatcherParser::getInstance()
+        );
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage No such matcher for syntax 'something'.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such matcher for syntax 'something'.
+     */
     public function testGetMatcherForSyntaxThrowsExceptionIfNoMatchersAreFound()
     {
         $this->parser->getMatcherForSyntax('something');
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage registerMatchers() can only be called once.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage registerMatchers() can only be called once.
+     */
     public function testRegisterMatchersCanOnlyBeCalledOnce()
     {
         $parser = new MatcherParserStub();
@@ -120,9 +126,9 @@ class MatcherParserTest extends TestCase
 
     public function testGetKeywordsAreOnlyGeneratedOnce()
     {
-        $parser = $this->niceMock('\Concise\Syntax\MatcherParser')
-                       ->expect('getRawKeywords')->once()->andReturn(array('a'))
-                       ->get();
+        $parser = $this->niceMock('\Concise\Syntax\MatcherParser')->expect(
+                'getRawKeywords'
+            )->once()->andReturn(array('a'))->get();
 
         $parser->getKeywords();
         $parser->getKeywords();
@@ -131,47 +137,59 @@ class MatcherParserTest extends TestCase
     public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
     {
         $syntaxes = MatcherParser::getInstance()->getAllMatcherDescriptions();
-        $this->assert($syntaxes, has_keys, array('? is null', '? is equal to ?'));
+        $this->assert(
+            $syntaxes,
+            has_keys,
+            array('? is null', '? is equal to ?')
+        );
     }
 
     public function testCanMatchSyntaxWithExpectedTypes()
     {
-        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
+        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(
+            array('?:int foobar ?:float')
+        );
         $this->parser->registerMatcher($matcher);
         $assertion = $this->parser->compile('123 foobar 1.23', array());
         $this->assert($matcher, exactly_equals, $assertion->getMatcher());
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Argument 2 (123) must be regex.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Argument 2 (123) must be regex.
+     */
     public function testWillValidateAllAttributes()
     {
         $this->assert('"abc" does not match regex 123');
     }
 
-    public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
+    public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword(
+    )
     {
-        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('?:int foobar ?:float'));
+        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(
+            array('?:int foobar ?:float')
+        );
         $this->parser->registerMatcher($matcher);
         $this->assert($this->parser->getKeywords(), has_value, 'foobar');
     }
 
     /**
-	 * @param string[] $supportedSyntaxes
-	 */
-    protected function getAbstractMatcherMockWithSupportedSyntaxes($supportedSyntaxes)
-    {
-        return $this->mock('\Concise\Matcher\AbstractMatcher')
-                    ->stub(array('supportedSyntaxes' => $supportedSyntaxes))
-                    ->get();
+     * @param string[] $supportedSyntaxes
+     */
+    protected function getAbstractMatcherMockWithSupportedSyntaxes(
+        $supportedSyntaxes
+    ) {
+        return $this->mock('\Concise\Matcher\AbstractMatcher')->stub(
+                array('supportedSyntaxes' => $supportedSyntaxes)
+            )->get();
     }
 
     public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
     {
-        $matcher1 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
-        $matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('bar'));
+        $matcher1 =
+            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+        $matcher2 =
+            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('bar'));
         $this->parser->registerMatcher($matcher1);
         $keywords1 = $this->parser->getKeywords();
         $this->parser->registerMatcher($matcher2);
@@ -180,21 +198,23 @@ class MatcherParserTest extends TestCase
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Syntax 'foo' is already declared.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Syntax 'foo' is already declared.
+     */
     public function testAddingAMatcherWithDuplicateSyntaxThrowsException()
     {
-        $matcher1 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
-        $matcher2 = $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+        $matcher1 =
+            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
+        $matcher2 =
+            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
         $this->parser->registerMatcher($matcher1);
         $this->parser->registerMatcher($matcher2);
     }
 
     /**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage All assertions ('Capitols') must be lower case.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage All assertions ('Capitols') must be lower case.
+     */
     public function testUsingCapitolsInAssertionNamesThrowsException()
     {
         $matcher = new MatcherParser();
@@ -216,7 +236,8 @@ class MatcherParserTest extends TestCase
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()
     {
         $parser = MatcherParser::getInstance();
-        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
+        $matcher =
+            $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
         $this->assert($matcher, has_key, 'on_error');
     }
 
@@ -230,14 +251,18 @@ class MatcherParserTest extends TestCase
     public function testOnErrorIsReturnedFromData()
     {
         $parser = MatcherParser::getInstance();
-        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
+        $matcher =
+            $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
         $this->assert($matcher['on_error'], equals, 'foo');
     }
 
     public function testOnErrorMustBeTheLastData()
     {
         $parser = MatcherParser::getInstance();
-        $matcher = $parser->getMatcherForSyntax('? equals ? on error ?', array('foo', 'bar'));
+        $matcher = $parser->getMatcherForSyntax(
+            '? equals ? on error ?',
+            array('foo', 'bar')
+        );
         $this->assert($matcher['on_error'], equals, 'bar');
     }
 

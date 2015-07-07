@@ -9,7 +9,11 @@ class TestCaseMockTest extends TestCase
 {
     public function testMocksAreResetInTheSetup()
     {
-        $this->assert($this->getMockManager()->getMocks(), exactly_equals, array());
+        $this->assert(
+            $this->getMockManager()->getMocks(),
+            exactly_equals,
+            array()
+        );
     }
 
     public function testCreatingAMockAddsItToTheMocks()
@@ -31,7 +35,8 @@ class TestCaseMockTest extends TestCase
         $this->assert(count($this->getMockManager()->getMocks()), equals, 2);
     }
 
-    public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered()
+    public function testCallingDoneTwiceWillGenerateTwoMocksAndBothWillBeRegistered(
+    )
     {
         $mockTemplate = $this->mock();
         $mockTemplate->get();

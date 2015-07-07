@@ -44,7 +44,11 @@ class HasPropertyTest extends AbstractNestedMatcherTestCase
     public function testNestedAssertionSuccess()
     {
         $this->obj->foo = 'bar';
-        $this->assert($this->assert($this->obj, has_property, 'foo'), exactly_equals, 'bar');
+        $this->assert(
+            $this->assert($this->obj, has_property, 'foo'),
+            exactly_equals,
+            'bar'
+        );
     }
 
     /**
@@ -53,6 +57,10 @@ class HasPropertyTest extends AbstractNestedMatcherTestCase
     public function testNestedAssertionFailure()
     {
         $this->obj->foo = 'bar';
-        $this->assertFailure($this->assert($this->obj, has_property, 'foo'), exactly_equals, 'baz');
+        $this->assertFailure(
+            $this->assert($this->obj, has_property, 'foo'),
+            exactly_equals,
+            'baz'
+        );
     }
 }

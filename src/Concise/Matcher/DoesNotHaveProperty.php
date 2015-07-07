@@ -13,7 +13,7 @@ class DoesNotHaveProperty extends AbstractMatcher
 
     public function match($syntax, array $data = array())
     {
-        return !array_key_exists($data[1], (array) $data[0]);
+        return !array_key_exists($data[1], (array)$data[0]);
     }
 
     public function getTags()

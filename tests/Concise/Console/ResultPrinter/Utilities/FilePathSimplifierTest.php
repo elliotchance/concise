@@ -15,7 +15,11 @@ class FilePathSimplifierTest extends TestCase
     public function testWillCropOffCurrentWorkingDirectory()
     {
         $simplifier = new FilePathSimplifier();
-        $this->assert($simplifier->process(getcwd() . '/foo/bar'), equals, 'foo/bar');
+        $this->assert(
+            $simplifier->process(getcwd() . '/foo/bar'),
+            equals,
+            'foo/bar'
+        );
     }
 
     /**

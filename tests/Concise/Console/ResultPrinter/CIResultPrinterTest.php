@@ -8,19 +8,21 @@ class CIResultPrinterTest extends TestCase
 {
     public function testUpdateCallsWrite()
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
-                              ->expect('write')
-                              ->get();
+        $resultPrinter =
+            $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
+                ->expect('write')
+                ->get();
         $resultPrinter->update();
     }
 
     public function testAppendTextAbovePrintsANewLineAbove()
     {
-        $resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
-                              ->expect('write')
-                              ->stub('update')
-                              ->stub('restoreCursor')
-                              ->get();
+        $resultPrinter =
+            $this->niceMock('Concise\Console\ResultPrinter\CIResultPrinter')
+                ->expect('write')
+                ->stub('update')
+                ->stub('restoreCursor')
+                ->get();
         $resultPrinter->appendTextAbove('a');
     }
 }

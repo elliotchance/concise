@@ -22,8 +22,7 @@ class ReturnPropertyAction extends AbstractAction
      */
     public function getActionCode()
     {
-        return
-"
+        return "
 if (property_exists(\$this, \"{$this->property}\")) {
 	return \$this->{$this->property};
 }

@@ -8,8 +8,8 @@ use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
 use Concise\Syntax\Token\Attribute;
-use Concise\Validation\DataTypeChecker;
 use Concise\Validation\ArgumentChecker;
+use Concise\Validation\DataTypeChecker;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit_Framework_AssertionFailedError;
@@ -17,33 +17,33 @@ use PHPUnit_Framework_AssertionFailedError;
 class Assertion
 {
     /**
-	 * @var \Concise\Matcher\AbstractMatcher
-	 */
+     * @var \Concise\Matcher\AbstractMatcher
+     */
     protected $matcher;
 
     /**
-	 * @var string
-	 */
+     * @var string
+     */
     protected $assertionString;
 
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $data = array();
 
     /**
-	 * @var \PHPUnit_Framework_TestCase
-	 */
+     * @var \PHPUnit_Framework_TestCase
+     */
     protected $testCase = null;
 
     /**
-	 * @var string
-	 */
+     * @var string
+     */
     protected $description = '';
 
     /**
-	 * @var string
-	 */
+     * @var string
+     */
     protected $originalSyntax = '';
 
     /**
@@ -52,13 +52,15 @@ class Assertion
     protected $failureMessage = '';
 
     /**
-	 * @param string                  $assertionString
-	 * @param Matcher\AbstractMatcher $matcher
-	 * @param array                   $data
-	 */
-    public function __construct($assertionString, Matcher\AbstractMatcher $matcher,
-        array $data = array())
-    {
+     * @param string                  $assertionString
+     * @param Matcher\AbstractMatcher $matcher
+     * @param array                   $data
+     */
+    public function __construct(
+        $assertionString,
+        Matcher\AbstractMatcher $matcher,
+        array $data = array()
+    ) {
         ArgumentChecker::check($assertionString, 'string');
 
         $this->assertionString = $assertionString;
@@ -67,8 +69,8 @@ class Assertion
     }
 
     /**
-	 * @param string $originalSyntax
-	 */
+     * @param string $originalSyntax
+     */
     public function setOriginalSyntax($originalSyntax)
     {
         ArgumentChecker::check($originalSyntax, 'string');
@@ -77,32 +79,32 @@ class Assertion
     }
 
     /**
-	 * @param \Concise\TestCase $testCase
-	 */
+     * @param \Concise\TestCase $testCase
+     */
     public function setTestCase(TestCase $testCase)
     {
         $this->testCase = $testCase;
     }
 
     /**
-	 * @return string
-	 */
+     * @return string
+     */
     public function getAssertion()
     {
         return $this->assertionString;
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getData()
     {
         return $this->data;
     }
 
     /**
-	 * @return \Concise\Matcher\AbstractMatcher
-	 */
+     * @return \Concise\Matcher\AbstractMatcher
+     */
     public function getMatcher()
     {
         return $this->matcher;
@@ -110,16 +112,20 @@ class Assertion
 
     /**
      * @param Attribute $arg
-     * @param integer $index
-     * @param $argument
+     * @param integer   $index
+     * @param           $argument
      * @throws Exception
      */
     protected function throwExceptionForInvalidArgument($arg, $index, $argument)
     {
         $renderer = new ValueRenderer();
         $acceptedTypes = implode(" or ", $arg->getAcceptedTypes());
-        $message = sprintf("Argument %d (%s) must be %s.", $index, $renderer->render($argument),
-            $acceptedTypes);
+        $message = sprintf(
+            "Argument %d (%s) must be %s.",
+            $index,
+            $renderer->render($argument),
+            $acceptedTypes
+        );
         throw new Exception($message);
     }
 
@@ -140,9 +146,16 @@ class Assertion
         $r = array();
         for ($i = 0; $i < $len; ++$i) {
             try {
-                $r[] = $checker->check($args[$i]->getAcceptedTypes(), $arguments[$i]);
+                $r[] = $checker->check(
+                    $args[$i]->getAcceptedTypes(),
+                    $arguments[$i]
+                );
             } catch (InvalidArgumentException $e) {
-                $this->throwExceptionForInvalidArgument($args[$i], $i + 1, $arguments[$i]);
+                $this->throwExceptionForInvalidArgument(
+                    $args[$i],
+                    $i + 1,
+                    $arguments[$i]
+                );
             }
         }
 
@@ -160,14 +173,15 @@ class Assertion
 
     /**
      * @param string $syntax
-     * @param array $args
+     * @param array  $args
      * @return string
      */
     protected function getFailureMessage($syntax, array $args)
     {
         $message = $this->failureMessage;
         if (!$message) {
-            $message = $this->getMatcher()->renderFailureMessage($syntax, $args);
+            $message =
+                $this->getMatcher()->renderFailureMessage($syntax, $args);
         }
 
         return $message;
@@ -181,7 +195,7 @@ class Assertion
         for ($i = 0; $i < $len; ++$i) {
             $arg = $arguments[$i];
             if ($arg instanceof Attribute) {
-                $args[$i] = $data[(string) $arg];
+                $args[$i] = $data[(string)$arg];
             } else {
                 $args[$i] = $arg;
             }
@@ -193,7 +207,7 @@ class Assertion
     }
 
     /**
-     * @param array $args
+     * @param array  $args
      * @param string $syntax
      * @return boolean
      */
@@ -202,7 +216,8 @@ class Assertion
         try {
             return $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
-            $message = $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
+            $message =
+                $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
     }
@@ -219,8 +234,9 @@ class Assertion
 
         $answer = $this->performMatch($result['syntax'], $args);
 
-        if (!$this->getMatcher() instanceof AbstractNestedMatcher && true !== $answer &&
-            null !== $answer) {
+        if (!$this->getMatcher() instanceof AbstractNestedMatcher &&
+            true !== $answer && null !== $answer
+        ) {
             $message = $this->getFailureMessage($result['syntax'], $args);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
@@ -239,8 +255,8 @@ class Assertion
     }
 
     /**
-	 * @return string
-	 */
+     * @return string
+     */
     public function __toString()
     {
         $excludeKeys = array_keys(TestCase::getPHPUnitProperties());
@@ -251,7 +267,8 @@ class Assertion
         $r = "";
         foreach ($this->getData() as $k => $v) {
             if (!in_array($k, $excludeKeys)) {
-                $r .= "\n  $k (" . $descriptor->describe($v) . ") = " . $renderer->render($v);
+                $r .= "\n  $k (" . $descriptor->describe($v) . ") = " .
+                    $renderer->render($v);
             }
         }
 
@@ -263,16 +280,16 @@ class Assertion
     }
 
     /**
-	 * @param string $description
-	 */
+     * @param string $description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
     /**
-	 * @return string
-	 */
+     * @return string
+     */
     public function getDescription()
     {
         if ('' === $this->description) {

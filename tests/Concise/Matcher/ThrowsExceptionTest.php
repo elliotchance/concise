@@ -15,18 +15,21 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
 
     public function exceptionTests()
     {
-        $throwNothing = function () {};
-        $throwException = function () { throw new \Exception(); };
+        $throwNothing = function () {
+        };
+        $throwException = function () {
+            throw new \Exception();
+        };
 
         return array(
-            array($throwNothing,   false),
+            array($throwNothing, false),
             array($throwException, true),
         );
     }
 
     /**
-	 * @dataProvider exceptionTests
-	 */
+     * @dataProvider exceptionTests
+     */
     public function testThrows(\Closure $method, $expectSuccess)
     {
         try {
@@ -41,10 +44,20 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
     public function testThrowsMessage()
     {
         try {
-            $this->matcher->match('? throws exception', array(function () {}));
+            $this->matcher->match(
+                '? throws exception',
+                array(
+                    function () {
+                    }
+                )
+            );
             $this->fail("Exception was not thrown.");
         } catch (DidNotMatchException $e) {
-            $this->assert("Expected exception to be thrown.", equals, $e->getMessage());
+            $this->assert(
+                "Expected exception to be thrown.",
+                equals,
+                $e->getMessage()
+            );
         }
     }
 

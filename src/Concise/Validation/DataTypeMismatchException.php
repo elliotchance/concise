@@ -10,8 +10,10 @@ class DataTypeMismatchException extends InvalidArgumentException
 
     protected $actualType;
 
-    public function __construct($actualType = 'unknown', array $expectedTypes = array())
-    {
+    public function __construct(
+        $actualType = 'unknown',
+        array $expectedTypes = array()
+    ) {
         $join = implode(' or ', $expectedTypes);
         parent::__construct("Expected $join, but got $actualType");
 

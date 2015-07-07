@@ -34,13 +34,20 @@ class ArgumentMatcherTest extends TestCase
         $this->assert($this->matcher->match(array(0), array(false)), is_true);
     }
 
-    public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse()
+    public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse(
+    )
     {
-        $this->assert($this->matcher->match(array('a', 'b'), array('a', 'a')), is_false);
+        $this->assert(
+            $this->matcher->match(array('a', 'b'), array('a', 'a')),
+            is_false
+        );
     }
 
     public function testExpectedIsAllowedToContainAnythingConstant()
     {
-        $this->assert($this->matcher->match(array('a', self::ANYTHING), array('a', 'a')), is_true);
+        $this->assert(
+            $this->matcher->match(array('a', self::ANYTHING), array('a', 'a')),
+            is_true
+        );
     }
 }

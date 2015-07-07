@@ -2,9 +2,9 @@
 
 namespace Concise\Console\Theme;
 
+use Colors\Color;
 use Concise\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
-use Colors\Color;
 
 class ColorStub extends Color
 {
@@ -56,11 +56,19 @@ abstract class ThemeTestCase extends TestCase
 
     public function testMustImplementColorTheme()
     {
-        $this->assert($this->theme, instance_of, 'Concise\Console\Theme\ThemeInterface');
+        $this->assert(
+            $this->theme,
+            instance_of,
+            'Concise\Console\Theme\ThemeInterface'
+        );
     }
 
     public function testMustExtendAbstractTheme()
     {
-        $this->assert($this->theme, instance_of, 'Concise\Console\Theme\AbstractTheme');
+        $this->assert(
+            $this->theme,
+            instance_of,
+            'Concise\Console\Theme\AbstractTheme'
+        );
     }
 }

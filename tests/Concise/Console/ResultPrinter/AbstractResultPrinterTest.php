@@ -9,22 +9,36 @@ class AbstractResultPrinterTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->resultPrinter = $this->niceMock('Concise\Console\ResultPrinter\AbstractResultPrinter')->get();
+        $this->resultPrinter = $this->niceMock(
+            'Concise\Console\ResultPrinter\AbstractResultPrinter'
+        )->get();
     }
 
     public function testResultPrinterImplementsTestResultDelegateInterface()
     {
-        $this->assert($this->resultPrinter, instance_of, 'Concise\Console\TestRunner\TestResultDelegateInterface');
+        $this->assert(
+            $this->resultPrinter,
+            instance_of,
+            'Concise\Console\TestRunner\TestResultDelegateInterface'
+        );
     }
 
     public function testDefaultSuccessCountIsZero()
     {
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testDefaultFailureCountIsZero()
     {
-        $this->assert($this->resultPrinter->getFailureCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getFailureCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testDefaultErrorCountIsZero()
@@ -34,7 +48,11 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testDefaultIncompleteCountIsZero()
     {
-        $this->assert($this->resultPrinter->getIncompleteCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getIncompleteCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testDefaultRiskyCountIsZero()
@@ -44,7 +62,11 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testDefaultSkippedCountIsZero()
     {
-        $this->assert($this->resultPrinter->getSkippedCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getSkippedCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testDefaultTestCountIsZero()
@@ -54,64 +76,101 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testDefaultTotalTestCountIsZero()
     {
-        $this->assert($this->resultPrinter->getTotalTestCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getTotalTestCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testDefaultAssertionCountIsZero()
     {
-        $this->assert($this->resultPrinter->getAssertionCount(), exactly_equals, 0);
+        $this->assert(
+            $this->resultPrinter->getAssertionCount(),
+            exactly_equals,
+            0
+        );
     }
 
     public function testSuccessCountIsTheTestCount()
     {
         $this->resultPrinter->testCount = 20;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 20);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            20
+        );
     }
 
     public function testSuccessCountWillNotIncludeSkipped()
     {
         $this->resultPrinter->testCount = 20;
         $this->resultPrinter->skippedCount = 10;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            10
+        );
     }
 
     public function testSuccessCountWillNotIncludeFailures()
     {
         $this->resultPrinter->testCount = 20;
         $this->resultPrinter->failureCount = 10;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            10
+        );
     }
 
     public function testSuccessCountWillNotIncludeErrors()
     {
         $this->resultPrinter->testCount = 20;
         $this->resultPrinter->errorCount = 10;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            10
+        );
     }
 
     public function testSuccessCountWillNotIncludeIncompleteTests()
     {
         $this->resultPrinter->testCount = 20;
         $this->resultPrinter->incompleteCount = 10;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            10
+        );
     }
 
     public function testSuccessCountWillNotIncludeRiskyTests()
     {
         $this->resultPrinter->testCount = 20;
         $this->resultPrinter->riskyCount = 10;
-        $this->assert($this->resultPrinter->getSuccessCount(), exactly_equals, 10);
+        $this->assert(
+            $this->resultPrinter->getSuccessCount(),
+            exactly_equals,
+            10
+        );
     }
 
     public function testEndTestReturnsNull()
     {
         $test = $this->mock('PHPUnit_Framework_Test')->get();
-        $this->assert($this->resultPrinter->endTest(0, $test, 0.0, null), is_null);
+        $this->assert(
+            $this->resultPrinter->endTest(0, $test, 0.0, null),
+            is_null
+        );
     }
 
     public function testEndTestSuiteReturnsNull()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')->disableConstructor()->get();
+        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+            ->disableConstructor()
+            ->get();
         $this->assert($this->resultPrinter->endTestSuite($suite), is_null);
     }
 

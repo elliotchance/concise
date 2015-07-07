@@ -3,8 +3,8 @@
 namespace Concise\Syntax;
 
 use Concise\Assertion;
-use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Matcher\AbstractMatcher;
+use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
@@ -13,28 +13,28 @@ use ReflectionException;
 class MatcherParser
 {
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $matchers = array();
 
     /**
-	 * @var MatcherParser
-	 */
+     * @var MatcherParser
+     */
     protected static $instance = null;
 
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $keywords = array();
 
     /**
-	 * @var Lexer
-	 */
+     * @var Lexer
+     */
     protected $lexer;
 
     /**
-	 * @var array
-	 */
+     * @var array
+     */
     protected $syntaxCache = array();
 
     public function __construct()
@@ -44,9 +44,9 @@ class MatcherParser
     }
 
     /**
-	 * @param  string $syntax
-	 * @return string
-	 */
+     * @param  string $syntax
+     * @return string
+     */
     protected function getRawSyntax($syntax)
     {
         return preg_replace('/\\?:[^\s$]+/i', '?', $syntax);
@@ -59,12 +59,13 @@ class MatcherParser
      */
     protected function endsWith($string, $substring)
     {
-        return (substr($string, strlen($string) - strlen($substring)) === $substring);
+        return (substr($string, strlen($string) - strlen($substring)) ===
+            $substring);
     }
 
     /**
      * @param string $syntax
-     * @param array $data
+     * @param array  $data
      * @throws Exception
      * @return array
      */
@@ -76,7 +77,8 @@ class MatcherParser
         $endsWith = ' on error ?';
         $options = array();
         if ($this->endsWith($rawSyntax, $endsWith)) {
-            $rawSyntax = substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
+            $rawSyntax =
+                substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
             $options = array(
                 'on_error' => $data[count($data) - 1],
             );
@@ -88,17 +90,18 @@ class MatcherParser
     }
 
     /**
-	 * @param array $data The data from the test case.
-	 * @param string $string
-	 * @return \Concise\Assertion
-	 */
+     * @param array $data The data from the test case.
+     * @param string $string
+     * @return \Concise\Assertion
+     */
     public function compile($string, array $data = array())
     {
         $result = $this->lexer->parse($string);
-        $match = $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
+        $match =
+            $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
         $assertion = new Assertion($string, $match['matcher'], $data);
         if (array_key_exists('on_error', $match)) {
-            $assertion->setFailureMessage($data[(string) $match['on_error']]);
+            $assertion->setFailureMessage($data[(string)$match['on_error']]);
         }
         $assertion->setOriginalSyntax($match['originalSyntax']);
 
@@ -112,22 +115,27 @@ class MatcherParser
 
     /**
      * @param string $rawSyntax
-     * @throws Exception if the assertion contains words that are not lower case.
+     * @throws Exception if the assertion contains words that are not lower
+     *     case.
      */
     protected function throwExceptionIfNotInLowerCase($rawSyntax)
     {
         if (strtolower($rawSyntax) != $rawSyntax) {
-            throw new Exception("All assertions ('$rawSyntax') must be lower case.");
+            throw new Exception(
+                "All assertions ('$rawSyntax') must be lower case."
+            );
         }
     }
 
     /**
      * @param string $rawSyntax
-     * @param $syntax
+     * @param        $syntax
      * @throws Exception
      */
-    protected function throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax)
-    {
+    protected function throwExceptionIfSyntaxIsAlreadyDeclared(
+        $rawSyntax,
+        $syntax
+    ) {
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             throw new Exception("Syntax '$syntax' is already declared.");
         }
@@ -145,13 +153,14 @@ class MatcherParser
     }
 
     /**
-	 * @param  \Concise\Matcher\AbstractMatcher $matcher
-	 * @return boolean
-	 */
+     * @param  \Concise\Matcher\AbstractMatcher $matcher
+     * @return boolean
+     */
     public function registerMatcher(AbstractMatcher $matcher)
     {
         $service = new MatcherSyntaxAndDescription();
-        $allSyntaxes = array_keys($service->process($matcher->supportedSyntaxes()));
+        $allSyntaxes =
+            array_keys($service->process($matcher->supportedSyntaxes()));
         foreach ($allSyntaxes as $syntax) {
             $this->registerSyntax($syntax, $matcher);
         }
@@ -163,8 +172,8 @@ class MatcherParser
     }
 
     /**
-	 * @return MatcherParser
-	 */
+     * @return MatcherParser
+     */
     public static function getInstance()
     {
         if (null === self::$instance) {
@@ -184,8 +193,8 @@ class MatcherParser
         try {
             $reflectionClass = new ReflectionClass($class);
             return !$reflectionClass->isAbstract() &&
-                is_subclass_of($class, 'Concise\Matcher\AbstractMatcher') &&
-                $class != 'Concise\Matcher\AbstractNestedMatcher';
+            is_subclass_of($class, 'Concise\Matcher\AbstractMatcher') &&
+            $class != 'Concise\Matcher\AbstractNestedMatcher';
         } catch (ReflectionException $e) {
             return false;
         }
@@ -211,8 +220,8 @@ class MatcherParser
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getMatchers()
     {
         return $this->matchers;
@@ -233,8 +242,8 @@ class MatcherParser
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     protected function getRawKeywords()
     {
         $r = array('error', 'on');
@@ -251,8 +260,8 @@ class MatcherParser
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getKeywords()
     {
         if (0 === count($this->keywords)) {
@@ -263,8 +272,8 @@ class MatcherParser
     }
 
     /**
-	 * @return array
-	 */
+     * @return array
+     */
     public function getAllMatcherDescriptions()
     {
         $r = array();

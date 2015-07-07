@@ -12,8 +12,9 @@ class BuilderCustomClassNameTest extends AbstractBuilderTestCase
      * @expectedExceptionMessage Invalid class name 'Concise\Mock\123'.
      * @dataProvider allBuilders
      */
-    public function testWillThrowExceptionIfTheCustomNameIsNotValid(MockBuilder $builder)
-    {
+    public function testWillThrowExceptionIfTheCustomNameIsNotValid(
+        MockBuilder $builder
+    ) {
         $builder->setCustomClassName('123')->get();
     }
 
