@@ -7,6 +7,8 @@ concise
    introduction
    matchers
    mocking
+   extending
+   changelog
 
 .. image:: https://travis-ci.org/elliotchance/concise.svg?branch=master
    :target: https://travis-ci.org/elliotchance/concise
