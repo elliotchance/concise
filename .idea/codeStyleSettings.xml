@@ -12,12 +12,17 @@
           <option name="LOWER_CASE_NULL_CONST" value="true" />
           <option name="KEEP_RPAREN_AND_LBRACE_ON_ONE_LINE" value="true" />
         </PHPCodeStyleSettings>
+        <XML>
+          <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+        </XML>
         <codeStyleSettings language="PHP">
           <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
           <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false" />
           <option name="BLANK_LINES_AFTER_PACKAGE" value="1" />
           <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
           <option name="CALL_PARAMETERS_WRAP" value="5" />
+          <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+          <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
           <option name="METHOD_PARAMETERS_WRAP" value="5" />
           <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
           <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
@@ -42,7 +47,6 @@
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
-    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default (1)" />
   </component>
 </project>
 
