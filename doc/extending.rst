@@ -1,8 +1,43 @@
 Extending Concise
 =================
 
+Using Concise with Other Frameworks
+-----------------------------------
+
+Concise is designed to work perfectly over the top of PHPUnit. But it can also
+be used by any other framework by simply instantiating and managing the
+``Concise\TestCase`` yourself:
+
+.. code-block:: php
+
+   use \Concise\TestCase;
+
+   class MyTinyTestSuite
+   {
+       protected $testCase;
+
+       public function __construct()
+       {
+           $this->testCase = new TestCase();
+       }
+
+       public function checkSomething()
+       {
+           $this->testCase->setUp();
+           $this->testCase->assert(3 + 5, equals, 8);
+           $this->testCase->tearDown();
+       }
+   }
+
+Since Concise implicitly expects ``setUp()`` and ``tearDown()`` methods to be
+called at appropriate times but does not enforce this behaviour - if you use it
+differently then it may do unexpected things.
+
+Creating Your Own Matchers (Assertions)
+---------------------------------------
+
 Create the Matcher Class
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -40,7 +75,7 @@ register your class:
    $defaultParser->registerMatcher(new MyMatcher());
 
 Limiting Matchers to Data Types
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can alter the syntax of your matchers to only allow certain data types to be
 passed into arguments:
@@ -72,7 +107,7 @@ Or even use a black list (any type except objects or arrays are allowed):
    '?:!object,array has length of ?:int'
 
 Testing Your Matcher
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Use the ``Concise\Matcher\AbstractMatcherTestCase`` when testing matchers:
 

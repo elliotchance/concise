@@ -40,4 +40,7 @@ Other Information
 have been setup. This means properties that may be set as part of a
 `partial mock`_ will be overridden by the properties provided.
 
-This feature was introduced in `Multiverse (Release v1.7)`_.
+This feature was introduced in `Multiverse (Release v1.7.0)`_.
+
+.. _partial mock: creating-mocks.html#partial-mocks
+.. _Multiverse (Release v1.7.0): https://github.com/elliotchance/concise/releases/tag/v1.7

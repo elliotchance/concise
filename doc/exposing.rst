@@ -73,6 +73,8 @@ API provided by the objects and services that you are testing.
 promote any method that is not ``final`` or ``private`` to a ``public``
 visibility. See `Mocking Final Classes and Methods`_ for more information.
 
+.. _Mocking Final Classes and Methods: mocking-limitations.html#final-classes-and-methods
+
 Properties
 ~~~~~~~~~~
 
