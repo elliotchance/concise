@@ -4,6 +4,9 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 class ProgressBarTest extends ProgressBarTestCase
 {
+    /**
+     * @var ProgressBar
+     */
     protected $progressBar;
 
     public function setUp()
