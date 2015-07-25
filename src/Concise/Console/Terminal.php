@@ -6,6 +6,6 @@ class Terminal
 {
     public function getColumns()
     {
-        return 0;
+        return (int)`tput cols`;
     }
 }
