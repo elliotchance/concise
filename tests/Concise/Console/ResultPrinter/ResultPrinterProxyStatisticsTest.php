@@ -6,6 +6,9 @@ use Concise\TestCase;
 
 class ResultPrinterProxyStatisticsTest extends TestCase
 {
+    /**
+     * @var ResultPrinterProxy
+     */
     protected $proxy;
 
     protected $test;

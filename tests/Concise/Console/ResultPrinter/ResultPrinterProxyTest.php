@@ -6,6 +6,9 @@ use Concise\TestCase;
 
 class ResultPrinterProxyTest extends TestCase
 {
+    /**
+     * @var ResultPrinterProxy
+     */
     protected $proxy;
 
     public function setUp()

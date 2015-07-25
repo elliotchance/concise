@@ -2,6 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
+use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Mock\Invocation;
 use Concise\TestCase;
 use Exception;
@@ -405,5 +406,38 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'width', 80);
 
         $this->assert($resultPrinter->getAssertionString(), equals, 'foo');
+    }
+
+    /**
+     * @group #276
+     */
+    public function testThereIsOneSpaceBetweenTheTimeAndProgress()
+    {
+        $resultPrinter = $this->niceMock(
+            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+        )
+            ->expose('getAssertionString')
+            ->stub(
+                array(
+                    'getTotalTestCount' => 2778,
+                    'getTestCount' => 834,
+                    'getSecondsElapsed' => 500,
+                    'getRemainingSeconds' => 1165,
+                    'getAssertionCount' => 1910,
+                )
+            )
+            ->get();
+        $this->setProperty($resultPrinter, 'width', 80);
+        $this->setProperty(
+            $resultPrinter,
+            'counter',
+            new ProgressCounter(2778, true)
+        );
+
+        $this->assert(
+            $resultPrinter->getAssertionString(),
+            does_not_contain_string,
+            ')8'
+        );
     }
 }

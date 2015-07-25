@@ -158,7 +158,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
             $this->width - strlen($assertionString) - strlen($counterString) -
             strlen($time) - strlen($remaining);
 
-        if ($pad < 0) {
+        if ($pad <= 0) {
             return '';
         }
         return sprintf(
