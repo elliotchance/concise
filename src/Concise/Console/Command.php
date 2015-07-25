@@ -79,7 +79,8 @@ class Command extends \PHPUnit_TextUI_Command
 
     public function getResultPrinter()
     {
-        if ($this->ci || `tput colors` < 2) {
+        $terminal = new Terminal();
+        if ($this->ci || $terminal->getColors() < 2) {
             return new CIResultPrinter();
         }
 

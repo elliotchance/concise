@@ -11,4 +11,12 @@ class Terminal
         }
         return (int)`tput cols`;
     }
+
+    public function getColors()
+    {
+        if (!getenv('TERM')) {
+            return 1;
+        }
+        return (int)`tput colors`;
+    }
 }
