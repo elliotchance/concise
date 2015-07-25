@@ -20,4 +20,11 @@ class TerminalTest extends TestCase
         $terminal = new Terminal();
         $this->assert($terminal->getColumns(), equals, `tput cols`);
     }
+
+    public function testGetColumnsIs80ForUnknownTerminal()
+    {
+        putenv('TERM=');
+        $terminal = new Terminal();
+        $this->assert($terminal->getColumns(), equals, 80);
+    }
 }
