@@ -5,6 +5,7 @@ namespace Concise\Console\ResultPrinter;
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
+use Concise\Console\Terminal;
 use Concise\Console\Theme\DefaultTheme;
 use Concise\Services\TimeFormatter;
 use Exception;
@@ -61,8 +62,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function __construct(DefaultTheme $theme = null)
     {
-        /** @noinspection SpellCheckingInspection */
-        $this->width = (int)exec('tput cols');
+        $terminal = new Terminal();
+        $this->width = $terminal->getColumns();
         if (!$theme) {
             $theme = new DefaultTheme();
         }
