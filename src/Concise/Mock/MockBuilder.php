@@ -126,6 +126,10 @@ class MockBuilder
         $this->className = $className;
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
+
+        if (!$niceMock && !$this->isInterface()) {
+            $this->disableConstructor();
+        }
     }
 
     /**

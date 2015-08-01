@@ -37,6 +37,10 @@ from a ``\stdClass``:
         ->expect('myMethod')->andReturn(123)
         ->get();
 
+This type of mock does not invoke the constructor since plain mocks are supposed
+to be totally hollow and the constructor could potentially setup an unexpected
+state or call methods that would not have actions associated with them.
+
 Nice Mocks
 ~~~~~~~~~~
 
