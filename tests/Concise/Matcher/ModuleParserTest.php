@@ -13,7 +13,7 @@ class ModuleParserTest extends TestCase
     {
         $loader = new ModuleParser();
         $this->assert(
-            $loader->parse(['module' => ['name' => "test"]]),
+            $loader->parse($this->getModule()),
             instance_of,
             '\Concise\Matcher\Module'
         );
@@ -52,17 +52,14 @@ class ModuleParserTest extends TestCase
     public function testModuleNameIsSet()
     {
         $loader = new ModuleParser();
-        $module = $loader->parse(['module' => ['name' => "test"]]);
+        $module = $loader->parse($this->getModule());
         $this->assert($module->getName(), equals, 'test');
     }
 
     public function testDescriptionIsSet()
     {
         $loader = new ModuleParser();
-        $module =
-            $loader->parse(
-                ['module' => ['name' => "test", 'description' => 'desc']]
-            );
+        $module = $loader->parse($this->getModule());
         $this->assert($module->getDescription(), equals, 'desc');
     }
 
@@ -73,8 +70,34 @@ class ModuleParserTest extends TestCase
     public function testModuleDescriptionMustBeAString()
     {
         $loader = new ModuleParser();
+        $module = $this->getModule();
+        $module['module']['description'] = [];
+        $loader->parse($module);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A module must have syntaxes.
+     */
+    public function testModuleMustHaveSyntaxes()
+    {
+        $loader = new ModuleParser();
         $loader->parse(
-            ['module' => ['name' => "test", 'description' => []]]
+            ['module' => ['name' => "test"]]
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getModule()
+    {
+        return [
+            'module' => [
+                'name' => "test",
+                'description' => 'desc',
+                'syntaxes' => []
+            ]
+        ];
     }
 }
