@@ -17,9 +17,6 @@ class ModuleParser
         if (!is_string($tree['module']['name'])) {
             $this->error("The module name must be a string.");
         }
-        if (!array_key_exists('syntaxes', $tree['module'])) {
-            $this->error("A module must have syntaxes.");
-        }
 
         $module = new Module($tree['module']['name']);
         if (array_key_exists('description', $tree['module'])) {
@@ -27,6 +24,13 @@ class ModuleParser
                 $this->error("The module description must be a string.");
             }
             $module->setDescription($tree['module']['description']);
+        }
+
+        if (!array_key_exists('syntaxes', $tree['module'])) {
+            $this->error("A module must have syntaxes.");
+        }
+        if (!is_array($tree['module']['syntaxes'])) {
+            $this->error("The module syntaxes must be an array.");
         }
 
         return $module;

@@ -88,6 +88,18 @@ class ModuleParserTest extends TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The module syntaxes must be an array.
+     */
+    public function testSyntaxesMustBeAnArray()
+    {
+        $loader = new ModuleParser();
+        $module = $this->getModule();
+        $module['module']['syntaxes'] = 123;
+        $loader->parse($module);
+    }
+
+    /**
      * @return array
      */
     public function getModule()
