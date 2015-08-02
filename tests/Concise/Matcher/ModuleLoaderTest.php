@@ -13,7 +13,7 @@ class ModuleLoaderTest extends TestCase
     {
         $loader = new ModuleLoader();
         $this->assert(
-            $loader->loadFromYaml('module:'),
+            $loader->loadFromYaml("module:\n  name: test"),
             instance_of,
             '\Concise\Matcher\Module'
         );
@@ -29,7 +29,7 @@ class ModuleLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Missing 'module' at Yaml root.
      */
     public function testMissingModuleKeyThrowsException()
@@ -39,12 +39,22 @@ class ModuleLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Yaml root must be an array.
      */
     public function testWrongTypeOfRootYaml()
     {
         $loader = new ModuleLoader();
         $loader->loadFromYaml('123');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A module must have a name defined.
+     */
+    public function testModuleMustHaveAName()
+    {
+        $loader = new ModuleLoader();
+        $loader->loadFromYaml('module: []');
     }
 }

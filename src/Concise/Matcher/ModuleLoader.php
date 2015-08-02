@@ -18,6 +18,9 @@ class ModuleLoader
                 "Missing 'module' at Yaml root."
             );
         }
+        if (!array_key_exists('name', $tree['module'])) {
+            throw new InvalidArgumentException("A module must have a name defined.");
+        }
         return new Module();
     }
 }
