@@ -39,4 +39,10 @@ class ModuleTest extends TestCase
         $module = new Module('Foo');
         $this->assert($module->getSyntaxes(), equals, []);
     }
+
+    public function testModuleSyntaxesSetInConstructor()
+    {
+        $module = new Module('Foo', ['? equals ?' => []]);
+        $this->assert($module->getSyntaxes(), equals, ['? equals ?' => []]);
+    }
 }
