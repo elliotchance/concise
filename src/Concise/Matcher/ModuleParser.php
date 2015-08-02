@@ -20,6 +20,9 @@ class ModuleParser
 
         $module = new Module($tree['module']['name']);
         if (array_key_exists('description', $tree['module'])) {
+            if (!is_string($tree['module']['description'])) {
+                $this->error("The module description must be a string.");
+            }
             $module->setDescription($tree['module']['description']);
         }
 

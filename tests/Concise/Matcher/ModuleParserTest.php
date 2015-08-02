@@ -65,4 +65,16 @@ class ModuleParserTest extends TestCase
             );
         $this->assert($module->getDescription(), equals, 'desc');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The module description must be a string.
+     */
+    public function testModuleDescriptionMustBeAString()
+    {
+        $loader = new ModuleParser();
+        $loader->parse(
+            ['module' => ['name' => "test", 'description' => []]]
+        );
+    }
 }
