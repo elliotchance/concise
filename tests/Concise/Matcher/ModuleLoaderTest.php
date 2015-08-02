@@ -13,7 +13,7 @@ class ModuleLoaderTest extends TestCase
     {
         $loader = new ModuleLoader();
         $this->assert(
-            $loader->loadFromYaml(''),
+            $loader->loadFromYaml('module:'),
             instance_of,
             '\Concise\Matcher\Module'
         );
@@ -26,5 +26,15 @@ class ModuleLoaderTest extends TestCase
     {
         $loader = new ModuleLoader();
         $loader->loadFromYaml('[');
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Missing 'module' at Yaml root.
+     */
+    public function testMissingModuleKeyThrowsException()
+    {
+        $loader = new ModuleLoader();
+        $loader->loadFromYaml('abc: def');
     }
 }
