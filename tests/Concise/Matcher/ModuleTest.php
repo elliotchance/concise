@@ -20,4 +20,10 @@ class ModuleTest extends TestCase
         $module = new Module('Bar');
         $this->assert($module->getName(), equals, 'Bar');
     }
+
+    public function testDefaultDescriptionIsBlank()
+    {
+        $module = new Module('Bar');
+        $this->assert($module->getDescription(), equals, '');
+    }
 }

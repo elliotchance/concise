@@ -15,4 +15,9 @@ class Module
     {
         return $this->name;
     }
+
+    public function getDescription()
+    {
+        return '';
+    }
 }

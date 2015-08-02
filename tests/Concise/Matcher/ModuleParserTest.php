@@ -7,13 +7,13 @@ use Concise\TestCase;
 /**
  * @group matcher
  */
-class ModuleLoaderTest extends TestCase
+class ModuleParserTest extends TestCase
 {
     public function testLoadingAModuleReturnsAModuleObject()
     {
-        $loader = new ModuleLoader();
+        $loader = new ModuleParser();
         $this->assert(
-            $loader->load(['module' => ['name' => "test"]]),
+            $loader->parse(['module' => ['name' => "test"]]),
             instance_of,
             '\Concise\Matcher\Module'
         );
@@ -25,8 +25,8 @@ class ModuleLoaderTest extends TestCase
      */
     public function testMissingModuleKeyThrowsException()
     {
-        $loader = new ModuleLoader();
-        $loader->load([]);
+        $loader = new ModuleParser();
+        $loader->parse([]);
     }
 
     /**
@@ -35,8 +35,8 @@ class ModuleLoaderTest extends TestCase
      */
     public function testModuleMustHaveAName()
     {
-        $loader = new ModuleLoader();
-        $loader->load(['module' => []]);
+        $loader = new ModuleParser();
+        $loader->parse(['module' => []]);
     }
 
     /**
@@ -45,14 +45,14 @@ class ModuleLoaderTest extends TestCase
      */
     public function testModuleNameMustBeAString()
     {
-        $loader = new ModuleLoader();
-        $loader->load(['module' => ['name' => 123]]);
+        $loader = new ModuleParser();
+        $loader->parse(['module' => ['name' => 123]]);
     }
 
     public function testModuleNameIsSet()
     {
-        $loader = new ModuleLoader();
-        $module = $loader->load(['module' => ['name' => "test"]]);
+        $loader = new ModuleParser();
+        $module = $loader->parse(['module' => ['name' => "test"]]);
         $this->assert($module->getName(), equals, 'test');
     }
 }

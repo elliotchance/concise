@@ -4,9 +4,9 @@ namespace Concise\Matcher;
 
 use InvalidArgumentException;
 
-class ModuleLoader
+class ModuleParser
 {
-    public function load(array $tree)
+    public function parse(array $tree)
     {
         if (!array_key_exists('module', $tree)) {
             $this->error("Missing 'module' at root.");
