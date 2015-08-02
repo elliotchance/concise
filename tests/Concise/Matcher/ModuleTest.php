@@ -33,4 +33,10 @@ class ModuleTest extends TestCase
         $module->setDescription('foo');
         $this->assert($module->getDescription(), equals, 'foo');
     }
+
+    public function testSyntaxesAreEmptyByDefault()
+    {
+        $module = new Module('Foo');
+        $this->assert($module->getSyntaxes(), equals, []);
+    }
 }

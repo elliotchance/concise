@@ -4,13 +4,25 @@ namespace Concise\Matcher;
 
 class Module
 {
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var string
+     */
     protected $description = '';
 
-    public function __construct($name)
+    /**
+     * @var array
+     */
+    protected $syntaxes;
+
+    public function __construct($name, array $syntaxes = array())
     {
         $this->name = $name;
+        $this->syntaxes = $syntaxes;
     }
 
     public function getName()
@@ -29,5 +41,10 @@ class Module
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getSyntaxes()
+    {
+        return $this->syntaxes;
     }
 }

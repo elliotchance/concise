@@ -108,7 +108,9 @@ class ModuleParserTest extends TestCase
             'module' => [
                 'name' => "test",
                 'description' => 'desc',
-                'syntaxes' => []
+                'syntaxes' => [
+                    '? equals ?' => 1
+                ]
             ]
         ];
     }
