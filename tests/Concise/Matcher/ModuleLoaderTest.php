@@ -37,4 +37,14 @@ class ModuleLoaderTest extends TestCase
         $loader = new ModuleLoader();
         $loader->loadFromYaml('abc: def');
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Yaml root must be an array.
+     */
+    public function testWrongTypeOfRootYaml()
+    {
+        $loader = new ModuleLoader();
+        $loader->loadFromYaml('123');
+    }
 }

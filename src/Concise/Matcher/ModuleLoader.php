@@ -10,6 +10,9 @@ class ModuleLoader
     public function loadFromYaml($yaml)
     {
         $tree = Yaml::parse($yaml);
+        if (!is_array($tree)) {
+            throw new InvalidArgumentException("Yaml root must be an array.");
+        }
         if (!array_key_exists('module', $tree)) {
             throw new InvalidArgumentException(
                 "Missing 'module' at Yaml root."
