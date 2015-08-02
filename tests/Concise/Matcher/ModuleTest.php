@@ -14,4 +14,10 @@ class ModuleTest extends TestCase
         $module = new Module('Foo');
         $this->assert($module->getName(), equals, 'Foo');
     }
+
+    public function testModuleNameIsSetByConstructor()
+    {
+        $module = new Module('Bar');
+        $this->assert($module->getName(), equals, 'Bar');
+    }
 }
