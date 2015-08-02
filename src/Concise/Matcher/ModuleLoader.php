@@ -3,24 +3,26 @@
 namespace Concise\Matcher;
 
 use InvalidArgumentException;
-use Symfony\Component\Yaml\Yaml;
 
 class ModuleLoader
 {
-    public function loadFromYaml($yaml)
+    public function load(array $tree)
     {
-        $tree = Yaml::parse($yaml);
-        if (!is_array($tree)) {
-            throw new InvalidArgumentException("Yaml root must be an array.");
-        }
         if (!array_key_exists('module', $tree)) {
-            throw new InvalidArgumentException(
-                "Missing 'module' at Yaml root."
-            );
+            $this->error("Missing 'module' at root.");
         }
         if (!array_key_exists('name', $tree['module'])) {
-            throw new InvalidArgumentException("A module must have a name defined.");
+            $this->error("A module must have a name defined.");
         }
+        if (!is_string($tree['module']['name'])) {
+            $this->error("The module name must be a string.");
+        }
+
         return new Module();
+    }
+
+    protected function error($message)
+    {
+        throw new InvalidArgumentException($message);
     }
 }

@@ -13,39 +13,20 @@ class ModuleLoaderTest extends TestCase
     {
         $loader = new ModuleLoader();
         $this->assert(
-            $loader->loadFromYaml("module:\n  name: test"),
+            $loader->load(['module' => ['name' => "test"]]),
             instance_of,
             '\Concise\Matcher\Module'
         );
     }
 
     /**
-     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
-     */
-    public function testInvalidYamlThrowsException()
-    {
-        $loader = new ModuleLoader();
-        $loader->loadFromYaml('[');
-    }
-
-    /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing 'module' at Yaml root.
+     * @expectedExceptionMessage Missing 'module' at root.
      */
     public function testMissingModuleKeyThrowsException()
     {
         $loader = new ModuleLoader();
-        $loader->loadFromYaml('abc: def');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Yaml root must be an array.
-     */
-    public function testWrongTypeOfRootYaml()
-    {
-        $loader = new ModuleLoader();
-        $loader->loadFromYaml('123');
+        $loader->load([]);
     }
 
     /**
@@ -55,6 +36,16 @@ class ModuleLoaderTest extends TestCase
     public function testModuleMustHaveAName()
     {
         $loader = new ModuleLoader();
-        $loader->loadFromYaml('module: []');
+        $loader->load(['module' => []]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The module name must be a string.
+     */
+    public function testModuleNameMustBeAString()
+    {
+        $loader = new ModuleLoader();
+        $loader->load(['module' => ['name' => 123]]);
     }
 }
