@@ -18,7 +18,7 @@ class ModuleLoader
             $this->error("The module name must be a string.");
         }
 
-        return new Module('');
+        return new Module($tree['module']['name']);
     }
 
     protected function error($message)

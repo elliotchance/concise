@@ -48,4 +48,11 @@ class ModuleLoaderTest extends TestCase
         $loader = new ModuleLoader();
         $loader->load(['module' => ['name' => 123]]);
     }
+
+    public function testModuleNameIsSet()
+    {
+        $loader = new ModuleLoader();
+        $module = $loader->load(['module' => ['name' => "test"]]);
+        $this->assert($module->getName(), equals, 'test');
+    }
 }
