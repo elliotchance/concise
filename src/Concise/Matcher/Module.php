@@ -6,6 +6,8 @@ class Module
 {
     protected $name;
 
+    protected $description = '';
+
     public function __construct($name)
     {
         $this->name = $name;
@@ -18,6 +20,14 @@ class Module
 
     public function getDescription()
     {
-        return '';
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

@@ -26,4 +26,11 @@ class ModuleTest extends TestCase
         $module = new Module('Bar');
         $this->assert($module->getDescription(), equals, '');
     }
+
+    public function testSettingDescription()
+    {
+        $module = new Module('Bar');
+        $module->setDescription('foo');
+        $this->assert($module->getDescription(), equals, 'foo');
+    }
 }
