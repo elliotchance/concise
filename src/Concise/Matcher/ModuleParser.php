@@ -18,7 +18,12 @@ class ModuleParser
             $this->error("The module name must be a string.");
         }
 
-        return new Module($tree['module']['name']);
+        $module = new Module($tree['module']['name']);
+        if (array_key_exists('description', $tree['module'])) {
+            $module->setDescription($tree['module']['description']);
+        }
+
+        return $module;
     }
 
     protected function error($message)

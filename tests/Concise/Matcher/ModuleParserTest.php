@@ -55,4 +55,14 @@ class ModuleParserTest extends TestCase
         $module = $loader->parse(['module' => ['name' => "test"]]);
         $this->assert($module->getName(), equals, 'test');
     }
+
+    public function testDescriptionIsSet()
+    {
+        $loader = new ModuleParser();
+        $module =
+            $loader->parse(
+                ['module' => ['name' => "test", 'description' => 'desc']]
+            );
+        $this->assert($module->getDescription(), equals, 'desc');
+    }
 }
