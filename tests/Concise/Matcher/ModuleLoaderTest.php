@@ -13,9 +13,18 @@ class ModuleLoaderTest extends TestCase
     {
         $loader = new ModuleLoader();
         $this->assert(
-            $loader->loadFromString(),
+            $loader->loadFromYaml(''),
             instance_of,
             '\Concise\Matcher\Module'
         );
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
+     */
+    public function testInvalidYamlThrowsException()
+    {
+        $loader = new ModuleLoader();
+        $loader->loadFromYaml('[');
     }
 }
