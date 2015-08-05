@@ -21,6 +21,11 @@ class Syntax
      */
     protected $method;
 
+    /**
+     * @var string
+     */
+    protected $description = '';
+
     public function __construct($syntax, $method)
     {
         if (strpos($method, '::') === false) {
@@ -74,6 +79,14 @@ class Syntax
      */
     public function getDescription()
     {
-        return '';
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

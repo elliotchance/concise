@@ -54,4 +54,11 @@ class SyntaxText extends TestCase
         $syntax = new Syntax('? equals ?', 'stdClass::method');
         $this->assert($syntax->getDescription(), is_blank);
     }
+
+    public function testSettingDescription()
+    {
+        $syntax = new Syntax('? equals ?', 'stdClass::method');
+        $syntax->setDescription('foo bar');
+        $this->assert($syntax->getDescription(), equals, 'foo bar');
+    }
 }
