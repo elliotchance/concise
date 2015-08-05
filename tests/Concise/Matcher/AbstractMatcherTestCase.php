@@ -16,17 +16,6 @@ abstract class AbstractMatcherTestCase extends TestCase
         );
     }
 
-    public function testCanRegisterMatcher()
-    {
-        $parser = new MatcherParser();
-        $this->assert($parser->registerMatcher($this->matcher), is_true);
-    }
-
-    public function testAtLeastOneTagExists()
-    {
-        $this->assert($this->matcher->getTags(), is_not_empty_array);
-    }
-
     protected function createStdClassThatCanBeCastToString($value)
     {
         return $this->mock()->stub(array('__toString' => $value))->get();

@@ -24,14 +24,7 @@ class Module
     public function __construct($name, array $syntaxes = array())
     {
         $this->name = $name;
-        foreach ($syntaxes as $syntax => $data) {
-            if (!array_key_exists('method', $data)) {
-                throw new InvalidArgumentException(
-                    "Missing 'method' for '$syntax'."
-                );
-            }
-            $this->syntaxes[] = new Syntax($syntax, $data['method']);
-        }
+        $this->setSyntaxes($syntaxes);
     }
 
     public function getName()
@@ -52,8 +45,24 @@ class Module
         $this->description = $description;
     }
 
+    /**
+     * @return Syntax[]
+     */
     public function getSyntaxes()
     {
         return $this->syntaxes;
+    }
+
+    public function setSyntaxes(array $syntaxes)
+    {
+        $this->syntaxes = [];
+        foreach ($syntaxes as $syntax => $data) {
+            if (!array_key_exists('method', $data)) {
+                throw new InvalidArgumentException(
+                    "Missing 'method' for '$syntax'."
+                );
+            }
+            $this->syntaxes[] = new Syntax($syntax, $data['method']);
+        }
     }
 }

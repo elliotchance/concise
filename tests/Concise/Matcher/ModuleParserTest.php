@@ -109,7 +109,9 @@ class ModuleParserTest extends TestCase
                 'name' => "test",
                 'description' => 'desc',
                 'syntaxes' => [
-                    '? equals ?' => 1
+                    '? equals ?' => [
+                        'method' => 'stdClass::foo',
+                    ]
                 ]
             ]
         ];

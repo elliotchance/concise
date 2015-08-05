@@ -2,9 +2,9 @@
 
 namespace Concise;
 
-use Concise\Matcher\Between;
 use Concise\Matcher\False;
 use Concise\Matcher\True;
+use Concise\Modules\Numbers\Between;
 use Concise\Syntax\MatcherParser;
 use PHPUnit_Framework_AssertionFailedError;
 

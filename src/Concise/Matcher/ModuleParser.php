@@ -33,6 +33,7 @@ class ModuleParser
         if (!is_array($tree['module']['syntaxes'])) {
             $this->error("The module syntaxes must be an array.");
         }
+        $module->setSyntaxes($tree['module']['syntaxes']);
 
         return $module;
     }

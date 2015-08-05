@@ -1,6 +1,9 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Numbers;
+
+use Concise\Matcher\AbstractNestedMatcherTestCase;
+use Concise\Matcher\Tag;
 
 /**
  * @group matcher
@@ -40,7 +43,7 @@ class BetweenTest extends AbstractNestedMatcherTestCase
 
     public function tags()
     {
-        return array(Tag::NUMBERS);
+        return array();
     }
 
     /**

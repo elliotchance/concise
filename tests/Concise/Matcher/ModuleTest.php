@@ -55,4 +55,19 @@ class ModuleTest extends TestCase
     {
         new Module('Foo', ['? equals ?' => []]);
     }
+
+    public function testSetModuleSyntaxes()
+    {
+        $module = new Module('Foo');
+        $module->setSyntaxes(['? equals ?' => ['method' => 'stdClass::foo']]);
+        $this->assert(count($module->getSyntaxes()), equals, 1);
+    }
+
+    public function testSetModuleSyntaxesReplacesOldOnes()
+    {
+        $module = new Module('Foo');
+        $module->setSyntaxes(['? foo ?' => ['method' => 'stdClass::foo']]);
+        $module->setSyntaxes(['? bar ?' => ['method' => 'stdClass::foo']]);
+        $this->assert(count($module->getSyntaxes()), equals, 1);
+    }
 }

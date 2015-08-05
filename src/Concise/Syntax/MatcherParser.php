@@ -4,6 +4,8 @@ namespace Concise\Syntax;
 
 use Concise\Assertion;
 use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\Module;
+use Concise\Matcher\ModuleParser;
 use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Validation\ArgumentChecker;
 use Exception;
@@ -36,6 +38,11 @@ class MatcherParser
      * @var array
      */
     protected $syntaxCache = array();
+
+    /**
+     * @var Module[]
+     */
+    protected $modules = array();
 
     public function __construct()
     {
@@ -86,6 +93,19 @@ class MatcherParser
         if (array_key_exists($rawSyntax, $this->syntaxCache)) {
             return $this->syntaxCache[$rawSyntax] + $options;
         }
+
+        foreach ($this->modules as $module) {
+            foreach ($module->getSyntaxes() as $s) {
+                if ($s->getRawSyntax() == $rawSyntax) {
+                    $class = $s->getClass();
+                    return [
+                        'matcher' => new $class(),
+                        'originalSyntax' => $syntax,
+                    ];
+                }
+            }
+        }
+
         throw new NoMatcherFoundException(array($syntax));
     }
 
@@ -217,6 +237,8 @@ class MatcherParser
         }
 
         $this->autoloadAllMatchers();
+        $parser = new ModuleParser();
+        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Numbers/numbers.yml');
     }
 
     /**

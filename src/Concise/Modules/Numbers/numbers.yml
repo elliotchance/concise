@@ -2,8 +2,10 @@ module:
   name: Numbers
   syntaxes:
     "?:number is between ?:number and ?:number":
+      method: Concise\Modules\Numbers\Between::match
       description: |
         A number must be between two values (inclusive), returns value.
     "?:number between ?:number and ?:number":
+      method: Concise\Modules\Numbers\Between::match
       description: |
         A number must be between two values (inclusive), returns value.
