@@ -42,7 +42,17 @@ class ModuleTest extends TestCase
 
     public function testModuleSyntaxesSetInConstructor()
     {
-        $module = new Module('Foo', ['? equals ?' => []]);
-        $this->assert($module->getSyntaxes(), equals, ['? equals ?' => []]);
+        $module =
+            new Module('Foo', ['? equals ?' => ['method' => 'stdClass::foo']]);
+        $this->assert(count($module->getSyntaxes()), equals, 1);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Missing 'method' for '? equals ?'.
+     */
+    public function testMethodIsMissing()
+    {
+        new Module('Foo', ['? equals ?' => []]);
     }
 }

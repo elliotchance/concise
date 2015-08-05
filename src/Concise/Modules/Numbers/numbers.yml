@@ -1,0 +1,8 @@
+module:
+  syntaxes:
+    "?:number is between ?:number and ?:number":
+      description: |
+        A number must be between two values (inclusive), returns value.
+    "?:number between ?:number and ?:number":
+      description: |
+        A number must be between two values (inclusive), returns value.

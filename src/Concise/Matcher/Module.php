@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use InvalidArgumentException;
+
 class Module
 {
     /**
@@ -17,12 +19,19 @@ class Module
     /**
      * @var array
      */
-    protected $syntaxes;
+    protected $syntaxes = [];
 
     public function __construct($name, array $syntaxes = array())
     {
         $this->name = $name;
-        $this->syntaxes = $syntaxes;
+        foreach ($syntaxes as $syntax => $data) {
+            if (!array_key_exists('method', $data)) {
+                throw new InvalidArgumentException(
+                    "Missing 'method' for '$syntax'."
+                );
+            }
+            $this->syntaxes[] = new Syntax($syntax, $data['method']);
+        }
     }
 
     public function getName()
