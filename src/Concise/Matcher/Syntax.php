@@ -8,12 +8,21 @@ class Syntax
 {
     protected $syntax;
 
+    protected $class;
+
+    protected $method;
+
     public function __construct($syntax, $method)
     {
-        list($class,) = explode("::", $method);
-        if (!class_exists($class)) {
+        if (strpos($method, '::') === false) {
             throw new InvalidArgumentException(
-                "Class '$class' does not exist."
+                "Method must be in the form of <class>::<method>"
+            );
+        }
+        list($this->class, $this->method) = explode("::", $method);
+        if (!class_exists($this->class)) {
+            throw new InvalidArgumentException(
+                "Class '$this->class' does not exist."
             );
         }
         $this->syntax = $syntax;
@@ -21,17 +30,17 @@ class Syntax
 
     public function getSyntax()
     {
-        return '? equals ?';
+        return $this->syntax;
     }
 
     public function getClass()
     {
-        return 'stdClass';
+        return $this->class;
     }
 
     public function getMethod()
     {
-        return 'method';
+        return $this->method;
     }
 
     public function getRawSyntax()

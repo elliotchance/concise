@@ -24,7 +24,7 @@ class SyntaxText extends TestCase
      */
     public function testClassMustExist()
     {
-        new Syntax('? equals ?', 'FooBar');
+        new Syntax('? equals ?', 'FooBar::method');
     }
 
     public function testGetMethod()
@@ -38,5 +38,14 @@ class SyntaxText extends TestCase
         $syntax =
             new Syntax('?:int does not equal ?:string', 'stdClass::method');
         $this->assert($syntax->getRawSyntax(), equals, '? does not equal ?');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Method must be in the form of <class>::<method>
+     */
+    public function testBadMethodFormat()
+    {
+        new Syntax('? equals ?', 'stdClass');
     }
 }
