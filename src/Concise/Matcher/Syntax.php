@@ -8,4 +8,9 @@ class Syntax
     {
         return '? equals ?';
     }
+
+    public function getClass()
+    {
+        return 'stdClass';
+    }
 }
