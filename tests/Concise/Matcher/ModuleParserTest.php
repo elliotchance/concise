@@ -114,4 +114,14 @@ class ModuleParserTest extends TestCase
             ]
         ];
     }
+
+    public function testLoadModuleFromFile()
+    {
+        $loader = new ModuleParser();
+        $module =
+            $loader->parseFromFile(
+                __DIR__ . '/../../../src/Concise/Modules/Numbers/numbers.yml'
+            );
+        $this->assert($module->getName(), equals, 'Numbers');
+    }
 }

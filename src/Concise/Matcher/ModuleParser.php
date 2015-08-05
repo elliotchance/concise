@@ -3,6 +3,7 @@
 namespace Concise\Matcher;
 
 use InvalidArgumentException;
+use Symfony\Component\Yaml\Yaml;
 
 class ModuleParser
 {
@@ -34,6 +35,11 @@ class ModuleParser
         }
 
         return $module;
+    }
+
+    public function parseFromFile($filePath)
+    {
+        return $this->parse(Yaml::parse(file_get_contents($filePath)));
     }
 
     protected function error($message)

@@ -1,4 +1,5 @@
 module:
+  name: Numbers
   syntaxes:
     "?:number is between ?:number and ?:number":
       description: |
