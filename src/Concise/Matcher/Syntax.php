@@ -6,12 +6,17 @@ use InvalidArgumentException;
 
 class Syntax
 {
+    protected $syntax;
+
     public function __construct($syntax, $method)
     {
-        list($class, ) = explode("::", $method);
+        list($class,) = explode("::", $method);
         if (!class_exists($class)) {
-            throw new InvalidArgumentException("Class '$class' does not exist.");
+            throw new InvalidArgumentException(
+                "Class '$class' does not exist."
+            );
         }
+        $this->syntax = $syntax;
     }
 
     public function getSyntax()
@@ -27,5 +32,10 @@ class Syntax
     public function getMethod()
     {
         return 'method';
+    }
+
+    public function getRawSyntax()
+    {
+        return preg_replace('/\\?:[^\s$]+/i', '?', $this->syntax);
     }
 }

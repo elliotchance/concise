@@ -32,4 +32,11 @@ class SyntaxText extends TestCase
         $syntax = new Syntax('? equals ?', 'stdClass::method');
         $this->assert($syntax->getMethod(), equals, 'method');
     }
+
+    public function testGetRawSyntax()
+    {
+        $syntax =
+            new Syntax('?:int does not equal ?:string', 'stdClass::method');
+        $this->assert($syntax->getRawSyntax(), equals, '? does not equal ?');
+    }
 }
