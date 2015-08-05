@@ -8,13 +8,13 @@ class SyntaxText extends TestCase
 {
     public function testGetSyntax()
     {
-        $syntax = new Syntax('? equals ?', 'stdClass');
+        $syntax = new Syntax('? equals ?', 'stdClass::method');
         $this->assert($syntax->getSyntax(), equals, '? equals ?');
     }
 
     public function testGetClass()
     {
-        $syntax = new Syntax('? equals ?', 'stdClass');
+        $syntax = new Syntax('? equals ?', 'stdClass::method');
         $this->assert($syntax->getClass(), equals, 'stdClass');
     }
 
@@ -25,5 +25,11 @@ class SyntaxText extends TestCase
     public function testClassMustExist()
     {
         new Syntax('? equals ?', 'FooBar');
+    }
+
+    public function testGetMethod()
+    {
+        $syntax = new Syntax('? equals ?', 'stdClass::method');
+        $this->assert($syntax->getMethod(), equals, 'method');
     }
 }

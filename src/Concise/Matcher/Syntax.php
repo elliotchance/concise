@@ -6,8 +6,9 @@ use InvalidArgumentException;
 
 class Syntax
 {
-    public function __construct($syntax, $class)
+    public function __construct($syntax, $method)
     {
+        list($class, ) = explode("::", $method);
         if (!class_exists($class)) {
             throw new InvalidArgumentException("Class '$class' does not exist.");
         }
@@ -21,5 +22,10 @@ class Syntax
     public function getClass()
     {
         return 'stdClass';
+    }
+
+    public function getMethod()
+    {
+        return 'method';
     }
 }
