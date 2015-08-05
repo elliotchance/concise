@@ -8,7 +8,7 @@ class SyntaxText extends TestCase
 {
     public function testGetSyntax()
     {
-        $syntax = new Syntax('? equals ?');
+        $syntax = new Syntax('? equals ?', 'stdClass');
         $this->assert($syntax->getSyntax(), equals, '? equals ?');
     }
 
@@ -16,5 +16,14 @@ class SyntaxText extends TestCase
     {
         $syntax = new Syntax('? equals ?', 'stdClass');
         $this->assert($syntax->getClass(), equals, 'stdClass');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Class 'FooBar' does not exist.
+     */
+    public function testClassMustExist()
+    {
+        new Syntax('? equals ?', 'FooBar');
     }
 }
