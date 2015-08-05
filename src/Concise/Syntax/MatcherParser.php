@@ -238,7 +238,9 @@ class MatcherParser
 
         $this->autoloadAllMatchers();
         $parser = new ModuleParser();
+        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Booleans/booleans.yml');
         $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Numbers/numbers.yml');
+        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Urls/urls.yml');
     }
 
     /**
@@ -275,6 +277,13 @@ class MatcherParser
             $syntaxes = $service->process($matcher->supportedSyntaxes());
             $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
         }
+
+        foreach ($this->modules as $module) {
+            foreach ($module->getSyntaxes() as $syntax) {
+                $r = array_merge($r, $this->getWordsForSyntaxes(array($syntax->getSyntax() => '')));
+            }
+        }
+
         $r = array_unique($r);
         sort($r);
 

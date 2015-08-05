@@ -1,21 +1,13 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Urls;
+
+use Concise\Matcher\AbstractMatcher;
 
 class UrlHasPart extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
-        return array(
-            'url ?:string has scheme ?:string' => 'URL has scheme.',
-            'url ?:string has host ?:string' => 'URL has host.',
-            'url ?:string has port ?:int' => 'URL has port.',
-            'url ?:string has user ?:string' => 'URL has user.',
-            'url ?:string has password ?:string' => 'URL has password.',
-            'url ?:string has path ?:string' => 'URL has path.',
-            'url ?:string has query ?:string' => 'URL has query.',
-            'url ?:string has fragment ?:string' => 'URL has fragment.',
-        );
     }
 
     public function match($syntax, array $data = array())
@@ -41,6 +33,6 @@ class UrlHasPart extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::URLS);
+        return array();
     }
 }

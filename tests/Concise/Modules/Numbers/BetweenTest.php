@@ -3,7 +3,6 @@
 namespace Concise\Modules\Numbers;
 
 use Concise\Matcher\AbstractNestedMatcherTestCase;
-use Concise\Matcher\Tag;
 
 /**
  * @group matcher

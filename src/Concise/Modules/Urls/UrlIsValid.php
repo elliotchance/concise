@@ -1,14 +1,14 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Urls;
+
+use Concise\Matcher\AbstractMatcher;
 
 class UrlIsValid extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
-        return array(
-            'url ?:string is valid' => 'Validate URL.',
-        );
+        return array();
     }
 
     public function match($syntax, array $data = array())
@@ -18,6 +18,6 @@ class UrlIsValid extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::URLS);
+        return array();
     }
 }

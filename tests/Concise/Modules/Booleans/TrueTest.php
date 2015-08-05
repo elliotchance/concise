@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Booleans;
+
+use Concise\Matcher\AbstractMatcherTestCase;
 
 /**
  * @group matcher
@@ -20,6 +22,6 @@ class TrueTest extends AbstractMatcherTestCase
 
     public function tags()
     {
-        return array(Tag::BOOLEANS);
+        return array();
     }
 }

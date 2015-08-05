@@ -1,0 +1,6 @@
+module:
+  name: Numbers
+  syntaxes:
+    "true":
+      method: Concise\Modules\Booleans\True::match
+      description: Always pass.

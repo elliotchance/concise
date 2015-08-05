@@ -1,0 +1,38 @@
+module:
+  name: URLs
+  syntaxes:
+    "url ?:string is valid":
+      method: Concise\Modules\Urls\UrlIsValid::match
+      description: Validate URL.
+
+    "url ?:string has scheme ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has scheme.
+
+    "url ?:string has host ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has host.
+
+    "url ?:string has port ?:int":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has port.
+
+    "url ?:string has user ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has user.
+
+    "url ?:string has password ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has password.
+
+    "url ?:string has path ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has path.
+
+    "url ?:string has query ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has query.
+
+    "url ?:string has fragment ?:string":
+      method: Concise\Modules\Urls\UrlHasPart::match
+      description: URL has fragment.

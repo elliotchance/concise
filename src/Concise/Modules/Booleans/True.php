@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Booleans;
+
+use Concise\Matcher\AbstractMatcher;
 
 class True extends AbstractMatcher
 {
@@ -18,6 +20,6 @@ class True extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::BOOLEANS);
+        return array();
     }
 }

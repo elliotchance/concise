@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Urls;
+
+use Concise\Matcher\AbstractMatcherTestCase;
 
 /**
  * @group matcher
@@ -25,6 +27,6 @@ class UrlIsValidTest extends AbstractMatcherTestCase
 
     public function tags()
     {
-        return array(Tag::URLS);
+        return array();
     }
 }
