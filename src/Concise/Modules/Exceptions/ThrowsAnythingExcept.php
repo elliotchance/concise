@@ -1,13 +1,15 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\DidNotMatchException;
 
 class ThrowsAnythingExcept extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:callable throws anything except ?:class' => 'Assert any exception except a specific one was thrown.',
         );
     }
 
@@ -31,6 +33,6 @@ class ThrowsAnythingExcept extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

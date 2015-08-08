@@ -1,13 +1,15 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\DidNotMatchException;
 
 class ThrowsExactly extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:callable throws exactly ?:class' => 'Assert a specific exception was thrown.',
         );
     }
 
@@ -32,6 +34,6 @@ class ThrowsExactly extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Closure;
+use Concise\Matcher\AbstractExceptionTestCase;
+use Concise\Matcher\DidNotMatchException;
 
 /**
  * @group matcher
@@ -52,7 +56,7 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
      * @dataProvider exceptionTests
      */
     public function testThrowsAnythingExcept(
-        \Closure $method,
+        Closure $method,
         $expectedException,
         $expectToThrow
     ) {
@@ -72,7 +76,7 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
      * @dataProvider exceptionThrowsAnythingExceptTestMessages
      */
     public function testThrowsAnythingExceptMessages(
-        \Closure $method,
+        Closure $method,
         $expectedException,
         $failureMessage
     ) {
@@ -85,6 +89,6 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
 
     public function tags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

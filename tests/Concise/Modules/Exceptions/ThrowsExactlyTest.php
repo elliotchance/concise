@@ -1,16 +1,19 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Closure;
+use Concise\Matcher\AbstractExceptionTestCase;
 
 /**
  * @group matcher
  */
-class ThrowsTest extends AbstractExceptionTestCase
+class ThrowsExactlyTest extends AbstractExceptionTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new Throws();
+        $this->matcher = new ThrowsExactly();
     }
 
     public function exceptionTests()
@@ -21,44 +24,53 @@ class ThrowsTest extends AbstractExceptionTestCase
                 array('throwNothing', 'expectMyException', 'FAIL'),
                 array('throwException', 'expectException', 'PASS'),
                 array('throwException', 'expectMyException', 'FAIL'),
-                array('throwMyException', 'expectException', 'PASS'),
+                array('throwMyException', 'expectException', 'FAIL'),
                 array('throwMyException', 'expectMyException', 'PASS'),
                 array('throwMyException', 'expectOtherException', 'FAIL'),
-                array('throwOtherException', 'expectException', 'PASS'),
+                array('throwOtherException', 'expectException', 'FAIL'),
                 array('throwOtherException', 'expectMyException', 'FAIL'),
-                array('throwOtherException', 'expectOtherException', 'PASS'),
             )
         );
     }
 
-    public function exceptionThrowsTestMessages()
+    public function exceptionThrowsExactlyTestMessages()
     {
         return $this->createExceptionTests(
             array(
                 array(
                     'throwNothing',
                     'expectException',
-                    "Expected Exception to be thrown, but nothing was thrown."
+                    "Expected exactly Exception to be thrown, but nothing was thrown."
                 ),
                 array(
                     'throwNothing',
                     'expectMyException',
-                    "Expected Concise\Matcher\MyException to be thrown, but nothing was thrown."
+                    "Expected exactly Concise\Matcher\MyException to be thrown, but nothing was thrown."
                 ),
                 array(
                     'throwException',
                     'expectMyException',
-                    "Expected Concise\Matcher\MyException to be thrown, but Exception was thrown."
+                    "Expected exactly Concise\Matcher\MyException to be thrown, but Exception was thrown."
+                ),
+                array(
+                    'throwMyException',
+                    'expectException',
+                    "Expected exactly Exception to be thrown, but Concise\Matcher\MyException was thrown."
                 ),
                 array(
                     'throwMyException',
                     'expectOtherException',
-                    "Expected Concise\Matcher\OtherException to be thrown, but Concise\Matcher\MyException was thrown."
+                    "Expected exactly Concise\Matcher\OtherException to be thrown, but Concise\Matcher\MyException was thrown."
+                ),
+                array(
+                    'throwOtherException',
+                    'expectException',
+                    "Expected exactly Exception to be thrown, but Concise\Matcher\OtherException was thrown."
                 ),
                 array(
                     'throwOtherException',
                     'expectMyException',
-                    "Expected Concise\Matcher\MyException to be thrown, but Concise\Matcher\OtherException was thrown."
+                    "Expected exactly Concise\Matcher\MyException to be thrown, but Concise\Matcher\OtherException was thrown."
                 ),
             )
         );
@@ -67,34 +79,34 @@ class ThrowsTest extends AbstractExceptionTestCase
     /**
      * @dataProvider exceptionTests
      */
-    public function testThrows(
-        \Closure $method,
+    public function testThrowsExactly(
+        Closure $method,
         $expectedException,
         $expectToThrow
     ) {
         if ($expectToThrow) {
             $this->assertMatcherFailure(
-                '? throws ?',
+                '? throws exactly ?',
                 array($method, $expectedException)
             );
         } else {
             $this->assertMatcherSuccess(
-                '? throws ?',
+                '? throws exactly ?',
                 array($method, $expectedException)
             );
         }
     }
 
     /**
-     * @dataProvider exceptionThrowsTestMessages
+     * @dataProvider exceptionThrowsExactlyTestMessages
      */
-    public function testThrowsMessages(
-        \Closure $method,
+    public function testThrowsExactlyMessages(
+        Closure $method,
         $expectedException,
         $failureMessage
     ) {
         $this->assertMatcherFailureMessage(
-            '? throws ?',
+            '? throws exactly ?',
             array($method, $expectedException),
             $failureMessage
         );
@@ -102,6 +114,6 @@ class ThrowsTest extends AbstractExceptionTestCase
 
     public function tags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

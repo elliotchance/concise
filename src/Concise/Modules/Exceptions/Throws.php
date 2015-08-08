@@ -1,17 +1,19 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\DidNotMatchException;
+use Exception;
 
 class Throws extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
-        return array(
-            '?:callable throws ?:class' => 'Assert a specific exception was thrown.',
-        );
+        return array();
     }
 
-    protected function isKindOfClass(\Exception $exception, $expectedClass)
+    protected function isKindOfClass(Exception $exception, $expectedClass)
     {
         return (get_class($exception) === $expectedClass) ||
         is_subclass_of($exception, $expectedClass);
@@ -21,7 +23,7 @@ class Throws extends AbstractMatcher
     {
         try {
             $data[0]();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             if ($this->isKindOfClass($exception, $data[1])) {
                 return true;
             }
@@ -37,6 +39,6 @@ class Throws extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

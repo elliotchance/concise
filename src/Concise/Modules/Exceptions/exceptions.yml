@@ -1,0 +1,18 @@
+module:
+  name: Exceptions
+  syntaxes:
+    "?:callable throws ?:class":
+      method: Concise\Modules\Exceptions\Throws::match
+      description: Assert a specific exception was thrown.
+
+    "?:callable throws anything except ?:class":
+      method: Concise\Modules\Exceptions\ThrowsAnythingExcept::match
+      description: Assert any exception except a specific one was thrown.
+
+    "?:callable throws exactly ?:class":
+      method: Concise\Modules\Exceptions\ThrowsExactly::match
+      description: Assert a specific exception was thrown.
+
+    "?:callable throws exception":
+      method: Concise\Modules\Exceptions\ThrowsExactly::match
+      description: Assert an exception was thrown.

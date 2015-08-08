@@ -167,7 +167,7 @@ class AssertionTest extends TestCase
         $this->assert(
             $block,
             throws,
-            '\PHPUnit_Framework_AssertionFailedError'
+            'PHPUnit_Framework_AssertionFailedError'
         );
     }
 

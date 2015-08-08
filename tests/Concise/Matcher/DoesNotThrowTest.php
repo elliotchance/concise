@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use Closure;
+
 /**
  * @group matcher
  */
@@ -68,7 +70,7 @@ class DoesNotThrowTest extends AbstractExceptionTestCase
      * @dataProvider exceptionTests
      */
     public function testDoesNotThrow(
-        \Closure $method,
+        Closure $method,
         $expectedException,
         $expectToThrow
     ) {
@@ -89,7 +91,7 @@ class DoesNotThrowTest extends AbstractExceptionTestCase
      * @dataProvider exceptionDoesNotThrowTestMessages
      */
     public function testDoesNotThrowMessages(
-        \Closure $method,
+        Closure $method,
         $expectedException,
         $failureMessage
     ) {
@@ -102,6 +104,6 @@ class DoesNotThrowTest extends AbstractExceptionTestCase
 
     public function tags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

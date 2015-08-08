@@ -1,6 +1,9 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
+
+use Concise\Matcher\AbstractExceptionTestCase;
+use Concise\Matcher\DidNotMatchException;
 
 /**
  * @group matcher
@@ -63,6 +66,6 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
 
     public function tags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

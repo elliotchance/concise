@@ -239,6 +239,7 @@ class MatcherParser
         $this->autoloadAllMatchers();
         $parser = new ModuleParser();
         $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Booleans/booleans.yml');
+        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Exceptions/exceptions.yml');
         $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Numbers/numbers.yml');
         $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Urls/urls.yml');
     }

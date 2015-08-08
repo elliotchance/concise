@@ -2,6 +2,8 @@
 
 namespace Concise\Matcher;
 
+use Concise\Modules\Exceptions\Throws;
+
 class DoesNotThrow extends Throws
 {
     public function supportedSyntaxes()

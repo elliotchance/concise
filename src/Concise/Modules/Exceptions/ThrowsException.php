@@ -1,7 +1,9 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Exceptions;
 
+use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\DidNotMatchException;
 use Exception;
 
 class ThrowsException extends AbstractMatcher
@@ -9,7 +11,6 @@ class ThrowsException extends AbstractMatcher
     public function supportedSyntaxes()
     {
         return array(
-            '?:callable throws exception' => 'Assert an exception was thrown.',
         );
     }
 
@@ -25,6 +26,6 @@ class ThrowsException extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::EXCEPTIONS);
+        return array();
     }
 }

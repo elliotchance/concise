@@ -32,7 +32,7 @@ class MockVerifyTest extends TestCase
                 $self->assertMock($mock);
             },
             throws,
-            '\PHPUnit_Framework_AssertionFailedError'
+            'PHPUnit_Framework_AssertionFailedError'
         );
     }
 
@@ -46,7 +46,7 @@ class MockVerifyTest extends TestCase
                 $self->assertMock($mock2);
             },
             throws,
-            '\PHPUnit_Framework_AssertionFailedError'
+            'PHPUnit_Framework_AssertionFailedError'
         );
     }
 
@@ -69,7 +69,7 @@ class MockVerifyTest extends TestCase
                 $self->assertMock($mock2);
             },
             throws,
-            '\PHPUnit_Framework_AssertionFailedError'
+            'PHPUnit_Framework_AssertionFailedError'
         );
     }
 
