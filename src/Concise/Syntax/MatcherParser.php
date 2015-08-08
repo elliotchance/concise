@@ -238,12 +238,21 @@ class MatcherParser
 
         $this->autoloadAllMatchers();
         $parser = new ModuleParser();
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Booleans/booleans.yml');
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Exceptions/exceptions.yml');
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Files/files.yml');
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Numbers/numbers.yml');
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Strings/strings.yml');
-        $this->modules[] = $parser->parseFromFile(__DIR__ . '/../Modules/Urls/urls.yml');
+
+        $modules = array(
+            'Basic',
+            'Booleans',
+            'Exceptions',
+            'Files',
+            'Numbers',
+            'Strings',
+            'Urls'
+        );
+        foreach ($modules as $module) {
+            $this->modules[] = $parser->parseFromFile(
+                __DIR__ . "/../Modules/$module/module.yml"
+            );
+        }
     }
 
     /**
@@ -283,7 +292,13 @@ class MatcherParser
 
         foreach ($this->modules as $module) {
             foreach ($module->getSyntaxes() as $syntax) {
-                $r = array_merge($r, $this->getWordsForSyntaxes(array($syntax->getSyntax() => '')));
+                $r =
+                    array_merge(
+                        $r,
+                        $this->getWordsForSyntaxes(
+                            array($syntax->getSyntax() => '')
+                        )
+                    );
             }
         }
 

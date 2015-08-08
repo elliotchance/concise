@@ -122,7 +122,7 @@ class ModuleParserTest extends TestCase
         $loader = new ModuleParser();
         $module =
             $loader->parseFromFile(
-                __DIR__ . '/../../../src/Concise/Modules/Numbers/numbers.yml'
+                __DIR__ . '/../../../src/Concise/Modules/Numbers/module.yml'
             );
         $this->assert($module->getName(), equals, 'Numbers');
     }

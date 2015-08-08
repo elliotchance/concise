@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Basic;
+
+use Concise\Matcher\AbstractMatcherTestCase;
 
 /**
  * @group matcher
@@ -30,6 +32,6 @@ class NotExactlyEqualsTest extends AbstractMatcherTestCase
 
     public function tags()
     {
-        return array(Tag::BASIC);
+        return array();
     }
 }
