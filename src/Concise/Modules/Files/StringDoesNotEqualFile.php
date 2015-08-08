@@ -1,13 +1,12 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Files;
 
 class StringDoesNotEqualFile extends StringEqualsFile
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:string does not equal file ?:string' => "Compare string value with the contents of a file.",
         );
     }
 

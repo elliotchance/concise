@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Files;
+
+use Concise\Matcher\AbstractFileTestCase;
 
 /**
  * @group matcher
@@ -38,6 +40,6 @@ class StringDoesNotEqualFileTest extends AbstractFileTestCase
 
     public function tags()
     {
-        return array(Tag::STRINGS);
+        return array();
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Strings;
+
+use Concise\Matcher\AbstractMatcher;
 
 class StringEndsWith extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:string ends with ?:string' => 'Assert a string ends with another string.',
         );
     }
 
@@ -19,6 +20,6 @@ class StringEndsWith extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::STRINGS);
+        return array();
     }
 }

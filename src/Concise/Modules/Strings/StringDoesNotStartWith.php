@@ -1,13 +1,12 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Strings;
 
 class StringDoesNotStartWith extends StringStartsWith
 {
     public function supportedSyntaxes()
     {
         return array(
-            '? does not start with ?' => 'Assert a string does not not start (begin) with another string.',
         );
     }
 

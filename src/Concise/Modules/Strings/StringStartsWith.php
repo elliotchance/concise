@@ -1,13 +1,14 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Strings;
+
+use Concise\Matcher\AbstractMatcher;
 
 class StringStartsWith extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:string starts with ?:string' => 'Assert a string starts (begins) with another string.',
         );
     }
 
@@ -18,6 +19,6 @@ class StringStartsWith extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::STRINGS);
+        return array();
     }
 }

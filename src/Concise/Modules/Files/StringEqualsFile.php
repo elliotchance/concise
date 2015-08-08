@@ -1,13 +1,15 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Files;
+
+use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\DidNotMatchException;
 
 class StringEqualsFile extends AbstractMatcher
 {
     public function supportedSyntaxes()
     {
         return array(
-            '?:string equals file ?:string' => "Compare string value with the contents of a file.",
         );
     }
 
@@ -22,6 +24,6 @@ class StringEqualsFile extends AbstractMatcher
 
     public function getTags()
     {
-        return array(Tag::FILES, Tag::STRINGS);
+        return array();
     }
 }

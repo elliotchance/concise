@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Modules\Strings;
+
+use Concise\Matcher\AbstractMatcherTestCase;
 
 /**
  * @group matcher
@@ -30,6 +32,6 @@ class StringDoesNotStartWithTest extends AbstractMatcherTestCase
 
     public function tags()
     {
-        return array(Tag::STRINGS);
+        return array();
     }
 }

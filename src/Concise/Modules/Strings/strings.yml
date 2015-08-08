@@ -1,0 +1,19 @@
+module:
+  name: Strings
+  syntaxes:
+    "?:string starts with ?:string":
+      method: Concise\Modules\Strings\StringStartsWith::match
+      description: Assert a string starts (begins) with another string.
+
+    "? does not end with ?":
+      method: Concise\Modules\Strings\StringDoesNotEndWith::match
+      description: Assert a string does not end with another string.
+
+    "? does not start with ?":
+      method: Concise\Modules\Strings\StringDoesNotStartWith::match
+      description: |
+        Assert a string does not not start (begin) with another string.
+
+    "?:string ends with ?:string":
+      method: Concise\Modules\Strings\StringEndsWith::match
+      description: Assert a string ends with another string.
