@@ -40,11 +40,6 @@ class BetweenTest extends AbstractNestedMatcherTestCase
         $this->assert(150, between, 123, 'and', 150);
     }
 
-    public function tags()
-    {
-        return array();
-    }
-
     /**
      * @group #219
      */

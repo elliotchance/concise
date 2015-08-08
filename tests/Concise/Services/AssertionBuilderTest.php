@@ -12,7 +12,7 @@ class AssertionBuilderTest extends TestCase
         $this->assert(
             $assertion->getMatcher(),
             instance_of,
-            '\Concise\Matcher\Equals'
+            '\Concise\Modules\Basic\Equals'
         );
     }
 
@@ -43,7 +43,7 @@ class AssertionBuilderTest extends TestCase
         $this->assert(
             $assertion->getMatcher(),
             instance_of,
-            '\Concise\Matcher\False'
+            '\Concise\Modules\Booleans\False'
         );
     }
 
@@ -63,7 +63,7 @@ class AssertionBuilderTest extends TestCase
         $this->assert(
             $assertion->getMatcher(),
             not_instance_of,
-            '\Concise\Matcher\False'
+            '\Concise\Modules\Booleans\False'
         );
     }
 

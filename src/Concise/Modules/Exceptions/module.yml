@@ -16,3 +16,11 @@ module:
     "?:callable throws exception":
       method: Concise\Modules\Exceptions\ThrowsExactly::match
       description: Assert an exception was thrown.
+
+    "?:callable does not throw ?:class":
+      method: Concise\Modules\Exceptions\DoesNotThrow::match
+      description: Assert that a specific exception is not thrown.
+
+    "?:callable does not throw exception":
+      method: Concise\Modules\Exceptions\DoesNotThrowException::match
+      description: Assert that no exception is thrown.

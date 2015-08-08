@@ -3,7 +3,6 @@
 namespace Concise\Modules\Exceptions;
 
 use Closure;
-use Concise\Matcher\AbstractExceptionTestCase;
 use Concise\Matcher\DidNotMatchException;
 
 /**
@@ -41,12 +40,12 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
                 array(
                     'throwException',
                     'expectException',
-                    "Expected any exception except Exception to be thrown, but Exception was thrown."
+                    'Expected any exception except Exception to be thrown, but Exception was thrown.'
                 ),
                 array(
                     'throwMyException',
                     'expectMyException',
-                    "Expected any exception except Concise\Matcher\MyException to be thrown, but Concise\Matcher\MyException was thrown."
+                    'Expected any exception except Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
                 ),
             )
         );
@@ -85,10 +84,5 @@ class ThrowsAnythingExceptTest extends AbstractExceptionTestCase
             array($method, $expectedException),
             $failureMessage
         );
-    }
-
-    public function tags()
-    {
-        return array();
     }
 }

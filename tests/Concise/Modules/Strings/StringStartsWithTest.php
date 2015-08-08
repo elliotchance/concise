@@ -29,9 +29,4 @@ class StringStartsWithTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"abc" starts with "abcd"');
     }
-
-    public function tags()
-    {
-        return array();
-    }
 }

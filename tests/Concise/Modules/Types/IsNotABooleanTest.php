@@ -1,0 +1,37 @@
+<?php
+
+namespace Concise\Modules\Types;
+
+use Concise\Matcher\AbstractMatcherTestCase;
+
+/**
+ * @group matcher
+ */
+class IsNotABooleanTest extends AbstractMatcherTestCase
+{
+    public function setUp()
+    {
+        parent::setUp();
+        $this->matcher = new IsNotABoolean();
+    }
+
+    public function testTrueIsABoolean()
+    {
+        $this->assertFailure(true, is_not_a_boolean);
+    }
+
+    public function testAStringIsNotABoolean()
+    {
+        $this->assert("true", is_not_a_boolean);
+    }
+
+    public function testFalseIsABoolean()
+    {
+        $this->assertFailure(false, is_not_a_boolean);
+    }
+
+    public function testAlternativeShorterSyntax()
+    {
+        $this->assertFailure(true, is_not_a_bool);
+    }
+}

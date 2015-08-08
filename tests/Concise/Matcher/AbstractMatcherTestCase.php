@@ -68,11 +68,4 @@ abstract class AbstractMatcherTestCase extends TestCase
         }
         $this->fail("Assertion did not fail.");
     }
-
-    public function testTags()
-    {
-        $this->assert($this->matcher->getTags(), has_values, $this->tags());
-    }
-
-    abstract public function tags();
 }

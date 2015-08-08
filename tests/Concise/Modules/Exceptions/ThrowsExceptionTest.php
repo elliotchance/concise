@@ -2,8 +2,8 @@
 
 namespace Concise\Modules\Exceptions;
 
-use Concise\Matcher\AbstractExceptionTestCase;
 use Concise\Matcher\DidNotMatchException;
+use Exception;
 
 /**
  * @group matcher
@@ -21,7 +21,7 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
         $throwNothing = function () {
         };
         $throwException = function () {
-            throw new \Exception();
+            throw new Exception();
         };
 
         return array(
@@ -62,10 +62,5 @@ class ThrowsExceptionTest extends AbstractExceptionTestCase
                 $e->getMessage()
             );
         }
-    }
-
-    public function tags()
-    {
-        return array();
     }
 }

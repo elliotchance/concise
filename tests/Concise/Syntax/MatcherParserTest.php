@@ -3,15 +3,8 @@
 namespace Concise\Syntax;
 
 use Concise\Matcher\AbstractMatcher;
+use Concise\Modules\Basic\Equals;
 use Concise\TestCase;
-
-class MatcherParserStub extends MatcherParser
-{
-    public function registerMatchers()
-    {
-        return parent::registerMatchers();
-    }
-}
 
 class MyBadMatcher extends AbstractMatcher
 {
@@ -44,16 +37,9 @@ class MatcherParserTest extends TestCase
 
     public function testCompileReturnsAssertion()
     {
-        $this->parser->registerMatcher(new \Concise\Matcher\Equals());
-        $matcher = $this->parser->compile('x equals y', $this->getData());
+        $matcher = MatcherParser::getInstance()
+            ->compile('x equals y', $this->getData());
         $this->assert($matcher, is_instance_of, '\Concise\Assertion');
-    }
-
-    public function testRegisteringANewMatcherReturnsTrue()
-    {
-        $this->assert(
-            $this->parser->registerMatcher(new \Concise\Matcher\Equals())
-        );
     }
 
     public function testGetInstanceIsASingleton()
@@ -72,24 +58,6 @@ class MatcherParserTest extends TestCase
     public function testGetMatcherForSyntaxThrowsExceptionIfNoMatchersAreFound()
     {
         $this->parser->getMatcherForSyntax('something');
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage registerMatchers() can only be called once.
-     */
-    public function testRegisterMatchersCanOnlyBeCalledOnce()
-    {
-        $parser = new MatcherParserStub();
-        $parser->registerMatchers();
-        $parser->registerMatchers();
-    }
-
-    public function testRegisterMatchersMustRegisterAtLeastOneMatcher()
-    {
-        $parser = new MatcherParserStub();
-        $parser->registerMatchers();
-        $this->assert(count($parser->getMatchers()), greater_than, 0);
     }
 
     public function testGetAllKeywordsReturnsAnArray()
@@ -144,16 +112,6 @@ class MatcherParserTest extends TestCase
         );
     }
 
-    public function testCanMatchSyntaxWithExpectedTypes()
-    {
-        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(
-            array('?:int foobar ?:float')
-        );
-        $this->parser->registerMatcher($matcher);
-        $assertion = $this->parser->compile('123 foobar 1.23', array());
-        $this->assert($matcher, exactly_equals, $assertion->getMatcher());
-    }
-
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage Argument 2 (123) must be regex.
@@ -161,15 +119,6 @@ class MatcherParserTest extends TestCase
     public function testWillValidateAllAttributes()
     {
         $this->assert('"abc" does not match regex 123');
-    }
-
-    public function testAnythingThatStartsWithAQuestionMarkWillNotBeConsideredAKeyword()
-    {
-        $matcher = $this->getAbstractMatcherMockWithSupportedSyntaxes(
-            array('?:int foobar ?:float')
-        );
-        $this->parser->registerMatcher($matcher);
-        $this->assert($this->parser->getKeywords(), has_value, 'foobar');
     }
 
     /**
@@ -181,43 +130,6 @@ class MatcherParserTest extends TestCase
         return $this->mock('\Concise\Matcher\AbstractMatcher')->stub(
             array('supportedSyntaxes' => $supportedSyntaxes)
         )->get();
-    }
-
-    public function testKeywordCacheIsDroppedWhenAMatcherIsAdded()
-    {
-        $matcher1 =
-            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
-        $matcher2 =
-            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('bar'));
-        $this->parser->registerMatcher($matcher1);
-        $keywords1 = $this->parser->getKeywords();
-        $this->parser->registerMatcher($matcher2);
-        $keywords2 = $this->parser->getKeywords();
-        $this->assert($keywords1, does_not_equal, $keywords2);
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Syntax 'foo' is already declared.
-     */
-    public function testAddingAMatcherWithDuplicateSyntaxThrowsException()
-    {
-        $matcher1 =
-            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
-        $matcher2 =
-            $this->getAbstractMatcherMockWithSupportedSyntaxes(array('foo'));
-        $this->parser->registerMatcher($matcher1);
-        $this->parser->registerMatcher($matcher2);
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage All assertions ('Capitols') must be lower case.
-     */
-    public function testUsingCapitolsInAssertionNamesThrowsException()
-    {
-        $matcher = new MatcherParser();
-        $matcher->registerMatcher(new MyBadMatcher());
     }
 
     public function testOnIsAKeyword()

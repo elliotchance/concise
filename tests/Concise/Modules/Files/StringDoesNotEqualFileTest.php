@@ -2,8 +2,6 @@
 
 namespace Concise\Modules\Files;
 
-use Concise\Matcher\AbstractFileTestCase;
-
 /**
  * @group matcher
  */
@@ -36,10 +34,5 @@ class StringDoesNotEqualFileTest extends AbstractFileTestCase
             does_not_equal_file,
             $this->createTempFile()
         );
-    }
-
-    public function tags()
-    {
-        return array();
     }
 }

@@ -17,3 +17,32 @@ module:
     "?:string ends with ?:string":
       method: Concise\Modules\Strings\StringEndsWith::match
       description: Assert a string ends with another string.
+
+    "?:string is blank":
+      method: Concise\Modules\Strings\IsBlank::match
+      description: Assert a string is zero length.
+
+    "?:string contains string ?:string":
+      method: Concise\Modules\Strings\ContainsString::match
+      description: A string contains a substring. Returns original string.
+
+    "?:string contains string ?:string ignoring case":
+      method: Concise\Modules\Strings\ContainsStringIgnoringCase::match
+      description: |
+        A string contains a substring (ignoring case-sensitivity). Returns
+        original string.
+
+    "?:string does not contain string ?:string":
+      method: Concise\Modules\Strings\DoesNotContainString::match
+      description: |
+        A string does not contain a substring. Returns original string.
+
+    "?:string does not contain string ?:string ignoring case":
+      method: Concise\Modules\Strings\DoesNotContainStringIgnoringCase::match
+      description: |
+        A string does not contain a substring (ignoring case-sensitivity).
+        Returns original string.
+
+    "?:string is not blank":
+      method: Concise\Modules\Strings\IsNotBlank::match
+      description: Assert a string has at least one character.

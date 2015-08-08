@@ -4,3 +4,23 @@ module:
     "true":
       method: Concise\Modules\Booleans\True::match
       description: Always pass.
+
+    "false":
+      method: Concise\Modules\Booleans\False::match
+      description: Always fail.
+
+    "? is false":
+      method: Concise\Modules\Booleans\IsFalse::match
+      description: Assert value is false.
+
+    "? is falsy":
+      method: Concise\Modules\Booleans\IsFalsy::match
+      description: Assert a value is a false-like value.
+
+    "? is true":
+      method: Concise\Modules\Booleans\IsTrue::match
+      description: Assert a value is true.
+
+    "? is truthy":
+      method: Concise\Modules\Booleans\IsTruthy::match
+      description: Assert a value is a non false-like value.

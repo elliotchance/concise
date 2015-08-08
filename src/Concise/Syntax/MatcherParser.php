@@ -6,7 +6,6 @@ use Concise\Assertion;
 use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\Module;
 use Concise\Matcher\ModuleParser;
-use Concise\Services\MatcherSyntaxAndDescription;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
@@ -14,11 +13,6 @@ use ReflectionException;
 
 class MatcherParser
 {
-    /**
-     * @var array
-     */
-    protected $matchers = array();
-
     /**
      * @var MatcherParser
      */
@@ -98,10 +92,18 @@ class MatcherParser
             foreach ($module->getSyntaxes() as $s) {
                 if ($s->getRawSyntax() == $rawSyntax) {
                     $class = $s->getClass();
-                    return [
+                    $r = [
                         'matcher' => new $class(),
-                        'originalSyntax' => $syntax,
+                        'originalSyntax' => $s->getSyntax(),
                     ];
+                    if ($this->endsWith(
+                        $this->getRawSyntax($syntax),
+                        $endsWith
+                    )
+                    ) {
+                        $r['on_error'] = $data[count($data) - 1];
+                    }
+                    return $r;
                 }
             }
         }
@@ -110,9 +112,9 @@ class MatcherParser
     }
 
     /**
-     * @param array  $data The data from the test case.
+     * @param array $data The data from the test case.
      * @param string $string
-     * @return \Concise\Assertion
+     * @return Assertion
      */
     public function compile($string, array $data = array())
     {
@@ -173,32 +175,12 @@ class MatcherParser
     }
 
     /**
-     * @param  \Concise\Matcher\AbstractMatcher $matcher
-     * @return boolean
-     */
-    public function registerMatcher(AbstractMatcher $matcher)
-    {
-        $service = new MatcherSyntaxAndDescription();
-        $allSyntaxes =
-            array_keys($service->process($matcher->supportedSyntaxes()));
-        foreach ($allSyntaxes as $syntax) {
-            $this->registerSyntax($syntax, $matcher);
-        }
-
-        $this->matchers[] = $matcher;
-        $this->clearKeywordCache();
-
-        return true;
-    }
-
-    /**
      * @return MatcherParser
      */
     public static function getInstance()
     {
         if (null === self::$instance) {
             self::$instance = new MatcherParser();
-            self::$instance->registerMatchers();
         }
 
         return self::$instance;
@@ -220,47 +202,14 @@ class MatcherParser
         }
     }
 
-    protected function autoloadAllMatchers()
+    public function loadModule($moduleYmlPath)
     {
-        foreach (scandir(__DIR__ . "/../Matcher") as $file) {
-            $class = "Concise\\Matcher\\" . substr($file, 0, strlen($file) - 4);
-            if ($this->isValidMatcher($class)) {
-                $this->registerMatcher(new $class());
-            }
-        }
-    }
-
-    protected function registerMatchers()
-    {
-        if (count($this->matchers) > 0) {
-            throw new Exception("registerMatchers() can only be called once.");
+        if (array_key_exists($moduleYmlPath, $this->modules)) {
+            return;
         }
 
-        $this->autoloadAllMatchers();
         $parser = new ModuleParser();
-
-        $modules = array(
-            'Basic',
-            'Booleans',
-            'Exceptions',
-            'Files',
-            'Numbers',
-            'Strings',
-            'Urls'
-        );
-        foreach ($modules as $module) {
-            $this->modules[] = $parser->parseFromFile(
-                __DIR__ . "/../Modules/$module/module.yml"
-            );
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getMatchers()
-    {
-        return $this->matchers;
+        $this->modules[$moduleYmlPath] = $parser->parseFromFile($moduleYmlPath);
     }
 
     protected function getWordsForSyntaxes(array $syntaxes)
@@ -283,22 +232,14 @@ class MatcherParser
     protected function getRawKeywords()
     {
         $r = array('error', 'on');
-        foreach ($this->getMatchers() as $matcher) {
-            $service = new MatcherSyntaxAndDescription();
-            /** @var $matcher \Concise\Matcher\AbstractMatcher */
-            $syntaxes = $service->process($matcher->supportedSyntaxes());
-            $r = array_merge($r, $this->getWordsForSyntaxes($syntaxes));
-        }
-
         foreach ($this->modules as $module) {
             foreach ($module->getSyntaxes() as $syntax) {
-                $r =
-                    array_merge(
-                        $r,
-                        $this->getWordsForSyntaxes(
-                            array($syntax->getSyntax() => '')
-                        )
-                    );
+                $r = array_merge(
+                    $r,
+                    $this->getWordsForSyntaxes(
+                        array($syntax->getSyntax() => '')
+                    )
+                );
             }
         }
 
@@ -326,19 +267,13 @@ class MatcherParser
     public function getAllMatcherDescriptions()
     {
         $r = array();
-        $service = new MatcherSyntaxAndDescription();
-        foreach ($this->getMatchers() as $matcher) {
-            /** @var $matcher \Concise\Matcher\AbstractMatcher */
-            $syntaxes = $service->process($matcher->supportedSyntaxes());
-            foreach ($syntaxes as &$syntax) {
-                /** @var $matcher \Concise\Matcher\AbstractMatcher */
-                $syntax = array(
-                    'description' => $syntax,
-                    'tags' => $matcher->getTags(),
-                    'matcher' => get_class($matcher),
+        foreach ($this->modules as $module) {
+            foreach ($module->getSyntaxes() as $syntax) {
+                $r[$syntax->getSyntax()] = array(
+                    'description' => $syntax->getDescription(),
+                    'method' => $syntax->getMethod(),
                 );
             }
-            $r += $syntaxes;
         }
 
         return $r;

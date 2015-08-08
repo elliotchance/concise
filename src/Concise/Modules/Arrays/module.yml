@@ -1,0 +1,95 @@
+module:
+  name: Arrays
+  syntaxes:
+    "?:array does not have key ?:string with value ?":
+      method: Concise\Modules\Arrays\DoesNotHaveItem::match
+      description: Assert an array does not have key and value item.
+
+    "?:array does not have item ?:array":
+      method: Concise\Modules\Arrays\DoesNotHaveItem::match
+      description: Assert an array does not have key and value item.
+
+    "?:array does not have key ?:int,string":
+      method: Concise\Modules\Arrays\DoesNotHaveKey::match
+      description: Assert an array does not have a key.
+
+    "?:array does not have keys ?:array":
+      method: Concise\Modules\Arrays\DoesNotHaveKeys::match
+      description: Assert an array does not contain any keys.
+
+    "?:array does not have value ?":
+      method: Concise\Modules\Arrays\DoesNotHaveValue::match
+      description: |
+        Assert an array does not have any occurrences of the given value.
+
+    "?:array does not contain ?":
+      method: Concise\Modules\Arrays\DoesNotHaveValue::match
+      description: |
+        Assert an array does not have any occurrences of the given value.
+
+    "?:array has key ?:string with value ?":
+      method: Concise\Modules\Arrays\HasItem::match
+      description: Assert an array has key and value item.
+
+    "?:array has item ?:array":
+      method: Concise\Modules\Arrays\HasItem::match
+      description: Assert an array has key and value item.
+
+    "?:array has items ?:array":
+      method: Concise\Modules\Arrays\HasItems::match
+      description: Assert an array has all key and value items.
+
+    "?:array has key ?:int,string":
+      method: Concise\Modules\Arrays\HasKey::match
+      description: Assert an array has key, returns value.
+
+    "?:array has keys ?:array":
+      method: Concise\Modules\Arrays\HasKeys::match
+      description: Assert an array has several keys in any order.
+
+    "?:array has value ?":
+      method: Concise\Modules\Arrays\HasValue::match
+      description: |
+        Assert an array has at least one occurrence of the given value.
+
+    "?:array contains ?":
+      method: Concise\Modules\Arrays\HasValue::match
+      description: |
+        Assert an array has at least one occurrence of the given value.
+
+    "?:array has values ?:array":
+      method: Concise\Modules\Arrays\HasValues::match
+      description: Assert an array has several values in any order.
+
+    "?:array is empty array":
+      method: Concise\Modules\Arrays\IsAnEmptyArray::match
+      description: Assert an array is empty (no elements).
+
+    "?:array is an empty array":
+      method: Concise\Modules\Arrays\IsAnEmptyArray::match
+      description: Assert an array is empty (no elements).
+
+    "?:array is not empty array":
+      method: Concise\Modules\Arrays\IsNotAnEmptyArray::match
+      description: Assert an array is not empty (at least one element).
+
+    "?:array is not an empty array":
+      method: Concise\Modules\Arrays\IsNotAnEmptyArray::match
+      description: Assert an array is not empty (at least one element).
+
+    "?:array is not unique":
+      method: Concise\Modules\Arrays\IsNotUnique::match
+      description: |
+        Assert that an array only has at least one element that is repeated.
+
+    "?:array is unique":
+      method: Concise\Modules\Arrays\IsUnique::match
+      description: Assert that an array only contains unique values.
+
+    "?:array is an associative array":
+      method: Concise\Modules\Arrays\IsAnAssociativeArray::match
+      description: Assert an array is associative.
+
+    "?:array is not an associative array":
+      method: Concise\Modules\Arrays\IsNotAnAssociativeArray::match
+      description: Assert an array is not associative.

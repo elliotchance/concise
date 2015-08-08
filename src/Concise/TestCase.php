@@ -251,6 +251,26 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $modules = array(
+            'Arrays',
+            'Basic',
+            'Booleans',
+            'DateAndTime',
+            'Exceptions',
+            'Files',
+            'Numbers',
+            'Objects',
+            'RegularExpressions',
+            'Strings',
+            'Types',
+            'Urls'
+        );
+        foreach ($modules as $module) {
+            MatcherParser::getInstance()
+                ->loadModule(__DIR__ . "/Modules/$module/module.yml");
+        }
+
         $this->verifyFailures = array();
     }
 

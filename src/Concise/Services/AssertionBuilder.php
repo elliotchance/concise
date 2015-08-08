@@ -158,8 +158,8 @@ class AssertionBuilder
                 // Syntax could not be compiled, try the next one.
                 $syntaxes = array_merge($syntaxes, $e->getSyntaxes());
             } catch (Exception $e) {
-                // This is likely caused by a lexer issue. Which means we couldn't pass the syntax
-                // anyway.
+                // This is likely caused by a lexer issue. Which means we
+                // couldn't pass the syntax anyway.
                 $syntaxes = array_merge($syntaxes, array($syntax['syntax']));
             }
         }

@@ -2,8 +2,6 @@
 
 namespace Concise\Modules\Files;
 
-use Concise\Matcher\AbstractFileTestCase;
-
 /**
  * @group matcher
  */
@@ -32,10 +30,5 @@ class StringEqualsFileTest extends AbstractFileTestCase
     public function testWillSucceedIfStringDoesMatchFile()
     {
         $this->assert('baz', equals_file, $this->createTempFile());
-    }
-
-    public function tags()
-    {
-        return array();
     }
 }

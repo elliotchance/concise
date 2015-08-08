@@ -2,8 +2,6 @@
 
 namespace Concise\Modules\Basic;
 
-use Concise\Matcher\ExactlyEquals;
-
 class NotExactlyEquals extends ExactlyEquals
 {
     public function supportedSyntaxes()

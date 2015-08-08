@@ -1,0 +1,20 @@
+module:
+  name: Objects
+  syntaxes:
+    "?:object has property ?:string with value ?":
+      method: Concise\Modules\Objects\HasPropertyWithValue::match
+      description: Assert that an object has a property with a specific value.
+
+    "?:object does not have property ?:string":
+      method: Concise\Modules\Objects\DoesNotHaveProperty::match
+      description: Assert that an object does not have a property.
+
+    "?:object has property ?:string":
+      method: Concise\Modules\Objects\HasProperty::match
+      description: |
+        Assert that an object has a property. Returns the properties value.
+
+    "?:object has property ?:string with exact value ?":
+      method: Concise\Modules\Objects\HasPropertyWithExactValue::match
+      description: |
+        Assert that an object has a property with a specific exact value.

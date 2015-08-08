@@ -29,9 +29,4 @@ class StringDoesNotEndWithTest extends AbstractMatcherTestCase
     {
         $this->assertFailure('"abc" does not end with "abc"');
     }
-
-    public function tags()
-    {
-        return array();
-    }
 }

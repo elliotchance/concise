@@ -1,5 +1,5 @@
 module:
-  name: Numbers
+  name: Basic
   syntaxes:
     "? is not exactly equal to ?":
       method: Concise\Modules\Basic\NotExactlyEquals::match
@@ -24,3 +24,23 @@ module:
     "? does not equal ?":
       method: Concise\Modules\Basic\NotEquals::match
       description: Assert two value do not match with no regard to type.
+
+    "? equals ?":
+      method: Concise\Modules\Basic\Equals::match
+      description: Assert values with no regard to exact data types.
+
+    "? is equal to ?":
+      method: Concise\Modules\Basic\Equals::match
+      description: Assert values with no regard to exact data types.
+
+    "? is exactly equal to ?":
+      method: Concise\Modules\Basic\ExactlyEquals::match
+      description: Assert two values match data type and value.
+
+    "? exactly equals ?":
+      method: Concise\Modules\Basic\ExactlyEquals::match
+      description: Assert two values match data type and value.
+
+    "? is the same as ?":
+      method: Concise\Modules\Basic\ExactlyEquals::match
+      description: Assert two values match data type and value.

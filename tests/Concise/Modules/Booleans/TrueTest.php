@@ -19,9 +19,4 @@ class TrueTest extends AbstractMatcherTestCase
     {
         $this->assert('true');
     }
-
-    public function tags()
-    {
-        return array();
-    }
 }

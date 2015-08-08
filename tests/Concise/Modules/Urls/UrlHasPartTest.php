@@ -106,9 +106,4 @@ class UrlHasPartTest extends AbstractMatcherTestCase
             $this->assertFailure(url, $url, $test, $value);
         }
     }
-
-    public function tags()
-    {
-        return array();
-    }
 }

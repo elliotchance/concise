@@ -61,4 +61,6 @@ class SyntaxText extends TestCase
         $syntax->setDescription('foo bar');
         $this->assert($syntax->getDescription(), equals, 'foo bar');
     }
+
+    // @todo testCapitolsAreNotAllowedInSyntax
 }
