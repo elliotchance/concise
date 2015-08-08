@@ -1,8 +1,16 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
+use Concise\Matcher\Module;
+use Concise\Matcher\Syntax;
 use Concise\Syntax\MatcherParser;
+use Concise\TestCase;
+
+// Simulate starting a test case which will cause the default MatcherParser
+// to load all the modules.
+$testCase = new TestCase();
+$testCase->setUpBeforeClass();
 
 refreshKeywords();
 updateReadme();
@@ -51,22 +59,26 @@ function generateMarkdownItem($syntax, $description)
         return "* $syntax\n";
     }
 
-    return "* $syntax - $description\n";
+    return "* $syntax - " . str_replace("\n", ' ', $description) . "\n";
 }
 
 /**
  * @return string
  */
-function generateMarkdownList(array $matchers)
+function generateMarkdownList(Module $module)
 {
     $matchersDoc = '';
-    foreach ($matchers as $matcher => $syntaxes) {
-        for ($i = 0; $i < count($syntaxes); ++$i) {
-            $matchersDoc .= generateMarkdownItem(
-                $syntaxes[$i][0],
-                $syntaxes[$i][1]
-            );
-        }
+    $syntaxes = [];
+    foreach ($module->getSyntaxes() as $syntax) {
+        $syntaxes[$syntax->getSyntax()] = $syntax;
+    }
+    ksort($syntaxes);
+    /** @var Syntax $syntax */
+    foreach ($syntaxes as $syntax) {
+        $matchersDoc .= generateMarkdownItem(
+            $syntax->getSyntax(),
+            $syntax->getDescription()
+        );
     }
 
     return "$matchersDoc\n";
@@ -74,15 +86,17 @@ function generateMarkdownList(array $matchers)
 
 function updateReadme()
 {
-    $matchers = getAssertionsByTag();
-
     $matchersDoc = '';
-    ksort($matchers);
-    foreach ($matchers as $tag => $syntaxes) {
-        ksort($syntaxes);
-        $matchersDoc .= "$tag\n";
-        $matchersDoc .= str_repeat('_', strlen($tag)) . "\n\n";
-        $matchersDoc .= generateMarkdownList($syntaxes);
+    $modules = [];
+    foreach (MatcherParser::getInstance()->getModules() as $module) {
+        $modules[$module->getName()] = $module;
+    }
+
+    ksort($modules);
+    foreach ($modules as $name => $module) {
+        $matchersDoc .= "$name\n";
+        $matchersDoc .= str_repeat('-', strlen($name)) . "\n\n";
+        $matchersDoc .= generateMarkdownList($module);
     }
 
     $readmeFile = __DIR__ . '/../doc/matchers.rst';
@@ -95,33 +109,6 @@ function updateReadme()
         );
     file_put_contents($readmeFile, $readme);
 }
-
-/*function updateWikiAssertions()
-{
-    $matchers = getAssertionsByTag();
-
-    ksort($matchers);
-    foreach ($matchers as $tag => $syntaxes) {
-        ksort($syntaxes);
-        $matchersDoc = generateMarkdownList($syntaxes);
-        $tag = str_replace(' ', '-', $tag);
-
-        $wikiFile = __DIR__ . "/../doc/M";
-        if (file_exists($wikiFile)) {
-            $matchersDoc =
-                preg_replace(
-                    '/.. start assertions.*.. end assertions/ms',
-                    ".. start assertions\n\n$matchersDoc\n.. end assertions",
-                    file_get_contents($wikiFile)
-                );
-        } else {
-            $matchersDoc =
-                ".. start assertions\n\n$matchersDoc\n.. end assertions";
-        }
-        echo $matchersDoc;
-        //file_put_contents($wikiFile, $matchersDoc);
-    }
-}*/
 
 function refreshKeywords()
 {

@@ -248,9 +248,9 @@ class TestCase extends PHPUnit_Framework_TestCase
         define('on_error', 'on error');
     }
 
-    public function setUp()
+    public static function setUpBeforeClass()
     {
-        parent::setUp();
+        parent::setUpBeforeClass();
 
         $modules = array(
             'Arrays',
@@ -270,7 +270,11 @@ class TestCase extends PHPUnit_Framework_TestCase
             MatcherParser::getInstance()
                 ->loadModule(__DIR__ . "/Modules/$module/module.yml");
         }
+    }
 
+    public function setUp()
+    {
+        parent::setUp();
         $this->verifyFailures = array();
     }
 

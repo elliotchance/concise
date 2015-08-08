@@ -45,6 +45,14 @@ class MatcherParser
     }
 
     /**
+     * @return Module[]
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+
+    /**
      * @param  string $syntax
      * @return string
      */

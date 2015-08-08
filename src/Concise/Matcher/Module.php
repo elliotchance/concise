@@ -62,7 +62,11 @@ class Module
                     "Missing 'method' for '$syntax'."
                 );
             }
-            $this->syntaxes[] = new Syntax($syntax, $data['method']);
+            $s = new Syntax($syntax, $data['method']);
+            if (array_key_exists('description', $data)) {
+                $s->setDescription(trim($data['description']));
+            }
+            $this->syntaxes[] = $s;
         }
     }
 }
