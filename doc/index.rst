@@ -36,5 +36,7 @@ Highlights include:
    matchers
    running-tests
    mocking
+   syntaxes
+   modules
    extending
    changelog

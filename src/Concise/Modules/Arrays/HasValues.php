@@ -6,12 +6,6 @@ use Concise\Matcher\AbstractMatcher;
 
 class HasValues extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         $keys = array_values($data[0]);
@@ -22,10 +16,5 @@ class HasValues extends AbstractMatcher
         }
 
         return true;
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

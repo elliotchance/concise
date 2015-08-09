@@ -8,11 +8,6 @@ use Exception;
 
 class Throws extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array();
-    }
-
     protected function isKindOfClass(Exception $exception, $expectedClass)
     {
         return (get_class($exception) === $expectedClass) ||
@@ -35,10 +30,5 @@ class Throws extends AbstractMatcher
         throw new DidNotMatchException(
             "Expected {$data[1]} to be thrown, but nothing was thrown."
         );
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

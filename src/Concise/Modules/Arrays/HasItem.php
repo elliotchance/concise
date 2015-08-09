@@ -8,12 +8,6 @@ class HasItem extends AbstractMatcher
 {
     const SPLIT_SYNTAX = '?:array has key ?:string with value ?';
 
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if ($syntax === self::SPLIT_SYNTAX) {
@@ -29,10 +23,5 @@ class HasItem extends AbstractMatcher
         }
 
         return false;
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

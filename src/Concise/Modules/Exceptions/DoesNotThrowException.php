@@ -8,12 +8,6 @@ use Exception;
 
 class DoesNotThrowException extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         try {
@@ -25,10 +19,5 @@ class DoesNotThrowException extends AbstractMatcher
                 "Expected exception not to be thrown."
             );
         }
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

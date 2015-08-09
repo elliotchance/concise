@@ -6,12 +6,6 @@ class DoesNotHaveItem extends HasItem
 {
     const SPLIT_SYNTAX = '?:array does not have key ?:string with value ?';
 
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if ($syntax === self::SPLIT_SYNTAX) {
@@ -22,10 +16,5 @@ class DoesNotHaveItem extends HasItem
         }
 
         return !parent::match(null, $data);
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

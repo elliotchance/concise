@@ -15,20 +15,4 @@ class Between extends AbstractNestedMatcher
 
         return $data[0];
     }
-
-    /**
-     * @return array Syntaxes this matcher can understand.
-     */
-    public function supportedSyntaxes()
-    {
-        // TODO: Implement supportedSyntaxes() method.
-    }
-
-    /**
-     * @return array
-     */
-    public function getTags()
-    {
-        return array();
-    }
 }

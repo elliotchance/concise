@@ -7,12 +7,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class ThrowsExactly extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         try {
@@ -30,10 +24,5 @@ class ThrowsExactly extends AbstractMatcher
         throw new DidNotMatchException(
             "Expected exactly {$data[1]} to be thrown, but nothing was thrown."
         );
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

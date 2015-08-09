@@ -6,19 +6,8 @@ use Concise\Matcher\AbstractMatcher;
 
 class IsFalse extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         return $data[0] === false;
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

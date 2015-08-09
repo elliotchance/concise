@@ -6,12 +6,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class DoesNotThrow extends Throws
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         try {

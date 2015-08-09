@@ -4,12 +4,6 @@ namespace Concise\Modules\Arrays;
 
 class HasItems extends HasItem
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if (count($data[1]) === 0) {

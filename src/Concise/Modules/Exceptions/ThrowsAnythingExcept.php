@@ -7,12 +7,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class ThrowsAnythingExcept extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         try {
@@ -29,10 +23,5 @@ class ThrowsAnythingExcept extends AbstractMatcher
         }
 
         return true;
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

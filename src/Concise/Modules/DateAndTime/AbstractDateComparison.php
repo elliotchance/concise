@@ -36,9 +36,4 @@ abstract class AbstractDateComparison extends AbstractNestedMatcher
 
         return $data[0];
     }
-
-    public function getTags()
-    {
-        return array();
-    }
 }

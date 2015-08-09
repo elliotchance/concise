@@ -10,16 +10,6 @@ class MyMatcher extends AbstractMatcher
     {
         return false;
     }
-
-    public function supportedSyntaxes()
-    {
-        return array();
-    }
-
-    public function getTags()
-    {
-        return array();
-    }
 }
 
 /**

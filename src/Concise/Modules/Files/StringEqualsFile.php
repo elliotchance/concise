@@ -7,12 +7,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class StringEqualsFile extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if (!file_exists($data[1])) {
@@ -20,10 +14,5 @@ class StringEqualsFile extends AbstractMatcher
         }
 
         return $data[0] == file_get_contents($data[1]);
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

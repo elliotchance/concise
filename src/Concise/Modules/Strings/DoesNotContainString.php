@@ -7,12 +7,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class DoesNotContainString extends AbstractNestedMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if (strpos($data[0], $data[1]) !== false) {
@@ -20,10 +14,5 @@ class DoesNotContainString extends AbstractNestedMatcher
         }
 
         return $data[0];
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

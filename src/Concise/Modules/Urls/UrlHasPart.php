@@ -6,10 +6,6 @@ use Concise\Matcher\AbstractMatcher;
 
 class UrlHasPart extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-    }
-
     public function match($syntax, array $data = array())
     {
         $parts = array(
@@ -29,10 +25,5 @@ class UrlHasPart extends AbstractMatcher
         }
 
         return parse_url($data[0], PHP_URL_SCHEME) == $data[1];
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

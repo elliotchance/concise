@@ -174,7 +174,7 @@ class AssertionTest extends TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage foobar
+     * @expectedExceptionMessage Method Concise\Matcher\AbstractMatcher::match() does not exist.
      * @group #219
      */
     public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()

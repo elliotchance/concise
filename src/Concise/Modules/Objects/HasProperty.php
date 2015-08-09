@@ -7,12 +7,6 @@ use Concise\Matcher\DidNotMatchException;
 
 class HasProperty extends AbstractNestedMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if (!array_key_exists($data[1], (array)$data[0])) {
@@ -20,10 +14,5 @@ class HasProperty extends AbstractNestedMatcher
         }
 
         return $data[0]->{$data[1]};
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }

@@ -8,19 +8,9 @@ use Concise\TestCase;
 
 class MyBadMatcher extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array('Capitols');
-    }
-
     public function match($syntax, array $data = array())
     {
         return false;
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }
 

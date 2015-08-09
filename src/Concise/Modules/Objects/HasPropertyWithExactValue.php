@@ -6,12 +6,6 @@ use Concise\Matcher\AbstractMatcher;
 
 class HasPropertyWithExactValue extends AbstractMatcher
 {
-    public function supportedSyntaxes()
-    {
-        return array(
-        );
-    }
-
     public function match($syntax, array $data = array())
     {
         if (method_exists($data[0], '__get') && $data[0]->{$data[1]}) {
@@ -19,10 +13,5 @@ class HasPropertyWithExactValue extends AbstractMatcher
         }
         return array_key_exists($data[1], (array)$data[0]) &&
         ($data[0]->{$data[1]} === $data[2]);
-    }
-
-    public function getTags()
-    {
-        return array();
     }
 }
