@@ -6,6 +6,7 @@ use Concise\Assertion;
 use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\Module;
 use Concise\Matcher\ModuleParser;
+use Concise\Matcher\Syntax;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
@@ -37,6 +38,11 @@ class MatcherParser
      * @var Module[]
      */
     protected $modules = array();
+
+    /**
+     * @var AbstractMatcher[]
+     */
+    protected $modules2 = array();
 
     public function __construct()
     {
@@ -116,6 +122,34 @@ class MatcherParser
             }
         }
 
+        foreach ($this->modules2 as $module) {
+            $reflectionClass = new ReflectionClass($module);
+            foreach($reflectionClass->getMethods() as $method) {
+                $doc = $method->getDocComment();
+                foreach (explode("\n", $doc) as $line) {
+                    $pos = strpos($line, '@syntax');
+                    if ($pos !== false) {
+                        $s = new Syntax(trim(substr($line, $pos + 7)), $method->getDeclaringClass()->getName() . '::' . $method->getName());
+                        if ($s->getRawSyntax() == $rawSyntax) {
+                            $class = $s->getClass();
+                            $r = [
+                                'matcher' => new $class(),
+                                'originalSyntax' => $s->getSyntax(),
+                            ];
+                            if ($this->endsWith(
+                                $this->getRawSyntax($syntax),
+                                $endsWith
+                            )
+                            ) {
+                                $r['on_error'] = $data[count($data) - 1];
+                            }
+                            return $r;
+                        }
+                    }
+                }
+            }
+        }
+
         throw new NoMatcherFoundException(array($syntax));
     }
 
@@ -145,7 +179,7 @@ class MatcherParser
 
     /**
      * @param string $rawSyntax
-     * @throws Exception if the assertion contains words that are not lower
+     * @throws Exception If the assertion contains words that are not lower
      *     case.
      */
     protected function throwExceptionIfNotInLowerCase($rawSyntax)
@@ -212,6 +246,11 @@ class MatcherParser
 
     public function loadModule($moduleYmlPath)
     {
+        if (is_object($moduleYmlPath)) {
+            $this->modules2[get_class($moduleYmlPath)] = $moduleYmlPath;
+            return;
+        }
+
         if (array_key_exists($moduleYmlPath, $this->modules)) {
             return;
         }
@@ -248,6 +287,25 @@ class MatcherParser
                         array($syntax->getSyntax() => '')
                     )
                 );
+            }
+        }
+
+        foreach ($this->modules2 as $module) {
+            $reflectionClass = new ReflectionClass($module);
+            foreach($reflectionClass->getMethods() as $method) {
+                $doc = $method->getDocComment();
+                foreach (explode("\n", $doc) as $line) {
+                    $pos = strpos($line, '@syntax');
+                    if ($pos !== false) {
+                        $syntax = new Syntax(trim(substr($line, $pos + 7)), $method->getDeclaringClass()->getName() . '::' . $method->getName());
+                        $r = array_merge(
+                            $r,
+                            $this->getWordsForSyntaxes(
+                                array($syntax->getSyntax() => '')
+                            )
+                        );
+                    }
+                }
             }
         }
 

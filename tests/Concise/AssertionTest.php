@@ -123,10 +123,11 @@ class AssertionTest extends TestCase
     {
         try {
             $assertion = new Assertion('false', new False());
+            $assertion->setTestCase($this);
             $assertion->setFailureMessage('foo');
             $assertion->run();
             $this->fail('Did not fail.');
-        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert($e->getMessage(), equals, 'foo');
         }
     }

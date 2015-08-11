@@ -4,15 +4,18 @@ namespace Concise;
 
 use Concise\Matcher\AbstractNestedMatcher;
 use Concise\Matcher\DidNotMatchException;
+use Concise\Matcher\Syntax;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
 use Concise\Syntax\Token\Attribute;
+use Concise\TestCase;
 use Concise\Validation\ArgumentChecker;
 use Concise\Validation\DataTypeChecker;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit_Framework_AssertionFailedError;
+use ReflectionClass;
 
 class Assertion
 {
@@ -79,7 +82,7 @@ class Assertion
     }
 
     /**
-     * @param \Concise\TestCase $testCase
+     * @param TestCase $testCase
      */
     public function setTestCase(TestCase $testCase)
     {
@@ -214,6 +217,24 @@ class Assertion
     protected function performMatch($syntax, array $args)
     {
         try {
+            $reflectionClass = new ReflectionClass($this->getMatcher());
+            foreach($reflectionClass->getMethods() as $method) {
+                $doc = $method->getDocComment();
+                foreach (explode("\n", $doc) as $line) {
+                    $pos = strpos($line, '@syntax');
+                    if ($pos !== false) {
+                        $s = new Syntax(trim(substr($line, $pos + 7)), $method->getDeclaringClass()->getName() . '::' . $method->getName());
+                        if ($s->getRawSyntax() == $syntax) {
+                            $m = $method->getName();
+                            $this->getMatcher()->setData($args);
+                            // @todo: remove $this->originalSyntax, $args after migration
+                            return $this->getMatcher()->$m($this->originalSyntax, $args);
+                        }
+                    }
+                }
+            }
+
+            // @todo delete this, its an error
             return $this->getMatcher()->match($this->originalSyntax, $args);
         } catch (DidNotMatchException $e) {
             $message =

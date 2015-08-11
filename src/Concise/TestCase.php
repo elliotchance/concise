@@ -5,6 +5,7 @@ namespace Concise;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
+use Concise\Modules\RegularExpressionModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
@@ -261,7 +262,6 @@ class TestCase extends PHPUnit_Framework_TestCase
             'Files',
             'Numbers',
             'Objects',
-            'RegularExpressions',
             'Strings',
             'Types',
             'Urls'
@@ -270,6 +270,9 @@ class TestCase extends PHPUnit_Framework_TestCase
             MatcherParser::getInstance()
                 ->loadModule(__DIR__ . "/Modules/$module/module.yml");
         }
+
+        MatcherParser::getInstance()
+            ->loadModule(new RegularExpressionModule());
     }
 
     public function setUp()
