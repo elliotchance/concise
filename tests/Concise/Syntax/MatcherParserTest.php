@@ -98,7 +98,7 @@ class MatcherParserTest extends TestCase
         $this->assert(
             $syntaxes,
             has_keys,
-            array('? is null', '? is equal to ?')
+            array('? is null', 'url ?:string is valid')
         );
     }
 

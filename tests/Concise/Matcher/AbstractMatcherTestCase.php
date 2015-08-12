@@ -4,6 +4,7 @@ namespace Concise\Matcher;
 
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
+use PHPUnit_Framework_AssertionFailedError;
 
 abstract class AbstractMatcherTestCase extends TestCase
 {
@@ -61,7 +62,7 @@ abstract class AbstractMatcherTestCase extends TestCase
     {
         try {
             call_user_func_array(array($this, 'assert'), func_get_args());
-        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert(true);
 
             return;

@@ -5,6 +5,8 @@ namespace Concise;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
+use Concise\Modules\ArrayModule;
+use Concise\Modules\BasicModule;
 use Concise\Modules\RegularExpressionModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
@@ -254,8 +256,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'Arrays',
-            'Basic',
             'Booleans',
             'DateAndTime',
             'Exceptions',
@@ -271,8 +271,15 @@ class TestCase extends PHPUnit_Framework_TestCase
                 ->loadModule(__DIR__ . "/Modules/$module/module.yml");
         }
 
-        MatcherParser::getInstance()
-            ->loadModule(new RegularExpressionModule());
+        $modules = array(
+            new ArrayModule(),
+            new BasicModule(),
+            new RegularExpressionModule(),
+        );
+        foreach ($modules as $module) {
+            MatcherParser::getInstance()
+                ->loadModule($module);
+        }
     }
 
     public function setUp()

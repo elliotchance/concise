@@ -2,7 +2,7 @@
 
 namespace Concise;
 
-use Concise\Modules\Basic\Equals;
+use Concise\Modules\BasicModule;
 use Concise\Modules\Booleans\False;
 use Concise\Modules\Booleans\True;
 use Concise\Modules\Numbers\Between;
@@ -13,13 +13,13 @@ class AssertionTest extends TestCase
 {
     public function testCreatingAssertionRequiresTheAssertionString()
     {
-        $assertion = new Assertion('? equals ?', new Equals());
+        $assertion = new Assertion('? equals ?', new BasicModule());
         $this->assert($assertion->getAssertion(), equals, '? equals ?');
     }
 
     public function testCreatingAssertionWithoutProvidingDataIsAnEmptyArray()
     {
-        $assertion = new Assertion('? equals ?', new Equals());
+        $assertion = new Assertion('? equals ?', new BasicModule());
         $this->assert($assertion->getData(), is_an_empty_array);
     }
 
@@ -27,7 +27,7 @@ class AssertionTest extends TestCase
     {
         $assertion = new Assertion(
             '? equals ?',
-            new Equals(),
+            new BasicModule(),
             array('abc', 'def')
         );
         $this->assert($assertion->getData(), equals, array('abc', 'def'));
@@ -35,14 +35,14 @@ class AssertionTest extends TestCase
 
     public function testCreatingAssertionRequiresTheMatcher()
     {
-        $matcher = new Equals();
+        $matcher = new BasicModule();
         $assertion = new Assertion('? equals ?', $matcher);
         $this->assert($matcher, is_the_same_as, $assertion->getMatcher());
     }
 
     public function testToStringRenderedData()
     {
-        $matcher = new Equals();
+        $matcher = new BasicModule();
         $data = array(
             'a' => 123,
             'b' => 'abc',
@@ -56,7 +56,7 @@ class AssertionTest extends TestCase
 
     public function testCanSetDescriptiveString()
     {
-        $assertion = new Assertion('? equals ?', new Equals());
+        $assertion = new Assertion('? equals ?', new BasicModule());
         $assertion->setDescription('my description');
         $this->assert(
             $assertion->getDescription(),
@@ -67,7 +67,7 @@ class AssertionTest extends TestCase
 
     public function testDescriptionReturnsAssertionIfNotSet()
     {
-        $assertion = new Assertion('? equals ?', new Equals());
+        $assertion = new Assertion('? equals ?', new BasicModule());
         $this->assert($assertion->getDescription(), equals, '? equals ?');
     }
 

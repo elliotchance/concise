@@ -9,7 +9,6 @@ use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
 use Concise\Syntax\Token\Attribute;
-use Concise\TestCase;
 use Concise\Validation\ArgumentChecker;
 use Concise\Validation\DataTypeChecker;
 use Exception;
@@ -216,26 +215,57 @@ class Assertion
      */
     protected function performMatch($syntax, array $args)
     {
+        if (substr($syntax, strlen($syntax) - 10) == 'on error ?') {
+            $syntax = substr($syntax, 0, 10);
+        }
         try {
             $reflectionClass = new ReflectionClass($this->getMatcher());
-            foreach($reflectionClass->getMethods() as $method) {
+            foreach ($reflectionClass->getMethods() as $method) {
                 $doc = $method->getDocComment();
+                $nested = strpos($doc, '@nested') !== false;
+
                 foreach (explode("\n", $doc) as $line) {
                     $pos = strpos($line, '@syntax');
                     if ($pos !== false) {
-                        $s = new Syntax(trim(substr($line, $pos + 7)), $method->getDeclaringClass()->getName() . '::' . $method->getName());
+                        $s = new Syntax(
+                            trim(substr($line, $pos + 7)),
+                            $method->getDeclaringClass()->getName() .
+                            '::' .
+                            $method->getName()
+                        );
                         if ($s->getRawSyntax() == $syntax) {
                             $m = $method->getName();
                             $this->getMatcher()->setData($args);
                             // @todo: remove $this->originalSyntax, $args after migration
-                            return $this->getMatcher()->$m($this->originalSyntax, $args);
+                            $answer = $this->getMatcher()->$m(
+                                $this->originalSyntax,
+                                $args
+                            );
+
+                            if (!$nested && true !== $answer && null !== $answer
+                            ) {
+                                $message = $this->getFailureMessage(
+                                    $this->originalSyntax,
+                                    $args
+                                );
+                                throw new PHPUnit_Framework_AssertionFailedError(
+                                    $message
+                                );
+                            }
+
+                            return array($answer, $nested);
                         }
                     }
                 }
             }
 
             // @todo delete this, its an error
-            return $this->getMatcher()->match($this->originalSyntax, $args);
+            if (!method_exists($this->getMatcher(), 'match')) {
+                var_dump($syntax); exit;
+                throw new Exception('a');
+            }
+
+            return array($this->getMatcher()->match($this->originalSyntax, $args), false);
         } catch (DidNotMatchException $e) {
             $message =
                 $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
@@ -253,9 +283,9 @@ class Assertion
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
 
-        $answer = $this->performMatch($result['syntax'], $args);
+        list($answer, $nested) = $this->performMatch($result['syntax'], $args);
 
-        if (!$this->getMatcher() instanceof AbstractNestedMatcher &&
+        if (!$nested && !$this->getMatcher() instanceof AbstractNestedMatcher &&
             true !== $answer && null !== $answer
         ) {
             $message = $this->getFailureMessage($result['syntax'], $args);

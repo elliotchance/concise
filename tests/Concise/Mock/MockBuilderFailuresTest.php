@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Concise\TestCase;
+use Exception;
 
 /**
  * @group mocking
@@ -147,7 +148,7 @@ class MockBuilderFailuresTest extends TestCase
 
     public function testAnythingIsRenderedCorrectly()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+        $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
             self::ANYTHING,
             'foo'
         )->get();
@@ -166,7 +167,7 @@ class MockBuilderFailuresTest extends TestCase
         $mock->myMethod('bar');
     }
 
-    protected function onNotSuccessfulTest(\Exception $e)
+    protected function onNotSuccessfulTest(Exception $e)
     {
         self::$failures[] = $this->getName();
         $this->assert(

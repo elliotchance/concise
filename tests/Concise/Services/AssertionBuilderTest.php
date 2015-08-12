@@ -12,7 +12,7 @@ class AssertionBuilderTest extends TestCase
         $this->assert(
             $assertion->getMatcher(),
             instance_of,
-            '\Concise\Modules\Basic\Equals'
+            '\Concise\Modules\BasicModule'
         );
     }
 
