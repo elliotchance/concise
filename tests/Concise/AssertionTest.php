@@ -3,8 +3,7 @@
 namespace Concise;
 
 use Concise\Modules\BasicModule;
-use Concise\Modules\Booleans\False;
-use Concise\Modules\Booleans\True;
+use Concise\Modules\BooleanModule;
 use Concise\Modules\Numbers\Between;
 use Concise\Syntax\MatcherParser;
 use PHPUnit_Framework_AssertionFailedError;
@@ -84,7 +83,7 @@ class AssertionTest extends TestCase
 
     protected function getStubForAssertionThatReturnsData(array $data)
     {
-        return $this->niceMock('\Concise\Assertion', array('true', new True()))
+        return $this->niceMock('\Concise\Assertion', array('true', new BooleanModule()))
             ->stub(array('getData' => $data))
             ->get();
     }
@@ -115,14 +114,14 @@ class AssertionTest extends TestCase
 
     public function testCanSetCustomFailureMessage()
     {
-        $assertion = new Assertion('true', new True());
+        $assertion = new Assertion('true', new BooleanModule());
         $this->assert($assertion->setFailureMessage('foo'), is_null);
     }
 
     public function testWillFailWithCustomMessage()
     {
         try {
-            $assertion = new Assertion('false', new False());
+            $assertion = new Assertion('false', new BooleanModule());
             $assertion->setTestCase($this);
             $assertion->setFailureMessage('foo');
             $assertion->run();
@@ -138,7 +137,7 @@ class AssertionTest extends TestCase
      */
     public function testAssertionMustBeAString()
     {
-        new Assertion(123, new True());
+        new Assertion(123, new BooleanModule());
     }
 
     /**
@@ -147,7 +146,7 @@ class AssertionTest extends TestCase
      */
     public function testOriginalSyntaxMustBeAString()
     {
-        $assertion = new Assertion('true', new True());
+        $assertion = new Assertion('true', new BooleanModule());
         $assertion->setOriginalSyntax(123);
     }
 

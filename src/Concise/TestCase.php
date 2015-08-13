@@ -7,6 +7,7 @@ use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
 use Concise\Modules\ArrayModule;
 use Concise\Modules\BasicModule;
+use Concise\Modules\BooleanModule;
 use Concise\Modules\RegularExpressionModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
@@ -256,7 +257,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'Booleans',
             'DateAndTime',
             'Exceptions',
             'Files',
@@ -274,6 +274,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         $modules = array(
             new ArrayModule(),
             new BasicModule(),
+            new BooleanModule(),
             new RegularExpressionModule(),
         );
         foreach ($modules as $module) {

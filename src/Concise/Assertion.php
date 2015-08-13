@@ -216,7 +216,7 @@ class Assertion
     protected function performMatch($syntax, array $args)
     {
         if (substr($syntax, strlen($syntax) - 10) == 'on error ?') {
-            $syntax = substr($syntax, 0, 10);
+            $syntax = trim(substr($syntax, 0, 10));
         }
         try {
             $reflectionClass = new ReflectionClass($this->getMatcher());
@@ -261,7 +261,6 @@ class Assertion
 
             // @todo delete this, its an error
             if (!method_exists($this->getMatcher(), 'match')) {
-                var_dump($syntax); exit;
                 throw new Exception('a');
             }
 
