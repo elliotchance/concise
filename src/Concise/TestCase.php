@@ -12,6 +12,7 @@ use Concise\Modules\DateAndTimeModule;
 use Concise\Modules\ExceptionModule;
 use Concise\Modules\FileModule;
 use Concise\Modules\NumberModule;
+use Concise\Modules\ObjectModule;
 use Concise\Modules\RegularExpressionModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
@@ -261,7 +262,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'Objects',
             'Strings',
             'Types',
             'Urls'
@@ -279,6 +279,7 @@ class TestCase extends PHPUnit_Framework_TestCase
             new ExceptionModule(),
             new FileModule(),
             new NumberModule(),
+            new ObjectModule(),
             new RegularExpressionModule(),
         );
         foreach ($modules as $module) {
