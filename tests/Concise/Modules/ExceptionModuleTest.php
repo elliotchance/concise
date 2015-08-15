@@ -1,0 +1,485 @@
+<?php
+
+namespace Concise\Modules\Exceptions;
+
+use Closure;
+use Concise\Matcher\AbstractMatcherTestCase;
+use Concise\Matcher\DidNotMatchException;
+use Concise\Modules\ExceptionModule;
+use Exception;
+
+class MyException extends Exception
+{
+}
+
+class OtherException extends Exception
+{
+}
+
+class ExceptionModuleTest extends AbstractMatcherTestCase
+{
+    public function setUp()
+    {
+        parent::setUp();
+        $this->matcher = new ExceptionModule();
+    }
+
+    protected function createExceptionTests(array $data)
+    {
+        $throw = array(
+            'throwNothing' => function () {
+            },
+            'throwException' => function () {
+                throw new Exception();
+            },
+            'throwMyException' => function () {
+                throw new MyException();
+            },
+            'throwOtherException' => function () {
+                throw new OtherException();
+            },
+        );
+        $expect = array(
+            'expectException' => 'Exception',
+            'expectMyException' => 'Concise\Modules\Exceptions\MyException',
+            'expectOtherException' => 'Concise\Modules\Exceptions\OtherException',
+        );
+        $result = array(
+            'FAIL' => true,
+            'PASS' => false,
+        );
+
+        $r = array();
+        foreach ($data as $d) {
+            if (array_key_exists($d[2], $result)) {
+                $r[] = array($throw[$d[0]], $expect[$d[1]], $result[$d[2]]);
+            } else {
+                $r[] = array($throw[$d[0]], $expect[$d[1]], $d[2]);
+            }
+        }
+
+        return $r;
+    }
+
+    public function exceptionTests()
+    {
+        $throwNothing = function () {
+        };
+        $throwException = function () {
+            throw new \Exception();
+        };
+
+        return array(
+            array($throwNothing, false),
+            array($throwException, true),
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests
+     */
+    public function testDoesNotThrow(Closure $method, $expectSuccess)
+    {
+        try {
+            $this->matcher->setData(array($method));
+            $success = $this->matcher->doesNotThrowException();
+        } catch (DidNotMatchException $e) {
+            $success = false;
+        }
+        $this->assert($expectSuccess, equals, !$success);
+    }
+
+    public function testDoesNotThrowMessage()
+    {
+        try {
+            $this->matcher->doesNotThrowException(
+                '? does not throw exception',
+                array(
+                    function () {
+                        throw new \Exception();
+                    }
+                )
+            );
+            $this->fail("Exception was not thrown.");
+        } catch (DidNotMatchException $e) {
+            $this->assert(
+                "Expected exception not to be thrown.",
+                equals,
+                $e->getMessage()
+            );
+        }
+    }
+
+    public function exceptionTests2()
+    {
+        return $this->createExceptionTests(
+            array(
+                array('throwNothing', 'expectException', 'FAIL'),
+                array('throwNothing', 'expectMyException', 'FAIL'),
+                array('throwException', 'expectException', 'PASS'),
+                array('throwException', 'expectMyException', 'FAIL'),
+                array('throwMyException', 'expectException', 'PASS'),
+                array('throwMyException', 'expectMyException', 'PASS'),
+                array('throwMyException', 'expectOtherException', 'FAIL'),
+                array('throwOtherException', 'expectException', 'PASS'),
+                array('throwOtherException', 'expectMyException', 'FAIL'),
+                array('throwOtherException', 'expectOtherException', 'PASS'),
+            )
+        );
+    }
+
+    public function exceptionDoesNotThrowTestMessages()
+    {
+        return $this->createExceptionTests(
+            array(
+                array(
+                    'throwException',
+                    'expectException',
+                    "Expected Exception not to be thrown, but Exception was thrown."
+                ),
+                array(
+                    'throwMyException',
+                    'expectException',
+                    'Expected Exception not to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+                array(
+                    'throwMyException',
+                    'expectMyException',
+                    'Expected Concise\Modules\Exceptions\MyException not to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+                array(
+                    'throwOtherException',
+                    'expectException',
+                    'Expected Exception not to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                ),
+                array(
+                    'throwOtherException',
+                    'expectOtherException',
+                    'Expected Concise\Modules\Exceptions\OtherException not to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                ),
+            )
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests2
+     */
+    public function testDoesNotThrow2(
+        Closure $method,
+        $expectedException,
+        $expectToThrow
+    ) {
+        if ($expectToThrow) {
+            $this->assert($method, 'does not throw', $expectedException);
+        } else {
+            $this->assertFailure($method, 'does not throw', $expectedException);
+        }
+    }
+
+    /**
+     * @dataProvider exceptionDoesNotThrowTestMessages
+     */
+    public function testDoesNotThrowMessages(
+        Closure $method,
+        $expectedException,
+        $failureMessage
+    ) {
+        $this->assertMatcherFailureMessage(
+            '? does not throw ?',
+            array($method, $expectedException),
+            $failureMessage,
+            'doesNotThrow'
+        );
+    }
+
+    public function exceptionTests3()
+    {
+        return $this->createExceptionTests(
+            array(
+                array('throwNothing', 'expectException', 'FAIL'),
+                array('throwNothing', 'expectMyException', 'FAIL'),
+                array('throwException', 'expectException', 'PASS'),
+                array('throwException', 'expectMyException', 'FAIL'),
+                array('throwMyException', 'expectException', 'FAIL'),
+                array('throwMyException', 'expectMyException', 'PASS'),
+                array('throwMyException', 'expectOtherException', 'FAIL'),
+                array('throwOtherException', 'expectException', 'FAIL'),
+                array('throwOtherException', 'expectMyException', 'FAIL'),
+            )
+        );
+    }
+
+    public function exceptionThrowsAnythingExceptTestMessages()
+    {
+        return $this->createExceptionTests(
+            array(
+                array(
+                    'throwException',
+                    'expectException',
+                    'Expected any exception except Exception to be thrown, but Exception was thrown.'
+                ),
+                array(
+                    'throwMyException',
+                    'expectMyException',
+                    'Expected any exception except Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+            )
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests3
+     */
+    public function testThrowsAnythingExcept(
+        Closure $method,
+        $expectedException,
+        $expectToThrow
+    ) {
+        try {
+            $this->matcher->setData(array($method, $expectedException));
+            $this->matcher->throwsAnythingExcept();
+            $didThrow = false;
+        } catch (DidNotMatchException $e) {
+            $didThrow = true;
+        }
+        $this->assert($expectToThrow, equals, !$didThrow);
+    }
+
+    /**
+     * @dataProvider exceptionThrowsAnythingExceptTestMessages
+     */
+    public function testThrowsAnythingExceptMessages(
+        Closure $method,
+        $expectedException,
+        $failureMessage
+    ) {
+        $this->assertMatcherFailureMessage(
+            '? throws anything except ?',
+            array($method, $expectedException),
+            $failureMessage,
+            'throwsAnythingExcept'
+        );
+    }
+
+    public function exceptionTests4()
+    {
+        return $this->createExceptionTests(
+            array(
+                array('throwNothing', 'expectException', 'FAIL'),
+                array('throwNothing', 'expectMyException', 'FAIL'),
+                array('throwException', 'expectException', 'PASS'),
+                array('throwException', 'expectMyException', 'FAIL'),
+                array('throwMyException', 'expectException', 'FAIL'),
+                array('throwMyException', 'expectMyException', 'PASS'),
+                array('throwMyException', 'expectOtherException', 'FAIL'),
+                array('throwOtherException', 'expectException', 'FAIL'),
+                array('throwOtherException', 'expectMyException', 'FAIL'),
+            )
+        );
+    }
+
+    public function exceptionThrowsExactlyTestMessages()
+    {
+        return $this->createExceptionTests(
+            array(
+                array(
+                    'throwNothing',
+                    'expectException',
+                    "Expected exactly Exception to be thrown, but nothing was thrown."
+                ),
+                array(
+                    'throwNothing',
+                    'expectMyException',
+                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but nothing was thrown.'
+                ),
+                array(
+                    'throwException',
+                    'expectMyException',
+                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but Exception was thrown.'
+                ),
+                array(
+                    'throwMyException',
+                    'expectException',
+                    'Expected exactly Exception to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+                array(
+                    'throwMyException',
+                    'expectOtherException',
+                    'Expected exactly Concise\Modules\Exceptions\OtherException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+                array(
+                    'throwOtherException',
+                    'expectException',
+                    'Expected exactly Exception to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                ),
+                array(
+                    'throwOtherException',
+                    'expectMyException',
+                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                ),
+            )
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests4
+     */
+    public function testThrowsExactly(
+        Closure $method,
+        $expectedException,
+        $expectToThrow
+    ) {
+        if ($expectToThrow) {
+            $this->assertFailure($method, throws_exactly, $expectedException);
+        } else {
+            $this->assert($method, throws_exactly, $expectedException);
+        }
+    }
+
+    /**
+     * @dataProvider exceptionThrowsExactlyTestMessages
+     */
+    public function testThrowsExactlyMessages(
+        Closure $method,
+        $expectedException,
+        $failureMessage
+    ) {
+        $this->assertMatcherFailureMessage(
+            '? throws exactly ?',
+            array($method, $expectedException),
+            $failureMessage,
+            'throwsExactly'
+        );
+    }
+
+    public function exceptionTests5()
+    {
+        $throwNothing = function () {
+        };
+        $throwException = function () {
+            throw new Exception();
+        };
+
+        return array(
+            array($throwNothing, false),
+            array($throwException, true),
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests5
+     */
+    public function testThrows(Closure $method, $expectSuccess)
+    {
+        try {
+            $this->matcher->setData(array($method));
+            $this->matcher->throwsException();
+            $success = true;
+        } catch (DidNotMatchException $e) {
+            $success = false;
+        }
+        $this->assert($expectSuccess, equals, $success);
+    }
+
+    public function testThrowsMessage()
+    {
+        try {
+            $this->matcher->setData(
+                array(
+                    function () {
+                    }
+                )
+            );
+            $this->matcher->throwsException();
+            $this->fail("Exception was not thrown.");
+        } catch (DidNotMatchException $e) {
+            $this->assert(
+                "Expected exception to be thrown.",
+                equals,
+                $e->getMessage()
+            );
+        }
+    }
+
+    public function exceptionTests6()
+    {
+        return $this->createExceptionTests(
+            array(
+                array('throwNothing', 'expectException', 'FAIL'),
+                array('throwNothing', 'expectMyException', 'FAIL'),
+                array('throwException', 'expectException', 'PASS'),
+                array('throwException', 'expectMyException', 'FAIL'),
+                array('throwMyException', 'expectException', 'PASS'),
+                array('throwMyException', 'expectMyException', 'PASS'),
+                array('throwMyException', 'expectOtherException', 'FAIL'),
+                array('throwOtherException', 'expectException', 'PASS'),
+                array('throwOtherException', 'expectMyException', 'FAIL'),
+                array('throwOtherException', 'expectOtherException', 'PASS'),
+            )
+        );
+    }
+
+    public function exceptionThrowsTestMessages()
+    {
+        return $this->createExceptionTests(
+            array(
+                array(
+                    'throwNothing',
+                    'expectException',
+                    "Expected Exception to be thrown, but nothing was thrown."
+                ),
+                array(
+                    'throwNothing',
+                    'expectMyException',
+                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but nothing was thrown.'
+                ),
+                array(
+                    'throwException',
+                    'expectMyException',
+                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but Exception was thrown.'
+                ),
+                array(
+                    'throwMyException',
+                    'expectOtherException',
+                    'Expected Concise\Modules\Exceptions\OtherException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                ),
+                array(
+                    'throwOtherException',
+                    'expectMyException',
+                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                ),
+            )
+        );
+    }
+
+    /**
+     * @dataProvider exceptionTests6
+     */
+    public function testThrows2(
+        Closure $method,
+        $expectedException,
+        $expectToThrow
+    ) {
+        if ($expectToThrow) {
+            $this->assertFailure($method, throws, $expectedException);
+        } else {
+            $this->assert($method, 'throws', $expectedException);
+        }
+    }
+
+    /**
+     * @dataProvider exceptionThrowsTestMessages
+     */
+    public function testThrowsMessages(
+        Closure $method,
+        $expectedException,
+        $failureMessage
+    ) {
+        $this->assertMatcherFailureMessage(
+            '? throws ?',
+            array($method, $expectedException),
+            $failureMessage,
+            'throws'
+        );
+    }
+}

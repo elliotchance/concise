@@ -28,10 +28,12 @@ abstract class AbstractMatcherTestCase extends TestCase
     protected function assertMatcherFailureMessage(
         $syntax,
         array $args,
-        $failureMessage
+        $failureMessage,
+        $method = 'match'
     ) {
         try {
-            $this->matcher->match($syntax, $args);
+            $this->matcher->setData($args);
+            $this->matcher->$method($syntax, $args);
             $this->fail("Expected assertion to fail.");
         } catch (DidNotMatchException $e) {
             $this->assertSame($failureMessage, $e->getMessage());
