@@ -235,9 +235,10 @@ class Assertion
                         );
                         if ($s->getRawSyntax() == $syntax) {
                             $m = $method->getName();
-                            $this->getMatcher()->setData($args);
+                            $matcher = $this->getMatcher();
+                            $matcher->setData($args);
                             // @todo: remove $this->originalSyntax, $args after migration
-                            $answer = $this->getMatcher()->$m(
+                            $answer = $matcher->$m(
                                 $this->originalSyntax,
                                 $args
                             );
@@ -352,5 +353,6 @@ class Assertion
     public function setFailureMessage($message)
     {
         $this->failureMessage = $message;
+        return null;
     }
 }

@@ -4,7 +4,7 @@ namespace Concise;
 
 use Concise\Modules\BasicModule;
 use Concise\Modules\BooleanModule;
-use Concise\Modules\Numbers\Between;
+use Concise\Modules\NumberModule;
 use Concise\Syntax\MatcherParser;
 use PHPUnit_Framework_AssertionFailedError;
 
@@ -152,24 +152,17 @@ class AssertionTest extends TestCase
 
     /**
      * @group #219
+     * @expectedException PHPUnit_Framework_AssertionFailedError
      */
     public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
     {
-        $self = $this;
-        $block = function () use ($self) {
-            $assertion = $self->niceMock('Concise\Assertion')
-                ->disableConstructor()
-                ->expose('performMatch')
-                ->stub(array('getMatcher' => new Between()))
-                ->get();
+        $assertion = $this->niceMock('Concise\Assertion')
+            ->disableConstructor()
+            ->expose('performMatch')
+            ->stub(array('getMatcher' => new NumberModule()))
+            ->get();
 
-            $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
-        };
-        $this->assert(
-            $block,
-            throws,
-            'PHPUnit_Framework_AssertionFailedError'
-        );
+        $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
     }
 
     /**
@@ -200,7 +193,7 @@ class AssertionTest extends TestCase
             $assertion = $this->niceMock('Concise\Assertion')
                 ->disableConstructor()
                 ->expose('performMatch')
-                ->stub(array('getMatcher' => new Between()))
+                ->stub(array('getMatcher' => new NumberModule()))
                 ->get();
 
             $assertion->performMatch('? is between ? and ?', array(10, 0, 5));

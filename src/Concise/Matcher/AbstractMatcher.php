@@ -6,7 +6,7 @@ use Concise\Services\SyntaxRenderer;
 
 abstract class AbstractMatcher
 {
-    protected $data = array();
+    public $data = array();
 
     /**
      * @param string $syntax
