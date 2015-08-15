@@ -8,6 +8,7 @@ use Concise\Mock\MockManager;
 use Concise\Modules\ArrayModule;
 use Concise\Modules\BasicModule;
 use Concise\Modules\BooleanModule;
+use Concise\Modules\DateAndTimeModule;
 use Concise\Modules\RegularExpressionModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
@@ -257,7 +258,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'DateAndTime',
             'Exceptions',
             'Files',
             'Numbers',
@@ -275,6 +275,7 @@ class TestCase extends PHPUnit_Framework_TestCase
             new ArrayModule(),
             new BasicModule(),
             new BooleanModule(),
+            new DateAndTimeModule(),
             new RegularExpressionModule(),
         );
         foreach ($modules as $module) {

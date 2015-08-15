@@ -245,7 +245,7 @@ class Assertion
                             if (!$nested && true !== $answer && null !== $answer
                             ) {
                                 $message = $this->getFailureMessage(
-                                    $this->originalSyntax,
+                                    $syntax,
                                     $args
                                 );
                                 throw new PHPUnit_Framework_AssertionFailedError(
