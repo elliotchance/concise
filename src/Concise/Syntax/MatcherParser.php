@@ -4,8 +4,6 @@ namespace Concise\Syntax;
 
 use Concise\Assertion;
 use Concise\Matcher\AbstractMatcher;
-use Concise\Matcher\Module;
-use Concise\Matcher\ModuleParser;
 use Concise\Matcher\Syntax;
 use Concise\Validation\ArgumentChecker;
 use Exception;
@@ -35,27 +33,14 @@ class MatcherParser
     protected $syntaxCache = array();
 
     /**
-     * @var Module[]
-     */
-    protected $modules = array();
-
-    /**
      * @var AbstractMatcher[]
      */
-    protected $modules2 = array();
+    protected $modules = array();
 
     public function __construct()
     {
         $this->lexer = new Lexer();
         $this->lexer->setMatcherParser($this);
-    }
-
-    /**
-     * @return Module[]
-     */
-    public function getModules()
-    {
-        return $this->modules;
     }
 
     /**
@@ -103,26 +88,6 @@ class MatcherParser
         }
 
         foreach ($this->modules as $module) {
-            foreach ($module->getSyntaxes() as $s) {
-                if ($s->getRawSyntax() == $rawSyntax) {
-                    $class = $s->getClass();
-                    $r = [
-                        'matcher' => new $class(),
-                        'originalSyntax' => $s->getSyntax(),
-                    ];
-                    if ($this->endsWith(
-                        $this->getRawSyntax($syntax),
-                        $endsWith
-                    )
-                    ) {
-                        $r['on_error'] = $data[count($data) - 1];
-                    }
-                    return $r;
-                }
-            }
-        }
-
-        foreach ($this->modules2 as $module) {
             $reflectionClass = new ReflectionClass($module);
             foreach($reflectionClass->getMethods() as $method) {
                 $doc = $method->getDocComment();
@@ -244,19 +209,9 @@ class MatcherParser
         }
     }
 
-    public function loadModule($moduleYmlPath)
+    public function loadModule(AbstractMatcher $module)
     {
-        if (is_object($moduleYmlPath)) {
-            $this->modules2[get_class($moduleYmlPath)] = $moduleYmlPath;
-            return;
-        }
-
-        if (array_key_exists($moduleYmlPath, $this->modules)) {
-            return;
-        }
-
-        $parser = new ModuleParser();
-        $this->modules[$moduleYmlPath] = $parser->parseFromFile($moduleYmlPath);
+        $this->modules[get_class($module)] = $module;
     }
 
     protected function getWordsForSyntaxes(array $syntaxes)
@@ -280,17 +235,6 @@ class MatcherParser
     {
         $r = array('error', 'on');
         foreach ($this->modules as $module) {
-            foreach ($module->getSyntaxes() as $syntax) {
-                $r = array_merge(
-                    $r,
-                    $this->getWordsForSyntaxes(
-                        array($syntax->getSyntax() => '')
-                    )
-                );
-            }
-        }
-
-        foreach ($this->modules2 as $module) {
             $reflectionClass = new ReflectionClass($module);
             foreach($reflectionClass->getMethods() as $method) {
                 $doc = $method->getDocComment();
