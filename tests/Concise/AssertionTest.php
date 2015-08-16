@@ -2,9 +2,9 @@
 
 namespace Concise;
 
-use Concise\Modules\BasicModule;
-use Concise\Modules\BooleanModule;
-use Concise\Modules\NumberModule;
+use Concise\Module\BasicModule;
+use Concise\Module\BooleanModule;
+use Concise\Module\NumberModule;
 use Concise\Syntax\MatcherParser;
 use PHPUnit_Framework_AssertionFailedError;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace Concise\Modules\Booleans;
+namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcherTestCase;
-use Concise\Modules\BooleanModule;
 
 /**
  * @group matcher

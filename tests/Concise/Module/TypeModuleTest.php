@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Modules;
+namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcherTestCase;
 use stdClass;
@@ -106,7 +106,7 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assert(
             new self(),
             is_an_instance_of,
-            '\Concise\Modules\TypeModuleTest'
+            '\Concise\Module\TypeModuleTest'
         );
     }
 
@@ -124,14 +124,14 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assertFailure(
             new \stdClass(),
             is_instance_of,
-            '\Concise\Modules\TypeModule'
+            '\Concise\Module\TypeModule'
         );
     }
 
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
         $this->assert(
-            '\Concise\Modules\TypeModule',
+            '\Concise\Module\TypeModule',
             instance_of,
             '\Concise\TestCase'
         );
@@ -142,7 +142,7 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assert(
             new self(),
             is_an_instance_of,
-            'Concise\Modules\TypeModuleTest'
+            'Concise\Module\TypeModuleTest'
         );
     }
 
@@ -236,7 +236,7 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assertFailure(
             new self(),
             is_not_an_instance_of,
-            '\Concise\Modules\TypeModuleTest'
+            '\Concise\Module\TypeModuleTest'
         );
     }
 
@@ -254,14 +254,14 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assert(
             new \stdClass(),
             is_not_instance_of,
-            '\Concise\Modules\TypeModuleTest'
+            '\Concise\Module\TypeModuleTest'
         );
     }
 
     public function testStringsRepresentingClassNamesCanBeUsed1()
     {
         $this->assertFailure(
-            '\Concise\Modules\TypeModule',
+            '\Concise\Module\TypeModule',
             is_not_instance_of,
             '\Concise\TestCase'
         );

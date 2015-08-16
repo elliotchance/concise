@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Modules;
+namespace Concise\Module;
 
 use Concise\Matcher\AbstractNestedMatcherTestCase;
 use DateTime;

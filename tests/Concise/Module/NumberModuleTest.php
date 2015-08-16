@@ -1,9 +1,8 @@
 <?php
 
-namespace Concise\Modules\Numbers;
+namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcherTestCase;
-use Concise\Modules\NumberModule;
 
 /**
  * @group matcher

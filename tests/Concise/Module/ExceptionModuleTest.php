@@ -1,11 +1,10 @@
 <?php
 
-namespace Concise\Modules\Exceptions;
+namespace Concise\Module;
 
 use Closure;
 use Concise\Matcher\AbstractMatcherTestCase;
 use Concise\Matcher\DidNotMatchException;
-use Concise\Modules\ExceptionModule;
 use Exception;
 
 class MyException extends Exception
@@ -41,8 +40,8 @@ class ExceptionModuleTest extends AbstractMatcherTestCase
         );
         $expect = array(
             'expectException' => 'Exception',
-            'expectMyException' => 'Concise\Modules\Exceptions\MyException',
-            'expectOtherException' => 'Concise\Modules\Exceptions\OtherException',
+            'expectMyException' => 'Concise\Module\MyException',
+            'expectOtherException' => 'Concise\Module\OtherException',
         );
         $result = array(
             'FAIL' => true,
@@ -140,22 +139,22 @@ class ExceptionModuleTest extends AbstractMatcherTestCase
                 array(
                     'throwMyException',
                     'expectException',
-                    'Expected Exception not to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected Exception not to be thrown, but Concise\Module\MyException was thrown.'
                 ),
                 array(
                     'throwMyException',
                     'expectMyException',
-                    'Expected Concise\Modules\Exceptions\MyException not to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected Concise\Module\MyException not to be thrown, but Concise\Module\MyException was thrown.'
                 ),
                 array(
                     'throwOtherException',
                     'expectException',
-                    'Expected Exception not to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                    'Expected Exception not to be thrown, but Concise\Module\OtherException was thrown.'
                 ),
                 array(
                     'throwOtherException',
                     'expectOtherException',
-                    'Expected Concise\Modules\Exceptions\OtherException not to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                    'Expected Concise\Module\OtherException not to be thrown, but Concise\Module\OtherException was thrown.'
                 ),
             )
         );
@@ -221,7 +220,7 @@ class ExceptionModuleTest extends AbstractMatcherTestCase
                 array(
                     'throwMyException',
                     'expectMyException',
-                    'Expected any exception except Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected any exception except Concise\Module\MyException to be thrown, but Concise\Module\MyException was thrown.'
                 ),
             )
         );
@@ -290,32 +289,32 @@ class ExceptionModuleTest extends AbstractMatcherTestCase
                 array(
                     'throwNothing',
                     'expectMyException',
-                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but nothing was thrown.'
+                    'Expected exactly Concise\Module\MyException to be thrown, but nothing was thrown.'
                 ),
                 array(
                     'throwException',
                     'expectMyException',
-                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but Exception was thrown.'
+                    'Expected exactly Concise\Module\MyException to be thrown, but Exception was thrown.'
                 ),
                 array(
                     'throwMyException',
                     'expectException',
-                    'Expected exactly Exception to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected exactly Exception to be thrown, but Concise\Module\MyException was thrown.'
                 ),
                 array(
                     'throwMyException',
                     'expectOtherException',
-                    'Expected exactly Concise\Modules\Exceptions\OtherException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected exactly Concise\Module\OtherException to be thrown, but Concise\Module\MyException was thrown.'
                 ),
                 array(
                     'throwOtherException',
                     'expectException',
-                    'Expected exactly Exception to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                    'Expected exactly Exception to be thrown, but Concise\Module\OtherException was thrown.'
                 ),
                 array(
                     'throwOtherException',
                     'expectMyException',
-                    'Expected exactly Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                    'Expected exactly Concise\Module\MyException to be thrown, but Concise\Module\OtherException was thrown.'
                 ),
             )
         );
@@ -431,22 +430,22 @@ class ExceptionModuleTest extends AbstractMatcherTestCase
                 array(
                     'throwNothing',
                     'expectMyException',
-                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but nothing was thrown.'
+                    'Expected Concise\Module\MyException to be thrown, but nothing was thrown.'
                 ),
                 array(
                     'throwException',
                     'expectMyException',
-                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but Exception was thrown.'
+                    'Expected Concise\Module\MyException to be thrown, but Exception was thrown.'
                 ),
                 array(
                     'throwMyException',
                     'expectOtherException',
-                    'Expected Concise\Modules\Exceptions\OtherException to be thrown, but Concise\Modules\Exceptions\MyException was thrown.'
+                    'Expected Concise\Module\OtherException to be thrown, but Concise\Module\MyException was thrown.'
                 ),
                 array(
                     'throwOtherException',
                     'expectMyException',
-                    'Expected Concise\Modules\Exceptions\MyException to be thrown, but Concise\Modules\Exceptions\OtherException was thrown.'
+                    'Expected Concise\Module\MyException to be thrown, but Concise\Module\OtherException was thrown.'
                 ),
             )
         );
