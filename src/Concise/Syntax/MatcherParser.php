@@ -326,22 +326,4 @@ class MatcherParser
 
         return $this->keywords;
     }
-
-    /**
-     * @return array
-     */
-    public function getAllMatcherDescriptions()
-    {
-        $r = array();
-        foreach ($this->modules as $module) {
-            foreach ($module->getSyntaxes() as $syntax) {
-                $r[$syntax->getSyntax()] = array(
-                    'description' => $syntax->getDescription(),
-                    'method' => $syntax->getMethod(),
-                );
-            }
-        }
-
-        return $r;
-    }
 }

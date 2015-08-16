@@ -3,12 +3,11 @@
 namespace Concise\Syntax;
 
 use Concise\Matcher\AbstractMatcher;
-use Concise\Modules\Basic\Equals;
 use Concise\TestCase;
 
 class MyBadMatcher extends AbstractMatcher
 {
-    public function match($syntax, array $data = array())
+    public function match()
     {
         return false;
     }
@@ -92,16 +91,6 @@ class MatcherParserTest extends TestCase
         $parser->getKeywords();
     }
 
-    public function testGetAllSyntaxesContainsItemsFromDifferentMatchers()
-    {
-        $syntaxes = MatcherParser::getInstance()->getAllMatcherDescriptions();
-        $this->assert(
-            $syntaxes,
-            has_keys,
-            array('? is null', 'url ?:string is valid')
-        );
-    }
-
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage Argument 2 (123) must be regex.
@@ -113,6 +102,7 @@ class MatcherParserTest extends TestCase
 
     /**
      * @param string[] $supportedSyntaxes
+     * @return AbstractMatcher
      */
     protected function getAbstractMatcherMockWithSupportedSyntaxes(
         $supportedSyntaxes
