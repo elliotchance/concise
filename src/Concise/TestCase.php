@@ -16,6 +16,7 @@ use Concise\Modules\ObjectModule;
 use Concise\Modules\RegularExpressionModule;
 use Concise\Modules\StringModule;
 use Concise\Modules\TypeModule;
+use Concise\Modules\UrlModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
@@ -264,14 +265,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'Urls'
-        );
-        foreach ($modules as $module) {
-            MatcherParser::getInstance()
-                ->loadModule(__DIR__ . "/Modules/$module/module.yml");
-        }
-
-        $modules = array(
             new ArrayModule(),
             new BasicModule(),
             new BooleanModule(),
@@ -283,6 +276,7 @@ class TestCase extends PHPUnit_Framework_TestCase
             new RegularExpressionModule(),
             new StringModule(),
             new TypeModule(),
+            new UrlModule(),
         );
         foreach ($modules as $module) {
             MatcherParser::getInstance()

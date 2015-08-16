@@ -1,18 +1,18 @@
 <?php
 
-namespace Concise\Modules\Urls;
+namespace Concise\Modules;
 
 use Concise\Matcher\AbstractMatcherTestCase;
 
 /**
  * @group matcher
  */
-class UrlHasPartTest extends AbstractMatcherTestCase
+class UrlHModuleTest extends AbstractMatcherTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new UrlHasPart();
+        $this->matcher = new UrlModule();
     }
 
     public function data()
@@ -105,5 +105,15 @@ class UrlHasPartTest extends AbstractMatcherTestCase
         } else {
             $this->assertFailure(url, $url, $test, $value);
         }
+    }
+
+    public function testInvalidURL()
+    {
+        $this->assertFailure(url, 'foo', is_valid);
+    }
+
+    public function testValidURL()
+    {
+        $this->assert(url, 'http://www.google.com', is_valid);
     }
 }
