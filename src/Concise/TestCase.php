@@ -14,6 +14,7 @@ use Concise\Modules\FileModule;
 use Concise\Modules\NumberModule;
 use Concise\Modules\ObjectModule;
 use Concise\Modules\RegularExpressionModule;
+use Concise\Modules\StringModule;
 use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
@@ -262,7 +263,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         parent::setUpBeforeClass();
 
         $modules = array(
-            'Strings',
             'Types',
             'Urls'
         );
@@ -281,6 +281,7 @@ class TestCase extends PHPUnit_Framework_TestCase
             new NumberModule(),
             new ObjectModule(),
             new RegularExpressionModule(),
+            new StringModule(),
         );
         foreach ($modules as $module) {
             MatcherParser::getInstance()
