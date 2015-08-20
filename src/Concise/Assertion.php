@@ -254,18 +254,11 @@ class Assertion
                                 );
                             }
 
-                            return array($answer, $nested);
+                            return $answer;
                         }
                     }
                 }
             }
-
-            // @todo delete this, its an error
-            if (!method_exists($this->getMatcher(), 'match')) {
-                throw new Exception('a');
-            }
-
-            return array($this->getMatcher()->match($this->originalSyntax, $args), false);
         } catch (DidNotMatchException $e) {
             $message =
                 $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
@@ -283,16 +276,7 @@ class Assertion
         $result = $lexer->parse($this->getAssertion());
         $args = $this->getArgumentsAndValidate($result['arguments']);
 
-        list($answer, $nested) = $this->performMatch($result['syntax'], $args);
-
-        if (!$nested && !$this->getMatcher() instanceof AbstractNestedMatcher &&
-            true !== $answer && null !== $answer
-        ) {
-            $message = $this->getFailureMessage($result['syntax'], $args);
-            throw new PHPUnit_Framework_AssertionFailedError($message);
-        }
-
-        return $answer;
+        return $this->performMatch($result['syntax'], $args);
     }
 
     /**

@@ -97,10 +97,10 @@ class MatcherParser
                         $s = new Syntax(trim(substr($line, $pos + 7)), $method->getDeclaringClass()->getName() . '::' . $method->getName());
                         if ($s->getRawSyntax() == $rawSyntax) {
                             $class = $s->getClass();
-                            $r = [
+                            $r = array(
                                 'matcher' => new $class(),
                                 'originalSyntax' => $s->getSyntax(),
-                            ];
+                            );
                             if ($this->endsWith(
                                 $this->getRawSyntax($syntax),
                                 $endsWith
