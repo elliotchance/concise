@@ -192,6 +192,6 @@ class MatcherParserTest extends TestCase
 
     public function testGetModules()
     {
-        $this->assert(count($this->parser->getModules()), is_greater_than, 0);
+        $this->assert($this->parser->getModules(), is_an_array);
     }
 }
