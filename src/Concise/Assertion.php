@@ -245,8 +245,8 @@ class Assertion
             $message =
                 $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
         }
-        $this->fail($message);
-    }
+        throw new PHPUnit_Framework_AssertionFailedError($message);
+    } // @codeCoverageIgnore
 
     /**
      * @throws PHPUnit_Framework_AssertionFailedError
@@ -320,15 +320,5 @@ class Assertion
     {
         $this->failureMessage = $message;
         return null;
-    }
-
-    /**
-     * @param $message
-     */
-    protected function fail($message)
-    {
-        throw new PHPUnit_Framework_AssertionFailedError(
-            $message
-        );
     }
 }

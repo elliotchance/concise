@@ -8,6 +8,11 @@ use PHPUnit_Framework_AssertionFailedError;
 
 abstract class AbstractMatcherTestCase extends TestCase
 {
+    /**
+     * @var AbstractMatcher
+     */
+    protected $matcher;
+
     public function testExtendsAbstractMatcher()
     {
         $this->assert(
@@ -70,5 +75,10 @@ abstract class AbstractMatcherTestCase extends TestCase
             return;
         }
         $this->fail("Assertion did not fail.");
+    }
+
+    public function testModuleHasAName()
+    {
+        $this->assert($this->matcher->getName(), is_not_blank);
     }
 }
