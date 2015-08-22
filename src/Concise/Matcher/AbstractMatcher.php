@@ -10,6 +10,8 @@ abstract class AbstractMatcher
 {
     public $data = array();
 
+    abstract public function getName();
+
     /**
      * @param string $syntax
      * @param array  $data
@@ -36,6 +38,14 @@ abstract class AbstractMatcher
         $m = $method->getName();
         $isNested = strpos($doc, '@nested') !== false;
         $syntaxes = array();
+        $description = '';
+
+        foreach (explode("\n", $doc) as $line) {
+            if (preg_match('/@[a-zA-Z]+/', $line)) {
+                continue;
+            }
+            $description .= ltrim($line, ' */') . "\n";
+        }
 
         foreach (explode("\n", $doc) as $line) {
             $pos = strpos($line, '@syntax');
@@ -45,13 +55,15 @@ abstract class AbstractMatcher
                 continue;
             }
 
-            $syntaxes[] = new Syntax(
+            $syntax = new Syntax(
                 trim(substr($line, $pos + 7)),
                 $method->getDeclaringClass()->getName() .
                 '::' .
                 $m,
                 $isNested
             );
+            $syntax->setDescription($description);
+            $syntaxes[] = $syntax;
         }
 
         return $syntaxes;

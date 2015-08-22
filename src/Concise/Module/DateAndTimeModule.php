@@ -8,6 +8,11 @@ use Concise\Services\TimestampToEpochConverter;
 
 class DateAndTimeModule extends AbstractNestedMatcher
 {
+    public function getName()
+    {
+        return "Date and Time";
+    }
+
     /**
      * http://stackoverflow.com/a/20460461/1470961
      * @param int $n

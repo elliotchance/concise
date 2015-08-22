@@ -7,6 +7,11 @@ use Concise\Matcher\DidNotMatchException;
 
 class ArrayModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Arrays";
+    }
+
     /**
      * Assert an array does not have key and value item.
      *

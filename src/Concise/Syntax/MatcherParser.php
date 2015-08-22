@@ -8,7 +8,6 @@ use Concise\Matcher\Syntax;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
-use ReflectionException;
 
 class MatcherParser
 {
@@ -41,6 +40,14 @@ class MatcherParser
     {
         $this->lexer = new Lexer();
         $this->lexer->setMatcherParser($this);
+    }
+
+    /**
+     * @return AbstractMatcher[]
+     */
+    public function getModules()
+    {
+        return $this->modules;
     }
 
     /**

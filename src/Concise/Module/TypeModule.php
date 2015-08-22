@@ -6,6 +6,11 @@ use Concise\Matcher\AbstractMatcher;
 
 class TypeModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Types";
+    }
+
     /**
      * Assert a value is true or false.
      *

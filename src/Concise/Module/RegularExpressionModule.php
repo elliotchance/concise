@@ -9,6 +9,11 @@ use Concise\Matcher\AbstractMatcher;
  */
 class RegularExpressionModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Regular Expressions";
+    }
+
     /**
      * @syntax ?:string matches regular expression ?:regex
      * @syntax ?:string matches regex ?:regex

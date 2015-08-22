@@ -7,6 +7,11 @@ use Concise\Matcher\DidNotMatchException;
 
 class StringModule extends AbstractNestedMatcher
 {
+    public function getName()
+    {
+        return "Strings";
+    }
+
     /**
      * A string contains a substring. Returns original string.
      *

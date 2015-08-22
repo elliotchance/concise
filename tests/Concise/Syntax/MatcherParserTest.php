@@ -11,6 +11,10 @@ class MyBadMatcher extends AbstractMatcher
     {
         return false;
     }
+
+    public function getName()
+    {
+    }
 }
 
 class MatcherParserTest extends TestCase

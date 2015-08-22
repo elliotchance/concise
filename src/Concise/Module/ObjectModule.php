@@ -7,6 +7,11 @@ use Concise\Matcher\DidNotMatchException;
 
 class ObjectModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Objects and Classes";
+    }
+
     /**
      * Assert that an object does not have a property.
      *

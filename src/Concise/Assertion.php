@@ -235,7 +235,7 @@ class Assertion
                             $syntax,
                             $args
                         );
-                        $this->fail($message);
+                        break;
                     }
 
                     return $answer;

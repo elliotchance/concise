@@ -7,6 +7,11 @@ use Concise\Matcher\DidNotMatchException;
 
 class FileModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Files";
+    }
+
     /**
      * Compare string value with the contents of a file.
      *

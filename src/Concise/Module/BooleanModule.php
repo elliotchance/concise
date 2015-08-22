@@ -6,6 +6,11 @@ use Concise\Matcher\AbstractMatcher;
 
 class BooleanModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Booleans";
+    }
+
     /**
      * Always fail.
      *

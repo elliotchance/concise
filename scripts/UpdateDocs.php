@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Concise\Matcher\Module;
+use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\Syntax;
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
@@ -65,7 +65,7 @@ function generateMarkdownItem($syntax, $description)
 /**
  * @return string
  */
-function generateMarkdownList(Module $module)
+function generateMarkdownList(AbstractMatcher $module)
 {
     $matchersDoc = '';
     $syntaxes = [];
@@ -116,11 +116,12 @@ function refreshKeywords()
     $defines = ['on_error' => 'on error'];
 
     $all = array();
-    foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-        $simpleSyntax = preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
-        foreach (explode('?', $simpleSyntax) as $part) {
-            $p = trim($part);
-            $all[str_replace(' ', '_', $p)] = $p;
+    foreach ($parser->getModules() as $module) {
+        foreach ($module->getSyntaxes() as $syntax) {
+            foreach (explode('?', $syntax->getRawSyntax()) as $part) {
+                $p = trim($part);
+                $all[str_replace(' ', '_', $p)] = $p;
+            }
         }
     }
 

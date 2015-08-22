@@ -324,9 +324,6 @@ if (!defined("less_than_or_equal")) {
 if (!defined("lt")) {
     define("lt", "lt");
 }
-if (!defined("lte")) {
-    define("lte", "lte");
-}
 if (!defined("matches_regex")) {
     define("matches_regex", "matches regex");
 }

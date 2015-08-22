@@ -6,6 +6,11 @@ use Concise\Matcher\AbstractMatcher;
 
 class BasicModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Basic";
+    }
+
     /**
      * Assert values with no regard to exact data types.
      *

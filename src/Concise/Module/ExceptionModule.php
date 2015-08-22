@@ -8,6 +8,11 @@ use Exception;
 
 class ExceptionModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Exceptions";
+    }
+
     /**
      * Assert that a specific exception is not thrown.
      *

@@ -10,6 +10,10 @@ class MyMatcher extends AbstractMatcher
     {
         return false;
     }
+
+    public function getName()
+    {
+    }
 }
 
 /**

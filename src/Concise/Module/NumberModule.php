@@ -7,6 +7,11 @@ use Concise\Matcher\DidNotMatchException;
 
 class NumberModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "Numbers";
+    }
+
     /**
      * A number must be between two values (inclusive), returns value.
      *

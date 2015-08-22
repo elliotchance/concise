@@ -6,6 +6,11 @@ use Concise\Matcher\AbstractMatcher;
 
 class UrlModule extends AbstractMatcher
 {
+    public function getName()
+    {
+        return "URLs";
+    }
+
     /**
      * Validate URL.
      *
