@@ -28,16 +28,34 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
     }
 
     /**
-     * @dataProvider allBuilders
+     * @dataProvider niceMockBuilders
      */
-    public function testMockReceivesConstructorArguments(
+    public function testNiceMockReceivesConstructorArguments(
         MockBuilder $builder,
         $type
     ) {
         if (self::MOCK_INTERFACE === $type) {
-            return $this->notApplicable();
+            $this->notApplicable();
+            return;
         }
+
         $mock = $builder->get();
         $this->assert($mock->constructorRun, equals, 2);
+    }
+
+    /**
+     * @dataProvider mockBuilders
+     */
+    public function testMockDoesNotEnableConstructorByDefault(
+        MockBuilder $builder,
+        $type
+    ) {
+        if (self::MOCK_INTERFACE === $type) {
+            $this->notApplicable();
+            return;
+        }
+
+        $mock = $builder->get();
+        $this->assert($mock->constructorRun, is_false);
     }
 }
