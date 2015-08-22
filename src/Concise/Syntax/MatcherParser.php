@@ -75,16 +75,9 @@ class MatcherParser
 
         $rawSyntax = $this->getRawSyntax($syntax);
         $endsWith = ' on error ?';
-        $options = array();
         if ($this->endsWith($rawSyntax, $endsWith)) {
             $rawSyntax =
                 substr($rawSyntax, 0, strlen($rawSyntax) - strlen($endsWith));
-            $options = array(
-                'on_error' => $data[count($data) - 1],
-            );
-        }
-        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            return $this->syntaxCache[$rawSyntax] + $options;
         }
 
         foreach ($this->modules as $module) {
@@ -137,50 +130,6 @@ class MatcherParser
         return $assertion;
     }
 
-    protected function clearKeywordCache()
-    {
-        $this->keywords = array();
-    }
-
-    /**
-     * @param string $rawSyntax
-     * @throws Exception If the assertion contains words that are not lower
-     *     case.
-     */
-    protected function throwExceptionIfNotInLowerCase($rawSyntax)
-    {
-        if (strtolower($rawSyntax) != $rawSyntax) {
-            throw new Exception(
-                "All assertions ('$rawSyntax') must be lower case."
-            );
-        }
-    }
-
-    /**
-     * @param string $rawSyntax
-     * @param        $syntax
-     * @throws Exception
-     */
-    protected function throwExceptionIfSyntaxIsAlreadyDeclared(
-        $rawSyntax,
-        $syntax
-    ) {
-        if (array_key_exists($rawSyntax, $this->syntaxCache)) {
-            throw new Exception("Syntax '$syntax' is already declared.");
-        }
-    }
-
-    protected function registerSyntax($syntax, AbstractMatcher $matcher)
-    {
-        $rawSyntax = $this->getRawSyntax($syntax);
-        $this->throwExceptionIfNotInLowerCase($rawSyntax);
-        $this->throwExceptionIfSyntaxIsAlreadyDeclared($rawSyntax, $syntax);
-        $this->syntaxCache[$rawSyntax] = array(
-            'matcher' => $matcher,
-            'originalSyntax' => $syntax,
-        );
-    }
-
     /**
      * @return MatcherParser
      */
@@ -191,22 +140,6 @@ class MatcherParser
         }
 
         return self::$instance;
-    }
-
-    /**
-     * @param string $class
-     * @return bool
-     */
-    protected function isValidMatcher($class)
-    {
-        try {
-            $reflectionClass = new ReflectionClass($class);
-            return !$reflectionClass->isAbstract() &&
-            is_subclass_of($class, 'Concise\Matcher\AbstractMatcher') &&
-            $class != 'Concise\Matcher\AbstractNestedMatcher';
-        } catch (ReflectionException $e) {
-            return false;
-        }
     }
 
     public function loadModule(AbstractMatcher $module)

@@ -218,52 +218,34 @@ class Assertion
         if (substr($syntax, strlen($syntax) - 10) == 'on error ?') {
             $syntax = trim(substr($syntax, 0, 10));
         }
+        $message = null;
         try {
-            $reflectionClass = new ReflectionClass($this->getMatcher());
-            foreach ($reflectionClass->getMethods() as $method) {
-                $doc = $method->getDocComment();
-                $nested = strpos($doc, '@nested') !== false;
+            $syntaxes = $this->getMatcher()->getSyntaxes();
 
-                foreach (explode("\n", $doc) as $line) {
-                    $pos = strpos($line, '@syntax');
-                    if ($pos !== false) {
-                        $s = new Syntax(
-                            trim(substr($line, $pos + 7)),
-                            $method->getDeclaringClass()->getName() .
-                            '::' .
-                            $method->getName()
+            foreach ($syntaxes as $s) {
+                if ($s->getRawSyntax() == $syntax) {
+                    $matcher = $this->getMatcher();
+                    $matcher->setData($args);
+                    $m = $s->getMethod();
+                    $answer = $matcher->$m();
+
+                    if (!$s->isNested() && true !== $answer && null !== $answer
+                    ) {
+                        $message = $this->getFailureMessage(
+                            $syntax,
+                            $args
                         );
-                        if ($s->getRawSyntax() == $syntax) {
-                            $m = $method->getName();
-                            $matcher = $this->getMatcher();
-                            $matcher->setData($args);
-                            // @todo: remove $this->originalSyntax, $args after migration
-                            $answer = $matcher->$m(
-                                $this->originalSyntax,
-                                $args
-                            );
-
-                            if (!$nested && true !== $answer && null !== $answer
-                            ) {
-                                $message = $this->getFailureMessage(
-                                    $syntax,
-                                    $args
-                                );
-                                throw new PHPUnit_Framework_AssertionFailedError(
-                                    $message
-                                );
-                            }
-
-                            return $answer;
-                        }
+                        $this->fail($message);
                     }
+
+                    return $answer;
                 }
             }
         } catch (DidNotMatchException $e) {
             $message =
                 $e->getMessage() ?: $this->getFailureMessage($syntax, $args);
-            throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+        $this->fail($message);
     }
 
     /**
@@ -338,5 +320,15 @@ class Assertion
     {
         $this->failureMessage = $message;
         return null;
+    }
+
+    /**
+     * @param $message
+     */
+    protected function fail($message)
+    {
+        throw new PHPUnit_Framework_AssertionFailedError(
+            $message
+        );
     }
 }

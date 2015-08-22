@@ -26,7 +26,12 @@ class Syntax
      */
     protected $description = '';
 
-    public function __construct($syntax, $method)
+    /**
+     * @var bool
+     */
+    protected $nested;
+
+    public function __construct($syntax, $method, $nested = false)
     {
         if (strpos($method, '::') === false) {
             throw new InvalidArgumentException(
@@ -40,6 +45,7 @@ class Syntax
             );
         }
         $this->syntax = $syntax;
+        $this->nested = $nested;
     }
 
     /**
@@ -88,5 +94,13 @@ class Syntax
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNested()
+    {
+        return $this->nested;
     }
 }

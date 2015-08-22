@@ -6,7 +6,7 @@ use Concise\TestCase;
 
 class MyMatcher extends AbstractMatcher
 {
-    public function match($syntax, array $data = array())
+    public function match()
     {
         return false;
     }
