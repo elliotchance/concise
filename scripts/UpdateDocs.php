@@ -14,23 +14,6 @@ $testCase->setUpBeforeClass();
 
 refreshKeywords();
 updateReadme();
-//updateWikiAssertions();
-
-function getAssertionsByTag()
-{
-    $parser = MatcherParser::getInstance();
-    $syntaxes = $parser->getAllMatcherDescriptions();
-
-    $matchers = array();
-    foreach ($syntaxes as $syntax => $d) {
-        foreach ($d['tags'] as $tag) {
-            $matchers[$tag][$d['matcher']][] =
-                array($syntax, $d['description']);
-        }
-    }
-
-    return $matchers;
-}
 
 function renderSyntax($syntax)
 {

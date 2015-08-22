@@ -189,4 +189,9 @@ class MatcherParserTest extends TestCase
     {
         $this->assert("abc", does_not_match_regex, null);
     }
+
+    public function testGetModules()
+    {
+        $this->assert(count($this->parser->getModules()), is_greater_than, 0);
+    }
 }
