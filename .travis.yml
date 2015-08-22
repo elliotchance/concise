@@ -22,6 +22,5 @@ script:
   - bin/concise --ci $PHPUNIT_OPTIONS
 
 after_script:
-  - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"
   - "if [[ -f build/logs/clover.xml ]] ; then wget https://scrutinizer-ci.com/ocular.phar; fi"
   - "if [[ -f build/logs/clover.xml ]] ; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi"
