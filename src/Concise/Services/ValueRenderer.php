@@ -10,7 +10,7 @@ use Concise\TestCase;
 class ValueRenderer
 {
     /**
-     * @var string
+     * @var array
      */
     protected $theme;
 
