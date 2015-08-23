@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Assertion\AssertionBuilder as NewAssertionBuilder;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
@@ -347,5 +348,10 @@ class TestCase extends PHPUnit_Framework_TestCase
         } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->verifyFailures[] = $e->getMessage();
         }
+    }
+
+    public function _assert($value)
+    {
+        return new NewAssertionBuilder();
     }
 }

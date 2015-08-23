@@ -133,4 +133,9 @@ class TestCaseTest extends TestCase
     {
         $this->assert(true);
     }
+
+    public function testAssertReturnsAssertionBuilder()
+    {
+        $this->assert($this->_assert(123), instance_of, '\Concise\Assertion\AssertionBuilder');
+    }
 }
