@@ -169,4 +169,13 @@ class TestCaseTest extends TestCase
             array(123)
         );
     }
+
+    public function testMagicAssertHasFirstWord()
+    {
+        $this->assert(
+            $this->_assertSomething(123)->getSyntax(),
+            equals,
+            'something ?'
+        );
+    }
 }
