@@ -356,4 +356,9 @@ class TestCase extends PHPUnit_Framework_TestCase
         $builder->add(null, $value);
         return $builder;
     }
+
+    public function __call($name, $args)
+    {
+        return new NewAssertionBuilder();
+    }
 }

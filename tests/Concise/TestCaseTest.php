@@ -151,4 +151,13 @@ class TestCaseTest extends TestCase
             array(123)
         );
     }
+
+    public function testMagicAssertReturnsAssertionBuilder()
+    {
+        $this->assert(
+            $this->_assertSomething(123),
+            instance_of,
+            '\Concise\Assertion\AssertionBuilder'
+        );
+    }
 }
