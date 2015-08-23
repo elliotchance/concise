@@ -4,23 +4,29 @@ namespace Concise\Assertion;
 
 class AssertionBuilder
 {
+    protected $data = array();
+
     protected $syntax = '';
 
-    public function __construct($value, $startingWord = null)
+    public function add($word = null, $value = null)
     {
-        if (null !== $startingWord) {
-            $this->syntax = "$startingWord ";
+        if (null !== $word) {
+            $this->syntax .= "$word ";
         }
-        $this->syntax .= '?';
+
+        if (null !== $value) {
+            $this->data[] = $value;
+            $this->syntax .= '? ';
+        }
     }
 
     public function getData()
     {
-        return array(123);
+        return $this->data;
     }
 
     public function getSyntax()
     {
-        return $this->syntax;
+        return rtrim($this->syntax);
     }
 }

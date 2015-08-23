@@ -6,21 +6,68 @@ use Concise\TestCase;
 
 class AssertionBuilderTest extends TestCase
 {
-    public function testDataWithOneElement()
+    public function data()
     {
-        $builder = new AssertionBuilder(123);
-        $this->assert($builder->getData(), equals, array(123));
+        return array(
+            array(
+                array(array(null, 123)),
+                array(123),
+                '?'
+            ),
+            array(
+                array(array('foo', 123)),
+                array(123),
+                'foo ?'
+            ),
+            array(
+                array(array(null, 123), array('equals')),
+                array(123),
+                '? equals'
+            ),
+            array(
+                array(array(null, 'a'), array('equals', 'b')),
+                array('a', 'b'),
+                '? equals ?'
+            ),
+            array(
+                array(array('url', 'http'), array('is valid')),
+                array('http'),
+                'url ? is valid'
+            ),
+            array(
+                array(array('url', 'http'), array('is valid', 456)),
+                array('http', 456),
+                'url ? is valid ?'
+            ),
+            array(
+                array(array(null, 0), array('equals', 10), array('between', 5)),
+                array(0, 10, 5),
+                '? equals ? between ?'
+            ),
+        );
     }
 
-    public function testEmptySyntax()
+    /**
+     * @dataProvider data
+     */
+    public function testData(array $adds, array $data)
     {
-        $builder = new AssertionBuilder(123);
-        $this->assert($builder->getSyntax(), equals, '?');
+        $builder = new AssertionBuilder();
+        foreach ($adds as $add) {
+            call_user_func_array(array($builder, 'add'), $add);
+        }
+        $this->assert($builder->getData(), equals, $data);
     }
 
-    public function testSyntaxStartsWithAWord()
+    /**
+     * @dataProvider data
+     */
+    public function testSyntax(array $adds, array $data, $syntax)
     {
-        $builder = new AssertionBuilder(123, 'foo');
-        $this->assert($builder->getSyntax(), equals, 'foo ?');
+        $builder = new AssertionBuilder();
+        foreach ($adds as $add) {
+            call_user_func_array(array($builder, 'add'), $add);
+        }
+        $this->assert($builder->getSyntax(), equals, $syntax);
     }
 }
