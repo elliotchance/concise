@@ -4,8 +4,8 @@ namespace Concise\Assertion;
 
 class AssertionBuilder
 {
-    public function __toString()
+    public function getData()
     {
-        return "123";
+        return array(123);
     }
 }
