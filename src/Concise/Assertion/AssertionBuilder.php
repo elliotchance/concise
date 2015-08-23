@@ -8,4 +8,9 @@ class AssertionBuilder
     {
         return array(123);
     }
+
+    public function getSyntax()
+    {
+        return '?';
+    }
 }
