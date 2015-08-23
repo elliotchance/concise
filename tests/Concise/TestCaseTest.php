@@ -178,4 +178,13 @@ class TestCaseTest extends TestCase
             'something ?'
         );
     }
+
+    public function testMagicAssertHasFirstWords()
+    {
+        $this->assert(
+            $this->_assertSomethingElse(123)->getSyntax(),
+            equals,
+            'something else ?'
+        );
+    }
 }

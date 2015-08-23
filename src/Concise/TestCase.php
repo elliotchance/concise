@@ -359,8 +359,9 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     public function __call($name, $args)
     {
+        $words = preg_split('/(?=[A-Z])/', substr($name, 7));
         $builder = new NewAssertionBuilder();
-        $builder->add(strtolower(substr($name, 7)), $args[0]);
+        $builder->add(trim(strtolower(implode(' ', $words))), $args[0]);
         return $builder;
     }
 }
