@@ -17,4 +17,10 @@ class AssertionBuilderTest extends TestCase
         $builder = new AssertionBuilder(123);
         $this->assert($builder->getSyntax(), equals, '?');
     }
+
+    public function testSyntaxStartsWithAWord()
+    {
+        $builder = new AssertionBuilder(123, 'foo');
+        $this->assert($builder->getSyntax(), equals, 'foo ?');
+    }
 }
