@@ -160,4 +160,13 @@ class TestCaseTest extends TestCase
             '\Concise\Assertion\AssertionBuilder'
         );
     }
+
+    public function testMagicAssertHasFirstValue()
+    {
+        $this->assert(
+            $this->_assertSomething(123)->getData(),
+            equals,
+            array(123)
+        );
+    }
 }
