@@ -4,6 +4,11 @@ namespace Concise;
 
 class VersionTest extends TestCase
 {
+    /**
+     * @var Version
+     */
+    protected $version;
+
     public function setUp()
     {
         parent::setUp();

@@ -30,8 +30,8 @@ class Version
      */
     public function getVersionForPackage($packageName)
     {
-        $vendor = $this->findVendorFolder(__DIR__);
-        if (!$vendor) {
+        $vendor = $this->findVendorFolder();
+        if (null === $vendor) {
             return '';
         }
 
