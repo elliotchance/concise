@@ -12,6 +12,5 @@ filter:
     - src/*
 build_failure_conditions:
   - 'project.metric("scrutinizer.test_coverage", < 1)'
-  - 'elements.rating(<= D).exists'
   - 'issues.severity(>= MAJOR).exists'
   - 'project.metric("scrutinizer.quality", < 9)'

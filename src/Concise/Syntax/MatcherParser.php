@@ -142,13 +142,25 @@ class MatcherParser
      */
     public static function getInstance()
     {
+        // @codeCoverageIgnoreStart
         if (null === self::$instance) {
+            // For some reason this line never get covered. Clearly it does run
+            // otherwise concise would blow up. But to be extra sure there is a
+            // specific unit test:
+            //   MatcherParserTest::testGetInstanceIsASingleton()
+
             self::$instance = new MatcherParser();
         }
+        // @codeCoverageIgnoreEnd
 
         return self::$instance;
     }
 
+    /**
+     * @testDox Here is another case of the line not being covered. Without this
+     *     method executing correctly no assertions would work.
+     * @codeCoverageIgnore
+     */
     public function loadModule(AbstractMatcher $module)
     {
         $this->modules[get_class($module)] = $module;

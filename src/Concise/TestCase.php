@@ -238,28 +238,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         return $mockBuilder;
     }
 
-    protected function loadKeywords()
-    {
-        $parser = MatcherParser::getInstance();
-
-        $all = array();
-        foreach ($parser->getAllMatcherDescriptions() as $syntax => $description) {
-            $simpleSyntax =
-                preg_replace('/\\?(:[a-zA-Z0-9-,]+)/', '?', $syntax);
-            foreach (explode('?', $simpleSyntax) as $part) {
-                $p = trim($part);
-                $all[str_replace(' ', '_', $p)] = $p;
-            }
-        }
-
-        foreach ($all as $name => $value) {
-            if (!defined($name)) {
-                define($name, $value);
-            }
-        }
-        define('on_error', 'on error');
-    }
-
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
