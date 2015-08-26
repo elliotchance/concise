@@ -4,7 +4,8 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 class ProportionalProgressBarTest extends ProgressBarTestCase
 {
-    public function testAProportionalProgressBarWillScaleDownAndFillToTheTotalWidth()
+    public function testAProportionalProgressBarWillScaleDownAndFillToTheTotalWidth(
+    )
     {
         $progressBar = new ProportionalProgressBar();
         $result = $progressBar->renderProportional(
@@ -15,11 +16,10 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->assert(
-            $result,
-            equals,
-            $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
-        );
+        $this->aassert($result)
+            ->equals(
+                $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
+            );
     }
 
     public function testZeroTotalMeans100Percent()
@@ -33,18 +33,17 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->assert(
-            $result,
-            equals,
-            $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
-        );
+        $this->aassert($result)
+            ->equals(
+                $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
+            );
     }
 
     public function testNoPartsMeansZeroPercent()
     {
         $progressBar = new ProportionalProgressBar();
         $result = $progressBar->renderProportional(10, 0, array());
-        $this->assert($result, equals, '__________');
+        $this->aassert($result)->equals('__________');
     }
 
     /**

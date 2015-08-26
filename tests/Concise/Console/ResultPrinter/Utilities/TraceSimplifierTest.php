@@ -14,12 +14,12 @@ class TraceSimplifierTest extends TestCase
 
     public function testZeroItemsInTraceWillNotRenderAnything()
     {
-        $this->assert($this->simplifier->render(array()), equals, '');
+        $this->aassert($this->simplifier->render(array()))->equals('');
     }
 
     public function testOneItemWillPrintSimplifiedFile()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -27,15 +27,13 @@ class TraceSimplifierTest extends TestCase
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            contains_string,
-            'foo.php'
-        );
+            )
+        )->containsString('foo.php');
     }
 
     public function testWillSkipTraceLineIfItsTheConciseExecutable()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -43,15 +41,13 @@ class TraceSimplifierTest extends TestCase
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            equals,
-            ''
-        );
+            )
+        )->equals('');
     }
 
     public function testWillSkipTraceLineIfThePathIsInTheVendorFolder()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -59,45 +55,39 @@ class TraceSimplifierTest extends TestCase
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            equals,
-            ''
-        );
+            )
+        )->equals('');
     }
 
     public function testUsesUnknownFileIfNotSpecified()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            contains_string,
-            '(unknown file)'
-        );
+            )
+        )->containsString('(unknown file)');
     }
 
     public function testWillUseAQuestionMarkIfTheLineIsNotSpecified()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            contains_string,
-            'Line ?'
-        );
+            )
+        )->containsString('Line ?');
     }
 
     public function testWillIncludeLineNumber()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -105,10 +95,8 @@ class TraceSimplifierTest extends TestCase
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            contains_string,
-            'Line 123'
-        );
+            )
+        )->containsString('Line 123');
     }
 
     public function testWillGroupLinesUnderTheSameHeadingIfTheyAreTheSameFile()
@@ -125,27 +113,25 @@ class TraceSimplifierTest extends TestCase
                 ),
             )
         );
-        $this->assert(substr_count($result, 'foo.php'), equals, 1);
+        $this->aassert(substr_count($result, 'foo.php'))->equals(1);
     }
 
     public function testWillIncludeTheFunctionName()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
                         'function' => 'myFunction',
                     ),
                 )
-            ),
-            contains_string,
-            'myFunction()'
-        );
+            )
+        )->containsString('myFunction()');
     }
 
     public function testWillIncludeClassIfAvailable()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -154,15 +140,13 @@ class TraceSimplifierTest extends TestCase
                         'type' => '',
                     ),
                 )
-            ),
-            contains_string,
-            'MyClass'
-        );
+            )
+        )->containsString('MyClass');
     }
 
     public function testWillIncludeTypeIfClassIsAvailable()
     {
-        $this->assert(
+        $this->aassert(
             $this->simplifier->render(
                 array(
                     array(
@@ -171,9 +155,7 @@ class TraceSimplifierTest extends TestCase
                         'type' => '::',
                     ),
                 )
-            ),
-            contains_string,
-            'MyClass::myFunction()'
-        );
+            )
+        )->containsString('MyClass::myFunction()');
     }
 }
