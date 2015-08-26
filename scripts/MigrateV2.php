@@ -10,7 +10,7 @@ $file = preg_replace_callback(
         if ($v[2]) {
             $r .= "\$this->aassertFailure(";
         }
-        $r .= "\$this->aassert!";
+        $r .= "\$this->aassert";
         $parts = explode(',', rtrim($v[3]));
         if (count($parts) % 2 == 0) {
             $r .= ucfirst($parts[0]);
@@ -32,5 +32,5 @@ $file = preg_replace_callback(
     $file
 );
 
-echo $file;
-//file_put_contents($argv[1], $file);
+//echo $file;
+file_put_contents($argv[1], $file);
