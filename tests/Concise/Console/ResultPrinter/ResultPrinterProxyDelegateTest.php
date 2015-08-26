@@ -38,11 +38,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->startTestSuite($suite);
-        $this->assert(
-            $proxy->getResultPrinter()->getTotalTestCount(),
-            equals,
-            123
-        );
+        $this->aassert($proxy->getResultPrinter()->getTotalTestCount())
+            ->equals(123);
     }
 
     protected function getMuteResultPrinter()
@@ -59,11 +56,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
-        $this->assert(
-            $proxy->getResultPrinter()->getAssertionCount(),
-            equals,
-            1
-        );
+        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+            ->equals(1);
     }
 
     public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase()
@@ -73,11 +67,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
         )->andReturn(123)->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
-        $this->assert(
-            $proxy->getResultPrinter()->getAssertionCount(),
-            equals,
-            123
-        );
+        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+            ->equals(123);
     }
 
     public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed()
@@ -88,11 +79,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
-        $this->assert(
-            $proxy->getResultPrinter()->getAssertionCount(),
-            equals,
-            2
-        );
+        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+            ->equals(2);
     }
 
     public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
@@ -103,11 +91,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
-        $this->assert(
-            $proxy->getResultPrinter()->getAssertionCount(),
-            equals,
-            246
-        );
+        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+            ->equals(246);
     }
 
     public function testWillNotUpdateTheTotalTestIfMultipleTestSuitesStart()
@@ -125,11 +110,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy->startTestSuite($suite);
         $proxy->endTestSuite($suite);
         $proxy->endTestSuite($suite);
-        $this->assert(
-            $proxy->getResultPrinter()->getTotalTestCount(),
-            equals,
-            123
-        );
+        $this->aassert($proxy->getResultPrinter()->getTotalTestCount())
+            ->equals(123);
     }
 
     public function testStartTestSuiteWillCallResultPrinterMultipleTimes()

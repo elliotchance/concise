@@ -61,7 +61,7 @@ class DefaultResultPrinterEndTest extends TestCase
     /**
      * @dataProvider endTestColorData
      */
-    public function testEndTestWillCallAdd($status, $color)
+    public function testEndTestWillCallAdd($status)
     {
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter',
