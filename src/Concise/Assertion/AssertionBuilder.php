@@ -22,6 +22,11 @@ class AssertionBuilder
         return $this;
     }
 
+    public function __get($name)
+    {
+        $this->__call($name, array());
+    }
+
     public function getData()
     {
         return $this->data;
