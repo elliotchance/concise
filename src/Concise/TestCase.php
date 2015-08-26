@@ -2,7 +2,6 @@
 
 namespace Concise;
 
-use Concise\Assertion\AssertionBuilder as NewAssertionBuilder;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
@@ -30,8 +29,11 @@ use ReflectionException;
 // Load the keyword cache before the test suite begins.
 Keywords::load();
 
+
 class TestCase extends PHPUnit_Framework_TestCase
 {
+    use RootTrait;
+
     /**
      * Used as a placeholder for with() clauses where the parameter is
      * unrestrictive. For the curious, this is the SHA1('a') with an extra 'a'
@@ -53,6 +55,11 @@ class TestCase extends PHPUnit_Framework_TestCase
      * @var array
      */
     protected $verifyFailures = array();
+
+    /**
+     * @var null|\Concise\Assertion\AssertionBuilder
+     */
+    protected $currentAssertion = null;
 
     /**
      * @param string|null $name
@@ -190,6 +197,7 @@ class TestCase extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        $this->performCurrentAssertion();
         $this->mockManager->validateMocks();
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
@@ -350,18 +358,31 @@ class TestCase extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function _assert($value)
+    public function performCurrentAssertion()
     {
-        $builder = new NewAssertionBuilder();
-        $builder->add(null, $value);
-        return $builder;
-    }
-
-    public function __call($name, $args)
-    {
-        $words = preg_split('/(?=[A-Z])/', substr($name, 7));
-        $builder = new NewAssertionBuilder();
-        $builder->add(trim(strtolower(implode(' ', $words))), $args[0]);
-        return $builder;
+        if (null !== $this->currentAssertion) {
+            $matcher = $this->getMatcherParserInstance()->getMatcherForSyntax(
+                $this->currentAssertion->getSyntax(),
+                $this->currentAssertion->getData()
+            );
+            $data = [];
+            foreach ($this->currentAssertion->getData() as $k => $v) {
+                $data["arg$k"] = $v;
+            }
+            $i = -1;
+            $syntax = preg_replace_callback(
+                '/\?/',
+                function () use (&$i) {
+                    ++$i;
+                    return "arg$i";
+                },
+                $this->currentAssertion->getSyntax()
+            );
+            $assertion = new Assertion($syntax, $matcher['matcher'], $data);
+            if ($this instanceof TestCase) {
+                $assertion->setTestCase($this);
+            }
+            $assertion->run();
+        }
     }
 }

@@ -14,6 +14,104 @@ $testCase->setUpBeforeClass();
 
 refreshKeywords();
 updateReadme();
+updateBuilders();
+
+function updateBuilders()
+{
+    $syntaxTree = array();
+    foreach (MatcherParser::getInstance()->getModules() as $module) {
+        foreach ($module->getSyntaxes() as $syntax) {
+            $parts = explode('?', $syntax->getRawSyntax());
+            $temp = &$syntaxTree;
+            foreach ($parts as $part) {
+                $part = trim($part);
+                $temp = &$temp[$part];
+            }
+            $temp = null;
+        }
+    }
+
+    $php = array();
+    $trait = 'Root';
+    foreach ($syntaxTree as $k => $v) {
+        if (!isset($php[$trait])) {
+            $php[$trait] = '';
+        }
+        $php[$trait] .= "\n\t/**\n\t * @return \\Concise\\Assertion\\AssertionBuilder";
+        if (null !== $v) {
+            foreach ($v as $words => $s) {
+                $php[$trait] .=
+                    '|' .
+                    str_replace(' ', '', ucwords($words)) .
+                    'Trait';
+            }
+        }
+        $php[$trait] .=
+            "\n\t */\n\tpublic function aassert" .
+            ucfirst($k) .
+            "(";
+        if (null !== $v) {
+            $php[$trait] .= "\$value";
+
+            $php = a($v, $php);
+        }
+        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\treturn \$this->currentAssertion = (new \\Concise\\Assertion\\AssertionBuilder())->";
+        $php[$trait] .= ($k ? $k : '_') . "(";
+        if (null !== $v) {
+            $php[$trait] .= "\$value";
+        }
+        $php[$trait] .= ");\n\t}\n";
+    }
+
+    $out =
+        "trait RootTrait\n{\n\tabstract public function performCurrentAssertion();\n" .
+        $php['Root'] .
+        "}\n\n";
+    ksort($php);
+    foreach ($php as $trait => $methods) {
+        if ($trait == 'Root') {
+            continue;
+        }
+        $out .= "/**$methods */\ntrait {$trait}Trait\n{\n}\n\n";
+    }
+
+    file_put_contents(
+        __DIR__ . '/../src/Concise/RootTrait.php',
+        "<?php\n\nnamespace Concise;\n\n" . str_replace("\t", '    ', $out)
+    );
+}
+
+/**
+ * @param $v
+ * @param $php
+ * @return array
+ */
+function a($v, $php)
+{
+    foreach ($v as $words => $s) {
+        $trait2 = str_replace(' ', '', ucwords($words));
+        $php[$trait2] = "\n * @method null";
+        if (is_array($s)) {
+            foreach ($s as $words2 => $s2) {
+                if ($words2) {
+                    $php[$trait2] .=
+                        '|' .
+                        str_replace(' ', '', ucwords($words2)) .
+                        'Trait';
+                }
+            }
+
+            unset($s['']);
+            if (count($s) > 0) {
+                $php = a($s, $php);
+            }
+        }
+        $php[$trait2] .= " ";
+        $php[$trait2] .= lcfirst($trait2);
+        $php[$trait2] .= "(\$value)\n";
+    }
+    return $php;
+}
 
 function renderSyntax($syntax)
 {
