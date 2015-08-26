@@ -186,7 +186,7 @@ trait DoesNotThrowTrait
 }
 
 /**
- * @method null doesNotThrowException($value)
+ * @property null doesNotThrowException
  */
 trait DoesNotThrowExceptionTrait
 {
@@ -368,7 +368,7 @@ trait HasValuesTrait
 }
 
 /**
- * @method null ignoringCase($value)
+ * @property null ignoringCase
  */
 trait IgnoringCaseTrait
 {
@@ -382,28 +382,28 @@ trait InstanceOfTrait
 }
 
 /**
- * @method null isABool($value)
+ * @property null isABool
  */
 trait IsABoolTrait
 {
 }
 
 /**
- * @method null isABoolean($value)
+ * @property null isABoolean
  */
 trait IsABooleanTrait
 {
 }
 
 /**
- * @method null isANumber($value)
+ * @property null isANumber
  */
 trait IsANumberTrait
 {
 }
 
 /**
- * @method null isAString($value)
+ * @property null isAString
  */
 trait IsAStringTrait
 {
@@ -417,21 +417,21 @@ trait IsAfterTrait
 }
 
 /**
- * @method null isAnArray($value)
+ * @property null isAnArray
  */
 trait IsAnArrayTrait
 {
 }
 
 /**
- * @method null isAnAssociativeArray($value)
+ * @property null isAnAssociativeArray
  */
 trait IsAnAssociativeArrayTrait
 {
 }
 
 /**
- * @method null isAnEmptyArray($value)
+ * @property null isAnEmptyArray
  */
 trait IsAnEmptyArrayTrait
 {
@@ -445,21 +445,21 @@ trait IsAnInstanceOfTrait
 }
 
 /**
- * @method null isAnInt($value)
+ * @property null isAnInt
  */
 trait IsAnIntTrait
 {
 }
 
 /**
- * @method null isAnInteger($value)
+ * @property null isAnInteger
  */
 trait IsAnIntegerTrait
 {
 }
 
 /**
- * @method null isAnObject($value)
+ * @property null isAnObject
  */
 trait IsAnObjectTrait
 {
@@ -480,14 +480,14 @@ trait IsBetweenTrait
 }
 
 /**
- * @method null isBlank($value)
+ * @property null isBlank
  */
 trait IsBlankTrait
 {
 }
 
 /**
- * @method null isEmptyArray($value)
+ * @property null isEmptyArray
  */
 trait IsEmptyArrayTrait
 {
@@ -508,14 +508,14 @@ trait IsExactlyEqualToTrait
 }
 
 /**
- * @method null isFalse($value)
+ * @property null isFalse
  */
 trait IsFalseTrait
 {
 }
 
 /**
- * @method null isFalsy($value)
+ * @property null isFalsy
  */
 trait IsFalsyTrait
 {
@@ -557,49 +557,49 @@ trait IsLessThanOrEqualToTrait
 }
 
 /**
- * @method null isNotABool($value)
+ * @property null isNotABool
  */
 trait IsNotABoolTrait
 {
 }
 
 /**
- * @method null isNotABoolean($value)
+ * @property null isNotABoolean
  */
 trait IsNotABooleanTrait
 {
 }
 
 /**
- * @method null isNotANumber($value)
+ * @property null isNotANumber
  */
 trait IsNotANumberTrait
 {
 }
 
 /**
- * @method null isNotAString($value)
+ * @property null isNotAString
  */
 trait IsNotAStringTrait
 {
 }
 
 /**
- * @method null isNotAnArray($value)
+ * @property null isNotAnArray
  */
 trait IsNotAnArrayTrait
 {
 }
 
 /**
- * @method null isNotAnAssociativeArray($value)
+ * @property null isNotAnAssociativeArray
  */
 trait IsNotAnAssociativeArrayTrait
 {
 }
 
 /**
- * @method null isNotAnEmptyArray($value)
+ * @property null isNotAnEmptyArray
  */
 trait IsNotAnEmptyArrayTrait
 {
@@ -613,21 +613,21 @@ trait IsNotAnInstanceOfTrait
 }
 
 /**
- * @method null isNotAnInt($value)
+ * @property null isNotAnInt
  */
 trait IsNotAnIntTrait
 {
 }
 
 /**
- * @method null isNotAnInteger($value)
+ * @property null isNotAnInteger
  */
 trait IsNotAnIntegerTrait
 {
 }
 
 /**
- * @method null isNotAnObject($value)
+ * @property null isNotAnObject
  */
 trait IsNotAnObjectTrait
 {
@@ -641,14 +641,14 @@ trait IsNotBetweenTrait
 }
 
 /**
- * @method null isNotBlank($value)
+ * @property null isNotBlank
  */
 trait IsNotBlankTrait
 {
 }
 
 /**
- * @method null isNotEmptyArray($value)
+ * @property null isNotEmptyArray
  */
 trait IsNotEmptyArrayTrait
 {
@@ -676,14 +676,14 @@ trait IsNotInstanceOfTrait
 }
 
 /**
- * @method null isNotNull($value)
+ * @property null isNotNull
  */
 trait IsNotNullTrait
 {
 }
 
 /**
- * @method null isNotNumeric($value)
+ * @property null isNotNumeric
  */
 trait IsNotNumericTrait
 {
@@ -697,21 +697,21 @@ trait IsNotTheSameAsTrait
 }
 
 /**
- * @method null isNotUnique($value)
+ * @property null isNotUnique
  */
 trait IsNotUniqueTrait
 {
 }
 
 /**
- * @method null isNull($value)
+ * @property null isNull
  */
 trait IsNullTrait
 {
 }
 
 /**
- * @method null isNumeric($value)
+ * @property null isNumeric
  */
 trait IsNumericTrait
 {
@@ -725,28 +725,28 @@ trait IsTheSameAsTrait
 }
 
 /**
- * @method null isTrue($value)
+ * @property null isTrue
  */
 trait IsTrueTrait
 {
 }
 
 /**
- * @method null isTruthy($value)
+ * @property null isTruthy
  */
 trait IsTruthyTrait
 {
 }
 
 /**
- * @method null isUnique($value)
+ * @property null isUnique
  */
 trait IsUniqueTrait
 {
 }
 
 /**
- * @method null isValid($value)
+ * @property null isValid
  */
 trait IsValidTrait
 {
@@ -837,7 +837,7 @@ trait ThrowsExactlyTrait
 }
 
 /**
- * @method null throwsException($value)
+ * @property null throwsException
  */
 trait ThrowsExceptionTrait
 {

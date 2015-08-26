@@ -2,6 +2,7 @@
 
 namespace Concise\Matcher;
 
+use Concise\Assertion\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
@@ -57,18 +58,22 @@ abstract class AbstractMatcherTestCase extends TestCase
         }
     }
 
-    /**
-     * @param string $syntax
-     */
-    protected function assertMatcherSuccess($syntax, array $args = array())
-    {
-        $this->assert($this->matcher->match($syntax, $args));
-    }
-
     protected function assertFailure()
     {
         try {
             call_user_func_array(array($this, 'assert'), func_get_args());
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+            $this->assert(true);
+
+            return;
+        }
+        $this->fail("Assertion did not fail.");
+    }
+
+    protected function aassertFailure(AssertionBuilder $assertion)
+    {
+        try {
+            $this->performCurrentAssertion();
         } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assert(true);
 

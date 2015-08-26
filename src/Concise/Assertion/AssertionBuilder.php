@@ -24,7 +24,7 @@ class AssertionBuilder
 
     public function __get($name)
     {
-        $this->__call($name, array());
+        return $this->__call($name, array());
     }
 
     public function getData()

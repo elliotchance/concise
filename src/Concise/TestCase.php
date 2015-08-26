@@ -378,6 +378,9 @@ class TestCase extends PHPUnit_Framework_TestCase
                 },
                 $this->currentAssertion->getSyntax()
             );
+
+            $this->currentAssertion = null;
+
             $assertion = new Assertion($syntax, $matcher['matcher'], $data);
             if ($this instanceof TestCase) {
                 $assertion->setTestCase($this);

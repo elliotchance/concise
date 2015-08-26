@@ -90,8 +90,8 @@ function a($v, $php)
 {
     foreach ($v as $words => $s) {
         $trait2 = str_replace(' ', '', ucwords($words));
-        $php[$trait2] = "\n * @method null";
         if (is_array($s)) {
+            $php[$trait2] = "\n * @method null";
             foreach ($s as $words2 => $s2) {
                 if ($words2) {
                     $php[$trait2] .=
@@ -105,10 +105,16 @@ function a($v, $php)
             if (count($s) > 0) {
                 $php = a($s, $php);
             }
+        } else {
+            $php[$trait2] = "\n * @property null";
         }
         $php[$trait2] .= " ";
         $php[$trait2] .= lcfirst($trait2);
-        $php[$trait2] .= "(\$value)\n";
+
+        if (is_array($s)) {
+            $php[$trait2] .= "(\$value)";
+        }
+        $php[$trait2] .= "\n";
     }
     return $php;
 }
