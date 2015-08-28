@@ -21,7 +21,7 @@ class CommandTest extends TestCase
 {
     public function testCommandExtendsPHPUnit()
     {
-        $this->assert(new Command(), instance_of, 'PHPUnit_TextUI_Command');
+        $this->aassert(new Command())->instanceOf('PHPUnit_TextUI_Command');
     }
 
     protected function getCommandMock()
@@ -34,59 +34,50 @@ class CommandTest extends TestCase
     public function testCreateRunnerReturnsAConciseRunner()
     {
         $command = $this->getCommandMock();
-        $this->assert(
-            $command->createRunner(),
-            instance_of,
-            'Concise\Console\TestRunner\DefaultTestRunner'
-        );
+        $this->aassert($command->createRunner())
+            ->instanceOf('Concise\Console\TestRunner\DefaultTestRunner');
     }
 
     public function testPrinterUsesProxy()
     {
         $command = $this->getCommandMock();
-        $this->assert(
-            $command->createRunner()->getPrinter(),
-            instance_of,
-            'Concise\Console\ResultPrinter\ResultPrinterProxy'
-        );
+        $this->aassert($command->createRunner()->getPrinter())
+            ->instanceOf('Concise\Console\ResultPrinter\ResultPrinterProxy');
     }
 
     public function testVerboseIsFalseByDefault()
     {
         $command = $this->getCommandMock();
-        $this->assert(
+        $this->aassert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
-                ->isVerbose(),
-            is_false
-        );
+                ->isVerbose()
+        )->isFalse;
     }
 
     public function testVerboseIsTurnedOnIfItExistsAndHasBeenSet()
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', true);
-        $this->assert(
+        $this->aassert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
-                ->isVerbose(),
-            is_true
-        );
+                ->isVerbose()
+        )->isTrue;
     }
 
     public function testVerboseIsNotTurnedOnIfItExistsButIfNotTrue()
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', false);
-        $this->assert(
+        $this->aassert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
-                ->isVerbose(),
-            is_false
-        );
+                ->isVerbose()
+        )->isFalse;
     }
 
     public function testCIResultPrinterIsUsedIfCIIsTrue()
@@ -94,11 +85,8 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(true);
 
-        $this->assert(
-            $command->getResultPrinter(),
-            instance_of,
-            'Concise\Console\ResultPrinter\CIResultPrinter'
-        );
+        $this->aassert($command->getResultPrinter())
+            ->instanceOf('Concise\Console\ResultPrinter\CIResultPrinter');
     }
 
     public function testDefaultResultPrinterIsNotUsedIfCIIsFalse()
@@ -106,20 +94,14 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(false);
 
-        $this->assert(
-            $command->getResultPrinter(),
-            instance_of,
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        );
+        $this->aassert($command->getResultPrinter())
+            ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 
     public function testDefaultResultPrinterIsUsedByDefault()
     {
         $command = $this->getCommandMock();
-        $this->assert(
-            $command->getResultPrinter(),
-            instance_of,
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        );
+        $this->aassert($command->getResultPrinter())
+            ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 }

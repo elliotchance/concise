@@ -12,13 +12,13 @@ class TerminalTest extends TestCase
     public function testGetColumnsIsAnInteger()
     {
         $terminal = new Terminal();
-        $this->assert($terminal->getColumns(), is_an_integer);
+        $this->aassert($terminal->getColumns())->isAnInteger;
     }
 
     public function testGetColumnsFromTheActiveTerminal()
     {
         $terminal = new Terminal();
-        $this->assert($terminal->getColumns(), equals, `tput cols`);
+        $this->aassert($terminal->getColumns())->equals(`tput cols`);
     }
 
     public function testGetColumnsIs80ForUnknownTerminal()
@@ -26,20 +26,20 @@ class TerminalTest extends TestCase
         $term = getenv('TERM');
         putenv('TERM=');
         $terminal = new Terminal();
-        $this->assert($terminal->getColumns(), equals, 80);
+        $this->aassert($terminal->getColumns())->equals(80);
         putenv("TERM=$term");
     }
 
     public function testGetColorsIsAnInteger()
     {
         $terminal = new Terminal();
-        $this->assert($terminal->getColors(), is_an_integer);
+        $this->aassert($terminal->getColors())->isAnInteger;
     }
 
     public function testGetColorsFromTheActiveTerminal()
     {
         $terminal = new Terminal();
-        $this->assert($terminal->getColors(), equals, `tput colors`);
+        $this->aassert($terminal->getColors())->equals(`tput colors`);
     }
 
     public function testGetColorsIs1ForUnknownTerminal()
@@ -47,7 +47,7 @@ class TerminalTest extends TestCase
         $term = getenv('TERM');
         putenv('TERM=');
         $terminal = new Terminal();
-        $this->assert($terminal->getColors(), equals, 1);
+        $this->aassert($terminal->getColors())->equals(1);
         putenv("TERM=$term");
     }
 }

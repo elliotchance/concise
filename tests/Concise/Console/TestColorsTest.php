@@ -9,6 +9,6 @@ class TestColorsTest extends TestCase
     public function testEndsInNewLine()
     {
         $testColors = new TestColors();
-        $this->assert($testColors->renderAll(), ends_with, "\n");
+        $this->aassert($testColors->renderAll())->endsWith("\n");
     }
 }
