@@ -22,6 +22,17 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache = new SyntaxCache();
         $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
         $syntaxCache->add($syntax);
-        $this->aassert($syntaxCache->getSyntax('?'))->isTheSameAs($syntax);
+        $this->aassert($syntaxCache->getSyntax('? equals ?'))->isTheSameAs($syntax);
+    }
+
+    public function testRetrievingAnotherSyntax()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
+        $syntax2 = new Syntax('? bar ?', '\Concise\TestCase::assert');
+        $syntaxCache->add($syntax1);
+        $syntaxCache->add($syntax2);
+        $this->aassert($syntaxCache->getSyntax('? foo ?'))
+            ->isTheSameAs($syntax1);
     }
 }

@@ -6,18 +6,26 @@ use Concise\Matcher\Syntax;
 
 class SyntaxCache
 {
-    protected $syntax;
+    /**
+     * @var Syntax[]
+     */
+    protected $syntaxes = array();
 
+    /**
+     * @param $string
+     * @throws \Exception
+     * @return Syntax
+     */
     public function getSyntax($string)
     {
-        if ($this->syntax) {
-            return $this->syntax;
+        if (array_key_exists($string, $this->syntaxes)) {
+            return $this->syntaxes[$string];
         }
         throw new \Exception("No such syntax '$string'");
     }
 
     public function add(Syntax $syntax)
     {
-        $this->syntax = $syntax;
+        $this->syntaxes[$syntax->getSyntax()] = $syntax;
     }
 }
