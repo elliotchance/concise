@@ -35,10 +35,20 @@ class SyntaxCache
         foreach ($this->syntaxes as $s) {
             $s1 = $s->getRawSyntax();
             $s2 = $syntax->getRawSyntax();
-            if (strlen($s1) < strlen($s2) && substr($s2, 0, strlen($s1)) == $s1) {
+            if ($this->startsWith($s1, $s2) || $this->startsWith($s2, $s1)) {
                 throw new Exception("Syntax '$s1' conflicts with '$s2'.");
             }
         }
         $this->syntaxes[$syntax->getRawSyntax()] = $syntax;
+    }
+
+    /**
+     * @param $s1
+     * @param $s2
+     * @return bool
+     */
+    protected function startsWith($s1, $s2)
+    {
+        return strlen($s1) < strlen($s2) && substr($s2, 0, strlen($s1)) == $s1;
     }
 }

@@ -83,4 +83,17 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessahe Syntax '? foo ?' conflicts with '? foo ? bar'.
+     */
+    public function testCannotAddASuperSyntax()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
+        $syntax2 = new Syntax('? foo ? bar', '\Concise\TestCase::assert');
+        $syntaxCache->add($syntax2);
+        $syntaxCache->add($syntax1);
+    }
 }
