@@ -29,6 +29,6 @@ class AbstractMatcherTest extends TestCase
 
     public function testDefaultRendererWorks()
     {
-        $this->assert($this->matcher->renderFailureMessage(''), is_blank);
+        $this->aassert($this->matcher->renderFailureMessage(''))->isBlank;
     }
 }
