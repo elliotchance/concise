@@ -70,4 +70,17 @@ class SyntaxCacheTest extends TestCase
         $this->aassert($syntaxCache->getSyntax('?:int equals ?'))
             ->isTheSameAs($syntax);
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessahe Syntax '? foo ?' conflicts with '? foo ? bar'.
+     */
+    public function testCannotAddASubSyntax()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
+        $syntax2 = new Syntax('? foo ? bar', '\Concise\TestCase::assert');
+        $syntaxCache->add($syntax1);
+        $syntaxCache->add($syntax2);
+    }
 }

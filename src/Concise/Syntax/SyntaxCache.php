@@ -32,6 +32,13 @@ class SyntaxCache
             throw new Exception("Syntax '" . $syntax->getSyntax() .
                 "' already registered.");
         }
+        foreach ($this->syntaxes as $s) {
+            $s1 = $s->getRawSyntax();
+            $s2 = $syntax->getRawSyntax();
+            if (strlen($s1) < strlen($s2) && substr($s2, 0, strlen($s1)) == $s1) {
+                throw new Exception("Syntax '$s1' conflicts with '$s2'.");
+            }
+        }
         $this->syntaxes[$syntax->getRawSyntax()] = $syntax;
     }
 }
