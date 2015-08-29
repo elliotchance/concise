@@ -19,10 +19,11 @@ class SyntaxCache
      */
     public function getSyntax($string)
     {
-        if (array_key_exists($string, $this->syntaxes)) {
-            return $this->syntaxes[$string];
+        $syntax = new Syntax($string);
+        if (array_key_exists($syntax->getRawSyntax(), $this->syntaxes)) {
+            return $this->syntaxes[$syntax->getRawSyntax()];
         }
-        throw new Exception("No such syntax '$string'");
+        throw new Exception("No such syntax '" . $syntax->getRawSyntax() . "'");
     }
 
     public function add(Syntax $syntax)
@@ -31,6 +32,6 @@ class SyntaxCache
             throw new Exception("Syntax '" . $syntax->getSyntax() .
                 "' already registered.");
         }
-        $this->syntaxes[$syntax->getSyntax()] = $syntax;
+        $this->syntaxes[$syntax->getRawSyntax()] = $syntax;
     }
 }

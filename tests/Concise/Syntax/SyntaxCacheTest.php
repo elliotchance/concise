@@ -61,4 +61,13 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
     }
+
+    public function testGetSyntaxBySimilar()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
+        $syntaxCache->add($syntax);
+        $this->aassert($syntaxCache->getSyntax('?:int equals ?'))
+            ->isTheSameAs($syntax);
+    }
 }
