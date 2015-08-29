@@ -62,5 +62,11 @@ class SyntaxText extends TestCase
         $this->aassert($syntax->getDescription())->equals('foo bar');
     }
 
+    public function testMethodIsAllowedToBeNull()
+    {
+        $syntax = new Syntax('? equals ?');
+        $this->aassert($syntax->getMethod())->isNull;
+    }
+
     // @todo testCapitolsAreNotAllowedInSyntax
 }

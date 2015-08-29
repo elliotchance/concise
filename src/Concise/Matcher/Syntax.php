@@ -14,12 +14,12 @@ class Syntax
     /**
      * @var string
      */
-    protected $class;
+    protected $class = null;
 
     /**
      * @var string
      */
-    protected $method;
+    protected $method = null;
 
     /**
      * @var string
@@ -31,18 +31,20 @@ class Syntax
      */
     protected $nested;
 
-    public function __construct($syntax, $method, $nested = false)
+    public function __construct($syntax, $method = null, $nested = false)
     {
-        if (strpos($method, '::') === false) {
-            throw new InvalidArgumentException(
-                "Method must be in the form of <class>::<method>"
-            );
-        }
-        list($this->class, $this->method) = explode("::", $method);
-        if (!class_exists($this->class)) {
-            throw new InvalidArgumentException(
-                "Class '$this->class' does not exist."
-            );
+        if ($method !== null) {
+            if (strpos($method, '::') === false) {
+                throw new InvalidArgumentException(
+                    "Method must be in the form of <class>::<method>"
+                );
+            }
+            list($this->class, $this->method) = explode("::", $method);
+            if (!class_exists($this->class)) {
+                throw new InvalidArgumentException(
+                    "Class '$this->class' does not exist."
+                );
+            }
         }
         $this->syntax = $syntax;
         $this->nested = $nested;
