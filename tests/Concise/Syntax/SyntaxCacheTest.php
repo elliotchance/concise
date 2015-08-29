@@ -48,4 +48,17 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache->add($syntax);
         $syntaxCache->add($syntax);
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessahe Syntax '? bar ?' already registered.
+     */
+    public function testAddingASimilarSyntaxThrowsAnException()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax1 = new Syntax('? bar ?', '\Concise\TestCase::assert');
+        $syntax2 = new Syntax('?:int bar ?', '\Concise\TestCase::assert');
+        $syntaxCache->add($syntax1);
+        $syntaxCache->add($syntax2);
+    }
 }

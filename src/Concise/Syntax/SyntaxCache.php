@@ -27,7 +27,7 @@ class SyntaxCache
 
     public function add(Syntax $syntax)
     {
-        if (array_key_exists($syntax->getSyntax(), $this->syntaxes)) {
+        if (array_key_exists($syntax->getRawSyntax(), $this->syntaxes)) {
             throw new Exception("Syntax '" . $syntax->getSyntax() .
                 "' already registered.");
         }
