@@ -2,13 +2,13 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractNestedMatcherTestCase;
+use Concise\Matcher\AbstractMatcherTestCase;
 use DateTime;
 
 /**
  * @group matcher
  */
-class DateAndTimeModuleTest extends AbstractNestedMatcherTestCase
+class DateAndTimeModuleTest extends AbstractMatcherTestCase
 {
     public function setUp()
     {

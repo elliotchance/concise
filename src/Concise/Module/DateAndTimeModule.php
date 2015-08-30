@@ -2,11 +2,11 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractNestedMatcher;
+use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\DidNotMatchException;
 use Concise\Services\TimestampToEpochConverter;
 
-class DateAndTimeModule extends AbstractNestedMatcher
+class DateAndTimeModule extends AbstractMatcher
 {
     public function getName()
     {

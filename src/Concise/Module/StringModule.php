@@ -2,10 +2,10 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractNestedMatcher;
+use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\DidNotMatchException;
 
-class StringModule extends AbstractNestedMatcher
+class StringModule extends AbstractMatcher
 {
     public function getName()
     {
