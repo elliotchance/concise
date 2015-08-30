@@ -1,873 +1,873 @@
 <?php
 
-namespace Concise;
+namespace Concise\Core;
 
-trait RootTrait
+abstract class BaseAssertions extends \PHPUnit_Framework_TestCase
 {
     abstract public function performCurrentAssertion();
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
+     * @return \Concise\Core\AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
      */
     public function aassert($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Assertion\AssertionBuilder())->_($value);
+        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->_($value);
     }
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder
+     * @return \Concise\Core\AssertionBuilder
      */
     public function aassertFalse()
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Assertion\AssertionBuilder())->false();
+        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->false();
     }
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder
+     * @return \Concise\Core\AssertionBuilder
      */
     public function aassertTrue()
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Assertion\AssertionBuilder())->true();
+        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->true();
     }
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder|IsAfterTrait|IsBeforeTrait
+     * @return \Concise\Core\AssertionBuilder|IsAfterTrait|IsBeforeTrait
      */
     public function aassertDate($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Assertion\AssertionBuilder())->date($value);
+        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->date($value);
     }
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
+     * @return \Concise\Core\AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
      */
     public function aassertUrl($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Assertion\AssertionBuilder())->url($value);
+        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->url($value);
     }
 }
 
 /**
  * @method null and($value)
  */
-trait AndTrait
+class AndTrait
 {
 }
 
 /**
  * @method null|AndTrait between($value)
  */
-trait BetweenTrait
+class BetweenTrait
 {
 }
 
 /**
  * @method null contains($value)
  */
-trait ContainsTrait
+class ContainsTrait
 {
 }
 
 /**
  * @method null containsCaseInsensitiveString($value)
  */
-trait ContainsCaseInsensitiveStringTrait
+class ContainsCaseInsensitiveStringTrait
 {
 }
 
 /**
  * @method null containsString($value)
  */
-trait ContainsStringTrait
+class ContainsStringTrait
 {
 }
 
 /**
  * @method null doesNotContain($value)
  */
-trait DoesNotContainTrait
+class DoesNotContainTrait
 {
 }
 
 /**
  * @method null doesNotContainCaseInsensitiveString($value)
  */
-trait DoesNotContainCaseInsensitiveStringTrait
+class DoesNotContainCaseInsensitiveStringTrait
 {
 }
 
 /**
  * @method null doesNotContainString($value)
  */
-trait DoesNotContainStringTrait
+class DoesNotContainStringTrait
 {
 }
 
 /**
  * @method null doesNotEndWith($value)
  */
-trait DoesNotEndWithTrait
+class DoesNotEndWithTrait
 {
 }
 
 /**
  * @method null doesNotEqual($value)
  */
-trait DoesNotEqualTrait
+class DoesNotEqualTrait
 {
 }
 
 /**
  * @method null doesNotEqualFile($value)
  */
-trait DoesNotEqualFileTrait
+class DoesNotEqualFileTrait
 {
 }
 
 /**
  * @method null doesNotExactlyEqual($value)
  */
-trait DoesNotExactlyEqualTrait
+class DoesNotExactlyEqualTrait
 {
 }
 
 /**
  * @method null doesNotHaveItem($value)
  */
-trait DoesNotHaveItemTrait
+class DoesNotHaveItemTrait
 {
 }
 
 /**
  * @method null doesNotHaveKey($value)
  */
-trait DoesNotHaveKeyTrait
+class DoesNotHaveKeyTrait
 {
 }
 
 /**
  * @method null doesNotHaveKeys($value)
  */
-trait DoesNotHaveKeysTrait
+class DoesNotHaveKeysTrait
 {
 }
 
 /**
  * @method null doesNotHaveProperty($value)
  */
-trait DoesNotHavePropertyTrait
+class DoesNotHavePropertyTrait
 {
 }
 
 /**
  * @method null doesNotHaveValue($value)
  */
-trait DoesNotHaveValueTrait
+class DoesNotHaveValueTrait
 {
 }
 
 /**
  * @method null doesNotMatchRegex($value)
  */
-trait DoesNotMatchRegexTrait
+class DoesNotMatchRegexTrait
 {
 }
 
 /**
  * @method null doesNotMatchRegularExpression($value)
  */
-trait DoesNotMatchRegularExpressionTrait
+class DoesNotMatchRegularExpressionTrait
 {
 }
 
 /**
  * @method null doesNotStartWith($value)
  */
-trait DoesNotStartWithTrait
+class DoesNotStartWithTrait
 {
 }
 
 /**
  * @method null doesNotThrow($value)
  */
-trait DoesNotThrowTrait
+class DoesNotThrowTrait
 {
 }
 
 /**
  * @property null doesNotThrowException
  */
-trait DoesNotThrowExceptionTrait
+class DoesNotThrowExceptionTrait
 {
 }
 
 /**
  * @method null doesntMatchRegex($value)
  */
-trait DoesntMatchRegexTrait
+class DoesntMatchRegexTrait
 {
 }
 
 /**
  * @method null doesntMatchRegularExpression($value)
  */
-trait DoesntMatchRegularExpressionTrait
+class DoesntMatchRegularExpressionTrait
 {
 }
 
 /**
  * @method null endsWith($value)
  */
-trait EndsWithTrait
+class EndsWithTrait
 {
 }
 
 /**
  * @method null equals($value)
  */
-trait EqualsTrait
+class EqualsTrait
 {
 }
 
 /**
  * @method null equalsFile($value)
  */
-trait EqualsFileTrait
+class EqualsFileTrait
 {
 }
 
 /**
  * @method null exactlyEquals($value)
  */
-trait ExactlyEqualsTrait
+class ExactlyEqualsTrait
 {
 }
 
 /**
  * @method null greaterThan($value)
  */
-trait GreaterThanTrait
+class GreaterThanTrait
 {
 }
 
 /**
  * @method null greaterThanOrEqual($value)
  */
-trait GreaterThanOrEqualTrait
+class GreaterThanOrEqualTrait
 {
 }
 
 /**
  * @method null gt($value)
  */
-trait GtTrait
+class GtTrait
 {
 }
 
 /**
  * @method null gte($value)
  */
-trait GteTrait
+class GteTrait
 {
 }
 
 /**
  * @method null hasFragment($value)
  */
-trait HasFragmentTrait
+class HasFragmentTrait
 {
 }
 
 /**
  * @method null hasHost($value)
  */
-trait HasHostTrait
+class HasHostTrait
 {
 }
 
 /**
  * @method null hasItem($value)
  */
-trait HasItemTrait
+class HasItemTrait
 {
 }
 
 /**
  * @method null hasItems($value)
  */
-trait HasItemsTrait
+class HasItemsTrait
 {
 }
 
 /**
  * @method null hasKey($value)
  */
-trait HasKeyTrait
+class HasKeyTrait
 {
 }
 
 /**
  * @method null hasKeys($value)
  */
-trait HasKeysTrait
+class HasKeysTrait
 {
 }
 
 /**
  * @method null hasPassword($value)
  */
-trait HasPasswordTrait
+class HasPasswordTrait
 {
 }
 
 /**
  * @method null hasPath($value)
  */
-trait HasPathTrait
+class HasPathTrait
 {
 }
 
 /**
  * @method null hasPort($value)
  */
-trait HasPortTrait
+class HasPortTrait
 {
 }
 
 /**
  * @method null hasProperty($value)
  */
-trait HasPropertyTrait
+class HasPropertyTrait
 {
 }
 
 /**
  * @method null hasQuery($value)
  */
-trait HasQueryTrait
+class HasQueryTrait
 {
 }
 
 /**
  * @method null hasScheme($value)
  */
-trait HasSchemeTrait
+class HasSchemeTrait
 {
 }
 
 /**
  * @method null hasUser($value)
  */
-trait HasUserTrait
+class HasUserTrait
 {
 }
 
 /**
  * @method null hasValue($value)
  */
-trait HasValueTrait
+class HasValueTrait
 {
 }
 
 /**
  * @method null hasValues($value)
  */
-trait HasValuesTrait
+class HasValuesTrait
 {
 }
 
 /**
  * @method null instanceOf($value)
  */
-trait InstanceOfTrait
+class InstanceOfTrait
 {
 }
 
 /**
  * @property null isABool
  */
-trait IsABoolTrait
+class IsABoolTrait
 {
 }
 
 /**
  * @property null isABoolean
  */
-trait IsABooleanTrait
+class IsABooleanTrait
 {
 }
 
 /**
  * @property null isANumber
  */
-trait IsANumberTrait
+class IsANumberTrait
 {
 }
 
 /**
  * @property null isAString
  */
-trait IsAStringTrait
+class IsAStringTrait
 {
 }
 
 /**
  * @method null isAfter($value)
  */
-trait IsAfterTrait
+class IsAfterTrait
 {
 }
 
 /**
  * @property null isAnArray
  */
-trait IsAnArrayTrait
+class IsAnArrayTrait
 {
 }
 
 /**
  * @property null isAnAssociativeArray
  */
-trait IsAnAssociativeArrayTrait
+class IsAnAssociativeArrayTrait
 {
 }
 
 /**
  * @property null isAnEmptyArray
  */
-trait IsAnEmptyArrayTrait
+class IsAnEmptyArrayTrait
 {
 }
 
 /**
  * @method null isAnInstanceOf($value)
  */
-trait IsAnInstanceOfTrait
+class IsAnInstanceOfTrait
 {
 }
 
 /**
  * @property null isAnInt
  */
-trait IsAnIntTrait
+class IsAnIntTrait
 {
 }
 
 /**
  * @property null isAnInteger
  */
-trait IsAnIntegerTrait
+class IsAnIntegerTrait
 {
 }
 
 /**
  * @property null isAnObject
  */
-trait IsAnObjectTrait
+class IsAnObjectTrait
 {
 }
 
 /**
  * @method null isBefore($value)
  */
-trait IsBeforeTrait
+class IsBeforeTrait
 {
 }
 
 /**
  * @method null|AndTrait isBetween($value)
  */
-trait IsBetweenTrait
+class IsBetweenTrait
 {
 }
 
 /**
  * @property null isBlank
  */
-trait IsBlankTrait
+class IsBlankTrait
 {
 }
 
 /**
  * @property null isEmptyArray
  */
-trait IsEmptyArrayTrait
+class IsEmptyArrayTrait
 {
 }
 
 /**
  * @method null isEqualTo($value)
  */
-trait IsEqualToTrait
+class IsEqualToTrait
 {
 }
 
 /**
  * @method null isExactlyEqualTo($value)
  */
-trait IsExactlyEqualToTrait
+class IsExactlyEqualToTrait
 {
 }
 
 /**
  * @property null isFalse
  */
-trait IsFalseTrait
+class IsFalseTrait
 {
 }
 
 /**
  * @property null isFalsy
  */
-trait IsFalsyTrait
+class IsFalsyTrait
 {
 }
 
 /**
  * @method null isGreaterThan($value)
  */
-trait IsGreaterThanTrait
+class IsGreaterThanTrait
 {
 }
 
 /**
  * @method null isGreaterThanOrEqualTo($value)
  */
-trait IsGreaterThanOrEqualToTrait
+class IsGreaterThanOrEqualToTrait
 {
 }
 
 /**
  * @method null isInstanceOf($value)
  */
-trait IsInstanceOfTrait
+class IsInstanceOfTrait
 {
 }
 
 /**
  * @method null isLessThan($value)
  */
-trait IsLessThanTrait
+class IsLessThanTrait
 {
 }
 
 /**
  * @method null isLessThanOrEqualTo($value)
  */
-trait IsLessThanOrEqualToTrait
+class IsLessThanOrEqualToTrait
 {
 }
 
 /**
  * @property null isNotABool
  */
-trait IsNotABoolTrait
+class IsNotABoolTrait
 {
 }
 
 /**
  * @property null isNotABoolean
  */
-trait IsNotABooleanTrait
+class IsNotABooleanTrait
 {
 }
 
 /**
  * @property null isNotANumber
  */
-trait IsNotANumberTrait
+class IsNotANumberTrait
 {
 }
 
 /**
  * @property null isNotAString
  */
-trait IsNotAStringTrait
+class IsNotAStringTrait
 {
 }
 
 /**
  * @property null isNotAnArray
  */
-trait IsNotAnArrayTrait
+class IsNotAnArrayTrait
 {
 }
 
 /**
  * @property null isNotAnAssociativeArray
  */
-trait IsNotAnAssociativeArrayTrait
+class IsNotAnAssociativeArrayTrait
 {
 }
 
 /**
  * @property null isNotAnEmptyArray
  */
-trait IsNotAnEmptyArrayTrait
+class IsNotAnEmptyArrayTrait
 {
 }
 
 /**
  * @method null isNotAnInstanceOf($value)
  */
-trait IsNotAnInstanceOfTrait
+class IsNotAnInstanceOfTrait
 {
 }
 
 /**
  * @property null isNotAnInt
  */
-trait IsNotAnIntTrait
+class IsNotAnIntTrait
 {
 }
 
 /**
  * @property null isNotAnInteger
  */
-trait IsNotAnIntegerTrait
+class IsNotAnIntegerTrait
 {
 }
 
 /**
  * @property null isNotAnObject
  */
-trait IsNotAnObjectTrait
+class IsNotAnObjectTrait
 {
 }
 
 /**
  * @method null|AndTrait isNotBetween($value)
  */
-trait IsNotBetweenTrait
+class IsNotBetweenTrait
 {
 }
 
 /**
  * @property null isNotBlank
  */
-trait IsNotBlankTrait
+class IsNotBlankTrait
 {
 }
 
 /**
  * @property null isNotEmptyArray
  */
-trait IsNotEmptyArrayTrait
+class IsNotEmptyArrayTrait
 {
 }
 
 /**
  * @method null isNotEqualTo($value)
  */
-trait IsNotEqualToTrait
+class IsNotEqualToTrait
 {
 }
 
 /**
  * @method null isNotExactlyEqualTo($value)
  */
-trait IsNotExactlyEqualToTrait
+class IsNotExactlyEqualToTrait
 {
 }
 
 /**
  * @method null isNotInstanceOf($value)
  */
-trait IsNotInstanceOfTrait
+class IsNotInstanceOfTrait
 {
 }
 
 /**
  * @property null isNotNull
  */
-trait IsNotNullTrait
+class IsNotNullTrait
 {
 }
 
 /**
  * @property null isNotNumeric
  */
-trait IsNotNumericTrait
+class IsNotNumericTrait
 {
 }
 
 /**
  * @method null isNotTheSameAs($value)
  */
-trait IsNotTheSameAsTrait
+class IsNotTheSameAsTrait
 {
 }
 
 /**
  * @property null isNotUnique
  */
-trait IsNotUniqueTrait
+class IsNotUniqueTrait
 {
 }
 
 /**
  * @method null|OfTrait isNotWithin($value)
  */
-trait IsNotWithinTrait
+class IsNotWithinTrait
 {
 }
 
 /**
  * @property null isNull
  */
-trait IsNullTrait
+class IsNullTrait
 {
 }
 
 /**
  * @property null isNumeric
  */
-trait IsNumericTrait
+class IsNumericTrait
 {
 }
 
 /**
  * @method null isTheSameAs($value)
  */
-trait IsTheSameAsTrait
+class IsTheSameAsTrait
 {
 }
 
 /**
  * @property null isTrue
  */
-trait IsTrueTrait
+class IsTrueTrait
 {
 }
 
 /**
  * @property null isTruthy
  */
-trait IsTruthyTrait
+class IsTruthyTrait
 {
 }
 
 /**
  * @property null isUnique
  */
-trait IsUniqueTrait
+class IsUniqueTrait
 {
 }
 
 /**
  * @property null isValid
  */
-trait IsValidTrait
+class IsValidTrait
 {
 }
 
 /**
  * @method null|OfTrait isWithin($value)
  */
-trait IsWithinTrait
+class IsWithinTrait
 {
 }
 
 /**
  * @method null lessThan($value)
  */
-trait LessThanTrait
+class LessThanTrait
 {
 }
 
 /**
  * @method null lessThanOrEqual($value)
  */
-trait LessThanOrEqualTrait
+class LessThanOrEqualTrait
 {
 }
 
 /**
  * @method null lt($value)
  */
-trait LtTrait
+class LtTrait
 {
 }
 
 /**
  * @method null matchesRegex($value)
  */
-trait MatchesRegexTrait
+class MatchesRegexTrait
 {
 }
 
 /**
  * @method null matchesRegularExpression($value)
  */
-trait MatchesRegularExpressionTrait
+class MatchesRegularExpressionTrait
 {
 }
 
 /**
  * @method null|AndTrait notBetween($value)
  */
-trait NotBetweenTrait
+class NotBetweenTrait
 {
 }
 
 /**
  * @method null notEquals($value)
  */
-trait NotEqualsTrait
+class NotEqualsTrait
 {
 }
 
 /**
  * @method null notInstanceOf($value)
  */
-trait NotInstanceOfTrait
+class NotInstanceOfTrait
 {
 }
 
 /**
  * @method null of($value)
  */
-trait OfTrait
+class OfTrait
 {
 }
 
 /**
  * @method null startsWith($value)
  */
-trait StartsWithTrait
+class StartsWithTrait
 {
 }
 
 /**
  * @method null throws($value)
  */
-trait ThrowsTrait
+class ThrowsTrait
 {
 }
 
 /**
  * @method null throwsAnythingExcept($value)
  */
-trait ThrowsAnythingExceptTrait
+class ThrowsAnythingExceptTrait
 {
 }
 
 /**
  * @method null throwsExactly($value)
  */
-trait ThrowsExactlyTrait
+class ThrowsExactlyTrait
 {
 }
 
 /**
  * @property null throwsException
  */
-trait ThrowsExceptionTrait
+class ThrowsExceptionTrait
 {
 }
 

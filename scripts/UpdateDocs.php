@@ -32,12 +32,12 @@ function updateBuilders()
     }
 
     $php = array();
-    $trait = 'Root';
+    $trait = 'BaseAssertions';
     foreach ($syntaxTree as $k => $v) {
         if (!isset($php[$trait])) {
             $php[$trait] = '';
         }
-        $php[$trait] .= "\n\t/**\n\t * @return \\Concise\\Assertion\\AssertionBuilder";
+        $php[$trait] .= "\n\t/**\n\t * @return \\Concise\\Core\\AssertionBuilder";
         if (null !== $v) {
             foreach ($v as $words => $s) {
                 $php[$trait] .=
@@ -55,7 +55,7 @@ function updateBuilders()
 
             $php = a($v, $php);
         }
-        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\treturn \$this->currentAssertion = (new \\Concise\\Assertion\\AssertionBuilder())->";
+        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\treturn \$this->currentAssertion = (new \\Concise\\Core\\AssertionBuilder())->";
         $php[$trait] .= ($k ? $k : '_') . "(";
         if (null !== $v) {
             $php[$trait] .= "\$value";
@@ -64,20 +64,20 @@ function updateBuilders()
     }
 
     $out =
-        "trait RootTrait\n{\n\tabstract public function performCurrentAssertion();\n" .
-        $php['Root'] .
+        "abstract class BaseAssertions extends \\PHPUnit_Framework_TestCase\n{\n\tabstract public function performCurrentAssertion();\n" .
+        $php['BaseAssertions'] .
         "}\n\n";
     ksort($php);
     foreach ($php as $trait => $methods) {
-        if ($trait == 'Root') {
+        if ($trait == 'BaseAssertions') {
             continue;
         }
-        $out .= "/**$methods */\ntrait {$trait}Trait\n{\n}\n\n";
+        $out .= "/**$methods */\nclass {$trait}Trait\n{\n}\n\n";
     }
 
     file_put_contents(
-        __DIR__ . '/../src/Concise/RootTrait.php',
-        "<?php\n\nnamespace Concise;\n\n" . str_replace("\t", '    ', $out)
+        __DIR__ . '/../src/Concise/Core/BaseAssertions.php',
+        "<?php\n\nnamespace Concise\\Core;\n\n" . str_replace("\t", '    ', $out)
     );
 }
 

@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Core\BaseAssertions;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
@@ -22,7 +23,6 @@ use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionException;
 
@@ -30,10 +30,8 @@ use ReflectionException;
 Keywords::load();
 
 
-class TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends BaseAssertions
 {
-    use RootTrait;
-
     /**
      * Used as a placeholder for with() clauses where the parameter is
      * unrestrictive. For the curious, this is the SHA1('a') with an extra 'a'
@@ -57,7 +55,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     protected $verifyFailures = array();
 
     /**
-     * @var null|\Concise\Assertion\AssertionBuilder
+     * @var null|\Concise\Core\AssertionBuilder
      */
     protected $currentAssertion = null;
 

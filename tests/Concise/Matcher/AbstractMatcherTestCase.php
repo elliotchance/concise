@@ -2,8 +2,7 @@
 
 namespace Concise\Matcher;
 
-use Concise\Assertion\AssertionBuilder;
-use Concise\Syntax\MatcherParser;
+use Concise\Core\AssertionBuilder;
 use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
 
@@ -46,18 +45,6 @@ abstract class AbstractMatcherTestCase extends TestCase
         }
     }
 
-    /**
-     * @param string $syntax
-     */
-    protected function assertMatcherFailure($syntax, array $args = array())
-    {
-        try {
-            $this->assert($this->matcher->match($syntax, $args), is_false);
-        } catch (DidNotMatchException $e) {
-            $this->assert(true);
-        }
-    }
-
     protected function assertFailure()
     {
         try {
@@ -67,7 +54,7 @@ abstract class AbstractMatcherTestCase extends TestCase
 
             return;
         }
-        $this->fail("Assertion did not fail.");
+        $this->fail("Core did not fail.");
     }
 
     protected function aassertFailure(AssertionBuilder $assertion)
@@ -79,7 +66,7 @@ abstract class AbstractMatcherTestCase extends TestCase
 
             return;
         }
-        $this->fail("Assertion did not fail.");
+        $this->fail("Core did not fail.");
     }
 
     public function testModuleHasAName()

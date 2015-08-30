@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Assertion;
+namespace Concise\Core;
 
 class AssertionBuilder
 {
@@ -11,7 +11,9 @@ class AssertionBuilder
     public function __call($words, $args)
     {
         if (null !== $words) {
-            $this->syntax .= strtolower(preg_replace('/([A-Z])/', ' $1', $words)) . ' ';
+            $this->syntax .=
+                strtolower(preg_replace('/([A-Z])/', ' $1', $words)) .
+                ' ';
         }
 
         if (count($args) > 0) {
