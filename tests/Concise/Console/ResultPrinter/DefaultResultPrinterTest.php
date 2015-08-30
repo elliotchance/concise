@@ -181,8 +181,7 @@ class DefaultResultPrinterTest extends TestCase
     public function testStartTimeIsNow()
     {
         $this->aassert($this->getProperty($this->resultPrinter, 'startTime'))
-            ->equals(time())
-            ->within(1);
+            ->isWithin(1)->of(time());
     }
 
     public function testAssertionStringIncludesTheRunTime()

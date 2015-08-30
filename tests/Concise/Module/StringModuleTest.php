@@ -17,41 +17,19 @@ class StringModuleTest extends AbstractMatcherTestCase
 
     public function testSuccessIfStringContainsASubstring()
     {
-        $this->assert('foobar', contains_string, 'oob', ignoring_case);
+        $this->aassert('foobar')->containsCaseInsensitiveString('oob');
     }
 
     public function testFailsIfSubstringDoesNotExistInString()
     {
-        $this->assertFailure('foobar', contains_string, 'baz', ignoring_case);
+        $this->aassertFailure(
+            $this->aassert('foobar')->containsCaseInsensitiveString('baz')
+        );
     }
 
     public function testIsNotSensitiveToCase()
     {
-        $this->assert('foobar', contains_string, 'Foo', ignoring_case);
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess()
-    {
-        $this->assert(
-            $this->assert('foobar', contains_string, 'Foo', ignoring_case),
-            exactly_equals,
-            'foobar'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure()
-    {
-        $this->assertFailure(
-            $this->assert('foobar', contains_string, 'Foo', ignoring_case),
-            exactly_equals,
-            'Foo'
-        );
+        $this->aassert('foobar')->containsCaseInsensitiveString('Foo');
     }
 
     public function testSuccessIfStringContainsASubstring1()
@@ -95,60 +73,20 @@ class StringModuleTest extends AbstractMatcherTestCase
 
     public function testSuccessIfStringContainsASubstring2()
     {
-        $this->assertFailure(
-            'foobar',
-            does_not_contain_string,
-            'oob',
-            ignoring_case
+        $this->aassertFailure(
+            $this->aassert('foobar')->doesNotContainCaseInsensitiveString('oob')
         );
     }
 
     public function testFailsIfSubstringDoesNotExistInString2()
     {
-        $this->assert('foobar', does_not_contain_string, 'baz', ignoring_case);
+        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('baz');
     }
 
     public function testIsNotSensitiveToCase1()
     {
-        $this->assertFailure(
-            'foobar',
-            does_not_contain_string,
-            'Foo',
-            ignoring_case
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess2()
-    {
-        $this->assert(
-            $this->assert(
-                'foobar',
-                does_not_contain_string,
-                'baz',
-                ignoring_case
-            ),
-            exactly_equals,
-            'foobar'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure2()
-    {
-        $this->assertFailure(
-            $this->assert(
-                'foobar',
-                does_not_contain_string,
-                'baz',
-                ignoring_case
-            ),
-            exactly_equals,
-            'Foo'
+        $this->aassertFailure(
+            $this->aassert('foobar')->doesNotContainCaseInsensitiveString('Foo')
         );
     }
 
@@ -165,30 +103,6 @@ class StringModuleTest extends AbstractMatcherTestCase
     public function testIsSensitiveToCase1()
     {
         $this->assert('foobar', does_not_contain_string, 'Foo');
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess3()
-    {
-        $this->assert(
-            $this->assert('foobar', does_not_contain_string, 'baz'),
-            exactly_equals,
-            'foobar'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure3()
-    {
-        $this->assertFailure(
-            $this->assert('foobar', does_not_contain_string, 'baz'),
-            exactly_equals,
-            'Foo'
-        );
     }
 
     public function testStringWithNoCharactersIsBlank()

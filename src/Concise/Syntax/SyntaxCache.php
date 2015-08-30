@@ -49,6 +49,6 @@ class SyntaxCache
      */
     protected function startsWith($s1, $s2)
     {
-        return strlen($s1) < strlen($s2) && substr($s2, 0, strlen($s1)) == $s1;
+        return preg_match("/^" . preg_quote($s1) . "[^a-z]/", $s2);
     }
 }

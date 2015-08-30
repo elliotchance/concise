@@ -39,36 +39,4 @@ class ObjectModule extends AbstractMatcher
 
         return $this->data[0]->{$this->data[1]};
     }
-
-    /**
-     * Assert that an object has a property with a specific exact value.
-     *
-     * @return bool
-     * @syntax ?:object has property ?:string with exact value ?
-     */
-    public function hasPropertyWithExactValue()
-    {
-        if (method_exists($this->data[0], '__get') && $this->data[0]->{$this->data[1]}) {
-            return ($this->data[0]->{$this->data[1]} == $this->data[2]);
-        }
-        return array_key_exists($this->data[1], (array)$this->data[0]) &&
-        ($this->data[0]->{$this->data[1]} === $this->data[2]);
-    }
-
-    /**
-     * Assert that an object has a property with a specific value.
-     *
-     * @return bool
-     * @syntax ?:object has property ?:string with value ?
-     */
-    public function hasPropertyWithValue()
-    {
-        if (method_exists($this->data[0], '__get') && $this->data[0]->{$this->data[1]}) {
-            return ($this->data[0]->{$this->data[1]} == $this->data[2]);
-        }
-        return array_key_exists(
-            $this->data[1],
-            (array)$this->data[0]
-        ) && ($this->data[0]->{$this->data[1]} == $this->data[2]);
-    }
 }

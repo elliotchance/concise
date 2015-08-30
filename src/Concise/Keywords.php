@@ -18,6 +18,9 @@ if (!defined("between")) {
 if (!defined("contains")) {
     define("contains", "contains");
 }
+if (!defined("contains_case_insensitive_string")) {
+    define("contains_case_insensitive_string", "contains case insensitive string");
+}
 if (!defined("contains_string")) {
     define("contains_string", "contains string");
 }
@@ -26,6 +29,9 @@ if (!defined("date")) {
 }
 if (!defined("does_not_contain")) {
     define("does_not_contain", "does not contain");
+}
+if (!defined("does_not_contain_case_insensitive_string")) {
+    define("does_not_contain_case_insensitive_string", "does not contain case insensitive string");
 }
 if (!defined("does_not_contain_string")) {
     define("does_not_contain_string", "does not contain string");
@@ -149,9 +155,6 @@ if (!defined("has_value")) {
 }
 if (!defined("has_values")) {
     define("has_values", "has values");
-}
-if (!defined("ignoring_case")) {
-    define("ignoring_case", "ignoring case");
 }
 if (!defined("instance_of")) {
     define("instance_of", "instance of");
@@ -294,6 +297,9 @@ if (!defined("is_not_the_same_as")) {
 if (!defined("is_not_unique")) {
     define("is_not_unique", "is not unique");
 }
+if (!defined("is_not_within")) {
+    define("is_not_within", "is not within");
+}
 if (!defined("is_null")) {
     define("is_null", "is null");
 }
@@ -314,6 +320,9 @@ if (!defined("is_unique")) {
 }
 if (!defined("is_valid")) {
     define("is_valid", "is valid");
+}
+if (!defined("is_within")) {
+    define("is_within", "is within");
 }
 if (!defined("less_than")) {
     define("less_than", "less than");
@@ -339,6 +348,9 @@ if (!defined("not_equals")) {
 if (!defined("not_instance_of")) {
     define("not_instance_of", "not instance of");
 }
+if (!defined("of")) {
+    define("of", "of");
+}
 if (!defined("on_error")) {
     define("on_error", "on error");
 }
@@ -362,13 +374,4 @@ if (!defined("true")) {
 }
 if (!defined("url")) {
     define("url", "url");
-}
-if (!defined("with_exact_value")) {
-    define("with_exact_value", "with exact value");
-}
-if (!defined("with_value")) {
-    define("with_value", "with value");
-}
-if (!defined("within")) {
-    define("within", "within");
 }

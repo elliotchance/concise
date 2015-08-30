@@ -7,7 +7,7 @@ trait RootTrait
     abstract public function performCurrentAssertion();
 
     /**
-     * @return \Concise\Assertion\AssertionBuilder|DoesNotHaveKeyTrait|DoesNotHaveItemTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasKeyTrait|HasItemTrait|HasItemsTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|DoesNotContainStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
+     * @return \Concise\Assertion\AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
      */
     public function aassert($value)
     {
@@ -74,7 +74,14 @@ trait ContainsTrait
 }
 
 /**
- * @method null|IgnoringCaseTrait containsString($value)
+ * @method null containsCaseInsensitiveString($value)
+ */
+trait ContainsCaseInsensitiveStringTrait
+{
+}
+
+/**
+ * @method null containsString($value)
  */
 trait ContainsStringTrait
 {
@@ -88,7 +95,14 @@ trait DoesNotContainTrait
 }
 
 /**
- * @method null|IgnoringCaseTrait doesNotContainString($value)
+ * @method null doesNotContainCaseInsensitiveString($value)
+ */
+trait DoesNotContainCaseInsensitiveStringTrait
+{
+}
+
+/**
+ * @method null doesNotContainString($value)
  */
 trait DoesNotContainStringTrait
 {
@@ -102,7 +116,7 @@ trait DoesNotEndWithTrait
 }
 
 /**
- * @method null|WithinTrait doesNotEqual($value)
+ * @method null doesNotEqual($value)
  */
 trait DoesNotEqualTrait
 {
@@ -130,7 +144,7 @@ trait DoesNotHaveItemTrait
 }
 
 /**
- * @method null|WithValueTrait doesNotHaveKey($value)
+ * @method null doesNotHaveKey($value)
  */
 trait DoesNotHaveKeyTrait
 {
@@ -214,7 +228,7 @@ trait EndsWithTrait
 }
 
 /**
- * @method null|WithinTrait equals($value)
+ * @method null equals($value)
  */
 trait EqualsTrait
 {
@@ -291,7 +305,7 @@ trait HasItemsTrait
 }
 
 /**
- * @method null|WithValueTrait hasKey($value)
+ * @method null hasKey($value)
  */
 trait HasKeyTrait
 {
@@ -326,7 +340,7 @@ trait HasPortTrait
 }
 
 /**
- * @method null|WithExactValueTrait|WithValueTrait hasProperty($value)
+ * @method null hasProperty($value)
  */
 trait HasPropertyTrait
 {
@@ -364,13 +378,6 @@ trait HasValueTrait
  * @method null hasValues($value)
  */
 trait HasValuesTrait
-{
-}
-
-/**
- * @property null ignoringCase
- */
-trait IgnoringCaseTrait
 {
 }
 
@@ -704,6 +711,13 @@ trait IsNotUniqueTrait
 }
 
 /**
+ * @method null|OfTrait isNotWithin($value)
+ */
+trait IsNotWithinTrait
+{
+}
+
+/**
  * @property null isNull
  */
 trait IsNullTrait
@@ -749,6 +763,13 @@ trait IsUniqueTrait
  * @property null isValid
  */
 trait IsValidTrait
+{
+}
+
+/**
+ * @method null|OfTrait isWithin($value)
+ */
+trait IsWithinTrait
 {
 }
 
@@ -809,6 +830,13 @@ trait NotInstanceOfTrait
 }
 
 /**
+ * @method null of($value)
+ */
+trait OfTrait
+{
+}
+
+/**
  * @method null startsWith($value)
  */
 trait StartsWithTrait
@@ -840,27 +868,6 @@ trait ThrowsExactlyTrait
  * @property null throwsException
  */
 trait ThrowsExceptionTrait
-{
-}
-
-/**
- * @method null withExactValue($value)
- */
-trait WithExactValueTrait
-{
-}
-
-/**
- * @method null withValue($value)
- */
-trait WithValueTrait
-{
-}
-
-/**
- * @method null within($value)
- */
-trait WithinTrait
 {
 }
 

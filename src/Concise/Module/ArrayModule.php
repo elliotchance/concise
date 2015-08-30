@@ -15,21 +15,6 @@ class ArrayModule extends AbstractMatcher
     /**
      * Assert an array does not have key and value item.
      *
-     * @syntax ?:array does not have key ?:string with value ?
-     * @return bool
-     */
-    public function doesNotHaveKeyWithValue()
-    {
-        $this->data = array(
-            $this->data[0],
-            array($this->data[1] => $this->data[2])
-        );
-        return $this->doesNotHaveItem();
-    }
-
-    /**
-     * Assert an array does not have key and value item.
-     *
      * @syntax ?:array does not have item ?:array
      * @return bool
      */
@@ -68,21 +53,6 @@ class ArrayModule extends AbstractMatcher
     public function doesNotHaveValue()
     {
         return !$this->hasValue();
-    }
-
-    /**
-     * Assert an array has key and value item.
-     *
-     * @syntax ?:array has key ?:string with value ?
-     * @return bool
-     */
-    public function hasKeyWithValue()
-    {
-        $this->data = array(
-            $this->data[0],
-            array($this->data[1] => $this->data[2])
-        );
-        return $this->hasItem();
     }
 
     /**

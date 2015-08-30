@@ -27,9 +27,9 @@ class MatcherParser
     protected $lexer;
 
     /**
-     * @var array
+     * @var SyntaxCache
      */
-    protected $syntaxCache = array();
+    protected $syntaxCache;
 
     /**
      * @var AbstractMatcher[]
@@ -40,6 +40,7 @@ class MatcherParser
     {
         $this->lexer = new Lexer();
         $this->lexer->setMatcherParser($this);
+        $this->syntaxCache = new SyntaxCache();
     }
 
     /**
@@ -163,7 +164,14 @@ class MatcherParser
      */
     public function loadModule(AbstractMatcher $module)
     {
-        $this->modules[get_class($module)] = $module;
+        $key = get_class($module);
+        if (!array_key_exists($key, $this->modules)) {
+            $this->modules[$key] = $module;
+
+            foreach ($module->getSyntaxes() as $syntax) {
+                $this->syntaxCache->add($syntax);
+            }
+        }
     }
 
     protected function getWordsForSyntaxes(array $syntaxes)

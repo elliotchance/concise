@@ -36,7 +36,7 @@ class NumberModule extends AbstractMatcher
      * Assert two values are not close to each other.
      *
      * @return bool
-     * @syntax ?:number does not equal ?:number within ?:number
+     * @syntax ?:number is not within ?:number of ?:number
      */
     public function doesNotEqualWithin()
     {
@@ -47,11 +47,11 @@ class NumberModule extends AbstractMatcher
      * Assert two values are close to each other.
      *
      * @return bool
-     * @syntax ?:number equals ?:number within ?:number
+     * @syntax ?:number is within ?:number of ?:number
      */
     public function equalsWithin()
     {
-        return abs($this->data[1] - $this->data[0]) <= $this->data[2];
+        return abs($this->data[2] - $this->data[0]) <= $this->data[1];
     }
 
     /**

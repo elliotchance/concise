@@ -66,52 +66,62 @@ class NumberModuleTest extends AbstractMatcherTestCase
 
     public function testTwoValuesThatAreExactlyEqualWithZeroDelta()
     {
-        $this->assertFailure(123.0, does_not_equal, 123.0, within, 0.0);
+        $this->aassertFailure(
+            $this->aassert(123.0)->isNotWithin(0)->of(123.0)
+        );
     }
 
     public function testTwoValuesThatAreNotEqualWithZeroDelta()
     {
-        $this->assert(123.0, does_not_equal, 124.0, within, 0.0);
+        $this->aassert(123.0)->isNotWithin(0.0)->of(124.0);
     }
 
     public function testComparingTwoValuesInsideTheDelta()
     {
-        $this->assertFailure(123.0, does_not_equal, 125.0, within, 5.0);
+        $this->aassertFailure(
+            $this->aassert(123.0)->isNotWithin(5.0)->of(125.0)
+        );
     }
 
     public function testComparingTwoValuesOutsideTheDelta()
     {
-        $this->assert(123, does_not_equal, 223, within, 5.0);
+        $this->aassert(123)->isNotWithin(5.0)->of(223);
     }
 
     public function testComparingTwoValuesOutsideTheDeltainReverse()
     {
-        $this->assert(223, does_not_equal, 123, within, 5.0);
+        $this->aassert(223)->isNotWithin(5.0)->of(123);
     }
 
     public function testTwoValuesThatAreExactlyEqualWithZeroDelta1()
     {
-        $this->assert(123.0, equals, 123.0, within, 0.0);
+        $this->aassert(123.0)->isWithin(0.0)->of(123.0);
     }
 
     public function testTwoValuesThatAreNotEqualWithZeroDelta1()
     {
-        $this->assertFailure(123.0, equals, 124.0, within, 0.0);
+        $this->aassertFailure(
+            $this->aassert(123.0)->isWithin(0.0)->of(124.0)
+        );
     }
 
     public function testComparingTwoValuesInsideTheDelta1()
     {
-        $this->assert(123.0, equals, 125.0, within, 5.0);
+        $this->aassert(123.0)->isWithin(5.0)->of(125.0);
     }
 
     public function testComparingTwoValuesOutsideTheDelta1()
     {
-        $this->assertFailure(123, equals, 223, within, 5.0);
+        $this->aassertFailure(
+            $this->aassert(123)->isWithin(5.0)->of(223)
+        );
     }
 
     public function testComparingTwoValuesOutsideTheDeltainReverse1()
     {
-        $this->assertFailure(223, equals, 123, within, 5.0);
+        $this->aassertFailure(
+            $this->aassert(223)->isWithin(5.0)->of(123)
+        );
     }
 
     public function testLessThan()

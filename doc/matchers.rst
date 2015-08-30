@@ -10,13 +10,11 @@ Arrays
 * `array`_ does not contain `mixed`_ -  Assert an array does not have any occurrences of the given value.   
 * `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
 * `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
-* `array`_ does not have key `string`_ with value `mixed`_ -  Assert an array does not have key and value item.   
 * `array`_ does not have keys `array`_ -   
 * `array`_ does not have value `mixed`_ -  Assert an array does not have any occurrences of the given value.   
 * `array`_ has item `array`_ -  Assert an array has key and value item.   
 * `array`_ has items `array`_ -  Assert an array has all key and value items.   
 * `array`_ has key `int`_\|\ `string`_ -  Assert an array has key, returns value.   
-* `array`_ has key `string`_ with value `mixed`_ -  Assert an array has key and value item.   
 * `array`_ has keys `array`_ -  Assert an array has several keys in any order.   
 * `array`_ has value `mixed`_ -  Assert an array has at least one occurrence of the given value.   
 * `array`_ has values `array`_ -  Assert an array has several values in any order.   
@@ -80,8 +78,6 @@ Numbers
 -------
 
 * `number`_ between `number`_ and `number`_ -  A number must be between two values (inclusive), returns value.   
-* `number`_ does not equal `number`_ within `number`_ -  Assert two values are not close to each other.   
-* `number`_ equals `number`_ within `number`_ -  Assert two values are close to each other.   
 * `number`_ greater than `number`_ -  A number is greater than another number.   
 * `number`_ greater than or equal `number`_ -  A number is greater than or equal to another number.   
 * `number`_ gt `number`_ -  A number is greater than another number.   
@@ -92,6 +88,8 @@ Numbers
 * `number`_ is less than `number`_ -  A number is less than another number.   
 * `number`_ is less than or equal to `number`_ -  A number is less than or equal to another number.   
 * `number`_ is not between `number`_ and `number`_ -  A number must not be between two values (inclusive).   
+* `number`_ is not within `number`_ of `number`_ -  Assert two values are not close to each other.   
+* `number`_ is within `number`_ of `number`_ -  Assert two values are close to each other.   
 * `number`_ less than `number`_ -  A number is less than another number.   
 * `number`_ less than or equal `number`_ -  A number is less than or equal to another number.   
 * `number`_ lt `number`_ -  A number is less than another number.   
@@ -102,8 +100,6 @@ Objects and Classes
 
 * `object`_ does not have property `string`_ -  Assert that an object does not have a property.   
 * `object`_ has property `string`_ -  Assert that an object has a property. Returns the properties value.   
-* `object`_ has property `string`_ with exact value `mixed`_ -  Assert that an object has a property with a specific exact value.   
-* `object`_ has property `string`_ with value `mixed`_ -  Assert that an object has a property with a specific value.   
 
 Regular Expressions
 -------------------
@@ -120,10 +116,10 @@ Strings
 
 * `mixed`_ does not end with `mixed`_ -  Assert a string does not end with another string.   
 * `mixed`_ does not start with `mixed`_ -  Assert a string does not not start (begin) with another string.   
+* `string`_ contains case insensitive string `string`_ -  A string contains a substring (ignoring case-sensitivity). Returns original string.   
 * `string`_ contains string `string`_ -  A string contains a substring. Returns original string.   
-* `string`_ contains string `string`_ ignoring case -  A string contains a substring (ignoring case-sensitivity). Returns original string.   
+* `string`_ does not contain case insensitive string `string`_ -  A string does not contain a substring (ignoring case-sensitivity). Returns original string.   
 * `string`_ does not contain string `string`_ -  A string does not contain a substring. Returns original string.   
-* `string`_ does not contain string `string`_ ignoring case -  A string does not contain a substring (ignoring case-sensitivity). Returns original string.   
 * `string`_ ends with `string`_ -  Assert a string ends with another string.   
 * `string`_ is blank -  Assert a string is zero length.   
 * `string`_ is not blank -  Assert a string has at least one character.   

@@ -34,7 +34,7 @@ class StringModule extends AbstractNestedMatcher
      * original string.
      *
      * @return mixed
-     * @syntax ?:string contains string ?:string ignoring case
+     * @syntax ?:string contains case insensitive string ?:string
      * @nested
      */
     public function containsStringIgnoringCase()
@@ -68,7 +68,7 @@ class StringModule extends AbstractNestedMatcher
      * Returns original string.
      *
      * @return mixed
-     * @syntax ?:string does not contain string ?:string ignoring case
+     * @syntax ?:string does not contain case insensitive string ?:string
      * @nested
      */
     public function doesNotContainStringIgnoringCase()

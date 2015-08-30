@@ -15,15 +15,6 @@ class ArrayModuleTest extends AbstractMatcherTestCase
         $this->matcher = new ArrayModule();
     }
 
-    public function testKeyValuePairExists()
-    {
-        $this->aassertFailure(
-            $this->aassert(array("foo" => 123))
-                ->doesNotHaveKey("foo")
-                ->withValue(123)
-        );
-    }
-
     public function testAlternativeSyntaxForItemExists()
     {
         $this->aassertFailure(
@@ -38,15 +29,6 @@ class ArrayModuleTest extends AbstractMatcherTestCase
             array("foo" => 123),
             does_not_have_item,
             array("foo" => 124)
-        );
-    }
-
-    public function testItemExistsInMultipleItems()
-    {
-        $this->aassertFailure(
-            $this->aassert(
-                array("foo" => 123, "bar" => "baz")
-            )->doesNotHaveKey("foo")->withValue(123)
         );
     }
 
@@ -164,11 +146,6 @@ class ArrayModuleTest extends AbstractMatcherTestCase
         );
     }
 
-    public function testKeyValuePairExists1()
-    {
-        $this->assert(array("foo" => 123), has_key, "foo", with_value, 123);
-    }
-
     public function testAlternativeSyntaxForItemExists1()
     {
         $this->assert(array("foo" => 123), has_item, array("foo" => 123));
@@ -178,17 +155,6 @@ class ArrayModuleTest extends AbstractMatcherTestCase
     {
         $this->aassertFailure(
             $this->aassert(array("foo" => 123))->hasItem(array("foo" => 124))
-        );
-    }
-
-    public function testItemExistsInMultipleItems1()
-    {
-        $this->assert(
-            array("foo" => 123, "bar" => "baz"),
-            has_key,
-            "foo",
-            with_value,
-            123
         );
     }
 
