@@ -37,7 +37,7 @@ function updateBuilders()
         if (!isset($php[$trait])) {
             $php[$trait] = '';
         }
-        $php[$trait] .= "\n\t/**\n\t * @return \\Concise\\Core\\AssertionBuilder";
+        $php[$trait] .= "\n\t/**\n\t * @return AssertionBuilder";
         if (null !== $v) {
             foreach ($v as $words => $s) {
                 $php[$trait] .=
@@ -45,6 +45,7 @@ function updateBuilders()
                     str_replace(' ', '', ucwords($words)) .
                     'Trait';
             }
+            $php[$trait] .= "\n\t * @param mixed \$value";
         }
         $php[$trait] .=
             "\n\t */\n\tpublic function aassert" .
@@ -55,7 +56,7 @@ function updateBuilders()
 
             $php = a($v, $php);
         }
-        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\treturn \$this->currentAssertion = (new \\Concise\\Core\\AssertionBuilder())->";
+        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\treturn \$this->currentAssertion = (new AssertionBuilder())->";
         $php[$trait] .= ($k ? $k : '_') . "(";
         if (null !== $v) {
             $php[$trait] .= "\$value";
@@ -64,7 +65,7 @@ function updateBuilders()
     }
 
     $out =
-        "abstract class BaseAssertions extends \\PHPUnit_Framework_TestCase\n{\n\tabstract public function performCurrentAssertion();\n" .
+        "abstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{\n\tabstract public function performCurrentAssertion();\n" .
         $php['BaseAssertions'] .
         "}\n\n";
     ksort($php);
@@ -77,7 +78,7 @@ function updateBuilders()
 
     file_put_contents(
         __DIR__ . '/../src/Concise/Core/BaseAssertions.php',
-        "<?php\n\nnamespace Concise\\Core;\n\n" . str_replace("\t", '    ', $out)
+        "<?php\n\nnamespace Concise\\Core;\n\nuse PHPUnit_Framework_TestCase;\n\n" . str_replace("\t", '    ', $out)
     );
 }
 

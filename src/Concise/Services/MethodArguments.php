@@ -8,7 +8,9 @@ use ReflectionMethod;
 class MethodArguments
 {
     /**
+     * @param array  $didReceive
      * @param string $method
+     * @return array
      */
     public function getMethodArgumentValues(array $didReceive, $method)
     {

@@ -2,8 +2,8 @@
 
 namespace Concise\Module;
 
+use Concise\Core\DidNotMatchException;
 use Concise\Matcher\AbstractMatcher;
-use Concise\Matcher\DidNotMatchException;
 
 class ArrayModule extends AbstractMatcher
 {
@@ -93,6 +93,7 @@ class ArrayModule extends AbstractMatcher
      * Assert an array has key, returns value.
      *
      * @syntax ?:array has key ?:int,string
+     * @throws DidNotMatchException
      * @return mixed
      * @nested
      */
@@ -224,6 +225,7 @@ class ArrayModule extends AbstractMatcher
     }
 
     /**
+     * @param array $data
      * @return bool
      */
     protected function itemExists(array $data)

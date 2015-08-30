@@ -36,7 +36,7 @@ class Syntax
         if ($method !== null) {
             if (strpos($method, '::') === false) {
                 throw new InvalidArgumentException(
-                    "Method must be in the form of <class>::<method>"
+                    "Method must be in the form of class::method"
                 );
             }
             list($this->class, $this->method) = explode("::", $method);
@@ -51,7 +51,7 @@ class Syntax
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getSyntax()
     {
@@ -59,7 +59,7 @@ class Syntax
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getClass()
     {
@@ -67,7 +67,7 @@ class Syntax
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getMethod()
     {
@@ -75,7 +75,7 @@ class Syntax
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getRawSyntax()
     {
@@ -83,7 +83,7 @@ class Syntax
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getDescription()
     {

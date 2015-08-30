@@ -4,7 +4,7 @@ namespace Concise\Matcher;
 
 use Concise\TestCase;
 
-class SyntaxText extends TestCase
+class SyntaxTest extends TestCase
 {
     public function testGetSyntax()
     {
@@ -42,7 +42,7 @@ class SyntaxText extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Method must be in the form of <class>::<method>
+     * @expectedExceptionMessage Method must be in the form of class::method
      */
     public function testBadMethodFormat()
     {

@@ -2,9 +2,7 @@
 
 namespace Concise;
 
-use Concise\Matcher\AbstractNestedMatcher;
-use Concise\Matcher\DidNotMatchException;
-use Concise\Matcher\Syntax;
+use Concise\Core\DidNotMatchException;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
@@ -14,7 +12,6 @@ use Concise\Validation\DataTypeChecker;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit_Framework_AssertionFailedError;
-use ReflectionClass;
 
 class Assertion
 {

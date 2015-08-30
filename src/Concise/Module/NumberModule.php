@@ -2,8 +2,8 @@
 
 namespace Concise\Module;
 
+use Concise\Core\DidNotMatchException;
 use Concise\Matcher\AbstractMatcher;
-use Concise\Matcher\DidNotMatchException;
 
 class NumberModule extends AbstractMatcher
 {

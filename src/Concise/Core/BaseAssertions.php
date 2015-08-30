@@ -2,53 +2,63 @@
 
 namespace Concise\Core;
 
-abstract class BaseAssertions extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
     abstract public function performCurrentAssertion();
 
     /**
-     * @return \Concise\Core\AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
+     * @return AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyArrayTrait|IsAnEmptyArrayTrait|IsNotEmptyArrayTrait|IsNotAnEmptyArrayTrait|IsNotUniqueTrait|IsUniqueTrait|IsAnAssociativeArrayTrait|IsNotAnAssociativeArrayTrait|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
+     * @param mixed $value
      */
     public function aassert($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->_($value);
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->currentAssertion = (new AssertionBuilder())->_($value);
     }
 
     /**
-     * @return \Concise\Core\AssertionBuilder
+     * @return AssertionBuilder
      */
     public function aassertFalse()
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->false();
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->currentAssertion = (new AssertionBuilder())->false();
     }
 
     /**
-     * @return \Concise\Core\AssertionBuilder
+     * @return AssertionBuilder
      */
     public function aassertTrue()
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->true();
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->currentAssertion = (new AssertionBuilder())->true();
     }
 
     /**
-     * @return \Concise\Core\AssertionBuilder|IsAfterTrait|IsBeforeTrait
+     * @return AssertionBuilder|IsAfterTrait|IsBeforeTrait
+     * @param mixed $value
      */
     public function aassertDate($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->date($value);
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->currentAssertion = (new AssertionBuilder())->date($value);
     }
 
     /**
-     * @return \Concise\Core\AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
+     * @return AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
+     * @param mixed $value
      */
     public function aassertUrl($value)
     {
         $this->performCurrentAssertion();
-        return $this->currentAssertion = (new \Concise\Core\AssertionBuilder())->url($value);
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->currentAssertion = (new AssertionBuilder())->url($value);
     }
 }
 

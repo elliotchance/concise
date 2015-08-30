@@ -2,7 +2,9 @@
 
 namespace Concise\Services;
 
-class ValueDescriptorTest extends \Concise\TestCase
+use Concise\TestCase;
+
+class ValueDescriptorTest extends TestCase
 {
     /** @var ValueDescriptor */
     protected $descriptor;

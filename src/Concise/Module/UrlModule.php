@@ -111,6 +111,7 @@ class UrlModule extends AbstractMatcher
     }
 
     /**
+     * @param string $part
      * @return bool
      */
     protected function urlHasPart($part)

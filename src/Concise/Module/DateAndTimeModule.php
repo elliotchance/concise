@@ -3,7 +3,7 @@
 namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcher;
-use Concise\Matcher\DidNotMatchException;
+use Concise\Core\DidNotMatchException;
 use Concise\Services\TimestampToEpochConverter;
 
 class DateAndTimeModule extends AbstractMatcher

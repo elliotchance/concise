@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Core;
 
 use Exception;
 

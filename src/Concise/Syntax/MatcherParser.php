@@ -161,6 +161,8 @@ class MatcherParser
      * @testDox Here is another case of the line not being covered. Without this
      *     method executing correctly no assertions would work.
      * @codeCoverageIgnore
+     * @param AbstractMatcher $module
+     * @throws Exception
      */
     public function loadModule(AbstractMatcher $module)
     {

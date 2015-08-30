@@ -3,7 +3,7 @@
 namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcher;
-use Concise\Matcher\DidNotMatchException;
+use Concise\Core\DidNotMatchException;
 
 class ObjectModule extends AbstractMatcher
 {

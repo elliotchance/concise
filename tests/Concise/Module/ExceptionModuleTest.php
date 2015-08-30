@@ -4,7 +4,7 @@ namespace Concise\Module;
 
 use Closure;
 use Concise\Matcher\AbstractMatcherTestCase;
-use Concise\Matcher\DidNotMatchException;
+use Concise\Core\DidNotMatchException;
 use Exception;
 
 class MyException extends Exception

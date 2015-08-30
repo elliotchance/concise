@@ -40,7 +40,7 @@ class FileModuleTest extends AbstractMatcherTestCase
     }
 
     /**
-     * @expectedException \Concise\Matcher\DidNotMatchException
+     * @expectedException \Concise\Core\DidNotMatchException
      * @expectedExceptionMessage File 'bar' does not exist.
      */
     public function testExceptionIsThrownIfFileDoesNotExist1()

@@ -3,6 +3,7 @@
 namespace Concise\Matcher;
 
 use Concise\Core\AssertionBuilder;
+use Concise\Core\DidNotMatchException;
 use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
 
