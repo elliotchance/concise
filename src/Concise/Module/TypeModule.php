@@ -2,9 +2,7 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcher;
-
-class TypeModule extends AbstractMatcher
+class TypeModule extends AbstractModule
 {
     public function getName()
     {

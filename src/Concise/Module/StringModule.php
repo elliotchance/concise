@@ -2,10 +2,9 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcher;
 use Concise\Core\DidNotMatchException;
 
-class StringModule extends AbstractMatcher
+class StringModule extends AbstractModule
 {
     public function getName()
     {

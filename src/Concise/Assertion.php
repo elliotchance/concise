@@ -3,6 +3,7 @@
 namespace Concise;
 
 use Concise\Core\DidNotMatchException;
+use Concise\Module\AbstractModule;
 use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
 use Concise\Syntax\Lexer;
@@ -16,7 +17,7 @@ use PHPUnit_Framework_AssertionFailedError;
 class Assertion
 {
     /**
-     * @var \Concise\Matcher\AbstractMatcher
+     * @var AbstractModule
      */
     protected $matcher;
 
@@ -51,13 +52,13 @@ class Assertion
     protected $failureMessage = '';
 
     /**
-     * @param string                  $assertionString
-     * @param Matcher\AbstractMatcher $matcher
-     * @param array                   $data
+     * @param string         $assertionString
+     * @param AbstractModule $matcher
+     * @param array          $data
      */
     public function __construct(
         $assertionString,
-        Matcher\AbstractMatcher $matcher,
+        AbstractModule $matcher,
         array $data = array()
     ) {
         ArgumentChecker::check($assertionString, 'string');
@@ -102,7 +103,7 @@ class Assertion
     }
 
     /**
-     * @return \Concise\Matcher\AbstractMatcher
+     * @return AbstractModule
      */
     public function getMatcher()
     {

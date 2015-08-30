@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Concise\Matcher\AbstractMatcher;
+use Concise\Matcher\AbstractModule;
 use Concise\Matcher\Syntax;
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
@@ -153,7 +153,7 @@ function generateMarkdownItem($syntax, $description)
 /**
  * @return string
  */
-function generateMarkdownList(AbstractMatcher $module)
+function generateMarkdownList(AbstractModule $module)
 {
     $matchersDoc = '';
     $syntaxes = [];

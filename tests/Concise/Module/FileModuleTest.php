@@ -4,7 +4,7 @@ namespace Concise\Module;
 
 use Concise\Matcher\AbstractMatcherTestCase;
 
-class FileModuleTest extends AbstractMatcherTestCase
+class FileModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

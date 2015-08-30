@@ -1,12 +1,13 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Module;
 
+use Concise\Matcher\Syntax;
 use Concise\Services\SyntaxRenderer;
 use ReflectionClass;
 use ReflectionMethod;
 
-abstract class AbstractMatcher
+abstract class AbstractModule
 {
     public $data = array();
 

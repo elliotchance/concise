@@ -8,7 +8,7 @@ use DateTime;
 /**
  * @group matcher
  */
-class DateAndTimeModuleTest extends AbstractMatcherTestCase
+class DateAndTimeModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

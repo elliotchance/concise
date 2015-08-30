@@ -1,16 +1,16 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Module;
 
 use Concise\Core\AssertionBuilder;
 use Concise\Core\DidNotMatchException;
 use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
 
-abstract class AbstractMatcherTestCase extends TestCase
+abstract class AbstractModuleTestCase extends TestCase
 {
     /**
-     * @var AbstractMatcher
+     * @var AbstractModule
      */
     protected $matcher;
 
@@ -19,7 +19,7 @@ abstract class AbstractMatcherTestCase extends TestCase
         $this->assert(
             $this->matcher,
             is_instance_of,
-            '\Concise\Matcher\AbstractMatcher'
+            '\Concise\Module\AbstractModule'
         );
     }
 

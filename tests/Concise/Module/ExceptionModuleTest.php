@@ -15,7 +15,7 @@ class OtherException extends Exception
 {
 }
 
-class ExceptionModuleTest extends AbstractMatcherTestCase
+class ExceptionModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

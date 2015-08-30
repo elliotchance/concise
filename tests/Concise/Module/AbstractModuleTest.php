@@ -1,10 +1,10 @@
 <?php
 
-namespace Concise\Matcher;
+namespace Concise\Module;
 
 use Concise\TestCase;
 
-class MyMatcher extends AbstractMatcher
+class MyMatcher extends AbstractModule
 {
     public function match()
     {
@@ -19,7 +19,7 @@ class MyMatcher extends AbstractMatcher
 /**
  * @group matcher
  */
-class AbstractMatcherTest extends TestCase
+class AbstractModuleTest extends TestCase
 {
     public function setUp()
     {

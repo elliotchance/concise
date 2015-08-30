@@ -7,7 +7,7 @@ use Concise\Matcher\AbstractMatcherTestCase;
 /**
  * @group matcher
  */
-class NumberModuleTest extends AbstractMatcherTestCase
+class NumberModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

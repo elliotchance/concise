@@ -2,12 +2,10 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
-
 /**
  * @group matcher
  */
-class StringModuleTest extends AbstractMatcherTestCase
+class StringModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

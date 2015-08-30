@@ -40,13 +40,13 @@ Creating a Matcher
 ------------------
 
 The only real requirement for a matcher is that it extends
-``Concise\Matcher\AbstractMatcher``:
+``Concise\Matcher\AbstractModule``:
 
 .. code-block:: php
 
-   use Concise\Matcher\AbstractMatcher
+   use Concise\Matcher\AbstractModule
 
-   class MyMatcher extends AbstractMatcher
+   class MyMatcher extends AbstractModule
    {
        public function match($syntax, array $data = array())
        {

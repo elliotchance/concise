@@ -167,12 +167,12 @@ class AssertionTest extends TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Method Concise\Matcher\AbstractMatcher::match() does not exist.
+     * @expectedExceptionMessage Method Concise\Module\AbstractModule::match() does not exist.
      * @group #219
      */
     public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()
     {
-        $matcher = $this->mock('\Concise\Matcher\AbstractMatcher')
+        $matcher = $this->mock('\Concise\Module\AbstractModule')
             ->stub('match')
             ->andThrow(new \Exception('foobar'))
             ->get();

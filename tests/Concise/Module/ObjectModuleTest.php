@@ -16,7 +16,7 @@ class SecretProperties
 /**
  * @group matcher
  */
-class ObjectModuleTest extends AbstractMatcherTestCase
+class ObjectModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {

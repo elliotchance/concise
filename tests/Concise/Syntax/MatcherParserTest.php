@@ -2,10 +2,10 @@
 
 namespace Concise\Syntax;
 
-use Concise\Matcher\AbstractMatcher;
+use Concise\Module\AbstractModule;
 use Concise\TestCase;
 
-class MyBadMatcher extends AbstractMatcher
+class MyBadMatcher extends AbstractModule
 {
     public function match()
     {
@@ -106,12 +106,12 @@ class MatcherParserTest extends TestCase
 
     /**
      * @param string[] $supportedSyntaxes
-     * @return AbstractMatcher
+     * @return AbstractModule
      */
     protected function getAbstractMatcherMockWithSupportedSyntaxes(
         $supportedSyntaxes
     ) {
-        return $this->mock('\Concise\Matcher\AbstractMatcher')->stub(
+        return $this->mock('\Concise\Module\AbstractModule')->stub(
             array('supportedSyntaxes' => $supportedSyntaxes)
         )->get();
     }

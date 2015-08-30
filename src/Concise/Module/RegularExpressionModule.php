@@ -2,12 +2,10 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcher;
-
 /**
  * Regular Expressions
  */
-class RegularExpressionModule extends AbstractMatcher
+class RegularExpressionModule extends AbstractModule
 {
     public function getName()
     {

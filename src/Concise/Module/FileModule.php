@@ -3,9 +3,8 @@
 namespace Concise\Module;
 
 use Concise\Core\DidNotMatchException;
-use Concise\Matcher\AbstractMatcher;
 
-class FileModule extends AbstractMatcher
+class FileModule extends AbstractModule
 {
     public function getName()
     {

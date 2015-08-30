@@ -2,13 +2,12 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
 use stdClass;
 
 /**
  * @group matcher
  */
-class TypeModuleTest extends AbstractMatcherTestCase
+class TypeModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {
@@ -115,7 +114,7 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assert(
             new self(),
             instance_of,
-            '\Concise\Matcher\AbstractMatcherTestCase'
+            '\Concise\Module\AbstractModuleTestCase'
         );
     }
 
@@ -245,7 +244,7 @@ class TypeModuleTest extends AbstractMatcherTestCase
         $this->assertFailure(
             new self(),
             not_instance_of,
-            '\Concise\Matcher\AbstractMatcherTestCase'
+            '\Concise\Module\AbstractModuleTestCase'
         );
     }
 

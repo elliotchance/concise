@@ -3,8 +3,8 @@
 namespace Concise\Syntax;
 
 use Concise\Assertion;
-use Concise\Matcher\AbstractMatcher;
 use Concise\Matcher\Syntax;
+use Concise\Module\AbstractModule;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
@@ -32,7 +32,7 @@ class MatcherParser
     protected $syntaxCache;
 
     /**
-     * @var AbstractMatcher[]
+     * @var AbstractModule[]
      */
     protected $modules = array();
 
@@ -44,7 +44,7 @@ class MatcherParser
     }
 
     /**
-     * @return AbstractMatcher[]
+     * @return AbstractModule[]
      */
     public function getModules()
     {
@@ -161,10 +161,10 @@ class MatcherParser
      * @testDox Here is another case of the line not being covered. Without this
      *     method executing correctly no assertions would work.
      * @codeCoverageIgnore
-     * @param AbstractMatcher $module
+     * @param AbstractModule $module
      * @throws Exception
      */
-    public function loadModule(AbstractMatcher $module)
+    public function loadModule(AbstractModule $module)
     {
         $key = get_class($module);
         if (!array_key_exists($key, $this->modules)) {
