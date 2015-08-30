@@ -2,7 +2,7 @@
 
 namespace Concise\Syntax;
 
-use Concise\Matcher\Syntax;
+use Concise\Core\Syntax;
 use Exception;
 
 class SyntaxCache

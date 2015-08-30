@@ -2,7 +2,7 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\Syntax;
+use Concise\Core\Syntax;
 use Concise\Services\SyntaxRenderer;
 use ReflectionClass;
 use ReflectionMethod;

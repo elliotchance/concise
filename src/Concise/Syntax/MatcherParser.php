@@ -3,7 +3,7 @@
 namespace Concise\Syntax;
 
 use Concise\Assertion;
-use Concise\Matcher\Syntax;
+use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
 use Concise\Validation\ArgumentChecker;
 use Exception;
