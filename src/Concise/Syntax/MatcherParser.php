@@ -52,6 +52,14 @@ class MatcherParser
     }
 
     /**
+     * @return SyntaxCache
+     */
+    public function getSyntaxCache()
+    {
+        return $this->syntaxCache;
+    }
+
+    /**
      * @param  string $syntax
      * @return string
      */

@@ -2,8 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
-
 /**
  * @group matcher
  */
@@ -17,21 +15,27 @@ class RegularExpressionModuleTest extends AbstractModuleTestCase
 
     public function testMatchesRegularExpression()
     {
-        $this->assert("123", matches_regular_expression, '/\\d+/');
+        $this->aassert("123")->matchesRegularExpression('/\\d+/');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testMatchesRegularExpressionFailure()
     {
-        $this->assertFailure("abc", matches_regular_expression, '/\\d+/');
+        $this->aassert("abc")->matchesRegularExpression('/\\d+/');
     }
 
     public function testDoesNotMatchRegularExpression()
     {
-        $this->assert("abc", does_not_match_regex, '/^f/');
+        $this->aassert("abc")->doesNotMatchRegex('/^f/');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testDoesNotMatchRegularExpressionFailure()
     {
-        $this->assertFailure("foo", does_not_match_regex, '/^f/');
+        $this->aassert("foo")->doesNotMatchRegex('/^f/');
     }
 }

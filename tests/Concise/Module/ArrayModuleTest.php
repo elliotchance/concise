@@ -13,75 +13,79 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->matcher = new ArrayModule();
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAlternativeSyntaxForItemExists()
     {
-        $this->aassertFailure(
-            $this->aassert(array("foo" => 123))
-                ->doesNotHaveItem(array("foo" => 123))
-        );
+        $this->aassert(array("foo" => 123))
+            ->doesNotHaveItem(array("foo" => 123));
     }
 
     public function testItemDoesNotExist()
     {
-        $this->assert(
-            array("foo" => 123),
-            does_not_have_item,
-            array("foo" => 124)
-        );
+        $this->aassert(array("foo" => 123))
+            ->doesNotHaveItem(array("foo" => 124));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayHasOneKey()
     {
-        $this->aassertFailure(
-            $this->aassert(array(123))->doesNotHaveKeys(array(0))
-        );
+        $this->aassert(array(123))->doesNotHaveKeys(array(0));
     }
 
     public function testArrayDoesNotContainAllKeys()
     {
-        $this->assert('[123] does not have keys [0,1]');
+        $this->aassert(array(123))->doesNotHaveKeys([0, 1]);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayKeysCanBeInAnyOrder()
     {
-        $this->aassertFailure(
-            $this->aassert(array("a" => 123, "b" => 456))->doesNotHaveKeys(
-                array("b", "a")
-            )
-        );
+        $this->aassert(array("a" => 123, "b" => 456))
+            ->doesNotHaveKeys(array("b", "a"));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayKeysCanBeASubset()
     {
-        $this->aassertFailure(
-            $this->aassert(array("a" => 123, "b" => 456))->doesNotHaveKeys(
-                array("b")
-            )
-        );
+        $this->aassert(array("a" => 123, "b" => 456))
+            ->doesNotHaveKeys(array("b"));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayHasIntegerKey()
     {
-        $this->aassertFailure($this->aassert(array(123))->doesNotHaveKey(0));
+        $this->aassert(array(123))->doesNotHaveKey(0);
     }
 
     public function testKeyDoesNotExist()
     {
-        $this->assert('[123] does not have key 1');
+        $this->aassert(array(123))->doesNotHaveKey(1);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayHasStringKey()
     {
-        $this->aassertFailure(
-            $this->aassert(array("abc" => 123))->doesNotHaveKey("abc")
-        );
+        $this->aassert(array("abc" => 123))->doesNotHaveKey("abc");
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayValueExists()
     {
-        $this->aassertFailure(
-            $this->aassert(array(123))->doesNotHaveValue(123)
-        );
+        $this->aassert(array(123))->doesNotHaveValue(123);
     }
 
     public function testArrayValueDoesNotExist()
@@ -99,11 +103,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->assert(array("foo" => 123), has_items, array("foo" => 123));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testSingleItemIsNotInSet()
     {
-        $this->aassertFailure(
-            $this->aassert(array("foo" => 123))->hasItems(array("foo" => 124))
-        );
+        $this->aassert(array("foo" => 123))->hasItems(array("foo" => 124));
     }
 
     public function testAllItemsAreInSet()
@@ -124,12 +129,13 @@ class ArrayModuleTest extends AbstractModuleTestCase
         );
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testSomeItemsAreInSubset()
     {
-        $this->aassertFailure(
-            $this->aassert(array("foo" => 123, "a" => "b", "bar" => "baz"))
-                ->hasItems(array("foo" => 123, "bart" => 123))
-        );
+        $this->aassert(array("foo" => 123, "a" => "b", "bar" => "baz"))
+            ->hasItems(array("foo" => 123, "bart" => 123));
     }
 
     public function testArrayValueExists1()
@@ -137,11 +143,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->assert('[123] has value 123');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayValueDoesNotExist1()
     {
-        $this->aassertFailure(
-            $this->aassert(array("abc"))->contains("def")
-        );
+        $this->aassert(array("abc"))->contains("def");
     }
 
     public function testAlternativeSyntaxForItemExists1()
@@ -149,23 +156,25 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->assert(array("foo" => 123), has_item, array("foo" => 123));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testItemDoesNotExist1()
     {
-        $this->aassertFailure(
-            $this->aassert(array("foo" => 123))->hasItem(array("foo" => 124))
-        );
+        $this->aassert(array("foo" => 123))->hasItem(array("foo" => 124));
     }
 
     public function testArrayHasOneKey1()
     {
-        $this->assert('[123] has keys [0]');
+        $this->aassert(array(123))->hasKeys(array(0));
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayDoesNotContainAllKeys1()
     {
-        $this->aassertFailure(
-            $this->aassert(array(123))->hasKeys(array(0, 1))
-        );
+        $this->aassert(array(123))->hasKeys(array(0, 1));
     }
 
     public function testArrayKeysCanBeInAnyOrder1()
@@ -183,11 +192,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->assert('[123] has key 0');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testKeyDoesNotExist1()
     {
-        $this->aassertFailure(
-            $this->aassert(array(123))->hasKey(1)
-        );
+        $this->aassert(array(123))->hasKey(1);
     }
 
     public function testArrayHasStringKey1()
@@ -207,28 +217,17 @@ class ArrayModuleTest extends AbstractModuleTestCase
         );
     }
 
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure()
-    {
-        $this->assertFailure(
-            $this->assert(array("abc" => 123), has_key, "abc"),
-            exactly_equals,
-            124
-        );
-    }
-
     public function testArrayHasOneValue()
     {
         $this->assert('[123] has values [123]');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayDoesNotContainAllValues()
     {
-        $this->aassertFailure(
-            $this->aassert(array(123))->hasValues(array(0, 123))
-        );
+        $this->aassert(array(123))->hasValues(array(0, 123));
     }
 
     public function testArrayValuesCanBeInAnyOrder()
@@ -268,9 +267,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         );
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAnArrayIsNotAssociativeIfZeroIndexed()
     {
-        $this->aassertFailure($this->aassert([1, "foo"])->isAnAssociativeArray);
+        $this->aassert([1, "foo"])->isAnAssociativeArray;
     }
 
     public function testArrayWithZeroElements()
@@ -278,35 +280,40 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->aassert(array())->isEmptyArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayWithMoreThanZeroElements()
     {
-        $this->aassertFailure($this->aassert(array('a'))->isEmptyArray);
+        $this->aassert(array('a'))->isEmptyArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAnAssociativeArrayContainsAtLeastOneKeyThatsNotANumber1(
     )
     {
-        $this->aassertFailure(
-            $this->aassert(
-                [
-                    "a" => 123,
-                    0 => "foo",
-                ]
-            )->isNotAnAssociativeArray
-        );
+        $this->aassert(
+            [
+                "a" => 123,
+                0 => "foo",
+            ]
+        )->isNotAnAssociativeArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAnArrayIsAssociativeIfAllIndexesAreIntegersButNotZeroIndexed1(
     )
     {
-        $this->aassertFailure(
-            $this->aassert(
-                [
-                    5 => 123,
-                    10 => "foo",
-                ]
-            )->isNotAnAssociativeArray
-        );
+        $this->aassert(
+            [
+                5 => 123,
+                10 => "foo",
+            ]
+        )->isNotAnAssociativeArray;
     }
 
     public function testAnArrayIsNotAssociativeIfZeroIndexed1()
@@ -314,11 +321,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->aassert([1, "foo"])->isNotAnAssociativeArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayWithZeroElements1()
     {
-        $this->aassertFailure(
-            $this->aassert(array())->isNotEmptyArray
-        );
+        $this->aassert(array())->isNotEmptyArray;
     }
 
     public function testArrayWithMoreThanZeroElements1()
@@ -326,11 +334,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->aassert(array('a'))->isNotEmptyArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayIsUniqueIfItContainsZeroElements()
     {
-        $this->aassertFailure(
-            $this->aassert(array())->isNotUnique
-        );
+        $this->aassert(array())->isNotUnique;
     }
 
     public function testArrayIsNotUniqueIfAnyElementsAppearMoreThanOnce()
@@ -343,8 +352,11 @@ class ArrayModuleTest extends AbstractModuleTestCase
         $this->aassert(array())->isUnique;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testArrayIsNotUniqueIfAnyElementsAppearMoreThanOnce1()
     {
-        $this->aassertFailure($this->aassert(array(123, 456, 123))->isUnique);
+        $this->aassert(array(123, 456, 123))->isUnique;
     }
 }

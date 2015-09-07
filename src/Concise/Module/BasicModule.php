@@ -18,7 +18,7 @@ class BasicModule extends AbstractModule
      */
     public function equal()
     {
-        return $this->data[0] == $this->data[1];
+        $this->failIf($this->data[0] != $this->data[1]);
     }
 
     /**
@@ -31,7 +31,7 @@ class BasicModule extends AbstractModule
      */
     public function exactlyEqual()
     {
-        return $this->data[0] === $this->data[1];
+        $this->failIf($this->data[0] !== $this->data[1]);
     }
 
     /**
@@ -44,7 +44,7 @@ class BasicModule extends AbstractModule
      */
     public function notEqual()
     {
-        return !$this->equal();
+        $this->failIf($this->data[0] == $this->data[1]);
     }
 
     /**
@@ -57,6 +57,6 @@ class BasicModule extends AbstractModule
      */
     public function notExactlyEqual()
     {
-        return !$this->exactlyEqual();
+        $this->failIf($this->data[0] === $this->data[1]);
     }
 }

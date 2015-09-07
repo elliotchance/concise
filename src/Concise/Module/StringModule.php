@@ -87,7 +87,7 @@ class StringModule extends AbstractModule
      */
     public function isBlank()
     {
-        return $this->data[0] === '';
+        $this->failIf($this->data[0] !== '');
     }
 
     /**
@@ -98,7 +98,7 @@ class StringModule extends AbstractModule
      */
     public function isNotBlank()
     {
-        return !$this->isBlank();
+        $this->failIf($this->data[0] === '');
     }
 
     /**
@@ -109,7 +109,7 @@ class StringModule extends AbstractModule
      */
     public function doesNotEndWith()
     {
-        return !$this->endsWith();
+        $this->failIf($this->stringEndsWith());
     }
 
     /**
@@ -120,7 +120,7 @@ class StringModule extends AbstractModule
      */
     public function doesNotStartWith()
     {
-        return !$this->startsWith();
+        $this->failIf($this->stringStartsWith());
     }
 
     /**
@@ -131,11 +131,7 @@ class StringModule extends AbstractModule
      */
     public function endsWith()
     {
-        return ((substr(
-                $this->data[0],
-                strlen($this->data[0]) - strlen($this->data[1])
-            ) ===
-            $this->data[1]));
+        $this->failIf(!$this->stringEndsWith());
     }
 
     /**
@@ -145,6 +141,25 @@ class StringModule extends AbstractModule
      * @syntax ?:string starts with ?:string
      */
     public function startsWith()
+    {
+        $this->failIf(!$this->stringStartsWith());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function stringEndsWith()
+    {
+        return ((substr(
+                $this->data[0],
+                strlen($this->data[0]) - strlen($this->data[1])
+            ) === $this->data[1]));
+    }
+
+    /**
+     * @return bool
+     */
+    protected function stringStartsWIth()
     {
         return ((substr($this->data[0], 0, strlen($this->data[1])) ===
             $this->data[1]));

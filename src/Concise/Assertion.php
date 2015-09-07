@@ -224,19 +224,9 @@ class Assertion
                 if ($s->getRawSyntax() == $syntax) {
                     $matcher = $this->getMatcher();
                     $matcher->setData($args);
+                    $matcher->syntax = $s;
                     $m = $s->getMethod();
-                    $answer = $matcher->$m();
-
-                    if (!$s->isNested() && true !== $answer && null !== $answer
-                    ) {
-                        $message = $this->getFailureMessage(
-                            $syntax,
-                            $args
-                        );
-                        break;
-                    }
-
-                    return $answer;
+                    return $matcher->$m();
                 }
             }
         } catch (DidNotMatchException $e) {

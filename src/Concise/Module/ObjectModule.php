@@ -19,7 +19,7 @@ class ObjectModule extends AbstractModule
      */
     public function doesNotHaveProperty()
     {
-        return !array_key_exists($this->data[1], (array)$this->data[0]);
+        $this->failIf(array_key_exists($this->data[1], (array)$this->data[0]));
     }
 
     /**

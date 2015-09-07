@@ -2,8 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
-
 /**
  * @group matcher
  */
@@ -15,9 +13,12 @@ class BooleanModuleTest extends AbstractModuleTestCase
         $this->matcher = new BooleanModule();
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAlwaysFails()
     {
-        $this->assertFailure('false');
+        $this->aassertFalse();
     }
 
     public function testFalse()

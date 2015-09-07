@@ -38,10 +38,7 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        $this->assert(
-            $action1->getActionCode(),
-            does_not_equal,
-            $action2->getActionCode()
-        );
+        $this->aassert($action1->getActionCode())
+            ->doesNotEqual($action2->getActionCode());
     }
 }

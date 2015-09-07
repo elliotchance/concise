@@ -39,7 +39,7 @@ class NumberModule extends AbstractModule
      */
     public function doesNotEqualWithin()
     {
-        return !$this->equalsWithin();
+        $this->failIf($this->numberIsWithin());
     }
 
     /**
@@ -50,7 +50,7 @@ class NumberModule extends AbstractModule
      */
     public function equalsWithin()
     {
-        return abs($this->data[2] - $this->data[0]) <= $this->data[1];
+        $this->failIf(!$this->numberIsWithin());
     }
 
     /**
@@ -63,7 +63,7 @@ class NumberModule extends AbstractModule
      */
     public function isGreaterThan()
     {
-        return $this->data[0] > $this->data[1];
+        $this->failIf($this->data[0] <= $this->data[1]);
     }
 
     /**
@@ -76,7 +76,7 @@ class NumberModule extends AbstractModule
      */
     public function isGreaterThanEqual()
     {
-        return $this->data[0] >= $this->data[1];
+        $this->failIf($this->data[0] < $this->data[1]);
     }
 
     /**
@@ -89,7 +89,7 @@ class NumberModule extends AbstractModule
      */
     public function isLessThan()
     {
-        return $this->data[0] < $this->data[1];
+        $this->failIf($this->data[0] >= $this->data[1]);
     }
 
     /**
@@ -102,7 +102,7 @@ class NumberModule extends AbstractModule
      */
     public function isLessThanEqual()
     {
-        return $this->data[0] <= $this->data[1];
+        $this->failIf($this->data[0] > $this->data[1]);
     }
 
     /**
@@ -114,8 +114,17 @@ class NumberModule extends AbstractModule
      */
     public function notBetween()
     {
-        return
-            $this->data[0] < $this->data[1] ||
-            $this->data[0] > $this->data[2];
+        $this->failIf(
+            $this->data[0] >= $this->data[1] &&
+            $this->data[0] <= $this->data[2]
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    protected function numberIsWithin()
+    {
+        return abs($this->data[2] - $this->data[0]) <= $this->data[1];
     }
 }

@@ -35,11 +35,8 @@ class VerifyFailuresTest extends TestCase
     {
         $c = new Color();
         self::$failures[] = $this->getName();
-        $this->assert(
-            self::$expectedFailures[$this->getName()],
-            equals,
-            $c($e->getMessage())->clean()
-        );
+        $this->aassert(self::$expectedFailures[$this->getName()])
+            ->equals($c($e->getMessage())->clean());
     }
 
     public static function tearDownAfterClass()

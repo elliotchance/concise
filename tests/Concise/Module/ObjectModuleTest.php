@@ -31,23 +31,32 @@ class ObjectModuleTest extends AbstractModuleTestCase
         $this->assert($obj, does_not_have_property, 'foo');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testObjectDoesHaveAProperty()
     {
         $obj = new stdClass();
         $obj->foo = 'bar';
-        $this->assertFailure($obj, does_not_have_property, 'foo');
+        $this->aassert($obj)->doesNotHaveProperty('foo');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testObjectDoesHaveAPropertyWithAFalsyValue()
     {
         $obj = new stdClass();
         $obj->foo = null;
-        $this->assertFailure($obj, does_not_have_property, 'foo');
+        $this->aassert($obj)->doesNotHaveProperty('foo');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testObjectDoesNotHaveAProperty1()
     {
-        $this->assertFailure($this->obj, has_property, 'foo');
+        $this->aassert($this->obj)->hasProperty('foo');
     }
 
     public function testObjectDoesHaveAProperty1()
@@ -72,19 +81,6 @@ class ObjectModuleTest extends AbstractModuleTestCase
             $this->assert($this->obj, has_property, 'foo'),
             exactly_equals,
             'bar'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure()
-    {
-        $this->obj->foo = 'bar';
-        $this->assertFailure(
-            $this->assert($this->obj, has_property, 'foo'),
-            exactly_equals,
-            'baz'
         );
     }
 }

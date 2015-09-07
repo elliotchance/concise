@@ -29,11 +29,8 @@ class TestCasePartialMockTest extends TestCase
     public function testPartialMockReturnsMockBuilder()
     {
         $instance = new DateTime();
-        $this->assert(
-            $this->partialMock($instance),
-            instance_of,
-            '\Concise\Mock\MockBuilder'
-        );
+        $this->aassert($this->partialMock($instance))
+            ->instanceOf('\Concise\Mock\MockBuilder');
     }
 
     /**
@@ -49,7 +46,7 @@ class TestCasePartialMockTest extends TestCase
     {
         $instance = new DateTime();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($mock, instance_of, '\DateTime');
+        $this->aassert($mock)->instanceOf('\DateTime');
     }
 
     public function testPartialMockWillInheritObjectValuesToMaintainState()
@@ -57,7 +54,7 @@ class TestCasePartialMockTest extends TestCase
         $instance = new TestCasePartialMockObject();
         $instance->init();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($this->getProperty($mock, 'public'), equals, 'yes');
+        $this->aassert($this->getProperty($mock, 'public'))->equals('yes');
     }
 
     public function testPartialMockWillInheritProtectedObjectValuesToMaintainState()
@@ -65,7 +62,7 @@ class TestCasePartialMockTest extends TestCase
         $instance = new TestCasePartialMockObject();
         $instance->init();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($this->getProperty($mock, 'foo'), equals, 'bar');
+        $this->aassert($this->getProperty($mock, 'foo'))->equals('bar');
     }
 
     public function testPartialMockWillInheritPrivateObjectValuesToMaintainState()
@@ -73,6 +70,6 @@ class TestCasePartialMockTest extends TestCase
         $instance = new TestCasePartialMockObject();
         $instance->init();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($this->getProperty($mock, 'secret'), equals, 'baz');
+        $this->aassert($this->getProperty($mock, 'secret'))->equals('baz');
     }
 }

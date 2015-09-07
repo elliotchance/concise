@@ -18,7 +18,7 @@ class TypeModule extends AbstractModule
      */
     public function isABoolean()
     {
-        return is_bool($this->data[0]);
+        $this->failIf(!is_bool($this->data[0]));
     }
 
     /**
@@ -29,7 +29,7 @@ class TypeModule extends AbstractModule
      */
     public function isAnArray()
     {
-        return is_array($this->data[0]);
+        $this->failIf(!is_array($this->data[0]));
     }
 
     /**
@@ -41,7 +41,7 @@ class TypeModule extends AbstractModule
      */
     public function isAnInteger()
     {
-        return is_int($this->data[0]);
+        $this->failIf(!is_int($this->data[0]));
     }
 
     /**
@@ -52,7 +52,7 @@ class TypeModule extends AbstractModule
      */
     public function isAnObject()
     {
-        return is_object($this->data[0]);
+        $this->failIf(!is_object($this->data[0]));
     }
 
     /**
@@ -63,7 +63,7 @@ class TypeModule extends AbstractModule
      */
     public function isANumber()
     {
-        return is_int($this->data[0]) || is_float($this->data[0]);
+        $this->failIf(!is_int($this->data[0]) && !is_float($this->data[0]));
     }
 
     /**
@@ -74,7 +74,7 @@ class TypeModule extends AbstractModule
      */
     public function isAString()
     {
-        return is_string($this->data[0]);
+        $this->failIf(!is_string($this->data[0]));
     }
 
     /**
@@ -87,14 +87,7 @@ class TypeModule extends AbstractModule
      */
     public function isInstanceOf()
     {
-        $interfaces = class_implements($this->data[0]);
-
-        if (is_string($this->data[0])) {
-            return true;
-        }
-        return (get_class($this->data[0]) === $this->data[1]) ||
-        is_subclass_of($this->data[0], $this->data[1]) ||
-        array_key_exists($this->data[1], $interfaces);
+        $this->failIf(!$this->isAnInstanceOf());
     }
 
     /**
@@ -106,7 +99,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotABoolean()
     {
-        return !$this->isABoolean();
+        $this->failIf(is_bool($this->data[0]));
     }
 
     /**
@@ -117,7 +110,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotAnArray()
     {
-        return !$this->isAnArray();
+        $this->failIf(is_array($this->data[0]));
     }
 
     /**
@@ -129,7 +122,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotAnInteger()
     {
-        return !$this->isAnInteger();
+        $this->failIf(is_int($this->data[0]));
     }
 
     /**
@@ -140,7 +133,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotAnObject()
     {
-        return !$this->isAnObject();
+        $this->failIf(is_object($this->data[0]));
     }
 
     /**
@@ -151,7 +144,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotANumber()
     {
-        return !$this->isANumber();
+        $this->failIf(is_integer($this->data[0]) || is_float($this->data[0]));
     }
 
     /**
@@ -162,7 +155,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotAString()
     {
-        return !$this->isAString();
+        $this->failIf(is_string($this->data[0]));
     }
 
     /**
@@ -175,7 +168,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotAnInstanceOf()
     {
-        return !$this->isInstanceOf();
+        $this->failIf($this->isAnInstanceOf());
     }
 
     /**
@@ -186,7 +179,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotNull()
     {
-        return !$this->isNull();
+        $this->failIf(is_null($this->data[0]));
     }
 
     /**
@@ -197,7 +190,7 @@ class TypeModule extends AbstractModule
      */
     public function isNotNumeric()
     {
-        return !$this->isNumeric();
+        $this->failIf(is_numeric($this->data[0]));
     }
 
     /**
@@ -208,7 +201,7 @@ class TypeModule extends AbstractModule
      */
     public function isNull()
     {
-        return is_null($this->data[0]);
+        $this->failIf(!is_null($this->data[0]));
     }
 
     /**
@@ -219,6 +212,19 @@ class TypeModule extends AbstractModule
      */
     public function isNumeric()
     {
-        return is_numeric($this->data[0]);
+        $this->failIf(!is_numeric($this->data[0]));
+    }
+
+    protected function isAnInstanceOf()
+    {
+        $interfaces = class_implements($this->data[0]);
+
+        if (is_string($this->data[0])) {
+            return true;
+        }
+        return
+            (get_class($this->data[0]) === $this->data[1]) ||
+            is_subclass_of($this->data[0], $this->data[1]) ||
+            array_key_exists($this->data[1], $interfaces);
     }
 }

@@ -5,34 +5,32 @@ namespace Concise;
 // This must go outside of any testing code becuase we know that the constants
 // are available before test initialisation.
 if (!defined('has_key')) {
-    throw new \Exception("Constants not initalised.");
+    throw new \Exception("Constants not initialised.");
 }
 
 class TestCaseTest extends TestCase
 {
     public function testExtendsTestCase()
     {
-        $this->assert(
-            new TestCase(),
-            is_an_instance_of,
-            '\PHPUnit_Framework_TestCase'
-        );
+        $this->aassert(new TestCase())
+            ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
     }
 
     protected function assertAssertions(array $expected, array $actual)
     {
-        $this->assert(count($actual), equals, count($expected));
+        $this->aassert(count($actual))->equals(count($expected));
         $right = array();
         foreach ($actual as $a) {
+            /** @var Assertion $a */
             $right[] = $a->getAssertion();
         }
-        $this->assert($right, equals, $expected);
+        $this->aassert($right)->equals($expected);
     }
 
     public function testCanSetAttribute()
     {
         $this->myAttribute = 123;
-        $this->assert(123, exactly_equals, $this->myAttribute);
+        $this->aassert(123)->exactlyEquals($this->myAttribute);
     }
 
     /**
@@ -49,20 +47,20 @@ class TestCaseTest extends TestCase
         $this->x = 123;
         $this->b = '456';
         $data = $this->getData();
-        $this->assert($data['x'], exactly_equals, 123);
+        $this->aassert($data['x'])->exactlyEquals(123);
     }
 
     public function testCanUnsetProperty()
     {
         $this->myUniqueProperty = 123;
         unset($this->myUniqueProperty);
-        $this->assert(isset($this->myUniqueProperty), is_false);
+        $this->aassert(isset($this->myUniqueProperty))->isFalse;
     }
 
     public function testUnsettingAnAttributeThatDoesntExistDoesNothing()
     {
         unset($this->foobar);
-        $this->assert(isset($this->myUniqueProperty), is_false);
+        $this->aassert(isset($this->myUniqueProperty))->isFalse;
     }
 
     /**
@@ -79,18 +77,18 @@ class TestCaseTest extends TestCase
 
     public function testDataIncludesExplicitInstanceVariables()
     {
-        $this->assert($this->getData(), has_key, 'mySpecialAttribute');
+        $this->aassert($this->getData())->hasKey('mySpecialAttribute');
     }
 
     public function testIssetWorksWithAttributes()
     {
         $this->x = 123;
-        $this->assert(isset($this->x));
+        $this->aassert(isset($this->x));
     }
 
     public function testDataIsResetBetweenTests()
     {
-        $this->assert(isset($this->x), is_false);
+        $this->aassert(isset($this->x))->isFalse;
     }
 
     protected function getAssertionsForFixtureTests()
@@ -111,26 +109,26 @@ class TestCaseTest extends TestCase
     public function testInlineAssertion()
     {
         $this->abc = 123;
-        $this->assert('abc equals 123');
+        $this->aassert('abc equals 123');
     }
 
     public function testAssertionBuilder()
     {
-        $this->assert(123, 'equals', "123");
+        $this->aassert(123)->equals("123");
     }
 
     public function testConstantsForKeywordsAreInitialised()
     {
-        $this->assertSame(equals, 'equals');
+        $this->aassert(equals)->exactlyEquals('equals');
     }
 
     public function testConstantsForKeywordStringsAreInitialised()
     {
-        $this->assertSame(exactly_equals, 'exactly equals');
+        $this->aassert(exactly_equals)->exactlyEquals('exactly equals');
     }
 
     public function testAssertionBuilderWillBeUsedForBooleanAssertions()
     {
-        $this->assert(true);
+        $this->aassert(true);
     }
 }

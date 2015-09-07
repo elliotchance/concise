@@ -20,13 +20,7 @@ class FileModule extends AbstractModule
      */
     public function stringEqualsFile()
     {
-        if (!file_exists($this->data[1])) {
-            throw new DidNotMatchException(
-                "File '{$this->data[1]}' does not exist."
-            );
-        }
-
-        return $this->data[0] == file_get_contents($this->data[1]);
+        $this->failIf(!$this->compareFileWithString());
     }
 
     /**
@@ -38,6 +32,21 @@ class FileModule extends AbstractModule
      */
     public function stringDoesNotEqualFile()
     {
-        return !$this->stringEqualsFile();
+        $this->failIf($this->compareFileWithString());
+    }
+
+    /**
+     * @return bool
+     * @throws DidNotMatchException
+     */
+    protected function compareFileWithString()
+    {
+        if (!file_exists($this->data[1])) {
+            throw new DidNotMatchException(
+                "File '{$this->data[1]}' does not exist."
+            );
+        }
+
+        return $this->data[0] == file_get_contents($this->data[1]);
     }
 }

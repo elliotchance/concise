@@ -18,7 +18,7 @@ class RegularExpressionModule extends AbstractModule
      */
     public function matchesRegex()
     {
-        return preg_match($this->data[1], $this->data[0]) === 1;
+        $this->failIf(preg_match($this->data[1], $this->data[0]) !== 1);
     }
 
     /**
@@ -29,6 +29,6 @@ class RegularExpressionModule extends AbstractModule
      */
     public function doesNotMatchRegex()
     {
-        return !$this->matchesRegex();
+        $this->failIf(preg_match($this->data[1], $this->data[0]) === 1);
     }
 }

@@ -13,65 +13,75 @@ class BasicModuleTest extends AbstractModuleTestCase
         $this->matcher = new BasicModule();
     }
 
-    public function comparisons()
+    public function testEqualsInt()
     {
-        return array(
-            array('123 equals 123'),
-            array('123 equals 123.0'),
-            array('123 equals "123"'),
-        );
+        $this->aassert(123)->equals(123);
+    }
+
+    public function testEqualsFloat()
+    {
+        $this->aassert(123)->equals(123.0);
+    }
+
+    public function testEqualsString()
+    {
+        $this->aassert(123)->equals("123");
     }
 
     /**
-     * @dataProvider comparisons
+     * @expectedException \Concise\Core\DidNotMatchException
      */
-    public function testEquals($assertion)
-    {
-        $this->assert($assertion);
-    }
-
     public function testEqualsFailure()
     {
-        $this->assertFailure("123 equals 124");
+        $this->aassert(123)->equals(124);
     }
 
     public function testExactlyEquals()
     {
-        $this->assert('123 exactly equals 123');
+        $this->aassert(123)->exactlyEquals(123);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIntegerAndFloatWithTheSameValueAreNotExactlyEqual()
     {
-        $this->assertFailure('123 exactly equals 123.0');
+        $this->aassert(123)->exactlyEquals(123.0);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIntegerAndItsStringRepresentationAreNotExactlyEqual()
     {
-        $this->assertFailure('123 exactly equals "123"');
+        $this->aassert(123)->exactlyEquals("123");
     }
 
     public function testIntegerAndFloatOfTheSameValueAreNotExactlyEqual()
     {
-        $this->assert('123 is not exactly equal to 123.0');
+        $this->aassert(123)->isNotExactlyEqualTo(123.0);
     }
 
     public function testIntegerAndStringRepresentationOfTheSameValueAreNotExactlyEqual()
     {
-        $this->assert('123 is not exactly equal to "123"');
+        $this->aassert(123)->isNotExactlyEqualTo("123");
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNotExactlyEqualsFailure()
     {
-        $this->assertFailure('123 is not exactly equal to 123');
+        $this->aassert(123)->isNotExactlyEqualTo(123);
     }
 
     public function testNotEquals()
     {
-        $this->assert('123 does not equal 124');
+        $this->aassert(123)->doesNotEqual(124);
     }
 
     public function testFloatingPointValuesThatDifferSlightlyAreNotEqual()
     {
-        $this->assert('123 is not equal to 123.000001');
+        $this->aassert(123)->isNotEqualTo(123.000001);
     }
 }

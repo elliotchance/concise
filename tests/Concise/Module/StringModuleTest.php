@@ -18,11 +18,12 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->aassert('foobar')->containsCaseInsensitiveString('oob');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFailsIfSubstringDoesNotExistInString()
     {
-        $this->aassertFailure(
-            $this->aassert('foobar')->containsCaseInsensitiveString('baz')
-        );
+        $this->aassert('foobar')->containsCaseInsensitiveString('baz');
     }
 
     public function testIsNotSensitiveToCase()
@@ -35,14 +36,20 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('foobar', contains_string, 'oob');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFailsIfSubstringDoesNotExistInString1()
     {
-        $this->assertFailure('foobar', contains_string, 'baz');
+        $this->aassert('foobar')->containsString('baz');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsSensitiveToCase()
     {
-        $this->assertFailure('foobar', contains_string, 'Foo');
+        $this->aassert('foobar')->containsString('Foo');
     }
 
     /**
@@ -58,22 +65,11 @@ class StringModuleTest extends AbstractModuleTestCase
     }
 
     /**
-     * @group #219
+     * @expectedException \Concise\Core\DidNotMatchException
      */
-    public function testNestedAssertionFailure1()
-    {
-        $this->assertFailure(
-            $this->assert('foobar', contains_string, 'oob'),
-            exactly_equals,
-            'Foo'
-        );
-    }
-
     public function testSuccessIfStringContainsASubstring2()
     {
-        $this->aassertFailure(
-            $this->aassert('foobar')->doesNotContainCaseInsensitiveString('oob')
-        );
+        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('oob');
     }
 
     public function testFailsIfSubstringDoesNotExistInString2()
@@ -81,16 +77,20 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->aassert('foobar')->doesNotContainCaseInsensitiveString('baz');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotSensitiveToCase1()
     {
-        $this->aassertFailure(
-            $this->aassert('foobar')->doesNotContainCaseInsensitiveString('Foo')
-        );
+        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('Foo');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testSuccessIfStringContainsASubstring3()
     {
-        $this->assertFailure('foobar', does_not_contain_string, 'oob');
+        $this->aassert('foobar')->doesNotContainString('oob');
     }
 
     public function testFailsIfSubstringDoesNotExistInString3()
@@ -108,14 +108,20 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('', is_blank);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringWithAtLeastOneCharacterIsNotBlank()
     {
-        $this->assertFailure('a', is_blank);
+        $this->aassert('a')->isBlank;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringWithNoCharactersIsBlank1()
     {
-        $this->assertFailure('', is_not_blank);
+        $this->aassert('')->isNotBlank;
     }
 
     public function testStringWithAtLeastOneCharacterIsNotBlank1()
@@ -133,9 +139,12 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('"abc" does not end with "a"');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringDoesNotEndWithFailure()
     {
-        $this->assertFailure('"abc" does not end with "abc"');
+        $this->aassert("abc")->doesNotEndWith("abc");
     }
 
     public function testNeedleLongerThanHaystack1()
@@ -148,9 +157,12 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('"abc" does not start with "c"');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringDoesNotStartWithFailure()
     {
-        $this->assertFailure('"abc" does not start with "abc"');
+        $this->aassert("abc")->doesNotStartWith("abc");
     }
 
     public function testBasicString()
@@ -163,9 +175,12 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('"abc" ends with "abc"');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringEndsWithFailure()
     {
-        $this->assertFailure('"abc" ends with "ab"');
+        $this->aassert("abc")->endsWith("ab");
     }
 
     public function testBasicString1()
@@ -178,8 +193,11 @@ class StringModuleTest extends AbstractModuleTestCase
         $this->assert('"abc" starts with "abc"');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringStartsWithFailure()
     {
-        $this->assertFailure('"abc" starts with "abcd"');
+        $this->aassert("abc")->startsWith("abcd");
     }
 }

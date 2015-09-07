@@ -17,342 +17,390 @@ class TypeModuleTest extends AbstractModuleTestCase
 
     public function testTrueIsABoolean()
     {
-        $this->assert(true, is_a_boolean);
+        $this->aassert(true)->isABoolean;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAStringIsNotABoolean()
     {
-        $this->assertFailure("true", is_a_boolean);
+        $this->aassert("true")->isABoolean;
     }
 
     public function testFalseIsABoolean()
     {
-        $this->assert(false, is_a_boolean);
+        $this->aassert(false)->isABoolean;
     }
 
     public function testAlternativeShorterSyntax()
     {
-        $this->assert(true, is_a_bool);
+        $this->aassert(true)->isABool;
     }
 
     public function testIsAnArray()
     {
-        $this->assert('[] is an array');
+        $this->aassert(array())->isAnArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsAnArrayFailure()
     {
-        $this->assertFailure('123 is an array');
+        $this->aassert(123)->isAnArray;
     }
 
     public function testIntegerIsAnInteger()
     {
-        $this->assert('123 is an integer');
+        $this->aassert(123)->isAnInteger;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFloatIsNotAnInteger()
     {
-        $this->assertFailure('123.0 is an integer');
+        $this->aassert(123.0)->isAnInteger;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringThatRepresentsAnIntegerIsNotAnInteger()
     {
-        $this->assertFailure('"123" is an integer');
+        $this->aassert("123")->isAnInteger;
     }
 
     public function testIsAnObject()
     {
-        $this->assert(new \stdClass(), is_an_object);
+        $this->aassert(new \stdClass())->isAnObject;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsAnObjectFailure()
     {
-        $this->assertFailure('123 is an object');
+        $this->aassert(123)->isAnObject;
     }
 
     public function testIntegerIsANumber()
     {
-        $this->assert('123 is a number');
+        $this->aassert(123)->isANumber;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringThatRepresentsANumberIsNotANumber()
     {
-        $this->assertFailure('"123" is a number');
+        $this->aassert("123")->isANumber;
     }
 
     public function testFloatIsANumber()
     {
-        $this->assert('12.3 is a number');
+        $this->aassert(12.3)->isANumber;
     }
 
     public function testIsAString()
     {
-        $this->assert('"123" is a string');
+        $this->aassert("123")->isAString;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsAStringFailure()
     {
-        $this->assertFailure('123 is a string');
+        $this->aassert(123)->isAString;
     }
 
     public function testClassNameIsAString()
     {
-        $this->assert('\My\Class is a string');
+        $this->aassert('\My\Class')->isAString;
     }
 
     public function testIsInstanceOfWithSameClass()
     {
-        $this->assert(
-            new self(),
-            is_an_instance_of,
-            '\Concise\Module\TypeModuleTest'
-        );
+        $this->aassert(new self())
+            ->isAnInstanceOf('\Concise\Module\TypeModuleTest');
     }
 
     public function testIsInstanceOfWithSuperClass()
     {
-        $this->assert(
-            new self(),
-            instance_of,
-            '\Concise\Module\AbstractModuleTestCase'
-        );
+        $this->aassert(new self())
+            ->instanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsInstanceOfFailure()
     {
-        $this->assertFailure(
-            new \stdClass(),
-            is_instance_of,
-            '\Concise\Module\TypeModule'
-        );
+        $this->aassert(new \stdClass())
+            ->isInstanceOf('\Concise\Module\TypeModule');
     }
 
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
-        $this->assert(
-            '\Concise\Module\TypeModule',
-            instance_of,
-            '\Concise\TestCase'
-        );
+        $this->aassert('\Concise\Module\TypeModule')
+            ->instanceOf('\Concise\TestCase');
     }
 
     public function testIsInstanceOfWithSameClassNoPrefix()
     {
-        $this->assert(
-            new self(),
-            is_an_instance_of,
-            'Concise\Module\TypeModuleTest'
-        );
+        $this->aassert(new self())
+            ->isAnInstanceOf('Concise\Module\TypeModuleTest');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testTrueIsABoolean1()
     {
-        $this->assertFailure(true, is_not_a_boolean);
+        $this->aassert(true)->isNotABoolean;
     }
 
     public function testAStringIsNotABoolean1()
     {
-        $this->assert("true", is_not_a_boolean);
+        $this->aassert("true")->isNotABoolean;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFalseIsABoolean1()
     {
-        $this->assertFailure(false, is_not_a_boolean);
+        $this->aassert(false)->isNotABoolean;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testAlternativeShorterSyntax1()
     {
-        $this->assertFailure(true, is_not_a_bool);
+        $this->aassert(true)->isNotABool;
     }
 
     public function testIsNotAnArray()
     {
-        $this->assert('123 is not an array');
+        $this->aassert(123)->isNotAnArray;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotAnArrayFailure()
     {
-        $this->assertFailure('[] is not an array');
+        $this->aassert(array())->isNotAnArray;
     }
 
     public function testStringThatRepresentsAnIntegerIsNotAnInteger1()
     {
-        $this->assert('"123" is not an integer');
+        $this->aassert("123")->isNotAnInteger;
     }
 
     public function testFloatThatIsAWholeNumberIsNotAnInteger()
     {
-        $this->assert('1.0 is not an integer');
+        $this->aassert(1.0)->isNotAnInteger;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotAnIntegerFailure()
     {
-        $this->assertFailure('123 is not an integer');
+        $this->aassert(123)->isNotAnInteger;
     }
 
     public function testIsNotAnObject()
     {
-        $this->assert('123 is not an object');
+        $this->aassert(123)->isNotAnObject;
     }
 
     public function testClassNameIsNotAnObject()
     {
-        $this->assert('\My\Class is not an object');
+        $this->aassert('\My\Class')->isNotAnObject;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotAnObjectFailure()
     {
-        $this->assertFailure(new stdClass(), is_not_an_object);
+        $this->aassert(new stdClass())->isNotAnObject;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIntegerIsANumber1()
     {
-        $this->assertFailure('123 is not a number');
+        $this->aassert(123)->isNotANumber;
     }
 
     public function testStringThatRepresentsANumberIsNotANumber1()
     {
-        $this->assert('"123" is not a number');
+        $this->aassert("123")->isNotANumber;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFloatIsANumber1()
     {
-        $this->assertFailure('12.3 is not a number');
+        $this->aassert(12.3)->isNotANumber;
     }
 
     public function testIsNotAString()
     {
-        $this->assert('123 is not a string');
+        $this->aassert(123)->isNotAString;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotAStringFailure()
     {
-        $this->assertFailure('"123" is not a string');
+        $this->aassert("123")->isNotAString;
     }
 
-    public function testIsInstanceOfWithSameClass1()
-    {
-        $this->assertFailure(
-            new self(),
-            is_not_an_instance_of,
-            '\Concise\Module\TypeModuleTest'
-        );
-    }
-
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsInstanceOfWithSuperClass1()
     {
-        $this->assertFailure(
-            new self(),
-            not_instance_of,
-            '\Concise\Module\AbstractModuleTestCase'
-        );
+        $this->aassert(new self())
+            ->notInstanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
     public function testIsInstanceOfFailure1()
     {
-        $this->assert(
-            new \stdClass(),
-            is_not_instance_of,
-            '\Concise\Module\TypeModuleTest'
-        );
+        $this->aassert(new \stdClass())
+            ->isNotInstanceOf('\Concise\Module\TypeModuleTest');
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringsRepresentingClassNamesCanBeUsed1()
     {
-        $this->assertFailure(
-            '\Concise\Module\TypeModule',
-            is_not_instance_of,
-            '\Concise\TestCase'
-        );
+        $this->aassert('\Concise\Module\TypeModule')
+            ->isNotInstanceOf('\Concise\TestCase');
     }
 
     public function testZeroIsNotNull()
     {
-        $this->assert('0 is not null');
+        $this->aassert(0)->isNotNull;
     }
 
     public function testABlankStringIsNotNull()
     {
-        $this->assert('"" is not null');
+        $this->aassert("")->isNotNull;
     }
 
     public function testFalseIsNotNull()
     {
-        $this->assert(false, is_not_null);
+        $this->aassert(false)->isNotNull;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNotNullFailure()
     {
-        $this->assertFailure(null, is_not_null);
+        $this->aassert(null)->isNotNull;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIntegerIsNumeric()
     {
-        $this->assertFailure('123 is not numeric');
+        $this->aassert(123)->isNotNumeric;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFloatIsNumeric()
     {
-        $this->assertFailure('12.3 is not numeric');
+        $this->aassert(12.3)->isNotNumeric;
     }
 
     public function testStringIsNotNumeric()
     {
-        $this->assert('"abc" is not numeric');
+        $this->aassert("abc")->isNotNumeric;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringThatRepresentsAnIntegerIsNumeric()
     {
-        $this->assertFailure('"123" is not numeric');
+        $this->aassert("123")->isNotNumeric;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringThatRepresentsAFloatIsNumeric()
     {
-        $this->assertFailure('"12.3" is not numeric');
+        $this->aassert("12.3")->isNotNumeric;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringThatRepresentsScientificNotationIsNumeric()
     {
-        $this->assertFailure('"12.3e-17" is not numeric');
+        $this->aassert("12.3e-17")->isNotNumeric;
     }
 
     public function testIsNull()
     {
-        $this->assert(null, is_null);
+        $this->aassert(null)->isNull;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsNullFailure()
     {
-        $this->assertFailure('123 is null');
+        $this->aassert(123)->isNull;
     }
 
     public function testIntegerIsNumeric1()
     {
-        $this->assert('123 is numeric');
+        $this->aassert(1230)->isNumeric;
     }
 
     public function testFloatIsNumeric1()
     {
-        $this->assert('12.3 is numeric');
+        $this->aassert(12.3)->isNumeric;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testStringIsNotNumeric1()
     {
-        $this->assertFailure('"abc" is numeric');
+        $this->aassert("abc")->isNumeric;
     }
 
     public function testStringThatRepresentsAnIntegerIsNumeric1()
     {
-        $this->assert('"123" is numeric');
+        $this->aassert("123")->isNumeric;
     }
 
     public function testStringThatRepresentsAFloatIsNumeric1()
     {
-        $this->assert('"12.3" is numeric');
+        $this->aassert("12.3")->isNumeric;
     }
 
     public function testStringThatRepresentsScientificNotationIsNumeric1()
     {
-        $this->assert('"12.3e-17" is numeric');
+        $this->aassert("12.3e-17")->isNumeric;
     }
 }

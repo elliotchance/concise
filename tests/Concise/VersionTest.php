@@ -17,44 +17,41 @@ class VersionTest extends TestCase
 
     public function testAnEmptyStringWillBeReturnedIfThePackageCanNotBeFound()
     {
-        $this->assert($this->version->getVersionForPackage('foo'), is_blank);
+        $this->aassert($this->version->getVersionForPackage('foo'))->isBlank;
     }
 
     public function testVersionCanBeExtractedForAPackageName()
     {
-        $this->assert(
-            $this->version->getVersionForPackage('sebastian/version'),
-            matches_regex,
-            '/^\\d\.\\d+/'
-        );
+        $v = $this->version->getVersionForPackage('sebastian/version');
+        $this->aassert($v)->matchesRegex('/^\\d\.\\d+/');
     }
 
     public function testWeCanEasilyGetTheConciseVersion()
     {
-        $this->assert(
-            $this->version->getConciseVersion(),
-            equals,
-            $this->version->getVersionForPackage('elliotchance/concise')
-        );
+        $this->aassert($this->version->getConciseVersion())
+            ->equals(
+                $this->version->getVersionForPackage('elliotchance/concise')
+            );
     }
 
     public function testFindingVendorFolder()
     {
-        $this->assert($this->version->findVendorFolder(), ends_with, '/vendor');
+        $this->aassert($this->version->findVendorFolder())->endsWith('/vendor');
     }
 
     public function testReturnEmptyStringIfVendorFolderCannotBeFound()
     {
-        $version =
-            $this->niceMock('Concise\Version')->stub('findVendorFolder')->get();
-        $this->assert($version->getConciseVersion(), is_blank);
+        $version = $this->niceMock('Concise\Version')
+            ->stub('findVendorFolder')
+            ->get();
+        $this->aassert($version->getConciseVersion())->isBlank;
     }
 
-    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound()
+    public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
+    )
     {
-        $version =
-            $this->niceMock('Concise\Version')->expose('findVendorFolder')->get();
-        $this->assert($version->findVendorFolder('/tmp'), is_null);
+        $version = $this->niceMock('Concise\Version')->expose('findVendorFolder')->get();
+        $this->aassert($version->findVendorFolder('/tmp'))->isNull;
     }
 
     public function versionData()
@@ -83,6 +80,6 @@ class VersionTest extends TestCase
     public function testVersionName($version, $expectedName)
     {
         $name = $this->version->getVersionNameForVersion($version);
-        $this->assert($name, equals, $expectedName);
+        $this->aassert($name)->equals($expectedName);
     }
 }

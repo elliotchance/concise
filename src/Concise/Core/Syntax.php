@@ -105,4 +105,13 @@ class Syntax
     {
         return $this->nested;
     }
+
+    public function getArgumentTypes()
+    {
+        $r = array();
+        preg_replace_callback('/\\?:?([^\s$]+)/i', function ($v) use (&$r) {
+                $r[] = explode(',', $v[1]);
+            }, $this->syntax);
+        return $r;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Concise\Module;
 
+use Concise\Core\DidNotMatchException;
 use Concise\Core\Syntax;
 use Concise\Services\SyntaxRenderer;
 use ReflectionClass;
@@ -10,6 +11,11 @@ use ReflectionMethod;
 abstract class AbstractModule
 {
     public $data = array();
+
+    /**
+     * @var Syntax
+     */
+    public $syntax;
 
     abstract public function getName();
 
@@ -85,5 +91,22 @@ abstract class AbstractModule
         }
 
         return $methods;
+    }
+
+    protected function fail()
+    {
+        throw new DidNotMatchException(
+            $this->renderFailureMessage(
+                $this->syntax->getRawSyntax(),
+                $this->data
+            )
+        );
+    }
+
+    protected function failIf($test)
+    {
+        if ($test) {
+            $this->fail();
+        }
     }
 }

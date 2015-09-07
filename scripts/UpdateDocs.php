@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Concise\Matcher\AbstractModule;
-use Concise\Matcher\Syntax;
+use Concise\Core\Syntax;
+use Concise\Module\AbstractModule;
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
 
@@ -52,16 +52,31 @@ function updateBuilders()
             ucfirst($k) .
             "(";
         if (null !== $v) {
-            $php[$trait] .= "\$value";
+            $php[$trait] .= "\$valueOrFailureMessage, \$value = null";
 
             $php = a($v, $php);
+        } else {
+            $php[$trait] .= "\$failureMessage = null";
         }
-        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\treturn \$this->currentAssertion = (new AssertionBuilder())->";
-        $php[$trait] .= ($k ? $k : '_') . "(";
+        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();";
         if (null !== $v) {
-            $php[$trait] .= "\$value";
+            $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\t\$this->currentAssertion = (new AssertionBuilder(\$this, \$valueOrFailureMessage))->";
+            $php[$trait] .= ($k ? $k : '_') . "(";
+            if (null !== $v) {
+                $php[$trait] .= "\$value";
+            }
+            $php[$trait] .= ");\n\t\t} else {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\t\$this->currentAssertion = (new AssertionBuilder(\$this))->";
+            $php[$trait] .= ($k ? $k : '_') . "(";
+            if (null !== $v) {
+                $php[$trait] .= "\$valueOrFailureMessage";
+            }
+            $php[$trait] .= ");\n\t\t}";
+        } else {
+            $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\$this->currentAssertion = (new AssertionBuilder(\$this, \$failureMessage))->";
+            $php[$trait] .= ($k ? $k : '_') . "();";
         }
-        $php[$trait] .= ");\n\t}\n";
+        $php[$trait] .= "\n\t\treturn \$this->currentAssertion;";
+        $php[$trait] .= "\n\t}\n";
     }
 
     $out =

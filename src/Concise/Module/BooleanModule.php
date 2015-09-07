@@ -17,7 +17,7 @@ class BooleanModule extends AbstractModule
      */
     public function false()
     {
-        return false;
+        $this->fail();
     }
 
     /**
@@ -28,7 +28,7 @@ class BooleanModule extends AbstractModule
      */
     public function isFalse()
     {
-        return $this->data[0] === false;
+        $this->failIf($this->data[0] !== false);
     }
 
     /**
@@ -39,7 +39,7 @@ class BooleanModule extends AbstractModule
      */
     public function isFalsy()
     {
-        return !$this->isTruthy();
+        $this->failIf($this->data[0] != false);
     }
 
     /**
@@ -50,7 +50,7 @@ class BooleanModule extends AbstractModule
      */
     public function isTrue()
     {
-        return $this->data[0] === true;
+        $this->failIf($this->data[0] !== true);
     }
 
     /**
@@ -61,7 +61,7 @@ class BooleanModule extends AbstractModule
      */
     public function isTruthy()
     {
-        return (bool)$this->data[0];
+        $this->failIf($this->data[0] != true);
     }
 
     /**

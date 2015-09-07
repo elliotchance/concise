@@ -2,8 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
-
 /**
  * @group matcher
  */
@@ -20,9 +18,12 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->assert(123, between, 100, 'and', 150);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNumberIsBelowLowerBounds()
     {
-        $this->assertFailure(80, between, 100, 'and', 150);
+        $this->aassert(80)->between(100)->and(150);
     }
 
     public function testNumberIsOnTheLowerBound()
@@ -30,9 +31,12 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->assert(123, between, 123, 'and', 150);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNumberIsAboveUpperBounds()
     {
-        $this->assertFailure(170, between, 100, 'and', 150);
+        $this->aassert(170)->between(100)->and(150);
     }
 
     public function testNumberIsOnTheUpperBound()
@@ -41,34 +45,11 @@ class NumberModuleTest extends AbstractModuleTestCase
     }
 
     /**
-     * @group #219
+     * @expectedException \Concise\Core\DidNotMatchException
      */
-    public function testNestedAssertionSuccess()
-    {
-        $this->assert(
-            $this->assert(5, between, 0, 'and', 10),
-            exactly_equals,
-            5
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure()
-    {
-        $this->assertFailure(
-            $this->assert(5, between, 0, 'and', 10),
-            exactly_equals,
-            6
-        );
-    }
-
     public function testTwoValuesThatAreExactlyEqualWithZeroDelta()
     {
-        $this->aassertFailure(
-            $this->aassert(123.0)->isNotWithin(0)->of(123.0)
-        );
+            $this->aassert(123.0)->isNotWithin(0)->of(123.0);
     }
 
     public function testTwoValuesThatAreNotEqualWithZeroDelta()
@@ -76,11 +57,12 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->aassert(123.0)->isNotWithin(0.0)->of(124.0);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testComparingTwoValuesInsideTheDelta()
     {
-        $this->aassertFailure(
-            $this->aassert(123.0)->isNotWithin(5.0)->of(125.0)
-        );
+            $this->aassert(123.0)->isNotWithin(5.0)->of(125.0);
     }
 
     public function testComparingTwoValuesOutsideTheDelta()
@@ -98,11 +80,12 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->aassert(123.0)->isWithin(0.0)->of(123.0);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testTwoValuesThatAreNotEqualWithZeroDelta1()
     {
-        $this->aassertFailure(
-            $this->aassert(123.0)->isWithin(0.0)->of(124.0)
-        );
+            $this->aassert(123.0)->isWithin(0.0)->of(124.0);
     }
 
     public function testComparingTwoValuesInsideTheDelta1()
@@ -110,28 +93,33 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->aassert(123.0)->isWithin(5.0)->of(125.0);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testComparingTwoValuesOutsideTheDelta1()
     {
-        $this->aassertFailure(
-            $this->aassert(123)->isWithin(5.0)->of(223)
-        );
+            $this->aassert(123)->isWithin(5.0)->of(223);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testComparingTwoValuesOutsideTheDeltainReverse1()
     {
-        $this->aassertFailure(
-            $this->aassert(223)->isWithin(5.0)->of(123)
-        );
+            $this->aassert(223)->isWithin(5.0)->of(123);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testLessThan()
     {
-        $this->assertFailure(100, is_greater_than_or_equal_to, 200);
+        $this->aassert(100)->isGreaterThanOrEqualTo(200);
     }
 
     public function testGreaterThanOrEqual()
     {
-        $this->assert(200, is_greater_than_or_equal_to, 200);
+        $this->aassert(200)->isGreaterThanOrEqualTo(200);
     }
 
     public function testGreaterThan()
@@ -139,14 +127,20 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->assert(300, is_greater_than_or_equal_to, 200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testLessThan1()
     {
-        $this->assertFailure(100, is_greater_than, 200);
+        $this->aassert(100)->isGreaterThan(200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testGreaterThanOrEqual1()
     {
-        $this->assertFailure(200, is_greater_than, 200);
+        $this->aassert(200)->isGreaterThan(200);
     }
 
     public function testGreaterThan1()
@@ -159,39 +153,54 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->assert(100, is_less_than, 200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testLessThanOrEqual()
     {
-        $this->assertFailure(200, is_less_than, 200);
+        $this->aassert(200)->isLessThan(200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testGreaterThan2()
     {
-        $this->assertFailure(300, is_less_than, 200);
+        $this->aassert(300)->isLessThan(200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNumberExistsBetweenTwoOtherNumbers1()
     {
-        $this->assertFailure(123, not_between, 100, 'and', 150);
+        $this->aassert(123)->notBetween(100)->and(150);
     }
 
     public function testNumberIsBelowLowerBounds1()
     {
-        $this->assert(80, not_between, 100, 'and', 150);
+        $this->aassert(80)->notBetween(100)->and(150);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNumberIsOnTheLowerBound1()
     {
-        $this->assertFailure(123, not_between, 123, 'and', 150);
+        $this->aassert(123)->notBetween(123)->and(150);
     }
 
     public function testNumberIsAboveUpperBounds1()
     {
-        $this->assert(170, not_between, 100, 'and', 150);
+        $this->aassert(170)->notBetween(100)->and(150);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testNumberIsOnTheUpperBound1()
     {
-        $this->assertFailure(150, not_between, 123, 'and', 150);
+        $this->aassert(150)->notBetween(123)->and(150);
     }
 
     public function testLessThan3()
@@ -204,8 +213,11 @@ class NumberModuleTest extends AbstractModuleTestCase
         $this->assert(200, is_less_than_or_equal_to, 200);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testGreaterThan3()
     {
-        $this->assertFailure(300, is_less_than_or_equal_to, 200);
+        $this->aassert(300)->isLessThanOrEqualTo(200);
     }
 }

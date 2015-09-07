@@ -13,13 +13,13 @@ class AssertionTest extends TestCase
     public function testCreatingAssertionRequiresTheAssertionString()
     {
         $assertion = new Assertion('? equals ?', new BasicModule());
-        $this->assert($assertion->getAssertion(), equals, '? equals ?');
+        $this->aassert($assertion->getAssertion())->equals('? equals ?');
     }
 
     public function testCreatingAssertionWithoutProvidingDataIsAnEmptyArray()
     {
         $assertion = new Assertion('? equals ?', new BasicModule());
-        $this->assert($assertion->getData(), is_an_empty_array);
+        $this->aassert($assertion->getData())->isAnEmptyArray;
     }
 
     public function testSettingDataWhenCreatingAssertion()
@@ -29,14 +29,14 @@ class AssertionTest extends TestCase
             new BasicModule(),
             array('abc', 'def')
         );
-        $this->assert($assertion->getData(), equals, array('abc', 'def'));
+        $this->aassert($assertion->getData())->equals(array('abc', 'def'));
     }
 
     public function testCreatingAssertionRequiresTheMatcher()
     {
         $matcher = new BasicModule();
         $assertion = new Assertion('? equals ?', $matcher);
-        $this->assert($matcher, is_the_same_as, $assertion->getMatcher());
+        $this->aassert($matcher)->isTheSameAs($assertion->getMatcher());
     }
 
     public function testToStringRenderedData()
@@ -50,24 +50,21 @@ class AssertionTest extends TestCase
         $assertion = new Assertion('a equals b', $matcher, $data);
         $expected =
             "\n  a (integer) = 123\n  b (string) = \"abc\"\n  c (string) = \"xyz\"\n";
-        $this->assert((string)$assertion, equals, $expected);
+        $this->aassert((string)$assertion)->equals($expected);
     }
 
     public function testCanSetDescriptiveString()
     {
         $assertion = new Assertion('? equals ?', new BasicModule());
         $assertion->setDescription('my description');
-        $this->assert(
-            $assertion->getDescription(),
-            equals,
-            'my description (? equals ?)'
-        );
+        $this->aassert($assertion->getDescription())
+            ->equals('my description (? equals ?)');
     }
 
     public function testDescriptionReturnsAssertionIfNotSet()
     {
         $assertion = new Assertion('? equals ?', new BasicModule());
-        $this->assert($assertion->getDescription(), equals, '? equals ?');
+        $this->aassert($assertion->getDescription())->equals('? equals ?');
     }
 
     /**
@@ -83,7 +80,10 @@ class AssertionTest extends TestCase
 
     protected function getStubForAssertionThatReturnsData(array $data)
     {
-        return $this->niceMock('\Concise\Assertion', array('true', new BooleanModule()))
+        return $this->niceMock(
+            '\Concise\Assertion',
+            array('true', new BooleanModule())
+        )
             ->stub(array('getData' => $data))
             ->get();
     }
@@ -93,7 +93,7 @@ class AssertionTest extends TestCase
         $assertion = $this->getStubForAssertionThatReturnsData(
             self::getPHPUnitProperties()
         );
-        $this->assert((string)$assertion, is_blank);
+        $this->aassert((string)$assertion)->isBlank;
     }
 
     public function testDoNotShowDataSetOnError()
@@ -103,32 +103,19 @@ class AssertionTest extends TestCase
                 '__dataSet' => array()
             )
         );
-        $this->assert((string)$assertion, is_blank);
+        $this->aassert((string)$assertion)->isBlank;
     }
 
     public function testNoAttributesRendersAsAnEmptyString()
     {
         $assertion = $this->getStubForAssertionThatReturnsData(array());
-        $this->assert((string)$assertion, is_blank);
+        $this->aassert((string)$assertion)->isBlank;
     }
 
     public function testCanSetCustomFailureMessage()
     {
         $assertion = new Assertion('true', new BooleanModule());
-        $this->assert($assertion->setFailureMessage('foo'), is_null);
-    }
-
-    public function testWillFailWithCustomMessage()
-    {
-        try {
-            $assertion = new Assertion('false', new BooleanModule());
-            $assertion->setTestCase($this);
-            $assertion->setFailureMessage('foo');
-            $assertion->run();
-            $this->fail('Did not fail.');
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
-            $this->assert($e->getMessage(), equals, 'foo');
-        }
+        $this->aassert($assertion->setFailureMessage('foo'))->isNull;
     }
 
     /**
@@ -154,7 +141,8 @@ class AssertionTest extends TestCase
      * @group #219
      * @expectedException PHPUnit_Framework_AssertionFailedError
      */
-    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError()
+    public function testDidNotMatchExceptionIsConvertedIntoAssertionFailedError(
+    )
     {
         $assertion = $this->niceMock('Concise\Assertion')
             ->disableConstructor()
@@ -167,10 +155,12 @@ class AssertionTest extends TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Method Concise\Module\AbstractModule::match() does not exist.
+     * @expectedExceptionMessage Method Concise\Module\AbstractModule::match()
+     *     does not exist.
      * @group #219
      */
-    public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError()
+    public function testAnyOtherTypeOfExceptionIsNotConvertedToAssertionFailedError(
+    )
     {
         $matcher = $this->mock('\Concise\Module\AbstractModule')
             ->stub('match')
@@ -198,9 +188,10 @@ class AssertionTest extends TestCase
 
             $assertion->performMatch('? is between ? and ?', array(10, 0, 5));
         } catch (PHPUnit_Framework_AssertionFailedError $e) {
-            $this->assert($e->getMessage(), contains_string, 'is between');
+            $this->aassert($e->getMessage())->containsString('is between');
             return;
         }
-        $this->assert(false);
+
+        $this->aassert(false);
     }
 }

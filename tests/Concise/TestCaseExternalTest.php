@@ -46,8 +46,10 @@ class TestCaseExternalTest extends TestCase
 
     public function testAnExternalRunnerWillThrowAnExceptionOnFailure()
     {
-        $this->assert(
+        /*$this->assert(
             function () {
+                $suite = new MyTinyTestSuite();*/
+        $this->aassert(function () {
                 $suite = new MyTinyTestSuite();
                 $suite->checkSomethingElse();
             },

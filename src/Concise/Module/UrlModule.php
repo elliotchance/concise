@@ -17,7 +17,9 @@ class UrlModule extends AbstractModule
      */
     public function urlIsValid()
     {
-        return filter_var($this->data[0], FILTER_VALIDATE_URL) !== false;
+        $this->failIf(
+            filter_var($this->data[0], FILTER_VALIDATE_URL) === false
+        );
     }
 
     /**
@@ -28,7 +30,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasScheme()
     {
-        return $this->urlHasPart(PHP_URL_SCHEME);
+        $this->failIf(!$this->urlHasPart(PHP_URL_SCHEME));
     }
 
     /**
@@ -39,7 +41,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasHost()
     {
-        return $this->urlHasPart(PHP_URL_HOST);
+        $this->failIf(!$this->urlHasPart(PHP_URL_HOST));
     }
 
     /**
@@ -50,7 +52,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasPort()
     {
-        return $this->urlHasPart(PHP_URL_PORT);
+        $this->failIf(!$this->urlHasPart(PHP_URL_PORT));
     }
 
     /**
@@ -61,7 +63,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasUser()
     {
-        return $this->urlHasPart(PHP_URL_USER);
+        $this->failIf(!$this->urlHasPart(PHP_URL_USER));
     }
 
     /**
@@ -72,7 +74,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasPass()
     {
-        return $this->urlHasPart(PHP_URL_PASS);
+        $this->failIf(!$this->urlHasPart(PHP_URL_PASS));
     }
 
     /**
@@ -83,7 +85,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasPath()
     {
-        return $this->urlHasPart(PHP_URL_PATH);
+        $this->failIf(!$this->urlHasPart(PHP_URL_PATH));
     }
 
     /**
@@ -94,7 +96,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasQuery()
     {
-        return $this->urlHasPart(PHP_URL_QUERY);
+        $this->failIf(!$this->urlHasPart(PHP_URL_QUERY));
     }
 
     /**
@@ -105,7 +107,7 @@ class UrlModule extends AbstractModule
      */
     public function urlHasFragment()
     {
-        return $this->urlHasPart(PHP_URL_FRAGMENT);
+        $this->failIf(!$this->urlHasPart(PHP_URL_FRAGMENT));
     }
 
     /**

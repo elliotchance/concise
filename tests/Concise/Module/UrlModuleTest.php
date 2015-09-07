@@ -5,7 +5,7 @@ namespace Concise\Module;
 /**
  * @group matcher
  */
-class UrlHModuleTest extends AbstractModuleTestCase
+class UrlModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
     {
@@ -18,78 +18,78 @@ class UrlHModuleTest extends AbstractModuleTestCase
         return array(
             'scheme 1' => array(
                 'http://google.com',
-                'has scheme',
+                'hasScheme',
                 'http',
                 true
             ),
             'scheme 2' => array(
                 'http://google.com',
-                'has scheme',
+                'hasScheme',
                 'https',
                 false
             ),
             'scheme 3' => array('google.com', 'has scheme', '', true),
             'host 1' => array(
                 'http://google.com',
-                'has host',
+                'hasHost',
                 'google.com',
                 true
             ),
             'host 2' => array(
                 'http://google.com',
-                'has host',
+                'hasHost',
                 'foo.com',
                 false
             ),
-            'host 3' => array('http://?abc', 'has host', '', true),
-            'port 1' => array('http://foo:123', 'has port', 123, true),
-            'port 2' => array('http://foo:123', 'has port', 456, false),
-            'port 3' => array('http://foo:123', 'has port', 0, false),
-            'user 1' => array('http://foo@bar', 'has user', 'foo', true),
-            'user 2' => array('http://foo@bar', 'has user', 'bar', false),
-            'user 3' => array('http://bar.com', 'has user', '', true),
+            'host 3' => array('http://?abc', 'hasHost', '', true),
+            'port 1' => array('http://foo:123', 'hasPort', 123, true),
+            'port 2' => array('http://foo:123', 'hasPort', 456, false),
+            'port 3' => array('http://foo:123', 'hasPort', 0, false),
+            'user 1' => array('http://foo@bar', 'hasUser', 'foo', true),
+            'user 2' => array('http://foo@bar', 'hasUser', 'bar', false),
+            'user 3' => array('http://bar.com', 'hasUser', '', true),
             'pass 1' => array(
                 'http://foo:baz@bar',
-                'has password',
+                'hasPassword',
                 'baz',
                 true
             ),
             'pass 2' => array(
                 'http://foo:bar@bar',
-                'has password',
+                'hasPassword',
                 'baz',
                 false
             ),
-            'pass 3' => array('http://bar.com', 'has password', '', true),
-            'path 1' => array('http://foo.com/abc', 'has path', '/abc', true),
-            'path 2' => array('http://foo.com/abc', 'has path', '/def', false),
-            'path 3' => array('http://foo.com', 'has path', '', true),
+            'pass 3' => array('http://bar.com', 'hasPassword', '', true),
+            'path 1' => array('http://foo.com/abc', 'hasPath', '/abc', true),
+            'path 2' => array('http://foo.com/abc', 'hasPath', '/def', false),
+            'path 3' => array('http://foo.com', 'hasPath', '', true),
             'query 1' => array(
                 'http://foo.com/abc?foo',
-                'has query',
+                'hasQuery',
                 'foo',
                 true
             ),
             'query 2' => array(
                 'http://foo.com/abc?foo',
-                'has query',
+                'hasQuery',
                 'bar',
                 false
             ),
-            'query 3' => array('http://foo.com', 'has query', '', true),
+            'query 3' => array('http://foo.com', 'hasQuery', '', true),
             'fragment 1' => array(
                 'http://foo.com/abc#foo',
-                'has fragment',
+                'hasFragment',
                 'foo',
                 true
             ),
             'fragment 2' => array(
                 'http://foo.com/abc#foo',
-                'has fragment',
+                'hasFragment',
                 'bar',
                 false
             ),
-            'fragment 3' => array('http://foo.com', 'has fragment', '', true),
+            'fragment 3' => array('http://foo.com', 'hasFragment', '', true),
         );
     }
 
@@ -98,20 +98,22 @@ class UrlHModuleTest extends AbstractModuleTestCase
      */
     public function testUrl($url, $test, $value, $passes)
     {
-        if ($passes) {
-            $this->assert(url, $url, $test, $value);
-        } else {
-            $this->assertFailure(url, $url, $test, $value);
+        if (!$passes) {
+            $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
+        $this->aassertUrl($url)->$test($value);
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testInvalidURL()
     {
-        $this->assertFailure(url, 'foo', is_valid);
+        $this->aassertUrl('foo')->isValid;
     }
 
     public function testValidURL()
     {
-        $this->assert(url, 'http://www.google.com', is_valid);
+        $this->aassertUrl('http://www.google.com')->isValid;
     }
 }

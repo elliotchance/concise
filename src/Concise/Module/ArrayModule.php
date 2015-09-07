@@ -15,31 +15,28 @@ class ArrayModule extends AbstractModule
      * Assert an array does not have key and value item.
      *
      * @syntax ?:array does not have item ?:array
-     * @return bool
      */
     public function doesNotHaveItem()
     {
-        return !$this->hasItem();
+        $this->failIf($this->itemExists($this->data));
     }
 
     /**
      * Assert an array does not have a key.
      *
      * @syntax ?:array does not have key ?:int,string
-     * @return bool
      */
     public function doesNotHaveKey()
     {
-        return !array_key_exists($this->data[1], $this->data[0]);
+        $this->failIf($this->keyExists($this->data[1], $this->data[0]));
     }
 
     /**
      * @syntax ?:array does not have keys ?:array
-     * @return bool
      */
     public function doesNotHaveKeys()
     {
-        return !$this->hasKeys();
+        $this->failIf($this->keysExist($this->data[1], $this->data[0]));
     }
 
     /**
@@ -47,22 +44,20 @@ class ArrayModule extends AbstractModule
      *
      * @syntax ?:array does not contain ?
      * @syntax ?:array does not have value ?
-     * @return bool
      */
     public function doesNotHaveValue()
     {
-        return !$this->hasValue();
+        $this->failIf($this->valueExists($this->data[1], $this->data[0]));
     }
 
     /**
      * Assert an array has key and value item.
      *
      * @syntax ?:array has item ?:array
-     * @return bool
      */
     public function hasItem()
     {
-        return $this->itemExists($this->data);
+        $this->failIf(!$this->itemExists($this->data));
     }
 
     /**
@@ -81,7 +76,7 @@ class ArrayModule extends AbstractModule
                 array($this->data[0], array($key => $value))
             )
             ) {
-                return false;
+                $this->fail();
             }
         }
 
@@ -94,12 +89,11 @@ class ArrayModule extends AbstractModule
      * @syntax ?:array has key ?:int,string
      * @throws DidNotMatchException
      * @return mixed
-     * @nested
      */
     public function hasKey()
     {
         if (!array_key_exists($this->data[1], $this->data[0])) {
-            throw new DidNotMatchException();
+            $this->fail();
         }
 
         return $this->data[0][$this->data[1]];
@@ -113,14 +107,7 @@ class ArrayModule extends AbstractModule
      */
     public function hasKeys()
     {
-        $keys = array_keys($this->data[0]);
-        foreach ($this->data[1] as $key) {
-            if (!in_array($key, $keys)) {
-                return false;
-            }
-        }
-
-        return true;
+        $this->failIf(!$this->keysExist($this->data[1], $this->data[0]));
     }
 
     /**
@@ -132,7 +119,7 @@ class ArrayModule extends AbstractModule
      */
     public function hasValue()
     {
-        return in_array($this->data[1], $this->data[0]);
+        $this->failIf(!$this->valueExists($this->data[1], $this->data[0]));
     }
 
     /**
@@ -146,11 +133,9 @@ class ArrayModule extends AbstractModule
         $keys = array_values($this->data[0]);
         foreach ($this->data[1] as $key) {
             if (!in_array($key, $keys)) {
-                return false;
+                $this->fail();
             }
         }
-
-        return true;
     }
 
     /**
@@ -162,7 +147,7 @@ class ArrayModule extends AbstractModule
      */
     public function isAnEmptyArray()
     {
-        return count($this->data[0]) === 0;
+        $this->failIf(!$this->arrayIsEmpty($this->data[0]));
     }
 
     /**
@@ -174,7 +159,7 @@ class ArrayModule extends AbstractModule
      */
     public function isNotAnEmptyArray()
     {
-        return !$this->isAnEmptyArray();
+        $this->failIf($this->arrayIsEmpty($this->data[0]));
     }
 
     /**
@@ -185,7 +170,7 @@ class ArrayModule extends AbstractModule
      */
     public function isNotUnique()
     {
-        return !$this->isUnique();
+        $this->failIf($this->arrayIsUnique($this->data[0]));
     }
 
     /**
@@ -196,7 +181,7 @@ class ArrayModule extends AbstractModule
      */
     public function isUnique()
     {
-        return count($this->data[0]) === count(array_unique($this->data[0]));
+        $this->failIf(!$this->arrayIsUnique($this->data[0]));
     }
 
     /**
@@ -207,9 +192,7 @@ class ArrayModule extends AbstractModule
      */
     public function isAnAssociativeArray()
     {
-        $arr = $this->data[0];
-
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        $this->failIf(!$this->arrayIsAssociative($this->data[0]));
     }
 
     /**
@@ -220,7 +203,7 @@ class ArrayModule extends AbstractModule
      */
     public function isNotAnAssociativeArray()
     {
-        return !$this->isAnAssociativeArray();
+        $this->failIf($this->arrayIsAssociative($this->data[0]));
     }
 
     /**
@@ -236,5 +219,55 @@ class ArrayModule extends AbstractModule
         }
 
         return false;
+    }
+
+    protected function keysExist()
+    {
+        $keys = array_keys($this->data[0]);
+        foreach ($this->data[1] as $key) {
+            if (!in_array($key, $keys)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function keyExists()
+    {
+        return array_key_exists($this->data[1], $this->data[0]);
+    }
+
+    protected function valueExists($value, array $array)
+    {
+        return in_array($value, $array);
+    }
+
+    /**
+     * @param $arr
+     * @return bool
+     */
+    protected function arrayIsAssociative(array $arr)
+    {
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function arrayIsEmpty(array $a)
+    {
+        return count($a) === 0;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function arrayIsUnique(array $a)
+    {
+        return $this->arrayIsEmpty($a) || count($a) === count(array_unique($a));
     }
 }
