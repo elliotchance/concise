@@ -13,7 +13,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testCanStubMethodWithAssociativeArray(MockBuilder $builder)
     {
         $mock = $builder->stub(array('myMethod' => 123))->get();
-        $this->assert($mock->myMethod(), equals, 123);
+        $this->aassert($mock->myMethod())->equals(123);
     }
 
     /**
@@ -25,7 +25,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
         $mock =
             $builder->stub(array('myMethod' => 123, 'mySecondMethod' => 'bar'))
                 ->get();
-        $this->assert($mock->mySecondMethod(), equals, 'bar');
+        $this->aassert($mock->mySecondMethod())->equals('bar');
     }
 
     /**
@@ -46,7 +46,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testCallingMethodOnNiceMockWithStub(MockBuilder $builder)
     {
         $mock = $builder->stub(array('myMethod' => 123))->get();
-        $this->assert($mock->myMethod(), equals, 123);
+        $this->aassert($mock->myMethod())->equals(123);
     }
 
     /**
@@ -56,7 +56,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->stub('myMethod')->andReturn(123)->get();
-        $this->assert($mock->myMethod(), equals, 123);
+        $this->aassert($mock->myMethod())->equals(123);
     }
 
     /**
@@ -65,7 +65,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testStubWithNoActionWillReturnNull(MockBuilder $builder)
     {
         $mock = $builder->stub('myMethod')->get();
-        $this->assert($mock->myMethod(), is_null);
+        $this->aassert($mock->myMethod())->isNull;
     }
 
     /**
@@ -74,7 +74,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testStubCanReturnNull(MockBuilder $builder)
     {
         $mock = $builder->stub('myMethod')->andReturn(null)->get();
-        $this->assert($mock->myMethod(), is_null);
+        $this->aassert($mock->myMethod())->isNull;
     }
 
     /**
@@ -115,11 +115,8 @@ class BuilderStubTest extends AbstractBuilderTestCase
         $builder->stub(array('myMethod' => 123))->get();
 
         $mock = $this->getLastElement($this->getMockManager()->getMocks());
-        $this->assert(
-            count($mock['instance']->getCallsForMethod('myMethod')),
-            exactly_equals,
-            0
-        );
+        $this->aassert(count($mock['instance']->getCallsForMethod('myMethod')))
+            ->exactlyEquals(0);
     }
 
     /**
@@ -133,11 +130,8 @@ class BuilderStubTest extends AbstractBuilderTestCase
         $mock->myMethod();
 
         $mock = $this->getLastElement($this->getMockManager()->getMocks());
-        $this->assert(
-            count($mock['instance']->getCallsForMethod('myMethod')),
-            exactly_equals,
-            1
-        );
+        $this->aassert(count($mock['instance']->getCallsForMethod('myMethod')))
+            ->exactlyEquals(1);
     }
 
     /**
@@ -152,11 +146,8 @@ class BuilderStubTest extends AbstractBuilderTestCase
         $mock->myMethod();
 
         $mock = $this->getLastElement($this->getMockManager()->getMocks());
-        $this->assert(
-            count($mock['instance']->getCallsForMethod('myMethod')),
-            exactly_equals,
-            2
-        );
+        $this->aassert(count($mock['instance']->getCallsForMethod('myMethod')))
+            ->exactlyEquals(2);
     }
 
     /**
@@ -166,7 +157,7 @@ class BuilderStubTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->stub('myMethod', 'mySecondMethod')->get();
-        $this->assert($mock->mySecondMethod(), is_null);
+        $this->aassert($mock->mySecondMethod())->isNull;
     }
 
     /**
@@ -175,9 +166,10 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testFirstMethodOfMultipleStubsReceivesAction(
         MockBuilder $builder
     ) {
-        $mock =
-            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
+        $mock = $builder->stub('myMethod', 'mySecondMethod')
+            ->andReturn('foo')
+            ->get();
+        $this->aassert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -186,8 +178,9 @@ class BuilderStubTest extends AbstractBuilderTestCase
     public function testSecondMethodOfMultipleStubsReceivesAction(
         MockBuilder $builder
     ) {
-        $mock =
-            $builder->stub('myMethod', 'mySecondMethod')->andReturn('foo')->get();
-        $this->assert($mock->mySecondMethod(), equals, 'foo');
+        $mock = $builder->stub('myMethod', 'mySecondMethod')
+            ->andReturn('foo')
+            ->get();
+        $this->aassert($mock->mySecondMethod())->equals('foo');
     }
 }

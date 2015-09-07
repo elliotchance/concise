@@ -1,0 +1,18 @@
+This file contains PHP-like code to be parsed with MigrateV2.php See the
+MigrateAfter.txt for the expected result.
+
+    $this->assert(21, equals, 45);
+
+    $this->assert(21, foo, 45, bar, "baz");
+
+        $this->assert(21, equals, 45);
+
+        $this->assert(
+            21,
+            equals,
+            45
+        );
+
+    $this->assert(21, is_null);
+
+    $this->assert(url, 21, is_valid);

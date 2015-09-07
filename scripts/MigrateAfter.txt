@@ -1,0 +1,4 @@
+This file contains PHP-like code to be parsed with MigrateV2.php See the
+MigrateAfter.txt for the expected result.
+
+$this->aassert(21)->equals(45);
