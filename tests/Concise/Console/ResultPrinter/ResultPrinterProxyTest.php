@@ -26,38 +26,28 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testProxyExtendsPHPUnit()
     {
-        $this->assert(
-            $this->proxy,
-            instance_of,
-            'PHPUnit_TextUI_ResultPrinter'
-        );
+        $this->aassert($this->proxy)->instanceOf('PHPUnit_TextUI_ResultPrinter');
     }
 
     public function testGetResultPrinterReturnsAResultPrinterInterface()
     {
-        $this->assert(
-            $this->proxy->getResultPrinter(),
-            instance_of,
-            'Concise\Console\TestRunner\TestResultDelegateInterface'
-        );
+        $this->aassert($this->proxy->getResultPrinter())
+            ->instanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
     }
 
     public function testResultPrinterIsSetViaConstructor()
     {
         $printer = new DefaultResultPrinter();
         $proxy = new ResultPrinterProxy($printer);
-        $this->assert($proxy->getResultPrinter(), is_the_same_as, $printer);
+        $this->aassert($proxy->getResultPrinter())->isTheSameAs($printer);
     }
 
     public function testEndTestWillIncrementTestCount()
     {
         $test = $this->mock('PHPUnit_Framework_Test')->get();
         $this->proxy->endTest($test, 0.1);
-        $this->assert(
-            $this->proxy->getResultPrinter()->getTestCount(),
-            equals,
-            1
-        );
+        $this->aassert($this->proxy->getResultPrinter()->getTestCount())
+            ->equals(1);
     }
 
     public function testPrintHeaderReturnsNull()
@@ -66,7 +56,7 @@ class ResultPrinterProxyTest extends TestCase
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
         )->expose('printHeader')->get();
-        $this->assert($proxy->printHeader(), is_null);
+        $this->aassert($proxy->printHeader())->isNull;
     }
 
     public function testPrintDefectsReturnsNull()
@@ -75,7 +65,7 @@ class ResultPrinterProxyTest extends TestCase
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
         )->expose('printDefects')->get();
-        $this->assert($proxy->printDefects(array(), null), is_null);
+        $this->aassert($proxy->printDefects(array(), null))->isNull;
     }
 
     public function testPrintDefectReturnsNull()
@@ -87,7 +77,7 @@ class ResultPrinterProxyTest extends TestCase
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
         )->expose('printDefect')->get();
-        $this->assert($proxy->printDefect($failure, 0), is_null);
+        $this->aassert($proxy->printDefect($failure, 0))->isNull;
     }
 
     public function testPrintFooterReturnsNull()
@@ -97,12 +87,12 @@ class ResultPrinterProxyTest extends TestCase
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
         )->expose('printFooter')->get();
-        $this->assert($proxy->printFooter($result), is_null);
+        $this->aassert($proxy->printFooter($result))->isNull;
     }
 
     public function testWriteWillNotPrintAnything()
     {
-        $this->assert($this->proxy->write('nothing'), is_null);
+        $this->aassert($this->proxy->write('nothing'))->isNull;
     }
 
     public function testPrintResultReturnsNull()
@@ -112,6 +102,6 @@ class ResultPrinterProxyTest extends TestCase
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
         )->expose('printResult')->get();
-        $this->assert($proxy->printResult($result), is_null);
+        $this->aassert($proxy->printResult($result))->isNull;
     }
 }
