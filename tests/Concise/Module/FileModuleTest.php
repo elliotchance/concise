@@ -36,7 +36,8 @@ class FileModuleTest extends AbstractModuleTestCase
 
     public function testWillSucceedIfStringDoesMatchFile()
     {
-        $this->assert('baz', equals_file, $this->createTempFile());
+        /*$this->assert('baz', equals_file, $this->createTempFile());*/
+        $this->aassert('baz')->equalsFile($this->createTempFile());
     }
 
     /**
@@ -51,7 +52,8 @@ class FileModuleTest extends AbstractModuleTestCase
 
     public function testWillFailIfStringDoesNotMatchFile1()
     {
-        $this->assert('bar', does_not_equal_file, $this->createTempFile());
+        /*$this->assert('bar', does_not_equal_file, $this->createTempFile());*/
+        $this->aassert('bar')->doesNotEqualFile($this->createTempFile());
     }
 
     public function testWillSucceedIfStringDoesMatchFile1()

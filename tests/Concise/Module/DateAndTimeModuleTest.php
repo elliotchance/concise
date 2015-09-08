@@ -2,7 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
 use DateTime;
 
 /**
@@ -72,35 +71,10 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
      */
     public function testDateIsAfter($left, $right, $shouldPass)
     {
-        if ($shouldPass) {
-            $this->assert(date, $left, is_after, $right);
-        } else {
-            $this->assertFailure(date, $left, is_after, $right);
+        if (!$shouldPass) {
+            $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess()
-    {
-        $this->assert(
-            $this->assert(date, '2014-03-02', is_after, '2014-02-02'),
-            exactly_equals,
-            '2014-03-02'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure()
-    {
-        $this->assertFailure(
-            $this->assert(date, '2014-03-02', is_after, '2014-02-02'),
-            exactly_equals,
-            '2014-03-01'
-        );
+        $this->aassertDate($left)->isAfter($right);
     }
 
     public function dataProvider1()
@@ -159,34 +133,9 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
      */
     public function testDateIsBefore($left, $right, $shouldPass)
     {
-        if ($shouldPass) {
-            $this->assert(date, $left, is_before, $right);
-        } else {
-            $this->assertFailure(date, $left, is_before, $right);
+        if (!$shouldPass) {
+            $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess1()
-    {
-        $this->assert(
-            $this->assert(date, '2014-01-02', is_before, '2014-02-02'),
-            exactly_equals,
-            '2014-01-02'
-        );
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionFailure1()
-    {
-        $this->assertFailure(
-            $this->assert(date, '2014-01-02', is_before, '2014-02-02'),
-            exactly_equals,
-            '2014-01-01'
-        );
+        $this->aassertDate($left)->isBefore($right);
     }
 }

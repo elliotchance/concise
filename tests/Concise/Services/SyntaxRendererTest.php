@@ -24,11 +24,8 @@ class SyntaxRendererTest extends TestCase
         $c = new Color();
         $expected = (string)$c('1')->red . ' is ' . (string)$c('"2"')->yellow .
             ' bla ' . (string)$c(3.1)->magenta;
-        $this->assert(
-            $expected,
-            equals,
-            $this->renderer->render('? is ? bla ?', $data)
-        );
+        $this->aassert($expected)
+            ->equals($this->renderer->render('? is ? bla ?', $data));
     }
 
     /**
@@ -45,10 +42,7 @@ class SyntaxRendererTest extends TestCase
      */
     public function testResourceRendering()
     {
-        $this->assert(
-            $this->renderer->render('?', array(fopen('.', 'r'))),
-            matches_regex,
-            '/Resource id #\\d+/'
-        );
+        $this->aassert($this->renderer->render('?', array(fopen('.', 'r'))))
+            ->matchesRegex('/Resource id #\\d+/');
     }
 }

@@ -90,17 +90,17 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayValueDoesNotExist()
     {
-        $this->assert('["abc"] does not contain "def"');
+        $this->aassert(array("abc"))->doesNotContain("def");
     }
 
     public function testZeroItemsWillAlwaysMatch()
     {
-        $this->assert(array("foo" => 123), has_items, array());
+        $this->aassert(array("foo" => 123))->hasItems(array());
     }
 
     public function testSingleItemIsInSet()
     {
-        $this->assert(array("foo" => 123), has_items, array("foo" => 123));
+        $this->aassert(array("foo" => 123))->hasItems(array("foo" => 123));
     }
 
     /**
@@ -113,20 +113,14 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testAllItemsAreInSet()
     {
-        $this->assert(
-            array("foo" => 123, "bar" => "baz"),
-            has_items,
-            array("foo" => 123, "bar" => "baz")
-        );
+        $this->aassert(array("foo" => 123, "bar" => "baz"))
+            ->hasItems(array("foo" => 123, "bar" => "baz"));
     }
 
     public function testAllItemsAreInSubset()
     {
-        $this->assert(
-            array("foo" => 123, "a" => "b", "bar" => "baz"),
-            has_items,
-            array("foo" => 123, "bar" => "baz")
-        );
+        $this->aassert(array("foo" => 123, "a" => "b", "bar" => "baz"))
+            ->hasItems(array("foo" => 123, "bar" => "baz"));
     }
 
     /**
@@ -140,7 +134,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayValueExists1()
     {
-        $this->assert('[123] has value 123');
+        $this->aassert(array(123))->hasValue(123);
     }
 
     /**
@@ -153,7 +147,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testAlternativeSyntaxForItemExists1()
     {
-        $this->assert(array("foo" => 123), has_item, array("foo" => 123));
+        $this->aassert(array("foo" => 123))->hasItem(array("foo" => 123));
     }
 
     /**
@@ -179,17 +173,17 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayKeysCanBeInAnyOrder1()
     {
-        $this->assert(array("a" => 123, "b" => 456), has_keys, array("b", "a"));
+        $this->aassert(array("a" => 123, "b" => 456))->hasKeys(array("b", "a"));
     }
 
     public function testArrayKeysCanBeASubset1()
     {
-        $this->assert(array("a" => 123, "b" => 456), has_keys, array("b"));
+        $this->aassert(array("a" => 123, "b" => 456))->hasKeys(array("b"));
     }
 
     public function testArrayHasIntegerKey1()
     {
-        $this->assert('[123] has key 0');
+        $this->aassert(array(123))->hasKey(0);
     }
 
     /**
@@ -202,24 +196,12 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayHasStringKey1()
     {
-        $this->assert(array("abc" => 123), has_key, "abc");
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess()
-    {
-        $this->assert(
-            $this->assert(array("abc" => 123), has_key, "abc"),
-            exactly_equals,
-            123
-        );
+        $this->aassert(array("abc" => 123))->hasKey("abc");
     }
 
     public function testArrayHasOneValue()
     {
-        $this->assert('[123] has values [123]');
+        $this->aassert(array(123))->hasValues(array(123));
     }
 
     /**
@@ -232,39 +214,34 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayValuesCanBeInAnyOrder()
     {
-        $this->assert(
-            array("a" => 123, "b" => 456),
-            has_values,
-            array(123, 456)
-        );
+        $this->aassert(array("a" => 123, "b" => 456))
+            ->hasValues(array(123, 456));
     }
 
     public function testArrayValuesCanBeASubset()
     {
-        $this->assert(array("a" => 123, "b" => 456), has_values, array(456));
+        $this->aassert(array("a" => 123, "b" => 456))->hasValues(array(456));
     }
 
     public function testAnAssociativeArrayContainsAtLeastOneKeyThatsNotANumber()
     {
-        $this->assert(
+        $this->aassert(
             array(
                 "a" => 123,
                 0 => "foo",
-            ),
-            is_an_associative_array
-        );
+            )
+        )->isAnAssociativeArray;
     }
 
     public function testAnArrayIsAssociativeIfAllIndexesAreIntegersButNotZeroIndexed(
     )
     {
-        $this->assert(
+        $this->aassert(
             array(
                 5 => 123,
                 10 => "foo",
-            ),
-            is_an_associative_array
-        );
+            )
+        )->isAnAssociativeArray;
     }
 
     /**

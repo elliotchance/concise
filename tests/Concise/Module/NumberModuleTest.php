@@ -15,7 +15,7 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testNumberExistsBetweenTwoOtherNumbers()
     {
-        $this->assert(123, between, 100, 'and', 150);
+        $this->aassert(123)->between(100)->and(150);
     }
 
     /**
@@ -28,7 +28,7 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testNumberIsOnTheLowerBound()
     {
-        $this->assert(123, between, 123, 'and', 150);
+        $this->aassert(123)->between(123)->and(150);
     }
 
     /**
@@ -41,7 +41,7 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testNumberIsOnTheUpperBound()
     {
-        $this->assert(150, between, 123, 'and', 150);
+        $this->aassert(150)->between(123)->and(150);
     }
 
     /**
@@ -124,7 +124,8 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testGreaterThan()
     {
-        $this->assert(300, is_greater_than_or_equal_to, 200);
+        /*$this->assert(300, is_greater_than_or_equal_to, 200);*/
+        $this->aassert(300)->isGreaterThanOrEqualTo(200);
     }
 
     /**
@@ -145,12 +146,14 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testGreaterThan1()
     {
-        $this->assert(300, is_greater_than, 200);
+        /*$this->assert(300, is_greater_than, 200);*/
+        $this->aassert(300)->isGreaterThan(200);
     }
 
     public function testLessThan2()
     {
-        $this->assert(100, is_less_than, 200);
+        /*$this->assert(100, is_less_than, 200);*/
+        $this->aassert(100)->isLessThan(200);
     }
 
     /**
@@ -205,12 +208,14 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testLessThan3()
     {
-        $this->assert(100, is_less_than_or_equal_to, 200);
+        /*$this->assert(100, is_less_than_or_equal_to, 200);*/
+        $this->aassert(100)->isLessThanOrEqualTo(200);
     }
 
     public function testLessThanOrEqual1()
     {
-        $this->assert(200, is_less_than_or_equal_to, 200);
+        /*$this->assert(200, is_less_than_or_equal_to, 200);*/
+        $this->aassert(200)->isLessThanOrEqualTo(200);
     }
 
     /**

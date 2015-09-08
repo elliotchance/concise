@@ -3,9 +3,11 @@
 namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
+use Concise\Services\ValueRenderer;
 use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
 use Concise\Validation\DataTypeChecker;
+use Concise\Validation\DataTypeMismatchException;
 use Exception;
 
 class AssertionBuilder
@@ -41,7 +43,9 @@ class AssertionBuilder
         }
 
         try {
-            $syntax = MatcherParser::getInstance()->getSyntaxCache()->getSyntax($this->getSyntax());
+            $syntax = MatcherParser::getInstance()->getSyntaxCache()->getSyntax(
+                $this->getSyntax()
+            );
         } catch (Exception $e) {
             $syntax = null;
         }
@@ -53,7 +57,20 @@ class AssertionBuilder
             $types = $syntax->getArgumentTypes();
             $checker = new DataTypeChecker();
             for ($i = 0; $i < count($types); ++$i) {
-                $data[$i] = $checker->check($types[$i], $data[$i]);
+                try {
+                    $data[$i] = $checker->check($types[$i], $data[$i]);
+                } catch (DataTypeMismatchException $e) {
+                    $renderer = new ValueRenderer();
+                    throw new Exception(
+                        "Argument " .
+                        ($i + 1) .
+                        ' (' .
+                        $renderer->render($data[$i]) .
+                        ') must be ' .
+                        implode(' or ', $types[$i]) .
+                        '.'
+                    );
+                }
             }
             $instance->setData($data);
             $instance->syntax = $syntax;

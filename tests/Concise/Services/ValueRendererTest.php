@@ -17,95 +17,84 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testIntegerValueRendersWithoutModification()
     {
-        $this->assert($this->renderer->render(123), equals, 123);
+        $this->aassert($this->renderer->render(123))->equals(123);
     }
 
     public function testFloatingPointValueRendersWithoutModification()
     {
-        $this->assert($this->renderer->render(1.23), equals, '1.23');
+        $this->aassert($this->renderer->render(1.23))->equals('1.23');
     }
 
     public function testStringValueRendersWithDoubleQuotes()
     {
-        $this->assert($this->renderer->render("abc"), equals, '"abc"');
+        $this->aassert($this->renderer->render("abc"))->equals('"abc"');
     }
 
     public function testArrayValueRendersAsJson()
     {
-        $this->assert(
-            $this->renderer->render(array(123, "abc")),
-            equals,
-            "[\n  123,\n  \"abc\"\n]"
-        );
+        $this->aassert($this->renderer->render(array(123, "abc")))
+            ->equals("[\n  123,\n  \"abc\"\n]");
     }
 
     public function testObjectValueRendersAsJson()
     {
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert(
-            $this->renderer->render($obj),
-            equals,
-            "stdClass:{\n  \"a\":123\n}"
-        );
+        $this->aassert($this->renderer->render($obj))
+            ->equals("stdClass:{\n  \"a\":123\n}");
     }
 
     public function testTrueValueRendersAsTrue()
     {
-        $this->assert($this->renderer->render(true), equals, 'true');
+        $this->aassert($this->renderer->render(true))->equals('true');
     }
 
     public function testFalseValueRendersAsFalse()
     {
-        $this->assert($this->renderer->render(false), equals, 'false');
+        $this->aassert($this->renderer->render(false))->equals('false');
     }
 
     public function testNullRendersAsNull()
     {
-        $this->assert($this->renderer->render(null), equals, 'null');
+        $this->aassert($this->renderer->render(null))->equals('null');
     }
 
     public function testResourceValueRendersAsResource()
     {
         $renderer = new ValueRenderer();
-        $this->str = $renderer->render(fopen('.', 'r'));
-        $this->assert('str starts with "Resource id #"');
+        $this->aassert($renderer->render(fopen('.', 'r')))
+            ->startsWith("Resource id #");
     }
 
     public function testFunctionRendersAsString()
     {
-        $this->assert(
+        $this->aassert(
             $this->renderer->render(
                 function () {
                 }
-            ),
-            equals,
-            'function'
-        );
+            )
+        )->equals('function');
     }
 
     public function testRenderAllMethodWithZeroElements()
     {
-        $this->assert($this->renderer->renderAll(array()), equals, '');
+        $this->aassert($this->renderer->renderAll(array()))->isBlank;
     }
 
     public function testRenderAllMethodWithOneElement()
     {
-        $this->assert($this->renderer->renderAll(array(1)), equals, '1');
+        $this->aassert($this->renderer->renderAll(array(1)))->equals('1');
     }
 
     public function testRenderAllMethodWithTwoElements()
     {
-        $this->assert($this->renderer->renderAll(array(1, 2)), equals, '1, 2');
+        $this->aassert($this->renderer->renderAll(array(1, 2)))->equals('1, 2');
     }
 
     public function testRenderAllWithStrings()
     {
-        $this->assert(
-            $this->renderer->renderAll(array('foo')),
-            equals,
-            '"foo"'
-        );
+        $this->aassert($this->renderer->renderAll(array('foo')))
+            ->equals('"foo"');
     }
 
     protected function getThemeForValue(array $colors)
@@ -120,11 +109,8 @@ class ValueRendererTest extends \Concise\TestCase
         $theme = $this->getThemeForValue(array('value.integer' => 'magenta'));
         $this->renderer->setTheme($theme);
         $c = new Color();
-        $this->assert(
-            $this->renderer->render(123),
-            equals,
-            (string)$c(123)->magenta
-        );
+        $this->aassert($this->renderer->render(123))
+            ->equals((string)$c(123)->magenta);
     }
 
     public function testFloatingPointsWillBeColoredWhenAThemeIsSpecified()
@@ -132,11 +118,8 @@ class ValueRendererTest extends \Concise\TestCase
         $theme = $this->getThemeForValue(array('value.float' => 'red'));
         $this->renderer->setTheme($theme);
         $c = new Color();
-        $this->assert(
-            $this->renderer->render(12.3),
-            equals,
-            (string)$c(12.3)->red
-        );
+        $this->aassert($this->renderer->render(12.3))
+            ->equals((string)$c(12.3)->red);
     }
 
     public function testStringsWillBeColoredWhenAThemeIsSpecified()
@@ -144,11 +127,8 @@ class ValueRendererTest extends \Concise\TestCase
         $theme = $this->getThemeForValue(array('value.string' => 'green'));
         $this->renderer->setTheme($theme);
         $c = new Color();
-        $this->assert(
-            $this->renderer->render("12.3"),
-            equals,
-            (string)$c("\"12.3\"")->green
-        );
+        $this->aassert($this->renderer->render("12.3"))
+            ->equals((string)$c("\"12.3\"")->green);
     }
 
     public function testClosureWillBeColoredWhenAThemeIsSpecified()
@@ -156,14 +136,12 @@ class ValueRendererTest extends \Concise\TestCase
         $theme = $this->getThemeForValue(array('value.closure' => 'blue'));
         $this->renderer->setTheme($theme);
         $c = new Color();
-        $this->assert(
+        $this->aassert(
             $this->renderer->render(
                 function () {
                 }
-            ),
-            equals,
-            (string)$c("function")->blue
-        );
+            )
+        )->equals((string)$c("function")->blue);
     }
 
     public function testObjectKeysWillBeColoredWhenAThemeIsSpecified()
@@ -176,11 +154,8 @@ class ValueRendererTest extends \Concise\TestCase
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert(
-            $this->renderer->render($obj),
-            contains_string,
-            (string)$c('"a"')->green
-        );
+        $this->aassert($this->renderer->render($obj))
+            ->containsString((string)$c('"a"')->green);
     }
 
     public function testObjectValuesWillBeColoredWhenAThemeIsSpecified()
@@ -193,11 +168,8 @@ class ValueRendererTest extends \Concise\TestCase
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert(
-            $this->renderer->render($obj),
-            contains_string,
-            (string)$c(123)->green
-        );
+        $this->aassert($this->renderer->render($obj))
+            ->containsString((string)$c(123)->green);
     }
 
     public function testArrayKeysWillBeColoredWhenAThemeIsSpecified()
@@ -206,11 +178,8 @@ class ValueRendererTest extends \Concise\TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert(
-            $this->renderer->render(array('bar')),
-            contains_string,
-            (string)$c('"bar"')->green
-        );
+        $this->aassert($this->renderer->render(array('bar')))
+            ->containsString((string)$c('"bar"')->green);
     }
 
     public function testMultipleObjectValuesRendersAsJson()
@@ -218,38 +187,27 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = new \stdClass();
         $obj->a = 123;
         $obj->b = 456;
-        $this->assert(
-            $this->renderer->render($obj),
-            equals,
+        $this->aassert($this->renderer->render($obj))->equals(
             "stdClass:{\n  \"a\":123,\n  \"b\":456\n}"
         );
     }
 
     public function testMultipleArrayValuesRendersAsJson()
     {
-        $this->assert(
-            $this->renderer->render(array(1, 2)),
-            equals,
-            "[\n  1,\n  2\n]"
-        );
+        $this->aassert($this->renderer->render(array(1, 2)))
+            ->equals("[\n  1,\n  2\n]");
     }
 
     public function testAssociativeArrayRendersAsJson()
     {
-        $this->assert(
-            $this->renderer->render(array('foo' => 'bar')),
-            equals,
-            "{\n  \"foo\":\"bar\"\n}"
-        );
+        $this->aassert($this->renderer->render(array('foo' => 'bar')))
+            ->equals("{\n  \"foo\":\"bar\"\n}");
     }
 
     public function testNumericArrayKeysAlwaysRenderAsStrings()
     {
-        $this->assert(
-            $this->renderer->render(array(123 => 'bar')),
-            equals,
-            "{\n  \"123\":\"bar\"\n}"
-        );
+        $this->aassert($this->renderer->render(array(123 => 'bar')))
+            ->equals("{\n  \"123\":\"bar\"\n}");
     }
 
     public function testNestedObjectsHideTypeHint()
@@ -257,11 +215,8 @@ class ValueRendererTest extends \Concise\TestCase
         $obj = new \stdClass();
         $obj->a = new \stdClass();
         $obj->a->b = 456;
-        $this->assert(
-            $this->renderer->render($obj),
-            equals,
-            "stdClass:{\n  \"a\":{\n    \"b\":456\n  }\n}"
-        );
+        $this->aassert($this->renderer->render($obj))
+            ->equals("stdClass:{\n  \"a\":{\n    \"b\":456\n  }\n}");
     }
 
     public function testNullWillBeColoredWhenAThemeIsSpecified()
@@ -270,11 +225,8 @@ class ValueRendererTest extends \Concise\TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert(
-            $this->renderer->render(null),
-            contains_string,
-            (string)$c('null')->green
-        );
+        $this->aassert($this->renderer->render(null))
+            ->containsString((string)$c('null')->green);
     }
 
     public function testBooleanWillBeColoredWhenAThemeIsSpecified()
@@ -283,16 +235,13 @@ class ValueRendererTest extends \Concise\TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert(
-            $this->renderer->render(true),
-            contains_string,
-            (string)$c('true')->red
-        );
+        $this->aassert($this->renderer->render(true))
+            ->containsString((string)$c('true')->red);
     }
 
     public function testDefaultMaximumDepthIsTen()
     {
-        $this->assert($this->renderer->getMaximumDepth(), equals, 10);
+        $this->aassert($this->renderer->getMaximumDepth())->equals(10);
     }
 
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemory()
@@ -301,32 +250,24 @@ class ValueRendererTest extends \Concise\TestCase
             array('getMaximumDepth' => 2)
         )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
-        $this->assert(
-            $renderer->render($obj),
-            equals,
-            "stdClass:{\n  \"a\":{\n    \"a\":...\n  }\n}"
-        );
+        $this->aassert($renderer->render($obj))
+            ->equals("stdClass:{\n  \"a\":{\n    \"a\":...\n  }\n}");
     }
 
-    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays()
+    public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays(
+    )
     {
         $renderer = $this->niceMock('Concise\Services\ValueRenderer')->stub(
             array('getMaximumDepth' => 2)
         )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
-        $this->assert(
-            $renderer->render($obj),
-            equals,
-            "{\n  \"a\":{\n    \"a\":...\n  }\n}"
-        );
+        $this->aassert($renderer->render($obj))
+            ->equals("{\n  \"a\":{\n    \"a\":...\n  }\n}");
     }
 
     public function testRenderAnythingConstant()
     {
-        $this->assert(
-            $this->renderer->render(self::ANYTHING),
-            equals,
-            '<ANYTHING>'
-        );
+        $this->aassert($this->renderer->render(self::ANYTHING))
+            ->equals('<ANYTHING>');
     }
 }

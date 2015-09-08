@@ -37,11 +37,8 @@ class TimeFormatterTest extends TestCase
      */
     public function testFormattingLong($seconds, $expected)
     {
-        $this->assert(
-            $this->formatter->format($seconds, false),
-            equals,
-            $expected
-        );
+        $this->aassert($this->formatter->format($seconds, false))
+            ->equals($expected);
     }
 
     /**
@@ -50,10 +47,7 @@ class TimeFormatterTest extends TestCase
      */
     public function testFormattingShort($seconds, $_, $expected)
     {
-        $this->assert(
-            $this->formatter->format($seconds, true),
-            equals,
-            $expected
-        );
+        $this->aassert($this->formatter->format($seconds, true))
+            ->equals($expected);
     }
 }

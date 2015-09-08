@@ -11,7 +11,8 @@ class ReturnValueActionTest extends TestCase
         $myObject = new \stdClass();
         $value = new ReturnValueAction(array($myObject));
         $result = eval($value->getActionCode());
-        $this->assert($myObject, equals, $result);
+        /*$this->assert($myObject, equals, $result);*/
+        $this->aassert($myObject)->equals($result);
     }
 
     public function testObjectsInCacheAreClonedSoThatTheyWillNotChangeState()
@@ -23,6 +24,8 @@ class ReturnValueActionTest extends TestCase
         $result1->foo = "baz";
         $result2 = eval($value->getActionCode());
 
-        $this->assert($result2->foo, equals, "bar");
+        /*$this->assert($result2->foo, equals, "bar");*/
+
+        $this->aassert($result2->foo)->equals("bar");
     }
 }

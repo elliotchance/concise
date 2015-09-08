@@ -23,76 +23,100 @@ class BooleanModuleTest extends AbstractModuleTestCase
 
     public function testFalse()
     {
-        $this->assert(false, is_false);
+        $this->aassert(false)->isFalse;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testZeroIsNotFalse()
     {
-        $this->assertFailure('0 is false');
+        $this->aassert(0)->isFalse;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testEmptyStringIsNotFalse()
     {
-        $this->assertFailure('"" is false');
+        $this->aassert("")->isFalse;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFloatingZeroIsNotFalse()
     {
-        $this->assertFailure('0.0 is false');
+        $this->aassert(0.0)->isFalse;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFalseFailure()
     {
-        $this->assertFailure(true, is_false);
+        $this->aassert(true)->isFalse;
     }
 
     public function testFalseIsFalsy()
     {
-        $this->assert(false, is_falsy);
+        $this->aassert(false)->isFalsy;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testTrueIsNotFalsy()
     {
-        $this->assertFailure(true, is_falsy);
+        $this->aassert(true)->isFalse;
     }
 
     public function testZeroIsFalsy()
     {
-        $this->assert(0, is_falsy);
+        $this->aassert(0)->isFalsy;
     }
 
     public function testIsTrue()
     {
-        $this->assert(true, is_true);
+        $this->aassert(true)->isTrue;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testIsTrueFailure()
     {
-        $this->assertFailure('123 is true');
+        $this->aassert(123)->isTrue;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testOneIsNotTrue()
     {
-        $this->assertFailure('1 is true');
+        $this->aassert(1)->isTrue;
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testFalseIsNotTruthy()
     {
-        $this->assertFailure(false, is_truthy);
+        $this->aassert(false)->isTruthy;
     }
 
     public function testTrueIsTruthy()
     {
-        $this->assert(true, is_truthy);
+        $this->aassert(true)->isTruthy;
     }
 
     public function testOneIsTruthy()
     {
-        $this->assert(1, is_truthy);
+        $this->aassert(1)->isTruthy;
     }
 
     public function testTrue()
     {
-        $this->assert('true');
+        $this->aassertTrue();
     }
 }

@@ -10,6 +10,7 @@ class ArgumentChecker
      * @param mixed  $value
      * @param string $types comma-separated.
      * @param int    $argumentNumber
+     * @return mixed
      */
     public static function check($value, $types, $argumentNumber = 1)
     {

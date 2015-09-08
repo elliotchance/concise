@@ -40,19 +40,22 @@ class MockBuilderTest extends TestCase
     {
         $mock =
             $this->mock('\Concise\Mock\MockMagicCall')->stub('nothing')->get();
-        $this->assert($mock->nothing(), is_null);
+        /*$this->assert($mock->nothing(), is_null);*/
+        $this->aassert($mock->nothing())->isNull;
     }
 
     public function testMockClassDefaultsToStdClass()
     {
         $mock = $this->mock()->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        /*$this->assert($mock, instance_of, '\stdClass');*/
+        $this->aassert($mock)->instanceOf('\stdClass');
     }
 
     public function testNiceMockClassDefaultsToStdClass()
     {
         $mock = $this->niceMock()->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        /*$this->assert($mock, instance_of, '\stdClass');*/
+        $this->aassert($mock)->instanceOf('\stdClass');
     }
 
     /**

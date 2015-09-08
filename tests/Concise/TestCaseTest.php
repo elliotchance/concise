@@ -83,7 +83,7 @@ class TestCaseTest extends TestCase
     public function testIssetWorksWithAttributes()
     {
         $this->x = 123;
-        $this->aassert(isset($this->x));
+        $this->aassert(isset($this->x))->isTrue;
     }
 
     public function testDataIsResetBetweenTests()
@@ -106,12 +106,6 @@ class TestCaseTest extends TestCase
         return $testCase->getAssertionsForMethod('abc');
     }
 
-    public function testInlineAssertion()
-    {
-        $this->abc = 123;
-        $this->aassert('abc equals 123');
-    }
-
     public function testAssertionBuilder()
     {
         $this->aassert(123)->equals("123");
@@ -125,10 +119,5 @@ class TestCaseTest extends TestCase
     public function testConstantsForKeywordStringsAreInitialised()
     {
         $this->aassert(exactly_equals)->exactlyEquals('exactly equals');
-    }
-
-    public function testAssertionBuilderWillBeUsedForBooleanAssertions()
-    {
-        $this->aassert(true);
     }
 }

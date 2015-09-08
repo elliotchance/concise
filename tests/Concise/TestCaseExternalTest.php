@@ -46,16 +46,12 @@ class TestCaseExternalTest extends TestCase
 
     public function testAnExternalRunnerWillThrowAnExceptionOnFailure()
     {
-        /*$this->assert(
+        $this->aassert(
             function () {
-                $suite = new MyTinyTestSuite();*/
-        $this->aassert(function () {
                 $suite = new MyTinyTestSuite();
                 $suite->checkSomethingElse();
-            },
-            throws,
-            "PHPUnit_Framework_AssertionFailedError"
-        );
+            }
+        )->throws("PHPUnit_Framework_AssertionFailedError");
     }
 
     public function testAnExternalRunnerCanUseAssertThat()

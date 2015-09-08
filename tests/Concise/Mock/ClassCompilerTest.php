@@ -46,32 +46,23 @@ class ClassCompilerTest extends TestCase
     public function testInstanceCanBeReturnedFromGeneratedCode()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-        $this->assert(
-            $compiler->newInstance(),
-            instance_of,
-            'Concise\Mock\ClassCompilerMock1'
-        );
+        $this->aassert($compiler->newInstance())
+            ->instanceOf('Concise\Mock\ClassCompilerMock1');
     }
 
     public function testCanGenerateMockFromAbstractClass()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock2');
-        $this->assert(
-            $compiler->newInstance(),
-            instance_of,
-            'Concise\Mock\ClassCompilerMock2'
-        );
+        $this->aassert($compiler->newInstance())
+            ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     public function testMultipleMocksGeneratedFromTheSameClassIsPossible()
     {
         $a = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $b = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-        $this->assert(
-            $a->newInstance(),
-            is_not_exactly_equal_to,
-            $b->newInstance()
-        );
+        $this->aassert($a->newInstance())
+            ->isNotExactlyEqualTo($b->newInstance());
     }
 
     /**
@@ -79,66 +70,50 @@ class ClassCompilerTest extends TestCase
      */
     protected function assertPHP(ClassCompiler $compiler, $php)
     {
-        $this->assert(
-            $compiler->generateCode(),
-            matches_regex,
+        $this->aassert($compiler->generateCode())->matchesRegex(
             '/' . str_replace('%', '(.*)', preg_quote($php)) . '/sm'
         );
         $compiler->newInstance();
     }
 
-    public function testExtraBackslashesAtTheStartOfTheClassNameWillBeTrimmedOff()
+    public function testExtraBackslashesAtTheStartOfTheClassNameWillBeTrimmedOff(
+    )
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
-        $this->assert(
-            $compiler->newInstance(),
-            instance_of,
-            'Concise\Mock\ClassCompilerMock2'
-        );
+        $this->aassert($compiler->newInstance())
+            ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     public function testTheNameOfTheClassCanBeSet()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('MyCustomClass');
-        $this->assert(
-            get_class($compiler->newInstance()),
-            equals,
-            'Concise\Mock\MyCustomClass'
-        );
+        $this->aassert(get_class($compiler->newInstance()))
+            ->equals('Concise\Mock\MyCustomClass');
     }
 
     public function testTheClassCanBeCreatedInADifferentNamespace()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('Other\Place\MyRandomClass');
-        $this->assert(
-            get_class($compiler->newInstance()),
-            equals,
-            'Other\Place\MyRandomClass'
-        );
+        $this->aassert(get_class($compiler->newInstance()))
+            ->equals('Other\Place\MyRandomClass');
     }
 
     public function testTheClassCanBeMovedIntoTheGlobalNamespace()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('\MyCustomClass');
-        $this->assert(
-            get_class($compiler->newInstance()),
-            equals,
-            'MyCustomClass'
-        );
+        $this->aassert(get_class($compiler->newInstance()))
+            ->equals('MyCustomClass');
     }
 
     public function testWillIgnorePreceedingBackslashForCustomClassName()
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
         $compiler->setCustomClassName('\Concise\Mock\ClassCompilerMock2Foo');
-        $this->assert(
-            $compiler->newInstance(),
-            instance_of,
-            'Concise\Mock\ClassCompilerMock2'
-        );
+        $this->aassert($compiler->newInstance())
+            ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     /**

@@ -1,5 +1,8 @@
 <?php
 
+// Use something like:
+// find tests -name "*Test.php" | xargs -n1 php scripts/MigrateV2.php
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $file = file_get_contents($argv[1]);

@@ -16,37 +16,35 @@ class ArgumentMatcherTest extends TestCase
 
     public function testMatchingZeroArgumentsReturnsTrue()
     {
-        $this->assert($this->matcher->match(array(), array()));
+        $this->aassert($this->matcher->match(array(), array()))->isTrue;
     }
 
     public function testMatchingArraysOfDifferentSizesReturnsFalse()
     {
-        $this->assert($this->matcher->match(array(), array('a')), is_false);
+        $this->aassert($this->matcher->match(array(), array('a')))->isFalse;
     }
 
     public function testMatchingWithOneValueThatIsDifferentReturnsFalse()
     {
-        $this->assert($this->matcher->match(array('b'), array('a')), is_false);
+        $this->aassert($this->matcher->match(array('b'), array('a')))->isFalse;
     }
 
     public function testMatchingIsNotExact()
     {
-        $this->assert($this->matcher->match(array(0), array(false)), is_true);
+        $this->aassert($this->matcher->match(array(0), array(false)))->isTrue;
     }
 
     public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse()
     {
-        $this->assert(
-            $this->matcher->match(array('a', 'b'), array('a', 'a')),
-            is_false
-        );
+        $this->aassert(
+            $this->matcher->match(array('a', 'b'), array('a', 'a'))
+        )->isFalse;
     }
 
     public function testExpectedIsAllowedToContainAnythingConstant()
     {
-        $this->assert(
-            $this->matcher->match(array('a', self::ANYTHING), array('a', 'a')),
-            is_true
-        );
+        $this->aassert(
+            $this->matcher->match(array('a', self::ANYTHING), array('a', 'a'))
+        )->isTrue;
     }
 }

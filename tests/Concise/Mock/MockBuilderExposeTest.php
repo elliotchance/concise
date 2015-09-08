@@ -25,7 +25,7 @@ class MockBuilderExposeTest extends TestCase
     public function testExposeWillReturnSelfToAllowChaining()
     {
         $builder = $this->niceMock('\Concise\Mock\MockExpose');
-        $this->assert($builder, equals, $builder->expose('myMethod'));
+        $this->aassert($builder)->equals($builder->expose('myMethod'));
     }
 
     /**

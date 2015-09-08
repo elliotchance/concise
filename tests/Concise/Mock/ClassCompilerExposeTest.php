@@ -41,7 +41,8 @@ class ClassCompilerExposeTest extends TestCase
     {
         $this->compiler->addExpose('hidden');
         $instance = $this->compiler->newInstance();
-        $this->assert($instance->hidden(), equals, 'foo');
+        /*$this->assert($instance->hidden(), equals, 'foo');*/
+        $this->aassert($instance->hidden())->equals('foo');
     }
 
     protected function setRulesForExposure()
@@ -63,17 +64,19 @@ class ClassCompilerExposeTest extends TestCase
         $this->setRulesForExposure();
         $this->compiler->addExpose('hidden');
         $instance = $this->compiler->newInstance();
-        $this->assert($instance->hidden(), equals, 'bar');
+        /*$this->assert($instance->hidden(), equals, 'bar');*/
+        $this->aassert($instance->hidden())->equals('bar');
     }
 
     public function testAProtectedMethodMustStayProtected()
     {
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert(
+        /*$this->assert(
             $reflectionClass->getMethod('hidden')->isPublic(),
             is_false
-        );
+        );*/
+        $this->aassert($reflectionClass->getMethod('hidden')->isPublic())->isFalse;
     }
 
     public function testExposingOneMethodWillNotExposeThemAll()
@@ -81,10 +84,11 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler->addExpose('hidden');
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert(
+        /*$this->assert(
             $reflectionClass->getMethod('hidden2')->isPublic(),
             is_false
-        );
+        );*/
+        $this->aassert($reflectionClass->getMethod('hidden2')->isPublic())->isFalse;
     }
 
     public function testAddingARuleToAMethodWillNotExposeThemAll()
@@ -92,10 +96,11 @@ class ClassCompilerExposeTest extends TestCase
         $this->setRulesForExposure();
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert(
+        /*$this->assert(
             $reflectionClass->getMethod('hidden2')->isPublic(),
             is_false
-        );
+        );*/
+        $this->aassert($reflectionClass->getMethod('hidden2')->isPublic())->isFalse;
     }
 
     public function testAddingARuleToAMethodWillNotExposeIt()
@@ -103,10 +108,11 @@ class ClassCompilerExposeTest extends TestCase
         $this->setRulesForExposure();
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert(
+        /*$this->assert(
             $reflectionClass->getMethod('hidden')->isPublic(),
             is_false
-        );
+        );*/
+        $this->aassert($reflectionClass->getMethod('hidden')->isPublic())->isFalse;
     }
 
     public function testMocksThatAreNotNiceWillNotExposeAMethod()
@@ -114,10 +120,11 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock3');
         $instance = $this->compiler->newInstance();
         $reflectionClass = new ReflectionClass(get_class($instance));
-        $this->assert(
+        /*$this->assert(
             $reflectionClass->getMethod('hidden')->isPublic(),
             is_false
-        );
+        );*/
+        $this->aassert($reflectionClass->getMethod('hidden')->isPublic())->isFalse;
     }
 
     public function testTwoMethodsCanBeExposed()
@@ -125,14 +132,16 @@ class ClassCompilerExposeTest extends TestCase
         $this->compiler->addExpose('hidden');
         $this->compiler->addExpose('hidden2');
         $instance = $this->compiler->newInstance();
-        $this->assert($instance->hidden(), equals, 'foo');
+        /*$this->assert($instance->hidden(), equals, 'foo');*/
+        $this->aassert($instance->hidden())->equals('foo');
     }
 
     public function testExposingAMethodRespectsArguments()
     {
         $this->compiler->addExpose('hidden3');
         $instance = $this->compiler->newInstance();
-        $this->assert($instance->hidden3(3), equals, 6);
+        /*$this->assert($instance->hidden3(3), equals, 6);*/
+        $this->aassert($instance->hidden3(3))->equals(6);
     }
 
     /**

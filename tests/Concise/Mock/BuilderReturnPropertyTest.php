@@ -18,7 +18,7 @@ class BuilderReturnPropertyTest extends AbstractBuilderTestCase
             );
         }
         $mock = $builder->stub('myMethod')->andReturnProperty('hidden')->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
+        $this->aassert($mock->myMethod())->equals('foo');
     }
 
     /**

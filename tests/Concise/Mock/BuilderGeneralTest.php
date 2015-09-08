@@ -14,7 +14,8 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->get();
-        $this->assert($mock, instance_of, $builder->getClassName());
+        /*$this->assert($mock, instance_of, $builder->getClassName());*/
+        $this->aassert($mock)->instanceOf($builder->getClassName());
     }
 
     /**
@@ -43,7 +44,8 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->get();
-        $this->assert($mock->myMethod(), equals, 'abc');
+        /*$this->assert($mock->myMethod(), equals, 'abc');*/
+        $this->aassert($mock->myMethod())->equals('abc');
     }
 
     /**
@@ -52,7 +54,8 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     public function testMockImplementsMockInterface(MockBuilder $builder)
     {
         $mock = $builder->get();
-        $this->assert($mock, instance_of, '\Concise\Mock\MockInterface');
+        /*$this->assert($mock, instance_of, '\Concise\Mock\MockInterface');*/
+        $this->aassert($mock)->instanceOf('\Concise\Mock\MockInterface');
     }
 
     /**

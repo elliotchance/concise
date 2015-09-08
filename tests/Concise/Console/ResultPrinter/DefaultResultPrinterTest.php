@@ -42,19 +42,12 @@ class DefaultResultPrinterTest extends TestCase
 
     public function testWillGetConsoleWidthOnStartup()
     {
-        /*$this->assert(
-            $this->resultPrinter->getWidth(),
-            equals,
-            exec('tput cols')
-        );*/
-        $this->aassert($this->resultPrinter->getWidth())->equals(
-            exec('tput cols')
-        );
+        $this->aassert($this->resultPrinter->getWidth())
+            ->equals(exec('tput cols'));
     }
 
     public function testFirstIssueNumberIsOne()
     {
-        /*$this->assert($this->resultPrinter->getIssueNumber(), equals, 1);*/
         $this->aassert($this->resultPrinter->getIssueNumber())->equals(1);
     }
 
@@ -70,7 +63,6 @@ class DefaultResultPrinterTest extends TestCase
             0,
             $exception
         );
-        /*$this->assert($this->resultPrinter->getIssueNumber(), equals, 2);*/
         $this->aassert($this->resultPrinter->getIssueNumber())->equals(2);
     }
 
@@ -85,7 +77,6 @@ class DefaultResultPrinterTest extends TestCase
             0,
             null
         );
-        /*$this->assert($this->resultPrinter->getIssueNumber(), equals, 1);*/
         $this->aassert($this->resultPrinter->getIssueNumber())->equals(1);
     }
 

@@ -32,16 +32,18 @@ class MatcherParserTest extends TestCase
     {
         $matcher = MatcherParser::getInstance()
             ->compile('x equals y', $this->getData());
-        $this->assert($matcher, is_instance_of, '\Concise\Assertion');
+        /*$this->assert($matcher, is_instance_of, '\Concise\Assertion');*/
+        $this->aassert($matcher)->isInstanceOf('\Concise\Assertion');
     }
 
     public function testGetInstanceIsASingleton()
     {
-        $this->assert(
+        /*$this->assert(
             MatcherParser::getInstance(),
             exactly_equals,
             MatcherParser::getInstance()
-        );
+        );*/
+        $this->aassert(MatcherParser::getInstance())->exactlyEquals(MatcherParser::getInstance());
     }
 
     /**
@@ -56,25 +58,29 @@ class MatcherParserTest extends TestCase
     public function testGetAllKeywordsReturnsAnArray()
     {
         $keywords = MatcherParser::getInstance()->getKeywords();
-        $this->assert($keywords, is_an_array);
+        /*$this->assert($keywords, is_an_array);*/
+        $this->aassert($keywords)->isAnArray;
     }
 
     public function testGetAllKeywordsContainsKeywordsFromMatchers()
     {
         $keywords = MatcherParser::getInstance()->getKeywords();
-        $this->assert($keywords, has_value, 'not');
+        /*$this->assert($keywords, has_value, 'not');*/
+        $this->aassert($keywords)->hasValue('not');
     }
 
     public function testGetAllKeywordsContainsOnlyUniqueWords()
     {
         $keywords = MatcherParser::getInstance()->getKeywords();
-        $this->assert($keywords, is_unique);
+        /*$this->assert($keywords, is_unique);*/
+        $this->aassert($keywords)->isUnique;
     }
 
     public function testGetAllKeywordsDoesNotContainPlaceholders()
     {
         $keywords = MatcherParser::getInstance()->getKeywords();
-        $this->assert($keywords, does_not_have_value, '?');
+        /*$this->assert($keywords, does_not_have_value, '?');*/
+        $this->aassert($keywords)->doesNotHaveValue('?');
     }
 
     public function testGetAllKeywordsAreSorted()
@@ -82,7 +88,8 @@ class MatcherParserTest extends TestCase
         $keywords1 = MatcherParser::getInstance()->getKeywords();
         $keywords2 = MatcherParser::getInstance()->getKeywords();
         sort($keywords2);
-        $this->assert($keywords1, equals, $keywords2);
+        /*$this->assert($keywords1, equals, $keywords2);*/
+        $this->aassert($keywords1)->equals($keywords2);
     }
 
     public function testGetKeywordsAreOnlyGeneratedOnce()
@@ -101,7 +108,7 @@ class MatcherParserTest extends TestCase
      */
     public function testWillValidateAllAttributes()
     {
-        $this->assert('"abc" does not match regex 123');
+        $this->aassert("abc")->doesNotMatchRegex(123);
     }
 
     /**
@@ -119,13 +126,15 @@ class MatcherParserTest extends TestCase
     public function testOnIsAKeyword()
     {
         $parser = MatcherParser::getInstance();
-        $this->assert($parser->getKeywords(), has_value, 'on');
+        /*$this->assert($parser->getKeywords(), has_value, 'on');*/
+        $this->aassert($parser->getKeywords())->hasValue('on');
     }
 
     public function testErrorIsAKeyword()
     {
         $parser = MatcherParser::getInstance();
-        $this->assert($parser->getKeywords(), has_value, 'error');
+        /*$this->assert($parser->getKeywords(), has_value, 'error');*/
+        $this->aassert($parser->getKeywords())->hasValue('error');
     }
 
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()
@@ -133,14 +142,16 @@ class MatcherParserTest extends TestCase
         $parser = MatcherParser::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
-        $this->assert($matcher, has_key, 'on_error');
+        /*$this->assert($matcher, has_key, 'on_error');*/
+        $this->aassert($matcher)->hasKey('on_error');
     }
 
     public function testOnErrorIsNotReturnedIfNotInTheSyntax()
     {
         $parser = MatcherParser::getInstance();
         $matcher = $parser->getMatcherForSyntax('? equals ?', array());
-        $this->assert($matcher, does_not_have_key, 'on_error');
+        /*$this->assert($matcher, does_not_have_key, 'on_error');*/
+        $this->aassert($matcher)->doesNotHaveKey('on_error');
     }
 
     public function testOnErrorIsReturnedFromData()
@@ -148,7 +159,8 @@ class MatcherParserTest extends TestCase
         $parser = MatcherParser::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
-        $this->assert($matcher['on_error'], equals, 'foo');
+        /*$this->assert($matcher['on_error'], equals, 'foo');*/
+        $this->aassert($matcher['on_error'])->equals('foo');
     }
 
     public function testOnErrorMustBeTheLastData()
@@ -158,7 +170,8 @@ class MatcherParserTest extends TestCase
             '? equals ? on error ?',
             array('foo', 'bar')
         );
-        $this->assert($matcher['on_error'], equals, 'bar');
+        /*$this->assert($matcher['on_error'], equals, 'bar');*/
+        $this->aassert($matcher['on_error'])->equals('bar');
     }
 
     /**
@@ -187,11 +200,13 @@ class MatcherParserTest extends TestCase
      */
     public function testWillUseValueRendererForValuesInExceptionMessages()
     {
-        $this->assert("abc", does_not_match_regex, null);
+        /*$this->assert("abc", does_not_match_regex, null);*/
+        $this->aassert("abc")->doesNotMatchRegex(null);
     }
 
     public function testGetModules()
     {
-        $this->assert($this->parser->getModules(), is_an_array);
+        /*$this->assert($this->parser->getModules(), is_an_array);*/
+        $this->aassert($this->parser->getModules())->isAnArray;
     }
 }

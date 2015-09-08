@@ -13,6 +13,6 @@ class BuilderStaticTest extends AbstractBuilderTestCase
     public function testMocksCanMockStaticMethods(MockBuilder $builder)
     {
         $mock = $builder->stub(array('myStaticMethod' => 'foo'))->get();
-        $this->assert($mock->myStaticMethod(), equals, 'foo');
+        $this->aassert($mock->myStaticMethod())->equals('foo');
     }
 }

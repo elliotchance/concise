@@ -2,7 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
 use stdClass;
 
 class SecretProperties
@@ -28,7 +27,7 @@ class ObjectModuleTest extends AbstractModuleTestCase
     public function testObjectDoesNotHaveAProperty()
     {
         $obj = new stdClass();
-        $this->assert($obj, does_not_have_property, 'foo');
+        $this->aassert($obj)->doesNotHaveProperty('foo');
     }
 
     /**
@@ -62,25 +61,12 @@ class ObjectModuleTest extends AbstractModuleTestCase
     public function testObjectDoesHaveAProperty1()
     {
         $this->obj->foo = 'bar';
-        $this->assert($this->obj, has_property, 'foo');
+        $this->aassert($this->obj)->hasProperty('foo');
     }
 
     public function testObjectDoesHaveAPropertyWithAFalsyValue1()
     {
         $this->obj->foo = null;
-        $this->assert($this->obj, has_property, 'foo');
-    }
-
-    /**
-     * @group #219
-     */
-    public function testNestedAssertionSuccess()
-    {
-        $this->obj->foo = 'bar';
-        $this->assert(
-            $this->assert($this->obj, has_property, 'foo'),
-            exactly_equals,
-            'bar'
-        );
+        $this->aassert($this->obj)->hasProperty('foo');
     }
 }

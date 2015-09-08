@@ -16,7 +16,8 @@ class BuilderDoTest extends AbstractBuilderTestCase
             function () {
             }
         )->get();
-        $this->assert($mock->myMethod(), equals, null);
+        /*$this->assert($mock->myMethod(), equals, null);*/
+        $this->aassert($mock->myMethod())->equals(null);
     }
 
     /**
@@ -31,7 +32,8 @@ class BuilderDoTest extends AbstractBuilderTestCase
             }
         )->get();
         $mock->myMethod();
-        $this->assert($a, equals, 456);
+        /*$this->assert($a, equals, 456);*/
+        $this->aassert($a)->equals(456);
     }
 
     /**
@@ -46,7 +48,8 @@ class BuilderDoTest extends AbstractBuilderTestCase
                 $a = 456;
             }
         )->get();
-        $this->assert($a, equals, 123);
+        /*$this->assert($a, equals, 123);*/
+        $this->aassert($a)->equals(123);
     }
 
     /**
@@ -61,7 +64,8 @@ class BuilderDoTest extends AbstractBuilderTestCase
                 return $i->getInvokeCount();
             }
         )->get();
-        $this->assert($mock->myMethod(), equals, 1);
+        /*$this->assert($mock->myMethod(), equals, 1);*/
+        $this->aassert($mock->myMethod())->equals(1);
     }
 
     /**
@@ -79,7 +83,8 @@ class BuilderDoTest extends AbstractBuilderTestCase
         )->get();
         $mock->myMethod();
         $mock->myMethod();
-        $this->assert($c, equals, 2);
+        /*$this->assert($c, equals, 2);*/
+        $this->aassert($c)->equals(2);
     }
 
     /**
@@ -96,6 +101,7 @@ class BuilderDoTest extends AbstractBuilderTestCase
             }
         )->get();
         $mock->myMethod('hello');
-        $this->assert($a, equals, array('hello'));
+        /*$this->assert($a, equals, array('hello'));*/
+        $this->aassert($a)->equals(array('hello'));
     }
 }

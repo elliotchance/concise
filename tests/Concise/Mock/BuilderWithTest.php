@@ -17,7 +17,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
                 'b'
             )->andReturn('bar')->get();
-        $this->assert($mock, instance_of, $builder->getClassName());
+        /*$this->assert($mock, instance_of, $builder->getClassName());*/
+        $this->aassert($mock)->instanceOf($builder->getClassName());
     }
 
     /**
@@ -30,7 +31,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
                 'b'
             )->andReturn('bar')->get();
-        $this->assert($mock->myWithMethod('b'), equals, 'bar');
+        /*$this->assert($mock->myWithMethod('b'), equals, 'bar');*/
+        $this->aassert($mock->myWithMethod('b'))->equals('bar');
     }
 
     /**
@@ -43,7 +45,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
                 'b'
             )->andReturn('bar')->get();
-        $this->assert($mock->myWithMethod('a'), equals, 'foo');
+        /*$this->assert($mock->myWithMethod('a'), equals, 'foo');*/
+        $this->aassert($mock->myWithMethod('a'))->equals('foo');
     }
 
     /**
@@ -57,7 +60,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
             ->andReturn('foo')
             ->get();
         $mock->myWithMethod('a');
-        $this->assert($mock->myWithMethod('a'), equals, 'foo');
+        /*$this->assert($mock->myWithMethod('a'), equals, 'foo');*/
+        $this->aassert($mock->myWithMethod('a'))->equals('foo');
     }
 
     /**
@@ -67,7 +71,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->stub('myWithMethod')->with('"foo"')->get();
-        $this->assert($mock->myWithMethod('"foo"'), is_null);
+        /*$this->assert($mock->myWithMethod('"foo"'), is_null);*/
+        $this->aassert($mock->myWithMethod('"foo"'))->isNull;
     }
 
     /**
@@ -77,7 +82,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->stub('myWithMethod')->with('a$b')->get();
-        $this->assert($mock->myWithMethod('a$b'), is_null);
+        /*$this->assert($mock->myWithMethod('a$b'), is_null);*/
+        $this->aassert($mock->myWithMethod('a$b'))->isNull;
     }
 
     /**
@@ -89,7 +95,8 @@ class BuilderWithTest extends AbstractBuilderTestCase
             $builder->stub('myWithMethod', 'myMethod')->with('foo')->andReturn(
                 'foobar'
             )->get();
-        $this->assert($mock->myMethod('foo'), equals, 'foobar');
+        /*$this->assert($mock->myMethod('foo'), equals, 'foobar');*/
+        $this->aassert($mock->myMethod('foo'))->equals('foobar');
     }
 
     /**
