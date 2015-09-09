@@ -329,11 +329,10 @@ class ExceptionModuleTest extends AbstractModuleTestCase
         $expectToThrow
     ) {
         if ($expectToThrow) {
-            $this->assertFailure($method, throws_exactly, $expectedException);
-        } else {
-            /*$this->assert($method, throws_exactly, $expectedException);*/
-            $this->aassert($method)->throwsExactly($expectedException);
+            $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
+
+        $this->aassert($method)->throwsExactly($expectedException);
     }
 
     /**
@@ -394,11 +393,6 @@ class ExceptionModuleTest extends AbstractModuleTestCase
             $this->matcher->throwsException();
             $this->fail("Exception was not thrown.");
         } catch (DidNotMatchException $e) {
-            /*$this->assert(
-                "Expected exception to be thrown.",
-                equals,
-                $e->getMessage()
-            );*/
             $this->aassert("Expected exception to be thrown.")->equals($e->getMessage());
         }
     }

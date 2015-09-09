@@ -2,8 +2,6 @@
 
 namespace Concise\Module;
 
-use Concise\Matcher\AbstractMatcherTestCase;
-
 class FileModuleTest extends AbstractModuleTestCase
 {
     public function setUp()
@@ -29,14 +27,16 @@ class FileModuleTest extends AbstractModuleTestCase
         $this->matcher->stringEqualsFile();
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testWillFailIfStringDoesNotMatchFile()
     {
-        $this->assertFailure('bar', equals_file, $this->createTempFile());
+        $this->aassert('bar')->equalsFile($this->createTempFile());
     }
 
     public function testWillSucceedIfStringDoesMatchFile()
     {
-        /*$this->assert('baz', equals_file, $this->createTempFile());*/
         $this->aassert('baz')->equalsFile($this->createTempFile());
     }
 
@@ -52,16 +52,14 @@ class FileModuleTest extends AbstractModuleTestCase
 
     public function testWillFailIfStringDoesNotMatchFile1()
     {
-        /*$this->assert('bar', does_not_equal_file, $this->createTempFile());*/
         $this->aassert('bar')->doesNotEqualFile($this->createTempFile());
     }
 
+    /**
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
     public function testWillSucceedIfStringDoesMatchFile1()
     {
-        $this->assertFailure(
-            'baz',
-            does_not_equal_file,
-            $this->createTempFile()
-        );
+        $this->aassert('baz')->doesNotEqualFile($this->createTempFile());
     }
 }

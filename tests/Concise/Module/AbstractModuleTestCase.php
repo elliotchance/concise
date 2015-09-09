@@ -46,22 +46,6 @@ abstract class AbstractModuleTestCase extends TestCase
         }
     }
 
-    protected function assertFailure()
-    {
-        try {
-            call_user_func_array(array($this, 'assert'), func_get_args());
-        } catch (DidNotMatchException $e) {
-            $this->assert(true);
-
-            return;
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
-            $this->assert(true);
-
-            return;
-        }
-        $this->fail("Core did not fail.");
-    }
-
     protected function aassertFailure(AssertionBuilder $assertion)
     {
         try {
