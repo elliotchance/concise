@@ -153,7 +153,7 @@ class MockManager
         } else {
             $this->validateMultiWith($method, $rule, $mock);
         }
-        $this->testCase->assert(true);
+        $this->testCase->assertTrue(true);
     }
 
     /**

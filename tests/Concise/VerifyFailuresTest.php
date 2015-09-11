@@ -45,7 +45,7 @@ class VerifyFailuresTest extends TestCase
         $b = self::$failures;
         $testCase = new TestCase();
         $testCase->setUp();
-        $testCase->assert(array_diff($a, $b), equals, array_diff($b, $a));
+        $testCase->aassert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();
     }
 }

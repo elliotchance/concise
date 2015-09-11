@@ -17,21 +17,21 @@ class MyTinyTestSuite
     public function checkSomething()
     {
         $this->testCase->setUp();
-        $this->testCase->assert(3 + 5, equals, 8);
+        $this->testCase->aassert(3 + 5)->equals(8);
         $this->testCase->tearDown();
     }
 
     public function checkSomethingElse()
     {
         $this->testCase->setUp();
-        $this->testCase->assert(3 + 5, equals, 7);
+        $this->testCase->aassert(3 + 5)->equals(7);
         $this->testCase->tearDown();
     }
 
     public function checkSomethingAgain()
     {
         $this->testCase->setUp();
-        $this->testCase->assert(3 + 5, equals, 8);
+        $this->testCase->aassert(3 + 5)->equals(8);
         $this->testCase->tearDown();
     }
 }
@@ -51,7 +51,7 @@ class TestCaseExternalTest extends TestCase
                 $suite = new MyTinyTestSuite();
                 $suite->checkSomethingElse();
             }
-        )->throws("PHPUnit_Framework_AssertionFailedError");
+        )->throws('Concise\Core\DidNotMatchException');
     }
 
     public function testAnExternalRunnerCanUseAssertThat()

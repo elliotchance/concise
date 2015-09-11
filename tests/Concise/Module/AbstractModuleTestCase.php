@@ -16,11 +16,8 @@ abstract class AbstractModuleTestCase extends TestCase
 
     public function testExtendsAbstractMatcher()
     {
-        $this->assert(
-            $this->matcher,
-            is_instance_of,
-            '\Concise\Module\AbstractModule'
-        );
+        $this->aassert($this->matcher)
+            ->isInstanceOf('\Concise\Module\AbstractModule');
     }
 
     protected function createStdClassThatCanBeCastToString($value)
