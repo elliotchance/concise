@@ -104,8 +104,8 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
             'property2',
             'b'
         )->get();
-        $this->verify($mock->property1, equals, 'a');
-        $this->verify($mock->property2, equals, 'b');
+        $this->averify($mock->property1)->equals('a');
+        $this->averify($mock->property2)->equals('b');
     }
 
     /**
@@ -135,8 +135,8 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
                 'property2' => 'b',
             )
         )->get();
-        $this->verify($mock->property1, equals, 'a');
-        $this->verify($mock->property2, equals, 'b');
+        $this->averify($mock->property1)->equals('a');
+        $this->averify($mock->property2)->equals('b');
     }
 
     /**
@@ -155,8 +155,8 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
                 'property2' => 'b',
             )
         )->get();
-        $this->verify($mock->property1, equals, 'a');
-        $this->verify($mock->property2, equals, 'b');
+        $this->averify($mock->property1)->equals('a');
+        $this->averify($mock->property2)->equals('b');
     }
 
     /**

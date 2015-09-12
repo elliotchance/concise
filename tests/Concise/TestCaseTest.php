@@ -2,12 +2,6 @@
 
 namespace Concise;
 
-// This must go outside of any testing code becuase we know that the constants
-// are available before test initialisation.
-if (!defined('has_key')) {
-    throw new \Exception("Constants not initialised.");
-}
-
 class TestCaseTest extends TestCase
 {
     public function testExtendsTestCase()
@@ -109,15 +103,5 @@ class TestCaseTest extends TestCase
     public function testAssertionBuilder()
     {
         $this->aassert(123)->equals("123");
-    }
-
-    public function testConstantsForKeywordsAreInitialised()
-    {
-        $this->aassert(equals)->exactlyEquals('equals');
-    }
-
-    public function testConstantsForKeywordStringsAreInitialised()
-    {
-        $this->aassert(exactly_equals)->exactlyEquals('exactly equals');
     }
 }

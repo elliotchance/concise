@@ -26,9 +26,6 @@ use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
 use ReflectionException;
 
-// Load the keyword cache before the test suite begins.
-Keywords::load();
-
 
 class TestCase extends BaseAssertions
 {
@@ -52,7 +49,7 @@ class TestCase extends BaseAssertions
     /**
      * @var array
      */
-    protected $verifyFailures = array();
+    public $verifyFailures = array();
 
     /**
      * @var null|\Concise\Core\AssertionBuilder
@@ -195,7 +192,6 @@ class TestCase extends BaseAssertions
      */
     public function tearDown()
     {
-        $this->performCurrentAssertion();
         $this->mockManager->validateMocks();
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
@@ -342,49 +338,5 @@ class TestCase extends BaseAssertions
     {
         $this->mockManager->validateMockByInstance($mock);
         return true;
-    }
-
-    /**
-     * @return boolean|null
-     */
-    public function verify()
-    {
-        try {
-            call_user_func_array(array($this, 'assert'), func_get_args());
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
-            $this->verifyFailures[] = $e->getMessage();
-        }
-    }
-
-    public function performCurrentAssertion()
-    {
-        return;
-        if (null !== $this->currentAssertion) {
-            $matcher = $this->getMatcherParserInstance()->getMatcherForSyntax(
-                $this->currentAssertion->getSyntax(),
-                $this->currentAssertion->getData()
-            );
-            $data = [];
-            foreach ($this->currentAssertion->getData() as $k => $v) {
-                $data["arg$k"] = $v;
-            }
-            $i = -1;
-            $syntax = preg_replace_callback(
-                '/\?/',
-                function () use (&$i) {
-                    ++$i;
-                    return "arg$i";
-                },
-                $this->currentAssertion->getSyntax()
-            );
-
-            $this->currentAssertion = null;
-
-            $assertion = new Assertion($syntax, $matcher['matcher'], $data);
-            if ($this instanceof TestCase) {
-                $assertion->setTestCase($this);
-            }
-            $assertion->run();
-        }
     }
 }

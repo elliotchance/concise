@@ -12,7 +12,7 @@ use Concise\TestCase;
 $testCase = new TestCase();
 $testCase->setUpBeforeClass();
 
-refreshKeywords();
+//refreshKeywords();
 updateReadme();
 updateBuilders();
 
@@ -34,53 +34,55 @@ function updateBuilders()
     $php = array();
     $trait = 'BaseAssertions';
     foreach ($syntaxTree as $k => $v) {
-        if (!isset($php[$trait])) {
-            $php[$trait] = '';
-        }
-        $php[$trait] .= "\n\t/**\n\t * @return AssertionBuilder";
-        if (null !== $v) {
-            foreach ($v as $words => $s) {
-                $php[$trait] .=
-                    '|' .
-                    str_replace(' ', '', ucwords($words)) .
-                    'Trait';
+        foreach (array('assert' => false, 'verify' => true) as $method => $verify) {
+            if (!isset($php[$trait])) {
+                $php[$trait] = '';
             }
-            $php[$trait] .= "\n\t * @param mixed \$value";
-        }
-        $php[$trait] .=
-            "\n\t */\n\tpublic function aassert" .
-            ucfirst($k) .
-            "(";
-        if (null !== $v) {
-            $php[$trait] .= "\$valueOrFailureMessage, \$value = null";
+            $php[$trait] .= "\n\t/**\n\t * @return AssertionBuilder";
+            if (null !== $v) {
+                foreach ($v as $words => $s) {
+                    $php[$trait] .=
+                        '|' .
+                        str_replace(' ', '', ucwords($words)) .
+                        'Trait';
+                }
+                $php[$trait] .= "\n\t * @param mixed \$value";
+            }
 
-            $php = a($v, $php);
-        } else {
-            $php[$trait] .= "\$failureMessage = null";
-        }
-        $php[$trait] .= ")\n\t{\n\t\t\$this->performCurrentAssertion();";
-        if (null !== $v) {
-            $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\t\$this->currentAssertion = (new AssertionBuilder(\$this, \$valueOrFailureMessage))->";
-            $php[$trait] .= ($k ? $k : '_') . "(";
+            $php[$trait] .=
+                "\n\t */\n\tpublic function a$method" .
+                ucfirst($k) .
+                "(";
             if (null !== $v) {
-                $php[$trait] .= "\$value";
+                $php[$trait] .= "\$valueOrFailureMessage, \$value = null";
+
+                $php = a($v, $php);
+            } else {
+                $php[$trait] .= "\$failureMessage = null";
             }
-            $php[$trait] .= ");\n\t\t} else {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\t\$this->currentAssertion = (new AssertionBuilder(\$this))->";
-            $php[$trait] .= ($k ? $k : '_') . "(";
+            $php[$trait] .= ")\n\t{";
             if (null !== $v) {
-                $php[$trait] .= "\$valueOrFailureMessage";
+                $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn (new AssertionBuilder(\$this, \$valueOrFailureMessage, " . var_export($verify, true) . "))->";
+                $php[$trait] .= ($k ? $k : '_') . "(";
+                if (null !== $v) {
+                    $php[$trait] .= "\$value";
+                }
+                $php[$trait] .= ");\n\t\t} else {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn (new AssertionBuilder(\$this, null, " . var_export($verify, true) . "))->";
+                $php[$trait] .= ($k ? $k : '_') . "(";
+                if (null !== $v) {
+                    $php[$trait] .= "\$valueOrFailureMessage";
+                }
+                $php[$trait] .= ");\n\t\t}";
+            } else {
+                $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\treturn (new AssertionBuilder(\$this, \$failureMessage, " . var_export($verify, true) . "))->";
+                $php[$trait] .= ($k ? $k : '_') . "();";
             }
-            $php[$trait] .= ");\n\t\t}";
-        } else {
-            $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\$this->currentAssertion = (new AssertionBuilder(\$this, \$failureMessage))->";
-            $php[$trait] .= ($k ? $k : '_') . "();";
+            $php[$trait] .= "\n\t}\n";
         }
-        $php[$trait] .= "\n\t\treturn \$this->currentAssertion;";
-        $php[$trait] .= "\n\t}\n";
     }
 
     $out =
-        "abstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{\n\tabstract public function performCurrentAssertion();\n" .
+        "abstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
         $php['BaseAssertions'] .
         "}\n\n";
     ksort($php);
@@ -240,5 +242,4 @@ function refreshKeywords()
     foreach ($defines as $k => $v) {
         $php .= "if (!defined(\"$k\")) {\n    define(\"$k\", \"$v\");\n}\n";
     }
-    file_put_contents(__DIR__ . '/../src/Concise/Keywords.php', $php);
 }

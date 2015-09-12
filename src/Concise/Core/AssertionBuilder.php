@@ -23,10 +23,19 @@ class AssertionBuilder
 
     protected $failureMessage;
 
-    public function __construct(TestCase $testCase, $failureMessage = null)
-    {
+    /**
+     * @var bool
+     */
+    protected $verify;
+
+    public function __construct(
+        TestCase $testCase,
+        $failureMessage = null,
+        $verify = false
+    ) {
         $this->testCase = $testCase;
         $this->failureMessage = $failureMessage;
+        $this->verify = $verify;
     }
 
     public function __call($words, $args)
@@ -79,10 +88,14 @@ class AssertionBuilder
                 $instance->{$syntax->getMethod()}();
                 $this->testCase->assertTrue(true);
             } catch (DidNotMatchException $e) {
-                if ($this->failureMessage) {
-                    throw new DidNotMatchException($this->failureMessage);
+                if ($this->verify) {
+                    $this->testCase->verifyFailures[] = $e->getMessage();
+                } else {
+                    if ($this->failureMessage) {
+                        throw new DidNotMatchException($this->failureMessage);
+                    }
+                    throw $e;
                 }
-                throw $e;
             }
         }
 

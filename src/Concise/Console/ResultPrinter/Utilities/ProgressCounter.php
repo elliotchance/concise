@@ -65,8 +65,6 @@ class ProgressCounter
     {
         return (0 === $this->total)
             ? 0
-            : (int)floor(
-                $value / $this->total * 100
-            );
+            : (int)floor($value / $this->total * 100);
     }
 }

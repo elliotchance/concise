@@ -19,8 +19,8 @@ class VerifyFailuresTest extends TestCase
      */
     public function testMultipleVerifyFailures()
     {
-        $this->verify(10, equals, 15);
-        $this->verify(15, equals, 20);
+        $this->averify(10)->equals(15);
+        $this->averify(15)->equals(20);
     }
 
     /**
@@ -28,7 +28,7 @@ class VerifyFailuresTest extends TestCase
      */
     public function testSingleVerifyFailures()
     {
-        $this->verify(10, equals, 15);
+        $this->averify(10)->equals(15);
     }
 
     protected function onNotSuccessfulTest(\Exception $e)

@@ -43,20 +43,8 @@ abstract class AbstractModuleTestCase extends TestCase
         }
     }
 
-    protected function aassertFailure(AssertionBuilder $assertion)
-    {
-        try {
-            $this->performCurrentAssertion();
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
-            $this->assert(true);
-
-            return;
-        }
-        $this->fail("Core did not fail.");
-    }
-
     public function testModuleHasAName()
     {
-        $this->assert($this->matcher->getName(), is_not_blank);
+        $this->aassert($this->matcher->getName())->isNotBlank;
     }
 }
