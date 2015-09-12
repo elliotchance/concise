@@ -77,7 +77,7 @@ class ArrayModule extends AbstractModule
             )
             ) {
                 $this->fail();
-            }
+            } // @codeCoverageIgnore
         }
 
         return true;
@@ -94,7 +94,7 @@ class ArrayModule extends AbstractModule
     {
         if (!array_key_exists($this->data[1], $this->data[0])) {
             $this->fail();
-        }
+        } // @codeCoverageIgnore
 
         return $this->data[0][$this->data[1]];
     }
@@ -134,7 +134,7 @@ class ArrayModule extends AbstractModule
         foreach ($this->data[1] as $key) {
             if (!in_array($key, $keys)) {
                 $this->fail();
-            }
+            } // @codeCoverageIgnore
         }
     }
 

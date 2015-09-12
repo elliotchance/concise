@@ -107,6 +107,6 @@ abstract class AbstractModule
     {
         if ($test) {
             $this->fail();
-        }
+        } // @codeCoverageIgnore
     }
 }
