@@ -21,7 +21,7 @@ class CommandTest extends TestCase
 {
     public function testCommandExtendsPHPUnit()
     {
-        $this->aassert(new Command())->instanceOf('PHPUnit_TextUI_Command');
+        $this->assert(new Command())->instanceOf('PHPUnit_TextUI_Command');
     }
 
     protected function getCommandMock()
@@ -34,21 +34,21 @@ class CommandTest extends TestCase
     public function testCreateRunnerReturnsAConciseRunner()
     {
         $command = $this->getCommandMock();
-        $this->aassert($command->createRunner())
+        $this->assert($command->createRunner())
             ->instanceOf('Concise\Console\TestRunner\DefaultTestRunner');
     }
 
     public function testPrinterUsesProxy()
     {
         $command = $this->getCommandMock();
-        $this->aassert($command->createRunner()->getPrinter())
+        $this->assert($command->createRunner()->getPrinter())
             ->instanceOf('Concise\Console\ResultPrinter\ResultPrinterProxy');
     }
 
     public function testVerboseIsFalseByDefault()
     {
         $command = $this->getCommandMock();
-        $this->aassert(
+        $this->assert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
@@ -60,7 +60,7 @@ class CommandTest extends TestCase
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', true);
-        $this->aassert(
+        $this->assert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
@@ -72,7 +72,7 @@ class CommandTest extends TestCase
     {
         $command = $this->getCommandMock();
         $command->setArgument('verbose', false);
-        $this->aassert(
+        $this->assert(
             $command->createRunner()
                 ->getPrinter()
                 ->getResultPrinter()
@@ -85,7 +85,7 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(true);
 
-        $this->aassert($command->getResultPrinter())
+        $this->assert($command->getResultPrinter())
             ->instanceOf('Concise\Console\ResultPrinter\CIResultPrinter');
     }
 
@@ -94,14 +94,14 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $command->setCI(false);
 
-        $this->aassert($command->getResultPrinter())
+        $this->assert($command->getResultPrinter())
             ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 
     public function testDefaultResultPrinterIsUsedByDefault()
     {
         $command = $this->getCommandMock();
-        $this->aassert($command->getResultPrinter())
+        $this->assert($command->getResultPrinter())
             ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 }

@@ -28,7 +28,7 @@ class BuilderExposeTest extends AbstractBuilderTestCase
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('mySecretMethod')->get();
         /*$this->assert($mock->myMethod(), equals, 'abc');*/
-        $this->aassert($mock->myMethod())->equals('abc');
+        $this->assert($mock->myMethod())->equals('abc');
     }
 
     /**
@@ -56,7 +56,7 @@ class BuilderExposeTest extends AbstractBuilderTestCase
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('myMethod', 'mySecondMethod')->get();
         /*$this->assert($mock->mySecondMethod(), equals, 'bar');*/
-        $this->aassert($mock->mySecondMethod())->equals('bar');
+        $this->assert($mock->mySecondMethod())->equals('bar');
     }
 
     /**
@@ -70,7 +70,7 @@ class BuilderExposeTest extends AbstractBuilderTestCase
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose('myMethod')->expose('mySecondMethod')->get();
         /*$this->assert($mock->myMethod(), equals, 'abc');*/
-        $this->aassert($mock->myMethod())->equals('abc');
+        $this->assert($mock->myMethod())->equals('abc');
     }
 
     /**
@@ -84,7 +84,7 @@ class BuilderExposeTest extends AbstractBuilderTestCase
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->expose(array('myMethod', 'mySecondMethod'))->get();
         /*$this->assert($mock->mySecondMethod(), equals, 'bar');*/
-        $this->aassert($mock->mySecondMethod())->equals('bar');
+        $this->assert($mock->mySecondMethod())->equals('bar');
     }
 
     /**
@@ -95,7 +95,7 @@ class BuilderExposeTest extends AbstractBuilderTestCase
     {
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         /*$this->assert($builder->exposeAll(), is_the_same_as, $builder);*/
-        $this->aassert($builder->exposeAll())->isTheSameAs($builder);
+        $this->assert($builder->exposeAll())->isTheSameAs($builder);
     }
 
     /**
@@ -109,6 +109,6 @@ class BuilderExposeTest extends AbstractBuilderTestCase
         $this->youCannotExposeAMethodOnAMockThatIsNotNice($type);
         $mock = $builder->exposeAll()->get();
         /*$this->assert($mock->mySecretMethod(), equals, 'abc');*/
-        $this->aassert($mock->mySecretMethod())->equals('abc');
+        $this->assert($mock->mySecretMethod())->equals('abc');
     }
 }

@@ -22,7 +22,7 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache = new SyntaxCache();
         $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
         $syntaxCache->add($syntax);
-        $this->aassert($syntaxCache->getSyntax('? equals ?'))
+        $this->assert($syntaxCache->getSyntax('? equals ?'))
             ->isTheSameAs($syntax);
     }
 
@@ -33,7 +33,7 @@ class SyntaxCacheTest extends TestCase
         $syntax2 = new Syntax('? bar ?', '\Concise\TestCase::assert');
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
-        $this->aassert($syntaxCache->getSyntax('? foo ?'))
+        $this->assert($syntaxCache->getSyntax('? foo ?'))
             ->isTheSameAs($syntax1);
     }
 
@@ -67,7 +67,7 @@ class SyntaxCacheTest extends TestCase
         $syntaxCache = new SyntaxCache();
         $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
         $syntaxCache->add($syntax);
-        $this->aassert($syntaxCache->getSyntax('?:int equals ?'))
+        $this->assert($syntaxCache->getSyntax('?:int equals ?'))
             ->isTheSameAs($syntax);
     }
 

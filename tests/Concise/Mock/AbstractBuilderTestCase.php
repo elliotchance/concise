@@ -297,6 +297,6 @@ abstract class AbstractBuilderTestCase extends TestCase
 
     protected function notApplicable()
     {
-        return $this->aassert(true)->isTrue;
+        return $this->assert(true)->isTrue;
     }
 }

@@ -16,7 +16,7 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals(
                 $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
             );
@@ -33,7 +33,7 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals(
                 $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
             );
@@ -43,7 +43,7 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
     {
         $progressBar = new ProportionalProgressBar();
         $result = $progressBar->renderProportional(10, 0, array());
-        $this->aassert($result)->equals('__________');
+        $this->assert($result)->equals('__________');
     }
 
     /**

@@ -10,6 +10,6 @@ class ReturnSelfActionTest extends TestCase
     {
         $self = new ReturnSelfAction();
         /*$this->assert($self->getActionCode(), equals, 'return $this;');*/
-        $this->aassert($self->getActionCode())->equals('return $this;');
+        $this->assert($self->getActionCode())->equals('return $this;');
     }
 }

@@ -38,7 +38,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->startTestSuite($suite);
-        $this->aassert($proxy->getResultPrinter()->getTotalTestCount())
+        $this->assert($proxy->getResultPrinter()->getTotalTestCount())
             ->equals(123);
     }
 
@@ -56,7 +56,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
-        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+        $this->assert($proxy->getResultPrinter()->getAssertionCount())
             ->equals(1);
     }
 
@@ -67,7 +67,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         )->andReturn(123)->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
-        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+        $this->assert($proxy->getResultPrinter()->getAssertionCount())
             ->equals(123);
     }
 
@@ -79,7 +79,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
-        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+        $this->assert($proxy->getResultPrinter()->getAssertionCount())
             ->equals(2);
     }
 
@@ -91,7 +91,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->endTest($testCase, 0);
         $proxy->endTest($testCase, 0);
-        $this->aassert($proxy->getResultPrinter()->getAssertionCount())
+        $this->assert($proxy->getResultPrinter()->getAssertionCount())
             ->equals(246);
     }
 
@@ -110,7 +110,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
         $proxy->startTestSuite($suite);
         $proxy->endTestSuite($suite);
         $proxy->endTestSuite($suite);
-        $this->aassert($proxy->getResultPrinter()->getTotalTestCount())
+        $this->assert($proxy->getResultPrinter()->getTotalTestCount())
             ->equals(123);
     }
 

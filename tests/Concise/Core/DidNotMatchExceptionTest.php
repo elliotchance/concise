@@ -8,7 +8,7 @@ class DidNotMatchExceptionTest extends TestCase
 {
     public function testIsATypeOfException()
     {
-        $this->aassert(new DidNotMatchException())
+        $this->assert(new DidNotMatchException())
             ->isAnInstanceOf('\Exception');
     }
 }

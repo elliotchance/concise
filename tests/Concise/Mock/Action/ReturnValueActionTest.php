@@ -12,7 +12,7 @@ class ReturnValueActionTest extends TestCase
         $value = new ReturnValueAction(array($myObject));
         $result = eval($value->getActionCode());
         /*$this->assert($myObject, equals, $result);*/
-        $this->aassert($myObject)->equals($result);
+        $this->assert($myObject)->equals($result);
     }
 
     public function testObjectsInCacheAreClonedSoThatTheyWillNotChangeState()
@@ -26,6 +26,6 @@ class ReturnValueActionTest extends TestCase
 
         /*$this->assert($result2->foo, equals, "bar");*/
 
-        $this->aassert($result2->foo)->equals("bar");
+        $this->assert($result2->foo)->equals("bar");
     }
 }

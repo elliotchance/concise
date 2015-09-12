@@ -24,7 +24,7 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
             );
         }
         $mock = $builder->disableConstructor()->get();
-        $this->aassert($mock->constructorRun)->isFalse;
+        $this->assert($mock->constructorRun)->isFalse;
     }
 
     /**
@@ -40,7 +40,7 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
         }
 
         $mock = $builder->get();
-        $this->aassert($mock->constructorRun)->equals(2);
+        $this->assert($mock->constructorRun)->equals(2);
     }
 
     /**
@@ -56,6 +56,6 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
         }
 
         $mock = $builder->get();
-        $this->aassert($mock->constructorRun)->isFalse;
+        $this->assert($mock->constructorRun)->isFalse;
     }
 }

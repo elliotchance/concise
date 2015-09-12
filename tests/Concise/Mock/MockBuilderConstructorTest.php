@@ -36,7 +36,7 @@ class MockBuilderConstructorTest extends TestCase
     public function testNiceMocksWillCallConstructorByDefault()
     {
         $mock = $this->niceMock('\Concise\Mock\MockConstructor1')->get();
-        $this->aassert($mock->constructorRun)->isTrue;
+        $this->assert($mock->constructorRun)->isTrue;
     }
 
     public function testDisableConstructorCanBeChained()
@@ -44,7 +44,7 @@ class MockBuilderConstructorTest extends TestCase
         $mock = $this->niceMock('\Concise\Mock\MockConstructor1')
             ->disableConstructor()
             ->get();
-        $this->aassert($mock)->instanceOf('\Concise\Mock\MockConstructor1');
+        $this->assert($mock)->instanceOf('\Concise\Mock\MockConstructor1');
     }
 
     public function testMocksCanHaveTheirConstructorDisabledWithArguments()
@@ -52,6 +52,6 @@ class MockBuilderConstructorTest extends TestCase
         $mock = $this->niceMock('\Concise\Mock\MockConstructor2')
             ->disableConstructor()
             ->get();
-        $this->aassert($mock)->instanceOf('\Concise\Mock\MockConstructor2');
+        $this->assert($mock)->instanceOf('\Concise\Mock\MockConstructor2');
     }
 }

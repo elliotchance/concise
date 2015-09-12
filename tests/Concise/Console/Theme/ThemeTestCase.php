@@ -44,7 +44,7 @@ abstract class ThemeTestCase extends TestCase
      */
     public function testThemeHasKey($expectedKey)
     {
-        $this->aassert($this->theme->getTheme())->hasKey($expectedKey);
+        $this->assert($this->theme->getTheme())->hasKey($expectedKey);
     }
 
     /**
@@ -54,18 +54,18 @@ abstract class ThemeTestCase extends TestCase
     {
         $theme = $this->theme->getTheme();
         $stub = new ColorStub();
-        $this->aassert($stub->getStyles())->hasKey($theme[$expectedKey]);
+        $this->assert($stub->getStyles())->hasKey($theme[$expectedKey]);
     }
 
     public function testMustImplementColorTheme()
     {
-        $this->aassert($this->theme)
+        $this->assert($this->theme)
             ->instanceOf('Concise\Console\Theme\ThemeInterface');
     }
 
     public function testMustExtendAbstractTheme()
     {
-        $this->aassert($this->theme)
+        $this->assert($this->theme)
             ->instanceOf('Concise\Console\Theme\AbstractTheme');
     }
 }

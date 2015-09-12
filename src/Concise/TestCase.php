@@ -176,18 +176,6 @@ class TestCase extends BaseAssertions
     }
 
     /**
-     * @return boolean
-     */
-    public function assert()
-    {
-        $assertion = $this->createAssertion(func_get_args());
-        if ($this instanceof TestCase) {
-            $assertion->setTestCase($this);
-        }
-        return $assertion->run();
-    }
-
-    /**
      * @return void
      */
     public function tearDown()

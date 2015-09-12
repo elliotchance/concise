@@ -101,7 +101,7 @@ class UrlModuleTest extends AbstractModuleTestCase
         if (!$passes) {
             $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
-        $this->aassertUrl($url)->$test($value);
+        $this->assertUrl($url)->$test($value);
     }
 
     /**
@@ -109,11 +109,11 @@ class UrlModuleTest extends AbstractModuleTestCase
      */
     public function testInvalidURL()
     {
-        $this->aassertUrl('foo')->isValid;
+        $this->assertUrl('foo')->isValid;
     }
 
     public function testValidURL()
     {
-        $this->aassertUrl('http://www.google.com')->isValid;
+        $this->assertUrl('http://www.google.com')->isValid;
     }
 }

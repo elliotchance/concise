@@ -35,35 +35,35 @@ class ResultPrinterProxyStatisticsTest extends TestCase
     {
         $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->get();
         $this->proxy->addFailure($this->test, $this->e, 0);
-        $this->aassert($this->proxy->getResultPrinter()->getFailureCount())
+        $this->assert($this->proxy->getResultPrinter()->getFailureCount())
             ->equals(1);
     }
 
     public function testAddErrorWillIncrementCount()
     {
         $this->proxy->addError($this->test, $this->e, 0);
-        $this->aassert($this->proxy->getResultPrinter()->getErrorCount())
+        $this->assert($this->proxy->getResultPrinter()->getErrorCount())
             ->equals(1);
     }
 
     public function testAddIncompleteWillIncrementCount()
     {
         $this->proxy->addIncompleteTest($this->test, $this->e, 0);
-        $this->aassert($this->proxy->getResultPrinter()->getIncompleteCount())
+        $this->assert($this->proxy->getResultPrinter()->getIncompleteCount())
             ->equals(1);
     }
 
     public function testAddSkippedWillIncrementCount()
     {
         $this->proxy->addSkippedTest($this->test, $this->e, 0);
-        $this->aassert($this->proxy->getResultPrinter()->getSkippedCount())
+        $this->assert($this->proxy->getResultPrinter()->getSkippedCount())
             ->equals(1);
     }
 
     public function testAddRiskyWillIncrementCount()
     {
         $this->proxy->addRiskyTest($this->test, $this->e, 0);
-        $this->aassert($this->proxy->getResultPrinter()->getRiskyCount())
+        $this->assert($this->proxy->getResultPrinter()->getRiskyCount())
             ->equals(1);
     }
 }

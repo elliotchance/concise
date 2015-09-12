@@ -17,21 +17,21 @@ class MyTinyTestSuite
     public function checkSomething()
     {
         $this->testCase->setUp();
-        $this->testCase->aassert(3 + 5)->equals(8);
+        $this->testCase->assert(3 + 5)->equals(8);
         $this->testCase->tearDown();
     }
 
     public function checkSomethingElse()
     {
         $this->testCase->setUp();
-        $this->testCase->aassert(3 + 5)->equals(7);
+        $this->testCase->assert(3 + 5)->equals(7);
         $this->testCase->tearDown();
     }
 
     public function checkSomethingAgain()
     {
         $this->testCase->setUp();
-        $this->testCase->aassert(3 + 5)->equals(8);
+        $this->testCase->assert(3 + 5)->equals(8);
         $this->testCase->tearDown();
     }
 }
@@ -46,7 +46,7 @@ class TestCaseExternalTest extends TestCase
 
     public function testAnExternalRunnerWillThrowAnExceptionOnFailure()
     {
-        $this->aassert(
+        $this->assert(
             function () {
                 $suite = new MyTinyTestSuite();
                 $suite->checkSomethingElse();

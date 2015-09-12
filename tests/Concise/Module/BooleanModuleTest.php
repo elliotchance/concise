@@ -13,17 +13,9 @@ class BooleanModuleTest extends AbstractModuleTestCase
         $this->matcher = new BooleanModule();
     }
 
-    /**
-     * @expectedException \Concise\Core\DidNotMatchException
-     */
-    public function testAlwaysFails()
-    {
-        $this->aassertFalse();
-    }
-
     public function testFalse()
     {
-        $this->aassert(false)->isFalse;
+        $this->assert(false)->isFalse;
     }
 
     /**
@@ -31,7 +23,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testZeroIsNotFalse()
     {
-        $this->aassert(0)->isFalse;
+        $this->assert(0)->isFalse;
     }
 
     /**
@@ -39,7 +31,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testEmptyStringIsNotFalse()
     {
-        $this->aassert("")->isFalse;
+        $this->assert("")->isFalse;
     }
 
     /**
@@ -47,7 +39,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testFloatingZeroIsNotFalse()
     {
-        $this->aassert(0.0)->isFalse;
+        $this->assert(0.0)->isFalse;
     }
 
     /**
@@ -55,12 +47,12 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testFalseFailure()
     {
-        $this->aassert(true)->isFalse;
+        $this->assert(true)->isFalse;
     }
 
     public function testFalseIsFalsy()
     {
-        $this->aassert(false)->isFalsy;
+        $this->assert(false)->isFalsy;
     }
 
     /**
@@ -68,17 +60,17 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testTrueIsNotFalsy()
     {
-        $this->aassert(true)->isFalse;
+        $this->assert(true)->isFalse;
     }
 
     public function testZeroIsFalsy()
     {
-        $this->aassert(0)->isFalsy;
+        $this->assert(0)->isFalsy;
     }
 
     public function testIsTrue()
     {
-        $this->aassert(true)->isTrue;
+        $this->assert(true)->isTrue;
     }
 
     /**
@@ -86,7 +78,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testIsTrueFailure()
     {
-        $this->aassert(123)->isTrue;
+        $this->assert(123)->isTrue;
     }
 
     /**
@@ -94,7 +86,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testOneIsNotTrue()
     {
-        $this->aassert(1)->isTrue;
+        $this->assert(1)->isTrue;
     }
 
     /**
@@ -102,21 +94,16 @@ class BooleanModuleTest extends AbstractModuleTestCase
      */
     public function testFalseIsNotTruthy()
     {
-        $this->aassert(false)->isTruthy;
+        $this->assert(false)->isTruthy;
     }
 
     public function testTrueIsTruthy()
     {
-        $this->aassert(true)->isTruthy;
+        $this->assert(true)->isTruthy;
     }
 
     public function testOneIsTruthy()
     {
-        $this->aassert(1)->isTruthy;
-    }
-
-    public function testTrue()
-    {
-        $this->aassertTrue();
+        $this->assert(1)->isTruthy;
     }
 }

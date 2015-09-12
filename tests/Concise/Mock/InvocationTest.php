@@ -13,14 +13,14 @@ class InvocationTest extends TestCase
     {
         $invocation = new Invocation();
         /*$this->assert($invocation->getInvokeCount(), equals, 1);*/
-        $this->aassert($invocation->getInvokeCount())->equals(1);
+        $this->assert($invocation->getInvokeCount())->equals(1);
     }
 
     public function testDefaultArgumentsIsEmpty()
     {
         $invocation = new Invocation();
         /*$this->assert($invocation->getArguments(), is_empty_array);*/
-        $this->aassert($invocation->getArguments())->isEmptyArray;
+        $this->assert($invocation->getArguments())->isEmptyArray;
     }
 
     public function testImplementsInvocationInterface()
@@ -31,35 +31,35 @@ class InvocationTest extends TestCase
             instance_of,
             '\Concise\Mock\InvocationInterface'
         );*/
-        $this->aassert($invocation)->instanceOf('\Concise\Mock\InvocationInterface');
+        $this->assert($invocation)->instanceOf('\Concise\Mock\InvocationInterface');
     }
 
     public function testConstructorCanInitialiseInvokeCount()
     {
         $invocation = new Invocation(123);
         /*$this->assert($invocation->getInvokeCount(), equals, 123);*/
-        $this->aassert($invocation->getInvokeCount())->equals(123);
+        $this->assert($invocation->getInvokeCount())->equals(123);
     }
 
     public function testConstructorCanInitialiseArguments()
     {
         $invocation = new Invocation(1, array('foo'));
         /*$this->assert($invocation->getArguments(), equals, array('foo'));*/
-        $this->aassert($invocation->getArguments())->equals(array('foo'));
+        $this->assert($invocation->getArguments())->equals(array('foo'));
     }
 
     public function testGetArgumentWillReturnFirstArgument()
     {
         $invocation = new Invocation(1, array('foo'));
         /*$this->assert($invocation->getArgument(0), equals, 'foo');*/
-        $this->aassert($invocation->getArgument(0))->equals('foo');
+        $this->assert($invocation->getArgument(0))->equals('foo');
     }
 
     public function testGetArgumentWillReturnAnyArgumentByIndex()
     {
         $invocation = new Invocation(1, array('foo', 'bar'));
         /*$this->assert($invocation->getArgument(1), equals, 'bar');*/
-        $this->aassert($invocation->getArgument(1))->equals('bar');
+        $this->assert($invocation->getArgument(1))->equals('bar');
     }
 
     /**
@@ -86,13 +86,13 @@ class InvocationTest extends TestCase
     {
         $invocation = new Invocation();
         /*$this->assert($invocation->getArgumentCount(), equals, 0);*/
-        $this->aassert($invocation->getArgumentCount())->equals(0);
+        $this->assert($invocation->getArgumentCount())->equals(0);
     }
 
     public function testArgumentCountIsCorrect()
     {
         $invocation = new Invocation(1, array('foo', 'bar'));
         /*$this->assert($invocation->getArgumentCount(), equals, 2);*/
-        $this->aassert($invocation->getArgumentCount())->equals(2);
+        $this->assert($invocation->getArgumentCount())->equals(2);
     }
 }

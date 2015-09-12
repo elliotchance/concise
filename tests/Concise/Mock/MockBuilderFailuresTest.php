@@ -175,7 +175,7 @@ class MockBuilderFailuresTest extends TestCase
             equals,
             $e->getMessage()
         );*/
-        $this->aassert(self::$expectedFailures[$this->getName()])->equals($e->getMessage());
+        $this->assert(self::$expectedFailures[$this->getName()])->equals($e->getMessage());
     }
 
     public static function tearDownAfterClass()
@@ -184,7 +184,7 @@ class MockBuilderFailuresTest extends TestCase
         $b = self::$failures;
         $testCase = new TestCase();
         $testCase->setUp();
-        $testCase->aassert(array_diff($a, $b))->equals(array_diff($b, $a));
+        $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();
     }
 }

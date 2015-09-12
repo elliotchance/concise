@@ -17,7 +17,7 @@ class TypeModuleTest extends AbstractModuleTestCase
 
     public function testTrueIsABoolean()
     {
-        $this->aassert(true)->isABoolean;
+        $this->assert(true)->isABoolean;
     }
 
     /**
@@ -25,22 +25,22 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testAStringIsNotABoolean()
     {
-        $this->aassert("true")->isABoolean;
+        $this->assert("true")->isABoolean;
     }
 
     public function testFalseIsABoolean()
     {
-        $this->aassert(false)->isABoolean;
+        $this->assert(false)->isABoolean;
     }
 
     public function testAlternativeShorterSyntax()
     {
-        $this->aassert(true)->isABool;
+        $this->assert(true)->isABool;
     }
 
     public function testIsAnArray()
     {
-        $this->aassert(array())->isAnArray;
+        $this->assert(array())->isAnArray;
     }
 
     /**
@@ -48,12 +48,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsAnArrayFailure()
     {
-        $this->aassert(123)->isAnArray;
+        $this->assert(123)->isAnArray;
     }
 
     public function testIntegerIsAnInteger()
     {
-        $this->aassert(123)->isAnInteger;
+        $this->assert(123)->isAnInteger;
     }
 
     /**
@@ -61,7 +61,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testFloatIsNotAnInteger()
     {
-        $this->aassert(123.0)->isAnInteger;
+        $this->assert(123.0)->isAnInteger;
     }
 
     /**
@@ -69,12 +69,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringThatRepresentsAnIntegerIsNotAnInteger()
     {
-        $this->aassert("123")->isAnInteger;
+        $this->assert("123")->isAnInteger;
     }
 
     public function testIsAnObject()
     {
-        $this->aassert(new \stdClass())->isAnObject;
+        $this->assert(new \stdClass())->isAnObject;
     }
 
     /**
@@ -82,12 +82,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsAnObjectFailure()
     {
-        $this->aassert(123)->isAnObject;
+        $this->assert(123)->isAnObject;
     }
 
     public function testIntegerIsANumber()
     {
-        $this->aassert(123)->isANumber;
+        $this->assert(123)->isANumber;
     }
 
     /**
@@ -95,17 +95,17 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringThatRepresentsANumberIsNotANumber()
     {
-        $this->aassert("123")->isANumber;
+        $this->assert("123")->isANumber;
     }
 
     public function testFloatIsANumber()
     {
-        $this->aassert(12.3)->isANumber;
+        $this->assert(12.3)->isANumber;
     }
 
     public function testIsAString()
     {
-        $this->aassert("123")->isAString;
+        $this->assert("123")->isAString;
     }
 
     /**
@@ -113,23 +113,23 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsAStringFailure()
     {
-        $this->aassert(123)->isAString;
+        $this->assert(123)->isAString;
     }
 
     public function testClassNameIsAString()
     {
-        $this->aassert('\My\Class')->isAString;
+        $this->assert('\My\Class')->isAString;
     }
 
     public function testIsInstanceOfWithSameClass()
     {
-        $this->aassert(new self())
+        $this->assert(new self())
             ->isAnInstanceOf('\Concise\Module\TypeModuleTest');
     }
 
     public function testIsInstanceOfWithSuperClass()
     {
-        $this->aassert(new self())
+        $this->assert(new self())
             ->instanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
@@ -138,19 +138,19 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsInstanceOfFailure()
     {
-        $this->aassert(new \stdClass())
+        $this->assert(new \stdClass())
             ->isInstanceOf('\Concise\Module\TypeModule');
     }
 
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
-        $this->aassert('\Concise\Module\TypeModule')
+        $this->assert('\Concise\Module\TypeModule')
             ->instanceOf('\Concise\TestCase');
     }
 
     public function testIsInstanceOfWithSameClassNoPrefix()
     {
-        $this->aassert(new self())
+        $this->assert(new self())
             ->isAnInstanceOf('Concise\Module\TypeModuleTest');
     }
 
@@ -159,12 +159,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testTrueIsABoolean1()
     {
-        $this->aassert(true)->isNotABoolean;
+        $this->assert(true)->isNotABoolean;
     }
 
     public function testAStringIsNotABoolean1()
     {
-        $this->aassert("true")->isNotABoolean;
+        $this->assert("true")->isNotABoolean;
     }
 
     /**
@@ -172,7 +172,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testFalseIsABoolean1()
     {
-        $this->aassert(false)->isNotABoolean;
+        $this->assert(false)->isNotABoolean;
     }
 
     /**
@@ -180,12 +180,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testAlternativeShorterSyntax1()
     {
-        $this->aassert(true)->isNotABool;
+        $this->assert(true)->isNotABool;
     }
 
     public function testIsNotAnArray()
     {
-        $this->aassert(123)->isNotAnArray;
+        $this->assert(123)->isNotAnArray;
     }
 
     /**
@@ -193,17 +193,17 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotAnArrayFailure()
     {
-        $this->aassert(array())->isNotAnArray;
+        $this->assert(array())->isNotAnArray;
     }
 
     public function testStringThatRepresentsAnIntegerIsNotAnInteger1()
     {
-        $this->aassert("123")->isNotAnInteger;
+        $this->assert("123")->isNotAnInteger;
     }
 
     public function testFloatThatIsAWholeNumberIsNotAnInteger()
     {
-        $this->aassert(1.0)->isNotAnInteger;
+        $this->assert(1.0)->isNotAnInteger;
     }
 
     /**
@@ -211,17 +211,17 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotAnIntegerFailure()
     {
-        $this->aassert(123)->isNotAnInteger;
+        $this->assert(123)->isNotAnInteger;
     }
 
     public function testIsNotAnObject()
     {
-        $this->aassert(123)->isNotAnObject;
+        $this->assert(123)->isNotAnObject;
     }
 
     public function testClassNameIsNotAnObject()
     {
-        $this->aassert('\My\Class')->isNotAnObject;
+        $this->assert('\My\Class')->isNotAnObject;
     }
 
     /**
@@ -229,7 +229,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotAnObjectFailure()
     {
-        $this->aassert(new stdClass())->isNotAnObject;
+        $this->assert(new stdClass())->isNotAnObject;
     }
 
     /**
@@ -237,12 +237,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIntegerIsANumber1()
     {
-        $this->aassert(123)->isNotANumber;
+        $this->assert(123)->isNotANumber;
     }
 
     public function testStringThatRepresentsANumberIsNotANumber1()
     {
-        $this->aassert("123")->isNotANumber;
+        $this->assert("123")->isNotANumber;
     }
 
     /**
@@ -250,12 +250,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testFloatIsANumber1()
     {
-        $this->aassert(12.3)->isNotANumber;
+        $this->assert(12.3)->isNotANumber;
     }
 
     public function testIsNotAString()
     {
-        $this->aassert(123)->isNotAString;
+        $this->assert(123)->isNotAString;
     }
 
     /**
@@ -263,7 +263,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotAStringFailure()
     {
-        $this->aassert("123")->isNotAString;
+        $this->assert("123")->isNotAString;
     }
 
     /**
@@ -271,13 +271,13 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsInstanceOfWithSuperClass1()
     {
-        $this->aassert(new self())
+        $this->assert(new self())
             ->notInstanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
     public function testIsInstanceOfFailure1()
     {
-        $this->aassert(new \stdClass())
+        $this->assert(new \stdClass())
             ->isNotInstanceOf('\Concise\Module\TypeModuleTest');
     }
 
@@ -286,23 +286,23 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringsRepresentingClassNamesCanBeUsed1()
     {
-        $this->aassert('\Concise\Module\TypeModule')
+        $this->assert('\Concise\Module\TypeModule')
             ->isNotInstanceOf('\Concise\TestCase');
     }
 
     public function testZeroIsNotNull()
     {
-        $this->aassert(0)->isNotNull;
+        $this->assert(0)->isNotNull;
     }
 
     public function testABlankStringIsNotNull()
     {
-        $this->aassert("")->isNotNull;
+        $this->assert("")->isNotNull;
     }
 
     public function testFalseIsNotNull()
     {
-        $this->aassert(false)->isNotNull;
+        $this->assert(false)->isNotNull;
     }
 
     /**
@@ -310,7 +310,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotNullFailure()
     {
-        $this->aassert(null)->isNotNull;
+        $this->assert(null)->isNotNull;
     }
 
     /**
@@ -318,7 +318,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIntegerIsNumeric()
     {
-        $this->aassert(123)->isNotNumeric;
+        $this->assert(123)->isNotNumeric;
     }
 
     /**
@@ -326,12 +326,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testFloatIsNumeric()
     {
-        $this->aassert(12.3)->isNotNumeric;
+        $this->assert(12.3)->isNotNumeric;
     }
 
     public function testStringIsNotNumeric()
     {
-        $this->aassert("abc")->isNotNumeric;
+        $this->assert("abc")->isNotNumeric;
     }
 
     /**
@@ -339,7 +339,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringThatRepresentsAnIntegerIsNumeric()
     {
-        $this->aassert("123")->isNotNumeric;
+        $this->assert("123")->isNotNumeric;
     }
 
     /**
@@ -347,7 +347,7 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringThatRepresentsAFloatIsNumeric()
     {
-        $this->aassert("12.3")->isNotNumeric;
+        $this->assert("12.3")->isNotNumeric;
     }
 
     /**
@@ -355,12 +355,12 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringThatRepresentsScientificNotationIsNumeric()
     {
-        $this->aassert("12.3e-17")->isNotNumeric;
+        $this->assert("12.3e-17")->isNotNumeric;
     }
 
     public function testIsNull()
     {
-        $this->aassert(null)->isNull;
+        $this->assert(null)->isNull;
     }
 
     /**
@@ -368,17 +368,17 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testIsNullFailure()
     {
-        $this->aassert(123)->isNull;
+        $this->assert(123)->isNull;
     }
 
     public function testIntegerIsNumeric1()
     {
-        $this->aassert(1230)->isNumeric;
+        $this->assert(1230)->isNumeric;
     }
 
     public function testFloatIsNumeric1()
     {
-        $this->aassert(12.3)->isNumeric;
+        $this->assert(12.3)->isNumeric;
     }
 
     /**
@@ -386,21 +386,21 @@ class TypeModuleTest extends AbstractModuleTestCase
      */
     public function testStringIsNotNumeric1()
     {
-        $this->aassert("abc")->isNumeric;
+        $this->assert("abc")->isNumeric;
     }
 
     public function testStringThatRepresentsAnIntegerIsNumeric1()
     {
-        $this->aassert("123")->isNumeric;
+        $this->assert("123")->isNumeric;
     }
 
     public function testStringThatRepresentsAFloatIsNumeric1()
     {
-        $this->aassert("12.3")->isNumeric;
+        $this->assert("12.3")->isNumeric;
     }
 
     public function testStringThatRepresentsScientificNotationIsNumeric1()
     {
-        $this->aassert("12.3e-17")->isNumeric;
+        $this->assert("12.3e-17")->isNumeric;
     }
 }

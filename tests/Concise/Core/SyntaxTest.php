@@ -9,13 +9,13 @@ class SyntaxTest extends TestCase
     public function testGetSyntax()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
-        $this->aassert($syntax->getSyntax())->equals('? equals ?');
+        $this->assert($syntax->getSyntax())->equals('? equals ?');
     }
 
     public function testGetClass()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
-        $this->aassert($syntax->getClass())->equals('stdClass');
+        $this->assert($syntax->getClass())->equals('stdClass');
     }
 
     /**
@@ -30,14 +30,14 @@ class SyntaxTest extends TestCase
     public function testGetMethod()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
-        $this->aassert($syntax->getMethod())->equals('method');
+        $this->assert($syntax->getMethod())->equals('method');
     }
 
     public function testGetRawSyntax()
     {
         $syntax =
             new Syntax('?:int does not equal ?:string', 'stdClass::method');
-        $this->aassert($syntax->getRawSyntax())->equals('? does not equal ?');
+        $this->assert($syntax->getRawSyntax())->equals('? does not equal ?');
     }
 
     /**
@@ -52,20 +52,20 @@ class SyntaxTest extends TestCase
     public function testDefaultDescriptionBlank()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
-        $this->aassert($syntax->getDescription())->isBlank;
+        $this->assert($syntax->getDescription())->isBlank;
     }
 
     public function testSettingDescription()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
         $syntax->setDescription('foo bar');
-        $this->aassert($syntax->getDescription())->equals('foo bar');
+        $this->assert($syntax->getDescription())->equals('foo bar');
     }
 
     public function testMethodIsAllowedToBeNull()
     {
         $syntax = new Syntax('? equals ?');
-        $this->aassert($syntax->getMethod())->isNull;
+        $this->assert($syntax->getMethod())->isNull;
     }
 
     // @todo testCapitolsAreNotAllowedInSyntax

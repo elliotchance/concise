@@ -17,7 +17,7 @@ class BuilderAnythingTest extends AbstractBuilderTestCase
             ->andReturn('foo')
             ->get();
         /*$this->assert($mock->myMethod(null), equals, 'foo');*/
-        $this->aassert($mock->myMethod(null))->equals('foo');
+        $this->assert($mock->myMethod(null))->equals('foo');
     }
 
     /**
@@ -30,6 +30,6 @@ class BuilderAnythingTest extends AbstractBuilderTestCase
             ->andReturn('foo')
             ->get();
         /*$this->assert($mock->myMethod(123), equals, 'foo');*/
-        $this->aassert($mock->myMethod(123))->equals('foo');
+        $this->assert($mock->myMethod(123))->equals('foo');
     }
 }

@@ -74,7 +74,7 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
         if (!$shouldPass) {
             $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
-        $this->aassertDate($left)->isAfter($right);
+        $this->assertDate($left)->isAfter($right);
     }
 
     public function dataProvider1()
@@ -136,6 +136,6 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
         if (!$shouldPass) {
             $this->setExpectedException('\Concise\Core\DidNotMatchException');
         }
-        $this->aassertDate($left)->isBefore($right);
+        $this->assertDate($left)->isBefore($right);
     }
 }

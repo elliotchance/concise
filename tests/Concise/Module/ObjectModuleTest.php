@@ -27,7 +27,7 @@ class ObjectModuleTest extends AbstractModuleTestCase
     public function testObjectDoesNotHaveAProperty()
     {
         $obj = new stdClass();
-        $this->aassert($obj)->doesNotHaveProperty('foo');
+        $this->assert($obj)->doesNotHaveProperty('foo');
     }
 
     /**
@@ -37,7 +37,7 @@ class ObjectModuleTest extends AbstractModuleTestCase
     {
         $obj = new stdClass();
         $obj->foo = 'bar';
-        $this->aassert($obj)->doesNotHaveProperty('foo');
+        $this->assert($obj)->doesNotHaveProperty('foo');
     }
 
     /**
@@ -47,7 +47,7 @@ class ObjectModuleTest extends AbstractModuleTestCase
     {
         $obj = new stdClass();
         $obj->foo = null;
-        $this->aassert($obj)->doesNotHaveProperty('foo');
+        $this->assert($obj)->doesNotHaveProperty('foo');
     }
 
     /**
@@ -55,18 +55,18 @@ class ObjectModuleTest extends AbstractModuleTestCase
      */
     public function testObjectDoesNotHaveAProperty1()
     {
-        $this->aassert($this->obj)->hasProperty('foo');
+        $this->assert($this->obj)->hasProperty('foo');
     }
 
     public function testObjectDoesHaveAProperty1()
     {
         $this->obj->foo = 'bar';
-        $this->aassert($this->obj)->hasProperty('foo');
+        $this->assert($this->obj)->hasProperty('foo');
     }
 
     public function testObjectDoesHaveAPropertyWithAFalsyValue1()
     {
         $this->obj->foo = null;
-        $this->aassert($this->obj)->hasProperty('foo');
+        $this->assert($this->obj)->hasProperty('foo');
     }
 }

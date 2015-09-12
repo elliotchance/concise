@@ -8,37 +8,37 @@ class DataTypeMismatchExceptionTest extends TestCase
 {
     public function testIsATypeOfInvalidArgumentException()
     {
-        $this->aassert(new DataTypeMismatchException())->instanceOf('\InvalidArgumentException');
+        $this->assert(new DataTypeMismatchException())->instanceOf('\InvalidArgumentException');
     }
 
     public function testExpectedTypesReturnsArray()
     {
         $e = new DataTypeMismatchException();
-        $this->aassert($e->getExpectedTypes())->isAnArray;
+        $this->assert($e->getExpectedTypes())->isAnArray;
     }
 
     public function testExpectedTypesCanBeSet()
     {
         $e = new DataTypeMismatchException('int', array('a'));
-        $this->aassert($e->getExpectedTypes())->equals(array('a'));
+        $this->assert($e->getExpectedTypes())->equals(array('a'));
     }
 
     public function testActualTypeReturnsUnknownIfUnknown()
     {
         $e = new DataTypeMismatchException();
-        $this->aassert($e->getActualType())->equals('unknown');
+        $this->assert($e->getActualType())->equals('unknown');
     }
 
     public function testActualTypeCanBeSet()
     {
         $e = new DataTypeMismatchException('int');
-        $this->aassert($e->getActualType())->equals('int');
+        $this->assert($e->getActualType())->equals('int');
     }
 
     public function testMessage()
     {
         $e = new DataTypeMismatchException('string', array('int', 'float'));
-        $this->aassert($e->getMessage())
+        $this->assert($e->getMessage())
             ->equals('Expected int or float, but got string');
     }
 }

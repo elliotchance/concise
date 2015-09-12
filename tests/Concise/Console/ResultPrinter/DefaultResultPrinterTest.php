@@ -42,13 +42,13 @@ class DefaultResultPrinterTest extends TestCase
 
     public function testWillGetConsoleWidthOnStartup()
     {
-        $this->aassert($this->resultPrinter->getWidth())
+        $this->assert($this->resultPrinter->getWidth())
             ->equals(exec('tput cols'));
     }
 
     public function testFirstIssueNumberIsOne()
     {
-        $this->aassert($this->resultPrinter->getIssueNumber())->equals(1);
+        $this->assert($this->resultPrinter->getIssueNumber())->equals(1);
     }
 
     public function testEndTestWillIncrementIssueNumber()
@@ -63,7 +63,7 @@ class DefaultResultPrinterTest extends TestCase
             0,
             $exception
         );
-        $this->aassert($this->resultPrinter->getIssueNumber())->equals(2);
+        $this->assert($this->resultPrinter->getIssueNumber())->equals(2);
     }
 
     public function testEndTestWillNotIncrementIssueNumberOnSuccess()
@@ -77,7 +77,7 @@ class DefaultResultPrinterTest extends TestCase
             0,
             null
         );
-        $this->aassert($this->resultPrinter->getIssueNumber())->equals(1);
+        $this->assert($this->resultPrinter->getIssueNumber())->equals(1);
     }
 
     public function testEndTestWillUpdateProgress()
@@ -171,7 +171,7 @@ class DefaultResultPrinterTest extends TestCase
 
     public function testStartTimeIsNow()
     {
-        $this->aassert($this->getProperty($this->resultPrinter, 'startTime'))
+        $this->assert($this->getProperty($this->resultPrinter, 'startTime'))
             ->isWithin(1)->of(time());
     }
 
@@ -181,7 +181,7 @@ class DefaultResultPrinterTest extends TestCase
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->get();
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             '0 seconds'
         );
     }
@@ -193,7 +193,7 @@ class DefaultResultPrinterTest extends TestCase
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             '10 seconds'
         );
     }
@@ -205,14 +205,14 @@ class DefaultResultPrinterTest extends TestCase
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 200);
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             '3 minutes 20 seconds'
         );
     }
 
     public function testHasUpdatedIsFalseByDefault()
     {
-        $this->aassert(
+        $this->assert(
             $this->getProperty($this->resultPrinter, 'hasUpdated')
         )->isFalse;
     }
@@ -223,7 +223,7 @@ class DefaultResultPrinterTest extends TestCase
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->stub('write')->get();
         $resultPrinter->update();
-        $this->aassert(
+        $this->assert(
             $this->getProperty($resultPrinter, 'hasUpdated')
         )->isTrue;
     }
@@ -263,7 +263,7 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             ' remaining'
         );
     }
@@ -277,7 +277,7 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             ' (3 minutes remaining)'
         );
     }
@@ -291,7 +291,7 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->aassert($resultPrinter->getAssertionString())
+        $this->assert($resultPrinter->getAssertionString())
             ->doesNotContainString(' remaining');
     }
 
@@ -304,7 +304,7 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 3);
 
-        $this->aassert($resultPrinter->getAssertionString())
+        $this->assert($resultPrinter->getAssertionString())
             ->doesNotContainString(' remaining');
     }
 
@@ -317,7 +317,7 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 5);
 
-        $this->aassert($resultPrinter->getAssertionString())->containsString(
+        $this->assert($resultPrinter->getAssertionString())->containsString(
             ' remaining'
         );
     }
@@ -338,7 +338,7 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
         $b = $resultPrinter->getRemainingTimeString();
 
-        $this->aassert($a)->equals($b);
+        $this->assert($a)->equals($b);
     }
 
     /**
@@ -354,7 +354,7 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
         $this->setProperty($resultPrinter, 'width', 80);
 
-        $this->aassert($resultPrinter->getRealAssertionString(false))->isBlank;
+        $this->assert($resultPrinter->getRealAssertionString(false))->isBlank;
     }
 
     /**
@@ -377,7 +377,7 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
         $this->setProperty($resultPrinter, 'width', 80);
 
-        $this->aassert($resultPrinter->getAssertionString())->equals('foo');
+        $this->assert($resultPrinter->getAssertionString())->equals('foo');
     }
 
     /**
@@ -406,7 +406,7 @@ class DefaultResultPrinterTest extends TestCase
             new ProgressCounter(2778, true)
         );
 
-        $this->aassert($resultPrinter->getAssertionString())
+        $this->assert($resultPrinter->getAssertionString())
             ->doesNotContainString(')8');
     }
 }

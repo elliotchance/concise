@@ -10,7 +10,7 @@ $file = preg_replace_callback(
     '/(\s*)\\$this\\->assert\\((.*)\\);/msU',
     function ($v) {
         $r = "$v[1]/*\$this->assert($v[2]);*/$v[1]";
-        $r .= "\$this->aassert";
+        $r .= "\$this->assert";
         $parts = explode(',', rtrim($v[2]));
         if (preg_match('/^[a-z]+$/', $parts[0])) {
             $r .= ucfirst($parts[0]);

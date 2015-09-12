@@ -14,7 +14,7 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     {
         $mock = $builder->stub('myMethod')->andReturn('foo')->get();
         /*$this->assert($mock->myMethod(), equals, 'foo');*/
-        $this->aassert($mock->myMethod())->equals('foo');
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -24,7 +24,7 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     {
         $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         /*$this->assert($mock->myMethod(), equals, 'foo');*/
-        $this->aassert($mock->myMethod())->equals('foo');
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -36,7 +36,7 @@ class BuilderReturnTest extends AbstractBuilderTestCase
         $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         $mock->myMethod();
         /*$this->assert($mock->myMethod(), equals, 'bar');*/
-        $this->aassert($mock->myMethod())->equals('bar');
+        $this->assert($mock->myMethod())->equals('bar');
     }
 
     /**
@@ -49,7 +49,7 @@ class BuilderReturnTest extends AbstractBuilderTestCase
         $mock->myMethod();
         $mock->myMethod();
         /*$this->assert($mock->myMethod(), equals, 'foo');*/
-        $this->aassert($mock->myMethod())->equals('foo');
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**

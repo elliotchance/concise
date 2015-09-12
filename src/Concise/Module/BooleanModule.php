@@ -10,17 +10,6 @@ class BooleanModule extends AbstractModule
     }
 
     /**
-     * Always fail.
-     *
-     * @syntax false
-     * @return bool
-     */
-    public function false()
-    {
-        $this->fail();
-    }
-
-    /**
      * Assert value is false.
      *
      * @syntax ? is false
@@ -62,16 +51,5 @@ class BooleanModule extends AbstractModule
     public function isTruthy()
     {
         $this->failIf($this->data[0] != true);
-    }
-
-    /**
-     * Always pass.
-     *
-     * @syntax true
-     * @return bool
-     */
-    public function true()
-    {
-        return true;
     }
 }

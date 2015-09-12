@@ -14,12 +14,12 @@ class TraceSimplifierTest extends TestCase
 
     public function testZeroItemsInTraceWillNotRenderAnything()
     {
-        $this->aassert($this->simplifier->render(array()))->equals('');
+        $this->assert($this->simplifier->render(array()))->equals('');
     }
 
     public function testOneItemWillPrintSimplifiedFile()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -33,7 +33,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillSkipTraceLineIfItsTheConciseExecutable()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -47,7 +47,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillSkipTraceLineIfThePathIsInTheVendorFolder()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -61,7 +61,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testUsesUnknownFileIfNotSpecified()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -74,7 +74,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillUseAQuestionMarkIfTheLineIsNotSpecified()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -87,7 +87,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillIncludeLineNumber()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -113,12 +113,12 @@ class TraceSimplifierTest extends TestCase
                 ),
             )
         );
-        $this->aassert(substr_count($result, 'foo.php'))->equals(1);
+        $this->assert(substr_count($result, 'foo.php'))->equals(1);
     }
 
     public function testWillIncludeTheFunctionName()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -131,7 +131,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillIncludeClassIfAvailable()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(
@@ -146,7 +146,7 @@ class TraceSimplifierTest extends TestCase
 
     public function testWillIncludeTypeIfClassIsAvailable()
     {
-        $this->aassert(
+        $this->assert(
             $this->simplifier->render(
                 array(
                     array(

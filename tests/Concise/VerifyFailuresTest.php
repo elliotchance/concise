@@ -19,8 +19,8 @@ class VerifyFailuresTest extends TestCase
      */
     public function testMultipleVerifyFailures()
     {
-        $this->averify(10)->equals(15);
-        $this->averify(15)->equals(20);
+        $this->verify(10)->equals(15);
+        $this->verify(15)->equals(20);
     }
 
     /**
@@ -28,14 +28,14 @@ class VerifyFailuresTest extends TestCase
      */
     public function testSingleVerifyFailures()
     {
-        $this->averify(10)->equals(15);
+        $this->verify(10)->equals(15);
     }
 
     protected function onNotSuccessfulTest(\Exception $e)
     {
         $c = new Color();
         self::$failures[] = $this->getName();
-        $this->aassert(self::$expectedFailures[$this->getName()])
+        $this->assert(self::$expectedFailures[$this->getName()])
             ->equals($c($e->getMessage())->clean());
     }
 
@@ -45,7 +45,7 @@ class VerifyFailuresTest extends TestCase
         $b = self::$failures;
         $testCase = new TestCase();
         $testCase->setUp();
-        $testCase->aassert(array_diff($a, $b))->equals(array_diff($b, $a));
+        $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();
     }
 }

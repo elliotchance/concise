@@ -6,25 +6,25 @@ class TestCaseTest extends TestCase
 {
     public function testExtendsTestCase()
     {
-        $this->aassert(new TestCase())
+        $this->assert(new TestCase())
             ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
     }
 
     protected function assertAssertions(array $expected, array $actual)
     {
-        $this->aassert(count($actual))->equals(count($expected));
+        $this->assert(count($actual))->equals(count($expected));
         $right = array();
         foreach ($actual as $a) {
             /** @var Assertion $a */
             $right[] = $a->getAssertion();
         }
-        $this->aassert($right)->equals($expected);
+        $this->assert($right)->equals($expected);
     }
 
     public function testCanSetAttribute()
     {
         $this->myAttribute = 123;
-        $this->aassert(123)->exactlyEquals($this->myAttribute);
+        $this->assert(123)->exactlyEquals($this->myAttribute);
     }
 
     /**
@@ -41,20 +41,20 @@ class TestCaseTest extends TestCase
         $this->x = 123;
         $this->b = '456';
         $data = $this->getData();
-        $this->aassert($data['x'])->exactlyEquals(123);
+        $this->assert($data['x'])->exactlyEquals(123);
     }
 
     public function testCanUnsetProperty()
     {
         $this->myUniqueProperty = 123;
         unset($this->myUniqueProperty);
-        $this->aassert(isset($this->myUniqueProperty))->isFalse;
+        $this->assert(isset($this->myUniqueProperty))->isFalse;
     }
 
     public function testUnsettingAnAttributeThatDoesntExistDoesNothing()
     {
         unset($this->foobar);
-        $this->aassert(isset($this->myUniqueProperty))->isFalse;
+        $this->assert(isset($this->myUniqueProperty))->isFalse;
     }
 
     /**
@@ -71,18 +71,18 @@ class TestCaseTest extends TestCase
 
     public function testDataIncludesExplicitInstanceVariables()
     {
-        $this->aassert($this->getData())->hasKey('mySpecialAttribute');
+        $this->assert($this->getData())->hasKey('mySpecialAttribute');
     }
 
     public function testIssetWorksWithAttributes()
     {
         $this->x = 123;
-        $this->aassert(isset($this->x))->isTrue;
+        $this->assert(isset($this->x))->isTrue;
     }
 
     public function testDataIsResetBetweenTests()
     {
-        $this->aassert(isset($this->x))->isFalse;
+        $this->assert(isset($this->x))->isFalse;
     }
 
     protected function getAssertionsForFixtureTests()
@@ -102,6 +102,6 @@ class TestCaseTest extends TestCase
 
     public function testAssertionBuilder()
     {
-        $this->aassert(123)->equals("123");
+        $this->assert(123)->equals("123");
     }
 }

@@ -15,7 +15,7 @@ class BuilderAbstractTest extends AbstractBuilderTestCase
     ) {
         $mock = $builder->stub('myMethod')->get();
         /*$this->assert($mock->myMethod(), is_null);*/
-        $this->aassert($mock->myMethod())->isNull;
+        $this->assert($mock->myMethod())->isNull;
     }
 
     /**
@@ -26,7 +26,7 @@ class BuilderAbstractTest extends AbstractBuilderTestCase
     ) {
         $mock = $builder->stub('myMethod')->get();
         /*$this->assert($mock->myMethod(), is_null);*/
-        $this->aassert($mock->myMethod())->isNull;
+        $this->assert($mock->myMethod())->isNull;
     }
 
     /**
@@ -63,6 +63,6 @@ class BuilderAbstractTest extends AbstractBuilderTestCase
     ) {
         $mock = $builder->stub('myAbstractMethod')->get();
         /*$this->assert($mock->myAbstractMethod(), is_null);*/
-        $this->aassert($mock->myAbstractMethod())->isNull;
+        $this->assert($mock->myAbstractMethod())->isNull;
     }
 }

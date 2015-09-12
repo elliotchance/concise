@@ -16,7 +16,7 @@ abstract class AbstractModuleTestCase extends TestCase
 
     public function testExtendsAbstractMatcher()
     {
-        $this->aassert($this->matcher)
+        $this->assert($this->matcher)
             ->isInstanceOf('\Concise\Module\AbstractModule');
     }
 
@@ -45,6 +45,6 @@ abstract class AbstractModuleTestCase extends TestCase
 
     public function testModuleHasAName()
     {
-        $this->aassert($this->matcher->getName())->isNotBlank;
+        $this->assert($this->matcher->getName())->isNotBlank;
     }
 }

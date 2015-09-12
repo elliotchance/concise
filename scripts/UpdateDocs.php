@@ -50,7 +50,7 @@ function updateBuilders()
             }
 
             $php[$trait] .=
-                "\n\t */\n\tpublic function a$method" .
+                "\n\t */\n\tpublic function $method" .
                 ucfirst($k) .
                 "(";
             if (null !== $v) {

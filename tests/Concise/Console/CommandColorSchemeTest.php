@@ -19,7 +19,7 @@ class CommandColorSchemeTest extends TestCase
 
     public function testDefaultColorSchemeIsSet()
     {
-        $this->aassert($this->command->getColorScheme())
+        $this->assert($this->command->getColorScheme())
             ->instanceOf('Concise\Console\Theme\DefaultTheme');
     }
 
@@ -27,7 +27,7 @@ class CommandColorSchemeTest extends TestCase
     {
         $theme = $this->mock('Concise\Console\Theme\DefaultTheme')->get();
         $this->setProperty($this->command, 'colorScheme', get_class($theme));
-        $this->aassert(get_class($this->command->getColorScheme()))
+        $this->assert(get_class($this->command->getColorScheme()))
             ->equals(get_class($theme));
     }
 
@@ -44,14 +44,14 @@ class CommandColorSchemeTest extends TestCase
     public function testColorSchemeCanBeAClassNameFoundInTheDefaultNamespace()
     {
         $this->setProperty($this->command, 'colorScheme', 'Default');
-        $this->aassert($this->command->getColorScheme())
+        $this->assert($this->command->getColorScheme())
             ->instanceOf('Concise\Console\Theme\DefaultTheme');
     }
 
     public function testColorSchemeWithLowerCase()
     {
         $this->setProperty($this->command, 'colorScheme', 'default');
-        $this->aassert($this->command->getColorScheme())
+        $this->assert($this->command->getColorScheme())
             ->instanceOf('Concise\Console\Theme\DefaultTheme');
     }
 }

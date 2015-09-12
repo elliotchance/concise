@@ -14,6 +14,6 @@ class ReturnPropertyActionTest extends TestCase
             contains_string,
             'return $this->foo;'
         );*/
-        $this->aassert($self->getActionCode())->containsString('return $this->foo;');
+        $this->assert($self->getActionCode())->containsString('return $this->foo;');
     }
 }

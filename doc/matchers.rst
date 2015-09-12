@@ -49,8 +49,6 @@ Booleans
 * `mixed`_ is falsy -  Assert a value is a false-like value.   
 * `mixed`_ is true -  Assert a value is true.   
 * `mixed`_ is truthy -  Assert a value is a non false-like value.   
-* false -  Always fail.   
-* true -  Always pass.   
 
 Date and Time
 -------------

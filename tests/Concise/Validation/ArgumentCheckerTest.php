@@ -8,7 +8,7 @@ class ArgumentCheckerTest extends TestCase
 {
     public function testSuccessReturnsOriginalValue()
     {
-        $this->aassert(ArgumentChecker::check(123, 'int', 1))
+        $this->assert(ArgumentChecker::check(123, 'int', 1))
             ->exactlyEquals(123);
     }
 
@@ -32,7 +32,7 @@ class ArgumentCheckerTest extends TestCase
 
     public function testMultipleTypesCanBeCommaSeparated()
     {
-        $this->aassert(ArgumentChecker::check(123, 'int,float'))
+        $this->assert(ArgumentChecker::check(123, 'int,float'))
             ->exactlyEquals(123);
     }
 }

@@ -46,14 +46,14 @@ class ClassCompilerTest extends TestCase
     public function testInstanceCanBeReturnedFromGeneratedCode()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-        $this->aassert($compiler->newInstance())
+        $this->assert($compiler->newInstance())
             ->instanceOf('Concise\Mock\ClassCompilerMock1');
     }
 
     public function testCanGenerateMockFromAbstractClass()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock2');
-        $this->aassert($compiler->newInstance())
+        $this->assert($compiler->newInstance())
             ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
@@ -61,7 +61,7 @@ class ClassCompilerTest extends TestCase
     {
         $a = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $b = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
-        $this->aassert($a->newInstance())
+        $this->assert($a->newInstance())
             ->isNotExactlyEqualTo($b->newInstance());
     }
 
@@ -70,7 +70,7 @@ class ClassCompilerTest extends TestCase
      */
     protected function assertPHP(ClassCompiler $compiler, $php)
     {
-        $this->aassert($compiler->generateCode())->matchesRegex(
+        $this->assert($compiler->generateCode())->matchesRegex(
             '/' . str_replace('%', '(.*)', preg_quote($php)) . '/sm'
         );
         $compiler->newInstance();
@@ -80,7 +80,7 @@ class ClassCompilerTest extends TestCase
     )
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
-        $this->aassert($compiler->newInstance())
+        $this->assert($compiler->newInstance())
             ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
@@ -88,7 +88,7 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('MyCustomClass');
-        $this->aassert(get_class($compiler->newInstance()))
+        $this->assert(get_class($compiler->newInstance()))
             ->equals('Concise\Mock\MyCustomClass');
     }
 
@@ -96,7 +96,7 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('Other\Place\MyRandomClass');
-        $this->aassert(get_class($compiler->newInstance()))
+        $this->assert(get_class($compiler->newInstance()))
             ->equals('Other\Place\MyRandomClass');
     }
 
@@ -104,7 +104,7 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $compiler->setCustomClassName('\MyCustomClass');
-        $this->aassert(get_class($compiler->newInstance()))
+        $this->assert(get_class($compiler->newInstance()))
             ->equals('MyCustomClass');
     }
 
@@ -112,7 +112,7 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
         $compiler->setCustomClassName('\Concise\Mock\ClassCompilerMock2Foo');
-        $this->aassert($compiler->newInstance())
+        $this->assert($compiler->newInstance())
             ->instanceOf('Concise\Mock\ClassCompilerMock2');
     }
 

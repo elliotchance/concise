@@ -17,18 +17,18 @@ class VersionTest extends TestCase
 
     public function testAnEmptyStringWillBeReturnedIfThePackageCanNotBeFound()
     {
-        $this->aassert($this->version->getVersionForPackage('foo'))->isBlank;
+        $this->assert($this->version->getVersionForPackage('foo'))->isBlank;
     }
 
     public function testVersionCanBeExtractedForAPackageName()
     {
         $v = $this->version->getVersionForPackage('sebastian/version');
-        $this->aassert($v)->matchesRegex('/^\\d\.\\d+/');
+        $this->assert($v)->matchesRegex('/^\\d\.\\d+/');
     }
 
     public function testWeCanEasilyGetTheConciseVersion()
     {
-        $this->aassert($this->version->getConciseVersion())
+        $this->assert($this->version->getConciseVersion())
             ->equals(
                 $this->version->getVersionForPackage('elliotchance/concise')
             );
@@ -36,7 +36,7 @@ class VersionTest extends TestCase
 
     public function testFindingVendorFolder()
     {
-        $this->aassert($this->version->findVendorFolder())->endsWith('/vendor');
+        $this->assert($this->version->findVendorFolder())->endsWith('/vendor');
     }
 
     public function testReturnEmptyStringIfVendorFolderCannotBeFound()
@@ -44,14 +44,14 @@ class VersionTest extends TestCase
         $version = $this->niceMock('Concise\Version')
             ->stub('findVendorFolder')
             ->get();
-        $this->aassert($version->getConciseVersion())->isBlank;
+        $this->assert($version->getConciseVersion())->isBlank;
     }
 
     public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
     )
     {
         $version = $this->niceMock('Concise\Version')->expose('findVendorFolder')->get();
-        $this->aassert($version->findVendorFolder('/tmp'))->isNull;
+        $this->assert($version->findVendorFolder('/tmp'))->isNull;
     }
 
     public function versionData()
@@ -80,6 +80,6 @@ class VersionTest extends TestCase
     public function testVersionName($version, $expectedName)
     {
         $name = $this->version->getVersionNameForVersion($version);
-        $this->aassert($name)->equals($expectedName);
+        $this->assert($name)->equals($expectedName);
     }
 }

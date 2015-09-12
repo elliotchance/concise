@@ -34,6 +34,6 @@ class CharacterConverterTest extends TestCase
             exactly_equals,
             $outcome
         );*/
-        $this->aassert($converter->convertEscapedCharacter($letter))->exactlyEquals($outcome);
+        $this->assert($converter->convertEscapedCharacter($letter))->exactlyEquals($outcome);
     }
 }

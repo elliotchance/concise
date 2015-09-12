@@ -15,7 +15,7 @@ class RegularExpressionModuleTest extends AbstractModuleTestCase
 
     public function testMatchesRegularExpression()
     {
-        $this->aassert("123")->matchesRegularExpression('/\\d+/');
+        $this->assert("123")->matchesRegularExpression('/\\d+/');
     }
 
     /**
@@ -23,12 +23,12 @@ class RegularExpressionModuleTest extends AbstractModuleTestCase
      */
     public function testMatchesRegularExpressionFailure()
     {
-        $this->aassert("abc")->matchesRegularExpression('/\\d+/');
+        $this->assert("abc")->matchesRegularExpression('/\\d+/');
     }
 
     public function testDoesNotMatchRegularExpression()
     {
-        $this->aassert("abc")->doesNotMatchRegex('/^f/');
+        $this->assert("abc")->doesNotMatchRegex('/^f/');
     }
 
     /**
@@ -36,6 +36,6 @@ class RegularExpressionModuleTest extends AbstractModuleTestCase
      */
     public function testDoesNotMatchRegularExpressionFailure()
     {
-        $this->aassert("foo")->doesNotMatchRegex('/^f/');
+        $this->assert("foo")->doesNotMatchRegex('/^f/');
     }
 }

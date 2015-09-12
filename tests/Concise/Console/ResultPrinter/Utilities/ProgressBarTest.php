@@ -23,7 +23,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'green' => 5,
             )
         );
-        $this->aassert($result)->equals($this->color(5, 'green'));
+        $this->assert($result)->equals($this->color(5, 'green'));
     }
 
     public function testTwoColors()
@@ -35,7 +35,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'red' => 3,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(3, 'green') . $this->color(3, 'red'));
     }
 
@@ -48,7 +48,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'red' => 40,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(3, 'green') . $this->color(2, 'red'));
     }
 
@@ -61,7 +61,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'red' => 7,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(1, 'green') . $this->color(4, 'red'));
     }
 
@@ -74,7 +74,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(1, 'yellow') . $this->color(4, 'blue'));
     }
 
@@ -87,7 +87,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(0, 'yellow') . $this->color(5, 'blue'));
     }
 
@@ -100,7 +100,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'blue' => 19,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(0, 'yellow') . $this->color(5, 'blue'));
     }
 
@@ -113,7 +113,7 @@ class ProgressBarTest extends ProgressBarTestCase
                 'blue' => -1,
             )
         );
-        $this->aassert($result)
+        $this->assert($result)
             ->equals($this->color(0, 'yellow') . $this->color(0, 'blue'));
     }
 

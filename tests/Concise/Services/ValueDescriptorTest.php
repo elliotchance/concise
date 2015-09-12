@@ -17,32 +17,32 @@ class ValueDescriptorTest extends TestCase
 
     public function testDescriptionOfString()
     {
-        $this->aassert($this->descriptor->describe('abc'))->equals('string');
+        $this->assert($this->descriptor->describe('abc'))->equals('string');
     }
 
     public function testDescriptionOfInteger()
     {
-        $this->aassert($this->descriptor->describe(123))->equals('integer');
+        $this->assert($this->descriptor->describe(123))->equals('integer');
     }
 
     public function testDescriptionOfDouble()
     {
-        $this->aassert($this->descriptor->describe(1.23))->equals('double');
+        $this->assert($this->descriptor->describe(1.23))->equals('double');
     }
 
     public function testDescriptionOfArray()
     {
-        $this->aassert($this->descriptor->describe(array()))->equals('array');
+        $this->assert($this->descriptor->describe(array()))->equals('array');
     }
 
     public function testDescriptionOfObject()
     {
-        $this->aassert($this->descriptor->describe($this))->equals('Concise\Services\ValueDescriptorTest');
+        $this->assert($this->descriptor->describe($this))->equals('Concise\Services\ValueDescriptorTest');
     }
 
     public function testDescriptionOfResource()
     {
-        $this->aassert($this->descriptor->describe(fopen('.', 'r')))
+        $this->assert($this->descriptor->describe(fopen('.', 'r')))
             ->equals('resource');
     }
 }

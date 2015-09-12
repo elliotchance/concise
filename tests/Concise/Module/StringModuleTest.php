@@ -15,7 +15,7 @@ class StringModuleTest extends AbstractModuleTestCase
 
     public function testSuccessIfStringContainsASubstring()
     {
-        $this->aassert('foobar')->containsCaseInsensitiveString('oob');
+        $this->assert('foobar')->containsCaseInsensitiveString('oob');
     }
 
     /**
@@ -23,17 +23,17 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testFailsIfSubstringDoesNotExistInString()
     {
-        $this->aassert('foobar')->containsCaseInsensitiveString('baz');
+        $this->assert('foobar')->containsCaseInsensitiveString('baz');
     }
 
     public function testIsNotSensitiveToCase()
     {
-        $this->aassert('foobar')->containsCaseInsensitiveString('Foo');
+        $this->assert('foobar')->containsCaseInsensitiveString('Foo');
     }
 
     public function testSuccessIfStringContainsASubstring1()
     {
-        $this->aassert('foobar')->containsString('oob');
+        $this->assert('foobar')->containsString('oob');
     }
 
     /**
@@ -41,7 +41,7 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testFailsIfSubstringDoesNotExistInString1()
     {
-        $this->aassert('foobar')->containsString('baz');
+        $this->assert('foobar')->containsString('baz');
     }
 
     /**
@@ -49,7 +49,7 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testIsSensitiveToCase()
     {
-        $this->aassert('foobar')->containsString('Foo');
+        $this->assert('foobar')->containsString('Foo');
     }
 
     /**
@@ -57,12 +57,12 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testSuccessIfStringContainsASubstring2()
     {
-        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('oob');
+        $this->assert('foobar')->doesNotContainCaseInsensitiveString('oob');
     }
 
     public function testFailsIfSubstringDoesNotExistInString2()
     {
-        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('baz');
+        $this->assert('foobar')->doesNotContainCaseInsensitiveString('baz');
     }
 
     /**
@@ -70,7 +70,7 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testIsNotSensitiveToCase1()
     {
-        $this->aassert('foobar')->doesNotContainCaseInsensitiveString('Foo');
+        $this->assert('foobar')->doesNotContainCaseInsensitiveString('Foo');
     }
 
     /**
@@ -78,25 +78,25 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testSuccessIfStringContainsASubstring3()
     {
-        $this->aassert('foobar')->doesNotContainString('oob');
+        $this->assert('foobar')->doesNotContainString('oob');
     }
 
     public function testFailsIfSubstringDoesNotExistInString3()
     {
         /*$this->assert('foobar', does_not_contain_string, 'baz');*/
-        $this->aassert('foobar')->doesNotContainString('baz');
+        $this->assert('foobar')->doesNotContainString('baz');
     }
 
     public function testIsSensitiveToCase1()
     {
         /*$this->assert('foobar', does_not_contain_string, 'Foo');*/
-        $this->aassert('foobar')->doesNotContainString('Foo');
+        $this->assert('foobar')->doesNotContainString('Foo');
     }
 
     public function testStringWithNoCharactersIsBlank()
     {
         /*$this->assert('', is_blank);*/
-        $this->aassert('')->isBlank;
+        $this->assert('')->isBlank;
     }
 
     /**
@@ -104,7 +104,7 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringWithAtLeastOneCharacterIsNotBlank()
     {
-        $this->aassert('a')->isBlank;
+        $this->assert('a')->isBlank;
     }
 
     /**
@@ -112,22 +112,22 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringWithNoCharactersIsBlank1()
     {
-        $this->aassert('')->isNotBlank;
+        $this->assert('')->isNotBlank;
     }
 
     public function testStringWithAtLeastOneCharacterIsNotBlank1()
     {
-        $this->aassert('a')->isNotBlank;
+        $this->assert('a')->isNotBlank;
     }
 
     public function testNeedleLongerThanHaystack()
     {
-        $this->aassert("abc")->doesNotEndWith("abcd");
+        $this->assert("abc")->doesNotEndWith("abcd");
     }
 
     public function testStringDoesNotStartWithAnotherString()
     {
-        $this->aassert("abc")->doesNotEndWith("a");
+        $this->assert("abc")->doesNotEndWith("a");
     }
 
     /**
@@ -135,17 +135,17 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringDoesNotEndWithFailure()
     {
-        $this->aassert("abc")->doesNotEndWith("abc");
+        $this->assert("abc")->doesNotEndWith("abc");
     }
 
     public function testNeedleLongerThanHaystack1()
     {
-        $this->aassert("abc")->doesNotStartWith("abcd");
+        $this->assert("abc")->doesNotStartWith("abcd");
     }
 
     public function testStringDoesNotStartWithAnotherString1()
     {
-        $this->aassert("abc")->doesNotStartWith("c");
+        $this->assert("abc")->doesNotStartWith("c");
     }
 
     /**
@@ -153,17 +153,17 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringDoesNotStartWithFailure()
     {
-        $this->aassert("abc")->doesNotStartWith("abc");
+        $this->assert("abc")->doesNotStartWith("abc");
     }
 
     public function testBasicString()
     {
-        $this->aassert("abc")->endsWith("bc");
+        $this->assert("abc")->endsWith("bc");
     }
 
     public function testStringsAreEqual()
     {
-        $this->aassert("abc")->endsWith("abc");
+        $this->assert("abc")->endsWith("abc");
     }
 
     /**
@@ -171,17 +171,17 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringEndsWithFailure()
     {
-        $this->aassert("abc")->endsWith("ab");
+        $this->assert("abc")->endsWith("ab");
     }
 
     public function testBasicString1()
     {
-        $this->aassert("abc")->startsWith("ab");
+        $this->assert("abc")->startsWith("ab");
     }
 
     public function testStringsAreEqual1()
     {
-        $this->aassert("abc")->startsWith("abc");
+        $this->assert("abc")->startsWith("abc");
     }
 
     /**
@@ -189,6 +189,6 @@ class StringModuleTest extends AbstractModuleTestCase
      */
     public function testStringStartsWithFailure()
     {
-        $this->aassert("abc")->startsWith("abcd");
+        $this->assert("abc")->startsWith("abcd");
     }
 }

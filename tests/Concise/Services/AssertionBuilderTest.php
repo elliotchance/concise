@@ -9,12 +9,7 @@ class AssertionBuilderTest extends TestCase
     public function testCanFindAssertionWithArguments()
     {
         $assertion = $this->getAssertionWithArgs(array(123, 'equals', 123));
-        /*$this->assert(
-            $assertion->getMatcher(),
-            instance_of,
-            '\Concise\Module\BasicModule'
-        );*/
-        $this->aassert($assertion->getMatcher())->instanceOf('\Concise\Module\BasicModule');
+        $this->assert($assertion->getMatcher())->instanceOf('\Concise\Module\BasicModule');
     }
 
     /**
@@ -28,48 +23,16 @@ class AssertionBuilderTest extends TestCase
         $builder->getAssertion();
     }
 
-    public function testAssertionBuilderWillAcceptTrue()
-    {
-        $assertion = $this->getAssertionWithArgs(array(true));
-        /*$this->assert(
-            $assertion->getMatcher(),
-            instance_of,
-            '\Concise\Module\BooleanModule'
-        );*/
-        $this->aassert($assertion->getMatcher())->instanceOf('\Concise\Module\BooleanModule');
-    }
-
-    public function testAssertionBuilderWillAcceptFalse()
-    {
-        $assertion = $this->getAssertionWithArgs(array(false));
-        /*$this->assert(
-            $assertion->getMatcher(),
-            instance_of,
-            '\Concise\Module\BooleanModule'
-        );*/
-        $this->aassert($assertion->getMatcher())->instanceOf('\Concise\Module\BooleanModule');
-    }
-
     public function testAssertionBuilderWillAcceptTrueFollowedByOtherArguments()
     {
         $assertion = $this->getAssertionWithArgs(array(true, 'is true'));
-        /*$this->assert(
-            $assertion->getMatcher(),
-            not_instance_of,
-            '\Concise\Module\BasicModule'
-        );*/
-        $this->aassert($assertion->getMatcher())->notInstanceOf('\Concise\Module\BasicModule');
+        $this->assert($assertion->getMatcher())->notInstanceOf('\Concise\Module\BasicModule');
     }
 
     public function testAssertionBuilderWillAcceptFalseFollowedByOtherArguments()
     {
         $assertion = $this->getAssertionWithArgs(array(false, 'is false'));
-        /*$this->assert(
-            $assertion->getMatcher(),
-            not_instance_of,
-            '\Concise\Module\BasicModule'
-        );*/
-        $this->aassert($assertion->getMatcher())->notInstanceOf('\Concise\Module\BasicModule');
+        $this->assert($assertion->getMatcher())->notInstanceOf('\Concise\Module\BasicModule');
     }
 
     protected function getAssertionWithArgs(array $args)

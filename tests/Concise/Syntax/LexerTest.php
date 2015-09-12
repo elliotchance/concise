@@ -42,27 +42,27 @@ class LexerTest extends TestCase
     {
         $lexer = new Lexer();
         $result = $lexer->parse($string);
-        $this->aassert($expectedToken)->equals($result['tokens'][0]);
+        $this->assert($expectedToken)->equals($result['tokens'][0]);
     }
 
     public function testTokensReturnsAnArrayWithABlankString()
     {
         $lexer = new Lexer();
         $result = $lexer->parse('');
-        $this->aassert(count($result['tokens']))->equals(0);
+        $this->assert(count($result['tokens']))->equals(0);
     }
 
     public function testLexerIgnoresBlankTokens()
     {
         $lexer = new Lexer();
         $result = $lexer->parse(' not not  not   not ');
-        $this->aassert(count($result['tokens']))->equals(4);
+        $this->assert(count($result['tokens']))->equals(4);
     }
 
     public function testTokensHaveUniqueValues()
     {
         $class = new \ReflectionClass('\Concise\Syntax\Lexer');
-        $this->aassert($class->getConstants())->isUnique;
+        $this->assert($class->getConstants())->isUnique;
     }
 
     public function stringData()
@@ -83,7 +83,7 @@ class LexerTest extends TestCase
     {
         $lexer = new Lexer();
         $result = $lexer->parse($string);
-        $this->aassert(array(new Token\Value($expected)))
+        $this->assert(array(new Token\Value($expected)))
             ->equals($result['tokens']);
     }
 
@@ -121,7 +121,7 @@ class LexerTest extends TestCase
     {
         $lexer = new Lexer();
         $result = $lexer->parse('?:int');
-        $this->aassert($result['arguments'][0]->getAcceptedTypes())
+        $this->assert($result['arguments'][0]->getAcceptedTypes())
             ->equals(array('int'));
     }
 
@@ -129,14 +129,14 @@ class LexerTest extends TestCase
     {
         $lexer = new Lexer();
         $result = $lexer->parse('?:int,float');
-        $this->aassert($result['arguments'][0]->getAcceptedTypes())->equals(array('int', 'float'));
+        $this->assert($result['arguments'][0]->getAcceptedTypes())->equals(array('int', 'float'));
     }
 
     public function testLexerWillNotPutExpectedTypesInAttributeValue()
     {
         $lexer = new Lexer();
         $result = $lexer->parse('?:int,float');
-        $this->aassert($result['arguments'][0]->getValue())->equals('?');
+        $this->assert($result['arguments'][0]->getValue())->equals('?');
     }
 
     /**

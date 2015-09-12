@@ -16,7 +16,7 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
             function () {
             }
         )->get();
-        $this->aassert($mock->myMethod())->isNull;
+        $this->assert($mock->myMethod())->isNull;
     }
 
     /**
@@ -30,7 +30,7 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
                 return 'foo';
             }
         )->get();
-        $this->aassert($mock->myMethod())->equals('foo');
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -45,7 +45,7 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
                 ++$count;
             }
         )->get();
-        $this->aassert($count)->equals(0);
+        $this->assert($count)->equals(0);
     }
 
     /**
@@ -59,7 +59,7 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
                 return $i->getInvokeCount();
             }
         )->get();
-        $this->aassert($mock->myMethod())->equals(1);
+        $this->assert($mock->myMethod())->equals(1);
     }
 
     /**
@@ -74,7 +74,7 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
             }
         )->get();
         $mock->myMethod();
-        $this->aassert($mock->myMethod())->equals(2);
+        $this->assert($mock->myMethod())->equals(2);
     }
 
     /**
@@ -88,6 +88,6 @@ class BuilderReturnCallbackTest extends AbstractBuilderTestCase
                 return $i->getArguments();
             }
         )->get();
-        $this->aassert($mock->myMethod('hello'))->equals(array('hello'));
+        $this->assert($mock->myMethod('hello'))->equals(array('hello'));
     }
 }
