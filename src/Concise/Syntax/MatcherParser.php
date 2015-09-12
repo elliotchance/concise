@@ -22,11 +22,6 @@ class MatcherParser
     protected $keywords = array();
 
     /**
-     * @var Lexer
-     */
-    protected $lexer;
-
-    /**
      * @var SyntaxCache
      */
     protected $syntaxCache;
@@ -38,8 +33,6 @@ class MatcherParser
 
     public function __construct()
     {
-        $this->lexer = new Lexer();
-        $this->lexer->setMatcherParser($this);
         $this->syntaxCache = new SyntaxCache();
     }
 
@@ -134,6 +127,7 @@ class MatcherParser
      */
     public function compile($string, array $data = array())
     {
+        return;
         $result = $this->lexer->parse($string);
         $match =
             $this->getMatcherForSyntax($result['syntax'], $result['arguments']);

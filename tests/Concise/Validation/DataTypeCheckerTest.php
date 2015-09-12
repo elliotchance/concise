@@ -2,8 +2,6 @@
 
 namespace Concise\Validation;
 
-use Concise\Syntax\Token\Attribute;
-use Concise\Syntax\Token\Regexp;
 use DateTime;
 
 class SubDateTime extends DateTime
@@ -52,8 +50,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
                 }
             ),
             'multiple' => array(array("int", "float"), 1.23),
-            'regex' => array(array("regex"), new Regexp('abc')),
-            'class' => array(array("class"), 'Concise\Syntax\Token\Regexp'),
+            'class' => array(array("class"), 'Concise\Validation\DataTypeChecker'),
             'integer number' => array(array("number"), 123),
             'float number' => array(array("number"), 12.3),
             'string number' => array(array("number"), '12.3'),
@@ -98,29 +95,6 @@ class DataTypeCheckerTest extends \Concise\TestCase
         $this->dataTypeChecker->check(array("int"), 123);
     }
 
-    public function testAttributesAreEvaluatedFromContext()
-    {
-        $context = array(
-            'foo' => 'bar',
-        );
-        $this->dataTypeChecker->setContext($context);
-        $this->assert(
-            $this->dataTypeChecker->check(
-                array('string'),
-                new Attribute('foo')
-            )
-        )->exactlyEquals('bar');
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Attribute 'foo' does not exist.
-     */
-    public function testWillThrowExceptionIfAttributeDoesNotExist()
-    {
-        $this->dataTypeChecker->check(array('string'), new Attribute('foo'));
-    }
-
     public function testExcludeWithEmptyArrayAllowsAnything()
     {
         $this->dataTypeChecker->setExcludeMode();
@@ -151,18 +125,6 @@ class DataTypeCheckerTest extends \Concise\TestCase
             $this->dataTypeChecker->check(array(), '\Concise\TestCase')
         )
             ->equals('\Concise\TestCase');
-    }
-
-    public function testWillTrimBackslashOffClassWhenInAttribute()
-    {
-        $context = array(
-            'foo' => '\Concise\TestCase',
-        );
-        $this->dataTypeChecker->setContext($context);
-        $this->assert(
-            $this->dataTypeChecker->check(array('class'), new Attribute('foo'))
-        )
-            ->equals('Concise\TestCase');
     }
 
     public function testStringsWillBeAcceptedForRegex()

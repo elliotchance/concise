@@ -18,7 +18,6 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
-use Concise\Services\AssertionBuilder;
 use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
 use Exception;

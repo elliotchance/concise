@@ -28,14 +28,6 @@ class MatcherParserTest extends TestCase
         $this->parser = new MatcherParser();
     }
 
-    public function testCompileReturnsAssertion()
-    {
-        $matcher = MatcherParser::getInstance()
-            ->compile('x equals y', $this->getData());
-        /*$this->assert($matcher, is_instance_of, '\Concise\Assertion');*/
-        $this->assert($matcher)->isInstanceOf('\Concise\Assertion');
-    }
-
     public function testGetInstanceIsASingleton()
     {
         /*$this->assert(
@@ -182,16 +174,6 @@ class MatcherParserTest extends TestCase
     {
         $parser = new MatcherParser();
         $parser->getMatcherForSyntax(123);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected string, but got integer for argument 1
-     */
-    public function testCompileSyntaxMustBeAString()
-    {
-        $parser = new MatcherParser();
-        $parser->compile(123);
     }
 
     /**
