@@ -3,7 +3,7 @@
 namespace Concise\Mock;
 
 use Closure;
-use Concise\Services\ValueRenderer;
+use Concise\Core\ValueRenderer;
 use Concise\TestCase;
 use Concise\Validation\ArgumentChecker;
 use Exception;

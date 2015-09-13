@@ -3,7 +3,6 @@
 namespace Concise\Core;
 
 use Concise\Console\Theme\DefaultTheme;
-use Concise\Services\ValueRenderer;
 use Concise\Validation\ArgumentChecker;
 
 class SyntaxRenderer

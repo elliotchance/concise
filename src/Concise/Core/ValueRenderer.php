@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Core;
 
 use Closure;
 use Colors\Color;

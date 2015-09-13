@@ -1,10 +1,11 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Core;
 
 use Colors\Color;
+use Concise\TestCase;
 
-class ValueRendererTest extends \Concise\TestCase
+class ValueRendererTest extends TestCase
 {
     /** @var ValueRenderer */
     protected $renderer;
@@ -246,7 +247,7 @@ class ValueRendererTest extends \Concise\TestCase
 
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemory()
     {
-        $renderer = $this->niceMock('Concise\Services\ValueRenderer')->stub(
+        $renderer = $this->niceMock('Concise\Core\ValueRenderer')->stub(
             array('getMaximumDepth' => 2)
         )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
@@ -257,7 +258,7 @@ class ValueRendererTest extends \Concise\TestCase
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays(
     )
     {
-        $renderer = $this->niceMock('Concise\Services\ValueRenderer')->stub(
+        $renderer = $this->niceMock('Concise\Core\ValueRenderer')->stub(
             array('getMaximumDepth' => 2)
         )->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);

@@ -4,12 +4,10 @@ namespace Concise;
 
 use Concise\Core\DidNotMatchException;
 use Concise\Core\ValueDescriptor;
+use Concise\Core\ValueRenderer;
 use Concise\Module\AbstractModule;
-use Concise\Services\ValueRenderer;
 use Concise\Validation\ArgumentChecker;
-use Concise\Validation\DataTypeChecker;
 use Exception;
-use InvalidArgumentException;
 use PHPUnit_Framework_AssertionFailedError;
 
 class Assertion
