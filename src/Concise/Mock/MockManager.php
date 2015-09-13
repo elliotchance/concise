@@ -2,7 +2,6 @@
 
 namespace Concise\Mock;
 
-use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
 use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;

@@ -3,7 +3,6 @@
 namespace Concise\Mock;
 
 use Closure;
-use Concise\Services\NumberToTimesConverter;
 use Concise\Services\ValueRenderer;
 use Concise\TestCase;
 use Concise\Validation\ArgumentChecker;

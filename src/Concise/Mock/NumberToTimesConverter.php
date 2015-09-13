@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Mock;
 
 use Concise\Validation\ArgumentChecker;
 
