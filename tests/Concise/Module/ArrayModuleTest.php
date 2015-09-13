@@ -38,7 +38,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayDoesNotContainAllKeys()
     {
-        $this->assert(array(123))->doesNotHaveKeys([0, 1]);
+        $this->assert(array(123))->doesNotHaveKeys(array(0, 1));
     }
 
     /**
@@ -249,7 +249,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
      */
     public function testAnArrayIsNotAssociativeIfZeroIndexed()
     {
-        $this->assert([1, "foo"])->isAnAssociativeArray;
+        $this->assert(array(1, "foo"))->isAnAssociativeArray;
     }
 
     public function testArrayWithZeroElements()
@@ -272,10 +272,10 @@ class ArrayModuleTest extends AbstractModuleTestCase
     )
     {
         $this->assert(
-            [
+            array(
                 "a" => 123,
                 0 => "foo",
-            ]
+            )
         )->isNotAnAssociativeArray;
     }
 
@@ -286,16 +286,16 @@ class ArrayModuleTest extends AbstractModuleTestCase
     )
     {
         $this->assert(
-            [
+            array(
                 5 => 123,
                 10 => "foo",
-            ]
+            )
         )->isNotAnAssociativeArray;
     }
 
     public function testAnArrayIsNotAssociativeIfZeroIndexed1()
     {
-        $this->assert([1, "foo"])->isNotAnAssociativeArray;
+        $this->assert(array(1, "foo"))->isNotAnAssociativeArray;
     }
 
     /**
