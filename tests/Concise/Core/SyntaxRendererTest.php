@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Core;
 
 use Colors\Color;
 use Concise\TestCase;

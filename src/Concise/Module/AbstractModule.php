@@ -4,7 +4,7 @@ namespace Concise\Module;
 
 use Concise\Core\DidNotMatchException;
 use Concise\Core\Syntax;
-use Concise\Services\SyntaxRenderer;
+use Concise\Core\SyntaxRenderer;
 use ReflectionClass;
 use ReflectionMethod;
 
