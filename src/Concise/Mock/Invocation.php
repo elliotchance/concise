@@ -17,7 +17,8 @@ class Invocation implements InvocationInterface
     protected $arguments;
 
     /**
-     * @param int $invokedCount
+     * @param int   $invokedCount
+     * @param array $arguments
      */
     public function __construct($invokedCount = 1, array $arguments = array())
     {

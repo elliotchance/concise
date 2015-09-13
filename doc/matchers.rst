@@ -8,6 +8,7 @@ Arrays
 
 * `array`_ contains `mixed`_ -  Assert an array has at least one occurrence of the given value.   
 * `array`_ does not contain `mixed`_ -  Assert an array does not have any occurrences of the given value.   
+* `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
 * `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
 * `array`_ does not have keys `array`_ -   
 * `array`_ does not have value `mixed`_ -  Assert an array does not have any occurrences of the given value.   
@@ -25,7 +26,6 @@ Arrays
 * `array`_ is not empty array -  Assert an array is not empty (at least one element).   
 * `array`_ is not unique -  Assert that an array only has at least one element that is repeated.   
 * `array`_ is unique -  Assert that an array only contains unique values.   
-* array `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
 
 Basic
 -----

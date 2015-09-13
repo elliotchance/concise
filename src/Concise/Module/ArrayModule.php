@@ -256,6 +256,7 @@ class ArrayModule extends AbstractModule
     }
 
     /**
+     * @param array $a
      * @return bool
      */
     protected function arrayIsEmpty(array $a)
@@ -264,6 +265,7 @@ class ArrayModule extends AbstractModule
     }
 
     /**
+     * @param array $a
      * @return bool
      */
     protected function arrayIsUnique(array $a)

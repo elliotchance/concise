@@ -46,6 +46,7 @@ function updateBuilders()
                         str_replace(' ', '', ucwords($words)) .
                         'Trait';
                 }
+                $php[$trait] .= "\n\t * @param mixed \$valueOrFailureMessage";
                 $php[$trait] .= "\n\t * @param mixed \$value";
             }
 

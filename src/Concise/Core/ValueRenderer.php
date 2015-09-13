@@ -5,7 +5,6 @@ namespace Concise\Core;
 use Closure;
 use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
-use Concise\Core\TestCase;
 
 class ValueRenderer
 {
