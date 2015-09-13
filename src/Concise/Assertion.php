@@ -3,11 +3,9 @@
 namespace Concise;
 
 use Concise\Core\DidNotMatchException;
+use Concise\Core\ValueDescriptor;
 use Concise\Module\AbstractModule;
-use Concise\Services\ValueDescriptor;
 use Concise\Services\ValueRenderer;
-use Concise\Syntax\Lexer;
-use Concise\Syntax\Token\Attribute;
 use Concise\Validation\ArgumentChecker;
 use Concise\Validation\DataTypeChecker;
 use Exception;
@@ -130,48 +128,6 @@ class Assertion
     }
 
     /**
-     * @param  array $arguments
-     * @throws Exception
-     * @return array
-     */
-    protected function checkDataTypes(array $arguments)
-    {
-        $checker = new DataTypeChecker();
-        $checker->setContext($this->getData());
-        $lexer = new Lexer();
-        $parse = $lexer->parse($this->originalSyntax);
-        /** @var $args \Concise\Syntax\Token\Attribute[] */
-        $args = $parse['arguments'];
-        $len = count($args);
-        $r = array();
-        for ($i = 0; $i < $len; ++$i) {
-            try {
-                $r[] = $checker->check(
-                    $args[$i]->getAcceptedTypes(),
-                    $arguments[$i]
-                );
-            } catch (InvalidArgumentException $e) {
-                $this->throwExceptionForInvalidArgument(
-                    $args[$i],
-                    $i + 1,
-                    $arguments[$i]
-                );
-            }
-        }
-
-        return $r;
-    }
-
-    protected function checkDataTypesIfOriginalSyntaxWasProvided(array $args)
-    {
-        if ('' !== $this->originalSyntax) {
-            $args = $this->checkDataTypes($args);
-        }
-
-        return $args;
-    }
-
-    /**
      * @param string $syntax
      * @param array  $args
      * @return string
@@ -185,25 +141,6 @@ class Assertion
         }
 
         return $message;
-    }
-
-    protected function getArgumentsAndValidate(array $arguments)
-    {
-        $args = array();
-        $data = $this->getData();
-        $len = count($arguments);
-        for ($i = 0; $i < $len; ++$i) {
-            $arg = $arguments[$i];
-            if ($arg instanceof Attribute) {
-                $args[$i] = $data[(string)$arg];
-            } else {
-                $args[$i] = $arg;
-            }
-        }
-
-        $args = $this->checkDataTypesIfOriginalSyntaxWasProvided($args);
-
-        return $args;
     }
 
     /**

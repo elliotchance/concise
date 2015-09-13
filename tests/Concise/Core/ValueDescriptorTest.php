@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Core;
 
 use Concise\TestCase;
 
@@ -38,7 +38,7 @@ class ValueDescriptorTest extends TestCase
     public function testDescriptionOfObject()
     {
         $this->assert($this->descriptor->describe($this))
-            ->equals('Concise\Services\ValueDescriptorTest');
+            ->equals('Concise\Core\ValueDescriptorTest');
     }
 
     public function testDescriptionOfResource()

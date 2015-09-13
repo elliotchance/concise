@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Core;
 
 class ValueDescriptor
 {
