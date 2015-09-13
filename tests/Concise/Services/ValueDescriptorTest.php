@@ -37,7 +37,8 @@ class ValueDescriptorTest extends TestCase
 
     public function testDescriptionOfObject()
     {
-        $this->assert($this->descriptor->describe($this))->equals('Concise\Services\ValueDescriptorTest');
+        $this->assert($this->descriptor->describe($this))
+            ->equals('Concise\Services\ValueDescriptorTest');
     }
 
     public function testDescriptionOfResource()

@@ -3,7 +3,7 @@
 namespace Concise\Module;
 
 use Concise\Core\DidNotMatchException;
-use Concise\Services\TimestampToEpochConverter;
+use DateTime;
 
 class DateAndTimeModule extends AbstractModule
 {
@@ -30,8 +30,7 @@ class DateAndTimeModule extends AbstractModule
      */
     protected function compare(array $data, $sign)
     {
-        $converter = new TimestampToEpochConverter();
-        $d = $converter->convertAll($data);
+        $d = $this->convertAll($data);
 
         $s = $this->getSign($d[0] - $d[1]);
         if (in_array(false, $d) || $s == $sign || 0 == $s) {
@@ -67,5 +66,25 @@ class DateAndTimeModule extends AbstractModule
     public function dateIsBefore()
     {
         return $this->compare($this->data, 1);
+    }
+
+    protected function convertAll(array $data)
+    {
+        foreach ($data as &$d) {
+            $d = $this->convert($d);
+        }
+
+        return $data;
+    }
+
+    protected function convert($d)
+    {
+        if (is_string($d)) {
+            return strtotime($d);
+        } elseif ($d instanceof DateTime) {
+            return $d->getTimestamp();
+        }
+
+        return $d;
     }
 }
