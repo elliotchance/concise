@@ -1,18 +1,19 @@
 <?php
 
-namespace Concise\Syntax;
+namespace Concise\Core;
 
 use Concise\Assertion;
-use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
+use Concise\Syntax\NoMatcherFoundException;
+use Concise\Syntax\SyntaxCache;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
 
-class MatcherParser
+class ModuleManager
 {
     /**
-     * @var MatcherParser
+     * @var ModuleManager
      */
     protected static $instance = null;
 
@@ -75,7 +76,7 @@ class MatcherParser
     /**
      * @param string $syntax
      * @param array  $data
-     * @throws Exception
+     * @throws NoMatcherFoundException
      * @return array
      */
     public function getMatcherForSyntax($syntax, array $data = array())
@@ -128,20 +129,10 @@ class MatcherParser
     public function compile($string, array $data = array())
     {
         return;
-        $result = $this->lexer->parse($string);
-        $match =
-            $this->getMatcherForSyntax($result['syntax'], $result['arguments']);
-        $assertion = new Assertion($string, $match['matcher'], $data);
-        if (array_key_exists('on_error', $match)) {
-            $assertion->setFailureMessage($data[(string)$match['on_error']]);
-        }
-        $assertion->setOriginalSyntax($match['originalSyntax']);
-
-        return $assertion;
     }
 
     /**
-     * @return MatcherParser
+     * @return ModuleManager
      */
     public static function getInstance()
     {
@@ -150,9 +141,9 @@ class MatcherParser
             // For some reason this line never get covered. Clearly it does run
             // otherwise concise would blow up. But to be extra sure there is a
             // specific unit test:
-            //   MatcherParserTest::testGetInstanceIsASingleton()
+            //   ModuleManagerTest::testGetInstanceIsASingleton()
 
-            self::$instance = new MatcherParser();
+            self::$instance = new ModuleManager();
         }
         // @codeCoverageIgnoreEnd
 

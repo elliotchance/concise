@@ -5,7 +5,7 @@ namespace Concise;
 use Concise\Module\BasicModule;
 use Concise\Module\BooleanModule;
 use Concise\Module\NumberModule;
-use Concise\Syntax\MatcherParser;
+use Concise\Syntax\ModuleManager;
 use PHPUnit_Framework_AssertionFailedError;
 
 class AssertionTest extends TestCase
@@ -72,7 +72,7 @@ class AssertionTest extends TestCase
      */
     protected function compileAndRunAssertion($theAssertion)
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         $assertion = $parser->compile($theAssertion);
         $assertion->setTestCase($this);
         $assertion->run();

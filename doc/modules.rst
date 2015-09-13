@@ -103,18 +103,18 @@ Loading Modules
 ---------------
 
 Loading a module is as easy as loading the YAML configuration file into the
-main instance of the ``MatcherParser``:
+main instance of the ``ModuleManager``:
 
 .. code-block:: php
 
    use Concise\TestCase
-   use Concise\Syntax\MatcherParser;
+   use Concise\Syntax\ModuleManager;
 
    class MyTest extends TestCase
    {
        public static function setUpBeforeClass()
        {
-           MatcherParser::getInstance()->loadModule('mymodule.yml');
+           ModuleManager::getInstance()->loadModule('mymodule.yml');
        }
    }
 
@@ -124,7 +124,7 @@ Some things to note:
    identified by their configuration file so loading the same configuration
    file will be ignored.
 
- * Once modules are loaded into the ``MatcherParser`` they remain there for the
+ * Once modules are loaded into the ``ModuleManager`` they remain there for the
    entire run. If you had a bootstrap file for your test suite it would be a
    good idea to load your modules here, otherwise putting them in the
    appropriate test cases is fine too.

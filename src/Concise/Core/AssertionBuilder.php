@@ -4,7 +4,6 @@ namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
 use Concise\Services\ValueRenderer;
-use Concise\Syntax\MatcherParser;
 use Concise\TestCase;
 use Concise\Validation\DataTypeChecker;
 use Concise\Validation\DataTypeMismatchException;
@@ -52,7 +51,7 @@ class AssertionBuilder
         }
 
         try {
-            $syntax = MatcherParser::getInstance()->getSyntaxCache()->getSyntax(
+            $syntax = ModuleManager::getInstance()->getSyntaxCache()->getSyntax(
                 $this->getSyntax()
             );
         } catch (Exception $e) {

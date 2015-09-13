@@ -17,6 +17,9 @@
         </testsuite>
     </testsuites>
     <filter>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
         <blacklist>
             <file>src/Concise/Keywords.php</file>
         </blacklist>

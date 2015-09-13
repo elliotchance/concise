@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Syntax;
+namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
 use Concise\TestCase;
@@ -17,25 +17,25 @@ class MyBadMatcher extends AbstractModule
     }
 }
 
-class MatcherParserTest extends TestCase
+class ModuleManagerTest extends TestCase
 {
-    /** @var MatcherParser */
+    /** @var ModuleManager */
     protected $parser;
 
     public function setUp()
     {
         parent::setUp();
-        $this->parser = new MatcherParser();
+        $this->parser = new ModuleManager();
     }
 
     public function testGetInstanceIsASingleton()
     {
         /*$this->assert(
-            MatcherParser::getInstance(),
+            ModuleManager::getInstance(),
             exactly_equals,
-            MatcherParser::getInstance()
+            ModuleManager::getInstance()
         );*/
-        $this->assert(MatcherParser::getInstance())->exactlyEquals(MatcherParser::getInstance());
+        $this->assert(ModuleManager::getInstance())->exactlyEquals(ModuleManager::getInstance());
     }
 
     /**
@@ -49,36 +49,36 @@ class MatcherParserTest extends TestCase
 
     public function testGetAllKeywordsReturnsAnArray()
     {
-        $keywords = MatcherParser::getInstance()->getKeywords();
+        $keywords = ModuleManager::getInstance()->getKeywords();
         /*$this->assert($keywords, is_an_array);*/
         $this->assert($keywords)->isAnArray;
     }
 
     public function testGetAllKeywordsContainsKeywordsFromMatchers()
     {
-        $keywords = MatcherParser::getInstance()->getKeywords();
+        $keywords = ModuleManager::getInstance()->getKeywords();
         /*$this->assert($keywords, has_value, 'not');*/
         $this->assert($keywords)->hasValue('not');
     }
 
     public function testGetAllKeywordsContainsOnlyUniqueWords()
     {
-        $keywords = MatcherParser::getInstance()->getKeywords();
+        $keywords = ModuleManager::getInstance()->getKeywords();
         /*$this->assert($keywords, is_unique);*/
         $this->assert($keywords)->isUnique;
     }
 
     public function testGetAllKeywordsDoesNotContainPlaceholders()
     {
-        $keywords = MatcherParser::getInstance()->getKeywords();
+        $keywords = ModuleManager::getInstance()->getKeywords();
         /*$this->assert($keywords, does_not_have_value, '?');*/
         $this->assert($keywords)->doesNotHaveValue('?');
     }
 
     public function testGetAllKeywordsAreSorted()
     {
-        $keywords1 = MatcherParser::getInstance()->getKeywords();
-        $keywords2 = MatcherParser::getInstance()->getKeywords();
+        $keywords1 = ModuleManager::getInstance()->getKeywords();
+        $keywords2 = ModuleManager::getInstance()->getKeywords();
         sort($keywords2);
         /*$this->assert($keywords1, equals, $keywords2);*/
         $this->assert($keywords1)->equals($keywords2);
@@ -86,7 +86,7 @@ class MatcherParserTest extends TestCase
 
     public function testGetKeywordsAreOnlyGeneratedOnce()
     {
-        $parser = $this->niceMock('\Concise\Syntax\MatcherParser')->expect(
+        $parser = $this->niceMock('\Concise\Core\ModuleManager')->expect(
             'getRawKeywords'
         )->once()->andReturn(array('a'))->get();
 
@@ -117,21 +117,21 @@ class MatcherParserTest extends TestCase
 
     public function testOnIsAKeyword()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         /*$this->assert($parser->getKeywords(), has_value, 'on');*/
         $this->assert($parser->getKeywords())->hasValue('on');
     }
 
     public function testErrorIsAKeyword()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         /*$this->assert($parser->getKeywords(), has_value, 'error');*/
         $this->assert($parser->getKeywords())->hasValue('error');
     }
 
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
         /*$this->assert($matcher, has_key, 'on_error');*/
@@ -140,7 +140,7 @@ class MatcherParserTest extends TestCase
 
     public function testOnErrorIsNotReturnedIfNotInTheSyntax()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         $matcher = $parser->getMatcherForSyntax('? equals ?', array());
         /*$this->assert($matcher, does_not_have_key, 'on_error');*/
         $this->assert($matcher)->doesNotHaveKey('on_error');
@@ -148,7 +148,7 @@ class MatcherParserTest extends TestCase
 
     public function testOnErrorIsReturnedFromData()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
         /*$this->assert($matcher['on_error'], equals, 'foo');*/
@@ -157,7 +157,7 @@ class MatcherParserTest extends TestCase
 
     public function testOnErrorMustBeTheLastData()
     {
-        $parser = MatcherParser::getInstance();
+        $parser = ModuleManager::getInstance();
         $matcher = $parser->getMatcherForSyntax(
             '? equals ? on error ?',
             array('foo', 'bar')
@@ -172,7 +172,7 @@ class MatcherParserTest extends TestCase
      */
     public function testSyntaxMustBeAString()
     {
-        $parser = new MatcherParser();
+        $parser = new ModuleManager();
         $parser->getMatcherForSyntax(123);
     }
 

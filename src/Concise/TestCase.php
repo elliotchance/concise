@@ -3,6 +3,7 @@
 namespace Concise;
 
 use Concise\Core\BaseAssertions;
+use Concise\Core\ModuleManager;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
@@ -18,7 +19,6 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
-use Concise\Syntax\MatcherParser;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
@@ -78,11 +78,11 @@ class TestCase extends BaseAssertions
     }
 
     /**
-     * @return MatcherParser
+     * @return ModuleManager
      */
-    protected function getMatcherParserInstance()
+    protected function getModuleManagerInstance()
     {
-        return MatcherParser::getInstance();
+        return ModuleManager::getInstance();
     }
 
     /**
@@ -116,7 +116,7 @@ class TestCase extends BaseAssertions
      */
     public function __set($name, $value)
     {
-        $parser = $this->getMatcherParserInstance();
+        $parser = $this->getModuleManagerInstance();
         if (in_array($name, $parser->getKeywords())) {
             throw new Exception(
                 "You cannot assign an attribute with the keyword '$name'."
@@ -158,19 +158,6 @@ class TestCase extends BaseAssertions
             'backupStaticAttributesBlacklist' => array(),
             'runTestInSeparateProcess' => null,
             'preserveGlobalState' => true,
-        );
-    }
-
-    protected function createAssertion(array $args)
-    {
-        if (count($args) > 1 || is_bool($args[0])) {
-            $builder = new AssertionBuilder($args);
-            return $builder->getAssertion();
-        }
-
-        return $this->getMatcherParserInstance()->compile(
-            $args[0],
-            $this->getData()
         );
     }
 
@@ -247,7 +234,7 @@ class TestCase extends BaseAssertions
             new UrlModule(),
         );
         foreach ($modules as $module) {
-            MatcherParser::getInstance()
+            ModuleManager::getInstance()
                 ->loadModule($module);
         }
     }

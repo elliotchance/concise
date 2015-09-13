@@ -4,10 +4,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
-use Concise\Syntax\MatcherParser;
+use Concise\Syntax\ModuleManager;
 use Concise\TestCase;
 
-// Simulate starting a test case which will cause the default MatcherParser
+// Simulate starting a test case which will cause the default ModuleManager
 // to load all the modules.
 $testCase = new TestCase();
 $testCase->setUpBeforeClass();
@@ -19,7 +19,7 @@ updateBuilders();
 function updateBuilders()
 {
     $syntaxTree = array();
-    foreach (MatcherParser::getInstance()->getModules() as $module) {
+    foreach (ModuleManager::getInstance()->getModules() as $module) {
         foreach ($module->getSyntaxes() as $syntax) {
             $parts = explode('?', $syntax->getRawSyntax());
             $temp = &$syntaxTree;
@@ -193,7 +193,7 @@ function updateReadme()
 {
     $matchersDoc = '';
     $modules = [];
-    foreach (MatcherParser::getInstance()->getModules() as $module) {
+    foreach (ModuleManager::getInstance()->getModules() as $module) {
         $modules[$module->getName()] = $module;
     }
 
@@ -217,7 +217,7 @@ function updateReadme()
 
 function refreshKeywords()
 {
-    $parser = MatcherParser::getInstance();
+    $parser = ModuleManager::getInstance();
     $defines = ['on_error' => 'on error'];
 
     $all = array();
