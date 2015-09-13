@@ -7,7 +7,7 @@ use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
 use Concise\Console\Terminal;
 use Concise\Console\Theme\DefaultTheme;
-use Concise\Services\TimeFormatter;
+use Concise\Console\TimeFormatter;
 use Exception;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;

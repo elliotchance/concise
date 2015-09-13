@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Services;
+namespace Concise\Console;
 
 class TimeFormatter
 {
