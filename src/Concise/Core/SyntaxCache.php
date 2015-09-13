@@ -1,8 +1,7 @@
 <?php
 
-namespace Concise\Syntax;
+namespace Concise\Core;
 
-use Concise\Core\Syntax;
 use Exception;
 
 class SyntaxCache

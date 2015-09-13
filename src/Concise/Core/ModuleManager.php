@@ -2,9 +2,7 @@
 
 namespace Concise\Core;
 
-use Concise\Assertion;
 use Concise\Module\AbstractModule;
-use Concise\Syntax\SyntaxCache;
 use Concise\Validation\ArgumentChecker;
 use Exception;
 use ReflectionClass;
@@ -118,16 +116,6 @@ class ModuleManager
         }
 
         throw new NoMatcherFoundException(array($syntax));
-    }
-
-    /**
-     * @param array $data The data from the test case.
-     * @param string $string
-     * @return Assertion
-     */
-    public function compile($string, array $data = array())
-    {
-        return;
     }
 
     /**
