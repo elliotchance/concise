@@ -2,8 +2,8 @@
 
 namespace Concise\Mock;
 
+use Concise\Core\TestCase;
 use Concise\Core\ValueRenderer;
-use Concise\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
@@ -14,7 +14,7 @@ class MockManager
     protected static $mocks = array();
 
     /**
-     * @var \Concise\TestCase
+     * @var TestCase
      */
     protected $testCase;
 

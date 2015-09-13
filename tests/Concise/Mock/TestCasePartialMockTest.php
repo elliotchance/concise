@@ -1,7 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Mock;
 
+use Concise\Core\TestCase;
 use DateTime;
 
 class TestCasePartialMockObject

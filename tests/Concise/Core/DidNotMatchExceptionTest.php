@@ -2,7 +2,7 @@
 
 namespace Concise\Core;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DidNotMatchExceptionTest extends TestCase
 {

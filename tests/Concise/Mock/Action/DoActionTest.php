@@ -2,7 +2,7 @@
 
 namespace Concise\Mock\Action;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DoActionTest extends TestCase
 {

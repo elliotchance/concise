@@ -2,7 +2,7 @@
 
 namespace Concise\Console\TestRunner;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DefaultTestRunnerTest extends TestCase
 {

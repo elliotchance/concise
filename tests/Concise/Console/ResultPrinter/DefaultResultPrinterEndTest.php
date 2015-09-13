@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 

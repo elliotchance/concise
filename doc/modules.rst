@@ -107,7 +107,7 @@ main instance of the ``ModuleManager``:
 
 .. code-block:: php
 
-   use Concise\TestCase
+   use Concise\Core\TestCase
    use Concise\Syntax\ModuleManager;
 
    class MyTest extends TestCase

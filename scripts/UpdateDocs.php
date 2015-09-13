@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
 use Concise\Syntax\ModuleManager;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 // Simulate starting a test case which will cause the default ModuleManager
 // to load all the modules.

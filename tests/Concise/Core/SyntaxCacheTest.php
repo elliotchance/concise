@@ -2,7 +2,7 @@
 
 namespace Concise\Core;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class SyntaxCacheTest extends TestCase
 {
@@ -19,7 +19,7 @@ class SyntaxCacheTest extends TestCase
     public function testRetrievingTheSameSyntax()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
+        $syntax = new Syntax('? equals ?', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax);
         $this->assert($syntaxCache->getSyntax('? equals ?'))
             ->isTheSameAs($syntax);
@@ -28,8 +28,8 @@ class SyntaxCacheTest extends TestCase
     public function testRetrievingAnotherSyntax()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
-        $syntax2 = new Syntax('? bar ?', '\Concise\TestCase::assert');
+        $syntax1 = new Syntax('? foo ?', '\Concise\Core\TestCase::assert');
+        $syntax2 = new Syntax('? bar ?', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
         $this->assert($syntaxCache->getSyntax('? foo ?'))
@@ -43,7 +43,7 @@ class SyntaxCacheTest extends TestCase
     public function testAddingTheSameSyntaxThrowsAnException()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax = new Syntax('? bar ?', '\Concise\TestCase::assert');
+        $syntax = new Syntax('? bar ?', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax);
         $syntaxCache->add($syntax);
     }
@@ -55,8 +55,8 @@ class SyntaxCacheTest extends TestCase
     public function testAddingASimilarSyntaxThrowsAnException()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax1 = new Syntax('? bar ?', '\Concise\TestCase::assert');
-        $syntax2 = new Syntax('?:int bar ?', '\Concise\TestCase::assert');
+        $syntax1 = new Syntax('? bar ?', '\Concise\Core\TestCase::assert');
+        $syntax2 = new Syntax('?:int bar ?', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
     }
@@ -64,7 +64,7 @@ class SyntaxCacheTest extends TestCase
     public function testGetSyntaxBySimilar()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax = new Syntax('? equals ?', '\Concise\TestCase::assert');
+        $syntax = new Syntax('? equals ?', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax);
         $this->assert($syntaxCache->getSyntax('?:int equals ?'))
             ->isTheSameAs($syntax);
@@ -77,8 +77,8 @@ class SyntaxCacheTest extends TestCase
     public function testCannotAddASubSyntax()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
-        $syntax2 = new Syntax('? foo ? bar', '\Concise\TestCase::assert');
+        $syntax1 = new Syntax('? foo ?', '\Concise\Core\TestCase::assert');
+        $syntax2 = new Syntax('? foo ? bar', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax1);
         $syntaxCache->add($syntax2);
     }
@@ -90,8 +90,8 @@ class SyntaxCacheTest extends TestCase
     public function testCannotAddASuperSyntax()
     {
         $syntaxCache = new SyntaxCache();
-        $syntax1 = new Syntax('? foo ?', '\Concise\TestCase::assert');
-        $syntax2 = new Syntax('? foo ? bar', '\Concise\TestCase::assert');
+        $syntax1 = new Syntax('? foo ?', '\Concise\Core\TestCase::assert');
+        $syntax2 = new Syntax('? foo ? bar', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax2);
         $syntaxCache->add($syntax1);
     }

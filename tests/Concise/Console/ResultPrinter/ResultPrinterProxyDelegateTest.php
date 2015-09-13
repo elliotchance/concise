@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
 
 class ResultPrinterProxyDelegateTest extends TestCase

@@ -3,7 +3,7 @@ Writing Tests
 
 If your familar with `PHPUnit`_ then there isn't much to explain here. You may
 use all the same processes and constructs as PHPUnit - the only difference is
-the class you extend from will be ``Concise\TestCase``.
+the class you extend from will be ``Concise\Core\TestCase``.
 
 .. _PHPUnit: https://phpunit.de
 

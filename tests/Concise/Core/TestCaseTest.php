@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise;
+namespace Concise\Core;
 
 class TestCaseTest extends TestCase
 {
@@ -87,7 +87,7 @@ class TestCaseTest extends TestCase
 
     protected function getAssertionsForFixtureTests()
     {
-        $testCase = $this->niceMock('\Concise\TestCase')->stub(
+        $testCase = $this->niceMock('\Concise\Core\TestCase')->stub(
             array(
                 'getRawAssertionsForMethod' => array(
                     'x equals b',

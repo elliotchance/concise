@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 /**
  * @group #182

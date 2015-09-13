@@ -1,8 +1,6 @@
 <?php
 
-namespace Concise;
-
-use Concise\Core\DidNotMatchException;
+namespace Concise\Core;
 
 class AssertionOnErrorTest extends TestCase
 {

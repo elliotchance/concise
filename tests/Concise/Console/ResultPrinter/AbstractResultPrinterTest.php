@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class AbstractResultPrinterTest extends TestCase
 {

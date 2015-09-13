@@ -2,7 +2,7 @@
 
 namespace Concise\Core;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use DateTime;
 
 class SubDateTime extends DateTime
@@ -106,26 +106,26 @@ class DataTypeCheckerTest extends TestCase
     public function testWillTrimBackslashOffClass()
     {
         $this->assert(
-            $this->dataTypeChecker->check(array('class'), '\Concise\TestCase')
-        )->equals('Concise\TestCase');
+            $this->dataTypeChecker->check(array('class'), '\Concise\Core\TestCase')
+        )->equals('Concise\Core\TestCase');
     }
 
     public function testWillNotTrimBackslashOffClassIfNotValidatingAgainstClass(
     )
     {
         $this->assert(
-            $this->dataTypeChecker->check(array('string'), '\Concise\TestCase')
+            $this->dataTypeChecker->check(array('string'), '\Concise\Core\TestCase')
         )->equals(
-            '\Concise\TestCase'
+            '\Concise\Core\TestCase'
         );
     }
 
     public function testWillNotTrimBackslashOffClassIfAnyValueCanBeAccepted()
     {
         $this->assert(
-            $this->dataTypeChecker->check(array(), '\Concise\TestCase')
+            $this->dataTypeChecker->check(array(), '\Concise\Core\TestCase')
         )
-            ->equals('\Concise\TestCase');
+            ->equals('\Concise\Core\TestCase');
     }
 
     public function testStringsWillBeAcceptedForRegex()

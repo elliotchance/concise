@@ -6,11 +6,11 @@ Using Concise with Other Frameworks
 
 Concise is designed to work perfectly over the top of PHPUnit. But it can also
 be used by any other framework by simply instantiating and managing the
-``Concise\TestCase`` yourself:
+``Concise\Core\TestCase`` yourself:
 
 .. code-block:: php
 
-   use \Concise\TestCase;
+   use \Concise\Core\TestCase;
 
    class MyTinyTestSuite
    {

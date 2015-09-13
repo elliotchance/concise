@@ -3,7 +3,7 @@
 namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Runner_BaseTestRunner;

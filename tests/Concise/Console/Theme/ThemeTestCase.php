@@ -3,7 +3,7 @@
 namespace Concise\Console\Theme;
 
 use Colors\Color;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
 
 class ColorStub extends Color

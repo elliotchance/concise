@@ -1,10 +1,7 @@
 <?php
 
-namespace Concise;
+namespace Concise\Core;
 
-use Concise\Core\ArgumentChecker;
-use Concise\Core\BaseAssertions;
-use Concise\Core\ModuleManager;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;

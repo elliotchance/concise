@@ -3,7 +3,7 @@
 namespace Concise\Mock;
 
 use Colors\Color;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class VerifyFailuresTest extends TestCase
 {

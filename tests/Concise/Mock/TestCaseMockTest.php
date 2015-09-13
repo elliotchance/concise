@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Mock;
+
+use Concise\Core\TestCase;
 
 /**
  * @group mocking

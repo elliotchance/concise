@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class ArgumentMatcherTest extends TestCase
 {

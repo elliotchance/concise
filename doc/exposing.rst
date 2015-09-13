@@ -99,7 +99,7 @@ have a public visibility.
 The above will work for all visibilities of a property.
 
 Likewise you can use the ``setProperty`` method provided by
-``Concise\TestCase``:
+``Concise\Core\TestCase``:
 
 .. code-block:: php
 

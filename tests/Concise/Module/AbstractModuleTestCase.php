@@ -4,7 +4,7 @@ namespace Concise\Module;
 
 use Concise\Core\AssertionBuilder;
 use Concise\Core\DidNotMatchException;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use PHPUnit_Framework_AssertionFailedError;
 
 abstract class AbstractModuleTestCase extends TestCase

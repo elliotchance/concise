@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise;
+namespace Concise\Core;
 
 /**
  * When using concise with non-PHPUnit it has to still remain compatible

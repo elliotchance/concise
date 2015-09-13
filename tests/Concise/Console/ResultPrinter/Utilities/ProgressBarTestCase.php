@@ -3,7 +3,7 @@
 namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class ProgressBarTestCase extends TestCase
 {

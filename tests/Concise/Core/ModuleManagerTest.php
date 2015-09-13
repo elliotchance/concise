@@ -3,7 +3,7 @@
 namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class MyBadMatcher extends AbstractModule
 {

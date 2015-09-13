@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class FilePathSimplifierTest extends TestCase
 {

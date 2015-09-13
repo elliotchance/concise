@@ -2,7 +2,7 @@
 
 namespace Concise\Console;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class CommandStub extends Command
 {

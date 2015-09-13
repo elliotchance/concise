@@ -4,8 +4,8 @@ namespace Concise\Mock;
 
 use Closure;
 use Concise\Core\ArgumentChecker;
+use Concise\Core\TestCase;
 use Concise\Core\ValueRenderer;
-use Concise\TestCase;
 use Exception;
 use InvalidArgumentException;
 use ReflectionClass;

@@ -2,7 +2,7 @@
 
 namespace Concise\Module;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class MyMatcher extends AbstractModule
 {

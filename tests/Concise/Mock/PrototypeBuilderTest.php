@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 // `callable` does not exist in PHP 5.3 and we need it for the prototype below.
 if (version_compare(phpversion(), '5.4', '<')) {

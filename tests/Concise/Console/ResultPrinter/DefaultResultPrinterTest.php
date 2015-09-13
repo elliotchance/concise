@@ -4,7 +4,7 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Mock\Invocation;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 

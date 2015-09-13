@@ -145,7 +145,7 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
         $this->assert('\Concise\Module\TypeModule')
-            ->instanceOf('\Concise\TestCase');
+            ->instanceOf('\Concise\Core\TestCase');
     }
 
     public function testIsInstanceOfWithSameClassNoPrefix()
@@ -287,7 +287,7 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testStringsRepresentingClassNamesCanBeUsed1()
     {
         $this->assert('\Concise\Module\TypeModule')
-            ->isNotInstanceOf('\Concise\TestCase');
+            ->isNotInstanceOf('\Concise\Core\TestCase');
     }
 
     public function testZeroIsNotNull()

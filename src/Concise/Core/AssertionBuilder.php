@@ -3,7 +3,6 @@
 namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
-use Concise\TestCase;
 use Exception;
 
 class AssertionBuilder

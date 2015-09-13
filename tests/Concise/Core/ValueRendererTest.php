@@ -3,7 +3,7 @@
 namespace Concise\Core;
 
 use Colors\Color;
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class ValueRendererTest extends TestCase
 {
