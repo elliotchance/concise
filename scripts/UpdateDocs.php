@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Concise\Core\ModuleManager;
 use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
-use Concise\Syntax\ModuleManager;
 use Concise\Core\TestCase;
 
 // Simulate starting a test case which will cause the default ModuleManager
@@ -62,19 +62,19 @@ function updateBuilders()
             }
             $php[$trait] .= ")\n\t{";
             if (null !== $v) {
-                $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn (new AssertionBuilder(\$this, \$valueOrFailureMessage, " . var_export($verify, true) . "))->";
+                $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t\$builder = new AssertionBuilder(\$this, \$valueOrFailureMessage, " . var_export($verify, true) . ");\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn \$builder->";
                 $php[$trait] .= ($k ? $k : '_') . "(";
                 if (null !== $v) {
                     $php[$trait] .= "\$value";
                 }
-                $php[$trait] .= ");\n\t\t} else {\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn (new AssertionBuilder(\$this, null, " . var_export($verify, true) . "))->";
+                $php[$trait] .= ");\n\t\t} else {\n\t\t\t\$builder = new AssertionBuilder(\$this, null, " . var_export($verify, true) . ");\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn \$builder->";
                 $php[$trait] .= ($k ? $k : '_') . "(";
                 if (null !== $v) {
                     $php[$trait] .= "\$valueOrFailureMessage";
                 }
                 $php[$trait] .= ");\n\t\t}";
             } else {
-                $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\treturn (new AssertionBuilder(\$this, \$failureMessage, " . var_export($verify, true) . "))->";
+                $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\$builder = new AssertionBuilder(\$this, \$failureMessage, " . var_export($verify, true) . ");\n\t\treturn \$builder->";
                 $php[$trait] .= ($k ? $k : '_') . "();";
             }
             $php[$trait] .= "\n\t}\n";

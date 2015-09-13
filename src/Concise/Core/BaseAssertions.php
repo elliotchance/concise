@@ -13,11 +13,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function assert($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, false))->_($value);
+            return $builder->_($value);
         } else {
+            $builder = new AssertionBuilder($this, null, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, false))->_($valueOrFailureMessage);
+            return $builder->_($valueOrFailureMessage);
         }
     }
 
@@ -28,11 +30,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function verify($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, true))->_($value);
+            return $builder->_($value);
         } else {
+            $builder = new AssertionBuilder($this, null, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, true))->_($valueOrFailureMessage);
+            return $builder->_($valueOrFailureMessage);
         }
     }
 
@@ -43,11 +47,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function assertDate($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, false))->date($value);
+            return $builder->date($value);
         } else {
+            $builder = new AssertionBuilder($this, null, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, false))->date($valueOrFailureMessage);
+            return $builder->date($valueOrFailureMessage);
         }
     }
 
@@ -58,11 +64,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function verifyDate($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, true))->date($value);
+            return $builder->date($value);
         } else {
+            $builder = new AssertionBuilder($this, null, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, true))->date($valueOrFailureMessage);
+            return $builder->date($valueOrFailureMessage);
         }
     }
 
@@ -73,11 +81,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function assertUrl($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, false))->url($value);
+            return $builder->url($value);
         } else {
+            $builder = new AssertionBuilder($this, null, false);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, false))->url($valueOrFailureMessage);
+            return $builder->url($valueOrFailureMessage);
         }
     }
 
@@ -88,11 +98,13 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
     public function verifyUrl($valueOrFailureMessage, $value = null)
     {
         if (count(func_get_args()) > 1) {
+            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, $valueOrFailureMessage, true))->url($value);
+            return $builder->url($value);
         } else {
+            $builder = new AssertionBuilder($this, null, true);
             /** @noinspection PhpUndefinedMethodInspection */
-            return (new AssertionBuilder($this, null, true))->url($valueOrFailureMessage);
+            return $builder->url($valueOrFailureMessage);
         }
     }
 }
