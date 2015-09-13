@@ -6,7 +6,10 @@ use Concise\Core\TestCase;
 
 class MyMatcher extends AbstractModule
 {
-    public function match()
+    /**
+     * @syntax ? foo bar ?
+     */
+    public function foo()
     {
         return false;
     }
@@ -21,14 +24,24 @@ class MyMatcher extends AbstractModule
  */
 class AbstractModuleTest extends TestCase
 {
+    /**
+     * @var MyMatcher
+     */
+    protected $module;
+
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new MyMatcher();
+        $this->module = new MyMatcher();
     }
 
     public function testDefaultRendererWorks()
     {
-        $this->assert($this->matcher->renderFailureMessage(''))->isBlank;
+        $this->assert($this->module->renderFailureMessage(''))->isBlank;
+    }
+
+    public function testGetSyntaxesForMethod()
+    {
+        $this->assert($this->module->getSyntaxes())->isNotEmptyArray;
     }
 }

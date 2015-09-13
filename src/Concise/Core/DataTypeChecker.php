@@ -13,19 +13,6 @@ class DataTypeChecker
     protected $excludeMode = false;
 
     /**
-     * @var array
-     */
-    protected $context = array();
-
-    /**
-     * @param array $context
-     */
-    public function setContext(array $context)
-    {
-        $this->context = $context;
-    }
-
-    /**
      * @param  array $acceptedTypes
      * @param  mixed $value
      * @return mixed
@@ -132,43 +119,11 @@ class DataTypeChecker
     }
 
     /**
-     * @param string $name
-     * @throws Exception if the attribute does not exist.
-     * @return mixed
-     */
-    protected function getAttribute($name)
-    {
-        if (!array_key_exists($name, $this->context)) {
-            throw new Exception("Attribute '$name' does not exist.");
-        }
-
-        return $this->context[$name];
-    }
-
-    protected function isRegex($value)
-    {
-        return is_object($value) &&
-        get_class($value) === 'Concise\Syntax\Token\Regexp';
-    }
-
-    protected function isAttribute($value)
-    {
-        return is_object($value) &&
-        get_class($value) === 'Concise\Syntax\Token\Attribute';
-    }
-
-    /**
      * @param  mixed $value
      * @return string
      */
     protected function getType($value)
     {
-        if ($this->isRegex($value)) {
-            return 'regex';
-        }
-        if ($this->isAttribute($value)) {
-            return $this->getType($this->getAttribute($value->getValue()));
-        }
         if ($value instanceof Closure) {
             return 'callable';
         }

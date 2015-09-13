@@ -2,7 +2,6 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
 use DateTime;
 
 class SubDateTime extends DateTime
@@ -52,6 +51,7 @@ class DataTypeCheckerTest extends TestCase
             ),
             'multiple' => array(array("int", "float"), 1.23),
             'class' => array(array("class"), 'Concise\Core\DataTypeChecker'),
+            'regex' => array(array("regex"), '/a/'),
             'integer number' => array(array("number"), 123),
             'float number' => array(array("number"), 12.3),
             'string number' => array(array("number"), '12.3'),
