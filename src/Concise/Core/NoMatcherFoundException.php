@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Syntax;
+namespace Concise\Core;
 
 use Exception;
 

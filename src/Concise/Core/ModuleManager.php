@@ -4,7 +4,6 @@ namespace Concise\Core;
 
 use Concise\Assertion;
 use Concise\Module\AbstractModule;
-use Concise\Syntax\NoMatcherFoundException;
 use Concise\Syntax\SyntaxCache;
 use Concise\Validation\ArgumentChecker;
 use Exception;
