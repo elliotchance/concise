@@ -17,11 +17,11 @@ Simple Example
        public function testSomeStuff()
        {
            $result = 100 + 23;
-           $this->assert($result, exactly_equals, 123);
+           $this->assert($result)->exactlyEquals(123);
 
            $a = ['foo' => 'bar'];
-           $this->assert($a, is_an_associative_array);
-           $this->assert($a, has_key, 'foo', with_value, 'bar');
+           $this->assert($a)->isAnAssociativeArray;
+           $this->assert($a)->hasKey('foo'));
        }
    }
 

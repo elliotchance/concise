@@ -84,7 +84,7 @@ Use the ``Concise\Matcher\AbstractMatcherTestCase`` when testing matchers:
 
        public function testIntegerIsAnInteger()
        {
-           $this->assert('123 is an integer');
+           $this->assert(123)->isAnInteger;
        }
 
        public function testFloatIsNotAnInteger()

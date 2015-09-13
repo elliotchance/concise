@@ -13,15 +13,7 @@ Which can be used in your test:
 
 .. code-block:: php
 
-   $this->assert(123, equals, 456);
-
-``equals`` is actually a constant that has the value of ``"equals"``. It would
-be the same as writing:
-
-.. code-block:: php
-
-   $this->assert(123, 'equals', 456);
-   $this->assert('123 equals 456');
+   $this->assert(123)->equals(456);
 
 So the syntax ``? equals ?`` matches with two data items; ``123`` and ``456``.
 
@@ -33,17 +25,15 @@ Which can be used the same way as:
 
 .. code-block:: php
 
-   $this->assert(123, is_greater_than, 456);
-   $this->assert(123, 'is greater than', 456);
-   $this->assert('123 is greater than 456');
+   $this->assert(123)->isGreaterThan(456);
 
 Syntaxes can contain as many data points as you need::
 
-    ? equals ? within ?
+    ? is within ? of ?
 
 .. code-block:: php
 
-   $this->assert(0.9, equals, 1, within, 0.2);
+   $this->assert(1)->isWithin(0.2)->of(0.9);
 
 And finally the syntax can start with a data element or not::
 
@@ -51,7 +41,7 @@ And finally the syntax can start with a data element or not::
 
 .. code-block:: php
 
-   $this->assert(date, $foo, is_after, time());
+   $this->assertDate($foo)->isAfter(time());
 
 
 Restricting Data Types
@@ -67,7 +57,7 @@ doesn't make sense or cannot be computed like:
 
 .. code-block:: php
 
-   $this->assert(new stdClass(), starts_with, true);
+   $this->assert(new stdClass())->startsWith(true);
 
 We would no doubt get some error, or at the very least the assertion would
 return an unreliable result.
@@ -106,7 +96,7 @@ this problem:
 
 .. code-block:: php
 
-   $this->assert('123', is_greater_than, 1.23);
+   $this->assert('123')->isGreaterThan(1.23);
 
 This will fail because ``'123'`` is a string, but it can also be treated as a
 number. So concise provides some special types that do value checking as well::
@@ -117,8 +107,8 @@ We can now safely use number-like values:
 
 .. code-block:: php
 
-   $this->assert('123', is_greater_than, 1.23); // numbers
-   $this->assert('foo', is_greater_than, 1.23); // 'foo' is not a number
+   $this->assert('123')->isGreaterThan(1.23); // numbers
+   $this->assert('foo')->isGreaterThan(1.23); // 'foo' is not a number
 
 See the table below for all the supported types:
 
@@ -145,7 +135,7 @@ See the table below for all the supported types:
 +--------------+-----------------------------------+
 | ``regex``    | ``"/foo/"``                       |
 +--------------+-----------------------------------+
-| ``class``    | ``"Concise\Syntax\Token\Regexp"`` |
+| ``class``    | ``"Concise\Core\TestCase"``       |
 +--------------+-----------------------------------+
 | ``number``   | ``123``, ``1.23``, ``"12.3"``     |
 +--------------+-----------------------------------+

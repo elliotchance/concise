@@ -31,7 +31,7 @@ Alternatively you can add it to your ``composer.json`` file:
 
    {
        "require-dev": {
-           "elliotchance/concise": "~1.8.0"
+           "elliotchance/concise": "~2.0"
        }
    }
 

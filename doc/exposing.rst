@@ -93,7 +93,7 @@ have a public visibility.
    public function testValueIsFoo()
    {
        $myClass = new MyClass();
-       $this->assert($this->getProperty($myClass, 'value'), equals, 'foo');
+       $this->assert($this->getProperty($myClass, 'value'))->equals('foo');
    }
 
 The above will work for all visibilities of a property.
@@ -107,5 +107,5 @@ Likewise you can use the ``setProperty`` method provided by
    {
        $myClass = new MyClass();
        $this->setProperty($myClass, 'value', 'bar');
-       $this->assert($this->getProperty($myClass, 'value'), equals, 'bar');
+       $this->assert($this->getProperty($myClass, 'value'))->equals('bar');
    }

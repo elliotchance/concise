@@ -24,7 +24,7 @@ be used by any other framework by simply instantiating and managing the
        public function checkSomething()
        {
            $this->testCase->setUp();
-           $this->testCase->assert(3 + 5, equals, 8);
+           $this->testCase->assert(3 + 5)->equals(8);
            $this->testCase->tearDown();
        }
    }

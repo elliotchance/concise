@@ -10,7 +10,7 @@ andDo(callback)
         ->stub('myMethod')->andDo(function() {
             echo "myMethod() was called.";
         }))
-        ->done();
+        ->get();
 
 This can also be used as a way to handle state that might be too complicated for
 the mocking engine:
@@ -23,7 +23,7 @@ the mocking engine:
             $calledOddTimes = !$calledOddTimes;
         }))
         ->get();
-   $this->assert($calledOddTimes);
+   $this->assert($calledOddTimes)->isTrue;
 
 ``andDo`` will pass through arguments:
 
@@ -51,7 +51,7 @@ You may also provide more than one argument to specify multiple resturn values:
 
    $mock = $this->mock()
                 ->stub('myMethod')->andReturn('foo', 123)
-                ->done();
+                ->get();
    $mock->myMethod(); // 'foo'
    $mock->myMethod(); // 123
 
@@ -69,7 +69,7 @@ Return the value returned by a callback function.
                 ->stub('myMethod')->andReturnCallback(function () {
                    return 'foo';
                 })
-                ->done();
+                ->get();
    $mock->myMethod(); // 'foo'
 
 The return value is evaluated when the invocation is made, so you can return
@@ -81,10 +81,12 @@ and only argument to gain insight about the invocation:
 .. code-block:: php
 
    $mock = $this->mock()
-                ->stub('myMethod')->andReturnCallback(function (InvocationInterface $invoke) {
-                   return $invoke->getInvokeCount();
-                })
-                ->done();
+                ->stub('myMethod')->andReturnCallback(
+                    function (InvocationInterface $invoke) {
+                        return $invoke->getInvokeCount();
+                    }
+                )
+                ->get();
    $mock->myMethod(); // 1
    $mock->myMethod(); // 2
 
@@ -93,10 +95,12 @@ You can also access the invocation arguments:
 .. code-block:: php
 
    $mock = $this->mock()
-                ->stub('myMethod')->andReturnCallback(function (InvocationInterface $invoke) {
-                   return $invoke->getArgument(1);
-                })
-                ->done();
+                ->stub('myMethod')->andReturnCallback(
+                    function (InvocationInterface $invoke) {
+                        return $invoke->getArgument(1);
+                    }
+                )
+                ->get();
    $mock->myMethod('foo', 'bar'); // bar
 
 andReturnProperty(propertyName)
@@ -119,7 +123,7 @@ you can use ``andReturnProperty()``:
 
    $mock = $this->mock()
                 ->stub('myMethod')->andReturnProperty('hidden')
-                ->done();
+                ->get();
    $mock->myMethod(); // foo
 
 andReturnSelf()
@@ -137,4 +141,4 @@ Throw the ``exception`` when the method is called.
 
    $this->mock()
         ->stub('myMethod')->andThrow(new \Exception('Uh-oh!'))
-        ->done();
+        ->get();
