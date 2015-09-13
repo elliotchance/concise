@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 
 class NumberToTimesConverter
 {

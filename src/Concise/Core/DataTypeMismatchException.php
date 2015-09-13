@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Validation;
+namespace Concise\Core;
 
 use InvalidArgumentException;
 

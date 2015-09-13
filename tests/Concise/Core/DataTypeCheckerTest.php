@@ -1,14 +1,15 @@
 <?php
 
-namespace Concise\Validation;
+namespace Concise\Core;
 
+use Concise\TestCase;
 use DateTime;
 
 class SubDateTime extends DateTime
 {
 }
 
-class DataTypeCheckerTest extends \Concise\TestCase
+class DataTypeCheckerTest extends TestCase
 {
     /** @var DataTypeChecker */
     protected $dataTypeChecker;
@@ -50,7 +51,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
                 }
             ),
             'multiple' => array(array("int", "float"), 1.23),
-            'class' => array(array("class"), 'Concise\Validation\DataTypeChecker'),
+            'class' => array(array("class"), 'Concise\Core\DataTypeChecker'),
             'integer number' => array(array("number"), 123),
             'float number' => array(array("number"), 12.3),
             'string number' => array(array("number"), '12.3'),
@@ -145,7 +146,7 @@ class DataTypeCheckerTest extends \Concise\TestCase
     }
 
     /**
-     * @expectedException \Concise\Validation\DataTypeMismatchException
+     * @expectedException \Concise\Core\DataTypeMismatchException
      * @expectedExceptionMessage Expected regex, but got integer
      */
     public function testDataTypeMismatchExceptionIsThrown()
@@ -158,7 +159,6 @@ class DataTypeCheckerTest extends \Concise\TestCase
         try {
             $this->dataTypeChecker->check(array('regex'), 123);
         } catch (DataTypeMismatchException $e) {
-            /*$this->assert($e->getActualType(), equals, 'integer');*/
             $this->assert($e->getActualType())->equals('integer');
         }
     }
@@ -178,7 +178,6 @@ class DataTypeCheckerTest extends \Concise\TestCase
             array('class'),
             '\Concise\Mock\MockInterface'
         );
-        /*$this->assert($result, equals, 'Concise\Mock\MockInterface');*/
         $this->assert($result)->equals('Concise\Mock\MockInterface');
     }
 }

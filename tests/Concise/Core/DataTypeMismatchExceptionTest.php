@@ -1,6 +1,6 @@
 <?php
 
-namespace Concise\Validation;
+namespace Concise\Core;
 
 use Concise\TestCase;
 
@@ -8,7 +8,8 @@ class DataTypeMismatchExceptionTest extends TestCase
 {
     public function testIsATypeOfInvalidArgumentException()
     {
-        $this->assert(new DataTypeMismatchException())->instanceOf('\InvalidArgumentException');
+        $this->assert(new DataTypeMismatchException())
+            ->instanceOf('\InvalidArgumentException');
     }
 
     public function testExpectedTypesReturnsArray()

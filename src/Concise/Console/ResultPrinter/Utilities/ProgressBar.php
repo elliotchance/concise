@@ -3,7 +3,7 @@
 namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 
 class ProgressBar
 {

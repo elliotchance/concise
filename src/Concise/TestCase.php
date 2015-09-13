@@ -2,6 +2,7 @@
 
 namespace Concise;
 
+use Concise\Core\ArgumentChecker;
 use Concise\Core\BaseAssertions;
 use Concise\Core\ModuleManager;
 use Concise\Mock\MockBuilder;
@@ -19,7 +20,6 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
-use Concise\Validation\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;

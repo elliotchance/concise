@@ -1,9 +1,8 @@
 <?php
 
-namespace Concise\Validation;
+namespace Concise\Core;
 
 use Closure;
-use Concise\Syntax\Token\Attribute;
 use Exception;
 
 class DataTypeChecker
@@ -93,9 +92,6 @@ class DataTypeChecker
     {
         $match = $this->matchesInAcceptedTypes($acceptedTypes, $value);
         if ($expecting === $match) {
-            if (is_object($value) && $value instanceof Attribute) {
-                $value = $this->getAttribute($value->getValue());
-            }
             if (in_array('class', $acceptedTypes) && is_string($value)) {
                 if (!class_exists($value) && !interface_exists($value)) {
                     throw new Exception(

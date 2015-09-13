@@ -2,11 +2,11 @@
 
 namespace Concise;
 
+use Concise\Core\ArgumentChecker;
 use Concise\Core\DidNotMatchException;
 use Concise\Core\ValueDescriptor;
 use Concise\Core\ValueRenderer;
 use Concise\Module\AbstractModule;
-use Concise\Validation\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 

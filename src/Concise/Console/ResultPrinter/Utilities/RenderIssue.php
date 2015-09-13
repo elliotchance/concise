@@ -4,7 +4,7 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_Test;
