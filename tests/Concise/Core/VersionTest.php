@@ -1,6 +1,8 @@
 <?php
 
-namespace Concise;
+namespace Concise\Core;
+
+use Concise\TestCase;
 
 class VersionTest extends TestCase
 {
@@ -41,7 +43,7 @@ class VersionTest extends TestCase
 
     public function testReturnEmptyStringIfVendorFolderCannotBeFound()
     {
-        $version = $this->niceMock('Concise\Version')
+        $version = $this->niceMock('Concise\Core\Version')
             ->stub('findVendorFolder')
             ->get();
         $this->assert($version->getConciseVersion())->isBlank;
@@ -50,7 +52,9 @@ class VersionTest extends TestCase
     public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
     )
     {
-        $version = $this->niceMock('Concise\Version')->expose('findVendorFolder')->get();
+        $version = $this->niceMock('Concise\Core\Version')
+            ->expose('findVendorFolder')
+            ->get();
         $this->assert($version->findVendorFolder('/tmp'))->isNull;
     }
 
