@@ -12,26 +12,20 @@ class InvocationTest extends TestCase
     public function testInvokeCountStartsWithOne()
     {
         $invocation = new Invocation();
-        /*$this->assert($invocation->getInvokeCount(), equals, 1);*/
         $this->assert($invocation->getInvokeCount())->equals(1);
     }
 
     public function testDefaultArgumentsIsEmpty()
     {
         $invocation = new Invocation();
-        /*$this->assert($invocation->getArguments(), is_empty_array);*/
-        $this->assert($invocation->getArguments())->isEmptyArray;
+        $this->assertArray($invocation->getArguments())->isEmpty;
     }
 
     public function testImplementsInvocationInterface()
     {
         $invocation = new Invocation();
-        /*$this->assert(
-            $invocation,
-            instance_of,
-            '\Concise\Mock\InvocationInterface'
-        );*/
-        $this->assert($invocation)->instanceOf('\Concise\Mock\InvocationInterface');
+        $this->assert($invocation)
+            ->instanceOf('\Concise\Mock\InvocationInterface');
     }
 
     public function testConstructorCanInitialiseInvokeCount()
@@ -85,14 +79,12 @@ class InvocationTest extends TestCase
     public function testDefaultArgumentCountIsZero()
     {
         $invocation = new Invocation();
-        /*$this->assert($invocation->getArgumentCount(), equals, 0);*/
         $this->assert($invocation->getArgumentCount())->equals(0);
     }
 
     public function testArgumentCountIsCorrect()
     {
         $invocation = new Invocation(1, array('foo', 'bar'));
-        /*$this->assert($invocation->getArgumentCount(), equals, 2);*/
         $this->assert($invocation->getArgumentCount())->equals(2);
     }
 }

@@ -42,6 +42,6 @@ class AbstractModuleTest extends TestCase
 
     public function testGetSyntaxesForMethod()
     {
-        $this->assert($this->module->getSyntaxes())->isNotEmptyArray;
+        $this->assertArray($this->module->getSyntaxes())->isNotEmpty;
     }
 }

@@ -14,7 +14,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array does not have key and value item.
      *
-     * @syntax ?:array does not have item ?:array
+     * @syntax array ?:array does not have item ?:array
      */
     public function doesNotHaveItem()
     {
@@ -24,7 +24,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array does not have a key.
      *
-     * @syntax ?:array does not have key ?:int,string
+     * @syntax array ?:array does not have key ?:int,string
      */
     public function doesNotHaveKey()
     {
@@ -32,7 +32,7 @@ class ArrayModule extends AbstractModule
     }
 
     /**
-     * @syntax ?:array does not have keys ?:array
+     * @syntax array ?:array does not have keys ?:array
      */
     public function doesNotHaveKeys()
     {
@@ -42,8 +42,8 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array does not have any occurrences of the given value.
      *
-     * @syntax ?:array does not contain ?
-     * @syntax ?:array does not have value ?
+     * @syntax array ?:array does not contain ?
+     * @syntax array ?:array does not have value ?
      */
     public function doesNotHaveValue()
     {
@@ -53,7 +53,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has key and value item.
      *
-     * @syntax ?:array has item ?:array
+     * @syntax array ?:array has item ?:array
      */
     public function hasItem()
     {
@@ -63,7 +63,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has all key and value items.
      *
-     * @syntax ?:array has items ?:array
+     * @syntax array ?:array has items ?:array
      * @return bool
      */
     public function hasItems()
@@ -86,7 +86,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has key, returns value.
      *
-     * @syntax ?:array has key ?:int,string
+     * @syntax array ?:array has key ?:int,string
      * @throws DidNotMatchException
      * @return mixed
      */
@@ -102,7 +102,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has several keys in any order.
      *
-     * @syntax ?:array has keys ?:array
+     * @syntax array ?:array has keys ?:array
      * @return bool
      */
     public function hasKeys()
@@ -113,8 +113,8 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has at least one occurrence of the given value.
      *
-     * @syntax ?:array has value ?
-     * @syntax ?:array contains ?
+     * @syntax array ?:array has value ?
+     * @syntax array ?:array contains ?
      * @return bool
      */
     public function hasValue()
@@ -125,7 +125,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array has several values in any order.
      *
-     * @syntax ?:array has values ?:array
+     * @syntax array ?:array has values ?:array
      * @return bool
      */
     public function hasValues()
@@ -141,8 +141,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array is empty (no elements).
      *
-     * @syntax ?:array is empty array
-     * @syntax ?:array is an empty array
+     * @syntax array ?:array is empty
      * @return bool
      */
     public function isAnEmptyArray()
@@ -153,8 +152,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array is not empty (at least one element).
      *
-     * @syntax ?:array is not empty array
-     * @syntax ?:array is not an empty array
+     * @syntax array ?:array is not empty
      * @return bool
      */
     public function isNotAnEmptyArray()
@@ -165,7 +163,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert that an array only has at least one element that is repeated.
      *
-     * @syntax ?:array is not unique
+     * @syntax array ?:array is not unique
      * @return bool
      */
     public function isNotUnique()
@@ -176,7 +174,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert that an array only contains unique values.
      *
-     * @syntax ?:array is unique
+     * @syntax array ?:array is unique
      * @return bool
      */
     public function isUnique()
@@ -187,7 +185,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array is associative.
      *
-     * @syntax ?:array is an associative array
+     * @syntax array ?:array is associative
      * @return bool
      */
     public function isAnAssociativeArray()
@@ -198,7 +196,7 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array is not associative.
      *
-     * @syntax ?:array is not an associative array
+     * @syntax array ?:array is not associative
      * @return bool
      */
     public function isNotAnAssociativeArray()

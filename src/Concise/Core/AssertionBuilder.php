@@ -23,11 +23,18 @@ class AssertionBuilder
      */
     protected $verify;
 
+    /**
+     * @var null|AssertionBuilder
+     */
+    public static $lastBuilder = null;
+
     public function __construct(
         TestCase $testCase,
         $failureMessage = null,
         $verify = false
     ) {
+        self::validateLastAssertion();
+        self::$lastBuilder = $this;
         $this->testCase = $testCase;
         $this->failureMessage = $failureMessage;
         $this->verify = $verify;
@@ -47,13 +54,14 @@ class AssertionBuilder
         }
 
         try {
-            $syntax = ModuleManager::getInstance()->getSyntaxCache()->getSyntax(
-                $this->getSyntax()
-            );
+            $syntax = ModuleManager::getInstance()->getSyntaxCache()
+                ->getSyntax($this->getSyntax());
         } catch (Exception $e) {
             $syntax = null;
         }
         if ($syntax) {
+            self::$lastBuilder = null;
+
             $class = $syntax->getClass();
             /** @var AbstractModule $instance */
             $instance = new $class();
@@ -83,14 +91,7 @@ class AssertionBuilder
                 $instance->{$syntax->getMethod()}();
                 $this->testCase->assertTrue(true);
             } catch (DidNotMatchException $e) {
-                if ($this->verify) {
-                    $this->testCase->verifyFailures[] = $e->getMessage();
-                } else {
-                    if ($this->failureMessage) {
-                        throw new DidNotMatchException($this->failureMessage);
-                    }
-                    throw $e;
-                }
+                $this->handleFailure($e);
             }
         }
 
@@ -115,5 +116,32 @@ class AssertionBuilder
     public function _($value)
     {
         return $this->__call(null, array($value));
+    }
+
+    /**
+     * @param Exception $e
+     * @throws DidNotMatchException
+     */
+    protected function handleFailure(Exception $e)
+    {
+        if ($this->verify) {
+            $this->testCase->verifyFailures[] = $e->getMessage();
+        } else {
+            if ($this->failureMessage) {
+                throw new DidNotMatchException($this->failureMessage);
+            }
+            throw $e;
+        }
+    }
+
+    public static function validateLastAssertion()
+    {
+        if (self::$lastBuilder) {
+            $last = self::$lastBuilder;
+            self::$lastBuilder = null;
+            $last->handleFailure(
+                new Exception('No such syntax "' . $last->getSyntax() . '"')
+            );
+        }
     }
 }

@@ -30,12 +30,8 @@ class ModuleManagerTest extends TestCase
 
     public function testGetInstanceIsASingleton()
     {
-        /*$this->assert(
-            ModuleManager::getInstance(),
-            exactly_equals,
-            ModuleManager::getInstance()
-        );*/
-        $this->assert(ModuleManager::getInstance())->exactlyEquals(ModuleManager::getInstance());
+        $this->assert(ModuleManager::getInstance())
+            ->exactlyEquals(ModuleManager::getInstance());
     }
 
     /**
@@ -50,29 +46,25 @@ class ModuleManagerTest extends TestCase
     public function testGetAllKeywordsReturnsAnArray()
     {
         $keywords = ModuleManager::getInstance()->getKeywords();
-        /*$this->assert($keywords, is_an_array);*/
         $this->assert($keywords)->isAnArray;
     }
 
     public function testGetAllKeywordsContainsKeywordsFromMatchers()
     {
         $keywords = ModuleManager::getInstance()->getKeywords();
-        /*$this->assert($keywords, has_value, 'not');*/
-        $this->assert($keywords)->hasValue('not');
+        $this->assertArray($keywords)->hasValue('not');
     }
 
     public function testGetAllKeywordsContainsOnlyUniqueWords()
     {
         $keywords = ModuleManager::getInstance()->getKeywords();
-        /*$this->assert($keywords, is_unique);*/
-        $this->assert($keywords)->isUnique;
+        $this->assertArray($keywords)->isUnique;
     }
 
     public function testGetAllKeywordsDoesNotContainPlaceholders()
     {
         $keywords = ModuleManager::getInstance()->getKeywords();
-        /*$this->assert($keywords, does_not_have_value, '?');*/
-        $this->assert($keywords)->doesNotHaveValue('?');
+        $this->assertArray($keywords)->doesNotHaveValue('?');
     }
 
     public function testGetAllKeywordsAreSorted()
@@ -118,15 +110,13 @@ class ModuleManagerTest extends TestCase
     public function testOnIsAKeyword()
     {
         $parser = ModuleManager::getInstance();
-        /*$this->assert($parser->getKeywords(), has_value, 'on');*/
-        $this->assert($parser->getKeywords())->hasValue('on');
+        $this->assertArray($parser->getKeywords())->hasValue('on');
     }
 
     public function testErrorIsAKeyword()
     {
         $parser = ModuleManager::getInstance();
-        /*$this->assert($parser->getKeywords(), has_value, 'error');*/
-        $this->assert($parser->getKeywords())->hasValue('error');
+        $this->assertArray($parser->getKeywords())->hasValue('error');
     }
 
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()
@@ -134,16 +124,14 @@ class ModuleManagerTest extends TestCase
         $parser = ModuleManager::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array(''));
-        /*$this->assert($matcher, has_key, 'on_error');*/
-        $this->assert($matcher)->hasKey('on_error');
+        $this->assertArray($matcher)->hasKey('on_error');
     }
 
     public function testOnErrorIsNotReturnedIfNotInTheSyntax()
     {
         $parser = ModuleManager::getInstance();
         $matcher = $parser->getMatcherForSyntax('? equals ?', array());
-        /*$this->assert($matcher, does_not_have_key, 'on_error');*/
-        $this->assert($matcher)->doesNotHaveKey('on_error');
+        $this->assertArray($matcher)->doesNotHaveKey('on_error');
     }
 
     public function testOnErrorIsReturnedFromData()
@@ -151,7 +139,6 @@ class ModuleManagerTest extends TestCase
         $parser = ModuleManager::getInstance();
         $matcher =
             $parser->getMatcherForSyntax('? equals ? on error ?', array('foo'));
-        /*$this->assert($matcher['on_error'], equals, 'foo');*/
         $this->assert($matcher['on_error'])->equals('foo');
     }
 
@@ -162,7 +149,6 @@ class ModuleManagerTest extends TestCase
             '? equals ? on error ?',
             array('foo', 'bar')
         );
-        /*$this->assert($matcher['on_error'], equals, 'bar');*/
         $this->assert($matcher['on_error'])->equals('bar');
     }
 
@@ -182,13 +168,11 @@ class ModuleManagerTest extends TestCase
      */
     public function testWillUseValueRendererForValuesInExceptionMessages()
     {
-        /*$this->assert("abc", does_not_match_regex, null);*/
         $this->assert("abc")->doesNotMatchRegex(null);
     }
 
     public function testGetModules()
     {
-        /*$this->assert($this->parser->getModules(), is_an_array);*/
         $this->assert($this->parser->getModules())->isAnArray;
     }
 }

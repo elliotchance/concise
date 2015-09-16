@@ -6,26 +6,24 @@ Matchers (Assertions)
 Arrays
 ------
 
-* `array`_ contains `mixed`_ -  Assert an array has at least one occurrence of the given value.   
-* `array`_ does not contain `mixed`_ -  Assert an array does not have any occurrences of the given value.   
-* `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
-* `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
-* `array`_ does not have keys `array`_ -   
-* `array`_ does not have value `mixed`_ -  Assert an array does not have any occurrences of the given value.   
-* `array`_ has item `array`_ -  Assert an array has key and value item.   
-* `array`_ has items `array`_ -  Assert an array has all key and value items.   
-* `array`_ has key `int`_\|\ `string`_ -  Assert an array has key, returns value.   
-* `array`_ has keys `array`_ -  Assert an array has several keys in any order.   
-* `array`_ has value `mixed`_ -  Assert an array has at least one occurrence of the given value.   
-* `array`_ has values `array`_ -  Assert an array has several values in any order.   
-* `array`_ is an associative array -  Assert an array is associative.   
-* `array`_ is an empty array -  Assert an array is empty (no elements).   
-* `array`_ is empty array -  Assert an array is empty (no elements).   
-* `array`_ is not an associative array -  Assert an array is not associative.   
-* `array`_ is not an empty array -  Assert an array is not empty (at least one element).   
-* `array`_ is not empty array -  Assert an array is not empty (at least one element).   
-* `array`_ is not unique -  Assert that an array only has at least one element that is repeated.   
-* `array`_ is unique -  Assert that an array only contains unique values.   
+* array `array`_ contains `mixed`_ -  Assert an array has at least one occurrence of the given value.   
+* array `array`_ does not contain `mixed`_ -  Assert an array does not have any occurrences of the given value.   
+* array `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
+* array `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
+* array `array`_ does not have keys `array`_ -   
+* array `array`_ does not have value `mixed`_ -  Assert an array does not have any occurrences of the given value.   
+* array `array`_ has item `array`_ -  Assert an array has key and value item.   
+* array `array`_ has items `array`_ -  Assert an array has all key and value items.   
+* array `array`_ has key `int`_\|\ `string`_ -  Assert an array has key, returns value.   
+* array `array`_ has keys `array`_ -  Assert an array has several keys in any order.   
+* array `array`_ has value `mixed`_ -  Assert an array has at least one occurrence of the given value.   
+* array `array`_ has values `array`_ -  Assert an array has several values in any order.   
+* array `array`_ is associative -  Assert an array is associative.   
+* array `array`_ is empty -  Assert an array is empty (no elements).   
+* array `array`_ is not associative -  Assert an array is not associative.   
+* array `array`_ is not empty -  Assert an array is not empty (at least one element).   
+* array `array`_ is not unique -  Assert that an array only has at least one element that is repeated.   
+* array `array`_ is unique -  Assert that an array only contains unique values.   
 
 Basic
 -----

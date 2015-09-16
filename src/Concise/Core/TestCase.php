@@ -163,6 +163,7 @@ class TestCase extends BaseAssertions
      */
     public function tearDown()
     {
+        AssertionBuilder::validateLastAssertion();
         $this->mockManager->validateMocks();
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);

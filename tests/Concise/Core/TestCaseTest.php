@@ -10,17 +10,6 @@ class TestCaseTest extends TestCase
             ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
     }
 
-    protected function assertAssertions(array $expected, array $actual)
-    {
-        $this->assert(count($actual))->equals(count($expected));
-        $right = array();
-        foreach ($actual as $a) {
-            /** @var Assertion $a */
-            $right[] = $a->getAssertion();
-        }
-        $this->assert($right)->equals($expected);
-    }
-
     public function testCanSetAttribute()
     {
         $this->myAttribute = 123;
@@ -71,7 +60,7 @@ class TestCaseTest extends TestCase
 
     public function testDataIncludesExplicitInstanceVariables()
     {
-        $this->assert($this->getData())->hasKey('mySpecialAttribute');
+        $this->assertArray($this->getData())->hasKey('mySpecialAttribute');
     }
 
     public function testIssetWorksWithAttributes()
