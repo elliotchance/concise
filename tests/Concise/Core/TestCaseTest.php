@@ -93,4 +93,14 @@ class TestCaseTest extends TestCase
     {
         $this->assert(123)->equals("123");
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "? foo bar"
+     */
+    public function testNoSuchAssertion()
+    {
+        $this->assert('a')->fooBar;
+        $this->assert(123)->equals("123");
+    }
 }

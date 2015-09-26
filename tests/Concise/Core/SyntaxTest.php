@@ -2,8 +2,6 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
-
 class SyntaxTest extends TestCase
 {
     public function testGetSyntax()

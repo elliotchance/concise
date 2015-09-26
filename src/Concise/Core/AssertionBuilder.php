@@ -142,6 +142,6 @@ class AssertionBuilder
             $last->handleFailure(
                 new Exception('No such syntax "' . $last->getSyntax() . '"')
             );
-        }
+        } // @codeCoverageIgnore
     }
 }
