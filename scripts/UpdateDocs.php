@@ -15,6 +15,15 @@ $testCase->setUpBeforeClass();
 updateReadme();
 updateBuilders();
 
+function getShortName($trait)
+{
+    static $shortNames = [];
+    if (!array_key_exists($trait, $shortNames)) {
+        $shortNames[$trait] = count($shortNames);
+    }
+    return $shortNames[$trait];
+}
+
 function updateBuilders()
 {
     $syntaxTree = array();
@@ -38,9 +47,8 @@ function updateBuilders()
             if (null !== $v) {
                 foreach ($v as $words => $s) {
                     $header .=
-                        '|' .
-                        str_replace(' ', '', ucwords($words)) .
-                        'Trait';
+                        '|_' .
+                        getShortName(str_replace(' ', '', ucwords($words)));
                 }
             }
             $header .= " $method" . ucfirst($k) .
@@ -57,7 +65,7 @@ function updateBuilders()
         "\n}\n\n";
     ksort($php);
     foreach ($php as $trait => $methods) {
-        $out .= "/**$methods */\nclass {$trait}Trait\n{\n}\n\n";
+        $out .= "/**$methods */\nclass _" . getShortName($trait) . "\n{\n}\n\n";
     }
 
     file_put_contents(
@@ -75,14 +83,14 @@ function a($v, $php)
 {
     foreach ($v as $words => $s) {
         $trait2 = str_replace(' ', '', ucwords($words));
+        $php[$trait2] = "\n * $trait2";
         if (is_array($s)) {
-            $php[$trait2] = "\n * @method null";
+            $php[$trait2] .= "\n * @method null";
             foreach ($s as $words2 => $s2) {
                 if ($words2) {
                     $php[$trait2] .=
-                        '|' .
-                        str_replace(' ', '', ucwords($words2)) .
-                        'Trait';
+                        '|_' .
+                        getShortName(str_replace(' ', '', ucwords($words2)));
                 }
             }
 
