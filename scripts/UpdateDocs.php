@@ -12,7 +12,6 @@ use Concise\Core\TestCase;
 $testCase = new TestCase();
 $testCase->setUpBeforeClass();
 
-//refreshKeywords();
 updateReadme();
 updateBuilders();
 
@@ -32,65 +31,32 @@ function updateBuilders()
     }
 
     $php = array();
-    $trait = 'BaseAssertions';
+    $header = "/**";
     foreach ($syntaxTree as $k => $v) {
         foreach (array('assert' => false, 'verify' => true) as $method => $verify) {
-            if (!isset($php[$trait])) {
-                $php[$trait] = '';
-            }
-            $php[$trait] .= "\n\t/**\n\t * @return AssertionBuilder";
+            $header .= "\n * @method AssertionBuilder";
             if (null !== $v) {
                 foreach ($v as $words => $s) {
-                    $php[$trait] .=
+                    $header .=
                         '|' .
                         str_replace(' ', '', ucwords($words)) .
                         'Trait';
                 }
-                $php[$trait] .= "\n\t * @param mixed \$valueOrFailureMessage";
-                $php[$trait] .= "\n\t * @param mixed \$value";
             }
+            $header .= " $method" . ucfirst($k) .
+                "(\$valueOrFailureMessage, \$value = null)";
 
-            $php[$trait] .=
-                "\n\t */\n\tpublic function $method" .
-                ucfirst($k) .
-                "(";
             if (null !== $v) {
-                $php[$trait] .= "\$valueOrFailureMessage, \$value = null";
-
                 $php = a($v, $php);
-            } else {
-                $php[$trait] .= "\$failureMessage = null";
             }
-            $php[$trait] .= ")\n\t{";
-            if (null !== $v) {
-                $php[$trait] .= "\n\t\tif (count(func_get_args()) > 1) {\n\t\t\t\$builder = new AssertionBuilder(\$this, \$valueOrFailureMessage, " . var_export($verify, true) . ");\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn \$builder->";
-                $php[$trait] .= ($k ? $k : '_') . "(";
-                if (null !== $v) {
-                    $php[$trait] .= "\$value";
-                }
-                $php[$trait] .= ");\n\t\t} else {\n\t\t\t\$builder = new AssertionBuilder(\$this, null, " . var_export($verify, true) . ");\n\t\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\treturn \$builder->";
-                $php[$trait] .= ($k ? $k : '_') . "(";
-                if (null !== $v) {
-                    $php[$trait] .= "\$valueOrFailureMessage";
-                }
-                $php[$trait] .= ");\n\t\t}";
-            } else {
-                $php[$trait] .= "\n\t\t/** @noinspection PhpUndefinedMethodInspection */\n\t\t\$builder = new AssertionBuilder(\$this, \$failureMessage, " . var_export($verify, true) . ");\n\t\treturn \$builder->";
-                $php[$trait] .= ($k ? $k : '_') . "();";
-            }
-            $php[$trait] .= "\n\t}\n";
         }
     }
 
-    $out =
-        "abstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
-        $php['BaseAssertions'] .
-        "}\n\n";
+    $out = $header .
+        "\n */\nabstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
+        "\n}\n\n";
     ksort($php);
     foreach ($php as $trait => $methods) {
-        if ($trait == 'BaseAssertions') {
-            continue;
-        }
         $out .= "/**$methods */\nclass {$trait}Trait\n{\n}\n\n";
     }
 
@@ -214,33 +180,4 @@ function updateReadme()
             $readme
         );
     file_put_contents($readmeFile, $readme);
-}
-
-function refreshKeywords()
-{
-    $parser = ModuleManager::getInstance();
-    $defines = ['on_error' => 'on error'];
-
-    $all = array();
-    foreach ($parser->getModules() as $module) {
-        foreach ($module->getSyntaxes() as $syntax) {
-            foreach (explode('?', $syntax->getRawSyntax()) as $part) {
-                $p = trim($part);
-                $all[str_replace(' ', '_', $p)] = $p;
-            }
-        }
-    }
-
-    foreach ($all as $name => $value) {
-        $defines[$name] = $value;
-    }
-
-    unset($defines['']);
-    ksort($defines);
-
-    $php =
-        "<?php\n\nnamespace Concise;\n\nclass Keywords\n{\n    public static function load()\n    {    \n    }\n}\n\n";
-    foreach ($defines as $k => $v) {
-        $php .= "if (!defined(\"$k\")) {\n    define(\"$k\", \"$v\");\n}\n";
-    }
 }

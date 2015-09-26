@@ -4,151 +4,18 @@ namespace Concise\Core;
 
 use PHPUnit_Framework_TestCase;
 
+/**
+ * @method AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyTrait|IsNotEmptyTrait|IsNotUniqueTrait|IsUniqueTrait|IsAssociativeTrait|IsNotAssociativeTrait assertArray($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyTrait|IsNotEmptyTrait|IsNotUniqueTrait|IsUniqueTrait|IsAssociativeTrait|IsNotAssociativeTrait verifyArray($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait assert($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait verify($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|IsAfterTrait|IsBeforeTrait assertDate($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|IsAfterTrait|IsBeforeTrait verifyDate($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait assertUrl($valueOrFailureMessage, $value = null)
+ * @method AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait verifyUrl($valueOrFailureMessage, $value = null)
+ */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @return AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyTrait|IsNotEmptyTrait|IsNotUniqueTrait|IsUniqueTrait|IsAssociativeTrait|IsNotAssociativeTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function assertArray($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->array($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->array($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|DoesNotHaveItemTrait|DoesNotHaveKeyTrait|DoesNotHaveKeysTrait|DoesNotContainTrait|DoesNotHaveValueTrait|HasItemTrait|HasItemsTrait|HasKeyTrait|HasKeysTrait|HasValueTrait|ContainsTrait|HasValuesTrait|IsEmptyTrait|IsNotEmptyTrait|IsNotUniqueTrait|IsUniqueTrait|IsAssociativeTrait|IsNotAssociativeTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function verifyArray($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->array($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->array($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function assert($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->_($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->_($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|EqualsTrait|IsEqualToTrait|IsExactlyEqualToTrait|ExactlyEqualsTrait|IsTheSameAsTrait|DoesNotEqualTrait|IsNotEqualToTrait|NotEqualsTrait|IsNotTheSameAsTrait|DoesNotExactlyEqualTrait|IsNotExactlyEqualToTrait|IsFalseTrait|IsFalsyTrait|IsTrueTrait|IsTruthyTrait|DoesNotThrowTrait|DoesNotThrowExceptionTrait|ThrowsTrait|ThrowsAnythingExceptTrait|ThrowsExactlyTrait|ThrowsExceptionTrait|EqualsFileTrait|DoesNotEqualFileTrait|IsBetweenTrait|BetweenTrait|IsNotWithinTrait|IsWithinTrait|IsGreaterThanTrait|GreaterThanTrait|GtTrait|IsGreaterThanOrEqualToTrait|GreaterThanOrEqualTrait|GteTrait|IsLessThanTrait|LessThanTrait|LtTrait|IsLessThanOrEqualToTrait|LessThanOrEqualTrait|IsNotBetweenTrait|NotBetweenTrait|DoesNotHavePropertyTrait|HasPropertyTrait|MatchesRegularExpressionTrait|MatchesRegexTrait|DoesNotMatchRegularExpressionTrait|DoesntMatchRegularExpressionTrait|DoesNotMatchRegexTrait|DoesntMatchRegexTrait|ContainsStringTrait|ContainsCaseInsensitiveStringTrait|DoesNotContainStringTrait|DoesNotContainCaseInsensitiveStringTrait|IsBlankTrait|IsNotBlankTrait|DoesNotEndWithTrait|DoesNotStartWithTrait|EndsWithTrait|StartsWithTrait|IsABooleanTrait|IsABoolTrait|IsAnArrayTrait|IsAnIntTrait|IsAnIntegerTrait|IsAnObjectTrait|IsANumberTrait|IsAStringTrait|IsAnInstanceOfTrait|IsInstanceOfTrait|InstanceOfTrait|IsNotABooleanTrait|IsNotABoolTrait|IsNotAnArrayTrait|IsNotAnIntTrait|IsNotAnIntegerTrait|IsNotAnObjectTrait|IsNotANumberTrait|IsNotAStringTrait|IsNotAnInstanceOfTrait|IsNotInstanceOfTrait|NotInstanceOfTrait|IsNotNullTrait|IsNotNumericTrait|IsNullTrait|IsNumericTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function verify($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->_($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->_($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|IsAfterTrait|IsBeforeTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function assertDate($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->date($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->date($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|IsAfterTrait|IsBeforeTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function verifyDate($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->date($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->date($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function assertUrl($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->url($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, false);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->url($valueOrFailureMessage);
-        }
-    }
-
-    /**
-     * @return AssertionBuilder|IsValidTrait|HasSchemeTrait|HasHostTrait|HasPortTrait|HasUserTrait|HasPasswordTrait|HasPathTrait|HasQueryTrait|HasFragmentTrait
-     * @param mixed $valueOrFailureMessage
-     * @param mixed $value
-     */
-    public function verifyUrl($valueOrFailureMessage, $value = null)
-    {
-        if (count(func_get_args()) > 1) {
-            $builder = new AssertionBuilder($this, $valueOrFailureMessage, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->url($value);
-        } else {
-            $builder = new AssertionBuilder($this, null, true);
-            /** @noinspection PhpUndefinedMethodInspection */
-            return $builder->url($valueOrFailureMessage);
-        }
-    }
 }
 
 /**

@@ -311,4 +311,23 @@ class TestCase extends BaseAssertions
         $this->mockManager->validateMockByInstance($mock);
         return true;
     }
+
+    public function __call($name, $args)
+    {
+        $verify = $name[0] === 'v';
+        $name = lcfirst(substr($name, 6));
+        if ($name === '') {
+            $name = '_';
+        }
+
+        if (count($args) > 1) {
+            $builder = new AssertionBuilder($this, $args[0], $verify);
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $builder->$name($args[1]);
+        }
+
+        $builder = new AssertionBuilder($this, null, $verify);
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $builder->$name($args[0]);
+    }
 }
