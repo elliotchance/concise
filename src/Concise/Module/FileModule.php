@@ -14,9 +14,8 @@ class FileModule extends AbstractModule
     /**
      * Compare string value with the contents of a file.
      *
-     * @return bool
      * @throws DidNotMatchException
-     * @syntax ?:string equals file ?:string
+     * @syntax file ?:string equals ?:string
      */
     public function stringEqualsFile()
     {
@@ -26,9 +25,8 @@ class FileModule extends AbstractModule
     /**
      * Compare string value with the contents of a file.
      *
-     * @return bool
      * @throws DidNotMatchException
-     * @syntax ?:string does not equal file ?:string
+     * @syntax file ?:string does not equal ?:string
      */
     public function stringDoesNotEqualFile()
     {
@@ -41,12 +39,14 @@ class FileModule extends AbstractModule
      */
     protected function compareFileWithString()
     {
-        if (!file_exists($this->data[1])) {
+        // This will be replaced with:
+        // https://github.com/elliotchance/concise/issues/290
+        if (!file_exists($this->data[0])) {
             throw new DidNotMatchException(
-                "File '{$this->data[1]}' does not exist."
+                "File '{$this->data[0]}' does not exist."
             );
         }
 
-        return $this->data[0] == file_get_contents($this->data[1]);
+        return $this->data[1] == file_get_contents($this->data[0]);
     }
 }

@@ -67,8 +67,8 @@ Exceptions
 Files
 -----
 
-* `string`_ does not equal file `string`_ -  Compare string value with the contents of a file.   
-* `string`_ equals file `string`_ -  Compare string value with the contents of a file.   
+* file `string`_ does not equal `string`_ -  Compare string value with the contents of a file.   
+* file `string`_ equals `string`_ -  Compare string value with the contents of a file.   
 
 Numbers
 -------

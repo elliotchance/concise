@@ -19,12 +19,11 @@ class FileModuleTest extends AbstractModuleTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage File 'bar' does not exist.
+     * @expectedExceptionMessage File 'foo' does not exist.
      */
     public function testExceptionIsThrownIfFileDoesNotExist()
     {
-        $this->matcher->setData(array('foo', 'bar'));
-        $this->matcher->stringEqualsFile();
+        $this->assertFile('foo')->equals('bar');
     }
 
     /**
@@ -32,27 +31,26 @@ class FileModuleTest extends AbstractModuleTestCase
      */
     public function testWillFailIfStringDoesNotMatchFile()
     {
-        $this->assert('bar')->equalsFile($this->createTempFile());
+        $this->assertFile($this->createTempFile())->equals('bar');
     }
 
     public function testWillSucceedIfStringDoesMatchFile()
     {
-        $this->assert('baz')->equalsFile($this->createTempFile());
+        $this->assertFile($this->createTempFile())->equals('baz');
     }
 
     /**
      * @expectedException \Concise\Core\DidNotMatchException
-     * @expectedExceptionMessage File 'bar' does not exist.
+     * @expectedExceptionMessage File 'foo' does not exist.
      */
     public function testExceptionIsThrownIfFileDoesNotExist1()
     {
-        $this->matcher->setData(array('foo', 'bar'));
-        $this->matcher->stringDoesNotEqualFile();
+        $this->assertFile('foo')->doesNotEqual('bar');
     }
 
     public function testWillFailIfStringDoesNotMatchFile1()
     {
-        $this->assert('bar')->doesNotEqualFile($this->createTempFile());
+        $this->assertFile($this->createTempFile())->doesNotEqual('bar');
     }
 
     /**
@@ -60,6 +58,6 @@ class FileModuleTest extends AbstractModuleTestCase
      */
     public function testWillSucceedIfStringDoesMatchFile1()
     {
-        $this->assert('baz')->doesNotEqualFile($this->createTempFile());
+        $this->assertFile($this->createTempFile())->doesNotEqual('baz');
     }
 }

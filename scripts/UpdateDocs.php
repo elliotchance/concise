@@ -18,9 +18,22 @@ updateBuilders();
 function getShortName($trait)
 {
     static $shortNames = [];
+    static $c = 0;
     if (!array_key_exists($trait, $shortNames)) {
-        $shortNames[$trait] = count($shortNames);
+        if ($c < 26) {
+            $shortNames[$trait] = chr(ord('A') + $c);
+        } else {
+            $shortNames[$trait] = chr(ord('A') + ($c / 26)) . chr(ord('a') + ($c % 26));
+        }
+
+        if ($shortNames[$trait] == 'Do' || $shortNames[$trait] == 'If') {
+            unset($shortNames[$trait]);
+            ++$c;
+            return getShortName($trait);
+        }
     }
+
+    ++$c;
     return $shortNames[$trait];
 }
 
@@ -47,7 +60,7 @@ function updateBuilders()
             if (null !== $v) {
                 foreach ($v as $words => $s) {
                     $header .=
-                        '|_' .
+                        '|' .
                         getShortName(str_replace(' ', '', ucwords($words)));
                 }
             }
@@ -65,7 +78,7 @@ function updateBuilders()
         "\n}\n\n";
     ksort($php);
     foreach ($php as $trait => $methods) {
-        $out .= "/**$methods */\nclass _" . getShortName($trait) . "\n{\n}\n\n";
+        $out .= "/**$methods */\nclass " . getShortName($trait) . "\n{\n}\n\n";
     }
 
     file_put_contents(
@@ -89,7 +102,7 @@ function a($v, $php)
             foreach ($s as $words2 => $s2) {
                 if ($words2) {
                     $php[$trait2] .=
-                        '|_' .
+                        '|' .
                         getShortName(str_replace(' ', '', ucwords($words2)));
                 }
             }
