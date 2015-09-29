@@ -10,7 +10,7 @@ class UrlModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new UrlModule();
+        $this->module = new UrlModule();
     }
 
     public function data()

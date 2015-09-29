@@ -19,7 +19,7 @@ class ExceptionModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new ExceptionModule();
+        $this->module = new ExceptionModule();
     }
 
     protected function createExceptionTests(array $data)

@@ -12,7 +12,7 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new TypeModule();
+        $this->module = new TypeModule();
     }
 
     public function testTrueIsABoolean()

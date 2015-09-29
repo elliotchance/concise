@@ -192,7 +192,7 @@ function updateReadme()
         $matchersDoc .= generateMarkdownList($module);
     }
 
-    $readmeFile = __DIR__ . '/../doc/matchers.rst';
+    $readmeFile = __DIR__ . '/../doc/assertions.rst';
     $readme = file_get_contents($readmeFile);
     $readme =
         preg_replace(

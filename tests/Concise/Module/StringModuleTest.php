@@ -10,7 +10,7 @@ class StringModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new StringModule();
+        $this->module = new StringModule();
     }
 
     public function testSuccessIfStringContainsASubstring()

@@ -10,7 +10,7 @@ class BooleanModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new BooleanModule();
+        $this->module = new BooleanModule();
     }
 
     public function testFalse()

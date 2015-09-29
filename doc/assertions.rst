@@ -1,5 +1,5 @@
-Matchers (Assertions)
-=====================
+Assertions
+==========
 
 .. start matchers
 

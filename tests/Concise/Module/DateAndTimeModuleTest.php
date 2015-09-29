@@ -12,7 +12,7 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new DateAndTimeModule();
+        $this->module = new DateAndTimeModule();
     }
 
     public function dataProvider()

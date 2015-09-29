@@ -10,7 +10,7 @@ class BasicModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new BasicModule();
+        $this->module = new BasicModule();
     }
 
     public function testEqualsInt()

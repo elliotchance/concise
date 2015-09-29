@@ -10,7 +10,7 @@ class RegularExpressionModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new RegularExpressionModule();
+        $this->module = new RegularExpressionModule();
     }
 
     public function testMatchesRegularExpression()

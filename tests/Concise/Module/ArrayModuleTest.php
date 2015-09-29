@@ -10,7 +10,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new ArrayModule();
+        $this->module = new ArrayModule();
     }
 
     /**

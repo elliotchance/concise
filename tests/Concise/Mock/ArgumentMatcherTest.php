@@ -6,6 +6,9 @@ use Concise\Core\TestCase;
 
 class ArgumentMatcherTest extends TestCase
 {
+    /**
+     * @var ArgumentMatcher
+     */
     protected $matcher;
 
     public function setUp()

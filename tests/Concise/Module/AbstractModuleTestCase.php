@@ -10,11 +10,11 @@ abstract class AbstractModuleTestCase extends TestCase
     /**
      * @var AbstractModule
      */
-    protected $matcher;
+    protected $module;
 
     public function testExtendsAbstractMatcher()
     {
-        $this->assert($this->matcher)
+        $this->assert($this->module)
             ->isAnInstanceOf('\Concise\Module\AbstractModule');
     }
 
@@ -33,8 +33,8 @@ abstract class AbstractModuleTestCase extends TestCase
         $method = 'match'
     ) {
         try {
-            $this->matcher->setData($args);
-            $this->matcher->$method($syntax, $args);
+            $this->module->setData($args);
+            $this->module->$method($syntax, $args);
             $this->fail("Expected assertion to fail.");
         } catch (DidNotMatchException $e) {
             $this->assertSame($failureMessage, $e->getMessage());
@@ -43,6 +43,6 @@ abstract class AbstractModuleTestCase extends TestCase
 
     public function testModuleHasAName()
     {
-        $this->assertString($this->matcher->getName())->isNotEmpty;
+        $this->assertString($this->module->getName())->isNotEmpty;
     }
 }

@@ -33,7 +33,7 @@ Highlights include:
 
    installation
    writing-tests
-   matchers
+   assertions
    running-tests
    mocking
    syntaxes

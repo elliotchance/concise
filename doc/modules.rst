@@ -9,9 +9,10 @@ Creating a Module
 -----------------
 
 Each module is a class that extends ``Concise\Module\AbstractModule`` and
-contains methods that are annotated with the syntaxes they will match on, for
+contains methods that are annotated with the `syntaxes`_ they will match on, for
 example:
 
+.. _syntaxes: syntaxes.html
 
 .. code-block:: php
 
@@ -41,7 +42,7 @@ returned as-is to be used in nested assertions.
 
 
 Loading a Module
-~~~~~~~~~~~~~~~~
+----------------
 
 Modules can be loaded through the ``ModuleManager`` like:
 
@@ -61,10 +62,10 @@ Some things to note:
 
 
 
-Testing the Matcher
-~~~~~~~~~~~~~~~~~~~
+Testing Modules
+---------------
 
-Use the ``Concise\Module\AbstractModuleTestCase`` when testing matchers:
+Use the ``Concise\Module\AbstractModuleTestCase`` when testing modules:
 
 .. code-block:: php
 
@@ -73,7 +74,7 @@ Use the ``Concise\Module\AbstractModuleTestCase`` when testing matchers:
        public function setUp()
        {
            parent::setUp();
-           $this->matcher = new MyModule();
+           $this->module = new MyModule();
        }
 
        public function testIntegerIsAnInteger()

@@ -10,7 +10,7 @@ class NumberModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new NumberModule();
+        $this->module = new NumberModule();
     }
 
     public function testNumberExistsBetweenTwoOtherNumbers()

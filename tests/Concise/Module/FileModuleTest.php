@@ -7,7 +7,7 @@ class FileModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new FileModule();
+        $this->module = new FileModule();
     }
 
     protected function createTempFile()

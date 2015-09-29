@@ -20,7 +20,7 @@ class ObjectModuleTest extends AbstractModuleTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->matcher = new ObjectModule();
+        $this->module = new ObjectModule();
         $this->obj = new stdClass();
     }
 
