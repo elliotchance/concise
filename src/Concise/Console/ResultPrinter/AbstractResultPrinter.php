@@ -2,12 +2,13 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Exception;
-use PHPUnit_Framework_TestSuite;
 use Concise\Console\TestRunner\TestResultDelegateInterface;
+use Exception;
 use PHPUnit_Framework_Test;
+use PHPUnit_Framework_TestSuite;
 
-abstract class AbstractResultPrinter implements TestResultDelegateInterface, StatisticsInterface
+abstract class AbstractResultPrinter
+    implements TestResultDelegateInterface, StatisticsInterface
 {
     /**
      * @var integer
@@ -59,8 +60,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
      */
     public function getSuccessCount()
     {
-        return $this->getTestCount() - $this->getFailureCount() - $this->getErrorCount()
-            - $this->getSkippedCount() - $this->getIncompleteCount() - $this->getRiskyCount();
+        return $this->getTestCount() - $this->getFailureCount() -
+        $this->getErrorCount() - $this->getSkippedCount() -
+        $this->getIncompleteCount() - $this->getRiskyCount();
     }
 
     /**
@@ -127,8 +129,12 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
         return $this->assertionCount;
     }
 
-    public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
-    {
+    public function endTest(
+        $status,
+        PHPUnit_Framework_Test $test,
+        $time,
+        Exception $e = null
+    ) {
     }
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
@@ -139,6 +145,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
     {
     }
 
+    /**
+     * @param string $string
+     */
     public function write($string)
     {
         echo $string;
@@ -148,6 +157,9 @@ abstract class AbstractResultPrinter implements TestResultDelegateInterface, Sta
     {
     }
 
+    /**
+     * @param boolean $verbose
+     */
     public function setVerbose($verbose)
     {
         $this->verbose = $verbose;

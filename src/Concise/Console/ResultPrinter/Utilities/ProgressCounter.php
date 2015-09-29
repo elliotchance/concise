@@ -2,13 +2,14 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Core\ArgumentChecker;
 use DomainException;
-use Concise\Validation\ArgumentChecker;
 
 class ProgressCounter
 {
     /**
      * Total value
+     *
      * @var integer
      */
     protected $total;
@@ -18,6 +19,10 @@ class ProgressCounter
      */
     protected $showPercentage;
 
+    /**
+     * @param integer $value
+     * @param string  $name
+     */
     protected function atLeastZero($value, $name)
     {
         if ($value < 0) {
@@ -52,8 +57,14 @@ class ProgressCounter
         return $r;
     }
 
+    /**
+     * @param integer $value
+     * @return int
+     */
     public function getPercentage($value)
     {
-        return (0 === $this->total) ? 0 : floor($value / $this->total * 100);
+        return (0 === $this->total)
+            ? 0
+            : (int)floor($value / $this->total * 100);
     }
 }

@@ -2,33 +2,40 @@
 
 namespace Concise\Mock\Action;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DoActionTest extends TestCase
 {
     public function testMustBeATypeOfAction()
     {
-        $action = new DoAction(function () {});
-        $this->assert($action, instance_of, '\Concise\Mock\Action\AbstractAction');
+        $action = new DoAction(
+            function () {
+            }
+        );
+        $this->assert($action)
+            ->isAnInstanceOf('\Concise\Mock\Action\AbstractAction');
     }
 
     public function testCanGeneratePHPCode()
     {
-        $action = new DoAction(function () {});
-        $this->assert($action->getActionCode(), matches_regex, "/return/");
+        $action = new DoAction(
+            function () {
+            }
+        );
+        $this->assertString($action->getActionCode())->matches("/return/");
     }
 
     public function testWillUseDifferentCacheKeyEachTime()
     {
-        $action1 = new DoAction(function () {});
-        $action2 = new DoAction(function () {});
-        $this->assert($action1->getActionCode(), does_not_equal, $action2->getActionCode());
-    }
-
-    public function testItemCanBeFetchedBackFromCache()
-    {
-        $action = new DoAction(function () { return 'foo'; });
-        $result = eval($action->getActionCode());
-        $this->assert($result, equals, 'foo');
+        $action1 = new DoAction(
+            function () {
+            }
+        );
+        $action2 = new DoAction(
+            function () {
+            }
+        );
+        $this->assert($action1->getActionCode())
+            ->doesNotEqual($action2->getActionCode());
     }
 }

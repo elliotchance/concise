@@ -1,6 +1,7 @@
 /composer.phar
 /vendor
 .DS_Store
-/.idea
-
 /wiki
+
+doc/_build
+report

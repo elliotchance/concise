@@ -4,9 +4,13 @@
 require_once('vendor/autoload.php');
 
 use Concise\Console\Command;
+use Concise\Core\Version;
 
-$version = new \Concise\Version();
-echo trim("Concise " . $version->getConciseVersion()) . " by Elliot Chance.\n\n";
+$version = new Version();
+$versionNumber = $version->getConciseVersion();
+$versionName = $version->getVersionNameForVersion($versionNumber);
+echo trim("Concise " . $versionNumber . ' ' . $versionName);
+echo " by Elliot Chance.\n\n";
 
 $command = new Command();
 $command->run($_SERVER['argv'], true);

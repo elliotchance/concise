@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class TraceSimplifierTest extends TestCase
 {
@@ -14,110 +14,148 @@ class TraceSimplifierTest extends TestCase
 
     public function testZeroItemsInTraceWillNotRenderAnything()
     {
-        $this->assert($this->simplifier->render(array()), equals, '');
+        $this->assert($this->simplifier->render(array()))->equals('');
     }
 
     public function testOneItemWillPrintSimplifiedFile()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'file' => getcwd() . '/foo.php',
-                'function' => 'myFunction',
-            ),
-        )), contains_string, 'foo.php');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'file' => getcwd() . '/foo.php',
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->contains('foo.php');
     }
 
     public function testWillSkipTraceLineIfItsTheConciseExecutable()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'file' => getcwd() . '/bin/concise',
-                'function' => 'myFunction',
-            ),
-        )), equals, '');
+        $this->assert(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'file' => getcwd() . '/bin/concise',
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->equals('');
     }
 
     public function testWillSkipTraceLineIfThePathIsInTheVendorFolder()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'file' => getcwd() . '/vendor/a',
-                'function' => 'myFunction',
-            ),
-        )), equals, '');
+        $this->assert(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'file' => getcwd() . '/vendor/a',
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->equals('');
     }
 
     public function testUsesUnknownFileIfNotSpecified()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'function' => 'myFunction',
-            ),
-        )), contains_string, '(unknown file)');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->contains('(unknown file)');
     }
 
     public function testWillUseAQuestionMarkIfTheLineIsNotSpecified()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'function' => 'myFunction',
-            ),
-        )), contains_string, 'Line ?');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->contains('Line ?');
     }
 
     public function testWillIncludeLineNumber()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'line' => 123,
-                'function' => 'myFunction',
-            ),
-        )), contains_string, 'Line 123');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'line' => 123,
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->contains('Line 123');
     }
 
     public function testWillGroupLinesUnderTheSameHeadingIfTheyAreTheSameFile()
     {
-        $result = $this->simplifier->render(array(
+        $result = $this->simplifier->render(
             array(
-                'file' => getcwd() . '/foo.php',
-                'function' => 'myFunction',
-            ),
-            array(
-                'file' => getcwd() . '/foo.php',
-                'function' => 'myFunction',
-            ),
-        ));
-        $this->assert(substr_count($result, 'foo.php'), equals, 1);
+                array(
+                    'file' => getcwd() . '/foo.php',
+                    'function' => 'myFunction',
+                ),
+                array(
+                    'file' => getcwd() . '/foo.php',
+                    'function' => 'myFunction',
+                ),
+            )
+        );
+        $this->assert(substr_count($result, 'foo.php'))->equals(1);
     }
 
     public function testWillIncludeTheFunctionName()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'function' => 'myFunction',
-            ),
-        )), contains_string, 'myFunction()');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'function' => 'myFunction',
+                    ),
+                )
+            )
+        )->contains('myFunction()');
     }
 
     public function testWillIncludeClassIfAvailable()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'function' => 'myFunction',
-                'class'    => 'MyClass',
-                'type'     => '',
-            ),
-        )), contains_string, 'MyClass');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'function' => 'myFunction',
+                        'class' => 'MyClass',
+                        'type' => '',
+                    ),
+                )
+            )
+        )->contains('MyClass');
     }
 
     public function testWillIncludeTypeIfClassIsAvailable()
     {
-        $this->assert($this->simplifier->render(array(
-            array(
-                'function' => 'myFunction',
-                'class'    => 'MyClass',
-                'type'     => '::',
-            ),
-        )), contains_string, 'MyClass::myFunction()');
+        $this->assertString(
+            $this->simplifier->render(
+                array(
+                    array(
+                        'function' => 'myFunction',
+                        'class' => 'MyClass',
+                        'type' => '::',
+                    ),
+                )
+            )
+        )->contains('MyClass::myFunction()');
     }
 }

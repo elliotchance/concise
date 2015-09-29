@@ -7,8 +7,8 @@ use Closure;
 class ReturnCallbackAction extends AbstractCachingAction
 {
     /**
-	 * @param Closure $callback
-	 */
+     * @param Closure $callback
+     */
     public function __construct(Closure $callback)
     {
         parent::__construct($callback);
@@ -20,6 +20,7 @@ class ReturnCallbackAction extends AbstractCachingAction
      */
     public function getActionCode()
     {
-        return parent::getActionCode() . "return \$v(\Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}i']++, func_get_args());";
+        return parent::getActionCode() .
+        "return \$v(new \Concise\Mock\Invocation(\Concise\Mock\Action\AbstractCachingAction::\$cache['{$this->cacheKey}i']++, func_get_args()));";
     }
 }

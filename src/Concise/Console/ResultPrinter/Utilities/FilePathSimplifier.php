@@ -2,14 +2,14 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 
 class FilePathSimplifier
 {
     /**
-	 * @param  string $filePath
-	 * @return string
-	 */
+     * @param  string $filePath
+     * @return string
+     */
     public function process($filePath)
     {
         ArgumentChecker::check($filePath, 'string');
