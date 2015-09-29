@@ -2,14 +2,12 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
-
 class NoMatcherFoundExceptionTest extends TestCase
 {
     public function testExtendsException()
     {
         $this->assert(new NoMatcherFoundException(array()))
-            ->instanceOf('\Exception');
+            ->isAnInstanceOf('\Exception');
     }
 
     public function testSyntaxCanBeSetInConstructor()

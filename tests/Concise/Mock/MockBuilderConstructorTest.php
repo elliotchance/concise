@@ -44,7 +44,7 @@ class MockBuilderConstructorTest extends TestCase
         $mock = $this->niceMock('\Concise\Mock\MockConstructor1')
             ->disableConstructor()
             ->get();
-        $this->assert($mock)->instanceOf('\Concise\Mock\MockConstructor1');
+        $this->assert($mock)->isAnInstanceOf('\Concise\Mock\MockConstructor1');
     }
 
     public function testMocksCanHaveTheirConstructorDisabledWithArguments()
@@ -52,6 +52,6 @@ class MockBuilderConstructorTest extends TestCase
         $mock = $this->niceMock('\Concise\Mock\MockConstructor2')
             ->disableConstructor()
             ->get();
-        $this->assert($mock)->instanceOf('\Concise\Mock\MockConstructor2');
+        $this->assert($mock)->isAnInstanceOf('\Concise\Mock\MockConstructor2');
     }
 }

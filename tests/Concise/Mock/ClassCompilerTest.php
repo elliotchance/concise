@@ -47,14 +47,14 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $this->assert($compiler->newInstance())
-            ->instanceOf('Concise\Mock\ClassCompilerMock1');
+            ->isAnInstanceOf('Concise\Mock\ClassCompilerMock1');
     }
 
     public function testCanGenerateMockFromAbstractClass()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock2');
         $this->assert($compiler->newInstance())
-            ->instanceOf('Concise\Mock\ClassCompilerMock2');
+            ->isAnInstanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     public function testMultipleMocksGeneratedFromTheSameClassIsPossible()
@@ -66,7 +66,8 @@ class ClassCompilerTest extends TestCase
     }
 
     /**
-     * @param string $php
+     * @param ClassCompiler $compiler
+     * @param string        $php
      */
     protected function assertPHP(ClassCompiler $compiler, $php)
     {
@@ -80,7 +81,7 @@ class ClassCompilerTest extends TestCase
     {
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
         $this->assert($compiler->newInstance())
-            ->instanceOf('Concise\Mock\ClassCompilerMock2');
+            ->isAnInstanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     public function testTheNameOfTheClassCanBeSet()
@@ -112,7 +113,7 @@ class ClassCompilerTest extends TestCase
         $compiler = new ClassCompiler('\Concise\Mock\ClassCompilerMock2');
         $compiler->setCustomClassName('\Concise\Mock\ClassCompilerMock2Foo');
         $this->assert($compiler->newInstance())
-            ->instanceOf('Concise\Mock\ClassCompilerMock2');
+            ->isAnInstanceOf('Concise\Mock\ClassCompilerMock2');
     }
 
     /**

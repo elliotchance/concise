@@ -2,10 +2,8 @@
 
 namespace Concise\Module;
 
-use Concise\Core\AssertionBuilder;
 use Concise\Core\DidNotMatchException;
 use Concise\Core\TestCase;
-use PHPUnit_Framework_AssertionFailedError;
 
 abstract class AbstractModuleTestCase extends TestCase
 {
@@ -17,7 +15,7 @@ abstract class AbstractModuleTestCase extends TestCase
     public function testExtendsAbstractMatcher()
     {
         $this->assert($this->matcher)
-            ->isInstanceOf('\Concise\Module\AbstractModule');
+            ->isAnInstanceOf('\Concise\Module\AbstractModule');
     }
 
     protected function createStdClassThatCanBeCastToString($value)

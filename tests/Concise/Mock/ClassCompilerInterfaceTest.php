@@ -20,6 +20,6 @@ class ClassCompilerInterfaceTest extends TestCase
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
         $this->assert($compiler->newInstance())
-            ->instanceOf('Concise\Mock\ClassCompilerMock4');
+            ->isAnInstanceOf('Concise\Mock\ClassCompilerMock4');
     }
 }

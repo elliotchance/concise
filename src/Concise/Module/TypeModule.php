@@ -78,19 +78,6 @@ class TypeModule extends AbstractModule
     }
 
     /**
-     * Assert an objects class or subclass.
-     *
-     * @return bool
-     * @syntax ?:object,class is an instance of ?:class
-     * @syntax ?:object,class is instance of ?:class
-     * @syntax ?:object,class instance of ?:class
-     */
-    public function isInstanceOf()
-    {
-        $this->failIf(!$this->isAnInstanceOf());
-    }
-
-    /**
      * Assert a value is not true or false.
      *
      * @return bool
@@ -159,19 +146,6 @@ class TypeModule extends AbstractModule
     }
 
     /**
-     * Assert than an object is not a class or subclass.
-     *
-     * @return bool
-     * @syntax ?:object,class is not an instance of ?:class
-     * @syntax ?:object,class is not instance of ?:class
-     * @syntax ?:object,class not instance of ?:class
-     */
-    public function isNotAnInstanceOf()
-    {
-        $this->failIf($this->isAnInstanceOf());
-    }
-
-    /**
      * Assert a value is not null.
      *
      * @return bool
@@ -213,18 +187,5 @@ class TypeModule extends AbstractModule
     public function isNumeric()
     {
         $this->failIf(!is_numeric($this->data[0]));
-    }
-
-    protected function isAnInstanceOf()
-    {
-        $interfaces = class_implements($this->data[0]);
-
-        if (is_string($this->data[0])) {
-            return true;
-        }
-        return
-            (get_class($this->data[0]) === $this->data[1]) ||
-            is_subclass_of($this->data[0], $this->data[1]) ||
-            array_key_exists($this->data[1], $interfaces);
     }
 }

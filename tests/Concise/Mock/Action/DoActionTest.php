@@ -13,7 +13,7 @@ class DoActionTest extends TestCase
             }
         );
         $this->assert($action)
-            ->instanceOf('\Concise\Mock\Action\AbstractAction');
+            ->isAnInstanceOf('\Concise\Mock\Action\AbstractAction');
     }
 
     public function testCanGeneratePHPCode()

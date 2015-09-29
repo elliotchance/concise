@@ -177,12 +177,12 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testNumberExistsBetweenTwoOtherNumbers1()
     {
-        $this->assert(123)->notBetween(100)->and(150);
+        $this->assert(123)->isNotBetween(100)->and(150);
     }
 
     public function testNumberIsBelowLowerBounds1()
     {
-        $this->assert(80)->notBetween(100)->and(150);
+        $this->assert(80)->isNotBetween(100)->and(150);
     }
 
     /**
@@ -190,12 +190,12 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testNumberIsOnTheLowerBound1()
     {
-        $this->assert(123)->notBetween(123)->and(150);
+        $this->assert(123)->isNotBetween(123)->and(150);
     }
 
     public function testNumberIsAboveUpperBounds1()
     {
-        $this->assert(170)->notBetween(100)->and(150);
+        $this->assert(170)->isNotBetween(100)->and(150);
     }
 
     /**
@@ -203,18 +203,16 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testNumberIsOnTheUpperBound1()
     {
-        $this->assert(150)->notBetween(123)->and(150);
+        $this->assert(150)->isNotBetween(123)->and(150);
     }
 
     public function testLessThan3()
     {
-        /*$this->assert(100, is_less_than_or_equal_to, 200);*/
         $this->assert(100)->isLessThanOrEqualTo(200);
     }
 
     public function testLessThanOrEqual1()
     {
-        /*$this->assert(200, is_less_than_or_equal_to, 200);*/
         $this->assert(200)->isLessThanOrEqualTo(200);
     }
 

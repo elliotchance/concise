@@ -9,6 +9,6 @@ class DefaultTestRunnerTest extends TestCase
     public function testTestRunnerExtendsPHPUnit()
     {
         $this->assert(new DefaultTestRunner())
-            ->isInstanceOf('PHPUnit_TextUI_TestRunner');
+            ->isAnInstanceOf('PHPUnit_TextUI_TestRunner');
     }
 }

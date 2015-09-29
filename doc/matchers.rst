@@ -66,8 +66,6 @@ Files
 Numbers
 -------
 
-* `number`_ greater than or equal `number`_ -  A number is greater than or equal to another number.   
-* `number`_ gte `number`_ -  A number is greater than or equal to another number.   
 * `number`_ is between `number`_ and `number`_ -  A number must be between two values (inclusive), returns value.   
 * `number`_ is greater than `number`_ -  A number is greater than another number.   
 * `number`_ is greater than or equal to `number`_ -  A number is greater than or equal to another number.   
@@ -76,22 +74,20 @@ Numbers
 * `number`_ is not between `number`_ and `number`_ -  A number must not be between two values (inclusive).   
 * `number`_ is not within `number`_ of `number`_ -  Assert two values are not close to each other.   
 * `number`_ is within `number`_ of `number`_ -  Assert two values are close to each other.   
-* `number`_ less than `number`_ -  A number is less than another number.   
-* `number`_ less than or equal `number`_ -  A number is less than or equal to another number.   
-* `number`_ lt `number`_ -  A number is less than another number.   
-* `number`_ not between `number`_ and `number`_ -  A number must not be between two values (inclusive).   
 
 Objects and Classes
 -------------------
 
+* `object`_\|\ `class`_ is an instance of `class`_ -  Assert an objects class or subclass.   
+* `object`_\|\ `class`_ is not an instance of `class`_ -  Assert than an object is not a class or subclass.   
 * object `object`_ does not have property `string`_ -  Assert that an object does not have a property.   
 * object `object`_ has property `string`_ -  Assert that an object has a property. Returns the properties value.   
 
 Regular Expressions
 -------------------
 
-* string `string`_ does not match `regex`_ -   
-* string `string`_ matches `regex`_ -   
+* string `string`_ does not match `regex`_ -  Assert that a string does not match a regular expression.   
+* string `string`_ matches `regex`_ -  Assert that a string matches a regular expression.   
 
 Strings
 -------
@@ -130,12 +126,6 @@ Types
 * `mixed`_ is not numeric -  Assert value is not a number or string that represents a number.   
 * `mixed`_ is null -  Assert a value is null.   
 * `mixed`_ is numeric -  Assert value is a number or string that represents a number.   
-* `object`_\|\ `class`_ instance of `class`_ -  Assert an objects class or subclass.   
-* `object`_\|\ `class`_ is an instance of `class`_ -  Assert an objects class or subclass.   
-* `object`_\|\ `class`_ is instance of `class`_ -  Assert an objects class or subclass.   
-* `object`_\|\ `class`_ is not an instance of `class`_ -  Assert than an object is not a class or subclass.   
-* `object`_\|\ `class`_ is not instance of `class`_ -  Assert than an object is not a class or subclass.   
-* `object`_\|\ `class`_ not instance of `class`_ -  Assert than an object is not a class or subclass.   
 
 URLs
 ----

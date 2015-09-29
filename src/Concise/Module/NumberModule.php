@@ -63,8 +63,6 @@ class NumberModule extends AbstractModule
      *
      * @return bool
      * @syntax ?:number is greater than or equal to ?:number
-     * @syntax ?:number greater than or equal ?:number
-     * @syntax ?:number gte ?:number
      */
     public function isGreaterThanEqual()
     {
@@ -76,8 +74,6 @@ class NumberModule extends AbstractModule
      *
      * @return bool
      * @syntax ?:number is less than ?:number
-     * @syntax ?:number less than ?:number
-     * @syntax ?:number lt ?:number
      */
     public function isLessThan()
     {
@@ -89,8 +85,6 @@ class NumberModule extends AbstractModule
      *
      * @return bool
      * @syntax ?:number is less than or equal to ?:number
-     * @syntax ?:number less than or equal ?:number
-     * @synatx ?:number lte ?:number
      */
     public function isLessThanEqual()
     {
@@ -101,7 +95,6 @@ class NumberModule extends AbstractModule
      * A number must not be between two values (inclusive).
      *
      * @syntax ?:number is not between ?:number and ?:number
-     * @syntax ?:number not between ?:number and ?:number
      * @return bool
      */
     public function notBetween()

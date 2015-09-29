@@ -13,6 +13,8 @@ class RegularExpressionModule extends AbstractModule
     }
 
     /**
+     * Assert that a string matches a regular expression.
+     *
      * @syntax string ?:string matches ?:regex
      */
     public function matchesRegex()
@@ -21,6 +23,8 @@ class RegularExpressionModule extends AbstractModule
     }
 
     /**
+     * Assert that a string does not match a regular expression.
+     *
      * @syntax string ?:string does not match ?:regex
      */
     public function doesNotMatchRegex()

@@ -14,8 +14,7 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $mock = $builder->get();
-        /*$this->assert($mock, instance_of, $builder->getClassName());*/
-        $this->assert($mock)->instanceOf($builder->getClassName());
+        $this->assert($mock)->isAnInstanceOf($builder->getClassName());
     }
 
     /**
@@ -54,15 +53,13 @@ class BuilderGeneralTest extends AbstractBuilderTestCase
     public function testMockImplementsMockInterface(MockBuilder $builder)
     {
         $mock = $builder->get();
-        /*$this->assert($mock, instance_of, '\Concise\Mock\MockInterface');*/
-        $this->assert($mock)->instanceOf('\Concise\Mock\MockInterface');
+        $this->assert($mock)->isAnInstanceOf('\Concise\Mock\MockInterface');
     }
 
     /**
      * @group #129
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot create a nice mock of an interface
-     *     (\Concise\Mock\CombinationMockedInterface)
+     * @expectedExceptionMessage You cannot create a nice mock of an interface (\Concise\Mock\CombinationMockedInterface)
      */
     public function testCannotCreateANiceMockOfAnInterface()
     {

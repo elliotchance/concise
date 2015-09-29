@@ -17,8 +17,7 @@ class BuilderWithTest extends AbstractBuilderTestCase
             $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
                 'b'
             )->andReturn('bar')->get();
-        /*$this->assert($mock, instance_of, $builder->getClassName());*/
-        $this->assert($mock)->instanceOf($builder->getClassName());
+        $this->assert($mock)->isAnInstanceOf($builder->getClassName());
     }
 
     /**
@@ -27,11 +26,12 @@ class BuilderWithTest extends AbstractBuilderTestCase
     public function testMultipleWithCanChangeTheActionOfTheMethod(
         MockBuilder $builder
     ) {
-        $mock =
-            $builder->stub('myWithMethod')->with('a')->andReturn('foo')->with(
-                'b'
-            )->andReturn('bar')->get();
-        /*$this->assert($mock->myWithMethod('b'), equals, 'bar');*/
+        $mock = $builder->stub('myWithMethod')
+            ->with('a')
+            ->andReturn('foo')
+            ->with('b')
+            ->andReturn('bar')
+            ->get();
         $this->assert($mock->myWithMethod('b'))->equals('bar');
     }
 

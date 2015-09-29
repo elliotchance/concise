@@ -21,28 +21,27 @@ class CommandTest extends TestCase
 {
     public function testCommandExtendsPHPUnit()
     {
-        $this->assert(new Command())->instanceOf('PHPUnit_TextUI_Command');
+        $this->assert(new Command())->isAnInstanceOf('PHPUnit_TextUI_Command');
     }
 
     protected function getCommandMock()
     {
-        return $this->niceMock('Concise\Console\CommandStub')->expose(
-            'createRunner'
-        )->get();
+        return $this->niceMock('Concise\Console\CommandStub')
+            ->expose('createRunner')->get();
     }
 
     public function testCreateRunnerReturnsAConciseRunner()
     {
         $command = $this->getCommandMock();
         $this->assert($command->createRunner())
-            ->instanceOf('Concise\Console\TestRunner\DefaultTestRunner');
+            ->isAnInstanceOf('Concise\Console\TestRunner\DefaultTestRunner');
     }
 
     public function testPrinterUsesProxy()
     {
         $command = $this->getCommandMock();
         $this->assert($command->createRunner()->getPrinter())
-            ->instanceOf('Concise\Console\ResultPrinter\ResultPrinterProxy');
+            ->isAnInstanceOf('Concise\Console\ResultPrinter\ResultPrinterProxy');
     }
 
     public function testVerboseIsFalseByDefault()
@@ -86,7 +85,7 @@ class CommandTest extends TestCase
         $command->setCI(true);
 
         $this->assert($command->getResultPrinter())
-            ->instanceOf('Concise\Console\ResultPrinter\CIResultPrinter');
+            ->isAnInstanceOf('Concise\Console\ResultPrinter\CIResultPrinter');
     }
 
     public function testDefaultResultPrinterIsNotUsedIfCIIsFalse()
@@ -95,13 +94,13 @@ class CommandTest extends TestCase
         $command->setCI(false);
 
         $this->assert($command->getResultPrinter())
-            ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
+            ->isAnInstanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 
     public function testDefaultResultPrinterIsUsedByDefault()
     {
         $command = $this->getCommandMock();
         $this->assert($command->getResultPrinter())
-            ->instanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
+            ->isAnInstanceOf('Concise\Console\ResultPrinter\DefaultResultPrinter');
     }
 }

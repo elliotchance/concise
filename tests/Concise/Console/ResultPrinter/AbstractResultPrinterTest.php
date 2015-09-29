@@ -16,7 +16,7 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testResultPrinterImplementsTestResultDelegateInterface()
     {
-        $this->assert($this->resultPrinter)->instanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
+        $this->assert($this->resultPrinter)->isAnInstanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
     }
 
     public function testDefaultSuccessCountIsZero()

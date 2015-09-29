@@ -47,15 +47,13 @@ class MockBuilderTest extends TestCase
     public function testMockClassDefaultsToStdClass()
     {
         $mock = $this->mock()->get();
-        /*$this->assert($mock, instance_of, '\stdClass');*/
-        $this->assert($mock)->instanceOf('\stdClass');
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     public function testNiceMockClassDefaultsToStdClass()
     {
         $mock = $this->niceMock()->get();
-        /*$this->assert($mock, instance_of, '\stdClass');*/
-        $this->assert($mock)->instanceOf('\stdClass');
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     /**

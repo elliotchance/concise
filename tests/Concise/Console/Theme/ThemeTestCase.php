@@ -60,12 +60,12 @@ abstract class ThemeTestCase extends TestCase
     public function testMustImplementColorTheme()
     {
         $this->assert($this->theme)
-            ->instanceOf('Concise\Console\Theme\ThemeInterface');
+            ->isAnInstanceOf('Concise\Console\Theme\ThemeInterface');
     }
 
     public function testMustExtendAbstractTheme()
     {
         $this->assert($this->theme)
-            ->instanceOf('Concise\Console\Theme\AbstractTheme');
+            ->isAnInstanceOf('Concise\Console\Theme\AbstractTheme');
     }
 }

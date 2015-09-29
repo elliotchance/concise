@@ -130,7 +130,7 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testIsInstanceOfWithSuperClass()
     {
         $this->assert(new self())
-            ->instanceOf('\Concise\Module\AbstractModuleTestCase');
+            ->isAnInstanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
     /**
@@ -139,13 +139,13 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testIsInstanceOfFailure()
     {
         $this->assert(new \stdClass())
-            ->isInstanceOf('\Concise\Module\TypeModule');
+            ->isAnInstanceOf('\Concise\Module\TypeModule');
     }
 
     public function testStringsRepresentingClassNamesCanBeUsed()
     {
         $this->assert('\Concise\Module\TypeModule')
-            ->instanceOf('\Concise\Core\TestCase');
+            ->isAnInstanceOf('\Concise\Core\TestCase');
     }
 
     public function testIsInstanceOfWithSameClassNoPrefix()
@@ -272,13 +272,13 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testIsInstanceOfWithSuperClass1()
     {
         $this->assert(new self())
-            ->notInstanceOf('\Concise\Module\AbstractModuleTestCase');
+            ->isNotAnInstanceOf('\Concise\Module\AbstractModuleTestCase');
     }
 
     public function testIsInstanceOfFailure1()
     {
         $this->assert(new \stdClass())
-            ->isNotInstanceOf('\Concise\Module\TypeModuleTest');
+            ->isNotAnInstanceOf('\Concise\Module\TypeModuleTest');
     }
 
     /**
@@ -287,7 +287,7 @@ class TypeModuleTest extends AbstractModuleTestCase
     public function testStringsRepresentingClassNamesCanBeUsed1()
     {
         $this->assert('\Concise\Module\TypeModule')
-            ->isNotInstanceOf('\Concise\Core\TestCase');
+            ->isNotAnInstanceOf('\Concise\Core\TestCase');
     }
 
     public function testZeroIsNotNull()

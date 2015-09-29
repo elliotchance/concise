@@ -2,14 +2,12 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
-
 class DataTypeMismatchExceptionTest extends TestCase
 {
     public function testIsATypeOfInvalidArgumentException()
     {
         $this->assert(new DataTypeMismatchException())
-            ->instanceOf('\InvalidArgumentException');
+            ->isAnInstanceOf('\InvalidArgumentException');
     }
 
     public function testExpectedTypesReturnsArray()

@@ -31,7 +31,7 @@ class TestCasePartialMockTest extends TestCase
     {
         $instance = new DateTime();
         $this->assert($this->partialMock($instance))
-            ->instanceOf('\Concise\Mock\MockBuilder');
+            ->isAnInstanceOf('\Concise\Mock\MockBuilder');
     }
 
     /**
@@ -47,7 +47,7 @@ class TestCasePartialMockTest extends TestCase
     {
         $instance = new DateTime();
         $mock = $this->partialMock($instance)->get();
-        $this->assert($mock)->instanceOf('\DateTime');
+        $this->assert($mock)->isAnInstanceOf('\DateTime');
     }
 
     public function testPartialMockWillInheritObjectValuesToMaintainState()

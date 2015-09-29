@@ -26,13 +26,13 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testProxyExtendsPHPUnit()
     {
-        $this->assert($this->proxy)->instanceOf('PHPUnit_TextUI_ResultPrinter');
+        $this->assert($this->proxy)->isAnInstanceOf('PHPUnit_TextUI_ResultPrinter');
     }
 
     public function testGetResultPrinterReturnsAResultPrinterInterface()
     {
         $this->assert($this->proxy->getResultPrinter())
-            ->instanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
+            ->isAnInstanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
     }
 
     public function testResultPrinterIsSetViaConstructor()
