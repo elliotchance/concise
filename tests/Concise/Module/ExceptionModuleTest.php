@@ -257,15 +257,15 @@ class ExceptionModuleTest extends AbstractModuleTestCase
     {
         return $this->createExceptionTests(
             array(
-//                array('throwNothing', 'expectException', 'FAIL'),
-//                array('throwNothing', 'expectMyException', 'FAIL'),
+                array('throwNothing', 'expectException', 'FAIL'),
+                array('throwNothing', 'expectMyException', 'FAIL'),
                 array('throwException', 'expectException', 'PASS'),
-//                array('throwException', 'expectMyException', 'FAIL'),
-//                array('throwMyException', 'expectException', 'FAIL'),
-//                array('throwMyException', 'expectMyException', 'PASS'),
-//                array('throwMyException', 'expectOtherException', 'FAIL'),
-//                array('throwOtherException', 'expectException', 'FAIL'),
-//                array('throwOtherException', 'expectMyException', 'FAIL'),
+                array('throwException', 'expectMyException', 'FAIL'),
+                array('throwMyException', 'expectException', 'FAIL'),
+                array('throwMyException', 'expectMyException', 'PASS'),
+                array('throwMyException', 'expectOtherException', 'FAIL'),
+                array('throwOtherException', 'expectException', 'FAIL'),
+                array('throwOtherException', 'expectMyException', 'FAIL'),
             )
         );
     }
