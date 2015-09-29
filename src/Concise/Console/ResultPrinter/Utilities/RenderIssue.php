@@ -2,12 +2,12 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Exception;
 use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
-use PHPUnit_Framework_Test;
+use Concise\Core\ArgumentChecker;
+use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
-use Concise\Validation\ArgumentChecker;
+use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestCase;
 
 class RenderIssue
@@ -25,7 +25,7 @@ class RenderIssue
     /**
      * @var array
      */
-    protected $colours;
+    protected $colors;
 
     public function __construct(TraceSimplifier $traceSimplifier = null)
     {
@@ -37,11 +37,21 @@ class RenderIssue
         $this->colors = $this->theme->getTheme();
     }
 
+    /**
+     * @param string $prefix
+     * @param string $lines
+     * @return string
+     */
     protected function prefixLines($prefix, $lines)
     {
+        $lines = str_replace("\r", "", $lines);
         return $prefix . str_replace("\n", "\n$prefix", $lines);
     }
 
+    /**
+     * @param Exception $e
+     * @return string
+     */
     protected function getPHPUnitDiff(Exception $e)
     {
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
@@ -54,8 +64,17 @@ class RenderIssue
         return '';
     }
 
-    protected function getHeading($status, $issueNumber, PHPUnit_Framework_Test $test)
-    {
+    /**
+     * @param integer                $status
+     * @param integer                $issueNumber
+     * @param PHPUnit_Framework_Test $test
+     * @return string
+     */
+    protected function getHeading(
+        $status,
+        $issueNumber,
+        PHPUnit_Framework_Test $test
+    ) {
         $c = new Color();
         $color = $this->colors[$status];
 
@@ -66,17 +85,34 @@ class RenderIssue
         return "$issueNumber. " . $c($message)->$color . "\n\n";
     }
 
-    public function render($status, $issueNumber, PHPUnit_Framework_Test $test, Exception $e)
-    {
+    /**
+     * @param integer                $status
+     * @param integer                $issueNumber
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception              $e
+     * @return string
+     */
+    public function render(
+        $status,
+        $issueNumber,
+        PHPUnit_Framework_Test $test,
+        Exception $e
+    ) {
         ArgumentChecker::check($issueNumber, 'integer');
 
         $c = new Color();
         $top = $this->getHeading($status, $issueNumber, $test);
         $message = $e->getMessage() . "\n";
         $message .= $this->getPHPUnitDiff($e);
-        $message .= "\n" . $this->prefixLines("\033[90m", $this->traceSimplifier->render($e->getTrace())) . "\033[0m";
+        $message .= "\n" . $this->prefixLines(
+                "\033[90m",
+                $this->traceSimplifier->render($e->getTrace())
+            ) . "\033[0m";
         $pad = str_repeat(' ', strlen($issueNumber));
 
-        return $top . $this->prefixLines($c("  ")->highlight($this->colors[$status]) . $pad, rtrim($message));
+        return $top . $this->prefixLines(
+            $c("  ")->highlight($this->colors[$status]) . $pad,
+            rtrim($message)
+        );
     }
 }

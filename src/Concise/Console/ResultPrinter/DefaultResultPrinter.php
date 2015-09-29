@@ -2,15 +2,16 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\Console\Theme\DefaultTheme;
-use Concise\Services\TimeFormatter;
-use Exception;
-use PHPUnit_Runner_BaseTestRunner;
-use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
+use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
+use Concise\Console\Terminal;
+use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\TimeFormatter;
+use Exception;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
+use PHPUnit_Runner_BaseTestRunner;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
@@ -44,16 +45,32 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $hasUpdated = false;
 
+    /**
+     * @var integer
+     */
+    protected $lastUpdatedRemainingSecondsAt = 0;
+
+    /**
+     * @var string
+     */
+    protected $remainingSecondsString = '';
+
+    /**
+     * @var TimeFormatter
+     */
+    protected $formatter;
+
     public function __construct(DefaultTheme $theme = null)
     {
-        /** @noinspection SpellCheckingInspection */
-        $this->width = (int) exec('tput cols');
+        $terminal = new Terminal();
+        $this->width = $terminal->getColumns();
         if (!$theme) {
             $theme = new DefaultTheme();
         }
         $this->theme = $theme;
         $this->counter = new ProgressCounter(0, true);
         $this->startTime = time();
+        $this->formatter = new TimeFormatter();
     }
 
     public function end()
@@ -61,9 +78,15 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->update();
     }
 
-    public function endTest($status, PHPUnit_Framework_Test $test, $time, Exception $e = null)
-    {
-        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
+    public function endTest(
+        $status,
+        PHPUnit_Framework_Test $test,
+        $time,
+        Exception $e = null
+    ) {
+        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED &&
+            $e instanceof Exception
+        ) {
             $this->add($status, $test, $e);
         }
         $this->update();
@@ -73,12 +96,17 @@ class DefaultResultPrinter extends AbstractResultPrinter
     {
         $progressBar = new ProportionalProgressBar();
 
-        return $progressBar->renderProportional($this->width, $this->getTotalTestCount(), array(
-            'green'   => $this->getSuccessCount(),
-            'yellow'  => $this->getIncompleteCount() + $this->getRiskyCount(),
-            'blue'    => $this->getSkippedCount(),
-            'red'     => $this->getFailureCount() + $this->getErrorCount(),
-        )) . "\n";
+        return $progressBar->renderProportional(
+            $this->width,
+            $this->getTotalTestCount(),
+            array(
+                'green' => $this->getSuccessCount(),
+                'yellow' => $this->getIncompleteCount() +
+                    $this->getRiskyCount(),
+                'blue' => $this->getSkippedCount(),
+                'red' => $this->getFailureCount() + $this->getErrorCount(),
+            )
+        ) . "\n";
     }
 
     protected function getSecondsElapsed()
@@ -88,34 +116,79 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     protected function getRemainingSeconds()
     {
-        if (0 == $this->getTestCount()) {
+        $testCount = $this->getTestCount();
+        if (0 == $testCount) {
             return -1;
         }
         $elapsed = $this->getSecondsElapsed();
-        $eta = ($this->getTotalTestCount() / $this->getTestCount()) * $elapsed - $elapsed;
+        $eta = ($this->getTotalTestCount() / $testCount) * $elapsed - $elapsed;
         return $eta;
+    }
+
+    protected function getRemainingTimeString($short = false)
+    {
+        if ($this->lastUpdatedRemainingSecondsAt == time()) {
+            return $this->remainingSecondsString;
+        }
+
+        $remainingSeconds = $this->getRemainingSeconds();
+        $this->remainingSecondsString = '';
+        if ($this->getSecondsElapsed() >= 5 && $remainingSeconds >= 1) {
+            $this->remainingSecondsString =
+                ' (' .
+                $this->formatter->format($remainingSeconds, $short) .
+                ' remaining)';
+        }
+
+        $this->lastUpdatedRemainingSecondsAt = time();
+        return $this->remainingSecondsString;
+    }
+
+    /**
+     * @param bool $short
+     * @return string
+     */
+    protected function getRealAssertionString($short)
+    {
+        $assertionString = $this->getAssertionCount() . ' assertion' .
+            ($this->getAssertionCount() == 1 ? '' : 's');
+        $time =
+            ', ' .
+            $this->formatter->format($this->getSecondsElapsed(), $short);
+        $remaining = $this->getRemainingTimeString($short);
+        $counterString = $this->counter->render($this->getTestCount());
+        $pad =
+            $this->width -
+            strlen($assertionString) -
+            strlen($counterString) -
+            strlen($time) -
+            strlen($remaining);
+
+        if ($pad <= 0) {
+            return '';
+        }
+        return sprintf(
+            "%s%s%s%s%s\n",
+            $assertionString,
+            $time,
+            $remaining,
+            str_repeat(' ', $pad),
+            $counterString
+        );
     }
 
     protected function getAssertionString()
     {
-        $assertionString = $this->getAssertionCount() . ' assertion' . ($this->getAssertionCount() == 1 ? '' : 's');
-        $formatter = new TimeFormatter();
-        $time = ', ' . $formatter->format($this->getSecondsElapsed());
-        $remaining = '';
-        if ($this->getSecondsElapsed() >= 5 && $this->getRemainingSeconds() > 0) {
-            $remaining = ' (' . $formatter->format($this->getRemainingSeconds()) . ' remaining)';
+        $assertionString = $this->getRealAssertionString(false);
+        if (!$assertionString) {
+            $assertionString = $this->getRealAssertionString(true);
         }
-        $counterString = $this->counter->render($this->getTestCount());
-        $pad = $this->width - strlen($assertionString) - strlen($counterString) - strlen($time) -
-            strlen($remaining);
-
-        return sprintf("%s%s%s%s%s\n", $assertionString, $time, $remaining, str_repeat(' ', $pad),
-            $counterString);
+        return $assertionString;
     }
 
     protected function restoreCursor()
     {
-        $this->write("\033[3F");
+        $this->write("\033[3A");
     }
 
     public function update()
@@ -123,10 +196,17 @@ class DefaultResultPrinter extends AbstractResultPrinter
         if ($this->hasUpdated) {
             $this->restoreCursor();
         }
-        $this->write($this->getAssertionString() . $this->drawProgressBar() . "\n");
+        $this->write(
+            $this->getAssertionString() . $this->drawProgressBar() . "\n"
+        );
         $this->hasUpdated = true;
     }
 
+    /**
+     * @param integer                $status
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception              $e
+     */
     protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
     {
         switch ($status) {

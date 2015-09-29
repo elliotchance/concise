@@ -10,3 +10,7 @@ tools:
 filter:
   paths:
     - src/*
+build_failure_conditions:
+  - 'project.metric("scrutinizer.test_coverage", < 1)'
+  - 'issues.severity(>= MAJOR).exists'
+  - 'project.metric("scrutinizer.quality", < 9)'

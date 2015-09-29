@@ -2,10 +2,8 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
-use Concise\Services\NumberToTimesConverter;
-use Concise\Services\ValueRenderer;
-use Concise\Mock\MockInterface;
+use Concise\Core\TestCase;
+use Concise\Core\ValueRenderer;
 use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
@@ -13,10 +11,10 @@ class MockManager
     /**
      * @var array
      */
-    protected $mocks = array();
+    protected static $mocks = array();
 
     /**
-     * @var \Concise\TestCase
+     * @var TestCase
      */
     protected $testCase;
 
@@ -36,12 +34,12 @@ class MockManager
     }
 
     /**
-	 * @param MockBuilder $mockBuilder
-	 * @param object      $mockInstance
-	 */
+     * @param MockBuilder $mockBuilder
+     * @param object      $mockInstance
+     */
     public function addMockInstance(MockBuilder $mockBuilder, $mockInstance)
     {
-        $this->mocks[] = array(
+        self::$mocks[] = array(
             'mockBuilder' => $mockBuilder,
             'instance' => $mockInstance,
             'validated' => false,
@@ -57,12 +55,17 @@ class MockManager
         $r = " Did receive:";
         $converter = new NumberToTimesConverter();
         foreach ($this->argumentsForCallKey as $key => $args) {
-            $r .= "\n\n" . $converter->convert($this->callGraph[$key]) . ": {$args['method']}(" . $this->renderArguments($args['args']) . ")";
+            $r .= "\n\n" . $converter->convert($this->callGraph[$key]) .
+                ": {$args['method']}(" . $this->renderArguments($args['args']) .
+                ")";
         }
         return $r;
     }
 
     /**
+     * @param array  $rule
+     * @param int    $actualTimes
+     * @param string $method
      * @return null
      */
     protected function validateSingleWith(array $rule, $actualTimes, $method)
@@ -82,9 +85,13 @@ class MockManager
         throw new \PHPUnit_Framework_AssertionFailedError($msg);
     }
 
-    protected function getKeyForCall($methodName, array $arguments, array $expected)
-    {
-        for ($i = 0; $i < count($expected); ++$i) {
+    protected function getKeyForCall(
+        $methodName,
+        array $arguments,
+        array $expected
+    ) {
+        $count = count($expected);
+        for ($i = 0; $i < $count; ++$i) {
             if ($expected[$i] === TestCase::ANYTHING) {
                 $arguments[$i] = TestCase::ANYTHING;
             }
@@ -93,8 +100,11 @@ class MockManager
         return md5($methodName . json_encode($arguments));
     }
 
-    protected function incrementCallGraphForCall($methodName, array $call, array $expected)
-    {
+    protected function incrementCallGraphForCall(
+        $methodName,
+        array $call,
+        array $expected
+    ) {
         $key = $this->getKeyForCall($methodName, $call, $expected);
         if (!array_key_exists($key, $this->callGraph)) {
             $this->callGraph[$key] = 0;
@@ -134,17 +144,25 @@ class MockManager
         if (null === $rule['with']) {
             /** @var $instance \Concise\Mock\MockInterface */
             $instance = $mock['instance'];
-            $this->validateSingleWith($rule, count($instance->getCallsForMethod($method)), $method);
+            $this->validateSingleWith(
+                $rule,
+                count($instance->getCallsForMethod($method)),
+                $method
+            );
         } else {
             $this->validateMultiWith($method, $rule, $mock);
         }
-        $this->testCase->assert(true);
+        $this->testCase->assertTrue(true);
     }
 
+    /**
+     * @param array $mock
+     * @return null
+     */
     protected function validateMock(array &$mock)
     {
         if ($mock['validated']) {
-            return;
+            return null;
         }
         $mock['validated'] = true;
 
@@ -160,13 +178,16 @@ class MockManager
                 $this->validateExpectation($mock, $method, $rule);
             }
         }
+
+        return null;
     }
 
     public function validateMocks()
     {
-        foreach ($this->mocks as &$mock) {
+        foreach (self::$mocks as &$mock) {
             $this->validateMock($mock);
         }
+        self::$mocks = array();
     }
 
     protected function renderArguments(array $args = null)
@@ -183,22 +204,26 @@ class MockManager
     /**
      * @return array
      */
-    public function getMocks()
+    public static function getMocks()
     {
-        return $this->mocks;
+        return self::$mocks;
     }
 
     public function validateMockByInstance(MockInterface $mock)
     {
-        foreach ($this->mocks as &$m) {
+        foreach (self::$mocks as &$m) {
             if ($mock === $m['instance']) {
                 if ($m['validated']) {
-                    throw new PHPUnit_Framework_AssertionFailedError('You cannot assert a mock more than once.');
+                    throw new PHPUnit_Framework_AssertionFailedError(
+                        'You cannot assert a mock more than once.'
+                    );
                 }
                 return $this->validateMock($m);
             }
         }
 
-        throw new PHPUnit_Framework_AssertionFailedError('No such mock in mock manager.');
+        throw new PHPUnit_Framework_AssertionFailedError(
+            'No such mock in mock manager.'
+        );
     }
 }

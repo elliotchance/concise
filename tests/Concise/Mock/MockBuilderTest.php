@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use \Concise\TestCase;
+use Concise\Core\TestCase;
 
 abstract class Mock2
 {
@@ -28,9 +28,9 @@ class MockMagicCall
 class MockBuilderTest extends TestCase
 {
     /**
-	 * @expectedException Exception
-	 * @expectedExceptionMessage Class or interface '\Abc' does not exist.
-	 */
+     * @expectedException \Exception
+     * @expectedExceptionMessage Class or interface '\Abc' does not exist.
+     */
     public function testExceptionIsThrownIfTheClassTryingToBeMockedDoesNotExist()
     {
         $this->mock('\Abc')->get();
@@ -38,24 +38,22 @@ class MockBuilderTest extends TestCase
 
     public function testMockingAMethodThatDoesNotExistIfThereIsAMagicCallMethod()
     {
-        $mock = $this->mock('\Concise\Mock\MockMagicCall')
-                     ->stub('nothing')
-                     ->get();
-        $this->assert($mock->nothing(), is_null);
+        $mock =
+            $this->mock('\Concise\Mock\MockMagicCall')->stub('nothing')->get();
+        /*$this->assert($mock->nothing(), is_null);*/
+        $this->assert($mock->nothing())->isNull;
     }
 
     public function testMockClassDefaultsToStdClass()
     {
-        $mock = $this->mock()
-                     ->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        $mock = $this->mock()->get();
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     public function testNiceMockClassDefaultsToStdClass()
     {
-        $mock = $this->niceMock()
-                     ->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        $mock = $this->niceMock()->get();
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     /**
@@ -69,11 +67,11 @@ class MockBuilderTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected boolean, but got integer for argument 3
+     * @expectedExceptionMessage Expected bool, but got string for argument 3
      */
     public function testNiceMockMustBeABoolean()
     {
-        new MockBuilder($this, 'stdClass', 123);
+        new MockBuilder($this, 'stdClass', '123');
     }
 
     /**

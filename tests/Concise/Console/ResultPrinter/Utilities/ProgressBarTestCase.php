@@ -2,8 +2,8 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\TestCase;
 use Colors\Color;
+use Concise\Core\TestCase;
 
 class ProgressBarTestCase extends TestCase
 {
@@ -11,6 +11,6 @@ class ProgressBarTestCase extends TestCase
     {
         $c = new Color();
 
-        return (string) $c(str_repeat(' ', $size))->highlight($color);
+        return (string)$c(str_repeat(' ', $size))->highlight($color);
     }
 }
