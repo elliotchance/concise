@@ -13,18 +13,13 @@ class ClassCompilerInterfaceTest extends TestCase
     public function testConstructWillAcceptAnInterface()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
-        /*$this->assert($compiler->generateCode(), is_not_blank);*/
-        $this->assert($compiler->generateCode())->isNotBlank;
+        $this->assertString($compiler->generateCode())->isNotEmpty;
     }
 
     public function testWillImplementAnInterface()
     {
         $compiler = new ClassCompiler('Concise\Mock\ClassCompilerMock4');
-        /*$this->assert(
-            $compiler->newInstance(),
-            instance_of,
-            'Concise\Mock\ClassCompilerMock4'
-        );*/
-        $this->assert($compiler->newInstance())->instanceOf('Concise\Mock\ClassCompilerMock4');
+        $this->assert($compiler->newInstance())
+            ->instanceOf('Concise\Mock\ClassCompilerMock4');
     }
 }

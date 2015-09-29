@@ -16,7 +16,6 @@ class NumberModule extends AbstractModule
      *
      * @return mixed
      * @throws DidNotMatchException
-     * @nested
      * @syntax ?:number is between ?:number and ?:number
      */
     public function between()

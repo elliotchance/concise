@@ -12,12 +12,8 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        /*$this->assert(
-            $action,
-            instance_of,
-            '\Concise\Mock\Action\AbstractAction'
-        );*/
-        $this->assert($action)->instanceOf('\Concise\Mock\Action\AbstractAction');
+        $this->assert($action)
+            ->instanceOf('\Concise\Mock\Action\AbstractAction');
     }
 
     public function testCanGeneratePHPCode()
@@ -26,8 +22,7 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        /*$this->assert($action->getActionCode(), matches_regex, "/return/");*/
-        $this->assert($action->getActionCode())->matchesRegex("/return/");
+        $this->assertString($action->getActionCode())->matches("/return/");
     }
 
     public function testWillUseDifferentCacheKeyEachTime()

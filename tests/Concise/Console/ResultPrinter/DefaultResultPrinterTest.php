@@ -181,9 +181,8 @@ class DefaultResultPrinterTest extends TestCase
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getAssertionString')->get();
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            '0 seconds'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains('0 seconds');
     }
 
     public function testWillPrintCorrectTimeElapsed()
@@ -193,9 +192,8 @@ class DefaultResultPrinterTest extends TestCase
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            '10 seconds'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains('10 seconds');
     }
 
     public function testUsesTimeFormatter()
@@ -205,9 +203,8 @@ class DefaultResultPrinterTest extends TestCase
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 200);
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            '3 minutes 20 seconds'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains('3 minutes 20 seconds');
     }
 
     public function testHasUpdatedIsFalseByDefault()
@@ -263,9 +260,8 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            ' remaining'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains(' remaining');
     }
 
     public function testWillShowAccurateEstimate()
@@ -277,9 +273,8 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            ' (3 minutes remaining)'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains(' (3 minutes remaining)');
     }
 
     public function testWillNotShowEstimateIfETAIsZero()
@@ -291,8 +286,8 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 60);
 
-        $this->assert($resultPrinter->getAssertionString())
-            ->doesNotContainString(' remaining');
+        $this->assertString($resultPrinter->getAssertionString())
+            ->doesNotContain(' remaining');
     }
 
     public function testWillNotShowEstimateUntil5SecondsHaveElapsed()
@@ -304,8 +299,8 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 3);
 
-        $this->assert($resultPrinter->getAssertionString())
-            ->doesNotContainString(' remaining');
+        $this->assertString($resultPrinter->getAssertionString())
+            ->doesNotContain(' remaining');
     }
 
     public function testWillShowEstimateOnce5SecondsHaveElapsed()
@@ -317,9 +312,8 @@ class DefaultResultPrinterTest extends TestCase
         )->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 5);
 
-        $this->assert($resultPrinter->getAssertionString())->containsString(
-            ' remaining'
-        );
+        $this->assertString($resultPrinter->getAssertionString())
+            ->contains(' remaining');
     }
 
     /**
@@ -327,7 +321,6 @@ class DefaultResultPrinterTest extends TestCase
      */
     public function testWillNotRefreshEstimatedTimeMoreThanOncePerSecond()
     {
-
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expose('getRemainingTimeString')->stub(
@@ -354,7 +347,8 @@ class DefaultResultPrinterTest extends TestCase
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
         $this->setProperty($resultPrinter, 'width', 80);
 
-        $this->assert($resultPrinter->getRealAssertionString(false))->isBlank;
+        $this->assertString($resultPrinter->getRealAssertionString(false))
+            ->isEmpty;
     }
 
     /**
@@ -406,7 +400,7 @@ class DefaultResultPrinterTest extends TestCase
             new ProgressCounter(2778, true)
         );
 
-        $this->assert($resultPrinter->getAssertionString())
-            ->doesNotContainString(')8');
+        $this->assertString($resultPrinter->getAssertionString())
+            ->doesNotContain(')8');
     }
 }

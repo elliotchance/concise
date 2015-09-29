@@ -13,8 +13,7 @@ class RegularExpressionModule extends AbstractModule
     }
 
     /**
-     * @syntax ?:string matches regular expression ?:regex
-     * @syntax ?:string matches regex ?:regex
+     * @syntax string ?:string matches ?:regex
      */
     public function matchesRegex()
     {
@@ -22,10 +21,7 @@ class RegularExpressionModule extends AbstractModule
     }
 
     /**
-     * @syntax ?:string does not match regular expression ?:regex
-     * @syntax ?:string doesnt match regular expression ?:regex
-     * @syntax ?:string does not match regex ?:regex
-     * @syntax ?:string doesnt match regex ?:regex
+     * @syntax string ?:string does not match ?:regex
      */
     public function doesNotMatchRegex()
     {

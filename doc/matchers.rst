@@ -84,32 +84,28 @@ Numbers
 Objects and Classes
 -------------------
 
-* `object`_ does not have property `string`_ -  Assert that an object does not have a property.   
-* `object`_ has property `string`_ -  Assert that an object has a property. Returns the properties value.   
+* object `object`_ does not have property `string`_ -  Assert that an object does not have a property.   
+* object `object`_ has property `string`_ -  Assert that an object has a property. Returns the properties value.   
 
 Regular Expressions
 -------------------
 
-* `string`_ does not match regex `regex`_ -   
-* `string`_ does not match regular expression `regex`_ -   
-* `string`_ doesnt match regex `regex`_ -   
-* `string`_ doesnt match regular expression `regex`_ -   
-* `string`_ matches regex `regex`_ -   
-* `string`_ matches regular expression `regex`_ -   
+* string `string`_ does not match `regex`_ -   
+* string `string`_ matches `regex`_ -   
 
 Strings
 -------
 
-* `mixed`_ does not end with `mixed`_ -  Assert a string does not end with another string.   
-* `mixed`_ does not start with `mixed`_ -  Assert a string does not not start (begin) with another string.   
-* `string`_ contains case insensitive string `string`_ -  A string contains a substring (ignoring case-sensitivity). Returns original string.   
-* `string`_ contains string `string`_ -  A string contains a substring. Returns original string.   
-* `string`_ does not contain case insensitive string `string`_ -  A string does not contain a substring (ignoring case-sensitivity). Returns original string.   
-* `string`_ does not contain string `string`_ -  A string does not contain a substring. Returns original string.   
-* `string`_ ends with `string`_ -  Assert a string ends with another string.   
-* `string`_ is blank -  Assert a string is zero length.   
-* `string`_ is not blank -  Assert a string has at least one character.   
-* `string`_ starts with `string`_ -  Assert a string starts (begins) with another string.   
+* string `mixed`_ does not end with `mixed`_ -  Assert a string does not end with another string.   
+* string `mixed`_ does not start with `mixed`_ -  Assert a string does not not start (begin) with another string.   
+* string `string`_ contains `string`_ -  A string contains a substring. Returns original string.   
+* string `string`_ contains case insensitive `string`_ -  A string contains a substring (ignoring case-sensitivity). Returns original string.   
+* string `string`_ does not contain `string`_ -  A string does not contain a substring. Returns original string.   
+* string `string`_ does not contain case insensitive `string`_ -  A string does not contain a substring (ignoring case-sensitivity). Returns original string.   
+* string `string`_ ends with `string`_ -  Assert a string ends with another string.   
+* string `string`_ is empty -  Assert a string is zero length.   
+* string `string`_ is not empty -  Assert a string has at least one character.   
+* string `string`_ starts with `string`_ -  Assert a string starts (begins) with another string.   
 
 Types
 -----

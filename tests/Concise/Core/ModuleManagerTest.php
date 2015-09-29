@@ -92,7 +92,7 @@ class ModuleManagerTest extends TestCase
      */
     public function testWillValidateAllAttributes()
     {
-        $this->assert("abc")->doesNotMatchRegex(123);
+        $this->assertString("abc")->doesNotMatch(123);
     }
 
     /**
@@ -168,7 +168,7 @@ class ModuleManagerTest extends TestCase
      */
     public function testWillUseValueRendererForValuesInExceptionMessages()
     {
-        $this->assert("abc")->doesNotMatchRegex(null);
+        $this->assertString("abc")->doesNotMatch(null);
     }
 
     public function testGetModules()

@@ -42,7 +42,7 @@ class SyntaxRendererTest extends TestCase
      */
     public function testResourceRendering()
     {
-        $this->assert($this->renderer->render('?', array(fopen('.', 'r'))))
-            ->matchesRegex('/Resource id #\\d+/');
+        $this->assertString($this->renderer->render('?', array(fopen('.', 'r'))))
+            ->matches('/Resource id #\\d+/');
     }
 }

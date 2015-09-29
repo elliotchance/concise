@@ -2,8 +2,6 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
-
 class VersionTest extends TestCase
 {
     /**
@@ -19,13 +17,15 @@ class VersionTest extends TestCase
 
     public function testAnEmptyStringWillBeReturnedIfThePackageCanNotBeFound()
     {
-        $this->assert($this->version->getVersionForPackage('foo'))->isBlank;
+        $this->assertString(
+            $this->version->getVersionForPackage('foo')
+        )->isEmpty;
     }
 
     public function testVersionCanBeExtractedForAPackageName()
     {
         $v = $this->version->getVersionForPackage('sebastian/version');
-        $this->assert($v)->matchesRegex('/^\\d\.\\d+/');
+        $this->assertString($v)->matches('/^\\d\.\\d+/');
     }
 
     public function testWeCanEasilyGetTheConciseVersion()
@@ -38,7 +38,8 @@ class VersionTest extends TestCase
 
     public function testFindingVendorFolder()
     {
-        $this->assert($this->version->findVendorFolder())->endsWith('/vendor');
+        $this->assertString($this->version->findVendorFolder())
+            ->endsWith('/vendor');
     }
 
     public function testReturnEmptyStringIfVendorFolderCannotBeFound()
@@ -46,7 +47,7 @@ class VersionTest extends TestCase
         $version = $this->niceMock('Concise\Core\Version')
             ->stub('findVendorFolder')
             ->get();
-        $this->assert($version->getConciseVersion())->isBlank;
+        $this->assertString($version->getConciseVersion())->isEmpty;
     }
 
     public function testFindVendorFolderWillReturnNullIfTheVendorFolderCouldNotBeFound(
@@ -80,6 +81,8 @@ class VersionTest extends TestCase
     /**
      * @group #257
      * @dataProvider versionData
+     * @param $version
+     * @param $expectedName
      */
     public function testVersionName($version, $expectedName)
     {

@@ -50,7 +50,7 @@ class SyntaxTest extends TestCase
     public function testDefaultDescriptionBlank()
     {
         $syntax = new Syntax('? equals ?', 'stdClass::method');
-        $this->assert($syntax->getDescription())->isBlank;
+        $this->assertString($syntax->getDescription())->isEmpty;
     }
 
     public function testSettingDescription()

@@ -9,11 +9,7 @@ class ReturnPropertyActionTest extends TestCase
     public function testReturnPropertyReturnsPHPCode()
     {
         $self = new ReturnPropertyAction('foo');
-        /*$this->assert(
-            $self->getActionCode(),
-            contains_string,
-            'return $this->foo;'
-        );*/
-        $this->assert($self->getActionCode())->containsString('return $this->foo;');
+        $this->assertString($self->getActionCode())
+            ->contains('return $this->foo;');
     }
 }

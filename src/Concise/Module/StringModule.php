@@ -16,8 +16,7 @@ class StringModule extends AbstractModule
      *
      * @return mixed
      * @throws DidNotMatchException
-     * @syntax ?:string contains string ?:string
-     * @nested
+     * @syntax string ?:string contains ?:string
      */
     public function containsString()
     {
@@ -33,8 +32,7 @@ class StringModule extends AbstractModule
      * original string.
      *
      * @return mixed
-     * @syntax ?:string contains case insensitive string ?:string
-     * @nested
+     * @syntax string ?:string contains case insensitive ?:string
      */
     public function containsStringIgnoringCase()
     {
@@ -50,8 +48,7 @@ class StringModule extends AbstractModule
      *
      * @return mixed
      * @throws DidNotMatchException
-     * @syntax ?:string does not contain string ?:string
-     * @nested
+     * @syntax string ?:string does not contain ?:string
      */
     public function doesNotContainString()
     {
@@ -67,8 +64,7 @@ class StringModule extends AbstractModule
      * Returns original string.
      *
      * @return mixed
-     * @syntax ?:string does not contain case insensitive string ?:string
-     * @nested
+     * @syntax string ?:string does not contain case insensitive ?:string
      */
     public function doesNotContainStringIgnoringCase()
     {
@@ -82,8 +78,7 @@ class StringModule extends AbstractModule
     /**
      * Assert a string is zero length.
      *
-     * @return bool
-     * @syntax ?:string is blank
+     * @syntax string ?:string is empty
      */
     public function isBlank()
     {
@@ -94,7 +89,7 @@ class StringModule extends AbstractModule
      * Assert a string has at least one character.
      *
      * @return bool
-     * @syntax ?:string is not blank
+     * @syntax string ?:string is not empty
      */
     public function isNotBlank()
     {
@@ -104,8 +99,7 @@ class StringModule extends AbstractModule
     /**
      * Assert a string does not end with another string.
      *
-     * @return bool
-     * @syntax ? does not end with ?
+     * @syntax string ? does not end with ?
      */
     public function doesNotEndWith()
     {
@@ -115,8 +109,7 @@ class StringModule extends AbstractModule
     /**
      * Assert a string does not not start (begin) with another string.
      *
-     * @return bool
-     * @syntax ? does not start with ?
+     * @syntax string ? does not start with ?
      */
     public function doesNotStartWith()
     {
@@ -126,8 +119,7 @@ class StringModule extends AbstractModule
     /**
      * Assert a string ends with another string.
      *
-     * @return bool
-     * @syntax ?:string ends with ?:string
+     * @syntax string ?:string ends with ?:string
      */
     public function endsWith()
     {
@@ -137,8 +129,7 @@ class StringModule extends AbstractModule
     /**
      * Assert a string starts (begins) with another string.
      *
-     * @return bool
-     * @syntax ?:string starts with ?:string
+     * @syntax string ?:string starts with ?:string
      */
     public function startsWith()
     {

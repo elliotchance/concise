@@ -15,7 +15,7 @@ class ObjectModule extends AbstractModule
      * Assert that an object does not have a property.
      *
      * @return bool
-     * @syntax ?:object does not have property ?:string
+     * @syntax object ?:object does not have property ?:string
      */
     public function doesNotHaveProperty()
     {
@@ -27,8 +27,7 @@ class ObjectModule extends AbstractModule
      *
      * @return mixed
      * @throws DidNotMatchException
-     * @syntax ?:object has property ?:string
-     * @nested
+     * @syntax object ?:object has property ?:string
      */
     public function hasProperty()
     {

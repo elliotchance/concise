@@ -45,6 +45,6 @@ abstract class AbstractModuleTestCase extends TestCase
 
     public function testModuleHasAName()
     {
-        $this->assert($this->matcher->getName())->isNotBlank;
+        $this->assertString($this->matcher->getName())->isNotEmpty;
     }
 }

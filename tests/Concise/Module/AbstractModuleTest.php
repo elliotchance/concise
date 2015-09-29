@@ -37,7 +37,7 @@ class AbstractModuleTest extends TestCase
 
     public function testDefaultRendererWorks()
     {
-        $this->assert($this->module->renderFailureMessage(''))->isBlank;
+        $this->assertString($this->module->renderFailureMessage(''))->isEmpty;
     }
 
     public function testGetSyntaxesForMethod()

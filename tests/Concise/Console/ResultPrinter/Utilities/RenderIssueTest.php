@@ -37,7 +37,7 @@ class RenderIssueTest extends TestCase
 
     public function testStartsWithTheIssueNumber()
     {
-        $this->assert(
+        $this->assertString(
             $this->issue->render(
                 PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
                 123,
@@ -50,38 +50,38 @@ class RenderIssueTest extends TestCase
     public function testIncludesTestClass()
     {
         $class = get_class($this->test);
-        $this->assert(
+        $this->assertString(
             $this->issue->render(
                 PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
             )
-        )->containsString($class);
+        )->contains($class);
     }
 
     public function testIncludesTheMethodName()
     {
-        $this->assert(
+        $this->assertString(
             $this->issue->render(
                 PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
             )
-        )->containsString('foo');
+        )->contains('foo');
     }
 
     public function testIncludesExceptionMessage()
     {
-        $this->assert(
+        $this->assertString(
             $this->issue->render(
                 PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
             )
-        )->containsString($this->exception->getMessage());
+        )->contains($this->exception->getMessage());
     }
 
     protected function getTraceSimplifier($return)
@@ -110,46 +110,45 @@ class RenderIssueTest extends TestCase
     public function testWillRenderSimplifiedTraceUnderneathTheTitle()
     {
         $result = $this->render();
-        $this->assert($result)->containsString("foo");
+        $this->assertString($result)->contains("foo");
     }
 
     public function testStackTraceShouldBeRenderedInGrey()
     {
         $result = $this->render();
-        $this->assert($result)->containsString("\033[90mfoo");
+        $this->assertString($result)->contains("\033[90mfoo");
     }
 
     public function testAllStackTraceLinesShouldBeRenderedInGrey()
     {
         $result = $this->render();
-        $this->assert($result)->containsString("\033[90mbar");
+        $this->assertString($result)->contains("\033[90mbar");
     }
 
     public function testClearFormattingAfterStackTraceToPreventUnwantedTextFromBeingColored(
     )
     {
         $result = $this->render();
-        $this->assert($result)->containsString("bar\033[0m");
+        $this->assertString($result)->contains("bar\033[0m");
     }
 
     public function testPrefixAllLinesWithAColor()
     {
         $result = $this->render();
-        $this->assert($result)->containsString("\033[41m  \033[0m ");
+        $this->assertString($result)->contains("\033[41m  \033[0m ");
     }
 
     public function testPrefixAllLinesWithTheSameColorAsTheTitle()
     {
         $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
-        $this->assert($result)->containsString("\033[44m  \033[0m ");
+        $this->assertString($result)->contains("\033[44m  \033[0m ");
     }
 
     public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned(
     )
     {
-        $result =
-            $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
-        $this->assert($result)->containsString("\033[41m  \033[0m  ");
+        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $this->assertString($result)->contains("\033[41m  \033[0m  ");
     }
 
     public function testTestTitilesAreColored()
@@ -161,7 +160,7 @@ class RenderIssueTest extends TestCase
             )->stub(array('getName' => 'foo'))->get();
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
-        $this->assert($result)->containsString(
+        $this->assertString($result)->contains(
             (string)$c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red()
         );
     }
@@ -172,9 +171,11 @@ class RenderIssueTest extends TestCase
             ->disableConstructor()
             ->stub(array('getName' => 'foo'))
             ->get();
-        $result =
-            $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
-        $this->assert($result)->containsString("foo");
+        $result = $this->render(
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            10
+        );
+        $this->assertString($result)->contains("foo");
     }
 
     protected function getComparisonFailure()
@@ -199,7 +200,7 @@ class RenderIssueTest extends TestCase
 
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
-        $this->assert($result)->containsString("foobar");
+        $this->assertString($result)->contains("foobar");
     }
 
     public function testPHPUnitDiffsAreShownOnlyIfAvailable()
@@ -209,7 +210,7 @@ class RenderIssueTest extends TestCase
 
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
-        $this->assert($result)->containsString("10.");
+        $this->assertString($result)->contains("10.");
     }
 
     /**
@@ -234,13 +235,13 @@ class RenderIssueTest extends TestCase
 
         $test = $this->mock('PHPUnit_Framework_Test')->get();
 
-        $this->assert(
+        $this->assertString(
             $renderIssue->getHeading(
                 PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
                 1,
                 $test
             )
-        )->doesNotContainString('::');
+        )->doesNotContain('::');
     }
 
     /**
@@ -253,6 +254,6 @@ class RenderIssueTest extends TestCase
             0,
             "foo\n\rbar"
         );
-        $this->assert($result)->doesNotContainString("\r");
+        $this->assertString($result)->doesNotContain("\r");
     }
 }

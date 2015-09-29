@@ -3,7 +3,6 @@
 namespace Concise\Core;
 
 use Colors\Color;
-use Concise\Core\TestCase;
 
 class ValueRendererTest extends TestCase
 {
@@ -63,7 +62,7 @@ class ValueRendererTest extends TestCase
     public function testResourceValueRendersAsResource()
     {
         $renderer = new ValueRenderer();
-        $this->assert($renderer->render(fopen('.', 'r')))
+        $this->assertString($renderer->render(fopen('.', 'r')))
             ->startsWith("Resource id #");
     }
 
@@ -79,7 +78,7 @@ class ValueRendererTest extends TestCase
 
     public function testRenderAllMethodWithZeroElements()
     {
-        $this->assert($this->renderer->renderAll(array()))->isBlank;
+        $this->assertString($this->renderer->renderAll(array()))->isEmpty;
     }
 
     public function testRenderAllMethodWithOneElement()
@@ -155,8 +154,8 @@ class ValueRendererTest extends TestCase
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert($this->renderer->render($obj))
-            ->containsString((string)$c('"a"')->green);
+        $this->assertString($this->renderer->render($obj))
+            ->contains((string)$c('"a"')->green);
     }
 
     public function testObjectValuesWillBeColoredWhenAThemeIsSpecified()
@@ -169,8 +168,8 @@ class ValueRendererTest extends TestCase
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assert($this->renderer->render($obj))
-            ->containsString((string)$c(123)->green);
+        $this->assertString($this->renderer->render($obj))
+            ->contains((string)$c(123)->green);
     }
 
     public function testArrayKeysWillBeColoredWhenAThemeIsSpecified()
@@ -179,8 +178,8 @@ class ValueRendererTest extends TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert($this->renderer->render(array('bar')))
-            ->containsString((string)$c('"bar"')->green);
+        $this->assertString($this->renderer->render(array('bar')))
+            ->contains((string)$c('"bar"')->green);
     }
 
     public function testMultipleObjectValuesRendersAsJson()
@@ -226,8 +225,8 @@ class ValueRendererTest extends TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert($this->renderer->render(null))
-            ->containsString((string)$c('null')->green);
+        $this->assertString($this->renderer->render(null))
+            ->contains((string)$c('null')->green);
     }
 
     public function testBooleanWillBeColoredWhenAThemeIsSpecified()
@@ -236,8 +235,8 @@ class ValueRendererTest extends TestCase
         $this->renderer->setTheme($theme);
         $c = new Color();
 
-        $this->assert($this->renderer->render(true))
-            ->containsString((string)$c('true')->red);
+        $this->assertString($this->renderer->render(true))
+            ->contains((string)$c('true')->red);
     }
 
     public function testDefaultMaximumDepthIsTen()
