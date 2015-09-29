@@ -2,7 +2,7 @@
 
 namespace Concise\Mock\Action;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DoActionTest extends TestCase
 {
@@ -12,11 +12,8 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        $this->assert(
-            $action,
-            instance_of,
-            '\Concise\Mock\Action\AbstractAction'
-        );
+        $this->assert($action)
+            ->isAnInstanceOf('\Concise\Mock\Action\AbstractAction');
     }
 
     public function testCanGeneratePHPCode()
@@ -25,7 +22,7 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        $this->assert($action->getActionCode(), matches_regex, "/return/");
+        $this->assertString($action->getActionCode())->matches("/return/");
     }
 
     public function testWillUseDifferentCacheKeyEachTime()
@@ -38,10 +35,7 @@ class DoActionTest extends TestCase
             function () {
             }
         );
-        $this->assert(
-            $action1->getActionCode(),
-            does_not_equal,
-            $action2->getActionCode()
-        );
+        $this->assert($action1->getActionCode())
+            ->doesNotEqual($action2->getActionCode());
     }
 }

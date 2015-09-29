@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class MockConstructor1
 {
@@ -33,25 +33,25 @@ class Mock3
  */
 class MockBuilderConstructorTest extends TestCase
 {
-    public function testMocksWillCallConstructorByDefault()
+    public function testNiceMocksWillCallConstructorByDefault()
     {
-        $mock = $this->mock('\Concise\Mock\MockConstructor1')->get();
-        $this->assert($mock->constructorRun);
+        $mock = $this->niceMock('\Concise\Mock\MockConstructor1')->get();
+        $this->assert($mock->constructorRun)->isTrue;
     }
 
     public function testDisableConstructorCanBeChained()
     {
-        $mock = $this->mock('\Concise\Mock\MockConstructor1')
+        $mock = $this->niceMock('\Concise\Mock\MockConstructor1')
             ->disableConstructor()
             ->get();
-        $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor1');
+        $this->assert($mock)->isAnInstanceOf('\Concise\Mock\MockConstructor1');
     }
 
     public function testMocksCanHaveTheirConstructorDisabledWithArguments()
     {
-        $mock = $this->mock('\Concise\Mock\MockConstructor2')
+        $mock = $this->niceMock('\Concise\Mock\MockConstructor2')
             ->disableConstructor()
             ->get();
-        $this->assert($mock, instance_of, '\Concise\Mock\MockConstructor2');
+        $this->assert($mock)->isAnInstanceOf('\Concise\Mock\MockConstructor2');
     }
 }

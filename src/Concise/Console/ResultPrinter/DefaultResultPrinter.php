@@ -5,8 +5,9 @@ namespace Concise\Console\ResultPrinter;
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
+use Concise\Console\Terminal;
 use Concise\Console\Theme\DefaultTheme;
-use Concise\Services\TimeFormatter;
+use Concise\Console\TimeFormatter;
 use Exception;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
@@ -61,8 +62,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
 
     public function __construct(DefaultTheme $theme = null)
     {
-        /** @noinspection SpellCheckingInspection */
-        $this->width = (int)exec('tput cols');
+        $terminal = new Terminal();
+        $this->width = $terminal->getColumns();
         if (!$theme) {
             $theme = new DefaultTheme();
         }
@@ -134,7 +135,8 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->remainingSecondsString = '';
         if ($this->getSecondsElapsed() >= 5 && $remainingSeconds >= 1) {
             $this->remainingSecondsString =
-                ' (' . $this->formatter->format($remainingSeconds, $short) .
+                ' (' .
+                $this->formatter->format($remainingSeconds, $short) .
                 ' remaining)';
         }
 
@@ -151,14 +153,18 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $assertionString = $this->getAssertionCount() . ' assertion' .
             ($this->getAssertionCount() == 1 ? '' : 's');
         $time =
-            ', ' . $this->formatter->format($this->getSecondsElapsed(), $short);
+            ', ' .
+            $this->formatter->format($this->getSecondsElapsed(), $short);
         $remaining = $this->getRemainingTimeString($short);
         $counterString = $this->counter->render($this->getTestCount());
         $pad =
-            $this->width - strlen($assertionString) - strlen($counterString) -
-            strlen($time) - strlen($remaining);
+            $this->width -
+            strlen($assertionString) -
+            strlen($counterString) -
+            strlen($time) -
+            strlen($remaining);
 
-        if ($pad < 0) {
+        if ($pad <= 0) {
             return '';
         }
         return sprintf(

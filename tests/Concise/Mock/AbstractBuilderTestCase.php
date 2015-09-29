@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class CombinationMockClass
 {
@@ -297,6 +297,6 @@ abstract class AbstractBuilderTestCase extends TestCase
 
     protected function notApplicable()
     {
-        return $this->assert(true);
+        return $this->assert(true)->isTrue;
     }
 }

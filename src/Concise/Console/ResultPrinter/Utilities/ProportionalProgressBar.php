@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 
 class ProportionalProgressBar extends ProgressBar
 {

@@ -3,7 +3,7 @@
 namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 
 class ProgressBar
 {
@@ -58,8 +58,12 @@ class ProgressBar
         reset($this->parts);
         $fill = $this->size - substr_count($currentProgressBar, ' ');
         if ($fill < 0) {
-            $currentProgressBar =
-                preg_replace('/\s\s/', ' ', $currentProgressBar, -$fill);
+            $currentProgressBar = preg_replace(
+                '/\s\s/',
+                ' ',
+                $currentProgressBar,
+                -$fill
+            );
         }
 
         return $currentProgressBar;

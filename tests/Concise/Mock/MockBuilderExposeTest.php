@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class MockExpose
 {
@@ -25,7 +25,7 @@ class MockBuilderExposeTest extends TestCase
     public function testExposeWillReturnSelfToAllowChaining()
     {
         $builder = $this->niceMock('\Concise\Mock\MockExpose');
-        $this->assert($builder, equals, $builder->expose('myMethod'));
+        $this->assert($builder)->equals($builder->expose('myMethod'));
     }
 
     /**

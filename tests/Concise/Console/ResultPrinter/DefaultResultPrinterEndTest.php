@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 
@@ -61,7 +61,7 @@ class DefaultResultPrinterEndTest extends TestCase
     /**
      * @dataProvider endTestColorData
      */
-    public function testEndTestWillCallAdd($status, $color)
+    public function testEndTestWillCallAdd($status)
     {
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter',

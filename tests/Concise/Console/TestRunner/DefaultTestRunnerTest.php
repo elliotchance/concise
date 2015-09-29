@@ -2,16 +2,13 @@
 
 namespace Concise\Console\TestRunner;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DefaultTestRunnerTest extends TestCase
 {
     public function testTestRunnerExtendsPHPUnit()
     {
-        $this->assert(
-            new DefaultTestRunner(),
-            instance_of,
-            'PHPUnit_TextUI_TestRunner'
-        );
+        $this->assert(new DefaultTestRunner())
+            ->isAnInstanceOf('PHPUnit_TextUI_TestRunner');
     }
 }

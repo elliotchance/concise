@@ -13,7 +13,8 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     public function testAndReturnWithASingleArgument(MockBuilder $builder)
     {
         $mock = $builder->stub('myMethod')->andReturn('foo')->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
+        /*$this->assert($mock->myMethod(), equals, 'foo');*/
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -22,7 +23,8 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     public function testAndReturnCanTakeMultipleArguments(MockBuilder $builder)
     {
         $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
-        $this->assert($mock->myMethod(), equals, 'foo');
+        /*$this->assert($mock->myMethod(), equals, 'foo');*/
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**
@@ -33,7 +35,8 @@ class BuilderReturnTest extends AbstractBuilderTestCase
     ) {
         $mock = $builder->stub('myMethod')->andReturn('foo', 'bar')->get();
         $mock->myMethod();
-        $this->assert($mock->myMethod(), equals, 'bar');
+        /*$this->assert($mock->myMethod(), equals, 'bar');*/
+        $this->assert($mock->myMethod())->equals('bar');
     }
 
     /**
@@ -45,7 +48,8 @@ class BuilderReturnTest extends AbstractBuilderTestCase
         $mock = $builder->stub('myMethod')->andReturn('foo')->get();
         $mock->myMethod();
         $mock->myMethod();
-        $this->assert($mock->myMethod(), equals, 'foo');
+        /*$this->assert($mock->myMethod(), equals, 'foo');*/
+        $this->assert($mock->myMethod())->equals('foo');
     }
 
     /**

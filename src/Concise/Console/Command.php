@@ -8,6 +8,7 @@ use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
 use Exception;
+use PHPUnit_TextUI_TestRunner;
 
 class Command extends \PHPUnit_TextUI_Command
 {
@@ -79,7 +80,8 @@ class Command extends \PHPUnit_TextUI_Command
 
     public function getResultPrinter()
     {
-        if ($this->ci || `tput colors` < 2) {
+        $terminal = new Terminal();
+        if ($this->ci || $terminal->getColors() < 2) {
             return new CIResultPrinter();
         }
 
@@ -103,7 +105,7 @@ class Command extends \PHPUnit_TextUI_Command
                 case '--test-colors':
                     $testColors = new TestColors();
                     echo $testColors->renderAll();
-                    exit(0);
+                    exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
 
                 case '--color-scheme':
                     $this->colorScheme = $option[1];
@@ -111,7 +113,7 @@ class Command extends \PHPUnit_TextUI_Command
 
                 case '--list-color-schemes':
                     echo "Color Schemes:\n  default\n\n";
-                    exit(0);
+                    exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
 
                 case '--ci':
                     $this->ci = true;

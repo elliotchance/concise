@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class DummyMock implements MockInterface
 {
@@ -20,20 +20,18 @@ class MockVerifyTest extends TestCase
     public function testManuallyVerifyingAMockWillReturnTrue()
     {
         $mock = $this->mock()->get();
-        $this->assert($this->assertMock($mock), is_true);
+        $this->assert($this->assertMock($mock))->isTrue;
     }
 
     public function testWillThrowExceptionIfMockDoesNotSatifyRequirements()
     {
         $mock = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock, $self) {
                 $self->assertMock($mock);
-            },
-            throws,
-            '\PHPUnit_Framework_AssertionFailedError'
-        );
+            }
+        )->throws('PHPUnit_Framework_AssertionFailedError');
     }
 
     public function testAssertingASecondaryMock()
@@ -41,13 +39,11 @@ class MockVerifyTest extends TestCase
         $this->mock()->get();
         $mock2 = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
-            },
-            throws,
-            '\PHPUnit_Framework_AssertionFailedError'
-        );
+            }
+        )->throws('PHPUnit_Framework_AssertionFailedError');
     }
 
     public function testAssertingAMockDoesNotRemoveItFromTheManager()
@@ -55,7 +51,7 @@ class MockVerifyTest extends TestCase
         $mock1 = $this->mock()->get();
         $this->mock()->get();
         $this->assertMock($mock1);
-        $this->assert(count($this->mockManager->getMocks()), equals, 2);
+        $this->assert(count($this->mockManager->getMocks()))->equals(2);
     }
 
     public function testAssertingAMiddleMock()
@@ -64,13 +60,11 @@ class MockVerifyTest extends TestCase
         $mock2 = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $this->mock()->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
-            },
-            throws,
-            '\PHPUnit_Framework_AssertionFailedError'
-        );
+            }
+        )->throws('PHPUnit_Framework_AssertionFailedError');
     }
 
     /**

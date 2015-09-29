@@ -2,7 +2,7 @@
 
 namespace Concise\Console;
 
-use Concise\Services\SyntaxRenderer;
+use Concise\Core\SyntaxRenderer;
 use DateTime;
 
 class TestColors

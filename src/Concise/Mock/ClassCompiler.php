@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
@@ -225,7 +225,7 @@ EOF;
                     str_replace(array('$', "\\'"), array('\\$', "'"), $args);
                 $actionCode .= <<<EOF
     \$matcher = new \Concise\Mock\ArgumentMatcher();
-    \$methodArguments = new \Concise\Services\MethodArguments();
+    \$methodArguments = new \Concise\Mock\MethodArguments();
     \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
                 )}\\{$this->getClassName()}::$method");
     if (\$matcher->match(json_decode("$args"), \$a)) {
@@ -241,7 +241,7 @@ $prototype {
 	if (!array_key_exists('$method', self::\$_methodCalls)) {
 		self::\$_methodCalls['$method'] = array();
 	}
-    \$methodArguments = new \Concise\Services\MethodArguments();
+    \$methodArguments = new \Concise\Mock\MethodArguments();
     \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
         )}\\{$this->getClassName()}::$method");
 	self::\$_methodCalls['$method'][] = \$a;

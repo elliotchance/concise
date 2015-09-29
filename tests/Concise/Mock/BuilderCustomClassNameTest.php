@@ -25,6 +25,6 @@ class BuilderCustomClassNameTest extends AbstractBuilderTestCase
     {
         $rand = "Concise\\Mock\\Temp" . md5(rand());
         $mock = $builder->setCustomClassName($rand)->get();
-        $this->assert(get_class($mock), equals, $rand);
+        $this->assert(get_class($mock))->equals($rand);
     }
 }

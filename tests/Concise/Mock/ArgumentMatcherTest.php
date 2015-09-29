@@ -2,10 +2,13 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 class ArgumentMatcherTest extends TestCase
 {
+    /**
+     * @var ArgumentMatcher
+     */
     protected $matcher;
 
     public function setUp()
@@ -16,37 +19,35 @@ class ArgumentMatcherTest extends TestCase
 
     public function testMatchingZeroArgumentsReturnsTrue()
     {
-        $this->assert($this->matcher->match(array(), array()));
+        $this->assert($this->matcher->match(array(), array()))->isTrue;
     }
 
     public function testMatchingArraysOfDifferentSizesReturnsFalse()
     {
-        $this->assert($this->matcher->match(array(), array('a')), is_false);
+        $this->assert($this->matcher->match(array(), array('a')))->isFalse;
     }
 
     public function testMatchingWithOneValueThatIsDifferentReturnsFalse()
     {
-        $this->assert($this->matcher->match(array('b'), array('a')), is_false);
+        $this->assert($this->matcher->match(array('b'), array('a')))->isFalse;
     }
 
     public function testMatchingIsNotExact()
     {
-        $this->assert($this->matcher->match(array(0), array(false)), is_true);
+        $this->assert($this->matcher->match(array(0), array(false)))->isTrue;
     }
 
     public function testMatchingMoreThanOneItemWhereOnlyOneIsDifferentReturnsFalse()
     {
         $this->assert(
-            $this->matcher->match(array('a', 'b'), array('a', 'a')),
-            is_false
-        );
+            $this->matcher->match(array('a', 'b'), array('a', 'a'))
+        )->isFalse;
     }
 
     public function testExpectedIsAllowedToContainAnythingConstant()
     {
         $this->assert(
-            $this->matcher->match(array('a', self::ANYTHING), array('a', 'a')),
-            is_true
-        );
+            $this->matcher->match(array('a', self::ANYTHING), array('a', 'a'))
+        )->isTrue;
     }
 }

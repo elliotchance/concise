@@ -3,11 +3,9 @@
 namespace Concise\Mock;
 
 use Closure;
-use Concise\Services\MethodArguments;
-use Concise\Services\NumberToTimesConverter;
-use Concise\Services\ValueRenderer;
-use Concise\TestCase;
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
+use Concise\Core\TestCase;
+use Concise\Core\ValueRenderer;
 use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -126,6 +124,10 @@ class MockBuilder
         $this->className = $className;
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
+
+        if (!$niceMock && !$this->isInterface()) {
+            $this->disableConstructor();
+        }
     }
 
     /**

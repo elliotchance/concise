@@ -2,7 +2,8 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
+use Exception;
 
 /**
  * @group mocking
@@ -118,7 +119,7 @@ class MockBuilderFailuresTest extends TestCase
 
     public function testWithArgumentsMayContainPercentageThatWasntCalled()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')
+        $this->mock('\Concise\Mock\Mock1')
             ->expects('myMethod')
             ->with('%d')
             ->get();
@@ -126,7 +127,7 @@ class MockBuilderFailuresTest extends TestCase
 
     public function testWithArgumentsWillNotMistakeAnArrayForACallback()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+        $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
             array('DateTime', 'getLastErrors')
         )->get();
     }
@@ -147,7 +148,7 @@ class MockBuilderFailuresTest extends TestCase
 
     public function testAnythingIsRenderedCorrectly()
     {
-        $mock = $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
+        $this->mock('\Concise\Mock\Mock1')->expects('myMethod')->with(
             self::ANYTHING,
             'foo'
         )->get();
@@ -166,14 +167,11 @@ class MockBuilderFailuresTest extends TestCase
         $mock->myMethod('bar');
     }
 
-    protected function onNotSuccessfulTest(\Exception $e)
+    protected function onNotSuccessfulTest(Exception $e)
     {
         self::$failures[] = $this->getName();
-        $this->assert(
-            self::$expectedFailures[$this->getName()],
-            equals,
-            $e->getMessage()
-        );
+        $this->assert(self::$expectedFailures[$this->getName()])
+            ->equals($e->getMessage());
     }
 
     public static function tearDownAfterClass()
@@ -182,7 +180,7 @@ class MockBuilderFailuresTest extends TestCase
         $b = self::$failures;
         $testCase = new TestCase();
         $testCase->setUp();
-        $testCase->assert(array_diff($a, $b), equals, array_diff($b, $a));
+        $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();
     }
 }

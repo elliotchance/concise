@@ -132,6 +132,7 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
 
     public function write($buffer)
     {
+        return null;
     }
 
     public function printResult(PHPUnit_Framework_TestResult $result)

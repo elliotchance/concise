@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Concise\TestCase;
+use Concise\Core\TestCase;
 
 abstract class Mock2
 {
@@ -40,19 +40,20 @@ class MockBuilderTest extends TestCase
     {
         $mock =
             $this->mock('\Concise\Mock\MockMagicCall')->stub('nothing')->get();
-        $this->assert($mock->nothing(), is_null);
+        /*$this->assert($mock->nothing(), is_null);*/
+        $this->assert($mock->nothing())->isNull;
     }
 
     public function testMockClassDefaultsToStdClass()
     {
         $mock = $this->mock()->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     public function testNiceMockClassDefaultsToStdClass()
     {
         $mock = $this->niceMock()->get();
-        $this->assert($mock, instance_of, '\stdClass');
+        $this->assert($mock)->isAnInstanceOf('\stdClass');
     }
 
     /**

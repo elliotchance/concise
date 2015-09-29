@@ -85,7 +85,7 @@ class BuilderExpectTest extends AbstractBuilderTestCase
     ) {
         $mock =
             $builder->expect('myMethod')->with('foo')->andReturn('bar')->get();
-        $this->assert($mock->myMethod('foo'), equals, 'bar');
+        $this->assert($mock->myMethod('foo'))->equals('bar');
     }
 
     /**

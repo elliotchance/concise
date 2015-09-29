@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Concise\Validation\ArgumentChecker;
+use Concise\Core\ArgumentChecker;
 use DomainException;
 
 class ProgressCounter
@@ -65,8 +65,6 @@ class ProgressCounter
     {
         return (0 === $this->total)
             ? 0
-            : (int)floor(
-                $value / $this->total * 100
-            );
+            : (int)floor($value / $this->total * 100);
     }
 }

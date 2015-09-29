@@ -2,9 +2,8 @@
 
 namespace Concise\Mock;
 
-use Concise\Services\NumberToTimesConverter;
-use Concise\Services\ValueRenderer;
-use Concise\TestCase;
+use Concise\Core\TestCase;
+use Concise\Core\ValueRenderer;
 use PHPUnit_Framework_AssertionFailedError;
 
 class MockManager
@@ -15,7 +14,7 @@ class MockManager
     protected static $mocks = array();
 
     /**
-     * @var \Concise\TestCase
+     * @var TestCase
      */
     protected $testCase;
 
@@ -153,7 +152,7 @@ class MockManager
         } else {
             $this->validateMultiWith($method, $rule, $mock);
         }
-        $this->testCase->assert(true);
+        $this->testCase->assertTrue(true);
     }
 
     /**
