@@ -15,16 +15,13 @@ class ExceptionModule extends AbstractModule
     /**
      * Assert that a specific exception is not thrown.
      *
-     * @syntax ?:callable does not throw ?:class
-     * @return bool
+     * @syntax closure ?:callable does not throw ?:class
      * @throws DidNotMatchException
      */
     public function doesNotThrow()
     {
         try {
             $this->data[0]();
-
-            return true;
         } catch (Exception $exception) {
             if ($this->isKindOfClass($exception, $this->data[1])) {
                 $exceptionClass = get_class($exception);
@@ -34,22 +31,18 @@ class ExceptionModule extends AbstractModule
                 );
             }
         }
-
-        return true;
     }
 
     /**
      * Assert that no exception is thrown.
      *
-     * @syntax ?:callable does not throw exception
+     * @syntax closure ?:callable does not throw exception
      * @throws DidNotMatchException
      */
     public function doesNotThrowException()
     {
         try {
             $this->data[0]();
-
-            return true;
         } catch (Exception $exception) {
             throw new DidNotMatchException(
                 "Expected exception not to be thrown."
@@ -66,7 +59,7 @@ class ExceptionModule extends AbstractModule
     /**
      * Assert a specific exception was thrown.
      *
-     * @syntax ?:callable throws ?:class
+     * @syntax closure ?:callable throws ?:class
      * @throws DidNotMatchException
      */
     public function throws()
@@ -91,8 +84,7 @@ class ExceptionModule extends AbstractModule
     /**
      * Assert any exception except a specific one was thrown.
      *
-     * @syntax ?:callable throws anything except ?:class
-     * @return bool
+     * @syntax closure ?:callable throws anything except ?:class
      * @throws DidNotMatchException
      */
     public function throwsAnythingExcept()
@@ -107,17 +99,13 @@ class ExceptionModule extends AbstractModule
                     "thrown, but $exceptionClass was thrown."
                 );
             }
-
-            return false;
         }
-
-        return true;
     }
 
     /**
      * Assert a specific exception was thrown.
      *
-     * @syntax ?:callable throws exactly ?:class
+     * @syntax closure ?:callable throws exactly ?:class
      * @throws DidNotMatchException
      */
     public function throwsExactly()
@@ -126,14 +114,14 @@ class ExceptionModule extends AbstractModule
             $this->data[0]();
         } catch (Exception $exception) {
             $exceptionClass = get_class($exception);
-            if ($exceptionClass !== $this->data[1]) {
+            if ($exceptionClass === $this->data[1]) {
+                return;
+            } else {
                 throw new DidNotMatchException(
                     "Expected exactly {$this->data[1]} to be thrown, " .
                     "but $exceptionClass was thrown."
                 );
             }
-
-            return true;
         }
         throw new DidNotMatchException(
             "Expected exactly {$this->data[1]} to be thrown, " .
@@ -144,8 +132,7 @@ class ExceptionModule extends AbstractModule
     /**
      * Assert an exception was thrown.
      *
-     * @syntax ?:callable throws exception
-     * @return bool
+     * @syntax closure ?:callable throws exception
      * @throws DidNotMatchException
      */
     public function throwsException()

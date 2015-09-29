@@ -15,7 +15,7 @@ class NumberModuleTest extends AbstractModuleTestCase
 
     public function testNumberExistsBetweenTwoOtherNumbers()
     {
-        $this->assert(123)->between(100)->and(150);
+        $this->assert(123)->isBetween(100)->and(150);
     }
 
     /**
@@ -23,12 +23,12 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testNumberIsBelowLowerBounds()
     {
-        $this->assert(80)->between(100)->and(150);
+        $this->assert(80)->isBetween(100)->and(150);
     }
 
     public function testNumberIsOnTheLowerBound()
     {
-        $this->assert(123)->between(123)->and(150);
+        $this->assert(123)->isBetween(123)->and(150);
     }
 
     /**
@@ -36,12 +36,12 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testNumberIsAboveUpperBounds()
     {
-        $this->assert(170)->between(100)->and(150);
+        $this->assert(170)->isBetween(100)->and(150);
     }
 
     public function testNumberIsOnTheUpperBound()
     {
-        $this->assert(150)->between(123)->and(150);
+        $this->assert(150)->isBetween(123)->and(150);
     }
 
     /**
@@ -49,7 +49,7 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testTwoValuesThatAreExactlyEqualWithZeroDelta()
     {
-            $this->assert(123.0)->isNotWithin(0)->of(123.0);
+        $this->assert(123.0)->isNotWithin(0)->of(123.0);
     }
 
     public function testTwoValuesThatAreNotEqualWithZeroDelta()
@@ -62,7 +62,7 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testComparingTwoValuesInsideTheDelta()
     {
-            $this->assert(123.0)->isNotWithin(5.0)->of(125.0);
+        $this->assert(123.0)->isNotWithin(5.0)->of(125.0);
     }
 
     public function testComparingTwoValuesOutsideTheDelta()
@@ -85,7 +85,7 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testTwoValuesThatAreNotEqualWithZeroDelta1()
     {
-            $this->assert(123.0)->isWithin(0.0)->of(124.0);
+        $this->assert(123.0)->isWithin(0.0)->of(124.0);
     }
 
     public function testComparingTwoValuesInsideTheDelta1()
@@ -98,7 +98,7 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testComparingTwoValuesOutsideTheDelta1()
     {
-            $this->assert(123)->isWithin(5.0)->of(223);
+        $this->assert(123)->isWithin(5.0)->of(223);
     }
 
     /**
@@ -106,7 +106,7 @@ class NumberModuleTest extends AbstractModuleTestCase
      */
     public function testComparingTwoValuesOutsideTheDeltainReverse1()
     {
-            $this->assert(223)->isWithin(5.0)->of(123);
+        $this->assert(223)->isWithin(5.0)->of(123);
     }
 
     /**

@@ -6,8 +6,6 @@ Matchers (Assertions)
 Arrays
 ------
 
-* array `array`_ contains `mixed`_ -  Assert an array has at least one occurrence of the given value.   
-* array `array`_ does not contain `mixed`_ -  Assert an array does not have any occurrences of the given value.   
 * array `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
 * array `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
 * array `array`_ does not have keys `array`_ -   
@@ -32,13 +30,8 @@ Basic
 * `mixed`_ does not exactly equal `mixed`_ -  Assert two values are of exactly the same type and value.   
 * `mixed`_ equals `mixed`_ -  Assert values with no regard to exact data types.   
 * `mixed`_ exactly equals `mixed`_ -  Assert two values match data type and value.   
-* `mixed`_ is equal to `mixed`_ -  Assert values with no regard to exact data types.   
-* `mixed`_ is exactly equal to `mixed`_ -  Assert two values match data type and value.   
-* `mixed`_ is not equal to `mixed`_ -  Assert two value do not match with no regard to type.   
-* `mixed`_ is not exactly equal to `mixed`_ -  Assert two values are of exactly the same type and value.   
 * `mixed`_ is not the same as `mixed`_ -  Assert two values are of exactly the same type and value.   
 * `mixed`_ is the same as `mixed`_ -  Assert two values match data type and value.   
-* `mixed`_ not equals `mixed`_ -  Assert two value do not match with no regard to type.   
 
 Booleans
 --------
@@ -57,12 +50,12 @@ Date and Time
 Exceptions
 ----------
 
-* `callable`_ does not throw `class`_ -  Assert that a specific exception is not thrown.   
-* `callable`_ does not throw exception -  Assert that no exception is thrown.   
-* `callable`_ throws `class`_ -  Assert a specific exception was thrown.   
-* `callable`_ throws anything except `class`_ -  Assert any exception except a specific one was thrown.   
-* `callable`_ throws exactly `class`_ -  Assert a specific exception was thrown.   
-* `callable`_ throws exception -  Assert an exception was thrown.   
+* closure `callable`_ does not throw `class`_ -  Assert that a specific exception is not thrown.   
+* closure `callable`_ does not throw exception -  Assert that no exception is thrown.   
+* closure `callable`_ throws `class`_ -  Assert a specific exception was thrown.   
+* closure `callable`_ throws anything except `class`_ -  Assert any exception except a specific one was thrown.   
+* closure `callable`_ throws exactly `class`_ -  Assert a specific exception was thrown.   
+* closure `callable`_ throws exception -  Assert an exception was thrown.   
 
 Files
 -----
@@ -73,10 +66,7 @@ Files
 Numbers
 -------
 
-* `number`_ between `number`_ and `number`_ -  A number must be between two values (inclusive), returns value.   
-* `number`_ greater than `number`_ -  A number is greater than another number.   
 * `number`_ greater than or equal `number`_ -  A number is greater than or equal to another number.   
-* `number`_ gt `number`_ -  A number is greater than another number.   
 * `number`_ gte `number`_ -  A number is greater than or equal to another number.   
 * `number`_ is between `number`_ and `number`_ -  A number must be between two values (inclusive), returns value.   
 * `number`_ is greater than `number`_ -  A number is greater than another number.   

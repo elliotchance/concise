@@ -47,7 +47,6 @@ class DateAndTimeModule extends AbstractModule
      * @syntax date ?:int,string,DateTime is after ?:int,string,DateTime
      * @return mixed
      * @throws DidNotMatchException
-     * @nested
      */
     public function dateIsAfter()
     {
@@ -61,7 +60,6 @@ class DateAndTimeModule extends AbstractModule
      * @syntax date ?:int,string,DateTime is before ?:int,string,DateTime
      * @return mixed
      * @throws DidNotMatchException
-     * @nested
      */
     public function dateIsBefore()
     {

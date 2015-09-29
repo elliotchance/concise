@@ -59,12 +59,12 @@ class BasicModuleTest extends AbstractModuleTestCase
 
     public function testIntegerAndFloatOfTheSameValueAreNotExactlyEqual()
     {
-        $this->assert(123)->isNotExactlyEqualTo(123.0);
+        $this->assert(123)->doesNotExactlyEqual(123.0);
     }
 
     public function testIntegerAndStringRepresentationOfTheSameValueAreNotExactlyEqual()
     {
-        $this->assert(123)->isNotExactlyEqualTo("123");
+        $this->assert(123)->doesNotExactlyEqual("123");
     }
 
     /**
@@ -72,7 +72,7 @@ class BasicModuleTest extends AbstractModuleTestCase
      */
     public function testNotExactlyEqualsFailure()
     {
-        $this->assert(123)->isNotExactlyEqualTo(123);
+        $this->assert(123)->doesNotExactlyEqual(123);
     }
 
     public function testNotEquals()
@@ -82,6 +82,6 @@ class BasicModuleTest extends AbstractModuleTestCase
 
     public function testFloatingPointValuesThatDifferSlightlyAreNotEqual()
     {
-        $this->assert(123)->isNotEqualTo(123.000001);
+        $this->assert(123)->doesNotEqual(123.000001);
     }
 }

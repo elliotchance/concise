@@ -27,7 +27,7 @@ class MockVerifyTest extends TestCase
     {
         $mock = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock, $self) {
                 $self->assertMock($mock);
             }
@@ -39,7 +39,7 @@ class MockVerifyTest extends TestCase
         $this->mock()->get();
         $mock2 = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
             }
@@ -60,7 +60,7 @@ class MockVerifyTest extends TestCase
         $mock2 = $this->mock('\DateTime')->expect('getLastErrors')->get();
         $this->mock()->get();
         $self = $this;
-        $this->assert(
+        $this->assertClosure(
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
             }

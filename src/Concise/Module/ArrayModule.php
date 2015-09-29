@@ -42,7 +42,6 @@ class ArrayModule extends AbstractModule
     /**
      * Assert an array does not have any occurrences of the given value.
      *
-     * @syntax array ?:array does not contain ?
      * @syntax array ?:array does not have value ?
      */
     public function doesNotHaveValue()
@@ -64,23 +63,19 @@ class ArrayModule extends AbstractModule
      * Assert an array has all key and value items.
      *
      * @syntax array ?:array has items ?:array
-     * @return bool
      */
     public function hasItems()
     {
         if (count($this->data[1]) === 0) {
-            return true;
+            return;
         }
         foreach ($this->data[1] as $key => $value) {
-            if (!$this->itemExists(
-                array($this->data[0], array($key => $value))
-            )
-            ) {
-                $this->fail();
-            } // @codeCoverageIgnore
+            $this->failIf(
+                !$this->itemExists(
+                    array($this->data[0], array($key => $value))
+                )
+            );
         }
-
-        return true;
     }
 
     /**
@@ -92,9 +87,7 @@ class ArrayModule extends AbstractModule
      */
     public function hasKey()
     {
-        if (!array_key_exists($this->data[1], $this->data[0])) {
-            $this->fail();
-        } // @codeCoverageIgnore
+        $this->failIf(!array_key_exists($this->data[1], $this->data[0]));
 
         return $this->data[0][$this->data[1]];
     }
@@ -103,7 +96,6 @@ class ArrayModule extends AbstractModule
      * Assert an array has several keys in any order.
      *
      * @syntax array ?:array has keys ?:array
-     * @return bool
      */
     public function hasKeys()
     {
@@ -114,8 +106,6 @@ class ArrayModule extends AbstractModule
      * Assert an array has at least one occurrence of the given value.
      *
      * @syntax array ?:array has value ?
-     * @syntax array ?:array contains ?
-     * @return bool
      */
     public function hasValue()
     {
@@ -126,15 +116,12 @@ class ArrayModule extends AbstractModule
      * Assert an array has several values in any order.
      *
      * @syntax array ?:array has values ?:array
-     * @return bool
      */
     public function hasValues()
     {
         $keys = array_values($this->data[0]);
         foreach ($this->data[1] as $key) {
-            if (!in_array($key, $keys)) {
-                $this->fail();
-            } // @codeCoverageIgnore
+            $this->failIf((!in_array($key, $keys)));
         }
     }
 
@@ -142,7 +129,6 @@ class ArrayModule extends AbstractModule
      * Assert an array is empty (no elements).
      *
      * @syntax array ?:array is empty
-     * @return bool
      */
     public function isAnEmptyArray()
     {
@@ -153,7 +139,6 @@ class ArrayModule extends AbstractModule
      * Assert an array is not empty (at least one element).
      *
      * @syntax array ?:array is not empty
-     * @return bool
      */
     public function isNotAnEmptyArray()
     {
@@ -164,7 +149,6 @@ class ArrayModule extends AbstractModule
      * Assert that an array only has at least one element that is repeated.
      *
      * @syntax array ?:array is not unique
-     * @return bool
      */
     public function isNotUnique()
     {
@@ -175,7 +159,6 @@ class ArrayModule extends AbstractModule
      * Assert that an array only contains unique values.
      *
      * @syntax array ?:array is unique
-     * @return bool
      */
     public function isUnique()
     {
@@ -186,7 +169,6 @@ class ArrayModule extends AbstractModule
      * Assert an array is associative.
      *
      * @syntax array ?:array is associative
-     * @return bool
      */
     public function isAnAssociativeArray()
     {
@@ -197,7 +179,6 @@ class ArrayModule extends AbstractModule
      * Assert an array is not associative.
      *
      * @syntax array ?:array is not associative
-     * @return bool
      */
     public function isNotAnAssociativeArray()
     {

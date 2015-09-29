@@ -62,7 +62,7 @@ class ClassCompilerTest extends TestCase
         $a = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $b = new ClassCompiler('Concise\Mock\ClassCompilerMock1');
         $this->assert($a->newInstance())
-            ->isNotExactlyEqualTo($b->newInstance());
+            ->doesNotExactlyEqual($b->newInstance());
     }
 
     /**

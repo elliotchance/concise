@@ -90,7 +90,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
 
     public function testArrayValueDoesNotExist()
     {
-        $this->assertArray(array("abc"))->doesNotContain("def");
+        $this->assertArray(array("abc"))->doesNotHaveValue("def");
     }
 
     public function testZeroItemsWillAlwaysMatch()
@@ -142,7 +142,7 @@ class ArrayModuleTest extends AbstractModuleTestCase
      */
     public function testArrayValueDoesNotExist1()
     {
-        $this->assertArray(array("abc"))->contains("def");
+        $this->assertArray(array("abc"))->hasValue("def");
     }
 
     public function testAlternativeSyntaxForItemExists1()

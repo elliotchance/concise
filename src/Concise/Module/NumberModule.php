@@ -18,15 +18,11 @@ class NumberModule extends AbstractModule
      * @throws DidNotMatchException
      * @nested
      * @syntax ?:number is between ?:number and ?:number
-     * @syntax ?:number between ?:number and ?:number
      */
     public function between()
     {
-        if ($this->data[0] < $this->data[1] ||
-            $this->data[0] > $this->data[2]
-        ) {
-            throw new DidNotMatchException();
-        }
+        $this->failIf($this->data[0] < $this->data[1]);
+        $this->failIf($this->data[0] > $this->data[2]);
 
         return $this->data[0];
     }
@@ -56,10 +52,7 @@ class NumberModule extends AbstractModule
     /**
      * A number is greater than another number.
      *
-     * @return bool
      * @syntax ?:number is greater than ?:number
-     * @syntax ?:number greater than ?:number
-     * @syntax ?:number gt ?:number
      */
     public function isGreaterThan()
     {
