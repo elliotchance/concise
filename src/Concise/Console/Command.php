@@ -30,7 +30,7 @@ class Command extends \PHPUnit_TextUI_Command
         ) {
             $resultPrinter->setVerbose(true);
         }
-        $testRunner = new DefaultTestRunner();
+        $testRunner = new DefaultTestRunner($this->arguments['loader']);
         $testRunner->setPrinter(new ResultPrinterProxy($resultPrinter));
 
         return $testRunner;

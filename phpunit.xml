@@ -10,7 +10,8 @@
         stopOnFailure="false"
         stopOnIncomplete="false"
         stopOnSkipped="false"
-        strict="true">
+        testSuiteLoaderFile="src/Concise/Extensions/Pho/PhoTestSuiteLoader.php"
+        testSuiteLoaderClass="Concise\Extensions\Pho\PhoTestSuiteLoader">
     <testsuites>
         <testsuite name="All Tests">
             <directory>tests</directory>
