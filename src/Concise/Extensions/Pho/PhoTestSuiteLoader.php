@@ -31,13 +31,12 @@ namespace pho\Reporter {
 
         public function beforeSpec(Spec $spec)
         {
-            self::$result->startTest(self::$test);
             self::$testCase->setUp();
+            self::$result->startTest(self::$test);
         }
 
         public function afterSpec(Spec $spec)
         {
-
             if ($spec->isFailed()) {
                 $this->failedSpecs[] = $spec;
                 self::$result->addFailure(
@@ -47,18 +46,14 @@ namespace pho\Reporter {
                     ),
                     5
                 );
-            } else {
-                if ($spec->isIncomplete()) {
-                    $this->incompleteSpecs[] = $spec;
-                    $incomplete = $this->formatter->cyan('I');
-                    $this->console->write($incomplete);
-                } else {
-                    if ($spec->isPending()) {
-                        $this->pendingSpecs[] = $spec;
-                        $pending = $this->formatter->yellow('P');
-                        $this->console->write($pending);
-                    }
-                }
+            } elseif ($spec->isIncomplete()) {
+                $this->incompleteSpecs[] = $spec;
+                $incomplete = $this->formatter->cyan('I');
+                $this->console->write($incomplete);
+            } elseif ($spec->isPending()) {
+                $this->pendingSpecs[] = $spec;
+                $pending = $this->formatter->yellow('P');
+                $this->console->write($pending);
             }
 
             self::$testCase->tearDown();
@@ -69,7 +64,8 @@ namespace pho\Reporter {
          * Invoked after the test suite has ran, allowing for the display of
          * test results and related statistics.
          */
-        public function afterRun()
+        public
+        function afterRun()
         {
             TestCase::tearDownAfterClass();
             //parent::afterRun();
@@ -79,7 +75,6 @@ namespace pho\Reporter {
 }
 
 namespace Concise\Extensions\Pho {
-
     use Concise\Core\TestCase;
     use pho\Console\Console;
     use pho\Reporter\ConciseReporter;
@@ -94,12 +89,11 @@ namespace Concise\Extensions\Pho {
 
         public function test()
         {
-
         }
 
         public function count()
         {
-            return self::$count;
+            return 1;
         }
 
         public function run(PHPUnit_Framework_TestResult $result = null)
