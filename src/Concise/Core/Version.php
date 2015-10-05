@@ -54,14 +54,20 @@ class Version
     public function getVersionNameForVersion($version)
     {
         $names = array(
-            'Big Bang',
-            'Dark Matter',
-            'String Theory',
-            'Supernova',
-            'Quantum',
-            'Antimatter',
-            'Entropy',
-            'Multiverse',
+            1 => array(
+                'Big Bang',
+                'Dark Matter',
+                'String Theory',
+                'Supernova',
+                'Quantum',
+                'Antimatter',
+                'Entropy',
+                'Multiverse',
+            ),
+            2 => array(
+                'Ultraviolet',
+                'Photon',
+            )
         );
 
         $version = ltrim($version, 'v');
@@ -69,6 +75,6 @@ class Version
             return '';
         }
 
-        return $names[substr($version, 2, 1)];
+        return $names[substr($version, 0, 1)][substr($version, 2, 1)];
     }
 }
