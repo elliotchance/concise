@@ -8,15 +8,15 @@ matrix:
   include:
     - php: 5.6
       env: PHPUNIT_OPTIONS="--coverage-clover build/logs/clover.xml"
-      env:
-      - PHPUNIT_OPTIONS="-c tests/Concise/Extensions/Pho/phpunit.xml --test-suffix=Spec.php vendor/danielstjules/pho/spec/Expectation/ExpectationSpec.php"
-      - INSTALL="composer require danielstjules/pho"
+      env: PHPUNIT_OPTIONS="-c tests/Concise/Extensions/Pho/phpunit.xml --test-suffix=Spec.php vendor/danielstjules/pho/spec/Expectation/ExpectationSpec.php"
+      #- INSTALL="composer require danielstjules/pho"
 
 install:
   - composer install
   - $INSTALL
 script:
   - ls vendor/danielstjules/pho/spec
+  - cat vendor/danielstjules/pho/spec/Expectation/ExpectationSpec.php
   - bin/concise --ci $PHPUNIT_OPTIONS
 
 after_script:

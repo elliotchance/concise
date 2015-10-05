@@ -1,10 +1,10 @@
 <?php
 
-namespace {
-    if (!class_exists('pho\Runnable\Spec')) {
-        return;
-    }
-}
+//namespace {
+//    if (!class_exists('pho\Runnable\Spec')) {
+//        return;
+//    }
+//}
 
 namespace pho\Reporter {
     use Concise\Core\TestCase;
