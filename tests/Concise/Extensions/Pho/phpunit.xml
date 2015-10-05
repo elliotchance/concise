@@ -12,9 +12,4 @@
         stopOnSkipped="false"
         testSuiteLoaderFile="../../../../src/Concise/Extensions/Pho/PhoTestSuiteLoader.php"
         testSuiteLoaderClass="Concise\Extensions\Pho\PhoTestSuiteLoader">
-    <testsuites>
-        <testsuite name="All Specs">
-            <directory suffix="Spec.php">../../../../vendor/danielstjules/pho/spec</directory>
-        </testsuite>
-    </testsuites>
 </phpunit>
