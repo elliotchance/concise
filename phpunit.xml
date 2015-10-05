@@ -9,8 +9,7 @@
         stopOnError="false"
         stopOnFailure="false"
         stopOnIncomplete="false"
-        stopOnSkipped="false"
-        strict="true">
+        stopOnSkipped="false">
     <testsuites>
         <testsuite name="All Tests">
             <directory>tests</directory>
