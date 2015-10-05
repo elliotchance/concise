@@ -6,7 +6,7 @@ use pho\Expectation\Expectation;
 use pho\Exception\ExpectationException;
 
 // Load MockMatcher for testing custom matchers
-include_once(dirname(__FILE__) . '/Matcher/MockMatcher.php');
+//include_once(dirname(__FILE__) . '/Matcher/MockMatcher.php');
 
 // Define a helper for testing the expectations
 function shouldThrowException($closure, $class = null) {
