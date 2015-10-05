@@ -16,6 +16,7 @@ install:
   - composer install
   - $INSTALL
 script:
+  - ls vendor/danielstjules/pho/spec
   - bin/concise --ci $PHPUNIT_OPTIONS
 
 after_script:
