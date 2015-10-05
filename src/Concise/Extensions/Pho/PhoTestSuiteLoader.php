@@ -116,6 +116,11 @@ namespace Concise\Extensions\Pho {
 
             return $result;
         }
+
+        public function realCount()
+        {
+            return self::$count;
+        }
     }
 
     class PhoTestSuiteLoader extends PHPUnit_Runner_StandardTestSuiteLoader
