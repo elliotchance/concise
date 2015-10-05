@@ -1,5 +1,11 @@
 <?php
 
+namespace {
+    if (!class_exists('pho\Runnable\Spec')) {
+        return;
+    }
+}
+
 namespace pho\Reporter {
     use Concise\Core\TestCase;
     use pho\Runnable\Spec;
@@ -107,7 +113,10 @@ namespace Concise\Extensions\Pho {
             ConciseReporter::$result = $result;
 
             // Create a new Console and parse arguments
-            $console = new Console(['--reporter', 'concise'], 'php://stdout');
+            $console = new Console(
+                array('--reporter', 'concise'),
+                'php://stdout'
+            );
             $console->parseArguments();
 
             // Start the runner

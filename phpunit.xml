@@ -9,9 +9,7 @@
         stopOnError="false"
         stopOnFailure="false"
         stopOnIncomplete="false"
-        stopOnSkipped="false"
-        testSuiteLoaderFile="src/Concise/Extensions/Pho/PhoTestSuiteLoader.php"
-        testSuiteLoaderClass="Concise\Extensions\Pho\PhoTestSuiteLoader">
+        stopOnSkipped="false">
     <testsuites>
         <testsuite name="All Tests">
             <directory>tests</directory>
