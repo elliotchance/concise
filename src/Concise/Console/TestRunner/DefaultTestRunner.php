@@ -134,7 +134,6 @@ class Suite extends PHPUnit_Framework_TestSuite
 
         static $done = false;
         if (!$done) {
-
             $this->addTestSuite(new \ReflectionClass('Concise\Extensions\Pho\Dummy'));
             $done = true;
         }
