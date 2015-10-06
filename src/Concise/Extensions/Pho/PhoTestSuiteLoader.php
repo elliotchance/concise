@@ -100,10 +100,9 @@ namespace Concise\Extensions\Pho {
 
     class DummySuite extends \PHPUnit_Framework_TestSuite
     {
-        public function __construct()
+        public function count()
         {
-            parent::__construct();
-            $this->numTests = 150;
+            return Dummy::$count;
         }
     }
 
