@@ -8,8 +8,8 @@ class CIResultPrinter extends DefaultResultPrinter
 
     public function update()
     {
-        var_dump($this->getTestCount());
         $percentage = $this->counter->getPercentage($this->getTestCount());
+        var_dump($this->getTestCount(), $percentage, $this->lastPercentage);
         if ($percentage > $this->lastPercentage) {
             $this->write($this->getAssertionString());
             $this->lastPercentage = $percentage;
