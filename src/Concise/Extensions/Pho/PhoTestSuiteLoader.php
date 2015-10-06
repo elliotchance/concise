@@ -8,6 +8,7 @@
 
 namespace pho\Reporter {
     use Concise\Core\TestCase;
+    use Concise\Extensions\Pho\DummySuite;
     use pho\Runnable\Spec;
     use PHPUnit_Framework_Test;
     use PHPUnit_Framework_TestResult;
@@ -39,7 +40,7 @@ namespace pho\Reporter {
         {
             parent::beforeRun();
             TestCase::setUpBeforeClass();
-            self::$testSuite = new PHPUnit_Framework_TestSuite();
+            self::$testSuite = new DummySuite();
             self::$result->startTestSuite(self::$testSuite);
         }
 
@@ -86,7 +87,6 @@ namespace pho\Reporter {
             //parent::afterRun();
         }
     }
-
 }
 
 namespace Concise\Extensions\Pho {
@@ -97,6 +97,15 @@ namespace Concise\Extensions\Pho {
     use PHPUnit_Framework_TestCase;
     use PHPUnit_Framework_TestResult;
     use PHPUnit_Runner_StandardTestSuiteLoader;
+
+    class DummySuite extends \PHPUnit_Framework_TestSuite
+    {
+        public function __construct()
+        {
+            parent::__construct();
+            $this->numTests = 150;
+        }
+    }
 
     class Dummy extends PHPUnit_Framework_TestCase
     {
