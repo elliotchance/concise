@@ -141,7 +141,7 @@ class Suite extends PHPUnit_Framework_TestSuite
 
     public function realCount()
     {
-        return min(1, Dummy::$count);
+        return max(1, Dummy::$count);
     }
 }
 
