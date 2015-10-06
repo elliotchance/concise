@@ -11,6 +11,7 @@ namespace pho\Reporter {
     use pho\Runnable\Spec;
     use PHPUnit_Framework_Test;
     use PHPUnit_Framework_TestResult;
+    use PHPUnit_Framework_TestSuite;
 
     class ConciseReporter extends AbstractReporter implements ReporterInterface
     {
@@ -29,10 +30,17 @@ namespace pho\Reporter {
          */
         public static $test = null;
 
+        /**
+         * @var PHPUnit_Framework_TestSuite
+         */
+        public static $testSuite = null;
+
         public function beforeRun()
         {
             parent::beforeRun();
             TestCase::setUpBeforeClass();
+            self::$testSuite = new PHPUnit_Framework_TestSuite();
+            self::$result->startTestSuite(self::$testSuite);
         }
 
         public function beforeSpec(Spec $spec)
@@ -74,6 +82,7 @@ namespace pho\Reporter {
         function afterRun()
         {
             TestCase::tearDownAfterClass();
+            self::$result->endTestSuite(self::$testSuite);
             //parent::afterRun();
         }
     }

@@ -8,4 +8,4 @@ vendor/bin/concise --ci vendor/danielstjules/pho/spec/Expectation/ExpectationSpe
 vendor/bin/concise --ci --test-suffix=Spec.php vendor/danielstjules/pho/spec/Expectation > tests/Concise/Extensions/Pho/travis_2.txt
 
 # Using configuration
-vendor/bin/concise --ci -c tests/Concise/Extensions/Pho/phpunit.xml > tests/Concise/Extensions/Pho/travis_3.txt
+vendor/bin/concise --ci -c tests/Concise/Extensions/Pho/phpunit.xml --test-suffix=Spec.php vendor/danielstjules/pho/spec > tests/Concise/Extensions/Pho/travis_3.txt
