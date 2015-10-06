@@ -137,13 +137,11 @@ class Suite extends PHPUnit_Framework_TestSuite
             $this->addTestSuite(new \ReflectionClass('Concise\Extensions\Pho\Dummy'));
             $done = true;
         }
-
-        $this->numTests = -1;
     }
 
     public function realCount()
     {
-        return Dummy::$count;
+        return min(1, Dummy::$count);
     }
 }
 
