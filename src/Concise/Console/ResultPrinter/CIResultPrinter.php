@@ -8,6 +8,7 @@ class CIResultPrinter extends DefaultResultPrinter
 
     public function update()
     {
+        var_dump($this->getTestCount());
         $percentage = $this->counter->getPercentage($this->getTestCount());
         if ($percentage > $this->lastPercentage) {
             $this->write($this->getAssertionString());
@@ -15,8 +16,8 @@ class CIResultPrinter extends DefaultResultPrinter
         }
     }
 
-    public function appendTextAbove($text)
-    {
-        parent::appendTextAbove("\n$text");
-    }
+//    public function appendTextAbove($text)
+//    {
+//        parent::appendTextAbove("\n$text");
+//    }
 }
