@@ -25,7 +25,8 @@ install:
   - composer install
   - $INSTALL
 script:
-  - $CUSTOM_SCRIPT || bin/concise --ci $PHPUNIT_OPTIONS
+  - $CUSTOM_SCRIPT
+  - if [ -n "$CUSTOM_SCRIPT" ]; then bin/concise --ci $PHPUNIT_OPTIONS; fi
 
 after_script:
   - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"
