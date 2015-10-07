@@ -11,14 +11,14 @@ $CONCISE_BIN --ci --test-suffix=Spec.php vendor/danielstjules/pho/spec > tests/C
 cat tests/Concise/Extensions/Pho/travis_2.txt
 
 # Make sure the outputs are good
-MD51=`md5_file -q tests/Concise/Extensions/Pho/travis_1.txt`
-MD52=`md5_file -q tests/Concise/Extensions/Pho/travis_1_expected.txt`
+MD51=`md5sum -q tests/Concise/Extensions/Pho/travis_1.txt`
+MD52=`md5sum -q tests/Concise/Extensions/Pho/travis_1_expected.txt`
 if [ "$MD51" != "$MD52" ]; then
     exit 1
 fi
 
-MD51=`md5_file -q tests/Concise/Extensions/Pho/travis_2.txt`
-MD52=`md5_file -q tests/Concise/Extensions/Pho/travis_2_expected.txt`
+MD51=`md5sum -q tests/Concise/Extensions/Pho/travis_2.txt`
+MD52=`md5sum -q tests/Concise/Extensions/Pho/travis_2_expected.txt`
 if [ "$MD51" != "$MD52" ]; then
     exit 2
 fi
