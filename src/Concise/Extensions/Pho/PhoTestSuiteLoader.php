@@ -169,6 +169,8 @@ namespace Concise\Extensions\Pho {
 
                 require_once($suiteClassFile);
 
+                AbstractResultPrinter::$totalTestCount += Dummy::$count;
+
                 return new \ReflectionClass('Concise\Extensions\Pho\Dummy');
             }
             return parent::load($suiteClassName, $suiteClassFile);
