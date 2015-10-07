@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 export CONCISE_BIN="bin/concise -c tests/Concise/Extensions/Pho/phpunit.xml"
 
 # Run a single spec file
