@@ -119,8 +119,6 @@ class Command extends \PHPUnit_TextUI_Command
             }
         }
 
-        //var_dump($this->longOptions, $this->options); exit;
-        //if ()
         parent::handleArguments($argv);
 
         foreach ($this->options[0] as $option) {

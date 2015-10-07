@@ -69,6 +69,10 @@ the ``concise`` command line to trigger the correct loading of the test files.
 Code coverage my not work as expected. I'm not sure why this is, please let me
 know if you get this working.
 
+PHP 5.6 does work (it will report errors on failures) however the total test
+count is not applied correctly. See `Pho on 5.6 not working`_.
+
+.. _Pho on 5.6 not working: https://github.com/elliotchance/concise/issues/301
 .. _BDD: https://en.wikipedia.org/wiki/Behavior-driven_development
 .. _Pho: https://github.com/danielstjules/pho
 .. _Jasmine: http://jasmine.github.io

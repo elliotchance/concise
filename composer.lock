@@ -4,58 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8be2a76e51cfdd71a190f517f89934c",
-    "content-hash": "f9d428219c66badfaf51a9d2b2464655",
+    "hash": "08a1d021d5dc0afecb04fcf50db2e059",
     "packages": [
-        {
-            "name": "danielstjules/pho",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/danielstjules/pho.git",
-                "reference": "6891f64dfeefb3b56dbe12ddcca3f1940a296047"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/danielstjules/pho/zipball/6891f64dfeefb3b56dbe12ddcca3f1940a296047",
-                "reference": "6891f64dfeefb3b56dbe12ddcca3f1940a296047",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "bin": [
-                "bin/pho"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "pho\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel St. Jules",
-                    "email": "danielst.jules@gmail.com",
-                    "homepage": "http://www.danielstjules.com"
-                }
-            ],
-            "description": "A BDD testing framework",
-            "homepage": "https://github.com/danielstjules/pho",
-            "keywords": [
-                "BDD",
-                "behavior driven development",
-                "framework",
-                "pho",
-                "test",
-                "unit"
-            ],
-            "time": "2015-01-26 01:52:18"
-        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
