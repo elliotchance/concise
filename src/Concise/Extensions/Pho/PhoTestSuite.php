@@ -2,6 +2,7 @@
 
 namespace Concise\Extensions\Pho;
 
+use Concise\Core\VirtualTestSuiteInterface;
 use PHPUnit_Extensions_PhptTestCase;
 use PHPUnit_Framework_Exception;
 use PHPUnit_Framework_TestSuite;
@@ -9,7 +10,7 @@ use PHPUnit_Runner_BaseTestRunner;
 use PHPUnit_Util_InvalidArgumentHelper;
 use ReflectionClass;
 
-class PhoTestSuite extends PHPUnit_Framework_TestSuite
+class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSuiteInterface
 {
     public function load($filename)
     {
@@ -17,7 +18,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
 
         include_once $filename;
 
-        $newVariables     = get_defined_vars();
+        $newVariables = get_defined_vars();
         $newVariableNames = array_diff(
             array_keys($newVariables),
             $oldVariableNames
@@ -63,8 +64,8 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
 
         // The given file may contain further stub classes in addition to the
         // test class itself. Figure out the actual test class.
-        $classes    = get_declared_classes();
-        $filename   = $this->checkAndLoad($filename);
+        $classes = get_declared_classes();
+        $filename = $this->checkAndLoad($filename);
         $newClasses = array_diff(get_declared_classes(), $classes);
 
         // The diff is empty in case a parent class (with test methods) is added
@@ -82,7 +83,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
         // a PEAR/PSR-0 prefixed shortname ('NameSpace_ShortName'), or as a
         // PSR-1 local shortname ('NameSpace\ShortName'). The comparison must be
         // anchored to prevent false-positive matches (e.g., 'OtherShortName').
-        $shortname      = basename($filename, '.php');
+        $shortname = basename($filename, '.php');
         $shortnameRegEx = '/(?:^|_|\\\\)' . preg_quote($shortname, '/') . '$/';
 
         foreach ($this->foundClasses as $i => $className) {
@@ -101,7 +102,10 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
             $class = new ReflectionClass($className);
 
             if (!$class->isAbstract()) {
-                if ($class->hasMethod(PHPUnit_Runner_BaseTestRunner::SUITE_METHODNAME)) {
+                if ($class->hasMethod(
+                    PHPUnit_Runner_BaseTestRunner::SUITE_METHODNAME
+                )
+                ) {
                     $method = $class->getMethod(
                         PHPUnit_Runner_BaseTestRunner::SUITE_METHODNAME
                     );
@@ -109,7 +113,10 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
                     if ($method->isStatic()) {
                         $this->addTest($method->invoke(null, $className));
                     }
-                } elseif ($class->implementsInterface('PHPUnit_Framework_Test')) {
+                } elseif ($class->implementsInterface(
+                    'PHPUnit_Framework_Test'
+                )
+                ) {
                     $this->addTestSuite($class);
                 }
             }
@@ -130,7 +137,9 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite
 
         static $done = false;
         if (!$done) {
-            $this->addTestSuite(new \ReflectionClass('Concise\Extensions\Pho\Dummy'));
+            $this->addTestSuite(
+                new \ReflectionClass('Concise\Extensions\Pho\Dummy')
+            );
             $done = true;
         }
     }
