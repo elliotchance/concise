@@ -41,10 +41,9 @@ abstract class AbstractResultPrinter
     public $testCount = 0;
 
     /**
-     * Needs description for static.
      * @var integer
      */
-    public static $totalTestCount = 0;
+    public $totalTestCount = 0;
 
     /**
      * @var integer
@@ -119,7 +118,7 @@ abstract class AbstractResultPrinter
      */
     public function getTotalTestCount()
     {
-        return self::$totalTestCount;
+        return $this->totalTestCount;
     }
 
     /**

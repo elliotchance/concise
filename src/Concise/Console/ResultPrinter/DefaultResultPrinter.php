@@ -106,7 +106,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
                 'blue' => $this->getSkippedCount(),
                 'red' => $this->getFailureCount() + $this->getErrorCount(),
             )
-        ) . "\n\n\n";
+        ) . "\n";
     }
 
     protected function getSecondsElapsed()
