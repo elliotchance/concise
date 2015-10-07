@@ -1,10 +1,10 @@
 <?php
 
-//namespace {
-//    if (!class_exists('pho\Runnable\Spec')) {
-//        return;
-//    }
-//}
+namespace {
+   if (!class_exists('pho\Runnable\Spec')) {
+       return;
+   }
+}
 
 namespace pho\Reporter {
     use Concise\Core\TestCase;
@@ -168,8 +168,6 @@ namespace Concise\Extensions\Pho {
                 );
 
                 require_once($suiteClassFile);
-
-                AbstractResultPrinter::$totalTestCount += Dummy::$count;
 
                 return new \ReflectionClass('Concise\Extensions\Pho\Dummy');
             }

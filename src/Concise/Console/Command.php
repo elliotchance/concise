@@ -100,25 +100,6 @@ class Command extends \PHPUnit_TextUI_Command
         $this->longOptions['color-scheme='] = null;
         $this->longOptions['list-color-schemes'] = null;
         $this->longOptions['ci'] = null;
-
-        try {
-            $this->options = PHPUnit_Util_Getopt::getopt(
-                $argv,
-                'd:c:hv',
-                array_keys($this->longOptions)
-            );
-        } catch (PHPUnit_Framework_Exception $e) {
-        }
-
-        foreach ($this->options[0] as $k => $option) {
-            switch ($option[0]) {
-                case 'c':
-                case '--configuration':
-                    unset($this->options[0][$k]);
-                    break;
-            }
-        }
-
         parent::handleArguments($argv);
 
         foreach ($this->options[0] as $option) {
