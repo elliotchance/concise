@@ -168,12 +168,12 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     {
         if ($this->startedTestSuite === 0) {
             if ($suite instanceof Suite) {
-                $this->getResultPrinter()->totalTestCount = $suite->realCount();
+                AbstractResultPrinter::$totalTestCount = $suite->realCount();
             } elseif ($suite->testAt(0) instanceof Dummy) {
-                $this->getResultPrinter()->totalTestCount = $suite->testAt(0)
+                AbstractResultPrinter::$totalTestCount = $suite->testAt(0)
                     ->realCount();
             } else {
-                $this->getResultPrinter()->totalTestCount = count($suite);
+                AbstractResultPrinter::$totalTestCount = count($suite);
             }
         }
 
