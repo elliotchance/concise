@@ -8,11 +8,10 @@ use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
 use Exception;
-use PHPUnit_Framework_Exception;
+use PHPUnit_TextUI_Command;
 use PHPUnit_TextUI_TestRunner;
-use PHPUnit_Util_Getopt;
 
-class Command extends \PHPUnit_TextUI_Command
+class Command extends PHPUnit_TextUI_Command
 {
     /**
      * @var string

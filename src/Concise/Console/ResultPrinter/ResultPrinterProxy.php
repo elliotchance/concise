@@ -2,8 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
-use Concise\Console\TestRunner\Suite;
-use Concise\Extensions\Pho\Dummy;
+use Concise\Extensions\Pho\PhoTestSuite;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
@@ -167,11 +166,8 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         if ($this->startedTestSuite === 0) {
-            if ($suite instanceof Suite) {
+            if ($suite instanceof PhoTestSuite) {
                 $this->getResultPrinter()->totalTestCount = $suite->realCount();
-            } elseif ($suite->testAt(0) instanceof Dummy) {
-                $this->getResultPrinter()->totalTestCount = $suite->testAt(0)
-                    ->realCount();
             } else {
                 $this->getResultPrinter()->totalTestCount = count($suite);
             }
