@@ -18,14 +18,14 @@ matrix:
       env: COMPOSER=composer40.json
     - php: 5.5
       env:
-      - PHPUNIT_OPTIONS="-c tests/Concise/Extensions/Pho/phpunit.xml --test-suffix=Spec.php vendor/danielstjules/pho/spec"
       - INSTALL="composer require danielstjules/pho"
+      - SCRIPT="./tests/Concise/Extensions/Pho/travis.sh"
 
 install:
   - composer install
   - $INSTALL
 script:
-  - bin/concise --ci $PHPUNIT_OPTIONS
+  - $SCRIPT || bin/concise --ci $PHPUNIT_OPTIONS
 
 after_script:
   - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"
