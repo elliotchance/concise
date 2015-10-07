@@ -48,10 +48,10 @@ Using other test result formats:
 
    vendor/bin/concise --log-junit junit.xml --test-suffix=Spec.php path/to/spec
 
-The `entire Pho test`_ suite is run under concise as part of the main build
+The `entire Pho test suite`_ is run under concise as part of the main build
 system.
 
-.. _entire Pho test: https://travis-ci.org/elliotchance/concise
+.. _entire Pho test suite: https://travis-ci.org/elliotchance/concise
 
 
 What Doesn't Work
