@@ -19,13 +19,13 @@ matrix:
     - php: 5.5
       env:
       - INSTALL="composer require danielstjules/pho"
-      - SCRIPT="./tests/Concise/Extensions/Pho/travis.sh"
+      - CUSTOM_SCRIPT="./tests/Concise/Extensions/Pho/travis.sh"
 
 install:
   - composer install
   - $INSTALL
 script:
-  - $SCRIPT || bin/concise --ci $PHPUNIT_OPTIONS
+  - $CUSTOM_SCRIPT || bin/concise --ci $PHPUNIT_OPTIONS
 
 after_script:
   - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"

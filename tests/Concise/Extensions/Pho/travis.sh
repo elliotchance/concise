@@ -3,7 +3,6 @@
 export CONCISE_BIN="bin/concise -c tests/Concise/Extensions/Pho/phpunit.xml"
 
 # Run a single spec file
-$CONCISE_BIN vendor/danielstjules/pho/spec/Expectation/ExpectationSpec.php
 $CONCISE_BIN --ci vendor/danielstjules/pho/spec/Expectation/ExpectationSpec.php > tests/Concise/Extensions/Pho/travis_1.txt
 cat tests/Concise/Extensions/Pho/travis_1.txt
 
@@ -12,14 +11,14 @@ $CONCISE_BIN --ci --test-suffix=Spec.php vendor/danielstjules/pho/spec > tests/C
 cat tests/Concise/Extensions/Pho/travis_2.txt
 
 # Make sure the outputs are good
-MD51=`md5 -q tests/Concise/Extensions/Pho/travis_1.txt`
-MD52=`md5 -q tests/Concise/Extensions/Pho/travis_1_expected.txt`
+MD51=`md5_file -q tests/Concise/Extensions/Pho/travis_1.txt`
+MD52=`md5_file -q tests/Concise/Extensions/Pho/travis_1_expected.txt`
 if [ "$MD51" != "$MD52" ]; then
     exit 1
 fi
 
-MD51=`md5 -q tests/Concise/Extensions/Pho/travis_2.txt`
-MD52=`md5 -q tests/Concise/Extensions/Pho/travis_2_expected.txt`
+MD51=`md5_file -q tests/Concise/Extensions/Pho/travis_2.txt`
+MD52=`md5_file -q tests/Concise/Extensions/Pho/travis_2_expected.txt`
 if [ "$MD51" != "$MD52" ]; then
     exit 2
 fi
