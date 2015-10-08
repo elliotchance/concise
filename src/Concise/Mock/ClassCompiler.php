@@ -129,6 +129,10 @@ class ClassCompiler
 
     protected function methodIsAllowedToBeMocked($method)
     {
+        if ($method === 'initTrace') {
+            return true;
+        }
+        
         try {
             $realMethod = new ReflectionMethod($this->className, $method);
             $this->finalMethodsCanNotBeMocked($realMethod);
