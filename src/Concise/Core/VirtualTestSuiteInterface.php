@@ -7,5 +7,5 @@ interface VirtualTestSuiteInterface
     /**
      * @return int
      */
-    public function realCount();
+    public function getRealCount();
 }

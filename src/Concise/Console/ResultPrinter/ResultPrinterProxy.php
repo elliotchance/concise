@@ -165,16 +165,17 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
+        $resultPrinter = $this->getResultPrinter();
         if ($this->startedTestSuite === 0) {
             if ($suite instanceof VirtualTestSuiteInterface) {
-                $this->getResultPrinter()->totalTestCount = $suite->realCount();
+                $resultPrinter->totalTestCount = $suite->getRealCount();
             } else {
-                $this->getResultPrinter()->totalTestCount = count($suite);
+                $resultPrinter->totalTestCount = count($suite);
             }
         }
 
         ++$this->startedTestSuite;
-        $this->getResultPrinter()->startTestSuite($suite);
+        $resultPrinter->startTestSuite($suite);
     }
 
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)

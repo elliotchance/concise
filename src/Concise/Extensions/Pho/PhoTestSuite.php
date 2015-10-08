@@ -144,7 +144,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
         }
     }
 
-    public function realCount()
+    public function getRealCount()
     {
         return max(1, Dummy::$count);
     }
