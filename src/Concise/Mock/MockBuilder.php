@@ -125,6 +125,10 @@ class MockBuilder
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
 
+        if (defined('HHVM_VERSION')) {
+            $this->rules['initTrace'] = array();
+        }
+
         if (!$niceMock && !$this->isInterface()) {
             $this->disableConstructor();
         }
