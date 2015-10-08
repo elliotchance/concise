@@ -14,13 +14,13 @@ cat tests/Concise/Extensions/Pho/travis_2.txt
 
 # Make sure the outputs are good
 MD51=`cat tests/Concise/Extensions/Pho/travis_1.txt | md5sum`
-MD52=`tests/Concise/Extensions/Pho/travis_1_expected.txt | md5sum`
+MD52=`cat tests/Concise/Extensions/Pho/travis_1_expected.txt | md5sum`
 if [ "$MD51" != "$MD52" ]; then
     exit 1
 fi
 
-MD51=`tests/Concise/Extensions/Pho/travis_2.txt | md5sum`
-MD52=`tests/Concise/Extensions/Pho/travis_2_expected.txt | md5sum`
+MD51=`cat tests/Concise/Extensions/Pho/travis_2.txt | md5sum`
+MD52=`cat tests/Concise/Extensions/Pho/travis_2_expected.txt | md5sum`
 if [ "$MD51" != "$MD52" ]; then
     exit 2
 fi
