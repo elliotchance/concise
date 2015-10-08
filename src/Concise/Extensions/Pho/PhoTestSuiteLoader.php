@@ -21,6 +21,7 @@ namespace pho\Reporter {
 
 namespace Concise\Extensions\Pho {
     use Concise\Core\TestCase;
+    use Concise\Core\VirtualTestSuiteInterface;
     use pho\Console\Console;
     use pho\Reporter\ConciseReporter;
     use pho\Runner\Runner;
@@ -36,7 +37,7 @@ namespace Concise\Extensions\Pho {
         }
     }
 
-    class Dummy extends PHPUnit_Framework_TestCase
+    class Dummy extends PHPUnit_Framework_TestCase implements VirtualTestSuiteInterface
     {
         public static $count = 0;
 
@@ -73,7 +74,7 @@ namespace Concise\Extensions\Pho {
             return $result;
         }
 
-        public function realCount()
+        public function getRealCount()
         {
             return self::$count;
         }
