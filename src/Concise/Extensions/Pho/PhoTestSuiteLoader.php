@@ -1,91 +1,21 @@
 <?php
 
 namespace {
-   if (!class_exists('pho\Runnable\Spec')) {
-       return;
-   }
+    // Drop out here if they do not have the Pho package installed.
+    if (!class_exists('pho\Runnable\Spec')) {
+        return;
+    }
 }
 
 namespace pho\Reporter {
-    use Concise\Core\TestCase;
-    use Concise\Extensions\Pho\DummySuite;
-    use pho\Runnable\Spec;
-    use PHPUnit_Framework_Test;
-    use PHPUnit_Framework_TestResult;
-    use PHPUnit_Framework_TestSuite;
-
-    class ConciseReporter extends AbstractReporter implements ReporterInterface
+    /**
+     * Pho will only let us load a reporter by name if it exists in the
+     * pho\Reporter namespace. Since we don't want to put the bulk of the code
+     * here we create basically an alias to the real class that the class loader
+     * can find.
+     */
+    class ConciseReporter extends \Concise\Extensions\Pho\ConciseReporter
     {
-        /**
-         * @var TestCase
-         */
-        public static $testCase = null;
-
-        /**
-         * @var PHPUnit_Framework_TestResult
-         */
-        public static $result = null;
-
-        /**
-         * @var PHPUnit_Framework_Test
-         */
-        public static $test = null;
-
-        /**
-         * @var PHPUnit_Framework_TestSuite
-         */
-        public static $testSuite = null;
-
-        public function beforeRun()
-        {
-            parent::beforeRun();
-            TestCase::setUpBeforeClass();
-            self::$testSuite = new DummySuite();
-            self::$result->startTestSuite(self::$testSuite);
-        }
-
-        public function beforeSpec(Spec $spec)
-        {
-            self::$testCase->setUp();
-            self::$result->startTest(self::$test);
-        }
-
-        public function afterSpec(Spec $spec)
-        {
-            if ($spec->isFailed()) {
-                $this->failedSpecs[] = $spec;
-                self::$result->addFailure(
-                    self::$test,
-                    new \PHPUnit_Framework_AssertionFailedError(
-                        $spec->exception
-                    ),
-                    5
-                );
-            } elseif ($spec->isIncomplete()) {
-                $this->incompleteSpecs[] = $spec;
-                $incomplete = $this->formatter->cyan('I');
-                $this->console->write($incomplete);
-            } elseif ($spec->isPending()) {
-                $this->pendingSpecs[] = $spec;
-                $pending = $this->formatter->yellow('P');
-                $this->console->write($pending);
-            }
-
-            self::$testCase->tearDown();
-            self::$result->endTest(self::$test, 1);
-        }
-
-        /**
-         * Invoked after the test suite has ran, allowing for the display of
-         * test results and related statistics.
-         */
-        public
-        function afterRun()
-        {
-            TestCase::tearDownAfterClass();
-            self::$result->endTestSuite(self::$testSuite);
-            //parent::afterRun();
-        }
     }
 }
 

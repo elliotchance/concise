@@ -10,8 +10,21 @@ use PHPUnit_Runner_BaseTestRunner;
 use PHPUnit_Util_InvalidArgumentHelper;
 use ReflectionClass;
 
+/**
+ * Almost all of the code in this class has been copied from
+ * PHPUnit_Framework_TestSuite. Unfortunately this is required to stop PHPUnit
+ * from requiring in files in a static context. Best efforts have been made to
+ * only copy the absolutele minimum code required. However, you may assume that
+ * all the code below is a direct copy of the parent or another method and only
+ * lines that commented are modified from the parent.
+ */
 class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSuiteInterface
 {
+    /**
+     * Copied from PHPUnit_Util_Fileloader.
+     * @param string $filename
+     * @return mixed
+     */
     public function load($filename)
     {
         $oldVariableNames = array_keys(get_defined_vars());
@@ -33,6 +46,11 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
         return $filename;
     }
 
+    /**
+     * Copied from PHPUnit_Util_Fileloader.
+     * @param string $filename
+     * @return string
+     */
     public function checkAndLoad($filename)
     {
         $includePathFilename = stream_resolve_include_path($filename);
