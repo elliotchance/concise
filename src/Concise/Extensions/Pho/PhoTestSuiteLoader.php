@@ -28,8 +28,9 @@ namespace Concise\Extensions\Pho {
     use PHPUnit_Framework_TestCase;
     use PHPUnit_Framework_TestResult;
     use PHPUnit_Runner_StandardTestSuiteLoader;
+    use ReflectionClass;
 
-    class Dummy extends PHPUnit_Framework_TestCase implements VirtualTestSuiteInterface
+    class PhoTestCase extends PHPUnit_Framework_TestCase implements VirtualTestSuiteInterface
     {
         public static $count = 0;
 
@@ -78,7 +79,7 @@ namespace Concise\Extensions\Pho {
         {
             if (substr($suiteClassName, -4) === 'Spec') {
                 $tokens = token_get_all(file_get_contents($suiteClassFile));
-                Dummy::$count = count(
+                PhoTestCase::$count = count(
                     array_filter(
                         $tokens,
                         function ($token) {
@@ -92,7 +93,9 @@ namespace Concise\Extensions\Pho {
 
                 require_once($suiteClassFile);
 
-                return new \ReflectionClass('Concise\Extensions\Pho\Dummy');
+                return new ReflectionClass(
+                    'Concise\Extensions\Pho\PhoTestCase'
+                );
             }
             return parent::load($suiteClassName, $suiteClassFile);
         }

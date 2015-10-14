@@ -141,7 +141,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
         }
 
         $tokens = token_get_all(file_get_contents($filename));
-        Dummy::$count += count(
+        PhoTestCase::$count += count(
             array_filter(
                 $tokens,
                 function ($token) {
@@ -156,7 +156,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
         static $done = false;
         if (!$done) {
             $this->addTestSuite(
-                new \ReflectionClass('Concise\Extensions\Pho\Dummy')
+                new \ReflectionClass('Concise\Extensions\Pho\PhoTestCase')
             );
             $done = true;
         }
@@ -164,6 +164,6 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
 
     public function getRealCount()
     {
-        return max(1, Dummy::$count);
+        return max(1, PhoTestCase::$count);
     }
 }
