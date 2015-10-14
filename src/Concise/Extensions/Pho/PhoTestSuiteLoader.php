@@ -29,14 +29,6 @@ namespace Concise\Extensions\Pho {
     use PHPUnit_Framework_TestResult;
     use PHPUnit_Runner_StandardTestSuiteLoader;
 
-    class DummySuite extends \PHPUnit_Framework_TestSuite
-    {
-        public function count()
-        {
-            return Dummy::$count;
-        }
-    }
-
     class Dummy extends PHPUnit_Framework_TestCase implements VirtualTestSuiteInterface
     {
         public static $count = 0;

@@ -36,8 +36,6 @@ class ConciseReporter extends AbstractReporter implements ReporterInterface
     {
         parent::beforeRun();
         TestCase::setUpBeforeClass();
-        //self::$testSuite = new DummySuite();
-        //self::$result->startTestSuite(self::$testSuite);
     }
 
     public function beforeSpec(Spec $spec)
