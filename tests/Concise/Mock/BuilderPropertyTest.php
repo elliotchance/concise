@@ -288,4 +288,13 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $this->setProperty($object, 'c', 'foo');
         $this->assert($object->c())->equals('foo');
     }
+
+    /**
+     * @group #309
+     */
+    public function testGetAmbiguousPrivatePropertyReturnsChildClass()
+    {
+        $object = new ChildClass();
+        $this->assert($this->getProperty($object, 'a'))->equals(2);
+    }
 }
