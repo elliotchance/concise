@@ -31,9 +31,11 @@ class BuilderCustomClassNameTest extends AbstractBuilderTestCase
         $mock = $builder->setCustomClassName($rand)->get();
         $this->assert(get_class($mock))->equals($rand);
     }
+
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage You cannot use 'Concise\Mock\FooClass' because a class with that name already exists.
+     * @expectedExceptionMessage You cannot use 'Concise\Mock\FooClass' because
+     *     a class with that name already exists.
      * @dataProvider allBuilders
      * @group #304
      */
@@ -41,5 +43,25 @@ class BuilderCustomClassNameTest extends AbstractBuilderTestCase
         MockBuilder $builder
     ) {
         $builder->setCustomClassName('Concise\Mock\FooClass')->get();
+    }
+
+    /**
+     * @dataProvider allBuilders
+     * @group #304
+     */
+    public function testCustomClassNameWillNotActivateClassLoader(
+        MockBuilder $builder
+    ) {
+        spl_autoload_register(
+            function () {
+                throw new \Exception("Autoloader should not have been called.");
+            }
+        );
+
+        $rand = "Concise\\Mock\\Temp" . md5(rand());
+        $builder->setCustomClassName($rand)->get();
+
+        $functions = spl_autoload_functions();
+        spl_autoload_unregister($functions[count($functions) - 1]);
     }
 }
