@@ -169,12 +169,22 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
         $resultPrinter = $this->getResultPrinter();
         if ($this->startedTestSuite === 0) {
             if ($suite instanceof VirtualTestSuiteInterface) {
+                // Custom test suite loaders may instantiate an instance of
+                // VirtualTestSuiteInterface for the test suite. This is to
+                // allow the test suites to return an explicit test count rather
+                // than relying on the native mechanics of PHPUnit to count the
+                // methods that start with "test".
                 $resultPrinter->totalTestCount = $suite->getRealCount();
-            } elseif ($suite->testAt(0) instanceof PhoTestCase) {
+            } elseif ($suite->testAt(0) instanceof VirtualTestSuiteInterface) {
+                // Alternatively we may be forced to use the standard PHPUnit
+                // suite but we can wrap the virtual test case inside it.
+
                 /** @var PhoTestCase $test */
                 $test = $suite->testAt(0);
                 $resultPrinter->totalTestCount = $test->getRealCount();
             } else {
+                // Fall back to the default option which is relying on the
+                // native PHPUnit classes to report their count.
                 $resultPrinter->totalTestCount = count($suite);
             }
         }

@@ -25,12 +25,11 @@ namespace Concise\Extensions\Pho {
     use pho\Console\Console;
     use pho\Reporter\ConciseReporter;
     use pho\Runner\Runner;
-    use PHPUnit_Framework_TestCase;
     use PHPUnit_Framework_TestResult;
     use PHPUnit_Runner_StandardTestSuiteLoader;
     use ReflectionClass;
 
-    class PhoTestCase extends PHPUnit_Framework_TestCase implements VirtualTestSuiteInterface
+    class PhoTestCase extends TestCase implements VirtualTestSuiteInterface
     {
         public static $count = 0;
 

@@ -16,15 +16,6 @@ class TestCaseTest extends TestCase
         $this->assert(123)->exactlyEquals($this->myAttribute);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
-     */
-    public function testGetAttributeThatDoesNotExistThrowsException()
-    {
-        $this->noSuchAttribute;
-    }
-
     public function testCanExtractDataFromTest()
     {
         $this->x = 123;
@@ -44,16 +35,6 @@ class TestCaseTest extends TestCase
     {
         unset($this->foobar);
         $this->assert(isset($this->myUniqueProperty))->isFalse;
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage You cannot assign an attribute with the
-     *     keyword 'not'.
-     */
-    public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
-    {
-        $this->not = 123;
     }
 
     protected $mySpecialAttribute = 123;
