@@ -26,4 +26,24 @@ class AssertionBuilderTest extends TestCase
             $this->assert($e->getMessage())->equals('custom message');
         }
     }
+
+    /**
+     * @group #306
+     */
+    public function testDidNotMatchExceptionMessageIfNoCustomFailureMessage()
+    {
+        try {
+            /** @var AssertionBuilder $builder */
+            $builder = $this->niceMock(
+                '\Concise\Core\AssertionBuilder',
+                array($this)
+            )
+                ->setProperty('lastBuilder', null)
+                ->stub('validateLastAssertion')
+                ->get();
+            $builder->handleFailure(new Exception('foo bar'));
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+            $this->assert($e->getMessage())->equals('foo bar');
+        }
+    }
 }

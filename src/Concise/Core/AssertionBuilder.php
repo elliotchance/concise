@@ -134,6 +134,11 @@ class AssertionBuilder
                     $this->failureMessage
                 );
             }
+            if ($e->getMessage()) {
+                throw new PHPUnit_Framework_AssertionFailedError(
+                    $e->getMessage()
+                );
+            }
             throw $e;
         }
     }
