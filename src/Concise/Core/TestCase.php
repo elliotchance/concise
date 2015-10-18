@@ -252,9 +252,14 @@ class TestCase extends BaseAssertions
         $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
     }
 
-    protected function getReflectionProperty($object, $property)
-    {
-        $className = get_class($object);
+    protected function getReflectionProperty(
+        $object,
+        $property,
+        $className = null
+    ) {
+        if (null === $className) {
+            $className = get_class($object);
+        }
         if ($object instanceof MockInterface) {
             $className = get_parent_class($object);
             if (!$className) {
@@ -276,10 +281,14 @@ class TestCase extends BaseAssertions
         method_exists($object, '__get');
     }
 
-    public function getProperty($object, $property)
+    public function getProperty($object, $property, $class = null)
     {
         try {
-            $property = $this->getReflectionProperty($object, $property);
+            $property = $this->getReflectionProperty(
+                $object,
+                $property,
+                $class
+            );
             return $property->getValue($object);
         } catch (ReflectionException $e) {
             if ($this->shouldAccessProperty($object, $property)) {
@@ -290,10 +299,10 @@ class TestCase extends BaseAssertions
         }
     }
 
-    public function setProperty($object, $name, $value)
+    public function setProperty($object, $name, $value, $class = null)
     {
         try {
-            $property = $this->getReflectionProperty($object, $name);
+            $property = $this->getReflectionProperty($object, $name, $class);
             $property->setValue($object, $value);
         } catch (ReflectionException $e) {
             $object->$name = $value;

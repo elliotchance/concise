@@ -30,7 +30,14 @@ class ParentClass
 
 class ChildClass extends ParentClass
 {
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a;
+
     private /** @noinspection PhpUnusedPrivateFieldInspection */ $b;
+
+    public function a()
+    {
+        return $this->a;
+    }
 
     public function b()
     {
@@ -251,7 +258,17 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     public function testPrivatePropertyIsSetOnChildClassByDefault()
     {
         $object = new ChildClass();
-        $this->setProperty($object, 'b', 'foo');
-        $this->assert($object->b())->equals('foo');
+        $this->setProperty($object, 'a', 'foo');
+        $this->assert($object->a())->equals('foo');
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyCanBeSetOnAnExplicitClass()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'a', 'foo', get_parent_class($object));
+        $this->assert($object->a())->isNull;
     }
 }
