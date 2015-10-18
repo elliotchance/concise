@@ -257,9 +257,26 @@ class TestCase extends BaseAssertions
         $property,
         $className = null
     ) {
+        // If no class is provided we need to determine which class contains the
+        // property.
         if (null === $className) {
             $className = get_class($object);
+            $reflection = new ReflectionClass($className);
+            while ($reflection) {
+                try {
+                    $reflection->getProperty($property);
+
+                    // If an exception was not thrown then we have found the
+                    // class that contains the property we are looking for so we
+                    // can remeber the class anem and jump out here.
+                    $className = $reflection->getName();
+                    break;
+                } catch (ReflectionException $e) {
+                    $reflection = $reflection->getParentClass();
+                }
+            }
         }
+
         if ($object instanceof MockInterface) {
             $className = get_parent_class($object);
             if (!$className) {

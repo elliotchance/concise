@@ -20,19 +20,26 @@ class MagicProperty
 
 class ParentClass
 {
-    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a;
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a = 1;
+
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $c = 4;
 
     public function a()
     {
         return $this->a;
     }
+
+    public function c()
+    {
+        return $this->c;
+    }
 }
 
 class ChildClass extends ParentClass
 {
-    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a;
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a = 2;
 
-    private /** @noinspection PhpUnusedPrivateFieldInspection */ $b;
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $b = 3;
 
     public function a()
     {
@@ -269,6 +276,16 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
     {
         $object = new ChildClass();
         $this->setProperty($object, 'a', 'foo', get_parent_class($object));
-        $this->assert($object->a())->isNull;
+        $this->assert($object->a())->equals(2);
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyOnlyOnParentClassWillBeSet()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'c', 'foo');
+        $this->assert($object->c())->equals('foo');
     }
 }
