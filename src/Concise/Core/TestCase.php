@@ -285,6 +285,7 @@ class TestCase extends BaseAssertions
                 throw new Exception($message);
             }
         }
+
         $reflection = new ReflectionClass($className);
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
