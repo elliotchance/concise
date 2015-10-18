@@ -18,6 +18,26 @@ class MagicProperty
     }
 }
 
+class ParentClass
+{
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $a;
+
+    public function a()
+    {
+        return $this->a;
+    }
+}
+
+class ChildClass extends ParentClass
+{
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $b;
+
+    public function b()
+    {
+        return $this->b;
+    }
+}
+
 /**
  * @group mocking
  */
@@ -223,5 +243,15 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $object = new MagicProperty();
         $this->setProperty($object, 'foo', 'bar');
         $this->assert($this->getProperty($object, 'foo'))->equals('bar');
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyIsSetOnChildClassByDefault()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'b', 'foo');
+        $this->assert($object->b())->equals('foo');
     }
 }
