@@ -4,6 +4,7 @@ namespace Concise\Core;
 
 use Concise\Module\AbstractModule;
 use Exception;
+use PHPUnit_Framework_AssertionFailedError;
 
 class AssertionBuilder
 {
@@ -121,14 +122,17 @@ class AssertionBuilder
     /**
      * @param Exception $e
      * @throws DidNotMatchException
+     * @throws Exception
      */
-    protected function handleFailure(Exception $e)
+    public function handleFailure(Exception $e)
     {
         if ($this->verify) {
             $this->testCase->verifyFailures[] = $e->getMessage();
         } else {
             if ($this->failureMessage) {
-                throw new DidNotMatchException($this->failureMessage);
+                throw new PHPUnit_Framework_AssertionFailedError(
+                    $this->failureMessage
+                );
             }
             throw $e;
         }
