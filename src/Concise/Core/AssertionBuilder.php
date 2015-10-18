@@ -92,7 +92,7 @@ class AssertionBuilder
                 $instance->{$syntax->getMethod()}();
                 $this->testCase->assertTrue(true);
             } catch (DidNotMatchException $e) {
-                $this->handleFailure($e);
+                $this->handleFailure($e, $instance);
             }
         }
 
@@ -120,26 +120,27 @@ class AssertionBuilder
     }
 
     /**
-     * @param Exception $e
-     * @throws DidNotMatchException
-     * @throws Exception
+     * @param Exception      $e
+     * @param AbstractModule $module
      */
-    public function handleFailure(Exception $e)
+    public function handleFailure(Exception $e, AbstractModule $module = null)
     {
         if ($this->verify) {
             $this->testCase->verifyFailures[] = $e->getMessage();
         } else {
+            $message = '';
             if ($this->failureMessage) {
-                throw new PHPUnit_Framework_AssertionFailedError(
-                    $this->failureMessage
+                $message = $this->failureMessage;
+            } elseif ($e->getMessage()) {
+                $message = $e->getMessage();
+            } elseif ($module) {
+                $message = $module->renderFailureMessage(
+                    $module->syntax->getRawSyntax(),
+                    $module->data
                 );
             }
-            if ($e->getMessage()) {
-                throw new PHPUnit_Framework_AssertionFailedError(
-                    $e->getMessage()
-                );
-            }
-            throw $e;
+
+            throw new PHPUnit_Framework_AssertionFailedError($message);
         }
     }
 
