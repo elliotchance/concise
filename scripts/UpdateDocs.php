@@ -96,10 +96,39 @@ function updateBuilders()
         $out .= "/**$methods */\nclass " . getShortName($trait) . "\n{\n}\n\n";
     }
 
+    // Assume concise has been deployed through composer and we do not want to
+    // modify the repository itself; so we load it into a temp folder somewhere
+    // on the system. This will be loaded manually when they run concise.
+    $assertionsFile = Concise\Core\getBaseAssertionsPath();
+
+    if (strpos(__DIR__, 'vendor/') === false) {
+        // Lets also remove the temp file since it has higher precedence than
+        // the file we are about to load. Make sure this happens before
+        // $assertionsFile gets reassined below.
+        if (file_exists($assertionsFile)) {
+            unlink($assertionsFile);
+        }
+
+        // This means the script has been run when it wasn't deployed through
+        // composer. Which means someone is has downloaded the library manually
+        // or we are working on the composer package itself (dev). In either
+        // case we update the BaseAssertions.php in this repository.
+        $assertionsFile = __DIR__ . '/../src/Concise/Core/BaseAssertions.php';
+    }
+
     file_put_contents(
-        __DIR__ . '/../src/Concise/Core/BaseAssertions.php',
-        "<?php\n\nnamespace Concise\\Core;\n\nuse PHPUnit_Framework_TestCase;\n\n" . str_replace("\t", '    ', $out)
+        $assertionsFile,
+        "<?php\n\nnamespace Concise\\Core;\n\nuse PHPUnit_Framework_TestCase;\n\n" .
+        str_replace("\t", '    ', $out)
     );
+}
+
+/**
+ * @return string
+ */
+function getTempBaseAssertionsPath()
+{
+    return sys_get_temp_dir() . '/BaseAssertions.php';
 }
 
 /**
