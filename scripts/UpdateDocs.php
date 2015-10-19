@@ -1,6 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$autoloadFiles = [
+    __DIR__ . '/../vendor/autoload.php',
+    'vendor/autoload.php',
+];
+
+foreach ($autoloadFiles as $autoload) {
+    if (file_exists($autoload)) {
+        require_once($autoload);
+        break;
+    }
+}
+
+$xml = simplexml_load_file('phpunit.xml');
+$bootstrapFile = (string)$xml['bootstrap'];
+
+require_once($bootstrapFile);
 
 use Concise\Core\ModuleManager;
 use Concise\Core\Syntax;
