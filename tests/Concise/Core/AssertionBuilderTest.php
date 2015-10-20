@@ -19,7 +19,7 @@ class AssertionBuilderTest extends TestCase
                 new Exception('foo bar'),
                 $this->getBasicModule()
             );
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (DidNotMatchException $e) {
             $this->assert($e->getMessage())->equals('custom message');
         }
     }
@@ -35,7 +35,7 @@ class AssertionBuilderTest extends TestCase
                 new Exception('foo bar'),
                 $this->getBasicModule()
             );
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (DidNotMatchException $e) {
             $this->assert($e->getMessage())->equals('foo bar');
         }
     }
@@ -51,7 +51,7 @@ class AssertionBuilderTest extends TestCase
                 new DidNotMatchException(),
                 $this->getBasicModule()
             );
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (DidNotMatchException $e) {
             $this->assert($e->getMessage())->equals('my syntax');
         }
     }

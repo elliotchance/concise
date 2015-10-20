@@ -168,7 +168,9 @@ class TestCase extends BaseAssertions
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
             $message =
-                "$count verify failure" . ($count === 1 ? '' : 's') . ":";
+                "$count verify failure" .
+                ($count === 1 ? '' : 's') .
+                ":";
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
