@@ -61,7 +61,6 @@ Some things to note:
    appropriate test cases is fine too.
 
 
-
 Testing Modules
 ---------------
 
@@ -90,3 +89,28 @@ Use the ``Concise\Module\AbstractModuleTestCase`` when testing modules:
            $this->assert(123.0)->isAnInteger;
        }
    }
+
+
+IDE and Code Completion
+-----------------------
+
+Once modules are loaded in (as described in *Loading a Module*) all
+functionailty will work as expected. However, to get code completion in your
+favourite IDE you will need to refresh the BaseAssertions that the IDE has used
+to pick up the known modules.
+
+Bundled with concise is a command called ``concise-init`` that will do just
+that. It is safe to run this as frequently as you need.
+
+By default the original ``BaseAssertions.php`` is modified. However, there are
+some cases where you want this file to be located somewhere else. To allow this
+you can set the environment variable ``CONCISE_BASEASSERTIONS`` to another file.
+
+.. code-block:: bash
+
+   export CONCISE_BASEASSERTIONS=/tmp/BaseAssertions.php
+
+**Note:** You will need to put this file somewhere your IDE will index but
+should not be committed to your application repository. A temporary build
+directory containing other generated content that is ignored by your version
+control is common.
