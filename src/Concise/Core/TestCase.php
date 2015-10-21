@@ -22,6 +22,36 @@ use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
 use ReflectionException;
 
+/**
+ * This can not be inside the TestCase because we need to use it before the
+ * BaseAssertion class is loaded.
+ * @return string
+ */
+function getBaseAssertionsPath()
+{
+    // For different reasons people can opt to have the BaseAssertions somewhere
+    // else. This is done through the CONCISE_BASEASSERTIONS environment
+    // variable. The variable must contain the full path to the file.
+    //
+    // Some more error checking around this actually resolving to a file and
+    // handling the if the file does not exist is needed.
+    if ($tmpDirectory = getenv('CONCISE_BASEASSERTIONS')) {
+        return $tmpDirectory;
+    }
+
+    // Fall back to the default location.
+    return sys_get_temp_dir() . '/BaseAssertions.php';
+}
+
+// Before we let composer's autoloader load the default BaseAssertions that
+// comes precompiled with the concise package we want to see if the temp version
+// (which may contain extra assertions) has been generated and prefer that
+// version.
+$baseAssertionsPath = getBaseAssertionsPath();
+if (file_exists($baseAssertionsPath)) {
+    /** @noinspection PhpIncludeInspection */
+    require_once($baseAssertionsPath);
+}
 
 class TestCase extends BaseAssertions
 {
@@ -168,7 +198,9 @@ class TestCase extends BaseAssertions
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
             $message =
-                "$count verify failure" . ($count === 1 ? '' : 's') . ":";
+                "$count verify failure" .
+                ($count === 1 ? '' : 's') .
+                ":";
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }

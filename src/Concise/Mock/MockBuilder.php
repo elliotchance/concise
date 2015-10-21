@@ -489,10 +489,10 @@ class MockBuilder
 
     /**
      * @throws Exception trying to expose a method on a mock that is not nice.
-     * @internal param $string ... A list of methods to expose.
+     * @param string $string,... A list of methods to expose.
      * @return $this
      */
-    public function expose()
+    public function expose($string)
     {
         if (!$this->niceMock) {
             throw new Exception(
