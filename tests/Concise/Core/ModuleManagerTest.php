@@ -43,49 +43,6 @@ class ModuleManagerTest extends TestCase
         $this->parser->getMatcherForSyntax('something');
     }
 
-    public function testGetAllKeywordsReturnsAnArray()
-    {
-        $keywords = ModuleManager::getInstance()->getKeywords();
-        $this->assert($keywords)->isAnArray;
-    }
-
-    public function testGetAllKeywordsContainsKeywordsFromMatchers()
-    {
-        $keywords = ModuleManager::getInstance()->getKeywords();
-        $this->assertArray($keywords)->hasValue('not');
-    }
-
-    public function testGetAllKeywordsContainsOnlyUniqueWords()
-    {
-        $keywords = ModuleManager::getInstance()->getKeywords();
-        $this->assertArray($keywords)->isUnique;
-    }
-
-    public function testGetAllKeywordsDoesNotContainPlaceholders()
-    {
-        $keywords = ModuleManager::getInstance()->getKeywords();
-        $this->assertArray($keywords)->doesNotHaveValue('?');
-    }
-
-    public function testGetAllKeywordsAreSorted()
-    {
-        $keywords1 = ModuleManager::getInstance()->getKeywords();
-        $keywords2 = ModuleManager::getInstance()->getKeywords();
-        sort($keywords2);
-        /*$this->assert($keywords1, equals, $keywords2);*/
-        $this->assert($keywords1)->equals($keywords2);
-    }
-
-    public function testGetKeywordsAreOnlyGeneratedOnce()
-    {
-        $parser = $this->niceMock('\Concise\Core\ModuleManager')->expect(
-            'getRawKeywords'
-        )->once()->andReturn(array('a'))->get();
-
-        $parser->getKeywords();
-        $parser->getKeywords();
-    }
-
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage Argument 2 (123) must be regex.
@@ -105,18 +62,6 @@ class ModuleManagerTest extends TestCase
         return $this->mock('\Concise\Module\AbstractModule')->stub(
             array('supportedSyntaxes' => $supportedSyntaxes)
         )->get();
-    }
-
-    public function testOnIsAKeyword()
-    {
-        $parser = ModuleManager::getInstance();
-        $this->assertArray($parser->getKeywords())->hasValue('on');
-    }
-
-    public function testErrorIsAKeyword()
-    {
-        $parser = ModuleManager::getInstance();
-        $this->assertArray($parser->getKeywords())->hasValue('error');
     }
 
     public function testOnErrorIsReturnedWhenLocatingTheMatcher()

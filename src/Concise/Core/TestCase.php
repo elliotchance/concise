@@ -70,11 +70,6 @@ class TestCase extends BaseAssertions
     /**
      * @var array
      */
-    protected $properties = array();
-
-    /**
-     * @var array
-     */
     public $verifyFailures = array();
 
     /**
@@ -110,54 +105,6 @@ class TestCase extends BaseAssertions
     protected function getModuleManagerInstance()
     {
         return ModuleManager::getInstance();
-    }
-
-    /**
-     * @param  string $name
-     * @throws Exception
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        if (!array_key_exists($name, $this->properties)) {
-            throw new Exception("No such attribute '{$name}'.");
-        }
-
-        return $this->properties[$name];
-    }
-
-    public function __isset($name)
-    {
-        return array_key_exists($name, $this->properties);
-    }
-
-    public function __unset($name)
-    {
-        unset($this->properties[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     * @throws Exception
-     */
-    public function __set($name, $value)
-    {
-        $parser = $this->getModuleManagerInstance();
-        if (in_array($name, $parser->getKeywords())) {
-            throw new Exception(
-                "You cannot assign an attribute with the keyword '$name'."
-            );
-        }
-        $this->properties[$name] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->properties + get_object_vars($this);
     }
 
     /**
