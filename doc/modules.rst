@@ -102,6 +102,11 @@ to pick up the known modules.
 Bundled with concise is a command called ``concise-init`` that will do just
 that. It is safe to run this as frequently as you need.
 
+**Note:** Modules must be loaded in your `bootstrap file`_ defined in the XML
+configuration.
+
+.. _bootstrap file: https://phpunit.de/manual/current/en/appendixes.configuration.html
+
 By default the original ``BaseAssertions.php`` is modified. However, there are
 some cases where you want this file to be located somewhere else. To allow this
 you can set the environment variable ``CONCISE_BASEASSERTIONS`` to another file.

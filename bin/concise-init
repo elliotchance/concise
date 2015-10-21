@@ -5,8 +5,17 @@ require_once('vendor/autoload.php');
 
 // Load the bootstrap from the XML configuration. This will contain any extra
 // custom modules that also need to be compiled.
+if (!file_exists('phpunit.xml')) {
+    echo "You need to have setup phpunit.xml with a bootstrap file.\n\n";
+    exit(1);
+}
+
 $xml = simplexml_load_file('phpunit.xml');
 $bootstrapFile = (string)$xml['bootstrap'];
+if (!$bootstrapFile) {
+    echo "Your phpunit.xml configuration must have a bootstrap file.\n\n";
+    exit(1);
+}
 
 require_once($bootstrapFile);
 
