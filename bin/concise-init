@@ -1,6 +1,7 @@
+#!/usr/bin/env php
 <?php
 
-require_once(__DIR__ . '/Autoload.php');
+require_once('vendor/autoload.php');
 
 // Load the bootstrap from the XML configuration. This will contain any extra
 // custom modules that also need to be compiled.
@@ -27,7 +28,9 @@ function getShortName($trait)
         if ($c < 26) {
             $shortNames[$trait] = chr(ord('A') + $c);
         } else {
-            $shortNames[$trait] = chr(ord('A') + ($c / 26)) . chr(ord('a') + ($c % 26));
+            $shortNames[$trait] =
+                chr(ord('A') + ($c / 26)) .
+                chr(ord('a') + ($c % 26));
         }
 
         if ($shortNames[$trait] == 'Do' || $shortNames[$trait] == 'If') {
@@ -59,15 +62,22 @@ function updateBuilders()
     $php = array();
     $header = "/**";
     foreach ($syntaxTree as $k => $v) {
-        foreach (array('assert' => false, 'verify' => true) as $method => $verify) {
-            $header .= "\n * @method AssertionBuilder";
+        foreach (array(
+                     'assert' => false,
+                     'verify' => true
+                 ) as $method => $verify) {
+            $header .= "\n * @method ";
+
+            $types = '';
             if (null !== $v) {
                 foreach ($v as $words => $s) {
-                    $header .=
+                    $types .=
                         '|' .
                         getShortName(str_replace(' ', '', ucwords($words)));
                 }
             }
+            $header .= ltrim($types, '|');
+
             $header .= " $method" . ucfirst($k) .
                 "(\$valueOrFailureMessage, \$value = null)";
 
@@ -77,7 +87,8 @@ function updateBuilders()
         }
     }
 
-    $out = $header .
+    $out =
+        $header .
         "\n */\nabstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
         "\n}\n\n";
     ksort($php);

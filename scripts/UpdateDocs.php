@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/Autoload.php');
+require_once('vendor/autoload.php');
 
 use Concise\Core\ModuleManager;
 use Concise\Core\Syntax;
