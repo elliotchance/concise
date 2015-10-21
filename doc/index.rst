@@ -25,7 +25,7 @@ Highlights include:
 
 .. _verify: writing-tests.html#verify-vs-assert
 .. _mocking framework: mocking.html
-.. _assertions: matchers.html
+.. _assertions: assertions.html
 
 .. toctree::
    :maxdepth: 2

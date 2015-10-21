@@ -438,7 +438,7 @@ EOF;
                 "Invalid class name '$className'."
             );
         }
-        if (class_exists($className)) {
+        if (class_exists($className, false)) {
             throw new InvalidArgumentException(
                 "You cannot use '$className' because a class with that name already exists."
             );

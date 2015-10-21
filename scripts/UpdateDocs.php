@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once('vendor/autoload.php');
 
 use Concise\Core\ModuleManager;
 use Concise\Core\Syntax;
@@ -13,117 +13,6 @@ $testCase = new TestCase();
 $testCase->setUpBeforeClass();
 
 updateReadme();
-updateBuilders();
-
-function getShortName($trait)
-{
-    static $shortNames = [];
-    static $c = 0;
-    if (!array_key_exists($trait, $shortNames)) {
-        if ($c < 26) {
-            $shortNames[$trait] = chr(ord('A') + $c);
-        } else {
-            $shortNames[$trait] = chr(ord('A') + ($c / 26)) . chr(ord('a') + ($c % 26));
-        }
-
-        if ($shortNames[$trait] == 'Do' || $shortNames[$trait] == 'If') {
-            unset($shortNames[$trait]);
-            ++$c;
-            return getShortName($trait);
-        }
-    }
-
-    ++$c;
-    return $shortNames[$trait];
-}
-
-function updateBuilders()
-{
-    $syntaxTree = array();
-    foreach (ModuleManager::getInstance()->getModules() as $module) {
-        foreach ($module->getSyntaxes() as $syntax) {
-            $parts = explode('?', $syntax->getRawSyntax());
-            $temp = &$syntaxTree;
-            foreach ($parts as $part) {
-                $part = trim($part);
-                $temp = &$temp[$part];
-            }
-            $temp = null;
-        }
-    }
-
-    $php = array();
-    $header = "/**";
-    foreach ($syntaxTree as $k => $v) {
-        foreach (array('assert' => false, 'verify' => true) as $method => $verify) {
-            $header .= "\n * @method AssertionBuilder";
-            if (null !== $v) {
-                foreach ($v as $words => $s) {
-                    $header .=
-                        '|' .
-                        getShortName(str_replace(' ', '', ucwords($words)));
-                }
-            }
-            $header .= " $method" . ucfirst($k) .
-                "(\$valueOrFailureMessage, \$value = null)";
-
-            if (null !== $v) {
-                $php = a($v, $php);
-            }
-        }
-    }
-
-    $out = $header .
-        "\n */\nabstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
-        "\n}\n\n";
-    ksort($php);
-    foreach ($php as $trait => $methods) {
-        $out .= "/**$methods */\nclass " . getShortName($trait) . "\n{\n}\n\n";
-    }
-
-    file_put_contents(
-        __DIR__ . '/../src/Concise/Core/BaseAssertions.php',
-        "<?php\n\nnamespace Concise\\Core;\n\nuse PHPUnit_Framework_TestCase;\n\n" . str_replace("\t", '    ', $out)
-    );
-}
-
-/**
- * @param $v
- * @param $php
- * @return array
- */
-function a($v, $php)
-{
-    foreach ($v as $words => $s) {
-        $trait2 = str_replace(' ', '', ucwords($words));
-        $php[$trait2] = "\n * $trait2";
-        if (is_array($s)) {
-            $php[$trait2] .= "\n * @method null";
-            foreach ($s as $words2 => $s2) {
-                if ($words2) {
-                    $php[$trait2] .=
-                        '|' .
-                        getShortName(str_replace(' ', '', ucwords($words2)));
-                }
-            }
-
-            unset($s['']);
-            if (count($s) > 0) {
-                $php = a($s, $php);
-            }
-        } else {
-            $php[$trait2] = "\n * @property null";
-        }
-        $php[$trait2] .= " ";
-        $php[$trait2] .= lcfirst($trait2);
-
-        if (is_array($s)) {
-            $php[$trait2] .= "(\$value)";
-        }
-        $php[$trait2] .= "\n";
-    }
-    return $php;
-}
 
 function renderSyntax($syntax)
 {
