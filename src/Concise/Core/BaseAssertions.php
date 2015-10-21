@@ -5,22 +5,22 @@ namespace Concise\Core;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @method AssertionBuilder|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P assertArray($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P verifyArray($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Bg|Bh|Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct assert($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Bg|Bh|Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct verify($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Eq|Er assertDate($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Eq|Er verifyDate($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Eu|Ev|Ew|Ex|Ey|Ez assertClosure($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Eu|Ev|Ew|Ex|Ey|Ez verifyClosure($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Bg|Bj assertFile($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Bg|Bj verifyFile($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Fk|Fl assertObject($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Fk|Fl verifyObject($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz assertString($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz verifyString($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu assertUrl($valueOrFailureMessage, $value = null)
- * @method AssertionBuilder|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu verifyUrl($valueOrFailureMessage, $value = null)
+ * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P assertArray($valueOrFailureMessage, $value = null)
+ * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P verifyArray($valueOrFailureMessage, $value = null)
+ * @method Bg|Bh|Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct assert($valueOrFailureMessage, $value = null)
+ * @method Bg|Bh|Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct verify($valueOrFailureMessage, $value = null)
+ * @method Eq|Er assertDate($valueOrFailureMessage, $value = null)
+ * @method Eq|Er verifyDate($valueOrFailureMessage, $value = null)
+ * @method Eu|Ev|Ew|Ex|Ey|Ez assertClosure($valueOrFailureMessage, $value = null)
+ * @method Eu|Ev|Ew|Ex|Ey|Ez verifyClosure($valueOrFailureMessage, $value = null)
+ * @method Bg|Bj assertFile($valueOrFailureMessage, $value = null)
+ * @method Bg|Bj verifyFile($valueOrFailureMessage, $value = null)
+ * @method Fk|Fl assertObject($valueOrFailureMessage, $value = null)
+ * @method Fk|Fl verifyObject($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz assertString($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz verifyString($valueOrFailureMessage, $value = null)
+ * @method Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu assertUrl($valueOrFailureMessage, $value = null)
+ * @method Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu verifyUrl($valueOrFailureMessage, $value = null)
  */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {

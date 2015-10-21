@@ -95,12 +95,7 @@ abstract class AbstractModule
 
     protected function fail()
     {
-        throw new DidNotMatchException(
-            $this->renderFailureMessage(
-                $this->syntax->getRawSyntax(),
-                $this->data
-            )
-        );
+        throw new DidNotMatchException();
     }
 
     protected function failIf($test)
