@@ -20,11 +20,9 @@ class MagicProperty
 
 class ParentClass
 {
-    private /** @noinspection PhpUnusedPrivateFieldInspection */
-        $a = 1;
+    private $a = 1;
 
-    private /** @noinspection PhpUnusedPrivateFieldInspection */
-        $c = 4;
+    private $c = 4;
 
     public function a()
     {
@@ -39,11 +37,9 @@ class ParentClass
 
 class ChildClass extends ParentClass
 {
-    private /** @noinspection PhpUnusedPrivateFieldInspection */
-        $a = 2;
+    private $a = 2;
 
-    private /** @noinspection PhpUnusedPrivateFieldInspection */
-        $b = 3;
+    private $b = 3;
 
     public function a()
     {
