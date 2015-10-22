@@ -22,12 +22,12 @@ describe(
 
                 // Make sure the Pho failed expectations get handled as PHPUnit
                 // failures.
-//                it(
-//                    'will export expectation as PHPUnit failures',
-//                    function () {
-//                        expect(true)->toBe(false);
-//                    }
-//                );
+                it(
+                    'will export expectation as PHPUnit failures',
+                    function () {
+                        expect(true)->toBe(false);
+                    }
+                );
             }
         );
 
@@ -38,15 +38,20 @@ describe(
             }
         );
 
-//        it(
-//            'will add concise assertion failures',
-//            function () {
-//                $this->assert(true)->isFalse;
-//            }
-//        );
+        it(
+            'will add concise assertion failures',
+            function () {
+                $this->assert(true)->isFalse;
+            }
+        );
 
         it('will allow incomplete specs');
 
-        // test $this must be pho\Suite\Suite
+        it(
+            'should masquerade $this as as a Pho suite',
+            function () {
+                $this->assert($this)->isAnInstanceOf('pho\Suite\Suite');
+            }
+        );
     }
 );

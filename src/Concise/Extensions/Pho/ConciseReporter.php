@@ -7,24 +7,11 @@ use Concise\Core\TestCase;
 use pho\Reporter\AbstractReporter;
 use pho\Reporter\ReporterInterface;
 use pho\Runnable\Spec;
-use pho\Suite\Suite;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_IncompleteTestError;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestResult;
 use PHPUnit_Framework_TestSuite;
-
-class ProxySuite extends Suite
-{
-    public function __construct()
-    {
-    }
-
-    public function __call($key, $args = [])
-    {
-        return ConciseReporter::$testCase->__call($key, $args);
-    }
-}
 
 /**
  * We use a cusom reporter for Pho as the trigger to setup and tear down the
@@ -84,12 +71,13 @@ class ConciseReporter extends AbstractReporter implements ReporterInterface
             return;
         }
         $suite = self::$testCase->getProperty($spec, 'suite');
-        $newSuite = new ProxySuite();
+        $newSuite = new ProxySuite($spec->getTitle(), $closure, $suite);
         $reflection = new \ReflectionClass($suite);
         foreach ($reflection->getProperties() as $property) {
             $v = self::$testCase->getProperty($suite, $property->getName());
             self::$testCase->setProperty($newSuite, $property->getName(), $v);
         }
+        /** @noinspection PhpUndefinedMethodInspection */
         $closure = $closure->bindTo($newSuite);
         self::$testCase->setProperty($spec, 'closure', $closure);
     }
@@ -128,11 +116,8 @@ class ConciseReporter extends AbstractReporter implements ReporterInterface
      * Invoked after the test suite has ran, allowing for the display of
      * test results and related statistics.
      */
-    public
-    function afterRun()
+    public function afterRun()
     {
         TestCase::tearDownAfterClass();
-        //self::$result->endTestSuite(self::$testSuite);
-        //parent::afterRun();
     }
 }
