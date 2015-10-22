@@ -11,6 +11,7 @@ use Concise\Module\BooleanModule;
 use Concise\Module\DateAndTimeModule;
 use Concise\Module\ExceptionModule;
 use Concise\Module\FileModule;
+use Concise\Module\HashModule;
 use Concise\Module\NumberModule;
 use Concise\Module\ObjectModule;
 use Concise\Module\RegularExpressionModule;
@@ -256,6 +257,7 @@ class TestCase extends BaseAssertions
             new DateAndTimeModule(),
             new ExceptionModule(),
             new FileModule(),
+            new HashModule(),
             new NumberModule(),
             new ObjectModule(),
             new RegularExpressionModule(),
