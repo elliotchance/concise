@@ -109,3 +109,40 @@ Likewise you can use the ``setProperty`` method provided by
        $this->setProperty($myClass, 'value', 'bar');
        $this->assert($this->getProperty($myClass, 'value'))->equals('bar');
    }
+
+``private`` properties are attached to a specific class. Therefore a parent and
+child class can contain ``private`` instance variables by the same name that are
+completely independent.
+
+.. code-block:: php
+
+   class A
+   {
+       private $value = 'foo';
+   }
+
+   class B extends A
+   {
+       private $value = 'bar';
+   }
+
+.. code-block:: php
+
+   public function testPrivates()
+   {
+       $object = new B();
+       $parent = get_parent_class($object);
+
+       $this->getProperty($object, 'value');                 // 'bar'
+       $this->getProperty($object, 'value', $parent);        // 'foo'
+
+       $this->setProperty($object, 'value', 'baz');          // B::$value is set.
+       $this->setProperty($object, 'value', 'baz', $parent); // A::$value is set.
+   }
+
+Concise will automatically determine which class in the hierarchy contains the
+property to be set if no explicit class name is provided. If multiple classes
+contain the same property the most child class is used.
+
+When an explicit class is provided that class is always used whether the
+property exists on that class or not.

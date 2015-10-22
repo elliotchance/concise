@@ -18,6 +18,40 @@ class MagicProperty
     }
 }
 
+class ParentClass
+{
+    private $a = 1;
+
+    private $c = 4;
+
+    public function a()
+    {
+        return $this->a;
+    }
+
+    public function c()
+    {
+        return $this->c;
+    }
+}
+
+class ChildClass extends ParentClass
+{
+    private $a = 2;
+
+    private $b = 3;
+
+    public function a()
+    {
+        return $this->a;
+    }
+
+    public function b()
+    {
+        return $this->b;
+    }
+}
+
 /**
  * @group mocking
  */
@@ -223,5 +257,57 @@ class BuilderPropertyTest extends AbstractBuilderTestCase
         $object = new MagicProperty();
         $this->setProperty($object, 'foo', 'bar');
         $this->assert($this->getProperty($object, 'foo'))->equals('bar');
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyIsSetOnChildClassByDefault()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'a', 'foo');
+        $this->assert($object->a())->equals('foo');
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyCanBeSetOnAnExplicitClass()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'a', 'foo', get_parent_class($object));
+        $this->assert($object->a())->equals(2);
+    }
+
+    /**
+     * @group #309
+     */
+    public function testPrivatePropertyOnlyOnParentClassWillBeSet()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'c', 'foo');
+        $this->assert($object->c())->equals('foo');
+    }
+
+    /**
+     * @group #309
+     */
+    public function testGetAmbiguousPrivatePropertyReturnsChildClass()
+    {
+        $object = new ChildClass();
+        $this->assert($this->getProperty($object, 'a'))->equals(2);
+    }
+
+    /**
+     * @group #309
+     */
+    public function testSetAmbiguousPrivatePropertyUsesChildClass()
+    {
+        $object = new ChildClass();
+        $this->setProperty($object, 'a', 'foo');
+        $this->assert($this->getProperty($object, 'a'))->equals('foo');
+        $this->assert(
+            $this->getProperty($object, 'a', get_parent_class($object))
+        )->equals(1);
     }
 }
