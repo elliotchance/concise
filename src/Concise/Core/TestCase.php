@@ -205,6 +205,8 @@ class TestCase extends BaseAssertions
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+
+        SyntaxRenderer::$color = true;
         parent::tearDown();
     }
 

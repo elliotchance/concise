@@ -15,12 +15,14 @@ use PHPUnit_Framework_TestCase;
  * @method Eu|Ev|Ew|Ex|Ey|Ez verifyClosure($valueOrFailureMessage, $value = null)
  * @method Bg|Bj assertFile($valueOrFailureMessage, $value = null)
  * @method Bg|Bj verifyFile($valueOrFailureMessage, $value = null)
- * @method Fk|Fl assertObject($valueOrFailureMessage, $value = null)
- * @method Fk|Fl verifyObject($valueOrFailureMessage, $value = null)
- * @method Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz assertString($valueOrFailureMessage, $value = null)
- * @method Fo|Fp|Fq|Fr|Fs|Ft|K|L|Fw|Fx|Fy|Fz verifyString($valueOrFailureMessage, $value = null)
- * @method Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu assertUrl($valueOrFailureMessage, $value = null)
- * @method Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu verifyUrl($valueOrFailureMessage, $value = null)
+ * @method Fk assertHash($valueOrFailureMessage, $value = null)
+ * @method Fk verifyHash($valueOrFailureMessage, $value = null)
+ * @method Fm|Fn assertObject($valueOrFailureMessage, $value = null)
+ * @method Fm|Fn verifyObject($valueOrFailureMessage, $value = null)
+ * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb assertString($valueOrFailureMessage, $value = null)
+ * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb verifyString($valueOrFailureMessage, $value = null)
+ * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw assertUrl($valueOrFailureMessage, $value = null)
+ * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw verifyUrl($valueOrFailureMessage, $value = null)
  */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
@@ -38,7 +40,7 @@ class Cu
  * Contains
  * @method null contains($value)
  */
-class Fq
+class Fs
 {
 }
 
@@ -46,7 +48,7 @@ class Fq
  * ContainsCaseInsensitive
  * @method null containsCaseInsensitive($value)
  */
-class Fr
+class Ft
 {
 }
 
@@ -54,7 +56,7 @@ class Fr
  * DoesNotContain
  * @method null doesNotContain($value)
  */
-class Fs
+class Fu
 {
 }
 
@@ -62,7 +64,7 @@ class Fs
  * DoesNotContainCaseInsensitive
  * @method null doesNotContainCaseInsensitive($value)
  */
-class Ft
+class Fv
 {
 }
 
@@ -70,7 +72,7 @@ class Ft
  * DoesNotEndWith
  * @method null doesNotEndWith($value)
  */
-class Fw
+class Fy
 {
 }
 
@@ -118,7 +120,7 @@ class C
  * DoesNotHaveProperty
  * @method null doesNotHaveProperty($value)
  */
-class Fk
+class Fm
 {
 }
 
@@ -134,7 +136,7 @@ class D
  * DoesNotMatch
  * @method null doesNotMatch($value)
  */
-class Fp
+class Fr
 {
 }
 
@@ -142,7 +144,7 @@ class Fp
  * DoesNotStartWith
  * @method null doesNotStartWith($value)
  */
-class Fx
+class Fz
 {
 }
 
@@ -165,7 +167,7 @@ class Ev
  * EndsWith
  * @method null endsWith($value)
  */
-class Fy
+class Ga
 {
 }
 
@@ -189,7 +191,7 @@ class Bh
  * HasFragment
  * @method null hasFragment($value)
  */
-class Gu
+class Gw
 {
 }
 
@@ -197,7 +199,7 @@ class Gu
  * HasHost
  * @method null hasHost($value)
  */
-class Go
+class Gq
 {
 }
 
@@ -237,7 +239,7 @@ class H
  * HasPassword
  * @method null hasPassword($value)
  */
-class Gr
+class Gt
 {
 }
 
@@ -245,7 +247,7 @@ class Gr
  * HasPath
  * @method null hasPath($value)
  */
-class Gs
+class Gu
 {
 }
 
@@ -253,7 +255,7 @@ class Gs
  * HasPort
  * @method null hasPort($value)
  */
-class Gp
+class Gr
 {
 }
 
@@ -261,7 +263,7 @@ class Gp
  * HasProperty
  * @method null hasProperty($value)
  */
-class Fl
+class Fn
 {
 }
 
@@ -269,7 +271,7 @@ class Fl
  * HasQuery
  * @method null hasQuery($value)
  */
-class Gt
+class Gv
 {
 }
 
@@ -277,7 +279,7 @@ class Gt
  * HasScheme
  * @method null hasScheme($value)
  */
-class Gn
+class Gp
 {
 }
 
@@ -285,7 +287,7 @@ class Gn
  * HasUser
  * @method null hasUser($value)
  */
-class Gq
+class Gs
 {
 }
 
@@ -367,6 +369,13 @@ class Cd
  * @property null isAnInteger
  */
 class Ce
+{
+}
+
+/**
+ * @property null isAnMd5
+ */
+class Fk
 {
 }
 
@@ -622,7 +631,7 @@ class N
 /**
  * @property null isValid
  */
-class Gm
+class Go
 {
 }
 
@@ -638,7 +647,7 @@ class Bs
  * Matches
  * @method null matches($value)
  */
-class Fo
+class Fq
 {
 }
 
@@ -654,7 +663,7 @@ class Cv
  * StartsWith
  * @method null startsWith($value)
  */
-class Fz
+class Gb
 {
 }
 
