@@ -24,4 +24,11 @@ class HashModuleTest extends AbstractModuleTestCase
         $this->expectFailure('hash "123" is an md5');
         $this->assertHash('123')->isAnMd5;
     }
+
+    public function testMd5IsGreatherThan32Characters()
+    {
+        $hash = str_repeat('a', 34);
+        $this->expectFailure("hash \"$hash\" is an md5");
+        $this->assertHash($hash)->isAnMd5;
+    }
 }
