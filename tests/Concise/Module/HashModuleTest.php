@@ -31,4 +31,11 @@ class HashModuleTest extends AbstractModuleTestCase
         $this->expectFailure("hash \"$hash\" is an md5");
         $this->assertHash($hash)->isAnMd5;
     }
+
+    public function testMd5ContainsNonHexCharacters()
+    {
+        $hash = str_repeat('a', 31) . 'z';
+        $this->expectFailure("hash \"$hash\" is an md5");
+        $this->assertHash($hash)->isAnMd5;
+    }
 }

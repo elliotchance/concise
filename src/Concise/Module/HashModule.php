@@ -14,6 +14,6 @@ class HashModule extends AbstractModule
      */
     public function isAnMd5()
     {
-        $this->failIf(strlen($this->data[0]) != 32);
+        $this->failIf(!preg_match('/^[a-f0-9]{32}$/', $this->data[0]));
     }
 }
