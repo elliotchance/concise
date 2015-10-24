@@ -13,16 +13,18 @@ class HashModule extends AbstractModule
      * @syntax hash ? is an md5
      * @syntax hash ? is an md4
      * @syntax hash ? is an md2
+     * @syntax hash ? is an ripemd128
      */
-    public function isAnMd245()
+    public function hash128()
     {
         $this->validateHexWithLength(32);
     }
 
     /**
      * @syntax hash ? is an sha1
+     * @syntax hash ? is an ripemd160
      */
-    public function isAnSha1()
+    public function hash160()
     {
         $this->validateHexWithLength(40);
     }
@@ -30,23 +32,32 @@ class HashModule extends AbstractModule
     /**
      * @syntax hash ? is an sha224
      */
-    public function isAnSha224()
+    public function hash224()
     {
         $this->validateHexWithLength(56);
     }
 
     /**
      * @syntax hash ? is an sha256
+     * @syntax hash ? is an ripemd256
      */
-    public function isAnSha256()
+    public function hash256()
     {
         $this->validateHexWithLength(64);
     }
 
     /**
+     * @syntax hash ? is an ripemd320
+     */
+    public function hash320()
+    {
+        $this->validateHexWithLength(80);
+    }
+
+    /**
      * @syntax hash ? is an sha384
      */
-    public function isAnSha384()
+    public function hash384()
     {
         $this->validateHexWithLength(96);
     }
@@ -54,7 +65,7 @@ class HashModule extends AbstractModule
     /**
      * @syntax hash ? is an sha512
      */
-    public function isAnSha512()
+    public function hash512()
     {
         $this->validateHexWithLength(128);
     }

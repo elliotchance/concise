@@ -59,10 +59,10 @@ class HashModuleTest extends AbstractModuleTestCase
             'sha384' => '923831157',
             'sha512' => '2009834756',
 
-//            'ripemd128('1700793405') = 60408d85e263fa0bd1dc67c0be0d892f
-//            'ripemd160('115914122') = e19ba963caf94f6f5a6eda3208ca67bc49c0e4e9
-//            'ripemd256('2043415493') = 1c56ae31261055feb1782f8a8b84cc5df570e64f745336ac8aa9ab4166182e74
-//            'ripemd320('192604904') = dae829096b3a7110b59f6e0e8809771c4d6a42a4da6408300bf9526239c066f9626f12182f7ea845
+            'ripemd128' => '1700793405',
+            'ripemd160' => '115914122',
+            'ripemd256' => '2043415493',
+            'ripemd320' => '192604904',
 //
 //            'whirlpool('27326413') = 61d76dd21388114f5be421d51e42c45868cb333df69299724db25c6794b2b0601a2a0cf09bb02ff910cd971939c4d9485a2912d4056356cec9c2e8be02540dde
 //
