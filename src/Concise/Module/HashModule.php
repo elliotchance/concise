@@ -15,6 +15,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid md2
      * @syntax hash ? is a valid ripemd128
      * @syntax hash ? is a valid tiger128
+     * @syntax hash ? is a valid haval128
      */
     public function hash128()
     {
@@ -25,6 +26,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid sha1
      * @syntax hash ? is a valid ripemd160
      * @syntax hash ? is a valid tiger160
+     * @syntax hash ? is a valid haval160
      */
     public function hash160()
     {
@@ -33,6 +35,7 @@ class HashModule extends AbstractModule
 
     /**
      * @syntax hash ? is a valid tiger192
+     * @syntax hash ? is a valid haval192
      */
     public function hash192()
     {
@@ -41,6 +44,7 @@ class HashModule extends AbstractModule
 
     /**
      * @syntax hash ? is a valid sha224
+     * @syntax hash ? is a valid haval224
      */
     public function hash224()
     {
@@ -50,6 +54,7 @@ class HashModule extends AbstractModule
     /**
      * @syntax hash ? is a valid sha256
      * @syntax hash ? is a valid ripemd256
+     * @syntax hash ? is a valid haval256
      */
     public function hash256()
     {
