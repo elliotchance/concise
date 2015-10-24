@@ -64,6 +64,7 @@ class HashModule extends AbstractModule
 
     /**
      * @syntax hash ? is an sha512
+     * @syntax hash ? is an whirlpool
      */
     public function hash512()
     {

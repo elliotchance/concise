@@ -63,9 +63,9 @@ class HashModuleTest extends AbstractModuleTestCase
             'ripemd160' => '115914122',
             'ripemd256' => '2043415493',
             'ripemd320' => '192604904',
-//
-//            'whirlpool('27326413') = 61d76dd21388114f5be421d51e42c45868cb333df69299724db25c6794b2b0601a2a0cf09bb02ff910cd971939c4d9485a2912d4056356cec9c2e8be02540dde
-//
+
+            'whirlpool' => '27326413',
+
 //            'tiger128,3('2090191574') = 4a363fb22d3a6109299ed9c4438574cb
 //            'tiger160,3('1473588334') = 7ca5155d76e2422fe8fa23a357d23cb20ba92a9e
 //            'tiger192,3('1052121460') = 2531dba75f68338df42ba879d793c90eadd300b02d13a1c5
