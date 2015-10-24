@@ -66,12 +66,13 @@ class HashModuleTest extends AbstractModuleTestCase
 
             'whirlpool' => '27326413',
 
-//            'tiger128,3('2090191574') = 4a363fb22d3a6109299ed9c4438574cb
-//            'tiger160,3('1473588334') = 7ca5155d76e2422fe8fa23a357d23cb20ba92a9e
-//            'tiger192,3('1052121460') = 2531dba75f68338df42ba879d793c90eadd300b02d13a1c5
-//            'tiger128,4('1325565485') = 6225d4e55b99721f013a3f8ee7c0bc56
-//            'tiger160,4('195633033') = dbeb58210c7ee8ff07520df639c6231a9fc4ddce
-//            'tiger192,4('1129380416') = 65d83cf7a6124cc17d7ec8c6158f690669e21ed7b5bb2dfe
+            'tiger128,3' => '2090191574',
+            'tiger160,3' => '1473588334',
+            'tiger192,3' => '1052121460',
+            'tiger128,4' => '1325565485',
+            'tiger160,4' => '195633033',
+            'tiger192,4' => '1129380416',
+
 //            'snefru('2053211574') = de7877c2898ab807a6d1ffac3a104ffeda655b7d96c9e62a29fcf5872472d537
 //            'snefru256('2050122072') = 935a0b4c687610a714425ee2f296a64c22bbe12dd5eaf0fb8030302c7ea4dd68
 //            'gost('791752798') = e605b24b7c9696d1e64db10bcdd14c02b2b9489a4728de7af886692be0ce325b
@@ -98,28 +99,29 @@ class HashModuleTest extends AbstractModuleTestCase
 //            'haval256,5('827858962') = ef00de0503f7e73dbfb2c4c0bc085f245edbabcbf56ed99fa94628728ef4a412
         );
         foreach ($data as $algorithm => $value) {
-            $a = ucfirst($algorithm);
+            $raw = explode(',', $algorithm);
+            $a = ucfirst($raw[0]);
 
             // passes
             $v = hash($algorithm, $value);
-            $tests["$algorithm lower"] = array("isAn$a", $v);
-            $tests["$algorithm upper"] = array("isAn$a", strtoupper($v));
+            $tests["$algorithm lower"] = array("isAValid$a", $v);
+            $tests["$algorithm upper"] = array("isAValid$a", strtoupper($v));
 
             // failures
             $tests["$algorithm too short"] = array(
-                "isAn$a",
+                "isAValid$a",
                 '0',
-                "hash \"0\" is an $algorithm"
+                "hash \"0\" is a valid $raw[0]"
             );
             $tests["$algorithm too long"] = array(
-                "isAn$a",
+                "isAValid$a",
                 "0$v",
-                "hash \"0$v\" is an $algorithm"
+                "hash \"0$v\" is a valid $raw[0]"
             );
             $tests["$algorithm bad character"] = array(
-                "isAn$a",
+                "isAValid$a",
                 "z" . substr($v, 1),
-                "hash \"z" . substr($v, 1) . "\" is an $algorithm"
+                "hash \"z" . substr($v, 1) . "\" is a valid $raw[0]"
             );
         }
 
@@ -135,17 +137,5 @@ class HashModuleTest extends AbstractModuleTestCase
             $this->expectFailure($error);
         }
         $this->assertHash($value)->$hash;
-    }
-
-    public function testMd5ContainsNonHexCharacters()
-    {
-        $hash = str_repeat('a', 31) . 'z';
-        $this->expectFailure("hash \"$hash\" is an md5");
-        $this->assertHash($hash)->isAnMd5;
-    }
-
-    public function testMd5IsCaseInsensitive()
-    {
-        $this->assertHash(strtoupper(md5('a')))->isAnMd5;
     }
 }

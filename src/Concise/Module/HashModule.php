@@ -10,10 +10,11 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an md5
-     * @syntax hash ? is an md4
-     * @syntax hash ? is an md2
-     * @syntax hash ? is an ripemd128
+     * @syntax hash ? is a valid md5
+     * @syntax hash ? is a valid md4
+     * @syntax hash ? is a valid md2
+     * @syntax hash ? is a valid ripemd128
+     * @syntax hash ? is a valid tiger128
      */
     public function hash128()
     {
@@ -21,8 +22,9 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an sha1
-     * @syntax hash ? is an ripemd160
+     * @syntax hash ? is a valid sha1
+     * @syntax hash ? is a valid ripemd160
+     * @syntax hash ? is a valid tiger160
      */
     public function hash160()
     {
@@ -30,7 +32,15 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an sha224
+     * @syntax hash ? is a valid tiger192
+     */
+    public function hash192()
+    {
+        $this->validateHexWithLength(48);
+    }
+
+    /**
+     * @syntax hash ? is a valid sha224
      */
     public function hash224()
     {
@@ -38,8 +48,8 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an sha256
-     * @syntax hash ? is an ripemd256
+     * @syntax hash ? is a valid sha256
+     * @syntax hash ? is a valid ripemd256
      */
     public function hash256()
     {
@@ -47,7 +57,7 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an ripemd320
+     * @syntax hash ? is a valid ripemd320
      */
     public function hash320()
     {
@@ -55,7 +65,7 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an sha384
+     * @syntax hash ? is a valid sha384
      */
     public function hash384()
     {
@@ -63,8 +73,8 @@ class HashModule extends AbstractModule
     }
 
     /**
-     * @syntax hash ? is an sha512
-     * @syntax hash ? is an whirlpool
+     * @syntax hash ? is a valid sha512
+     * @syntax hash ? is a valid whirlpool
      */
     public function hash512()
     {
