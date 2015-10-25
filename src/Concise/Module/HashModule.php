@@ -6,7 +6,7 @@ class HashModule extends AbstractModule
 {
     public function getName()
     {
-        return "Hash";
+        return "Hashing (Cryptography)";
     }
 
     /**

@@ -15,14 +15,14 @@ use PHPUnit_Framework_TestCase;
  * @method Eu|Ev|Ew|Ex|Ey|Ez verifyClosure($valueOrFailureMessage, $value = null)
  * @method Bg|Bj assertFile($valueOrFailureMessage, $value = null)
  * @method Bg|Bj verifyFile($valueOrFailureMessage, $value = null)
- * @method Fk assertHash($valueOrFailureMessage, $value = null)
- * @method Fk verifyHash($valueOrFailureMessage, $value = null)
- * @method Fm|Fn assertObject($valueOrFailureMessage, $value = null)
- * @method Fm|Fn verifyObject($valueOrFailureMessage, $value = null)
- * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb assertString($valueOrFailureMessage, $value = null)
- * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb verifyString($valueOrFailureMessage, $value = null)
- * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw assertUrl($valueOrFailureMessage, $value = null)
- * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw verifyUrl($valueOrFailureMessage, $value = null)
+ * @method Fk|Fl|Fm|Fn|Fo|Fp|Fq|Fr|Fs|Ft|Fu|Fv|Fw|Fx|Fy|Fz|Ga|Gb|Gc|Gd|Ge|Gf|Gg|Gh|Gi|Gj|Gk|Gl|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy|Gz|Ha|Hb|Hc|Hd|He|Hf|Hg|Hh|Hi|Hj|Hk|Hl|Hm|Hn|Ho|Hp|Hq|Hr assertHash($valueOrFailureMessage, $value = null)
+ * @method Fk|Fl|Fm|Fn|Fo|Fp|Fq|Fr|Fs|Ft|Fu|Fv|Fw|Fx|Fy|Fz|Ga|Gb|Gc|Gd|Ge|Gf|Gg|Gh|Gi|Gj|Gk|Gl|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy|Gz|Ha|Hb|Hc|Hd|He|Hf|Hg|Hh|Hi|Hj|Hk|Hl|Hm|Hn|Ho|Hp|Hq|Hr verifyHash($valueOrFailureMessage, $value = null)
+ * @method Ka|Kb assertObject($valueOrFailureMessage, $value = null)
+ * @method Ka|Kb verifyObject($valueOrFailureMessage, $value = null)
+ * @method Ke|Kf|Kg|Kh|Ki|Kj|K|L|Km|Kn|Ko|Kp assertString($valueOrFailureMessage, $value = null)
+ * @method Ke|Kf|Kg|Kh|Ki|Kj|K|L|Km|Kn|Ko|Kp verifyString($valueOrFailureMessage, $value = null)
+ * @method Lc|Ld|Le|Lf|Lg|Lh|Li|Lj|Lk assertUrl($valueOrFailureMessage, $value = null)
+ * @method Lc|Ld|Le|Lf|Lg|Lh|Li|Lj|Lk verifyUrl($valueOrFailureMessage, $value = null)
  */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
@@ -40,7 +40,7 @@ class Cu
  * Contains
  * @method null contains($value)
  */
-class Fs
+class Kg
 {
 }
 
@@ -48,7 +48,7 @@ class Fs
  * ContainsCaseInsensitive
  * @method null containsCaseInsensitive($value)
  */
-class Ft
+class Kh
 {
 }
 
@@ -56,7 +56,7 @@ class Ft
  * DoesNotContain
  * @method null doesNotContain($value)
  */
-class Fu
+class Ki
 {
 }
 
@@ -64,7 +64,7 @@ class Fu
  * DoesNotContainCaseInsensitive
  * @method null doesNotContainCaseInsensitive($value)
  */
-class Fv
+class Kj
 {
 }
 
@@ -72,7 +72,7 @@ class Fv
  * DoesNotEndWith
  * @method null doesNotEndWith($value)
  */
-class Fy
+class Km
 {
 }
 
@@ -120,7 +120,7 @@ class C
  * DoesNotHaveProperty
  * @method null doesNotHaveProperty($value)
  */
-class Fm
+class Ka
 {
 }
 
@@ -136,7 +136,7 @@ class D
  * DoesNotMatch
  * @method null doesNotMatch($value)
  */
-class Fr
+class Kf
 {
 }
 
@@ -144,7 +144,7 @@ class Fr
  * DoesNotStartWith
  * @method null doesNotStartWith($value)
  */
-class Fz
+class Kn
 {
 }
 
@@ -167,7 +167,7 @@ class Ev
  * EndsWith
  * @method null endsWith($value)
  */
-class Ga
+class Ko
 {
 }
 
@@ -191,7 +191,7 @@ class Bh
  * HasFragment
  * @method null hasFragment($value)
  */
-class Gw
+class Lk
 {
 }
 
@@ -199,7 +199,7 @@ class Gw
  * HasHost
  * @method null hasHost($value)
  */
-class Gq
+class Le
 {
 }
 
@@ -239,7 +239,7 @@ class H
  * HasPassword
  * @method null hasPassword($value)
  */
-class Gt
+class Lh
 {
 }
 
@@ -247,7 +247,7 @@ class Gt
  * HasPath
  * @method null hasPath($value)
  */
-class Gu
+class Li
 {
 }
 
@@ -255,7 +255,7 @@ class Gu
  * HasPort
  * @method null hasPort($value)
  */
-class Gr
+class Lf
 {
 }
 
@@ -263,7 +263,7 @@ class Gr
  * HasProperty
  * @method null hasProperty($value)
  */
-class Fn
+class Kb
 {
 }
 
@@ -271,7 +271,7 @@ class Fn
  * HasQuery
  * @method null hasQuery($value)
  */
-class Gv
+class Lj
 {
 }
 
@@ -279,7 +279,7 @@ class Gv
  * HasScheme
  * @method null hasScheme($value)
  */
-class Gp
+class Ld
 {
 }
 
@@ -287,7 +287,7 @@ class Gp
  * HasUser
  * @method null hasUser($value)
  */
-class Gs
+class Lg
 {
 }
 
@@ -336,6 +336,216 @@ class Ch
 }
 
 /**
+ * @property null isAValidAdler32
+ */
+class Fm
+{
+}
+
+/**
+ * @property null isAValidCrc32
+ */
+class Fk
+{
+}
+
+/**
+ * @property null isAValidCrc32b
+ */
+class Fl
+{
+}
+
+/**
+ * @property null isAValidFnv132
+ */
+class Fn
+{
+}
+
+/**
+ * @property null isAValidFnv164
+ */
+class Fu
+{
+}
+
+/**
+ * @property null isAValidGost
+ */
+class Hd
+{
+}
+
+/**
+ * @property null isAValidHaval128
+ */
+class Gb
+{
+}
+
+/**
+ * @property null isAValidHaval160
+ */
+class Gl
+{
+}
+
+/**
+ * @property null isAValidHaval192
+ */
+class Gr
+{
+}
+
+/**
+ * @property null isAValidHaval224
+ */
+class Gv
+{
+}
+
+/**
+ * @property null isAValidHaval256
+ */
+class Ha
+{
+}
+
+/**
+ * @property null isAValidJoaat
+ */
+class Fo
+{
+}
+
+/**
+ * @property null isAValidMd2
+ */
+class Fy
+{
+}
+
+/**
+ * @property null isAValidMd4
+ */
+class Fx
+{
+}
+
+/**
+ * @property null isAValidMd5
+ */
+class Fw
+{
+}
+
+/**
+ * @property null isAValidRipemd128
+ */
+class Fz
+{
+}
+
+/**
+ * @property null isAValidRipemd160
+ */
+class Gj
+{
+}
+
+/**
+ * @property null isAValidRipemd256
+ */
+class Gz
+{
+}
+
+/**
+ * @property null isAValidRipemd320
+ */
+class Hk
+{
+}
+
+/**
+ * @property null isAValidSha1
+ */
+class Gi
+{
+}
+
+/**
+ * @property null isAValidSha224
+ */
+class Gu
+{
+}
+
+/**
+ * @property null isAValidSha256
+ */
+class Gy
+{
+}
+
+/**
+ * @property null isAValidSha384
+ */
+class Hm
+{
+}
+
+/**
+ * @property null isAValidSha512
+ */
+class Ho
+{
+}
+
+/**
+ * @property null isAValidSnefru
+ */
+class Hb
+{
+}
+
+/**
+ * @property null isAValidSnefru256
+ */
+class Hc
+{
+}
+
+/**
+ * @property null isAValidTiger128
+ */
+class Ga
+{
+}
+
+/**
+ * @property null isAValidTiger160
+ */
+class Gk
+{
+}
+
+/**
+ * @property null isAValidTiger192
+ */
+class Gq
+{
+}
+
+/**
+ * @property null isAValidWhirlpool
+ */
+class Hp
+{
+}
+
+/**
  * IsAfter
  * @method null isAfter($value)
  */
@@ -369,13 +579,6 @@ class Cd
  * @property null isAnInteger
  */
 class Ce
-{
-}
-
-/**
- * @property null isAnMd5
- */
-class Fk
 {
 }
 
@@ -487,6 +690,216 @@ class Co
  * @property null isNotAString
  */
 class Cp
+{
+}
+
+/**
+ * @property null isNotAValidAdler32
+ */
+class Fr
+{
+}
+
+/**
+ * @property null isNotAValidCrc32
+ */
+class Fp
+{
+}
+
+/**
+ * @property null isNotAValidCrc32b
+ */
+class Fq
+{
+}
+
+/**
+ * @property null isNotAValidFnv132
+ */
+class Fs
+{
+}
+
+/**
+ * @property null isNotAValidFnv164
+ */
+class Fv
+{
+}
+
+/**
+ * @property null isNotAValidGost
+ */
+class Hj
+{
+}
+
+/**
+ * @property null isNotAValidHaval128
+ */
+class Gh
+{
+}
+
+/**
+ * @property null isNotAValidHaval160
+ */
+class Gp
+{
+}
+
+/**
+ * @property null isNotAValidHaval192
+ */
+class Gt
+{
+}
+
+/**
+ * @property null isNotAValidHaval224
+ */
+class Gx
+{
+}
+
+/**
+ * @property null isNotAValidHaval256
+ */
+class Hg
+{
+}
+
+/**
+ * @property null isNotAValidJoaat
+ */
+class Ft
+{
+}
+
+/**
+ * @property null isNotAValidMd2
+ */
+class Ge
+{
+}
+
+/**
+ * @property null isNotAValidMd4
+ */
+class Gd
+{
+}
+
+/**
+ * @property null isNotAValidMd5
+ */
+class Gc
+{
+}
+
+/**
+ * @property null isNotAValidRipemd128
+ */
+class Gf
+{
+}
+
+/**
+ * @property null isNotAValidRipemd160
+ */
+class Gn
+{
+}
+
+/**
+ * @property null isNotAValidRipemd256
+ */
+class Hf
+{
+}
+
+/**
+ * @property null isNotAValidRipemd320
+ */
+class Hl
+{
+}
+
+/**
+ * @property null isNotAValidSha1
+ */
+class Gm
+{
+}
+
+/**
+ * @property null isNotAValidSha224
+ */
+class Gw
+{
+}
+
+/**
+ * @property null isNotAValidSha256
+ */
+class He
+{
+}
+
+/**
+ * @property null isNotAValidSha384
+ */
+class Hn
+{
+}
+
+/**
+ * @property null isNotAValidSha512
+ */
+class Hq
+{
+}
+
+/**
+ * @property null isNotAValidSnefru
+ */
+class Hh
+{
+}
+
+/**
+ * @property null isNotAValidSnefru256
+ */
+class Hi
+{
+}
+
+/**
+ * @property null isNotAValidTiger128
+ */
+class Gg
+{
+}
+
+/**
+ * @property null isNotAValidTiger160
+ */
+class Go
+{
+}
+
+/**
+ * @property null isNotAValidTiger192
+ */
+class Gs
+{
+}
+
+/**
+ * @property null isNotAValidWhirlpool
+ */
+class Hr
 {
 }
 
@@ -631,7 +1044,7 @@ class N
 /**
  * @property null isValid
  */
-class Go
+class Lc
 {
 }
 
@@ -647,7 +1060,7 @@ class Bs
  * Matches
  * @method null matches($value)
  */
-class Fq
+class Ke
 {
 }
 
@@ -663,7 +1076,7 @@ class Cv
  * StartsWith
  * @method null startsWith($value)
  */
-class Gb
+class Kp
 {
 }
 

@@ -63,6 +63,70 @@ Files
 * file `string`_ does not equal `string`_ -  Compare string value with the contents of a file.   
 * file `string`_ equals `string`_ -  Compare string value with the contents of a file.   
 
+Hashing (Cryptography)
+----------------------
+
+* hash `mixed`_ is a valid adler32 -   
+* hash `mixed`_ is a valid crc32 -   
+* hash `mixed`_ is a valid crc32b -   
+* hash `mixed`_ is a valid fnv132 -   
+* hash `mixed`_ is a valid fnv164 -   
+* hash `mixed`_ is a valid gost -   
+* hash `mixed`_ is a valid haval128 -   
+* hash `mixed`_ is a valid haval160 -   
+* hash `mixed`_ is a valid haval192 -   
+* hash `mixed`_ is a valid haval224 -   
+* hash `mixed`_ is a valid haval256 -   
+* hash `mixed`_ is a valid joaat -   
+* hash `mixed`_ is a valid md2 -   
+* hash `mixed`_ is a valid md4 -   
+* hash `mixed`_ is a valid md5 -   
+* hash `mixed`_ is a valid ripemd128 -   
+* hash `mixed`_ is a valid ripemd160 -   
+* hash `mixed`_ is a valid ripemd256 -   
+* hash `mixed`_ is a valid ripemd320 -   
+* hash `mixed`_ is a valid sha1 -   
+* hash `mixed`_ is a valid sha224 -   
+* hash `mixed`_ is a valid sha256 -   
+* hash `mixed`_ is a valid sha384 -   
+* hash `mixed`_ is a valid sha512 -   
+* hash `mixed`_ is a valid snefru -   
+* hash `mixed`_ is a valid snefru256 -   
+* hash `mixed`_ is a valid tiger128 -   
+* hash `mixed`_ is a valid tiger160 -   
+* hash `mixed`_ is a valid tiger192 -   
+* hash `mixed`_ is a valid whirlpool -   
+* hash `mixed`_ is not a valid adler32 -   
+* hash `mixed`_ is not a valid crc32 -   
+* hash `mixed`_ is not a valid crc32b -   
+* hash `mixed`_ is not a valid fnv132 -   
+* hash `mixed`_ is not a valid fnv164 -   
+* hash `mixed`_ is not a valid gost -   
+* hash `mixed`_ is not a valid haval128 -   
+* hash `mixed`_ is not a valid haval160 -   
+* hash `mixed`_ is not a valid haval192 -   
+* hash `mixed`_ is not a valid haval224 -   
+* hash `mixed`_ is not a valid haval256 -   
+* hash `mixed`_ is not a valid joaat -   
+* hash `mixed`_ is not a valid md2 -   
+* hash `mixed`_ is not a valid md4 -   
+* hash `mixed`_ is not a valid md5 -   
+* hash `mixed`_ is not a valid ripemd128 -   
+* hash `mixed`_ is not a valid ripemd160 -   
+* hash `mixed`_ is not a valid ripemd256 -   
+* hash `mixed`_ is not a valid ripemd320 -   
+* hash `mixed`_ is not a valid sha1 -   
+* hash `mixed`_ is not a valid sha224 -   
+* hash `mixed`_ is not a valid sha256 -   
+* hash `mixed`_ is not a valid sha384 -   
+* hash `mixed`_ is not a valid sha512 -   
+* hash `mixed`_ is not a valid snefru -   
+* hash `mixed`_ is not a valid snefru256 -   
+* hash `mixed`_ is not a valid tiger128 -   
+* hash `mixed`_ is not a valid tiger160 -   
+* hash `mixed`_ is not a valid tiger192 -   
+* hash `mixed`_ is not a valid whirlpool -   
+
 Numbers
 -------
 
