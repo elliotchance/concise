@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Concise\Core\TestCase;
+use Exception;
 
 class CombinationMockClass
 {
@@ -10,7 +11,8 @@ class CombinationMockClass
 
     protected $hidden = 'foo';
 
-    private $secret = 'bar';
+    private /** @noinspection PhpUnusedPrivateFieldInspection */
+        $secret = 'bar';
 
     public function __construct($a, $b)
     {
@@ -32,6 +34,7 @@ class CombinationMockClass
         return 'bar';
     }
 
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private function myPrivateMethod()
     {
     }
@@ -52,6 +55,11 @@ class CombinationMockClass
     public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
     {
     }
+
+    public function __clone()
+    {
+        throw new Exception("Did clone.");
+    }
 }
 
 abstract class CombinationMockAbstractClass
@@ -60,7 +68,8 @@ abstract class CombinationMockAbstractClass
 
     protected $hidden = 'foo';
 
-    private $secret = 'bar';
+    private /** @noinspection PhpUnusedPrivateFieldInspection */
+        $secret = 'bar';
 
     public function __construct($a, $b)
     {
@@ -82,6 +91,7 @@ abstract class CombinationMockAbstractClass
         return 'bar';
     }
 
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private function myPrivateMethod()
     {
     }
@@ -103,6 +113,11 @@ abstract class CombinationMockAbstractClass
 
     public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
     {
+    }
+
+    public function __clone()
+    {
+        throw new Exception("Did clone.");
     }
 }
 
@@ -127,7 +142,8 @@ final class CombinationMockFinalClass
 
     protected $hidden = 'foo';
 
-    private $secret = 'bar';
+    private /** @noinspection PhpUnusedPrivateFieldInspection */
+        $secret = 'bar';
 
     public function __construct($a, $b)
     {
@@ -149,6 +165,7 @@ final class CombinationMockFinalClass
         return 'bar';
     }
 
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private function myPrivateMethod()
     {
     }
@@ -168,6 +185,11 @@ final class CombinationMockFinalClass
 
     public function myWithMethodDefaults($a, $b = 'foo', $c = 'baz')
     {
+    }
+
+    public function __clone()
+    {
+        throw new Exception("Did clone.");
     }
 }
 
