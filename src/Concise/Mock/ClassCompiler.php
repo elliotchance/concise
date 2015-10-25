@@ -76,7 +76,8 @@ class ClassCompiler
         $className,
         $niceMock = false,
         array $constructorArgs = array(),
-        $disableConstructor = false
+        $disableConstructor = false,
+        $disableClone = false
     ) {
         ArgumentChecker::check($className, 'string');
         ArgumentChecker::check($niceMock, 'bool', 2);
@@ -97,6 +98,7 @@ class ClassCompiler
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
         $this->disableConstructor = $disableConstructor;
+        $this->disableClone = $disableClone;
     }
 
     /**
@@ -169,9 +171,11 @@ class ClassCompiler
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
         $prototype = $this->getPublicPrototype($method->getName());
-        $message = "{$method->getName()}() does not have an associated action - consider a niceMock()?";
+        $message = "{$method->getName(
+        )}() does not have an associated action - consider a niceMock()?";
         if ($method->isAbstract()) {
-            $message = "{$method->getName()}() is abstract and has no associated action.";
+            $message = "{$method->getName(
+            )}() is abstract and has no associated action.";
         }
         $this->methods[$method->getName()] = <<<EOF
 $prototype {
@@ -267,6 +271,15 @@ EOF;
         }
     }
 
+    protected function renderClone()
+    {
+        if ($this->disableClone) {
+            $this->methods['__clone'] = 'public function __clone() {}';
+        } else {
+            unset($this->methods['__clone']);
+        }
+    }
+
     protected function exposeMethods()
     {
         foreach ($this->expose as $method => $value) {
@@ -342,6 +355,7 @@ EOF;
         }
         $this->renderRules();
         $this->renderConstructor();
+        $this->renderClone();
         $this->exposeMethods();
         $this->setUpGetCallsForMethod();
 
