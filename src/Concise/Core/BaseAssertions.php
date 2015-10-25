@@ -5,22 +5,22 @@ namespace Concise\Core;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q assertArray($valueOrFailureMessage, $value = null)
- * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q verifyArray($valueOrFailureMessage, $value = null)
- * @method Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct|Cu|Cv assert($valueOrFailureMessage, $value = null)
- * @method Bi|Bj|Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct|Cu|Cv verify($valueOrFailureMessage, $value = null)
- * @method Es|Et assertDate($valueOrFailureMessage, $value = null)
- * @method Es|Et verifyDate($valueOrFailureMessage, $value = null)
- * @method Ew|Ex|Ey|Ez|Fa|Fb assertClosure($valueOrFailureMessage, $value = null)
- * @method Ew|Ex|Ey|Ez|Fa|Fb verifyClosure($valueOrFailureMessage, $value = null)
- * @method Bi|Bl assertFile($valueOrFailureMessage, $value = null)
- * @method Bi|Bl verifyFile($valueOrFailureMessage, $value = null)
- * @method Fm|Fn assertObject($valueOrFailureMessage, $value = null)
- * @method Fm|Fn verifyObject($valueOrFailureMessage, $value = null)
- * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb assertString($valueOrFailureMessage, $value = null)
- * @method Fq|Fr|Fs|Ft|Fu|Fv|K|L|Fy|Fz|Ga|Gb verifyString($valueOrFailureMessage, $value = null)
- * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw assertUrl($valueOrFailureMessage, $value = null)
- * @method Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw verifyUrl($valueOrFailureMessage, $value = null)
+ * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R assertArray($valueOrFailureMessage, $value = null)
+ * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R verifyArray($valueOrFailureMessage, $value = null)
+ * @method Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct|Cu|Cv|Cw|Cx assert($valueOrFailureMessage, $value = null)
+ * @method Bk|Bl|Bm|Bn|Bo|Bp|Bq|Br|Bs|Bt|Bu|Bv|Bw|Bx|By|Bz|Ca|Cb|Cc|Cd|Ce|Cf|Cg|Ch|Ci|Cj|Ck|Cl|Cm|Cn|Co|Cp|Cq|Cr|Cs|Ct|Cu|Cv|Cw|Cx verify($valueOrFailureMessage, $value = null)
+ * @method Eu|Ev assertDate($valueOrFailureMessage, $value = null)
+ * @method Eu|Ev verifyDate($valueOrFailureMessage, $value = null)
+ * @method Ey|Ez|Fa|Fb|Fc|Fd assertClosure($valueOrFailureMessage, $value = null)
+ * @method Ey|Ez|Fa|Fb|Fc|Fd verifyClosure($valueOrFailureMessage, $value = null)
+ * @method Bk|Bn assertFile($valueOrFailureMessage, $value = null)
+ * @method Bk|Bn verifyFile($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp assertObject($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp verifyObject($valueOrFailureMessage, $value = null)
+ * @method Fs|Ft|Fu|Fv|Fw|Fx|K|L|Ga|Gb|Gc|Gd assertString($valueOrFailureMessage, $value = null)
+ * @method Fs|Ft|Fu|Fv|Fw|Fx|K|L|Ga|Gb|Gc|Gd verifyString($valueOrFailureMessage, $value = null)
+ * @method Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy assertUrl($valueOrFailureMessage, $value = null)
+ * @method Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy verifyUrl($valueOrFailureMessage, $value = null)
  */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
@@ -30,7 +30,7 @@ abstract class BaseAssertions extends PHPUnit_Framework_TestCase
  * And
  * @method null and($value)
  */
-class Cw
+class Cy
 {
 }
 
@@ -38,7 +38,7 @@ class Cw
  * Contains
  * @method null contains($value)
  */
-class Fs
+class Fu
 {
 }
 
@@ -46,7 +46,7 @@ class Fs
  * ContainsCaseInsensitive
  * @method null containsCaseInsensitive($value)
  */
-class Ft
+class Fv
 {
 }
 
@@ -59,10 +59,18 @@ class Q
 }
 
 /**
+ * CountIsNot
+ * @method null countIsNot($value)
+ */
+class R
+{
+}
+
+/**
  * DoesNotContain
  * @method null doesNotContain($value)
  */
-class Fu
+class Fw
 {
 }
 
@@ -70,7 +78,7 @@ class Fu
  * DoesNotContainCaseInsensitive
  * @method null doesNotContainCaseInsensitive($value)
  */
-class Fv
+class Fx
 {
 }
 
@@ -78,7 +86,7 @@ class Fv
  * DoesNotEndWith
  * @method null doesNotEndWith($value)
  */
-class Fy
+class Ga
 {
 }
 
@@ -86,7 +94,7 @@ class Fy
  * DoesNotEqual
  * @method null doesNotEqual($value)
  */
-class Bl
+class Bn
 {
 }
 
@@ -94,7 +102,7 @@ class Bl
  * DoesNotExactlyEqual
  * @method null doesNotExactlyEqual($value)
  */
-class Bm
+class Bo
 {
 }
 
@@ -126,7 +134,7 @@ class C
  * DoesNotHaveProperty
  * @method null doesNotHaveProperty($value)
  */
-class Fm
+class Fo
 {
 }
 
@@ -142,7 +150,7 @@ class D
  * DoesNotMatch
  * @method null doesNotMatch($value)
  */
-class Fr
+class Ft
 {
 }
 
@@ -150,7 +158,7 @@ class Fr
  * DoesNotStartWith
  * @method null doesNotStartWith($value)
  */
-class Fz
+class Gb
 {
 }
 
@@ -158,14 +166,14 @@ class Fz
  * DoesNotThrow
  * @method null doesNotThrow($value)
  */
-class Ew
+class Ey
 {
 }
 
 /**
  * @property null doesNotThrowException
  */
-class Ex
+class Ez
 {
 }
 
@@ -173,7 +181,7 @@ class Ex
  * EndsWith
  * @method null endsWith($value)
  */
-class Ga
+class Gc
 {
 }
 
@@ -181,7 +189,7 @@ class Ga
  * Equals
  * @method null equals($value)
  */
-class Bi
+class Bk
 {
 }
 
@@ -189,7 +197,7 @@ class Bi
  * ExactlyEquals
  * @method null exactlyEquals($value)
  */
-class Bj
+class Bl
 {
 }
 
@@ -197,7 +205,7 @@ class Bj
  * HasFragment
  * @method null hasFragment($value)
  */
-class Gw
+class Gy
 {
 }
 
@@ -205,7 +213,7 @@ class Gw
  * HasHost
  * @method null hasHost($value)
  */
-class Gq
+class Gs
 {
 }
 
@@ -245,7 +253,7 @@ class H
  * HasPassword
  * @method null hasPassword($value)
  */
-class Gt
+class Gv
 {
 }
 
@@ -253,7 +261,7 @@ class Gt
  * HasPath
  * @method null hasPath($value)
  */
-class Gu
+class Gw
 {
 }
 
@@ -261,7 +269,7 @@ class Gu
  * HasPort
  * @method null hasPort($value)
  */
-class Gr
+class Gt
 {
 }
 
@@ -269,7 +277,7 @@ class Gr
  * HasProperty
  * @method null hasProperty($value)
  */
-class Fn
+class Fp
 {
 }
 
@@ -277,7 +285,7 @@ class Fn
  * HasQuery
  * @method null hasQuery($value)
  */
-class Gv
+class Gx
 {
 }
 
@@ -285,7 +293,7 @@ class Gv
  * HasScheme
  * @method null hasScheme($value)
  */
-class Gp
+class Gr
 {
 }
 
@@ -293,7 +301,7 @@ class Gp
  * HasUser
  * @method null hasUser($value)
  */
-class Gs
+class Gu
 {
 }
 
@@ -316,28 +324,28 @@ class J
 /**
  * @property null isABool
  */
-class Cd
+class Cf
 {
 }
 
 /**
  * @property null isABoolean
  */
-class Cc
+class Ce
 {
 }
 
 /**
  * @property null isANumber
  */
-class Ci
+class Ck
 {
 }
 
 /**
  * @property null isAString
  */
-class Cj
+class Cl
 {
 }
 
@@ -345,14 +353,14 @@ class Cj
  * IsAfter
  * @method null isAfter($value)
  */
-class Es
+class Eu
 {
 }
 
 /**
  * @property null isAnArray
  */
-class Ce
+class Cg
 {
 }
 
@@ -360,28 +368,28 @@ class Ce
  * IsAnInstanceOf
  * @method null isAnInstanceOf($value)
  */
-class Cb
+class Cd
 {
 }
 
 /**
  * @property null isAnInt
  */
-class Cf
+class Ch
 {
 }
 
 /**
  * @property null isAnInteger
  */
-class Cg
+class Ci
 {
 }
 
 /**
  * @property null isAnObject
  */
-class Ch
+class Cj
 {
 }
 
@@ -396,15 +404,15 @@ class O
  * IsBefore
  * @method null isBefore($value)
  */
-class Et
+class Ev
 {
 }
 
 /**
  * IsBetween
- * @method null|Cw isBetween($value)
+ * @method null|Cy isBetween($value)
  */
-class Bs
+class Bu
 {
 }
 
@@ -418,14 +426,14 @@ class K
 /**
  * @property null isFalse
  */
-class Bo
+class Bq
 {
 }
 
 /**
  * @property null isFalsy
  */
-class Bp
+class Br
 {
 }
 
@@ -433,7 +441,7 @@ class Bp
  * IsGreaterThan
  * @method null isGreaterThan($value)
  */
-class Bv
+class Bx
 {
 }
 
@@ -441,7 +449,7 @@ class Bv
  * IsGreaterThanOrEqualTo
  * @method null isGreaterThanOrEqualTo($value)
  */
-class Bw
+class By
 {
 }
 
@@ -449,7 +457,7 @@ class Bw
  * IsLessThan
  * @method null isLessThan($value)
  */
-class Bx
+class Bz
 {
 }
 
@@ -457,42 +465,42 @@ class Bx
  * IsLessThanOrEqualTo
  * @method null isLessThanOrEqualTo($value)
  */
-class By
+class Ca
 {
 }
 
 /**
  * @property null isNotABool
  */
-class Cl
+class Cn
 {
 }
 
 /**
  * @property null isNotABoolean
  */
-class Ck
+class Cm
 {
 }
 
 /**
  * @property null isNotANumber
  */
-class Cq
+class Cs
 {
 }
 
 /**
  * @property null isNotAString
  */
-class Cr
+class Ct
 {
 }
 
 /**
  * @property null isNotAnArray
  */
-class Cm
+class Co
 {
 }
 
@@ -500,28 +508,28 @@ class Cm
  * IsNotAnInstanceOf
  * @method null isNotAnInstanceOf($value)
  */
-class Ca
+class Cc
 {
 }
 
 /**
  * @property null isNotAnInt
  */
-class Cn
+class Cp
 {
 }
 
 /**
  * @property null isNotAnInteger
  */
-class Co
+class Cq
 {
 }
 
 /**
  * @property null isNotAnObject
  */
-class Cp
+class Cr
 {
 }
 
@@ -534,9 +542,9 @@ class P
 
 /**
  * IsNotBetween
- * @method null|Cw isNotBetween($value)
+ * @method null|Cy isNotBetween($value)
  */
-class Bz
+class Cb
 {
 }
 
@@ -550,14 +558,14 @@ class L
 /**
  * @property null isNotNull
  */
-class Cs
+class Cu
 {
 }
 
 /**
  * @property null isNotNumeric
  */
-class Ct
+class Cv
 {
 }
 
@@ -565,7 +573,7 @@ class Ct
  * IsNotTheSameAs
  * @method null isNotTheSameAs($value)
  */
-class Bn
+class Bp
 {
 }
 
@@ -578,23 +586,23 @@ class M
 
 /**
  * IsNotWithin
- * @method null|Cx isNotWithin($value)
+ * @method null|Cz isNotWithin($value)
  */
-class Bt
+class Bv
 {
 }
 
 /**
  * @property null isNull
  */
-class Cu
+class Cw
 {
 }
 
 /**
  * @property null isNumeric
  */
-class Cv
+class Cx
 {
 }
 
@@ -602,21 +610,21 @@ class Cv
  * IsTheSameAs
  * @method null isTheSameAs($value)
  */
-class Bk
+class Bm
 {
 }
 
 /**
  * @property null isTrue
  */
-class Bq
+class Bs
 {
 }
 
 /**
  * @property null isTruthy
  */
-class Br
+class Bt
 {
 }
 
@@ -630,15 +638,15 @@ class N
 /**
  * @property null isValid
  */
-class Go
+class Gq
 {
 }
 
 /**
  * IsWithin
- * @method null|Cx isWithin($value)
+ * @method null|Cz isWithin($value)
  */
-class Bu
+class Bw
 {
 }
 
@@ -646,7 +654,7 @@ class Bu
  * Matches
  * @method null matches($value)
  */
-class Fq
+class Fs
 {
 }
 
@@ -654,7 +662,7 @@ class Fq
  * Of
  * @method null of($value)
  */
-class Cx
+class Cz
 {
 }
 
@@ -662,7 +670,7 @@ class Cx
  * StartsWith
  * @method null startsWith($value)
  */
-class Gb
+class Gd
 {
 }
 
@@ -670,7 +678,7 @@ class Gb
  * Throws
  * @method null throws($value)
  */
-class Ey
+class Fa
 {
 }
 
@@ -678,7 +686,7 @@ class Ey
  * ThrowsAnythingExcept
  * @method null throwsAnythingExcept($value)
  */
-class Ez
+class Fb
 {
 }
 
@@ -686,14 +694,14 @@ class Ez
  * ThrowsExactly
  * @method null throwsExactly($value)
  */
-class Fa
+class Fc
 {
 }
 
 /**
  * @property null throwsException
  */
-class Fb
+class Fd
 {
 }
 
