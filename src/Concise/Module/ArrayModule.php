@@ -261,4 +261,13 @@ class ArrayModule extends AbstractModule
     {
         $this->failIf(count($this->data[0]) !== $this->data[1]);
     }
+
+    /**
+     * Assert an array does not have a specific number of elements.
+     *
+     * @syntax array ?:array count is not ?:int
+     */
+    public function arrayCountIsNot()
+    {
+    }
 }

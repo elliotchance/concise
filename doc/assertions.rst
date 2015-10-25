@@ -6,6 +6,7 @@ Assertions
 Arrays
 ------
 
+* array `array`_ count is `int`_ -  Assert an array has a specific number of elements.   
 * array `array`_ does not have item `array`_ -  Assert an array does not have key and value item.   
 * array `array`_ does not have key `int`_\|\ `string`_ -  Assert an array does not have a key.   
 * array `array`_ does not have keys `array`_ -   
