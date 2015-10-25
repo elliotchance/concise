@@ -10,6 +10,26 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * @syntax hash ? is a valid crc32
+     * @syntax hash ? is a valid crc32b
+     * @syntax hash ? is a valid adler32
+     * @syntax hash ? is a valid fnv132
+     * @syntax hash ? is a valid joaat
+     */
+    public function hash32()
+    {
+        $this->validateHexWithLength(8);
+    }
+
+    /**
+     * @syntax hash ? is a valid fnv164
+     */
+    public function hash64()
+    {
+        $this->validateHexWithLength(16);
+    }
+
+    /**
      * @syntax hash ? is a valid md5
      * @syntax hash ? is a valid md4
      * @syntax hash ? is a valid md2
@@ -55,6 +75,9 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid sha256
      * @syntax hash ? is a valid ripemd256
      * @syntax hash ? is a valid haval256
+     * @syntax hash ? is a valid snefru
+     * @syntax hash ? is a valid snefru256
+     * @syntax hash ? is a valid gost
      */
     public function hash256()
     {
