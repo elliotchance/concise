@@ -336,4 +336,38 @@ class ArrayModuleTest extends AbstractModuleTestCase
     {
         $this->assertArray(array(123, 456, 123))->isUnique;
     }
+
+    /**
+     * @group #311
+     */
+    public function testArrayCountMatches()
+    {
+        $this->assertArray(array(123, 456, 123))->countIs(3);
+    }
+
+    /**
+     * @group #311
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
+    public function testArrayCountDoesNotMatch()
+    {
+        $this->assertArray(array(123, 456, 123))->countIs(2);
+    }
+
+    /**
+     * @group #311
+     */
+    public function testArrayNotCountMatches()
+    {
+        $this->assertArray(array(123, 456, 123))->countIsNot(2);
+    }
+
+    /**
+     * @group #311
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
+    public function testArrayNotCountDoesNotMatch()
+    {
+        $this->assertArray(array(123, 456, 123))->countIsNot(3);
+    }
 }
