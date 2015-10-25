@@ -15,6 +15,7 @@ There are three types of mocks available:
    you can add custom rules to an object that already contains some arbitrary
    state.
 
+
 Normal Mocks
 ~~~~~~~~~~~~
 
@@ -41,6 +42,7 @@ This type of mock does not invoke the constructor since plain mocks are supposed
 to be totally hollow and the constructor could potentially setup an unexpected
 state or call methods that would not have actions associated with them.
 
+
 Nice Mocks
 ~~~~~~~~~~
 
@@ -53,6 +55,7 @@ the original method).
    $this->niceMock('\My\Class')
         ->...
         ->get();
+
 
 Partial Mocks
 ~~~~~~~~~~~~~
@@ -70,6 +73,7 @@ add custom rules to an object that already contains some arbitrary state.
 
    $mock->addToMemory(20);
    $mock->getMemory(); // 30
+
 
 Constructors
 ~~~~~~~~~~~~
@@ -99,6 +103,21 @@ Or you can disable the original constructor:
 have all methods stubbed off). The reason for this is even in a normal mock you
 may want the constructor to set up the state of the object, whilst leaving you
 with the ability to turn this off with ``disableConstructor()``.
+
+
+Cloning
+~~~~~~~
+
+If you need to disable the ``__clone()`` of the original class you can:
+
+.. code-block:: php
+
+   $this->niceMock('\My\Class')
+        ->disableClone()
+        ->...
+
+This will stub off the ``__clone()`` so that it does nothing.
+
 
 Programmatically Building Mocks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,6 +154,7 @@ with the same rules:
    $mock2 = $mockTemplate->get();
 
    echo get_class($mock1) . " " . get_class($mock2); // stdClass_abd1240f stdClass_4432eba7
+
 
 Changing the Class Name and Namespace of a Mock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
