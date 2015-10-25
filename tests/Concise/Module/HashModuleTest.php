@@ -44,6 +44,7 @@ class HashModuleTest extends AbstractModuleTestCase
                 }
             }
             if (!$found) {
+                /** @noinspection PhpUndefinedVariableInspection */
                 echo "$algorithm ws not found, lets use $algorithm('$v') = $hash\n";
             }
         }
@@ -114,6 +115,17 @@ class HashModuleTest extends AbstractModuleTestCase
             $tests["$algorithm lower"] = array("isAValid$a", $v);
             $tests["$algorithm upper"] = array("isAValid$a", strtoupper($v));
 
+            $tests["not $algorithm lower"] = array(
+                "isNotAValid$a",
+                $v,
+                "hash \"$v\" is not a valid $raw[0]"
+            );
+            $tests["not $algorithm upper"] = array(
+                "isNotAValid$a",
+                strtoupper($v),
+                "hash \"" . strtoupper($v) . "\" is not a valid $raw[0]"
+            );
+
             // failures
             $tests["$algorithm too short"] = array(
                 "isAValid$a",
@@ -129,6 +141,18 @@ class HashModuleTest extends AbstractModuleTestCase
                 "isAValid$a",
                 "z" . substr($v, 1),
                 "hash \"z" . substr($v, 1) . "\" is a valid $raw[0]"
+            );
+            $tests["not $algorithm too short"] = array(
+                "isNotAValid$a",
+                '0'
+            );
+            $tests["not $algorithm too long"] = array(
+                "isNotAValid$a",
+                "0$v"
+            );
+            $tests["not $algorithm bad character"] = array(
+                "isNotAValid$a",
+                "z" . substr($v, 1)
             );
         }
 
