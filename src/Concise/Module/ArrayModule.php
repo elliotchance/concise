@@ -259,5 +259,6 @@ class ArrayModule extends AbstractModule
      */
     public function arrayCountIs()
     {
+        $this->failIf(count($this->data[0]) !== $this->data[1]);
     }
 }

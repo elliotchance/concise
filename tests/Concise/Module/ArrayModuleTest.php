@@ -344,4 +344,13 @@ class ArrayModuleTest extends AbstractModuleTestCase
     {
         $this->assertArray(array(123, 456, 123))->countIs(3);
     }
+
+    /**
+     * @group #311
+     * @expectedException \Concise\Core\DidNotMatchException
+     */
+    public function testArrayCountDoesNotMatch()
+    {
+        $this->assertArray(array(123, 456, 123))->countIs(2);
+    }
 }
