@@ -25,4 +25,20 @@ class BuilderCloneTest extends AbstractBuilderTestCase
         $cloned = clone $mock;
         $this->assert($cloned)->isAnInstanceOf(get_class($mock));
     }
+
+    /**
+     * @dataProvider allBuilders
+     */
+    public function testOriginalCloneIsNotModifiedIsNotDisabled(
+        MockBuilder $builder,
+        $type
+    ) {
+        if (self::MOCK_INTERFACE !== $type) {
+            $this->expectFailure('Did clone.');
+        }
+
+        $mock = $builder->get();
+        $cloned = clone $mock;
+        $this->assert($cloned)->isAnInstanceOf(get_class($mock));
+    }
 }
