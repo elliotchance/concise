@@ -50,6 +50,11 @@ class ClassCompiler
     protected $disableConstructor;
 
     /**
+     * @var boolean
+     */
+    protected $disableClone;
+
+    /**
      * You may specify a custom class name for the mock.
      *
      * @var string
