@@ -68,66 +68,66 @@ Files
 Hashing (Cryptography)
 ----------------------
 
-* hash `mixed`_ is a valid adler32 -   
-* hash `mixed`_ is a valid crc32 -   
-* hash `mixed`_ is a valid crc32b -   
-* hash `mixed`_ is a valid fnv132 -   
-* hash `mixed`_ is a valid fnv164 -   
-* hash `mixed`_ is a valid gost -   
-* hash `mixed`_ is a valid haval128 -   
-* hash `mixed`_ is a valid haval160 -   
-* hash `mixed`_ is a valid haval192 -   
-* hash `mixed`_ is a valid haval224 -   
-* hash `mixed`_ is a valid haval256 -   
-* hash `mixed`_ is a valid joaat -   
-* hash `mixed`_ is a valid md2 -   
-* hash `mixed`_ is a valid md4 -   
-* hash `mixed`_ is a valid md5 -   
-* hash `mixed`_ is a valid ripemd128 -   
-* hash `mixed`_ is a valid ripemd160 -   
-* hash `mixed`_ is a valid ripemd256 -   
-* hash `mixed`_ is a valid ripemd320 -   
-* hash `mixed`_ is a valid sha1 -   
-* hash `mixed`_ is a valid sha224 -   
-* hash `mixed`_ is a valid sha256 -   
-* hash `mixed`_ is a valid sha384 -   
-* hash `mixed`_ is a valid sha512 -   
-* hash `mixed`_ is a valid snefru -   
-* hash `mixed`_ is a valid snefru256 -   
-* hash `mixed`_ is a valid tiger128 -   
-* hash `mixed`_ is a valid tiger160 -   
-* hash `mixed`_ is a valid tiger192 -   
-* hash `mixed`_ is a valid whirlpool -   
-* hash `mixed`_ is not a valid adler32 -   
-* hash `mixed`_ is not a valid crc32 -   
-* hash `mixed`_ is not a valid crc32b -   
-* hash `mixed`_ is not a valid fnv132 -   
-* hash `mixed`_ is not a valid fnv164 -   
-* hash `mixed`_ is not a valid gost -   
-* hash `mixed`_ is not a valid haval128 -   
-* hash `mixed`_ is not a valid haval160 -   
-* hash `mixed`_ is not a valid haval192 -   
-* hash `mixed`_ is not a valid haval224 -   
-* hash `mixed`_ is not a valid haval256 -   
-* hash `mixed`_ is not a valid joaat -   
-* hash `mixed`_ is not a valid md2 -   
-* hash `mixed`_ is not a valid md4 -   
-* hash `mixed`_ is not a valid md5 -   
-* hash `mixed`_ is not a valid ripemd128 -   
-* hash `mixed`_ is not a valid ripemd160 -   
-* hash `mixed`_ is not a valid ripemd256 -   
-* hash `mixed`_ is not a valid ripemd320 -   
-* hash `mixed`_ is not a valid sha1 -   
-* hash `mixed`_ is not a valid sha224 -   
-* hash `mixed`_ is not a valid sha256 -   
-* hash `mixed`_ is not a valid sha384 -   
-* hash `mixed`_ is not a valid sha512 -   
-* hash `mixed`_ is not a valid snefru -   
-* hash `mixed`_ is not a valid snefru256 -   
-* hash `mixed`_ is not a valid tiger128 -   
-* hash `mixed`_ is not a valid tiger160 -   
-* hash `mixed`_ is not a valid tiger192 -   
-* hash `mixed`_ is not a valid whirlpool -   
+* hash `mixed`_ is a valid adler32 -  Assert hash is an 8 digit hexadecimal.   
+* hash `mixed`_ is a valid crc32 -  Assert hash is an 8 digit hexadecimal.   
+* hash `mixed`_ is a valid crc32b -  Assert hash is an 8 digit hexadecimal.   
+* hash `mixed`_ is a valid fnv132 -  Assert hash is an 8 digit hexadecimal.   
+* hash `mixed`_ is a valid fnv164 -  Assert hash is a 16 digit hexadecimal.   
+* hash `mixed`_ is a valid gost -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid haval128 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid haval160 -  Assert hash is a 40 digit hexadecimal.   
+* hash `mixed`_ is a valid haval192 -  Assert hash is a 48 digit hexadecimal.   
+* hash `mixed`_ is a valid haval224 -  Assert hash is a 56 digit hexadecimal.   
+* hash `mixed`_ is a valid haval256 -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid joaat -  Assert hash is an 8 digit hexadecimal.   
+* hash `mixed`_ is a valid md2 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid md4 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid md5 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid ripemd128 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid ripemd160 -  Assert hash is a 40 digit hexadecimal.   
+* hash `mixed`_ is a valid ripemd256 -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid ripemd320 -  Assert hash is an 80 digit hexadecimal.   
+* hash `mixed`_ is a valid sha1 -  Assert hash is a 40 digit hexadecimal.   
+* hash `mixed`_ is a valid sha224 -  Assert hash is a 56 digit hexadecimal.   
+* hash `mixed`_ is a valid sha256 -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid sha384 -  Assert hash is a 96 digit hexadecimal.   
+* hash `mixed`_ is a valid sha512 -  Assert hash is a 128 digit hexadecimal.   
+* hash `mixed`_ is a valid snefru -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid snefru256 -  Assert hash is a 64 digit hexadecimal.   
+* hash `mixed`_ is a valid tiger128 -  Assert hash is a 32 digit hexadecimal.   
+* hash `mixed`_ is a valid tiger160 -  Assert hash is a 40 digit hexadecimal.   
+* hash `mixed`_ is a valid tiger192 -  Assert hash is a 48 digit hexadecimal.   
+* hash `mixed`_ is a valid whirlpool -  Assert hash is a 128 digit hexadecimal.   
+* hash `mixed`_ is not a valid adler32 -  Assert hash is not an 8 digit hexadecimal.   
+* hash `mixed`_ is not a valid crc32 -  Assert hash is not an 8 digit hexadecimal.   
+* hash `mixed`_ is not a valid crc32b -  Assert hash is not an 8 digit hexadecimal.   
+* hash `mixed`_ is not a valid fnv132 -  Assert hash is not an 8 digit hexadecimal.   
+* hash `mixed`_ is not a valid fnv164 -  Assert hash is not a 16 digit hexadecimal.   
+* hash `mixed`_ is not a valid gost -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid haval128 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid haval160 -  Assert hash is not a 40 digit hexadecimal.   
+* hash `mixed`_ is not a valid haval192 -  Assert hash is not a 48 digit hexadecimal.   
+* hash `mixed`_ is not a valid haval224 -  Assert hash is not a 56 digit hexadecimal.   
+* hash `mixed`_ is not a valid haval256 -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid joaat -  Assert hash is not an 8 digit hexadecimal.   
+* hash `mixed`_ is not a valid md2 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid md4 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid md5 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid ripemd128 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid ripemd160 -  Assert hash is not a 40 digit hexadecimal.   
+* hash `mixed`_ is not a valid ripemd256 -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid ripemd320 -  Assert hash is not a 80 digit hexadecimal.   
+* hash `mixed`_ is not a valid sha1 -  Assert hash is not a 40 digit hexadecimal.   
+* hash `mixed`_ is not a valid sha224 -  Assert hash is not a 56 digit hexadecimal.   
+* hash `mixed`_ is not a valid sha256 -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid sha384 -  Assert hash is not a 96 digit hexadecimal.   
+* hash `mixed`_ is not a valid sha512 -  Assert hash is not a 128 digit hexadecimal.   
+* hash `mixed`_ is not a valid snefru -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid snefru256 -  Assert hash is not a 64 digit hexadecimal.   
+* hash `mixed`_ is not a valid tiger128 -  Assert hash is not a 32 digit hexadecimal.   
+* hash `mixed`_ is not a valid tiger160 -  Assert hash is not a 40 digit hexadecimal.   
+* hash `mixed`_ is not a valid tiger192 -  Assert hash is not a 48 digit hexadecimal.   
+* hash `mixed`_ is not a valid whirlpool -  Assert hash is not a 128 digit hexadecimal.   
 
 Numbers
 -------

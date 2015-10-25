@@ -10,6 +10,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is an 8 digit hexadecimal.
+     *
      * @syntax hash ? is a valid crc32
      * @syntax hash ? is a valid crc32b
      * @syntax hash ? is a valid adler32
@@ -22,6 +24,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not an 8 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid crc32
      * @syntax hash ? is not a valid crc32b
      * @syntax hash ? is not a valid adler32
@@ -34,6 +38,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 16 digit hexadecimal.
+     *
      * @syntax hash ? is a valid fnv164
      */
     public function hash64()
@@ -42,6 +48,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 16 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid fnv164
      */
     public function hash64not()
@@ -50,6 +58,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 32 digit hexadecimal.
+     *
      * @syntax hash ? is a valid md5
      * @syntax hash ? is a valid md4
      * @syntax hash ? is a valid md2
@@ -63,6 +73,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 32 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid md5
      * @syntax hash ? is not a valid md4
      * @syntax hash ? is not a valid md2
@@ -76,6 +88,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 40 digit hexadecimal.
+     *
      * @syntax hash ? is a valid sha1
      * @syntax hash ? is a valid ripemd160
      * @syntax hash ? is a valid tiger160
@@ -87,6 +101,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 40 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid sha1
      * @syntax hash ? is not a valid ripemd160
      * @syntax hash ? is not a valid tiger160
@@ -98,6 +114,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 48 digit hexadecimal.
+     *
      * @syntax hash ? is a valid tiger192
      * @syntax hash ? is a valid haval192
      */
@@ -107,6 +125,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 48 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid tiger192
      * @syntax hash ? is not a valid haval192
      */
@@ -116,6 +136,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 56 digit hexadecimal.
+     *
      * @syntax hash ? is a valid sha224
      * @syntax hash ? is a valid haval224
      */
@@ -125,6 +147,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 56 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid sha224
      * @syntax hash ? is not a valid haval224
      */
@@ -134,6 +158,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 64 digit hexadecimal.
+     *
      * @syntax hash ? is a valid sha256
      * @syntax hash ? is a valid ripemd256
      * @syntax hash ? is a valid haval256
@@ -147,6 +173,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 64 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid sha256
      * @syntax hash ? is not a valid ripemd256
      * @syntax hash ? is not a valid haval256
@@ -160,6 +188,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is an 80 digit hexadecimal.
+     *
      * @syntax hash ? is a valid ripemd320
      */
     public function hash320()
@@ -168,6 +198,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 80 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid ripemd320
      */
     public function hash320not()
@@ -176,6 +208,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 96 digit hexadecimal.
+     *
      * @syntax hash ? is a valid sha384
      */
     public function hash384()
@@ -184,6 +218,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 96 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid sha384
      */
     public function hash384not()
@@ -192,6 +228,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is a 128 digit hexadecimal.
+     *
      * @syntax hash ? is a valid sha512
      * @syntax hash ? is a valid whirlpool
      */
@@ -201,6 +239,8 @@ class HashModule extends AbstractModule
     }
 
     /**
+     * Assert hash is not a 128 digit hexadecimal.
+     *
      * @syntax hash ? is not a valid sha512
      * @syntax hash ? is not a valid whirlpool
      */
