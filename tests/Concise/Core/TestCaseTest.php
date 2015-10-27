@@ -71,4 +71,14 @@ class TestCaseTest extends TestCase
         $this->assert('a')->fooBar;
         $this->assert(123)->equals("123");
     }
+
+    /**
+     * @expectedException BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::something()
+     * @group #317
+     */
+    public function testWillCallBadMethodCallExceptionForUnknownMethod()
+    {
+        $this->something();
+    }
 }
