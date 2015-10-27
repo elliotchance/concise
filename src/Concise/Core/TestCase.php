@@ -294,8 +294,12 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        throw new BadMethodCallException("No such method " . get_class($this) .
-            "::$name()");
+        if (substr($name, 0, 6) !== 'assert') {
+            throw new BadMethodCallException(
+                "No such method " . get_class($this) . "::$name()"
+            );
+        }
+
         $verify = $name[0] === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
