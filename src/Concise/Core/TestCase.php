@@ -17,6 +17,7 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
+use BadMethodCallException;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
@@ -293,7 +294,15 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        $verify = $name[0] === 'v';
+        $lowerName = strtolower($name);
+        if (substr($lowerName, 0, 6) !== 'assert' &&
+            substr($lowerName, 0, 6) !== 'verify') {
+            throw new BadMethodCallException(
+                "No such method " . get_class($this) . "::$name()"
+            );
+        }
+
+        $verify = substr($lowerName, 0, 1) === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
             $name = '_';
