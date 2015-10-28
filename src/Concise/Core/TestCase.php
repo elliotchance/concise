@@ -294,7 +294,7 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        if (substr($name, 0, 6) !== 'assert' &&
+        if (strtolower(substr($name, 0, 6)) !== 'assert' &&
             substr($name, 0, 6) !== 'verify') {
             throw new BadMethodCallException(
                 "No such method " . get_class($this) . "::$name()"

@@ -102,4 +102,15 @@ class TestCaseTest extends TestCase
     {
         $this->a();
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "something ?"
+     * @group #317
+     */
+    public function testAssertPrefixIsNotCaseSensitive()
+    {
+        $this->AssertSomething(123);
+        $this->assert(123)->equals("123");
+    }
 }
