@@ -71,4 +71,46 @@ class TestCaseTest extends TestCase
         $this->assert('a')->fooBar;
         $this->assert(123)->equals("123");
     }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::something()
+     * @group #317
+     */
+    public function testWillCallBadMethodCallExceptionForUnknownMethod()
+    {
+        $this->something();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "something ?"
+     * @group #317
+     */
+    public function testWillNotCallBadMethodCallExceptionIsPrefixedWithAssert()
+    {
+        $this->assertSomething(123);
+        $this->assert(123)->equals("123");
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::a()
+     * @group #317
+     */
+    public function testMethodCallsLessThan6Characters()
+    {
+        $this->a();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "something ?"
+     * @group #317
+     */
+    public function testAssertPrefixIsNotCaseSensitive()
+    {
+        $this->AssertSomething(123);
+        $this->assert(123)->equals("123");
+    }
 }
