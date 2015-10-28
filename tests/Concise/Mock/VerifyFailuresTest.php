@@ -13,6 +13,7 @@ class VerifyFailuresTest extends TestCase
         'testMultipleVerifyFailures' => "2 verify failures:\n\n10 equals 15\n\n15 equals 20",
         'testSingleVerifyFailures' => "1 verify failure:\n\n10 equals 15",
         'testWillNotCallBadMethodCallExceptionIsPrefixedWithVerify' => "1 verify failure:\n\nNo such syntax \"something ?\"",
+        'testVerifyPrefixIsNotCaseSensitive' => "1 verify failure:\n\nNo such syntax \"something ?\"",
     );
 
     protected static $didRun = array();
@@ -47,6 +48,15 @@ class VerifyFailuresTest extends TestCase
     public function testWillNotCallBadMethodCallExceptionIsPrefixedWithVerify()
     {
         $this->verifySomething(123);
+    }
+
+    /**
+     * @see TestCaseTest::testAssertPrefixIsNotCaseSensitive().
+     * @group #317
+     */
+    public function testVerifyPrefixIsNotCaseSensitive()
+    {
+        $this->VerifySomething(123);
     }
 
     protected function onNotSuccessfulTest(\Exception $e)

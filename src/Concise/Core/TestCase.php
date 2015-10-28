@@ -294,14 +294,15 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        if (strtolower(substr($name, 0, 6)) !== 'assert' &&
-            substr($name, 0, 6) !== 'verify') {
+        $lowerName = strtolower($name);
+        if (substr($lowerName, 0, 6) !== 'assert' &&
+            substr($lowerName, 0, 6) !== 'verify') {
             throw new BadMethodCallException(
                 "No such method " . get_class($this) . "::$name()"
             );
         }
 
-        $verify = $name[0] === 'v';
+        $verify = substr($lowerName, 0, 1) === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
             $name = '_';
