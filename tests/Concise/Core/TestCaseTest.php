@@ -92,4 +92,14 @@ class TestCaseTest extends TestCase
         $this->assertSomething(123);
         $this->assert(123)->equals("123");
     }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::a()
+     * @group #317
+     */
+    public function testMethodCallsLessThan6Characters()
+    {
+        $this->a();
+    }
 }
