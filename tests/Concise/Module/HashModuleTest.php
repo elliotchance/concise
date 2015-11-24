@@ -67,6 +67,10 @@ class HashModuleTest extends AbstractModuleTestCase
         'fnv132' => '1312987169',
         'fnv164' => '1920646076',
         'joaat' => '1388690451',
+        // These are not avilable in all PHP versions. It cannot be guaranteed
+        // they contain all possible hexadecimal digits.
+        'salsa10' => '2160027372',
+        'salsa20' => '160027372',
     );
 
     public function setUp()
@@ -112,7 +116,9 @@ class HashModuleTest extends AbstractModuleTestCase
      */
     public function testAllAlgorithmsHaveBeenCovered()
     {
-        $this->assertArray(self::$data)->hasKeys(hash_algos());
+        foreach (hash_algos() as $algorithm) {
+            $this->assertArray(self::$data)->hasKey($algorithm);
+        }
     }
 
     public function data()

@@ -232,6 +232,8 @@ class HashModule extends AbstractModule
      *
      * @syntax hash ? is a valid sha512
      * @syntax hash ? is a valid whirlpool
+     * @syntax hash ? is a valid salsa10
+     * @syntax hash ? is a valid salsa20
      */
     public function hash512()
     {
@@ -243,6 +245,8 @@ class HashModule extends AbstractModule
      *
      * @syntax hash ? is not a valid sha512
      * @syntax hash ? is not a valid whirlpool
+     * @syntax hash ? is not a valid salsa10
+     * @syntax hash ? is not a valid salsa20
      */
     public function hash512not()
     {
