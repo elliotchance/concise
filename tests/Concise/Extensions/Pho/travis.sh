@@ -13,7 +13,9 @@ cat tests/Concise/Extensions/Pho/travis_1.txt
 $CONCISE_BIN --ci --test-suffix=Spec.php vendor/danielstjules/pho/spec | cut -c65- > tests/Concise/Extensions/Pho/travis_2.txt
 cat tests/Concise/Extensions/Pho/travis_2.txt
 
-$CONCISE_BIN --ci tests/Concise/Extensions/Pho/TestSpec.php --log-tap tests/Concise/Extensions/Pho/travis_3.tap
+# Ignore errors that come out of this because there are test that are supposed
+# to fail.
+$CONCISE_BIN --ci tests/Concise/Extensions/Pho/TestSpec.php --log-tap tests/Concise/Extensions/Pho/travis_3.tap || true
 cat tests/Concise/Extensions/Pho/travis_3.tap
 
 
