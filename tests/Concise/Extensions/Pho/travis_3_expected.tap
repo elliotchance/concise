@@ -2,7 +2,7 @@ TAP version 13
 ok 1 - Concise\Extensions\Pho\PhoTestCase::test
 not ok 2 - Failure: Concise\Extensions\Pho\PhoTestCase::test
   ---
-  message: '/Users/elliot/Development/concise/src/Concise/Core/AssertionBuilder.php:142'
+  message: '/home/travis/build/elliotchance/concise/src/Concise/Core/AssertionBuilder.php:142'
   severity: fail
   ...
 not ok 3 - Concise\Extensions\Pho\PhoTestCase::test # TODO Incomplete Test
@@ -10,7 +10,7 @@ ok 4 - Concise\Extensions\Pho\PhoTestCase::test
 ok 5 - Concise\Extensions\Pho\PhoTestCase::test
 not ok 6 - Failure: Concise\Extensions\Pho\PhoTestCase::test
   ---
-  message: '/Users/elliot/Development/concise/tests/Concise/Extensions/Pho/TestSpec.php:28'
+  message: '/home/travis/build/elliotchance/concise/tests/Concise/Extensions/Pho/TestSpec.php:28'
   severity: fail
   ...
 1..6
