@@ -104,4 +104,10 @@ class ResultPrinterProxyTest extends TestCase
         )->expose('printResult')->get();
         $this->assert($proxy->printResult($result))->isNull;
     }
+
+    public function testWriteWillPrintCodeCoverage()
+    {
+        $this->expectOutputString('foo Code Coverage Report bar');
+        $this->proxy->write('foo Code Coverage Report bar');
+    }
 }
