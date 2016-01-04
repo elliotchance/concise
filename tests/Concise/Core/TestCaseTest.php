@@ -2,13 +2,15 @@
 
 namespace Concise\Core;
 
+use ReflectionClass;
+
 class TestCaseTest extends TestCase
 {
     protected $mySpecialAttribute = 123;
 
     public function testExtendsTestCase()
     {
-        $this->assert(new TestCase())
+        $this->assert('\Concise\Core\TestCase')
             ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
     }
 
@@ -112,5 +114,11 @@ class TestCaseTest extends TestCase
     {
         $this->AssertSomething(123);
         $this->assert(123)->equals("123");
+    }
+
+    public function testIsAbstract()
+    {
+        $class = new ReflectionClass('\Concise\Core\TestCase');
+        $this->assert($class->isAbstract())->isTrue;
     }
 }

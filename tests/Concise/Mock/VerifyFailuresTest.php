@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Colors\Color;
+use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 
 class VerifyFailuresTest extends TestCase
@@ -72,7 +73,7 @@ class VerifyFailuresTest extends TestCase
         $a = self::$didRun;
         $b = self::$failures;
 
-        $testCase = new TestCase();
+        $testCase = new IndependentTestCase();
         $testCase->setUp();
         $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();
