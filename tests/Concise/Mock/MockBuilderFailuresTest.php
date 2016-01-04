@@ -2,6 +2,7 @@
 
 namespace Concise\Mock;
 
+use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 use Exception;
 
@@ -178,7 +179,7 @@ class MockBuilderFailuresTest extends TestCase
     {
         $a = array_keys(self::$expectedFailures);
         $b = self::$failures;
-        $testCase = new TestCase();
+        $testCase = new IndependentTestCase();
         $testCase->setUp();
         $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();

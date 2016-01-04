@@ -28,7 +28,7 @@ class TestCaseFailuresTest extends TestCase
     {
         $a = array_keys(self::$expectedFailures);
         $b = self::$failures;
-        $testCase = new TestCase();
+        $testCase = new IndependentTestCase();
         $testCase->setUp();
         $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();

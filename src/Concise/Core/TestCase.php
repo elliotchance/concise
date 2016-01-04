@@ -54,7 +54,7 @@ if (file_exists($baseAssertionsPath)) {
     require_once($baseAssertionsPath);
 }
 
-class TestCase extends BaseAssertions
+abstract class TestCase extends BaseAssertions
 {
     /**
      * Used as a placeholder for with() clauses where the parameter is
