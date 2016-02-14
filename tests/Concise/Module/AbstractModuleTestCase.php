@@ -49,10 +49,7 @@ abstract class AbstractModuleTestCase extends TestCase
 
     protected function expectFailure($message)
     {
-        $this->setExpectedException(
-            'Concise\Core\DidNotMatchException',
-            $message
-        );
+        $this->setExpectedException('Exception', $message);
         SyntaxRenderer::$color = false;
     }
 }

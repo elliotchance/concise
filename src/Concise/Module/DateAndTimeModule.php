@@ -4,6 +4,7 @@ namespace Concise\Module;
 
 use Concise\Core\DidNotMatchException;
 use DateTime;
+use DomainException;
 
 class DateAndTimeModule extends AbstractModule
 {
@@ -34,6 +35,14 @@ class DateAndTimeModule extends AbstractModule
 
         $s = $this->getSign($d[0] - $d[1]);
         if (in_array(false, $d) || $s == $sign || 0 == $s) {
+            // Lets render the dates in a pretty format that makes dealing with
+            // failures a lot easier.
+            foreach ($this->data as &$d) {
+                if (!is_object($d)) {
+                    $d .= ' (' . date('c', $this->convert($d)) . ')';
+                }
+            }
+
             throw new DidNotMatchException();
         }
 
@@ -78,11 +87,17 @@ class DateAndTimeModule extends AbstractModule
     protected function convert($d)
     {
         if (is_string($d)) {
-            return strtotime($d);
+            $d2 = strtotime($d);
         } elseif ($d instanceof DateTime) {
-            return $d->getTimestamp();
+            $d2 = $d->getTimestamp();
+        } else {
+            $d2 = $d;
         }
 
-        return $d;
+        if ($d2 == false) {
+            throw new DomainException("Invalid date '$d'");
+        }
+
+        return $d2;
     }
 }

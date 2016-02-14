@@ -24,6 +24,12 @@ matrix:
 install:
   - composer install
   - $INSTALL
+
+before_script:
+  # Use a non-UTC timezone to make sure any test that doesn't specifically set a
+  # timezone will work under non-UTC timezones.
+  - echo 'date.timezone = "Australia/Sydney"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
 script:
   - $CUSTOM_SCRIPT
   - if [ -z "$CUSTOM_SCRIPT" ]; then bin/concise --ci $PHPUNIT_OPTIONS; fi
