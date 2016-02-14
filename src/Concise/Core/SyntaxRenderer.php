@@ -20,6 +20,7 @@ class SyntaxRenderer
         if (self::$color) {
             $renderer->setTheme(new DefaultTheme());
         }
+        
         return preg_replace_callback(
             '/\?/',
             function () use (&$data, $renderer) {

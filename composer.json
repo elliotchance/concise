@@ -25,8 +25,7 @@
     "require": {
         "php": ">=5.3.9",
         "phpunit/phpunit": ">= 4.0",
-        "kevinlebrun/colors.php": ">= 0.3.0",
-        "symfony/yaml": "~2.7"
+        "kevinlebrun/colors.php": ">= 0.3.0"
     },
     "require-dev": {
         "satooshi/php-coveralls": "dev-master"
