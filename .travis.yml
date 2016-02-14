@@ -24,6 +24,10 @@ matrix:
 install:
   - composer install
   - $INSTALL
+
+before_script:
+  - export TZ=UTC
+
 script:
   - $CUSTOM_SCRIPT
   - if [ -z "$CUSTOM_SCRIPT" ]; then bin/concise --ci $PHPUNIT_OPTIONS; fi
