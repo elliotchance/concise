@@ -2,11 +2,15 @@
 
 namespace Concise\Core;
 
+use ReflectionClass;
+
 class TestCaseTest extends TestCase
 {
+    protected $mySpecialAttribute = 123;
+
     public function testExtendsTestCase()
     {
-        $this->assert(new TestCase())
+        $this->assert('\Concise\Core\TestCase')
             ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
     }
 
@@ -14,23 +18,6 @@ class TestCaseTest extends TestCase
     {
         $this->myAttribute = 123;
         $this->assert(123)->exactlyEquals($this->myAttribute);
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage No such attribute 'noSuchAttribute'.
-     */
-    public function testGetAttributeThatDoesNotExistThrowsException()
-    {
-        $this->noSuchAttribute;
-    }
-
-    public function testCanExtractDataFromTest()
-    {
-        $this->x = 123;
-        $this->b = '456';
-        $data = $this->getData();
-        $this->assert($data['x'])->exactlyEquals(123);
     }
 
     public function testCanUnsetProperty()
@@ -44,23 +31,6 @@ class TestCaseTest extends TestCase
     {
         unset($this->foobar);
         $this->assert(isset($this->myUniqueProperty))->isFalse;
-    }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage You cannot assign an attribute with the
-     *     keyword 'not'.
-     */
-    public function testAssigningAnAttributeThatIsAKeywordThrowsAnException()
-    {
-        $this->not = 123;
-    }
-
-    protected $mySpecialAttribute = 123;
-
-    public function testDataIncludesExplicitInstanceVariables()
-    {
-        $this->assertArray($this->getData())->hasKey('mySpecialAttribute');
     }
 
     public function testIssetWorksWithAttributes()
@@ -102,5 +72,53 @@ class TestCaseTest extends TestCase
     {
         $this->assert('a')->fooBar;
         $this->assert(123)->equals("123");
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::something()
+     * @group #317
+     */
+    public function testWillCallBadMethodCallExceptionForUnknownMethod()
+    {
+        $this->something();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "something ?"
+     * @group #317
+     */
+    public function testWillNotCallBadMethodCallExceptionIsPrefixedWithAssert()
+    {
+        $this->assertSomething(123);
+        $this->assert(123)->equals("123");
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No such method Concise\Core\TestCaseTest::a()
+     * @group #317
+     */
+    public function testMethodCallsLessThan6Characters()
+    {
+        $this->a();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No such syntax "something ?"
+     * @group #317
+     */
+    public function testAssertPrefixIsNotCaseSensitive()
+    {
+        $this->AssertSomething(123);
+        $this->assert(123)->equals("123");
+    }
+
+    public function testIsAbstract()
+    {
+        $class = new ReflectionClass('\Concise\Core\TestCase');
+        $this->assert($class->isAbstract())->isTrue;
     }
 }

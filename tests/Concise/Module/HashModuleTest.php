@@ -58,6 +58,7 @@ class HashModuleTest extends AbstractModuleTestCase
         'snefru' => '2053211574',
         'snefru256' => '2050122072',
         'gost' => '791752798',
+        'gost-crypto' => '791752798',
         // The following are shorter than 16 characters and so it is
         // impossible for them to contain all characters. In this case we
         // just use random values.
@@ -66,7 +67,13 @@ class HashModuleTest extends AbstractModuleTestCase
         'adler32' => '289014769',
         'fnv132' => '1312987169',
         'fnv164' => '1920646076',
+        'fnv1a32' => '1312987169',
+        'fnv1a64' => '1920646076',
         'joaat' => '1388690451',
+        // These are not avilable in all PHP versions. It cannot be guaranteed
+        // they contain all possible hexadecimal digits.
+        'salsa10' => '2160027372',
+        'salsa20' => '160027372',
     );
 
     public function setUp()
@@ -112,7 +119,9 @@ class HashModuleTest extends AbstractModuleTestCase
      */
     public function testAllAlgorithmsHaveBeenCovered()
     {
-        $this->assertArray(self::$data)->hasKeys(hash_algos());
+        foreach (hash_algos() as $algorithm) {
+            $this->assertArray(self::$data)->hasKey($algorithm);
+        }
     }
 
     public function data()

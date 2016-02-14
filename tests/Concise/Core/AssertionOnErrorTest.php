@@ -11,11 +11,12 @@ class AssertionOnErrorTest extends TestCase
 
     public function testWillUseOnErrorMessage()
     {
+        SyntaxRenderer::$color = false;
         try {
             $this->assert('foo', 123)->equals(124);
             $this->fail('Did not fail.');
         } catch (DidNotMatchException $e) {
-            $this->assert($e->getMessage())->equals('foo');
+            $this->assert($e->getMessage())->equals('foo: 123 equals 124');
         }
     }
 

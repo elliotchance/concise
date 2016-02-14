@@ -17,7 +17,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub(array('count' => 0))
+            ->stub(array('count' => 0, 'testAt' => null))
             ->get();
 
         $resultPrinter =
@@ -35,6 +35,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->disableConstructor()
             ->expect('count')
             ->andReturn(123)
+            ->stub('testAt')
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $proxy->startTestSuite($suite);
@@ -60,7 +61,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(1);
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase()
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase(
+    )
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')->expect(
             'getNumAssertions'
@@ -71,7 +73,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(123);
     }
 
-    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed()
+    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed(
+    )
     {
         $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')
             ->disableConstructor()
@@ -83,7 +86,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(2);
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases(
+    )
     {
         $testCase = $this->mock('PHPUnit_Framework_TestCase')->stub(
             array('getNumAssertions' => 123)
@@ -99,8 +103,8 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub('count')
-            ->andReturn(123, 456)
+            ->stub('count')->andReturn(123, 456)
+            ->stub('testAt')
             ->get();
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
@@ -118,7 +122,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub(array('count' => 0))
+            ->stub(array('count' => 0, 'testAt' => null))
             ->get();
 
         $resultPrinter =
@@ -140,7 +144,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub(array('count' => 0))
+            ->stub(array('count' => 0, 'testAt' => null))
             ->get();
         $resultPrinter =
             $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
@@ -157,7 +161,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub(array('count' => 0))
+            ->stub(array('count' => 0, 'testAt' => null))
             ->get();
         $resultPrinter =
             $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')
@@ -175,7 +179,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
     {
         $suite = $this->mock('PHPUnit_Framework_TestSuite')
             ->disableConstructor()
-            ->stub(array('count' => 0))
+            ->stub(array('count' => 0, 'testAt' => null))
             ->get();
         $resultPrinter =
             $this->mock('Concise\Console\ResultPrinter\AbstractResultPrinter')

@@ -11,7 +11,7 @@ class MyTinyTestSuite
 
     public function __construct()
     {
-        $this->testCase = new TestCase();
+        $this->testCase = new IndependentTestCase();
     }
 
     public function checkSomething()

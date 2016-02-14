@@ -7,10 +7,12 @@ use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Extensions\Pho\PhoTestRunner;
 use Exception;
+use PHPUnit_TextUI_Command;
 use PHPUnit_TextUI_TestRunner;
 
-class Command extends \PHPUnit_TextUI_Command
+class Command extends PHPUnit_TextUI_Command
 {
     /**
      * @var string
@@ -30,7 +32,13 @@ class Command extends \PHPUnit_TextUI_Command
         ) {
             $resultPrinter->setVerbose(true);
         }
-        $testRunner = new DefaultTestRunner();
+
+        if ($this->phoExtensionIsInstalled()) {
+            $testRunner = new PhoTestRunner($this->arguments['loader']);
+        } else {
+            $testRunner = new DefaultTestRunner($this->arguments['loader']);
+        }
+
         $testRunner->setPrinter(new ResultPrinterProxy($resultPrinter));
 
         return $testRunner;
@@ -120,5 +128,13 @@ class Command extends \PHPUnit_TextUI_Command
                     break;
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function phoExtensionIsInstalled()
+    {
+        return class_exists('pho\Runnable\Spec');
     }
 }

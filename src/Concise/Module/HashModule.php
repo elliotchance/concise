@@ -16,6 +16,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid crc32b
      * @syntax hash ? is a valid adler32
      * @syntax hash ? is a valid fnv132
+     * @syntax hash ? is a valid fnv1a32
      * @syntax hash ? is a valid joaat
      */
     public function hash32()
@@ -30,6 +31,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is not a valid crc32b
      * @syntax hash ? is not a valid adler32
      * @syntax hash ? is not a valid fnv132
+     * @syntax hash ? is not a valid fnv1a32
      * @syntax hash ? is not a valid joaat
      */
     public function hash32not()
@@ -41,6 +43,7 @@ class HashModule extends AbstractModule
      * Assert hash is a 16 digit hexadecimal.
      *
      * @syntax hash ? is a valid fnv164
+     * @syntax hash ? is a valid fnv1a64
      */
     public function hash64()
     {
@@ -51,6 +54,7 @@ class HashModule extends AbstractModule
      * Assert hash is not a 16 digit hexadecimal.
      *
      * @syntax hash ? is not a valid fnv164
+     * @syntax hash ? is not a valid fnv1a64
      */
     public function hash64not()
     {
@@ -166,6 +170,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid snefru
      * @syntax hash ? is a valid snefru256
      * @syntax hash ? is a valid gost
+     * @syntax hash ? is a valid gost-crypto
      */
     public function hash256()
     {
@@ -181,6 +186,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is not a valid snefru
      * @syntax hash ? is not a valid snefru256
      * @syntax hash ? is not a valid gost
+     * @syntax hash ? is not a valid gost-crypto
      */
     public function hash256not()
     {
@@ -232,6 +238,8 @@ class HashModule extends AbstractModule
      *
      * @syntax hash ? is a valid sha512
      * @syntax hash ? is a valid whirlpool
+     * @syntax hash ? is a valid salsa10
+     * @syntax hash ? is a valid salsa20
      */
     public function hash512()
     {
@@ -243,6 +251,8 @@ class HashModule extends AbstractModule
      *
      * @syntax hash ? is not a valid sha512
      * @syntax hash ? is not a valid whirlpool
+     * @syntax hash ? is not a valid salsa10
+     * @syntax hash ? is not a valid salsa20
      */
     public function hash512not()
     {
