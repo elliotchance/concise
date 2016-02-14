@@ -58,6 +58,7 @@ class HashModuleTest extends AbstractModuleTestCase
         'snefru' => '2053211574',
         'snefru256' => '2050122072',
         'gost' => '791752798',
+        'gost-crypto' => '791752798',
         // The following are shorter than 16 characters and so it is
         // impossible for them to contain all characters. In this case we
         // just use random values.
@@ -71,7 +72,6 @@ class HashModuleTest extends AbstractModuleTestCase
         // they contain all possible hexadecimal digits.
         'salsa10' => '2160027372',
         'salsa20' => '160027372',
-        'gostcrypto' => '160027372',
     );
 
     public function setUp()
