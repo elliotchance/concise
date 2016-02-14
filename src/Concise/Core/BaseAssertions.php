@@ -15,12 +15,14 @@ use PHPUnit_Framework_TestCase;
  * @method Ey|Ez|Fa|Fb|Fc|Fd verifyClosure($valueOrFailureMessage, $value = null)
  * @method Bk|Bn assertFile($valueOrFailureMessage, $value = null)
  * @method Bk|Bn verifyFile($valueOrFailureMessage, $value = null)
- * @method Fo|Fp assertObject($valueOrFailureMessage, $value = null)
- * @method Fo|Fp verifyObject($valueOrFailureMessage, $value = null)
- * @method Fs|Ft|Fu|Fv|Fw|Fx|K|L|Ga|Gb|Gc|Gd assertString($valueOrFailureMessage, $value = null)
- * @method Fs|Ft|Fu|Fv|Fw|Fx|K|L|Ga|Gb|Gc|Gd verifyString($valueOrFailureMessage, $value = null)
- * @method Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy assertUrl($valueOrFailureMessage, $value = null)
- * @method Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy verifyUrl($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp|Fq|Fr|Fs|Ft|Fu|Fv|Fw|Fx|Fy|Fz|Ga|Gb|Gc|Gd|Ge|Gf|Gg|Gh|Gi|Gj|Gk|Gl|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy|Gz|Ha|Hb|Hc|Hd|He|Hf|Hg|Hh|Hi|Hj|Hk|Hl|Hm|Hn|Ho|Hp|Hq|Hr|Hs|Ht|Hu|Hv|Hw|Hx|Hy|Hz|Ia|Ib|Ic|Id|Ie|Ig assertHash($valueOrFailureMessage, $value = null)
+ * @method Fo|Fp|Fq|Fr|Fs|Ft|Fu|Fv|Fw|Fx|Fy|Fz|Ga|Gb|Gc|Gd|Ge|Gf|Gg|Gh|Gi|Gj|Gk|Gl|Gm|Gn|Go|Gp|Gq|Gr|Gs|Gt|Gu|Gv|Gw|Gx|Gy|Gz|Ha|Hb|Hc|Hd|He|Hf|Hg|Hh|Hi|Hj|Hk|Hl|Hm|Hn|Ho|Hp|Hq|Hr|Hs|Ht|Hu|Hv|Hw|Hx|Hy|Hz|Ia|Ib|Ic|Id|Ie|Ig verifyHash($valueOrFailureMessage, $value = null)
+ * @method Kz|La assertObject($valueOrFailureMessage, $value = null)
+ * @method Kz|La verifyObject($valueOrFailureMessage, $value = null)
+ * @method Ld|Le|Lf|Lg|Lh|Li|K|L|Ll|Lm|Ln|Lo assertString($valueOrFailureMessage, $value = null)
+ * @method Ld|Le|Lf|Lg|Lh|Li|K|L|Ll|Lm|Ln|Lo verifyString($valueOrFailureMessage, $value = null)
+ * @method Mb|Mc|Md|Me|Mf|Mg|Mh|Mi|Mj assertUrl($valueOrFailureMessage, $value = null)
+ * @method Mb|Mc|Md|Me|Mf|Mg|Mh|Mi|Mj verifyUrl($valueOrFailureMessage, $value = null)
  */
 abstract class BaseAssertions extends PHPUnit_Framework_TestCase
 {
@@ -38,7 +40,7 @@ class Cy
  * Contains
  * @method null contains($value)
  */
-class Fu
+class Lf
 {
 }
 
@@ -46,7 +48,7 @@ class Fu
  * ContainsCaseInsensitive
  * @method null containsCaseInsensitive($value)
  */
-class Fv
+class Lg
 {
 }
 
@@ -70,7 +72,7 @@ class R
  * DoesNotContain
  * @method null doesNotContain($value)
  */
-class Fw
+class Lh
 {
 }
 
@@ -78,7 +80,7 @@ class Fw
  * DoesNotContainCaseInsensitive
  * @method null doesNotContainCaseInsensitive($value)
  */
-class Fx
+class Li
 {
 }
 
@@ -86,7 +88,7 @@ class Fx
  * DoesNotEndWith
  * @method null doesNotEndWith($value)
  */
-class Ga
+class Ll
 {
 }
 
@@ -134,7 +136,7 @@ class C
  * DoesNotHaveProperty
  * @method null doesNotHaveProperty($value)
  */
-class Fo
+class Kz
 {
 }
 
@@ -150,7 +152,7 @@ class D
  * DoesNotMatch
  * @method null doesNotMatch($value)
  */
-class Ft
+class Le
 {
 }
 
@@ -158,7 +160,7 @@ class Ft
  * DoesNotStartWith
  * @method null doesNotStartWith($value)
  */
-class Gb
+class Lm
 {
 }
 
@@ -181,7 +183,7 @@ class Ez
  * EndsWith
  * @method null endsWith($value)
  */
-class Gc
+class Ln
 {
 }
 
@@ -205,7 +207,7 @@ class Bl
  * HasFragment
  * @method null hasFragment($value)
  */
-class Gy
+class Mj
 {
 }
 
@@ -213,7 +215,7 @@ class Gy
  * HasHost
  * @method null hasHost($value)
  */
-class Gs
+class Md
 {
 }
 
@@ -253,7 +255,7 @@ class H
  * HasPassword
  * @method null hasPassword($value)
  */
-class Gv
+class Mg
 {
 }
 
@@ -261,7 +263,7 @@ class Gv
  * HasPath
  * @method null hasPath($value)
  */
-class Gw
+class Mh
 {
 }
 
@@ -269,7 +271,7 @@ class Gw
  * HasPort
  * @method null hasPort($value)
  */
-class Gt
+class Me
 {
 }
 
@@ -277,7 +279,7 @@ class Gt
  * HasProperty
  * @method null hasProperty($value)
  */
-class Fp
+class La
 {
 }
 
@@ -285,7 +287,7 @@ class Fp
  * HasQuery
  * @method null hasQuery($value)
  */
-class Gx
+class Mi
 {
 }
 
@@ -293,7 +295,7 @@ class Gx
  * HasScheme
  * @method null hasScheme($value)
  */
-class Gr
+class Mc
 {
 }
 
@@ -301,7 +303,7 @@ class Gr
  * HasUser
  * @method null hasUser($value)
  */
-class Gu
+class Mf
 {
 }
 
@@ -346,6 +348,251 @@ class Ck
  * @property null isAString
  */
 class Cl
+{
+}
+
+/**
+ * @property null isAValidAdler32
+ */
+class Fq
+{
+}
+
+/**
+ * @property null isAValidCrc32
+ */
+class Fo
+{
+}
+
+/**
+ * @property null isAValidCrc32b
+ */
+class Fp
+{
+}
+
+/**
+ * @property null isAValidFnv132
+ */
+class Fr
+{
+}
+
+/**
+ * @property null isAValidFnv164
+ */
+class Ga
+{
+}
+
+/**
+ * @property null isAValidFnv1a32
+ */
+class Fs
+{
+}
+
+/**
+ * @property null isAValidFnv1a64
+ */
+class Gb
+{
+}
+
+/**
+ * @property null isAValidGost
+ */
+class Hl
+{
+}
+
+/**
+ * @property null isAValidGost-crypto
+ */
+class Hm
+{
+}
+
+/**
+ * @property null isAValidHaval128
+ */
+class Gj
+{
+}
+
+/**
+ * @property null isAValidHaval160
+ */
+class Gt
+{
+}
+
+/**
+ * @property null isAValidHaval192
+ */
+class Gz
+{
+}
+
+/**
+ * @property null isAValidHaval224
+ */
+class Hd
+{
+}
+
+/**
+ * @property null isAValidHaval256
+ */
+class Hi
+{
+}
+
+/**
+ * @property null isAValidJoaat
+ */
+class Ft
+{
+}
+
+/**
+ * @property null isAValidMd2
+ */
+class Gg
+{
+}
+
+/**
+ * @property null isAValidMd4
+ */
+class Gf
+{
+}
+
+/**
+ * @property null isAValidMd5
+ */
+class Ge
+{
+}
+
+/**
+ * @property null isAValidRipemd128
+ */
+class Gh
+{
+}
+
+/**
+ * @property null isAValidRipemd160
+ */
+class Gr
+{
+}
+
+/**
+ * @property null isAValidRipemd256
+ */
+class Hh
+{
+}
+
+/**
+ * @property null isAValidRipemd320
+ */
+class Hu
+{
+}
+
+/**
+ * @property null isAValidSalsa10
+ */
+class Ia
+{
+}
+
+/**
+ * @property null isAValidSalsa20
+ */
+class Ib
+{
+}
+
+/**
+ * @property null isAValidSha1
+ */
+class Gq
+{
+}
+
+/**
+ * @property null isAValidSha224
+ */
+class Hc
+{
+}
+
+/**
+ * @property null isAValidSha256
+ */
+class Hg
+{
+}
+
+/**
+ * @property null isAValidSha384
+ */
+class Hw
+{
+}
+
+/**
+ * @property null isAValidSha512
+ */
+class Hy
+{
+}
+
+/**
+ * @property null isAValidSnefru
+ */
+class Hj
+{
+}
+
+/**
+ * @property null isAValidSnefru256
+ */
+class Hk
+{
+}
+
+/**
+ * @property null isAValidTiger128
+ */
+class Gi
+{
+}
+
+/**
+ * @property null isAValidTiger160
+ */
+class Gs
+{
+}
+
+/**
+ * @property null isAValidTiger192
+ */
+class Gy
+{
+}
+
+/**
+ * @property null isAValidWhirlpool
+ */
+class Hz
 {
 }
 
@@ -498,6 +745,251 @@ class Ct
 }
 
 /**
+ * @property null isNotAValidAdler32
+ */
+class Fw
+{
+}
+
+/**
+ * @property null isNotAValidCrc32
+ */
+class Fu
+{
+}
+
+/**
+ * @property null isNotAValidCrc32b
+ */
+class Fv
+{
+}
+
+/**
+ * @property null isNotAValidFnv132
+ */
+class Fx
+{
+}
+
+/**
+ * @property null isNotAValidFnv164
+ */
+class Gc
+{
+}
+
+/**
+ * @property null isNotAValidFnv1a32
+ */
+class Fy
+{
+}
+
+/**
+ * @property null isNotAValidFnv1a64
+ */
+class Gd
+{
+}
+
+/**
+ * @property null isNotAValidGost
+ */
+class Hs
+{
+}
+
+/**
+ * @property null isNotAValidGost-crypto
+ */
+class Ht
+{
+}
+
+/**
+ * @property null isNotAValidHaval128
+ */
+class Gp
+{
+}
+
+/**
+ * @property null isNotAValidHaval160
+ */
+class Gx
+{
+}
+
+/**
+ * @property null isNotAValidHaval192
+ */
+class Hb
+{
+}
+
+/**
+ * @property null isNotAValidHaval224
+ */
+class Hf
+{
+}
+
+/**
+ * @property null isNotAValidHaval256
+ */
+class Hp
+{
+}
+
+/**
+ * @property null isNotAValidJoaat
+ */
+class Fz
+{
+}
+
+/**
+ * @property null isNotAValidMd2
+ */
+class Gm
+{
+}
+
+/**
+ * @property null isNotAValidMd4
+ */
+class Gl
+{
+}
+
+/**
+ * @property null isNotAValidMd5
+ */
+class Gk
+{
+}
+
+/**
+ * @property null isNotAValidRipemd128
+ */
+class Gn
+{
+}
+
+/**
+ * @property null isNotAValidRipemd160
+ */
+class Gv
+{
+}
+
+/**
+ * @property null isNotAValidRipemd256
+ */
+class Ho
+{
+}
+
+/**
+ * @property null isNotAValidRipemd320
+ */
+class Hv
+{
+}
+
+/**
+ * @property null isNotAValidSalsa10
+ */
+class Ie
+{
+}
+
+/**
+ * @property null isNotAValidSalsa20
+ */
+class Ig
+{
+}
+
+/**
+ * @property null isNotAValidSha1
+ */
+class Gu
+{
+}
+
+/**
+ * @property null isNotAValidSha224
+ */
+class He
+{
+}
+
+/**
+ * @property null isNotAValidSha256
+ */
+class Hn
+{
+}
+
+/**
+ * @property null isNotAValidSha384
+ */
+class Hx
+{
+}
+
+/**
+ * @property null isNotAValidSha512
+ */
+class Ic
+{
+}
+
+/**
+ * @property null isNotAValidSnefru
+ */
+class Hq
+{
+}
+
+/**
+ * @property null isNotAValidSnefru256
+ */
+class Hr
+{
+}
+
+/**
+ * @property null isNotAValidTiger128
+ */
+class Go
+{
+}
+
+/**
+ * @property null isNotAValidTiger160
+ */
+class Gw
+{
+}
+
+/**
+ * @property null isNotAValidTiger192
+ */
+class Ha
+{
+}
+
+/**
+ * @property null isNotAValidWhirlpool
+ */
+class Id
+{
+}
+
+/**
  * @property null isNotAnArray
  */
 class Co
@@ -638,7 +1130,7 @@ class N
 /**
  * @property null isValid
  */
-class Gq
+class Mb
 {
 }
 
@@ -654,7 +1146,7 @@ class Bw
  * Matches
  * @method null matches($value)
  */
-class Fs
+class Ld
 {
 }
 
@@ -670,7 +1162,7 @@ class Cz
  * StartsWith
  * @method null startsWith($value)
  */
-class Gd
+class Lo
 {
 }
 
