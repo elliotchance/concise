@@ -26,6 +26,8 @@ install:
   - $INSTALL
 
 before_script:
+  # Use a non-UTC timezone to make sure any test that doesn't specifically set a
+  # timezone will work under non-UTC timezones.
   - echo 'date.timezone = "Australia/Sydney"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:

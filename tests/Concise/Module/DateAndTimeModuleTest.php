@@ -5,7 +5,13 @@ namespace Concise\Module;
 use DateTime;
 
 /**
+ * This whole test suite will only work under PHP 5.4 and above becuase of the
+ * way dates are formatted differently in PHP 5.3. It doesn't matter too much
+ * that we skip these for PHP 5.3 becuase all the other versions of PHP will be
+ * tested on Travis.
+ * 
  * @group matcher
+ * @requires PHP 5.4
  */
 class DateAndTimeModuleTest extends AbstractModuleTestCase
 {
