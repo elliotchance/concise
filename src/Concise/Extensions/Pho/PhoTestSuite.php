@@ -22,6 +22,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
 {
     /**
      * Copied from PHPUnit_Util_Fileloader.
+     *
      * @param string $filename
      * @return mixed
      */
@@ -48,6 +49,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
 
     /**
      * Copied from PHPUnit_Util_Fileloader.
+     *
      * @param string $filename
      * @return string
      */
@@ -66,6 +68,22 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
         return $includePathFilename;
     }
 
+    /**
+     * This is basically a copy of the parent method. Since PHPUnit is written
+     * in a way that has massive methods that is extremely hard to extend we
+     * have to copy large blocks of code to make modifications without affecting
+     * the core logic.
+     *
+     * The only line that is changed from the parent method is:
+     *
+     * @code
+     * $filename = $this->checkAndLoad($filename);
+     * @endcode
+     *
+     * There is also some logic added onto the end of it.
+     *
+     * @param string $filename
+     */
     public function addTestFile($filename)
     {
         if (!is_string($filename)) {
@@ -140,6 +158,7 @@ class PhoTestSuite extends PHPUnit_Framework_TestSuite implements VirtualTestSui
             }
         }
 
+        // This is where the custom logic for Concise begins.
         $tokens = token_get_all(file_get_contents($filename));
         PhoTestCase::$count += count(
             array_filter(
