@@ -2,10 +2,10 @@
 
 namespace Concise\Extensions\Pho;
 
+use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 use Concise\Core\VirtualTestSuiteInterface;
 use pho\Console\Console;
-use pho\Reporter\ConciseReporter;
 use pho\Runner\Runner;
 use PHPUnit_Framework_TestResult;
 
@@ -29,7 +29,7 @@ class PhoTestCase extends TestCase implements VirtualTestSuiteInterface
         }
 
         ConciseReporter::$test = $this;
-        ConciseReporter::$testCase = new TestCase();
+        ConciseReporter::$testCase = new IndependentTestCase();
         ConciseReporter::$result = $result;
 
         // Create a new Console and parse arguments
