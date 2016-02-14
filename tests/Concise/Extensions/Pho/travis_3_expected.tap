@@ -9,13 +9,13 @@ not ok 3 - Concise\Extensions\Pho\PhoTestCase::test # TODO Incomplete Test
 ok 4 - Concise\Extensions\Pho\PhoTestCase::test
 not ok 5 - Failure: Concise\Extensions\Pho\PhoTestCase::test
   ---
-  message: '/home/travis/build/elliotchance/concise/src/Concise/Core/TestCase.php:327'
+  message: '/home/travis/build/elliotchance/concise/src/Concise/Core/TestCase.php:331'
   severity: fail
   ...
 ok 6 - Concise\Extensions\Pho\PhoTestCase::test
 not ok 7 - Failure: Concise\Extensions\Pho\PhoTestCase::test
   ---
-  message: '/Users/elliot/Development/concise/tests/Concise/Extensions/Pho/TestSpec.php:28'
+  message: '/home/travis/build/elliotchance/concise/tests/Concise/Extensions/Pho/TestSpec.php:28'
   severity: fail
   ...
 1..7
