@@ -4,7 +4,6 @@ namespace Concise\Core;
 
 use Concise\Module\BasicModule;
 use Exception;
-use PHPUnit_Framework_AssertionFailedError;
 
 class AssertionBuilderTest extends TestCase
 {
@@ -20,7 +19,9 @@ class AssertionBuilderTest extends TestCase
                 $this->getBasicModule()
             );
         } catch (DidNotMatchException $e) {
-            $this->assert($e->getMessage())->equals('custom message');
+            $this->assert($e->getMessage())->equals(
+                'custom message: my syntax'
+            );
         }
     }
 

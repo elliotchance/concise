@@ -16,11 +16,14 @@ class BuilderConstructorTest extends AbstractBuilderTestCase
     ) {
         if (self::MOCK_INTERFACE === $type) {
             $this->expectFailure(
-                'You cannot disable the constructor of an interface (\Concise\Mock\CombinationMockedInterface).'
+                'You cannot disable the constructor of an interface ' .
+                '(\Concise\Mock\CombinationMockedInterface).'
             );
         } elseif (self::MOCK_PARTIAL === $type) {
             $this->expectFailure(
-                'You cannot disable the constructor on a partial mock because any constructor would have already run (Concise\Mock\CombinationMockClass).'
+                'You cannot disable the constructor on a partial mock ' .
+                'because any constructor would have already run ' .
+                '(Concise\Mock\CombinationMockClass).'
             );
         }
         $mock = $builder->disableConstructor()->get();

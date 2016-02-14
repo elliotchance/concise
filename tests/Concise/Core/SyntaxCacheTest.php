@@ -2,8 +2,6 @@
 
 namespace Concise\Core;
 
-use Concise\Core\TestCase;
-
 class SyntaxCacheTest extends TestCase
 {
     /**
@@ -94,5 +92,19 @@ class SyntaxCacheTest extends TestCase
         $syntax2 = new Syntax('? foo ? bar', '\Concise\Core\TestCase::assert');
         $syntaxCache->add($syntax2);
         $syntaxCache->add($syntax1);
+    }
+
+    /**
+     * @group #269
+     */
+    public function testASubsyntaxMustUseWholeWords()
+    {
+        $syntaxCache = new SyntaxCache();
+        $syntax1 = new Syntax('? bar', '\Concise\Core\TestCase::assert');
+        $syntax2 = new Syntax('? barbaz', '\Concise\Core\TestCase::assert');
+        $syntaxCache->add($syntax1);
+        $syntaxCache->add($syntax2);
+        $this->assert($syntaxCache->getSyntax('? bar'))
+            ->isNotTheSameAs($syntaxCache->getSyntax('? barbaz'));
     }
 }
