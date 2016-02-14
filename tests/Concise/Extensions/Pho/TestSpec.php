@@ -53,5 +53,14 @@ describe(
                 $this->assert($this)->isAnInstanceOf('pho\Suite\Suite');
             }
         );
+
+        it(
+            'should handle bad method calls appropriately',
+            function () {
+                // BadMethodCallException with message
+                // "No such method Concise\Core\IndependentTestCase::fooBar()"
+                $this->fooBar();
+            }
+        );
     }
 );
