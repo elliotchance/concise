@@ -124,16 +124,21 @@ class AssertionBuilder
      */
     public function handleFailure(Exception $e, AbstractModule $module = null)
     {
-        $message = '';
-        if ($this->failureMessage) {
-            $message = $this->failureMessage;
-        } elseif ($e->getMessage()) {
-            $message = $e->getMessage();
-        } elseif ($module) {
-            $message = $module->renderFailureMessage(
+        $renderedMessge = '';
+        if ($module) {
+            $renderedMessge = $module->renderFailureMessage(
                 $module->syntax->getRawSyntax(),
                 $module->data
             );
+        }
+
+        $message = '';
+        if ($this->failureMessage) {
+            $message = $this->failureMessage . ': ' . $renderedMessge;
+        } elseif ($e->getMessage()) {
+            $message = $e->getMessage();
+        } elseif ($module) {
+            $message = $renderedMessge;
         }
 
         if ($this->verify) {
