@@ -26,7 +26,7 @@ install:
   - $INSTALL
 
 before_script:
-  - echo 'date.timezone = "UTC"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - echo 'date.timezone = "Australia/Sydney"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
   - $CUSTOM_SCRIPT
