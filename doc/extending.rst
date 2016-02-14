@@ -6,7 +6,7 @@ Using Concise with Other Frameworks
 
 Concise is designed to work perfectly over the top of PHPUnit. But it can also
 be used by any other framework by simply instantiating and managing the
-``Concise\Core\TestCase`` yourself:
+``Concise\Core\IndependentTestCase`` yourself:
 
 .. code-block:: php
 
@@ -18,7 +18,7 @@ be used by any other framework by simply instantiating and managing the
 
        public function __construct()
        {
-           $this->testCase = new TestCase();
+           $this->testCase = new IndependentTestCase();
        }
 
        public function checkSomething()

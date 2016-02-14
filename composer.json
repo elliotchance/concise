@@ -21,7 +21,7 @@
             "email": "elliotchance@gmail.com"
         }
     ],
-    "bin": [ "bin/concise" ],
+    "bin": [ "bin/concise", "bin/concise-init" ],
     "require": {
         "php": ">=5.3.9",
         "phpunit/phpunit": ">= 4.0",

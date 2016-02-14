@@ -132,7 +132,10 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
 
     public function write($buffer)
     {
-        return null;
+        if (strpos($buffer, 'Code Coverage Report') === false) {
+            return null;
+        }
+        echo $buffer;
     }
 
     public function printResult(PHPUnit_Framework_TestResult $result)

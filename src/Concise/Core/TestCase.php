@@ -11,12 +11,14 @@ use Concise\Module\BooleanModule;
 use Concise\Module\DateAndTimeModule;
 use Concise\Module\ExceptionModule;
 use Concise\Module\FileModule;
+use Concise\Module\HashModule;
 use Concise\Module\NumberModule;
 use Concise\Module\ObjectModule;
 use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
+use BadMethodCallException;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
@@ -53,7 +55,7 @@ if (file_exists($baseAssertionsPath)) {
     require_once($baseAssertionsPath);
 }
 
-class TestCase extends BaseAssertions
+abstract class TestCase extends BaseAssertions
 {
     /**
      * Used as a placeholder for with() clauses where the parameter is
@@ -66,11 +68,6 @@ class TestCase extends BaseAssertions
      * @var MockManager
      */
     protected $mockManager;
-
-    /**
-     * @var array
-     */
-    protected $properties = array();
 
     /**
      * @var array
@@ -110,54 +107,6 @@ class TestCase extends BaseAssertions
     protected function getModuleManagerInstance()
     {
         return ModuleManager::getInstance();
-    }
-
-    /**
-     * @param  string $name
-     * @throws Exception
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        if (!array_key_exists($name, $this->properties)) {
-            throw new Exception("No such attribute '{$name}'.");
-        }
-
-        return $this->properties[$name];
-    }
-
-    public function __isset($name)
-    {
-        return array_key_exists($name, $this->properties);
-    }
-
-    public function __unset($name)
-    {
-        unset($this->properties[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     * @throws Exception
-     */
-    public function __set($name, $value)
-    {
-        $parser = $this->getModuleManagerInstance();
-        if (in_array($name, $parser->getKeywords())) {
-            throw new Exception(
-                "You cannot assign an attribute with the keyword '$name'."
-            );
-        }
-        $this->properties[$name] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->properties + get_object_vars($this);
     }
 
     /**
@@ -204,6 +153,8 @@ class TestCase extends BaseAssertions
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+
+        SyntaxRenderer::$color = true;
         parent::tearDown();
     }
 
@@ -256,6 +207,7 @@ class TestCase extends BaseAssertions
             new DateAndTimeModule(),
             new ExceptionModule(),
             new FileModule(),
+            new HashModule(),
             new NumberModule(),
             new ObjectModule(),
             new RegularExpressionModule(),
@@ -373,7 +325,15 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        $verify = $name[0] === 'v';
+        $lowerName = strtolower($name);
+        if (substr($lowerName, 0, 6) !== 'assert' &&
+            substr($lowerName, 0, 6) !== 'verify') {
+            throw new BadMethodCallException(
+                "No such method " . get_class($this) . "::$name()"
+            );
+        }
+
+        $verify = substr($lowerName, 0, 1) === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
             $name = '_';

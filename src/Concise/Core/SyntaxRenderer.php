@@ -6,6 +6,8 @@ use Concise\Console\Theme\DefaultTheme;
 
 class SyntaxRenderer
 {
+    public static $color = true;
+
     /**
      * @param string $syntax
      * @param array  $data
@@ -16,7 +18,9 @@ class SyntaxRenderer
         ArgumentChecker::check($syntax, 'string');
 
         $renderer = new ValueRenderer();
-        $renderer->setTheme(new DefaultTheme());
+        if (self::$color) {
+            $renderer->setTheme(new DefaultTheme());
+        }
 
         return preg_replace_callback(
             '/\?/',

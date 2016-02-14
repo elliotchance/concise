@@ -2,14 +2,14 @@
 
 require_once('vendor/autoload.php');
 
+use Concise\Core\IndependentTestCase;
 use Concise\Core\ModuleManager;
 use Concise\Core\Syntax;
 use Concise\Module\AbstractModule;
-use Concise\Core\TestCase;
 
 // Simulate starting a test case which will cause the default ModuleManager
 // to load all the modules.
-$testCase = new TestCase();
+$testCase = new IndependentTestCase();
 $testCase->setUpBeforeClass();
 
 updateReadme();
