@@ -166,6 +166,7 @@ class HashModule extends AbstractModule
      * @syntax hash ? is a valid snefru
      * @syntax hash ? is a valid snefru256
      * @syntax hash ? is a valid gost
+     * @syntax hash ? is a valid gostcrypto
      */
     public function hash256()
     {

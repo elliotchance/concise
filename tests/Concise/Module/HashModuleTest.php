@@ -71,6 +71,7 @@ class HashModuleTest extends AbstractModuleTestCase
         // they contain all possible hexadecimal digits.
         'salsa10' => '2160027372',
         'salsa20' => '160027372',
+        'gostcrypto' => '160027372',
     );
 
     public function setUp()
