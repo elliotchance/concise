@@ -19,12 +19,12 @@ if (!$bootstrapFile) {
 
 require_once($bootstrapFile);
 
+use Concise\Core\IndependentTestCase;
 use Concise\Core\ModuleManager;
-use Concise\Core\TestCase;
 
 // Simulate starting a test case which will cause the default ModuleManager
 // to load all the modules.
-$testCase = new TestCase();
+$testCase = new IndependentTestCase();
 $testCase->setUpBeforeClass();
 
 updateBuilders();

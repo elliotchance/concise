@@ -100,7 +100,8 @@ Ignoring Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes you only need to restrict some of the incoming paramter values, in
-this case there is a ``ANYTHING`` constant provided by ``Concise\Core\TestCase``:
+this case there is a ``ANYTHING`` constant provided by
+``Concise\Core\TestCase``:
 
 .. code-block:: php
 

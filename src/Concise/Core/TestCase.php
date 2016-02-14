@@ -17,6 +17,7 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
+use BadMethodCallException;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
@@ -53,7 +54,7 @@ if (file_exists($baseAssertionsPath)) {
     require_once($baseAssertionsPath);
 }
 
-class TestCase extends BaseAssertions
+abstract class TestCase extends BaseAssertions
 {
     /**
      * Used as a placeholder for with() clauses where the parameter is
@@ -66,11 +67,6 @@ class TestCase extends BaseAssertions
      * @var MockManager
      */
     protected $mockManager;
-
-    /**
-     * @var array
-     */
-    protected $properties = array();
 
     /**
      * @var array
@@ -110,14 +106,6 @@ class TestCase extends BaseAssertions
     protected function getModuleManagerInstance()
     {
         return ModuleManager::getInstance();
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->properties + get_object_vars($this);
     }
 
     /**
@@ -333,7 +321,15 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        $verify = $name[0] === 'v';
+        $lowerName = strtolower($name);
+        if (substr($lowerName, 0, 6) !== 'assert' &&
+            substr($lowerName, 0, 6) !== 'verify') {
+            throw new BadMethodCallException(
+                "No such method " . get_class($this) . "::$name()"
+            );
+        }
+
+        $verify = substr($lowerName, 0, 1) === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
             $name = '_';
