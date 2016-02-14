@@ -67,6 +67,8 @@ class HashModuleTest extends AbstractModuleTestCase
         'adler32' => '289014769',
         'fnv132' => '1312987169',
         'fnv164' => '1920646076',
+        'fnv1a32' => '1312987169',
+        'fnv1a64' => '1920646076',
         'joaat' => '1388690451',
         // These are not avilable in all PHP versions. It cannot be guaranteed
         // they contain all possible hexadecimal digits.
