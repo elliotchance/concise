@@ -16,11 +16,17 @@ matrix:
       env: COMPOSER=composer41.json
     - php: 5.6
       env: COMPOSER=composer40.json
+    - php: 5.5
+      env:
+      - INSTALL="composer require danielstjules/pho"
+      - CUSTOM_SCRIPT="./tests/Concise/Extensions/Pho/travis.sh"
 
 install:
   - composer install
+  - $INSTALL
 script:
-  - bin/concise --ci $PHPUNIT_OPTIONS
+  - $CUSTOM_SCRIPT
+  - if [ -z "$CUSTOM_SCRIPT" ]; then bin/concise --ci $PHPUNIT_OPTIONS; fi
 
 after_script:
   - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"

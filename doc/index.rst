@@ -38,5 +38,5 @@ Highlights include:
    mocking
    syntaxes
    modules
-   extending
+   integrations
    changelog
