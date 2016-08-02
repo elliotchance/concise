@@ -24,9 +24,9 @@ class ProportionalProgressBar extends ProgressBar
         if (0 === $total) {
             return str_repeat('_', $size);
         }
-        $barSize = $size * $this->total / $total;
+        $barSize = min($size * $this->total / $total, $size);
         $bar = parent::render((int)$barSize, $parts);
-        $spaces = $size - substr_count($bar, ' ');
+        $spaces = max(0, $size - substr_count($bar, ' '));
 
         return $bar . str_repeat('_', $spaces);
     }
