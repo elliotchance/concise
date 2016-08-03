@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once('vendor/autoload.php');
+require_once(__DIR__ . '/../src/bootstrap.php');
 
 // Load the bootstrap from the XML configuration. This will contain any extra
 // custom modules that also need to be compiled.
