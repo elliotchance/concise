@@ -34,8 +34,18 @@ class Command extends PHPUnit_TextUI_Command
         }
 
         if ($this->phoExtensionIsInstalled()) {
+            // This branch is excluded from code coverage because it is covered
+            // by a separate Travis build job that runs the Pho test suite (from
+            // the vendor/ directory).
+            //
+            // @codeCoverageIgnoreStart
             $testRunner = new PhoTestRunner($this->arguments['loader']);
         } else {
+            // For some reason the `else` above is not properly excluded
+            // unless we put the end marker in this branch.
+            //
+            // @codeCoverageIgnoreEnd
+
             $testRunner = new DefaultTestRunner($this->arguments['loader']);
         }
 
