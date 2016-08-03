@@ -177,14 +177,28 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
                 // allow the test suites to return an explicit test count rather
                 // than relying on the native mechanics of PHPUnit to count the
                 // methods that start with "test".
+                //
+                // This branch is excluded from code coverage because the tests
+                // that walk over this line comes from the test suite in Pho
+                // (the vendor directory). We have a whole separate build step
+                // that checked the CLI output of those tests and those outputs
+                // would fail if this line wasn't walked over.
+                //
+                // @codeCoverageIgnoreStart
                 $resultPrinter->totalTestCount = $suite->getRealCount();
+                // @codeCoverageIgnoreEnd
             } elseif ($suite->testAt(0) instanceof VirtualTestSuiteInterface) {
                 // Alternatively we may be forced to use the standard PHPUnit
                 // suite but we can wrap the virtual test case inside it.
-
+                //
+                // This branch is also excluded from code coverage for the same
+                // reason explained above.
+                //
+                // @codeCoverageIgnoreStart
                 /** @var PhoTestCase $test */
                 $test = $suite->testAt(0);
                 $resultPrinter->totalTestCount = $test->getRealCount();
+                // @codeCoverageIgnoreEnd
             } else {
                 // Fall back to the default option which is relying on the
                 // native PHPUnit classes to report their count.

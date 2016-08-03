@@ -13,8 +13,6 @@ filter:
     - src/*
 
 build_failure_conditions:
-  # The test coverage should be 1. However, one line is not coverered and made
-  # it into the stable branch. I will fix this in a later pull request.
-  - 'project.metric("scrutinizer.test_coverage", < 0.99)'
+  - 'project.metric("scrutinizer.test_coverage", < 1)'
   - 'issues.severity(>= MAJOR).exists'
   - 'project.metric("scrutinizer.quality", < 9)'
