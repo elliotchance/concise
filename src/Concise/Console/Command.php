@@ -40,8 +40,12 @@ class Command extends PHPUnit_TextUI_Command
             //
             // @codeCoverageIgnoreStart
             $testRunner = new PhoTestRunner($this->arguments['loader']);
-            // @codeCoverageIgnoreEnd
         } else {
+            // For some reason the `else` above is not properly excluded
+            // unless we put the end marker in this branch.
+            //
+            // @codeCoverageIgnoreEnd
+
             $testRunner = new DefaultTestRunner($this->arguments['loader']);
         }
 
