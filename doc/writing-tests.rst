@@ -1,7 +1,7 @@
 Writing Tests
 =============
 
-If your familar with `PHPUnit`_ then there isn't much to explain here. You may
+If you're familar with `PHPUnit`_ then there isn't much to explain here. You may
 use all the same processes and constructs as PHPUnit - the only difference is
 the class you extend from will be ``Concise\Core\TestCase``.
 
@@ -33,13 +33,13 @@ creates the syntax for the assertion:
    // array ? has key ?
    $this->assertArray($a)->hasKey('foo');
 
-This syntax is used to find the assertion. If the assertion fails ti will be
+This syntax is used to find the assertion. If the assertion fails it will be
 able to render the data and the assertion in a pretty way.
 
 Verify vs Assert
 ----------------
 
-``verify`` is a stand in replacement for ``assert`` that does not stop the
+``verify`` is a stand-in replacement for ``assert`` that does not stop the
 execution of the current test. This is useful when testing several values where
 a failure would not cause an error:
 
