@@ -140,7 +140,7 @@ abstract class TestCase extends BaseAssertions
     /**
      * @return void
      */
-    public function tearDown()
+    protected function tearDown()
     {
         AssertionBuilder::validateLastAssertion();
         $this->mockManager->validateMocks();
@@ -221,7 +221,7 @@ abstract class TestCase extends BaseAssertions
         }
     }
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->verifyFailures = array();
