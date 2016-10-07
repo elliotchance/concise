@@ -16,23 +16,17 @@ class MyTinyTestSuite
 
     public function checkSomething()
     {
-        $this->testCase->setUp();
         $this->testCase->assert(3 + 5)->equals(8);
-        $this->testCase->tearDown();
     }
 
     public function checkSomethingElse()
     {
-        $this->testCase->setUp();
         $this->testCase->assert(3 + 5)->equals(7);
-        $this->testCase->tearDown();
     }
 
     public function checkSomethingAgain()
     {
-        $this->testCase->setUp();
         $this->testCase->assert(3 + 5)->equals(8);
-        $this->testCase->tearDown();
     }
 }
 
