@@ -10,6 +10,11 @@ class Version
      */
     public function findVendorFolder($path = null)
     {
+        // COMPOSER_VENDOR_DIR will overide any other defaults.
+        if ($vendorDirectory = getenv('COMPOSER_VENDOR_DIR')) {
+            return $vendorDirectory;
+        }
+
         if (null === $path) {
             $path = __DIR__;
         }

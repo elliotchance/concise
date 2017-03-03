@@ -89,4 +89,17 @@ class VersionTest extends TestCase
         $name = $this->version->getVersionNameForVersion($version);
         $this->assert($name)->equals($expectedName);
     }
+
+    /**
+     * @group #345
+     */
+    public function testVendorMayBeDefinedWithAnEnvironmentVariable()
+    {
+        putenv('COMPOSER_VENDOR_DIR=/some/path');
+
+        $this->assert($this->version->findVendorFolder())
+            ->equals('/some/path');
+
+        putenv('COMPOSER_VENDOR_DIR');
+    }
 }
