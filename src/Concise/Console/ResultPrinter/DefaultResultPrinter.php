@@ -60,6 +60,11 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $formatter;
 
+    /**
+     * @var bool
+     */
+    protected $colors = false;
+
     public function __construct(DefaultTheme $theme = null)
     {
         $terminal = new Terminal();

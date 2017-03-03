@@ -3,8 +3,8 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
-use Concise\Mock\Invocation;
 use Concise\Core\TestCase;
+use Concise\Mock\Invocation;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 
@@ -34,6 +34,11 @@ class DefaultResultPrinterStub extends DefaultResultPrinter
  */
 class DefaultResultPrinterTest extends TestCase
 {
+    /**
+     * @var DefaultResultPrinterStub
+     */
+    protected $resultPrinter;
+
     public function setUp()
     {
         parent::setUp();
@@ -402,5 +407,12 @@ class DefaultResultPrinterTest extends TestCase
 
         $this->assertString($resultPrinter->getAssertionString())
             ->doesNotContain(')8');
+    }
+
+    public function testColorsAreNotPrintedByDefault()
+    {
+        $this->assert(
+            $this->getProperty($this->resultPrinter, 'colors')
+        )->isFalse;
     }
 }
