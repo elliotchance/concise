@@ -15,7 +15,7 @@ class ColorText
     public function color($text, $color)
     {
         if ($color === ThemeColor::BLUE) {
-            return '\033[39;40m' . $text;
+            return '\033[39;40m' . $text . '\033[0m';
         }
         return $text;
     }

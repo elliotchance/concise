@@ -21,6 +21,13 @@ class ColorTextTest extends TestCase
     {
         $color = new ColorText();
         $this->assertString($color->color('foo', ThemeColor::BLUE))
-            ->contains('\033[39;40m');
+            ->startsWith('\033[39;40m');
+    }
+
+    public function testAValidColorWillAddClearEscapeCode()
+    {
+        $color = new ColorText();
+        $this->assertString($color->color('foo', ThemeColor::BLUE))
+            ->endsWith('\033[0m');
     }
 }
