@@ -49,12 +49,23 @@ abstract class ThemeTestCase extends TestCase
 
     /**
      * @dataProvider keysProvider
+     * @group #339
      */
     public function testThemeColorNameIsValid($expectedKey)
     {
         $theme = $this->theme->getTheme();
         $stub = new ColorStub();
-        $this->assertArray($stub->getStyles())->hasKey($theme[$expectedKey]);
+
+        if ($theme[$expectedKey] === ThemeColor::NONE) {
+            // None is a special color and is handled differently. This is a
+            // dummy assertion so that it doesn't complain of a risky test (a
+            // test with no assertions).
+            $this->assert($theme[$expectedKey])
+                ->exactlyEquals(ThemeColor::NONE);
+        } else {
+            $this->assertArray($stub->getStyles())
+                ->hasKey($theme[$expectedKey]);
+        }
     }
 
     public function testMustImplementColorTheme()

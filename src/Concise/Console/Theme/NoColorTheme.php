@@ -2,65 +2,65 @@
 
 namespace Concise\Console\Theme;
 
-class DefaultTheme extends AbstractTheme
+class NoColorTheme extends AbstractTheme
 {
     public function getValueIntegerColor()
     {
-        return ThemeColor::RED;
+        return ThemeColor::NONE;
     }
 
     public function getValueFloatColor()
     {
-        return ThemeColor::MAGENTA;
+        return ThemeColor::NONE;
     }
 
     public function getValueStringColor()
     {
-        return ThemeColor::YELLOW;
+        return ThemeColor::NONE;
     }
 
     public function getValueClosureColor()
     {
-        return ThemeColor::CYAN;
+        return ThemeColor::NONE;
     }
 
     public function getValueNullColor()
     {
-        return ThemeColor::BLUE;
+        return ThemeColor::NONE;
     }
 
     public function getValueBooleanColor()
     {
-        return ThemeColor::GREEN;
+        return ThemeColor::NONE;
     }
 
     public function getStatusPassedColor()
     {
-        return ThemeColor::GREEN;
+        return ThemeColor::NONE;
     }
 
     public function getStatusFailureColor()
     {
-        return ThemeColor::RED;
+        return ThemeColor::NONE;
     }
 
     public function getStatusErrorColor()
     {
-        return ThemeColor::RED;
+        return ThemeColor::NONE;
     }
 
     public function getStatusSkippedColor()
     {
-        return ThemeColor::BLUE;
+        return ThemeColor::NONE;
     }
 
     public function getStatusIncompleteColor()
     {
-        return ThemeColor::YELLOW;
+        return ThemeColor::NONE;
     }
 
     public function getStatusRiskyColor()
     {
-        return ThemeColor::YELLOW;
+        return ThemeColor::NONE;
     }
 }
