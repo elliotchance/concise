@@ -18,4 +18,6 @@ class ThemeColor
     const NONE = '';
 
     const RED = 'red';
+
+    const GREEN = 'green';
 }
