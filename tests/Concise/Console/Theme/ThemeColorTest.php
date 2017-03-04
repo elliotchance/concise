@@ -8,6 +8,11 @@ class ThemeColorTest extends TestCase
 {
     public function testRed()
     {
-        $this->assert(ThemeColor::RED)->equals('red');
+        $this->assert(ThemeColor::RED)->exactlyEquals('red');
+    }
+
+    public function testNone()
+    {
+        $this->assert(ThemeColor::NONE)->exactlyEquals('');
     }
 }
