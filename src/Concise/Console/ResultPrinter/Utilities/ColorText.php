@@ -13,13 +13,19 @@ use Concise\Console\Theme\ThemeColor;
  */
 class ColorText
 {
-    public function color($text, $color)
+    public function color($text, $color, $backgroudColor)
     {
         if ($color === ThemeColor::NONE) {
             return $text;
         }
 
         $c = new Color();
-        return (string)$c($text)->$color;
+        $t = $c($text)->$color;
+
+        if ($backgroudColor !== ThemeColor::NONE) {
+            $t->highlight($backgroudColor);
+        }
+
+        return (string)$t;
     }
 }
