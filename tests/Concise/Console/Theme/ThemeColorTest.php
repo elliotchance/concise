@@ -4,6 +4,9 @@ namespace Concise\Console\Theme;
 
 use Concise\Core\TestCase;
 
+/**
+ * @group #339
+ */
 class ThemeColorTest extends TestCase
 {
     public function testRed()
@@ -19,5 +22,10 @@ class ThemeColorTest extends TestCase
     public function testGreen()
     {
         $this->assert(ThemeColor::GREEN)->exactlyEquals('green');
+    }
+
+    public function testYellow()
+    {
+        $this->assert(ThemeColor::YELLOW)->exactlyEquals('yellow');
     }
 }

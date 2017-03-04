@@ -20,4 +20,6 @@ class ThemeColor
     const RED = 'red';
 
     const GREEN = 'green';
+
+    const YELLOW = 'yellow';
 }
