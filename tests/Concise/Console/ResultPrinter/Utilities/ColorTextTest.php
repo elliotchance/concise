@@ -16,4 +16,11 @@ class ColorTextTest extends TestCase
         $this->assert($color->color('foo', ThemeColor::NONE))
             ->exactlyEquals('foo');
     }
+
+    public function testAValidColorWillAddOpenEscapeCode()
+    {
+        $color = new ColorText();
+        $this->assertString($color->color('foo', ThemeColor::BLUE))
+            ->contains('\033[39;40m');
+    }
 }
