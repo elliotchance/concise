@@ -28,4 +28,9 @@ class ThemeColorTest extends TestCase
     {
         $this->assert(ThemeColor::YELLOW)->exactlyEquals('yellow');
     }
+
+    public function testBlue()
+    {
+        $this->assert(ThemeColor::BLUE)->exactlyEquals('blue');
+    }
 }

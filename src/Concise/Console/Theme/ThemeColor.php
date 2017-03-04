@@ -22,4 +22,6 @@ class ThemeColor
     const GREEN = 'green';
 
     const YELLOW = 'yellow';
+
+    const BLUE = 'blue';
 }
