@@ -24,4 +24,6 @@ class ThemeColor
     const YELLOW = 'yellow';
 
     const BLUE = 'blue';
+
+    const MAGENTA = 'magenta';
 }
