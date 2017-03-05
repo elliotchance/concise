@@ -2,6 +2,8 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Console\Theme\ThemeColor;
+
 class ProgressBarTest extends ProgressBarTestCase
 {
     /**
@@ -20,10 +22,10 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'green' => 5,
+                ThemeColor::GREEN => 5,
             )
         );
-        $this->assert($result)->equals($this->color(5, 'green'));
+        $this->assert($result)->equals($this->color(5, ThemeColor::GREEN));
     }
 
     public function testTwoColors()
@@ -31,12 +33,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             6,
             array(
-                'green' => 3,
-                'red' => 3,
+                ThemeColor::GREEN => 3,
+                ThemeColor::RED => 3,
             )
         );
         $this->assert($result)
-            ->equals($this->color(3, 'green') . $this->color(3, 'red'));
+            ->equals(
+                $this->color(3, ThemeColor::GREEN) .
+                $this->color(3, ThemeColor::RED)
+            );
     }
 
     public function testPartsMustBeProportionalToTheTotal()
@@ -44,12 +49,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'green' => 60,
-                'red' => 40,
+                ThemeColor::GREEN => 60,
+                ThemeColor::RED => 40,
             )
         );
         $this->assert($result)
-            ->equals($this->color(3, 'green') . $this->color(2, 'red'));
+            ->equals(
+                $this->color(3, ThemeColor::GREEN) .
+                $this->color(2, ThemeColor::RED)
+            );
     }
 
     public function testPartsAreNotAlwaysCleanlyDivisible()
@@ -57,12 +65,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'green' => 4,
-                'red' => 7,
+                ThemeColor::GREEN => 4,
+                ThemeColor::RED => 7,
             )
         );
         $this->assert($result)
-            ->equals($this->color(1, 'green') . $this->color(4, 'red'));
+            ->equals(
+                $this->color(1, ThemeColor::GREEN) .
+                $this->color(4, ThemeColor::RED)
+            );
     }
 
     public function testLessThanOneBarWillAlwaysShowOneBar()
@@ -70,12 +81,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'yellow' => 1,
-                'blue' => 19,
+                ThemeColor::YELLOW => 1,
+                ThemeColor::BLUE => 19,
             )
         );
         $this->assert($result)
-            ->equals($this->color(1, 'yellow') . $this->color(4, 'blue'));
+            ->equals(
+                $this->color(1, ThemeColor::YELLOW) .
+                $this->color(4, ThemeColor::BLUE)
+            );
     }
 
     public function testZeroIsAllowed()
@@ -83,12 +97,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'yellow' => 0,
-                'blue' => 19,
+                ThemeColor::YELLOW => 0,
+                ThemeColor::BLUE => 19,
             )
         );
         $this->assert($result)
-            ->equals($this->color(0, 'yellow') . $this->color(5, 'blue'));
+            ->equals(
+                $this->color(0, ThemeColor::YELLOW) .
+                $this->color(5, ThemeColor::BLUE)
+            );
     }
 
     public function testNegativeValuesAreAllowed()
@@ -96,12 +113,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'yellow' => -5,
-                'blue' => 19,
+                ThemeColor::YELLOW => -5,
+                ThemeColor::BLUE => 19,
             )
         );
         $this->assert($result)
-            ->equals($this->color(0, 'yellow') . $this->color(5, 'blue'));
+            ->equals(
+                $this->color(0, ThemeColor::YELLOW) .
+                $this->color(5, ThemeColor::BLUE)
+            );
     }
 
     public function testTotalIsZero()
@@ -109,12 +129,15 @@ class ProgressBarTest extends ProgressBarTestCase
         $result = $this->progressBar->render(
             5,
             array(
-                'yellow' => 1,
-                'blue' => -1,
+                ThemeColor::YELLOW => 1,
+                ThemeColor::BLUE => -1,
             )
         );
         $this->assert($result)
-            ->equals($this->color(0, 'yellow') . $this->color(0, 'blue'));
+            ->equals(
+                $this->color(0, ThemeColor::YELLOW) .
+                $this->color(0, ThemeColor::BLUE)
+            );
     }
 
     /**

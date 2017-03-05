@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Colors\Color;
+use Concise\Console\Theme\ThemeColor;
 use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
@@ -147,13 +147,17 @@ class RenderIssueTest extends TestCase
     public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned(
     )
     {
-        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $result = $this->render(
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            10
+        );
         $this->assertString($result)->contains("\033[41m  \033[0m  ");
     }
 
     public function testTestTitilesAreColored()
     {
-        $c = new Color();
+        $c = new ColorText();
+
         $this->test =
             $this->mock('PHPUnit_Framework_TestCase')->setCustomClassName(
                 'PHPUnit_Framework_TestCase_57c3cc10'
@@ -161,7 +165,10 @@ class RenderIssueTest extends TestCase
         $result =
             $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
         $this->assertString($result)->contains(
-            (string)$c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red()
+            $c->color(
+                "PHPUnit_Framework_TestCase_57c3cc10::foo",
+                ThemeColor::RED
+            )
         );
     }
 

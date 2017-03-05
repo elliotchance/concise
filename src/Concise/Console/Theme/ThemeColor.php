@@ -15,17 +15,30 @@ namespace Concise\Console\Theme;
  */
 class ThemeColor
 {
-    const NONE = '';
+    const NONE = 0;
 
-    const RED = 'red';
+    const RED = 1;
 
-    const GREEN = 'green';
+    const GREEN = 2;
 
-    const YELLOW = 'yellow';
+    const YELLOW = 3;
 
-    const BLUE = 'blue';
+    const BLUE = 4;
 
-    const MAGENTA = 'magenta';
+    const MAGENTA = 5;
 
-    const CYAN = 'cyan';
+    const CYAN = 6;
+
+    public static function getAllColors()
+    {
+        return [
+            self::NONE,
+            self::RED,
+            self::GREEN,
+            self::YELLOW,
+            self::BLUE,
+            self::MAGENTA,
+            self::CYAN,
+        ];
+    }
 }

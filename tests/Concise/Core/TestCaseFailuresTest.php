@@ -24,7 +24,7 @@ class TestCaseFailuresTest extends TestCase
         $this->assert('Something', true)->equals(false);
     }
 
-    protected function onNotSuccessfulTest(Exception $e)
+    protected function onNotSuccessfulTest($e)
     {
         self::$failures[] = $this->getName();
         $this->assert(self::$expectedFailures[$this->getName()])

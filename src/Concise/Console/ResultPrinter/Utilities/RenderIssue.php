@@ -2,8 +2,8 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\ThemeColor;
 use Concise\Core\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
@@ -75,14 +75,14 @@ class RenderIssue
         $issueNumber,
         PHPUnit_Framework_Test $test
     ) {
-        $c = new Color();
+        $c = new ColorText();
         $color = $this->colors[$status];
 
         $message = get_class($test);
         if ($test instanceof PHPUnit_Framework_TestCase) {
             $message .= '::' . $test->getName();
         }
-        return "$issueNumber. " . $c($message)->$color . "\n\n";
+        return "$issueNumber. " . $c->color($message, $color) . "\n\n";
     }
 
     /**
@@ -100,7 +100,7 @@ class RenderIssue
     ) {
         ArgumentChecker::check($issueNumber, 'integer');
 
-        $c = new Color();
+        $c = new ColorText();
         $top = $this->getHeading($status, $issueNumber, $test);
         $message = $e->getMessage() . "\n";
         $message .= $this->getPHPUnitDiff($e);
@@ -111,7 +111,7 @@ class RenderIssue
         $pad = str_repeat(' ', strlen($issueNumber));
 
         return $top . $this->prefixLines(
-            $c("  ")->highlight($this->colors[$status]) . $pad,
+            $c->color("  ", ThemeColor::NONE, $this->colors[$status]) . $pad,
             rtrim($message)
         );
     }

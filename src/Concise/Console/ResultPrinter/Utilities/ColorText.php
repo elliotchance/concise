@@ -2,7 +2,6 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Colors\Color;
 use Concise\Console\Theme\ThemeColor;
 
 /**
@@ -13,19 +12,31 @@ use Concise\Console\Theme\ThemeColor;
  */
 class ColorText
 {
-    public function color($text, $color, $backgroudColor)
+    public function color($text, $textColor, $backgroudColor = ThemeColor::NONE)
     {
-        if ($color === ThemeColor::NONE) {
-            return $text;
+        if ($textColor !== ThemeColor::NONE &&
+            $backgroudColor !== ThemeColor::NONE
+        ) {
+            return "\e[3$textColor;4{$backgroudColor}m$text\e[0m";
         }
 
-        $c = new Color();
-        $t = $c($text)->$color;
+        if ($textColor !== ThemeColor::NONE) {
+            return "\e[3{$textColor}m$text\e[0m";
+        }
 
         if ($backgroudColor !== ThemeColor::NONE) {
-            $t->highlight($backgroudColor);
+            return "\e[4{$backgroudColor}m$text\e[0m";
         }
 
-        return (string)$t;
+        return $text;
+    }
+
+    /**
+     * Remove the ANSI escape codes from a string.
+     * @param string $colored
+     */
+    public function clean($colored)
+    {
+        return preg_replace("/\e\\[[\\d;]+m/", '', $colored);
     }
 }

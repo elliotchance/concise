@@ -2,17 +2,8 @@
 
 namespace Concise\Console\Theme;
 
-use Colors\Color;
 use Concise\Core\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
-
-class ColorStub extends Color
-{
-    public function getStyles()
-    {
-        return $this->styles;
-    }
-}
 
 abstract class ThemeTestCase extends TestCase
 {
@@ -54,18 +45,9 @@ abstract class ThemeTestCase extends TestCase
     public function testThemeColorNameIsValid($expectedKey)
     {
         $theme = $this->theme->getTheme();
-        $stub = new ColorStub();
 
-        if ($theme[$expectedKey] === ThemeColor::NONE) {
-            // None is a special color and is handled differently. This is a
-            // dummy assertion so that it doesn't complain of a risky test (a
-            // test with no assertions).
-            $this->assert($theme[$expectedKey])
-                ->exactlyEquals(ThemeColor::NONE);
-        } else {
-            $this->assertArray($stub->getStyles())
-                ->hasKey($theme[$expectedKey]);
-        }
+        $this->assertArray(ThemeColor::getAllColors())
+            ->hasValue($theme[$expectedKey]);
     }
 
     public function testMustImplementColorTheme()

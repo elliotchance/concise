@@ -2,7 +2,7 @@
 
 namespace Concise\Mock;
 
-use Colors\Color;
+use Concise\Console\ResultPrinter\Utilities\ColorText;
 use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 
@@ -60,12 +60,12 @@ class VerifyFailuresTest extends TestCase
         $this->VerifySomething(123);
     }
 
-    protected function onNotSuccessfulTest(\Exception $e)
+    protected function onNotSuccessfulTest($e)
     {
-        $c = new Color();
+        $c = new ColorText();
         self::$failures[] = $this->getName();
         $this->assert(self::$expectedFailures[$this->getName()])
-            ->equals($c($e->getMessage())->clean());
+            ->equals($c->clean($e->getMessage()));
     }
 
     public static function tearDownAfterClass()

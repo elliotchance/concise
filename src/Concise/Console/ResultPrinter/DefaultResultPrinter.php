@@ -7,6 +7,7 @@ use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
 use Concise\Console\Terminal;
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\ThemeColor;
 use Concise\Console\TimeFormatter;
 use Exception;
 use PHPUnit_Framework_Test;
@@ -100,11 +101,12 @@ class DefaultResultPrinter extends AbstractResultPrinter
             $this->width,
             $this->getTotalTestCount(),
             array(
-                'green' => $this->getSuccessCount(),
-                'yellow' => $this->getIncompleteCount() +
+                ThemeColor::GREEN => $this->getSuccessCount(),
+                ThemeColor::YELLOW => $this->getIncompleteCount() +
                     $this->getRiskyCount(),
-                'blue' => $this->getSkippedCount(),
-                'red' => $this->getFailureCount() + $this->getErrorCount(),
+                ThemeColor::BLUE => $this->getSkippedCount(),
+                ThemeColor::RED => $this->getFailureCount() +
+                    $this->getErrorCount(),
             )
         ) . "\n";
     }

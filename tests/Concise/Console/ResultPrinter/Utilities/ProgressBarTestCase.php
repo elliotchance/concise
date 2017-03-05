@@ -2,15 +2,15 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Colors\Color;
+use Concise\Console\Theme\ThemeColor;
 use Concise\Core\TestCase;
 
 class ProgressBarTestCase extends TestCase
 {
     protected function color($size, $color)
     {
-        $c = new Color();
+        $c = new ColorText();
 
-        return (string)$c(str_repeat(' ', $size))->highlight($color);
+        return $c->color(str_repeat(' ', $size), ThemeColor::NONE, $color);
     }
 }

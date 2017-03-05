@@ -408,11 +408,4 @@ class DefaultResultPrinterTest extends TestCase
         $this->assertString($resultPrinter->getAssertionString())
             ->doesNotContain(')8');
     }
-
-    public function testColorsAreNotPrintedByDefault()
-    {
-        $this->assert(
-            $this->getProperty($this->resultPrinter, 'colors')
-        )->isFalse;
-    }
 }

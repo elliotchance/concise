@@ -2,6 +2,8 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Console\Theme\ThemeColor;
+
 class ProportionalProgressBarTest extends ProgressBarTestCase
 {
     public function testAProportionalProgressBarWillScaleDownAndFillToTheTotalWidth(
@@ -12,13 +14,15 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
             10,
             40,
             array(
-                'yellow' => 1,
-                'blue' => 19,
+                ThemeColor::YELLOW => 1,
+                ThemeColor::BLUE => 19,
             )
         );
         $this->assert($result)
             ->equals(
-                $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
+                $this->color(1, ThemeColor::YELLOW) .
+                $this->color(4, ThemeColor::BLUE) .
+                '_____'
             );
     }
 
@@ -29,13 +33,15 @@ class ProportionalProgressBarTest extends ProgressBarTestCase
             10,
             40,
             array(
-                'yellow' => 1,
-                'blue' => 19,
+                ThemeColor::YELLOW => 1,
+                ThemeColor::BLUE => 19,
             )
         );
         $this->assert($result)
             ->equals(
-                $this->color(1, 'yellow') . $this->color(4, 'blue') . '_____'
+                $this->color(1, ThemeColor::YELLOW) .
+                $this->color(4, ThemeColor::BLUE) .
+                '_____'
             );
     }
 

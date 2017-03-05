@@ -2,8 +2,8 @@
 
 namespace Concise\Core;
 
-use Colors\Color;
-use Concise\Core\TestCase;
+use Concise\Console\ResultPrinter\Utilities\ColorText;
+use Concise\Console\Theme\ThemeColor;
 
 class SyntaxRendererTest extends TestCase
 {
@@ -21,9 +21,12 @@ class SyntaxRendererTest extends TestCase
     public function testCanSubstituteValuesFromArrayIntoPlaceholders()
     {
         $data = array(1, '2', 3.1);
-        $c = new Color();
-        $expected = (string)$c('1')->red . ' is ' . (string)$c('"2"')->yellow .
-            ' bla ' . (string)$c(3.1)->magenta;
+        $c = new ColorText();
+        $expected = $c->color('1', ThemeColor::RED) .
+            ' is ' .
+            $c->color('"2"', ThemeColor::YELLOW) .
+            ' bla ' .
+            $c->color(3.1, ThemeColor::MAGENTA);
         $this->assert($expected)
             ->equals($this->renderer->render('? is ? bla ?', $data));
     }
@@ -42,7 +45,9 @@ class SyntaxRendererTest extends TestCase
      */
     public function testResourceRendering()
     {
-        $this->assertString($this->renderer->render('?', array(fopen('.', 'r'))))
+        $this->assertString(
+            $this->renderer->render('?', array(fopen('.', 'r')))
+        )
             ->matches('/Resource id #\\d+/');
     }
 }

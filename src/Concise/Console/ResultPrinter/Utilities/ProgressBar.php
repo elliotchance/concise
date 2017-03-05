@@ -2,7 +2,7 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
-use Colors\Color;
+use Concise\Console\Theme\ThemeColor;
 use Concise\Core\ArgumentChecker;
 
 class ProgressBar
@@ -44,9 +44,13 @@ class ProgressBar
 
     protected function colorSpaces($length, $colorName)
     {
-        $c = new Color();
+        $c = new ColorText();
 
-        return (string)$c(str_repeat(' ', $length))->highlight($colorName);
+        return $c->color(
+            str_repeat(' ', $length),
+            ThemeColor::NONE,
+            $colorName
+        );
     }
 
     /**

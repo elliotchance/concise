@@ -168,7 +168,7 @@ class MockBuilderFailuresTest extends TestCase
         $mock->myMethod('bar');
     }
 
-    protected function onNotSuccessfulTest(Exception $e)
+    protected function onNotSuccessfulTest($e)
     {
         self::$failures[] = $this->getName();
         $this->assert(self::$expectedFailures[$this->getName()])
