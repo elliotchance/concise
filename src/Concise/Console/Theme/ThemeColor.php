@@ -29,6 +29,8 @@ class ThemeColor
 
     const CYAN = 6;
 
+    const GRAY = 7;
+
     public static function getAllColors()
     {
         return [
@@ -39,6 +41,7 @@ class ThemeColor
             self::BLUE,
             self::MAGENTA,
             self::CYAN,
+            self::GRAY,
         ];
     }
 }
