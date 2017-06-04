@@ -19,7 +19,7 @@ matrix:
       env: COMPOSER=composer40.json
     - php: 5.5
       env:
-      - INSTALL="composer require danielstjules/pho"
+      - INSTALL="composer require danielstjules/pho:1.1.3"
       - CUSTOM_SCRIPT="./tests/Concise/Extensions/Pho/travis.sh"
 
 install:
