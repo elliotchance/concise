@@ -234,9 +234,6 @@ EOF;
                     str_replace(array('$', "\\'"), array('\\$', "'"), $args);
                 $actionCode .= <<<EOF
     \$matcher = new \Concise\Mock\ArgumentMatcher();
-    \$methodArguments = new \Concise\Mock\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
-                )}\\{$this->getClassName()}::$method");
     if (\$matcher->match(json_decode("$args"), \$a)) {
         {$action->getActionCode()}
     }
@@ -251,8 +248,10 @@ $prototype {
 		self::\$_methodCalls['$method'] = array();
 	}
     \$methodArguments = new \Concise\Mock\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
-        )}\\{$this->getClassName()}::$method");
+    \$a = \$methodArguments->getMethodArgumentValues(
+        func_get_args(),
+        "{$this->getNamespaceName()}\\{$this->getClassName()}::$method"
+    );
 	self::\$_methodCalls['$method'][] = \$a;
 	$actionCode
 	$defaultActionCode
