@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Colors\Color;
+use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 
 class VerifyFailuresTest extends TestCase
@@ -12,7 +13,17 @@ class VerifyFailuresTest extends TestCase
     protected static $expectedFailures = array(
         'testMultipleVerifyFailures' => "2 verify failures:\n\n10 equals 15\n\n15 equals 20",
         'testSingleVerifyFailures' => "1 verify failure:\n\n10 equals 15",
+        'testWillNotCallBadMethodCallExceptionIsPrefixedWithVerify' => "1 verify failure:\n\nNo such syntax \"something ?\"",
+        'testVerifyPrefixIsNotCaseSensitive' => "1 verify failure:\n\nNo such syntax \"something ?\"",
     );
+
+    protected static $didRun = array();
+
+    public function setUp()
+    {
+        parent::setUp();
+        self::$didRun[] = $this->getName();
+    }
 
     /**
      * @group #216
@@ -31,6 +42,24 @@ class VerifyFailuresTest extends TestCase
         $this->verify(10)->equals(15);
     }
 
+    /**
+     * @see TestCaseTest::testWillNotCallBadMethodCallExceptionIsPrefixedWithAssert().
+     * @group #317
+     */
+    public function testWillNotCallBadMethodCallExceptionIsPrefixedWithVerify()
+    {
+        $this->verifySomething(123);
+    }
+
+    /**
+     * @see TestCaseTest::testAssertPrefixIsNotCaseSensitive().
+     * @group #317
+     */
+    public function testVerifyPrefixIsNotCaseSensitive()
+    {
+        $this->VerifySomething(123);
+    }
+
     protected function onNotSuccessfulTest(\Exception $e)
     {
         $c = new Color();
@@ -41,9 +70,10 @@ class VerifyFailuresTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        $a = array_keys(self::$expectedFailures);
+        $a = self::$didRun;
         $b = self::$failures;
-        $testCase = new TestCase();
+
+        $testCase = new IndependentTestCase();
         $testCase->setUp();
         $testCase->assert(array_diff($a, $b))->equals(array_diff($b, $a));
         $testCase->tearDown();

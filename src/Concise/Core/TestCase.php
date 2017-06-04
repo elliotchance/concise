@@ -11,19 +11,51 @@ use Concise\Module\BooleanModule;
 use Concise\Module\DateAndTimeModule;
 use Concise\Module\ExceptionModule;
 use Concise\Module\FileModule;
+use Concise\Module\HashModule;
 use Concise\Module\NumberModule;
 use Concise\Module\ObjectModule;
 use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
+use BadMethodCallException;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
 use ReflectionException;
 
+/**
+ * This can not be inside the TestCase because we need to use it before the
+ * BaseAssertion class is loaded.
+ * @return string
+ */
+function getBaseAssertionsPath()
+{
+    // For different reasons people can opt to have the BaseAssertions somewhere
+    // else. This is done through the CONCISE_BASEASSERTIONS environment
+    // variable. The variable must contain the full path to the file.
+    //
+    // Some more error checking around this actually resolving to a file and
+    // handling the if the file does not exist is needed.
+    if ($tmpDirectory = getenv('CONCISE_BASEASSERTIONS')) {
+        return $tmpDirectory;
+    }
 
-class TestCase extends BaseAssertions
+    // Fall back to the default location.
+    return sys_get_temp_dir() . '/BaseAssertions.php';
+}
+
+// Before we let composer's autoloader load the default BaseAssertions that
+// comes precompiled with the concise package we want to see if the temp version
+// (which may contain extra assertions) has been generated and prefer that
+// version.
+$baseAssertionsPath = getBaseAssertionsPath();
+if (file_exists($baseAssertionsPath)) {
+    /** @noinspection PhpIncludeInspection */
+    require_once($baseAssertionsPath);
+}
+
+abstract class TestCase extends BaseAssertions
 {
     /**
      * Used as a placeholder for with() clauses where the parameter is
@@ -36,11 +68,6 @@ class TestCase extends BaseAssertions
      * @var MockManager
      */
     protected $mockManager;
-
-    /**
-     * @var array
-     */
-    protected $properties = array();
 
     /**
      * @var array
@@ -83,54 +110,6 @@ class TestCase extends BaseAssertions
     }
 
     /**
-     * @param  string $name
-     * @throws Exception
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        if (!array_key_exists($name, $this->properties)) {
-            throw new Exception("No such attribute '{$name}'.");
-        }
-
-        return $this->properties[$name];
-    }
-
-    public function __isset($name)
-    {
-        return array_key_exists($name, $this->properties);
-    }
-
-    public function __unset($name)
-    {
-        unset($this->properties[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     * @throws Exception
-     */
-    public function __set($name, $value)
-    {
-        $parser = $this->getModuleManagerInstance();
-        if (in_array($name, $parser->getKeywords())) {
-            throw new Exception(
-                "You cannot assign an attribute with the keyword '$name'."
-            );
-        }
-        $this->properties[$name] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->properties + get_object_vars($this);
-    }
-
-    /**
      * @return string
      */
     protected function getRealTestName()
@@ -168,10 +147,14 @@ class TestCase extends BaseAssertions
         if ($this->verifyFailures) {
             $count = count($this->verifyFailures);
             $message =
-                "$count verify failure" . ($count === 1 ? '' : 's') . ":";
+                "$count verify failure" .
+                ($count === 1 ? '' : 's') .
+                ":";
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
+
+        SyntaxRenderer::$color = true;
         parent::tearDown();
     }
 
@@ -224,6 +207,7 @@ class TestCase extends BaseAssertions
             new DateAndTimeModule(),
             new ExceptionModule(),
             new FileModule(),
+            new HashModule(),
             new NumberModule(),
             new ObjectModule(),
             new RegularExpressionModule(),
@@ -252,9 +236,31 @@ class TestCase extends BaseAssertions
         $this->mockManager->addMockInstance($mockBuilder, $mockInstance);
     }
 
-    protected function getReflectionProperty($object, $property)
-    {
-        $className = get_class($object);
+    protected function getReflectionProperty(
+        $object,
+        $property,
+        $className = null
+    ) {
+        // If no class is provided we need to determine which class contains the
+        // property.
+        if (null === $className) {
+            $className = get_class($object);
+            $reflection = new ReflectionClass($className);
+            while ($reflection) {
+                try {
+                    $reflection->getProperty($property);
+
+                    // If an exception was not thrown then we have found the
+                    // class that contains the property we are looking for so we
+                    // can remeber the class anem and jump out here.
+                    $className = $reflection->getName();
+                    break;
+                } catch (ReflectionException $e) {
+                    $reflection = $reflection->getParentClass();
+                }
+            }
+        }
+
         if ($object instanceof MockInterface) {
             $className = get_parent_class($object);
             if (!$className) {
@@ -263,6 +269,7 @@ class TestCase extends BaseAssertions
                 throw new Exception($message);
             }
         }
+
         $reflection = new ReflectionClass($className);
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
@@ -276,10 +283,14 @@ class TestCase extends BaseAssertions
         method_exists($object, '__get');
     }
 
-    public function getProperty($object, $property)
+    public function getProperty($object, $property, $class = null)
     {
         try {
-            $property = $this->getReflectionProperty($object, $property);
+            $property = $this->getReflectionProperty(
+                $object,
+                $property,
+                $class
+            );
             return $property->getValue($object);
         } catch (ReflectionException $e) {
             if ($this->shouldAccessProperty($object, $property)) {
@@ -290,10 +301,10 @@ class TestCase extends BaseAssertions
         }
     }
 
-    public function setProperty($object, $name, $value)
+    public function setProperty($object, $name, $value, $class = null)
     {
         try {
-            $property = $this->getReflectionProperty($object, $name);
+            $property = $this->getReflectionProperty($object, $name, $class);
             $property->setValue($object, $value);
         } catch (ReflectionException $e) {
             $object->$name = $value;
@@ -314,7 +325,15 @@ class TestCase extends BaseAssertions
 
     public function __call($name, $args)
     {
-        $verify = $name[0] === 'v';
+        $lowerName = strtolower($name);
+        if (substr($lowerName, 0, 6) !== 'assert' &&
+            substr($lowerName, 0, 6) !== 'verify') {
+            throw new BadMethodCallException(
+                "No such method " . get_class($this) . "::$name()"
+            );
+        }
+
+        $verify = substr($lowerName, 0, 1) === 'v';
         $name = lcfirst(substr($name, 6));
         if ($name === '') {
             $name = '_';

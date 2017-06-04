@@ -7,10 +7,12 @@ use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Extensions\Pho\PhoTestRunner;
 use Exception;
+use PHPUnit_TextUI_Command;
 use PHPUnit_TextUI_TestRunner;
 
-class Command extends \PHPUnit_TextUI_Command
+class Command extends PHPUnit_TextUI_Command
 {
     /**
      * @var string
@@ -30,7 +32,23 @@ class Command extends \PHPUnit_TextUI_Command
         ) {
             $resultPrinter->setVerbose(true);
         }
-        $testRunner = new DefaultTestRunner();
+
+        if ($this->phoExtensionIsInstalled()) {
+            // This branch is excluded from code coverage because it is covered
+            // by a separate Travis build job that runs the Pho test suite (from
+            // the vendor/ directory).
+            //
+            // @codeCoverageIgnoreStart
+            $testRunner = new PhoTestRunner($this->arguments['loader']);
+        } else {
+            // For some reason the `else` above is not properly excluded
+            // unless we put the end marker in this branch.
+            //
+            // @codeCoverageIgnoreEnd
+
+            $testRunner = new DefaultTestRunner($this->arguments['loader']);
+        }
+
         $testRunner->setPrinter(new ResultPrinterProxy($resultPrinter));
 
         return $testRunner;
@@ -120,5 +138,13 @@ class Command extends \PHPUnit_TextUI_Command
                     break;
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function phoExtensionIsInstalled()
+    {
+        return class_exists('pho\Runnable\Spec');
     }
 }

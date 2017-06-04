@@ -66,6 +66,7 @@ class VersionTest extends TestCase
             'unknown version is blank' => array('', ''),
             'version can be prefixed with v' => array('v1.1', 'Dark Matter'),
             'patch version' => array('1.2.3', 'String Theory'),
+            'semantic version' => array('2.0.0', 'Ultraviolet'),
             // Specific versions.
             array('1.0', 'Big Bang'),
             array('1.1', 'Dark Matter'),
@@ -75,6 +76,8 @@ class VersionTest extends TestCase
             array('1.5', 'Antimatter'),
             array('1.6', 'Entropy'),
             array('1.7', 'Multiverse'),
+            array('2.0', 'Ultraviolet'),
+            array('2.1', 'Photon'),
         );
     }
 

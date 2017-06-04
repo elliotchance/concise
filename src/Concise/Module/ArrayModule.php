@@ -251,4 +251,24 @@ class ArrayModule extends AbstractModule
     {
         return $this->arrayIsEmpty($a) || count($a) === count(array_unique($a));
     }
+
+    /**
+     * Assert an array has a specific number of elements.
+     *
+     * @syntax array ?:array count is ?:int
+     */
+    public function arrayCountIs()
+    {
+        $this->failIf(count($this->data[0]) !== $this->data[1]);
+    }
+
+    /**
+     * Assert an array does not have a specific number of elements.
+     *
+     * @syntax array ?:array count is not ?:int
+     */
+    public function arrayCountIsNot()
+    {
+        $this->failIf(count($this->data[0]) === $this->data[1]);
+    }
 }

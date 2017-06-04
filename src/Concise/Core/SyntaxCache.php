@@ -34,7 +34,7 @@ class SyntaxCache
         foreach ($this->syntaxes as $s) {
             $s1 = $s->getRawSyntax();
             $s2 = $syntax->getRawSyntax();
-            if ($this->startsWith($s1, $s2) || $this->startsWith($s2, $s1)) {
+            if ($this->isSubSyntax($s1, $s2) || $this->isSubSyntax($s2, $s1)) {
                 throw new Exception("Syntax '$s1' conflicts with '$s2'.");
             }
         }
@@ -42,12 +42,20 @@ class SyntaxCache
     }
 
     /**
-     * @param $s1
-     * @param $s2
+     * @param string $s1
+     * @param string $s2
      * @return bool
      */
-    protected function startsWith($s1, $s2)
+    protected function isSubSyntax($s1, $s2)
     {
-        return preg_match("/^" . preg_quote($s1) . "[^a-z]/", $s2);
+        // We can't simply compare strings because it would cause a
+        // false-positive with "? foo" and "? foobar" conflicting. Instead we
+        // treat whole words (splitting on the space) as characters with the
+        // same logic as a string-starts-with algorithm.
+        $s1p = explode(' ', $s1);
+        $s2p = explode(' ', $s2);
+        $count = count($s1p);
+
+        return array_slice($s1p, 0, $count) == array_slice($s2p, 0, $count);
     }
 }

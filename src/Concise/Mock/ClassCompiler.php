@@ -50,6 +50,11 @@ class ClassCompiler
     protected $disableConstructor;
 
     /**
+     * @var boolean
+     */
+    protected $disableClone;
+
+    /**
      * You may specify a custom class name for the mock.
      *
      * @var string
@@ -76,7 +81,8 @@ class ClassCompiler
         $className,
         $niceMock = false,
         array $constructorArgs = array(),
-        $disableConstructor = false
+        $disableConstructor = false,
+        $disableClone = false
     ) {
         ArgumentChecker::check($className, 'string');
         ArgumentChecker::check($niceMock, 'bool', 2);
@@ -97,6 +103,7 @@ class ClassCompiler
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
         $this->disableConstructor = $disableConstructor;
+        $this->disableClone = $disableClone;
     }
 
     /**
@@ -169,9 +176,11 @@ class ClassCompiler
     protected function makeMethodThrowException(\ReflectionMethod $method)
     {
         $prototype = $this->getPublicPrototype($method->getName());
-        $message = "{$method->getName()}() does not have an associated action - consider a niceMock()?";
+        $message = "{$method->getName(
+        )}() does not have an associated action - consider a niceMock()?";
         if ($method->isAbstract()) {
-            $message = "{$method->getName()}() is abstract and has no associated action.";
+            $message = "{$method->getName(
+            )}() is abstract and has no associated action.";
         }
         $this->methods[$method->getName()] = <<<EOF
 $prototype {
@@ -225,9 +234,6 @@ EOF;
                     str_replace(array('$', "\\'"), array('\\$', "'"), $args);
                 $actionCode .= <<<EOF
     \$matcher = new \Concise\Mock\ArgumentMatcher();
-    \$methodArguments = new \Concise\Mock\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
-                )}\\{$this->getClassName()}::$method");
     if (\$matcher->match(json_decode("$args"), \$a)) {
         {$action->getActionCode()}
     }
@@ -242,8 +248,10 @@ $prototype {
 		self::\$_methodCalls['$method'] = array();
 	}
     \$methodArguments = new \Concise\Mock\MethodArguments();
-    \$a = \$methodArguments->getMethodArgumentValues(func_get_args(), "{$this->getNamespaceName(
-        )}\\{$this->getClassName()}::$method");
+    \$a = \$methodArguments->getMethodArgumentValues(
+        func_get_args(),
+        "{$this->getNamespaceName()}\\{$this->getClassName()}::$method"
+    );
 	self::\$_methodCalls['$method'][] = \$a;
 	$actionCode
 	$defaultActionCode
@@ -264,6 +272,15 @@ EOF;
             $this->methods['__construct'] = 'public function __construct() {}';
         } else {
             unset($this->methods['__construct']);
+        }
+    }
+
+    protected function renderClone()
+    {
+        if ($this->disableClone) {
+            $this->methods['__clone'] = 'public function __clone() {}';
+        } else {
+            unset($this->methods['__clone']);
         }
     }
 
@@ -342,6 +359,7 @@ EOF;
         }
         $this->renderRules();
         $this->renderConstructor();
+        $this->renderClone();
         $this->exposeMethods();
         $this->setUpGetCallsForMethod();
 
@@ -438,7 +456,7 @@ EOF;
                 "Invalid class name '$className'."
             );
         }
-        if (class_exists($className)) {
+        if (class_exists($className, false)) {
             throw new InvalidArgumentException(
                 "You cannot use '$className' because a class with that name already exists."
             );

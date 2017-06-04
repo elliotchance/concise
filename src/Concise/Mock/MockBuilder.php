@@ -69,6 +69,11 @@ class MockBuilder
     protected $disableConstructor = false;
 
     /**
+     * @var boolean
+     */
+    protected $disableClone = false;
+
+    /**
      * A list of methods that should be exposed as public.
      *
      * @var array
@@ -212,7 +217,8 @@ class MockBuilder
             $this->className,
             $this->niceMock,
             $this->constructorArgs,
-            $this->disableConstructor
+            $this->disableConstructor,
+            $this->disableClone
         );
         if ($this->customClassName) {
             $compiler->setCustomClassName($this->customClassName);
@@ -488,11 +494,21 @@ class MockBuilder
     }
 
     /**
-     * @throws Exception trying to expose a method on a mock that is not nice.
-     * @internal param $string ... A list of methods to expose.
      * @return $this
      */
-    public function expose()
+    public function disableClone()
+    {
+        $this->disableClone = true;
+
+        return $this;
+    }
+
+    /**
+     * @throws Exception trying to expose a method on a mock that is not nice.
+     * @param string $string,... A list of methods to expose.
+     * @return $this
+     */
+    public function expose($string)
     {
         if (!$this->niceMock) {
             throw new Exception(
