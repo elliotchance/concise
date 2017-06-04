@@ -36,7 +36,7 @@ class DataTypeCheckerTest extends TestCase
     public function dataTypes()
     {
         return array(
-            'int' => array(array("int"), 123),
+            'int' => array(array("inta"), 123),
             'integer' => array(array("integer"), 123),
             'float' => array(array("float"), 1.23),
             'double' => array(array("double"), 1.23),

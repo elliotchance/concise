@@ -3,7 +3,10 @@
 namespace Concise\Core;
 
 use Concise\Console\ResultPrinter\Utilities\ColorText;
+use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\NoColorTheme;
 use Concise\Console\Theme\ThemeColor;
+use Concise\Console\Theme\ThemeInterface;
 
 class ValueRendererTest extends TestCase
 {
@@ -13,7 +16,7 @@ class ValueRendererTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->renderer = new ValueRenderer();
+        $this->renderer = new ValueRenderer(new NoColorTheme());
     }
 
     public function testIntegerValueRendersWithoutModification()
@@ -62,7 +65,7 @@ class ValueRendererTest extends TestCase
 
     public function testResourceValueRendersAsResource()
     {
-        $renderer = new ValueRenderer();
+        $renderer = new ValueRenderer(new NoColorTheme());
         $this->assertString($renderer->render(fopen('.', 'r')))
             ->startsWith("Resource id #");
     }
@@ -98,55 +101,65 @@ class ValueRendererTest extends TestCase
             ->equals('"foo"');
     }
 
-    protected function getThemeForValue(array $colors)
+    /**
+     * @param string $method
+     * @param integer $color
+     * @return ThemeInterface
+     */
+    protected function getThemeForValue($method, $color)
     {
-        return $this->mock('Concise\Console\Theme\DefaultTheme')->stub(
-            array('getTheme' => $colors)
-        )->get();
+        return $this->mock('Concise\Console\Theme\ThemeInterface')
+            ->expect($method)
+            ->andReturn($color)
+            ->get();
     }
 
     public function testIntegersWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.integer' => ThemeColor::MAGENTA)
+            'getValueIntegerColor',
+            ThemeColor::MAGENTA
         );
-        $this->renderer->setTheme($theme);
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
-        $this->assert($this->renderer->render(123))
+        $this->assert($renderer->render(123))
             ->equals($c->color(123, ThemeColor::MAGENTA));
     }
 
     public function testFloatingPointsWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.float' => ThemeColor::RED)
+            'getValueFloatColor',
+            ThemeColor::RED
         );
-        $this->renderer->setTheme($theme);
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
-        $this->assert($this->renderer->render(12.3))
+        $this->assert($renderer->render(12.3))
             ->equals($c->color(12.3, ThemeColor::RED));
     }
 
     public function testStringsWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.string' => ThemeColor::GREEN)
+            'getValueStringColor',
+            ThemeColor::GREEN
         );
-        $this->renderer->setTheme($theme);
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
-        $this->assert($this->renderer->render("12.3"))
+        $this->assert($renderer->render("12.3"))
             ->equals($c->color("\"12.3\"", ThemeColor::GREEN));
     }
 
     public function testClosureWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.closure' => ThemeColor::BLUE)
+            'getValueClosureColor',
+            ThemeColor::BLUE
         );
-        $this->renderer->setTheme($theme);
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
         $this->assert(
-            $this->renderer->render(
+            $renderer->render(
                 function () {
                 }
             )
@@ -155,47 +168,42 @@ class ValueRendererTest extends TestCase
 
     public function testObjectKeysWillBeColoredWhenAThemeIsSpecified()
     {
-        $theme = $this->getThemeForValue(
-            array(
-                'value.string' => ThemeColor::GREEN,
-                'value.integer' => 'yellow'
-            )
-        );
-        $this->renderer->setTheme($theme);
+        $theme = $this->mock('Concise\Console\Theme\ThemeInterface')
+            ->expect('getValueStringColor')->andReturn(ThemeColor::GREEN)
+            ->expect('getValueIntegerColor')->andReturn(ThemeColor::YELLOW)
+            ->get();
+        $renderer = new ValueRenderer($theme);
+
         $c = new ColorText();
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assertString($this->renderer->render($obj))
+        $this->assertString($renderer->render($obj))
             ->contains($c->color('"a"', ThemeColor::GREEN));
     }
 
     public function testObjectValuesWillBeColoredWhenAThemeIsSpecified()
     {
-        $theme = $this->getThemeForValue(
-            array(
-                'value.string' => 'yellow',
-                'value.integer' => ThemeColor::GREEN
-            )
-        );
-        $this->renderer->setTheme($theme);
+        $theme = $this->mock('Concise\Console\Theme\ThemeInterface')
+            ->expect('getValueStringColor')->andReturn(ThemeColor::YELLOW)
+            ->expect('getValueIntegerColor')->andReturn(ThemeColor::GREEN)
+            ->get();
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
 
         $obj = new \stdClass();
         $obj->a = 123;
-        $this->assertString($this->renderer->render($obj))
+        $this->assertString($renderer->render($obj))
             ->contains($c->color(123, ThemeColor::GREEN));
     }
 
     public function testArrayKeysWillBeColoredWhenAThemeIsSpecified()
     {
-        $theme = $this->getThemeForValue(
-            array('value.string' => ThemeColor::GREEN)
-        );
-        $this->renderer->setTheme($theme);
+        $theme = $this->getThemeForValue('getValueStringColor', ThemeColor::GREEN);
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
 
-        $this->assertString($this->renderer->render(array('bar')))
+        $this->assertString($renderer->render(array('bar')))
             ->contains($c->color('"bar"', ThemeColor::GREEN));
     }
 
@@ -239,24 +247,28 @@ class ValueRendererTest extends TestCase
     public function testNullWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.null' => ThemeColor::GREEN)
+            'getValueNullColor',
+            ThemeColor::GREEN
         );
-        $this->renderer->setTheme($theme);
+
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
 
-        $this->assertString($this->renderer->render(null))
+        $this->assertString($renderer->render(null))
             ->contains($c->color('null', ThemeColor::GREEN));
     }
 
     public function testBooleanWillBeColoredWhenAThemeIsSpecified()
     {
         $theme = $this->getThemeForValue(
-            array('value.boolean' => ThemeColor::RED)
+            'getValueBooleanColor',
+            ThemeColor::RED
         );
-        $this->renderer->setTheme($theme);
+
+        $renderer = new ValueRenderer($theme);
         $c = new ColorText();
 
-        $this->assertString($this->renderer->render(true))
+        $this->assertString($renderer->render(true))
             ->contains($c->color('true', ThemeColor::RED));
     }
 
@@ -267,9 +279,12 @@ class ValueRendererTest extends TestCase
 
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemory()
     {
-        $renderer = $this->niceMock('Concise\Core\ValueRenderer')->stub(
-            array('getMaximumDepth' => 2)
-        )->get();
+        $renderer = $this->niceMock(
+            'Concise\Core\ValueRenderer',
+            array(new NoColorTheme())
+        )
+            ->stub(array('getMaximumDepth' => 2))
+            ->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}');
         $this->assert($renderer->render($obj))
             ->equals("stdClass:{\n  \"a\":{\n    \"a\":...\n  }\n}");
@@ -278,9 +293,12 @@ class ValueRendererTest extends TestCase
     public function testMaximumDepthStopsRendererFromConsumingTooMuchMemoryForArrays(
     )
     {
-        $renderer = $this->niceMock('Concise\Core\ValueRenderer')->stub(
-            array('getMaximumDepth' => 2)
-        )->get();
+        $renderer = $this->niceMock(
+            'Concise\Core\ValueRenderer',
+            array(new NoColorTheme())
+        )
+            ->stub(array('getMaximumDepth' => 2))
+            ->get();
         $obj = json_decode('{"a":{"a":{"a":"b"}}}', true);
         $this->assert($renderer->render($obj))
             ->equals("{\n  \"a\":{\n    \"a\":...\n  }\n}");

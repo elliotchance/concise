@@ -14,25 +14,40 @@ class ColorText
 {
     public function color($text, $textColor, $backgroudColor = ThemeColor::NONE)
     {
+        $prefix = '';
         if ($textColor !== ThemeColor::NONE &&
             $backgroudColor !== ThemeColor::NONE
         ) {
-            return "\e[3$textColor;4{$backgroudColor}m$text\e[0m";
+            $prefix = "\e[3$textColor;4{$backgroudColor}m";
+        } elseif ($textColor !== ThemeColor::NONE) {
+            $prefix = "\e[3{$textColor}m";
+        } elseif ($backgroudColor !== ThemeColor::NONE) {
+            $prefix = "\e[4{$backgroudColor}m";
         }
 
-        if ($textColor !== ThemeColor::NONE) {
-            return "\e[3{$textColor}m$text\e[0m";
+        $suffix = '';
+        if ($prefix) {
+            $suffix = "\e[0m";
         }
 
-        if ($backgroudColor !== ThemeColor::NONE) {
-            return "\e[4{$backgroudColor}m$text\e[0m";
-        }
+        // A new line in most terminals will clear out some or all of the escape
+        // codes. We need to apply the formatting to each line.
+        $lines = explode("\n", $text);
 
-        return $text;
+        return implode(
+            "\n",
+            array_map(
+                function ($line) use ($prefix, $suffix) {
+                    return "$prefix$line$suffix";
+                },
+                $lines
+            )
+        );
     }
 
     /**
      * Remove the ANSI escape codes from a string.
+     *
      * @param string $colored
      */
     public function clean($colored)

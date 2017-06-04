@@ -2,14 +2,15 @@
 
 namespace Concise\Console;
 
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Core\SyntaxRenderer;
 use DateTime;
 
 class TestColors
 {
-    public function renderAll()
+    public function renderAll(ThemeInterface $theme)
     {
-        $renderer = new SyntaxRenderer();
+        $renderer = new SyntaxRenderer($theme);
         $lines = array(
             $renderer->render('? is null', array(null)),
             $renderer->render('? does not equal ?', array(true, false)),

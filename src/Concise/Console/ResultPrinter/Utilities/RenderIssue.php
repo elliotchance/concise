@@ -4,6 +4,7 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 use Concise\Console\Theme\DefaultTheme;
 use Concise\Console\Theme\ThemeColor;
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Core\ArgumentChecker;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
@@ -18,23 +19,23 @@ class RenderIssue
     protected $traceSimplifier;
 
     /**
-     * @var DefaultTheme
+     * @var ThemeInterface
      */
     protected $theme;
 
-    /**
-     * @var array
-     */
-    protected $colors;
-
-    public function __construct(TraceSimplifier $traceSimplifier = null)
-    {
+    public function __construct(
+        TraceSimplifier $traceSimplifier = null,
+        ThemeInterface $theme = null
+    ) {
         if (!$traceSimplifier) {
             $traceSimplifier = new TraceSimplifier();
         }
         $this->traceSimplifier = $traceSimplifier;
-        $this->theme = new DefaultTheme();
-        $this->colors = $this->theme->getTheme();
+
+        if (!$theme) {
+            $theme = new DefaultTheme();
+        }
+        $this->theme = $theme;
     }
 
     /**
@@ -76,7 +77,7 @@ class RenderIssue
         PHPUnit_Framework_Test $test
     ) {
         $c = new ColorText();
-        $color = $this->colors[$status];
+        $color = $this->theme->getColorForPHPUnitStatus($status);
 
         $message = get_class($test);
         if ($test instanceof PHPUnit_Framework_TestCase) {
@@ -100,18 +101,25 @@ class RenderIssue
     ) {
         ArgumentChecker::check($issueNumber, 'integer');
 
+        // 0. PHPUnit_Framework_TestCase_0cdabc3a::foo
+        $heading = $this->getHeading($status, $issueNumber, $test);
+
         $c = new ColorText();
-        $top = $this->getHeading($status, $issueNumber, $test);
         $message = $e->getMessage() . "\n";
         $message .= $this->getPHPUnitDiff($e);
-        $message .= "\n" . $this->prefixLines(
-                "\033[90m",
-                $this->traceSimplifier->render($e->getTrace())
-            ) . "\033[0m";
+        $message .= "\n" .
+            $c->color(
+                $this->traceSimplifier->render($e->getTrace()),
+                $this->theme->getStackTraceColor()
+            );
         $pad = str_repeat(' ', strlen($issueNumber));
 
-        return $top . $this->prefixLines(
-            $c->color("  ", ThemeColor::NONE, $this->colors[$status]) . $pad,
+        return $heading . $this->prefixLines(
+            $c->color(
+                "  ",
+                ThemeColor::NONE,
+                $this->theme->getColorForPHPUnitStatus($status)
+            ) . $pad,
             rtrim($message)
         );
     }

@@ -4,14 +4,19 @@ namespace Concise\Core;
 
 use Closure;
 use Concise\Console\ResultPrinter\Utilities\ColorText;
-use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\ThemeInterface;
 
 class ValueRenderer
 {
     /**
-     * @var array
+     * @var ThemeInterface
      */
     protected $theme;
+
+    public function __construct(ThemeInterface $theme)
+    {
+        $this->theme = $theme;
+    }
 
     /**
      * @param $value
@@ -23,7 +28,7 @@ class ValueRenderer
         $lines = explode("\n", $value);
         $string = array();
         foreach ($lines as $line) {
-            $string[] = $c->color($line, $this->theme['value.string']);
+            $string[] = $c->color($line, $this->theme->getValueStringColor());
         }
 
         return implode("\n", $string);
@@ -42,22 +47,25 @@ class ValueRenderer
                 : (string)$value;
         }
         if (is_null($value)) {
-            return $c->color('null', $this->theme['value.null']);
+            return $c->color('null', $this->theme->getValueNullColor());
         }
         if (is_bool($value)) {
             return $c->color(
                 json_encode($value),
-                $this->theme['value.boolean']
+                $this->theme->getValueBooleanColor()
             );
         }
         if (is_int($value)) {
-            return $c->color($value, $this->theme['value.integer']);
+            return $c->color($value, $this->theme->getValueIntegerColor());
         }
         if (is_float($value)) {
-            return $c->color($value, $this->theme['value.float']);
+            return $c->color($value, $this->theme->getValueFloatColor());
         }
         if (is_resource($value)) {
-            return $c->color((string)$value, $this->theme['value.string']);
+            return $c->color(
+                (string)$value,
+                $this->theme->getValueStringColor()
+            );
         }
 
         return $this->colorizeLines($value);
@@ -158,7 +166,7 @@ class ValueRenderer
     {
         $c = new ColorText();
         return $this->theme
-            ? $c->color('function', $this->theme['value.closure'])
+            ? $c->color('function', $this->theme->getValueClosureColor())
             : 'function';
     }
 
@@ -209,10 +217,5 @@ class ValueRenderer
     public function renderAll(array $items)
     {
         return implode(', ', array_map(array($this, 'render'), $items));
-    }
-
-    public function setTheme(DefaultTheme $theme)
-    {
-        $this->theme = $theme->getTheme();
     }
 }

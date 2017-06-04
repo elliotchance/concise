@@ -2,6 +2,7 @@
 
 namespace Concise\Core;
 
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Module\AbstractModule;
 use Exception;
 
@@ -28,8 +29,14 @@ class AssertionBuilder
      */
     public static $lastBuilder = null;
 
+    /**
+     * @var ThemeInterface
+     */
+    protected $theme;
+
     public function __construct(
         TestCase $testCase,
+        ThemeInterface $theme,
         $failureMessage = null,
         $verify = false
     ) {
@@ -38,6 +45,7 @@ class AssertionBuilder
         $this->testCase = $testCase;
         $this->failureMessage = $failureMessage;
         $this->verify = $verify;
+        $this->theme = $theme;
     }
 
     public function __call($words, $args)
@@ -72,7 +80,7 @@ class AssertionBuilder
                 try {
                     $data[$i] = $checker->check($types[$i], $data[$i]);
                 } catch (DataTypeMismatchException $e) {
-                    $renderer = new ValueRenderer();
+                    $renderer = new ValueRenderer($this->theme);
                     throw new Exception(
                         "Argument " .
                         ($i + 1) .

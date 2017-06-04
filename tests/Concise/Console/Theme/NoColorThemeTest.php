@@ -7,9 +7,11 @@ namespace Concise\Console\Theme;
  */
 class NoColorThemeTest extends ThemeTestCase
 {
-    public function setUp()
+    /**
+     * @return ThemeInterface
+     */
+    protected function getTheme()
     {
-        parent::setUp();
-        $this->theme = new NoColorTheme();
+        return new NoColorTheme();
     }
 }

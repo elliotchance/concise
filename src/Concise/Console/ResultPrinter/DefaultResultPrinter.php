@@ -6,8 +6,8 @@ use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
 use Concise\Console\ResultPrinter\Utilities\ProportionalProgressBar;
 use Concise\Console\ResultPrinter\Utilities\RenderIssue;
 use Concise\Console\Terminal;
-use Concise\Console\Theme\DefaultTheme;
 use Concise\Console\Theme\ThemeColor;
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Console\TimeFormatter;
 use Exception;
 use PHPUnit_Framework_Test;
@@ -22,7 +22,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
     protected $width;
 
     /**
-     * @var DefaultTheme
+     * @var ThemeInterface
      */
     protected $theme;
 
@@ -61,13 +61,10 @@ class DefaultResultPrinter extends AbstractResultPrinter
      */
     protected $formatter;
 
-    public function __construct(DefaultTheme $theme = null)
+    public function __construct(ThemeInterface $theme)
     {
         $terminal = new Terminal();
         $this->width = $terminal->getColumns();
-        if (!$theme) {
-            $theme = new DefaultTheme();
-        }
         $this->theme = $theme;
         $this->counter = new ProgressCounter(0, true);
         $this->startTime = time();
@@ -220,7 +217,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
                 }
         }
 
-        $renderIssue = new RenderIssue();
+        $renderIssue = new RenderIssue(null, $this->theme);
         $message = $renderIssue->render($status, $this->issueNumber, $test, $e);
         $this->appendTextAbove($message);
         ++$this->issueNumber;
@@ -229,8 +226,16 @@ class DefaultResultPrinter extends AbstractResultPrinter
     public function appendTextAbove($text)
     {
         $this->restoreCursor();
-        $this->write(str_replace("\n", "\033[K\n", $text) . "\n\n\n\n\n");
+        $this->write(
+            $this->processTextBeforWriting($text) .
+            $this->afterWriteTextAbove()
+        );
         $this->update();
+    }
+
+    protected function processTextBeforWriting($text)
+    {
+        return str_replace("\n", "\033[K\n", $text);
     }
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
@@ -238,5 +243,13 @@ class DefaultResultPrinter extends AbstractResultPrinter
         parent::startTestSuite($suite);
         $this->counter = new ProgressCounter($this->getTotalTestCount(), true);
         $this->update();
+    }
+
+    /**
+     * @return string
+     */
+    protected function afterWriteTextAbove()
+    {
+        return "\n\n\n\n\n";
     }
 }

@@ -7,6 +7,7 @@ use Concise\Console\ResultPrinter\DefaultResultPrinter;
 use Concise\Console\ResultPrinter\ResultPrinterProxy;
 use Concise\Console\TestRunner\DefaultTestRunner;
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\NoColorTheme;
 use Concise\Extensions\Pho\PhoTestRunner;
 use Exception;
 use PHPUnit_TextUI_Command;
@@ -23,6 +24,17 @@ class Command extends PHPUnit_TextUI_Command
      * @var bool
      */
     protected $ci = false;
+
+    protected static $instance;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
     protected function createRunner()
     {
@@ -99,11 +111,17 @@ class Command extends PHPUnit_TextUI_Command
     public function getResultPrinter()
     {
         $terminal = new Terminal();
-        if ($this->ci || $terminal->getColors() < 2) {
-            return new CIResultPrinter();
+
+        $theme = new DefaultTheme();
+        if ($terminal->getColors() < 2) {
+            $theme = new NoColorTheme();
         }
 
-        return new DefaultResultPrinter();
+        if ($this->ci) {
+            return new CIResultPrinter($theme);
+        }
+
+        return new DefaultResultPrinter($theme);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Core\TestCase;
 use PHPUnit_Runner_BaseTestRunner;
 
@@ -46,8 +47,11 @@ class ResultPrinterProxyDelegateTest extends TestCase
     protected function getMuteResultPrinter()
     {
         return $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->stub('write')->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->stub('write')
+            ->get();
     }
 
     public function testEndTestWillIncrementAssertionsByOneIfLegacyPhptIsUsed()
@@ -107,8 +111,13 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->stub('testAt')
             ->get();
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->stub('startTestSuite')->stub('endTestSuite')->stub('end')->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->stub('startTestSuite')
+            ->stub('endTestSuite')
+            ->stub('end')
+            ->get();
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->startTestSuite($suite);
         $proxy->startTestSuite($suite);
@@ -200,12 +209,16 @@ class ResultPrinterProxyDelegateTest extends TestCase
             array('getNumAssertions' => 1)
         )->get();
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->expect('endTest')->with(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
-            $testCase,
-            0.1
-        )->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->expect('endTest')
+            ->with(
+                PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
+                $testCase,
+                0.1
+            )
+            ->get();
         $proxy = new ResultPrinterProxy($resultPrinter);
         $proxy->endTest($testCase, 0.1);
     }

@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Closure;
+use Concise\Console\Command;
 use Concise\Core\ArgumentChecker;
 use Concise\Core\TestCase;
 use Concise\Core\ValueRenderer;
@@ -136,9 +137,9 @@ class MockBuilder
     }
 
     /**
-     * @param array                 $methods
+     * @param array $methods
      * @param Action\AbstractAction $action
-     * @param integer               $times
+     * @param integer $times
      */
     protected function addRule(
         array $methods,
@@ -420,9 +421,10 @@ class MockBuilder
         );
         foreach ($this->currentRules as $rule) {
             if ($this->rules[$rule][md5('null')]['hasSetTimes']) {
-                $renderer = new ValueRenderer();
                 $converter = new NumberToTimesConverter();
-                $args = $renderer->renderAll($this->currentWith);
+                $args = $this->getValueRenderer()->renderAll(
+                    $this->currentWith
+                );
                 $times = $this->rules[$rule][md5('null')]['times'];
                 $convertToMethod = $converter->convertToMethod($times);
                 throw new Exception(
@@ -652,5 +654,10 @@ class MockBuilder
             }
         }
         return $this;
+    }
+
+    public function getValueRenderer()
+    {
+        return new ValueRenderer(Command::getInstance()->getColorScheme());
     }
 }

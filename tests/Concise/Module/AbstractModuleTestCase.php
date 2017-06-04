@@ -3,7 +3,6 @@
 namespace Concise\Module;
 
 use Concise\Core\DidNotMatchException;
-use Concise\Core\SyntaxRenderer;
 use Concise\Core\TestCase;
 
 abstract class AbstractModuleTestCase extends TestCase
@@ -49,10 +48,7 @@ abstract class AbstractModuleTestCase extends TestCase
 
     protected function expectFailure($message)
     {
-        $this->setExpectedException(
-            'Concise\Core\DidNotMatchException',
-            $message
-        );
-        SyntaxRenderer::$color = false;
+        $this->expectException('Concise\Core\DidNotMatchException');
+        $this->expectExceptionMessage($message);
     }
 }

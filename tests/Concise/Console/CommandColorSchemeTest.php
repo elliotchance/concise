@@ -20,7 +20,7 @@ class CommandColorSchemeTest extends TestCase
     public function testDefaultColorSchemeIsSet()
     {
         $this->assert($this->command->getColorScheme())
-            ->isAnInstanceOf('Concise\Console\Theme\DefaultTheme');
+            ->isAnInstanceOf('Concise\Console\Theme\ThemeInterface');
     }
 
     public function testColorSchemeCanBeAClassName()

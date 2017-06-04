@@ -2,6 +2,7 @@
 
 namespace Concise\Core;
 
+use Concise\Console\Theme\NoColorTheme;
 use Concise\Module\AbstractModule;
 use Concise\Core\TestCase;
 
@@ -26,6 +27,7 @@ class ModuleManagerTest extends TestCase
     {
         parent::setUp();
         $this->parser = new ModuleManager();
+        $this->theme = new NoColorTheme();
     }
 
     public function testGetInstanceIsASingleton()

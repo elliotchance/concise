@@ -63,4 +63,9 @@ class DefaultTheme extends AbstractTheme
     {
         return ThemeColor::YELLOW;
     }
+
+    public function getStackTraceColor()
+    {
+        return ThemeColor::GRAY;
+    }
 }

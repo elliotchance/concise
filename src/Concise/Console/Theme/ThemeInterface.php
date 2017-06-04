@@ -5,67 +5,72 @@ namespace Concise\Console\Theme;
 interface ThemeInterface
 {
     /**
-     * @return array
+     * @return integer
      */
-    public function getTheme();
+    public function getColorForPHPUnitStatus($status);
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueIntegerColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueFloatColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueStringColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueClosureColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueNullColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getValueBooleanColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusPassedColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusFailureColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusErrorColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusSkippedColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusIncompleteColor();
 
     /**
-     * @return string
+     * @return integer
      */
     public function getStatusRiskyColor();
+
+    /**
+     * @return integer
+     */
+    public function getStackTraceColor();
 }

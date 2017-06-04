@@ -3,6 +3,7 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\ResultPrinter\Utilities\ProgressCounter;
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Core\TestCase;
 use Concise\Mock\Invocation;
 use Exception;
@@ -42,11 +43,17 @@ class DefaultResultPrinterTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->resultPrinter = new DefaultResultPrinterStub();
+        $this->resultPrinter = new DefaultResultPrinterStub(new DefaultTheme());
     }
 
     public function testWillGetConsoleWidthOnStartup()
     {
+        if (!getenv('TERM')) {
+            $this->markTestSkipped(
+                'This test will only work when $TERM is provided.'
+            );
+        }
+
         $this->assert($this->resultPrinter->getWidth())
             ->equals(exec('tput cols'));
     }
@@ -58,9 +65,9 @@ class DefaultResultPrinterTest extends TestCase
 
     public function testEndTestWillIncrementIssueNumber()
     {
-        $test = $this->mock('PHPUnit_Framework_TestCase')->stub(
-            array('getName' => '')
-        )->get();
+        $test = $this->mock('PHPUnit_Framework_TestCase')
+            ->stub(array('getName' => ''))
+            ->get();
         $exception = $this->mock('Exception')->get();
         $this->resultPrinter->endTest(
             PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
@@ -88,7 +95,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testEndTestWillUpdateProgress()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expects('update')->get();
         $test = $this->mock('PHPUnit_Framework_TestCase')->stub(
             array('getName' => '')
@@ -104,7 +112,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testUpdateWillPrintProgress()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('update')->expect('write')->stub('restoreCursor')->get();
         $resultPrinter->update();
     }
@@ -112,7 +121,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testStartSuiteWillUpdateProgress()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expects('update')->get();
         $suite = $this->niceMock('PHPUnit_Framework_TestSuite')->stub(
             array('getName' => '')
@@ -123,7 +133,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testEndWillUpdateProgress()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expects('update')->stub('write')->get();
         $resultPrinter->end();
     }
@@ -161,7 +172,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testVerbosePrintsIssues($status, $isVerbose, $willBePrinted)
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )
             ->expect('appendTextAbove')
             ->exactly($willBePrinted)
@@ -183,7 +195,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testAssertionStringIncludesTheRunTime()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->get();
 
         $this->assertString($resultPrinter->getAssertionString())
@@ -193,7 +206,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillPrintCorrectTimeElapsed()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
 
@@ -204,7 +218,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testUsesTimeFormatter()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 200);
 
@@ -222,7 +237,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testHasUpdatedIsTrueAfterUpdateIsCalled()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->stub('write')->get();
         $resultPrinter->update();
         $this->assert(
@@ -233,7 +249,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillRestoreCursorWithUpdate()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->stub('write')->expect('restoreCursor')->get();
         $resultPrinter->update();
         $resultPrinter->update();
@@ -242,7 +259,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillNotRestoreCursorWithFirstUpdate()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->stub('write')->expect('restoreCursor')->never()->get();
         $resultPrinter->update();
     }
@@ -251,7 +269,8 @@ class DefaultResultPrinterTest extends TestCase
     {
         /** @var $resultPrinter \Concise\Console\ResultPrinter\DefaultResultPrinter */
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->stub('write')->stub('update')->expect('restoreCursor')->get();
         $resultPrinter->appendTextAbove('');
     }
@@ -259,7 +278,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillShowEstimate()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->stub(
             array('getTotalTestCount' => 100, 'getTestCount' => 25)
         )->get();
@@ -272,7 +292,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillShowAccurateEstimate()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->stub(
             array('getTotalTestCount' => 100, 'getTestCount' => 25)
         )->get();
@@ -285,7 +306,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillNotShowEstimateIfETAIsZero()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->stub(
             array('getTotalTestCount' => 100, 'getTestCount' => 100)
         )->get();
@@ -298,7 +320,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillNotShowEstimateUntil5SecondsHaveElapsed()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->stub(
             array('getTotalTestCount' => 100, 'getTestCount' => 25)
         )->get();
@@ -311,7 +334,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillShowEstimateOnce5SecondsHaveElapsed()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )->expose('getAssertionString')->stub(
             array('getTotalTestCount' => 100, 'getTestCount' => 25)
         )->get();
@@ -327,10 +351,14 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillNotRefreshEstimatedTimeMoreThanOncePerSecond()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->expose('getRemainingTimeString')->stub(
-            array('getTotalTestCount' => 100, 'getTestCount' => 25)
-        )->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->expose('getRemainingTimeString')
+            ->stub(
+                array('getTotalTestCount' => 100, 'getTestCount' => 25)
+            )
+            ->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 5);
         $a = $resultPrinter->getRemainingTimeString();
         $this->setProperty($resultPrinter, 'startTime', time() - 10);
@@ -345,10 +373,14 @@ class DefaultResultPrinterTest extends TestCase
     public function testCanOutputShortenedAssertionString()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->expose('getRealAssertionString')->stub(
-            array('getTotalTestCount' => 1000, 'getTestCount' => 200)
-        )->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->expose('getRealAssertionString')
+            ->stub(
+                array('getTotalTestCount' => 1000, 'getTestCount' => 200)
+            )
+            ->get();
         $this->setProperty($resultPrinter, 'startTime', time() - 4000);
         $this->setProperty($resultPrinter, 'width', 80);
 
@@ -363,7 +395,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testWillUseShorterAssertionStringIfRequired()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )
             ->expose('getAssertionString')
             ->stub('getRealAssertionString')
@@ -385,7 +418,8 @@ class DefaultResultPrinterTest extends TestCase
     public function testThereIsOneSpaceBetweenTheTimeAndProgress()
     {
         $resultPrinter = $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
         )
             ->expose('getAssertionString')
             ->stub(

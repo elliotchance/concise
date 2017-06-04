@@ -7,23 +7,32 @@ use PHPUnit_Runner_BaseTestRunner;
 abstract class AbstractTheme implements ThemeInterface
 {
     /**
-     * @return array
+     * @return integer
      */
-    public function getTheme()
+    public function getColorForPHPUnitStatus($status)
     {
-        return array(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => $this->getStatusPassedColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => $this->getStatusFailureColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => $this->getStatusErrorColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => $this->getStatusSkippedColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => $this->getStatusIncompleteColor(),
-            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY => $this->getStatusRiskyColor(),
-            'value.integer' => $this->getValueIntegerColor(),
-            'value.float' => $this->getValueFloatColor(),
-            'value.string' => $this->getValueStringColor(),
-            'value.closure' => $this->getValueClosureColor(),
-            'value.null' => $this->getValueNullColor(),
-            'value.boolean' => $this->getValueBooleanColor(),
-        );
+        switch ($status) {
+            case PHPUnit_Runner_BaseTestRunner::STATUS_PASSED:
+                return $this->getStatusPassedColor();
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE:
+                return $this->getStatusFailureColor();
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_ERROR:
+                return $this->getStatusErrorColor();
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
+                return $this->getStatusSkippedColor();
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
+                return $this->getStatusIncompleteColor();
+
+            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
+                return $this->getStatusRiskyColor();
+        }
+
+        // It is either an invalid status or a new status that has been added to
+        // PHPUnit. Either way default to not applying any color.
+        return ThemeColor::NONE;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Concise\Mock;
 
+use Concise\Console\ResultPrinter\Utilities\ColorText;
+use Concise\Console\Theme\NoColorTheme;
 use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
 use Exception;
@@ -171,8 +173,9 @@ class MockBuilderFailuresTest extends TestCase
     protected function onNotSuccessfulTest($e)
     {
         self::$failures[] = $this->getName();
+        $color = new ColorText();
         $this->assert(self::$expectedFailures[$this->getName()])
-            ->equals($e->getMessage());
+            ->equals($color->clean($e->getMessage()));
     }
 
     public static function tearDownAfterClass()

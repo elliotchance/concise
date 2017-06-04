@@ -2,6 +2,8 @@
 
 namespace Concise\Module;
 
+use Concise\Console\Theme\NoColorTheme;
+
 /**
  * Testing hashes is quite easy. We want to select values that when hashed will
  * result in all the possible characters (16 for hexadecimal) in the one hash.
@@ -193,6 +195,7 @@ class HashModuleTest extends AbstractModuleTestCase
      */
     public function testHash($hash, $value, $error = null)
     {
+        $this->theme = new NoColorTheme();
         if ($error) {
             $this->expectFailure($error);
         }

@@ -2,6 +2,7 @@
 
 namespace Concise\Core;
 
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Module\BasicModule;
 use Exception;
 
@@ -13,7 +14,9 @@ class AssertionBuilderTest extends TestCase
     public function testHandleFailureWillUseCustomFailureMessageFirst()
     {
         try {
-            $builder = $this->getBuilder(array($this, 'custom message'));
+            $builder = $this->getBuilder(
+                array($this, new DefaultTheme(), 'custom message')
+            );
             $builder->handleFailure(
                 new Exception('foo bar'),
                 $this->getBasicModule()
@@ -31,7 +34,7 @@ class AssertionBuilderTest extends TestCase
     public function testDidNotMatchExceptionMessageIfNoCustomFailureMessage()
     {
         try {
-            $builder = $this->getBuilder(array($this));
+            $builder = $this->getBuilder(array($this, new DefaultTheme()));
             $builder->handleFailure(
                 new Exception('foo bar'),
                 $this->getBasicModule()
@@ -47,7 +50,7 @@ class AssertionBuilderTest extends TestCase
     public function testWillRenderSyntaxIsNoOtherMessageCanBeFound()
     {
         try {
-            $builder = $this->getBuilder(array($this));
+            $builder = $this->getBuilder(array($this, new DefaultTheme()));
             $builder->handleFailure(
                 new DidNotMatchException(),
                 $this->getBasicModule()

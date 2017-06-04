@@ -63,4 +63,9 @@ class NoColorTheme extends AbstractTheme
     {
         return ThemeColor::NONE;
     }
+
+    public function getStackTraceColor()
+    {
+        return ThemeColor::NONE;
+    }
 }

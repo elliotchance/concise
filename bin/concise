@@ -12,5 +12,5 @@ $versionName = $version->getVersionNameForVersion($versionNumber);
 echo trim("Concise " . $versionNumber . ' ' . $versionName);
 echo " by Elliot Chance.\n\n";
 
-$command = new Command();
+$command = Command::getInstance();
 $command->run($_SERVER['argv'], true);

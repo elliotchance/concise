@@ -16,6 +16,12 @@ class ColorTextTest extends TestCase
             // No color
             'a01' => array('foo', 'foo', ThemeColor::NONE, ThemeColor::NONE),
             'a02' => array('bar', 'bar', ThemeColor::NONE, ThemeColor::NONE),
+            'a03' => array(
+                "foo\nbar",
+                "foo\nbar",
+                ThemeColor::NONE,
+                ThemeColor::NONE
+            ),
 
             // Only foreground
             'b01' => array(
@@ -57,6 +63,12 @@ class ColorTextTest extends TestCase
             'b07' => array(
                 "\e[36mfoo\e[0m",
                 'foo',
+                ThemeColor::CYAN,
+                ThemeColor::NONE
+            ),
+            'b08' => array(
+                "\e[36mfoo\e[0m\n\e[36mbar\e[0m",
+                "foo\nbar",
                 ThemeColor::CYAN,
                 ThemeColor::NONE
             ),
@@ -104,6 +116,12 @@ class ColorTextTest extends TestCase
                 ThemeColor::NONE,
                 ThemeColor::CYAN
             ),
+            'c08' => array(
+                "\e[46mfoo\e[0m\n\e[46mbar\e[0m",
+                "foo\nbar",
+                ThemeColor::NONE,
+                ThemeColor::CYAN
+            ),
 
             // Foreground and background
             'd01' => array(
@@ -115,6 +133,12 @@ class ColorTextTest extends TestCase
             'd02' => array(
                 "\e[33;42mbar\e[0m",
                 'bar',
+                ThemeColor::YELLOW,
+                ThemeColor::GREEN
+            ),
+            'd03' => array(
+                "\e[33;42mfoo\e[0m\n\e[33;42mbar\e[0m",
+                "foo\nbar",
                 ThemeColor::YELLOW,
                 ThemeColor::GREEN
             ),
@@ -143,13 +167,11 @@ class ColorTextTest extends TestCase
     }
 
     /**
-     * @param $expected
-     * @param $text
-     * @param $textColor
-     * @param $backgroundColor
+     * @param string $colored
+     * @param string $expected
      * @dataProvider colorTests
      */
-    public function testClean($colored, $expected, $textColor, $backgroundColor)
+    public function testClean($colored, $expected)
     {
         $color = new ColorText();
 

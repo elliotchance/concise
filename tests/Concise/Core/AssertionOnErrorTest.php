@@ -11,7 +11,6 @@ class AssertionOnErrorTest extends TestCase
 
     public function testWillUseOnErrorMessage()
     {
-        SyntaxRenderer::$color = false;
         try {
             $this->assert('foo', 123)->equals(124);
             $this->fail('Did not fail.');

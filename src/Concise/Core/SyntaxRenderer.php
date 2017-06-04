@@ -3,10 +3,19 @@
 namespace Concise\Core;
 
 use Concise\Console\Theme\DefaultTheme;
+use Concise\Console\Theme\ThemeInterface;
 
 class SyntaxRenderer
 {
-    public static $color = true;
+    /**
+     * @var ThemeInterface
+     */
+    protected $theme;
+
+    public function __construct(ThemeInterface $theme)
+    {
+        $this->theme = $theme;
+    }
 
     /**
      * @param string $syntax
@@ -16,10 +25,7 @@ class SyntaxRenderer
     public function render($syntax, array $data = array())
     {
         ArgumentChecker::check($syntax, 'string');
-        $renderer = new ValueRenderer();
-        if (self::$color) {
-            $renderer->setTheme(new DefaultTheme());
-        }
+        $renderer = new ValueRenderer($this->theme);
         
         return preg_replace_callback(
             '/\?/',

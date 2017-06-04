@@ -2,9 +2,13 @@
 
 namespace Concise\Core;
 
+use BadMethodCallException;
+use Concise\Console\Command;
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Mock\MockBuilder;
 use Concise\Mock\MockInterface;
 use Concise\Mock\MockManager;
+use Concise\Module\AbstractModule;
 use Concise\Module\ArrayModule;
 use Concise\Module\BasicModule;
 use Concise\Module\BooleanModule;
@@ -18,7 +22,6 @@ use Concise\Module\RegularExpressionModule;
 use Concise\Module\StringModule;
 use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
-use BadMethodCallException;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use ReflectionClass;
@@ -27,6 +30,7 @@ use ReflectionException;
 /**
  * This can not be inside the TestCase because we need to use it before the
  * BaseAssertion class is loaded.
+ *
  * @return string
  */
 function getBaseAssertionsPath()
@@ -80,6 +84,11 @@ abstract class TestCase extends BaseAssertions
     protected $currentAssertion = null;
 
     /**
+     * @var ThemeInterface
+     */
+    protected $theme;
+
+    /**
      * @param string|null $name
      * @param array       $data
      * @param string      $dataName
@@ -90,7 +99,11 @@ abstract class TestCase extends BaseAssertions
         $dataName = ''
     ) {
         parent::__construct($name, $data, $dataName);
-        $this->mockManager = new MockManager($this);
+        $this->theme = Command::getInstance()->getColorScheme();
+        $this->mockManager = new MockManager(
+            $this,
+            new ValueRenderer($this->theme)
+        );
     }
 
     /**
@@ -154,7 +167,6 @@ abstract class TestCase extends BaseAssertions
             throw new PHPUnit_Framework_AssertionFailedError($message);
         }
 
-        SyntaxRenderer::$color = true;
         parent::tearDown();
     }
 
@@ -200,6 +212,7 @@ abstract class TestCase extends BaseAssertions
     {
         parent::setUpBeforeClass();
 
+        /** @var AbstractModule[] $modules */
         $modules = array(
             new ArrayModule(),
             new BasicModule(),
@@ -216,6 +229,7 @@ abstract class TestCase extends BaseAssertions
             new UrlModule(),
         );
         foreach ($modules as $module) {
+            $module->setSyntaxRenderer(new SyntaxRenderer())
             ModuleManager::getInstance()
                 ->loadModule($module);
         }
@@ -327,7 +341,8 @@ abstract class TestCase extends BaseAssertions
     {
         $lowerName = strtolower($name);
         if (substr($lowerName, 0, 6) !== 'assert' &&
-            substr($lowerName, 0, 6) !== 'verify') {
+            substr($lowerName, 0, 6) !== 'verify'
+        ) {
             throw new BadMethodCallException(
                 "No such method " . get_class($this) . "::$name()"
             );
@@ -340,12 +355,17 @@ abstract class TestCase extends BaseAssertions
         }
 
         if (count($args) > 1) {
-            $builder = new AssertionBuilder($this, $args[0], $verify);
+            $builder = new AssertionBuilder(
+                $this,
+                $this->theme,
+                $args[0],
+                $verify
+            );
             /** @noinspection PhpUndefinedMethodInspection */
             return $builder->$name($args[1]);
         }
 
-        $builder = new AssertionBuilder($this, null, $verify);
+        $builder = new AssertionBuilder($this, $this->theme, null, $verify);
         /** @noinspection PhpUndefinedMethodInspection */
         return $builder->$name($args[0]);
     }

@@ -3,62 +3,52 @@
 namespace Concise\Console\Theme;
 
 use Concise\Core\TestCase;
-use PHPUnit_Runner_BaseTestRunner;
 
 abstract class ThemeTestCase extends TestCase
 {
     /**
-     * @var DefaultTheme
+     * @return ThemeInterface
      */
-    protected $theme;
+    abstract protected function getTheme();
 
-    public function keysProvider()
+    public function colors()
     {
         return array(
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY),
-            array('value.integer'),
-            array('value.float'),
-            array('value.string'),
-            array('value.closure'),
-            array('value.null'),
-            array('value.boolean'),
+            array($this->getTheme()->getValueIntegerColor()),
+            array($this->getTheme()->getValueFloatColor()),
+            array($this->getTheme()->getValueStringColor()),
+            array($this->getTheme()->getValueClosureColor()),
+            array($this->getTheme()->getValueNullColor()),
+            array($this->getTheme()->getValueBooleanColor()),
+            array($this->getTheme()->getStatusPassedColor()),
+            array($this->getTheme()->getStatusFailureColor()),
+            array($this->getTheme()->getStatusErrorColor()),
+            array($this->getTheme()->getStatusSkippedColor()),
+            array($this->getTheme()->getStatusIncompleteColor()),
+            array($this->getTheme()->getStatusRiskyColor()),
+            array($this->getTheme()->getStackTraceColor()),
         );
-    }
-
-    /**
-     * @dataProvider keysProvider
-     */
-    public function testThemeHasKey($expectedKey)
-    {
-        $this->assertArray($this->theme->getTheme())->hasKey($expectedKey);
     }
 
     /**
      * @dataProvider keysProvider
      * @group #339
      */
-    public function testThemeColorNameIsValid($expectedKey)
+    public function testThemeColorIsValid($color)
     {
-        $theme = $this->theme->getTheme();
-
         $this->assertArray(ThemeColor::getAllColors())
-            ->hasValue($theme[$expectedKey]);
+            ->hasValue($color);
     }
 
     public function testMustImplementColorTheme()
     {
-        $this->assert($this->theme)
+        $this->assert($this->getTheme())
             ->isAnInstanceOf('Concise\Console\Theme\ThemeInterface');
     }
 
     public function testMustExtendAbstractTheme()
     {
-        $this->assert($this->theme)
+        $this->assert($this->getTheme())
             ->isAnInstanceOf('Concise\Console\Theme\AbstractTheme');
     }
 }

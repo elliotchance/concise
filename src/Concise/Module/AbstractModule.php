@@ -2,6 +2,7 @@
 
 namespace Concise\Module;
 
+use Concise\Console\Command;
 use Concise\Core\DidNotMatchException;
 use Concise\Core\Syntax;
 use Concise\Core\SyntaxRenderer;
@@ -17,6 +18,11 @@ abstract class AbstractModule
      */
     public $syntax;
 
+    /**
+     * @var SyntaxRenderer
+     */
+    protected $syntaxRenderer;
+
     abstract public function getName();
 
     /**
@@ -26,9 +32,7 @@ abstract class AbstractModule
      */
     public function renderFailureMessage($syntax, array $data = array())
     {
-        $renderer = new SyntaxRenderer();
-
-        return $renderer->render($syntax, $data);
+        return $this->getSyntaxRenderer()->render($syntax, $data);
     }
 
     /**
@@ -37,6 +41,28 @@ abstract class AbstractModule
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param SyntaxRenderer $syntaxRenderer
+     */
+    public function setSyntaxRenderer(SyntaxRenderer $syntaxRenderer)
+    {
+        $this->syntaxRenderer = $syntaxRenderer;
+    }
+
+    /**
+     * @return SyntaxRenderer
+     */
+    public function getSyntaxRenderer()
+    {
+        if (!$this->syntaxRenderer) {
+            $this->syntaxRenderer = new SyntaxRenderer(
+                Command::getInstance()->getColorScheme()
+            );
+        }
+
+        return $this->syntaxRenderer;
     }
 
     protected function getSyntaxesFromMethod(ReflectionMethod $method)

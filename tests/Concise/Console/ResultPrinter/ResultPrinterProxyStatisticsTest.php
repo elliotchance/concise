@@ -2,6 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Core\TestCase;
 
 class ResultPrinterProxyStatisticsTest extends TestCase
@@ -27,8 +28,11 @@ class ResultPrinterProxyStatisticsTest extends TestCase
     protected function getMuteResultPrinter()
     {
         return $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->stub('write')->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->stub('write')
+            ->get();
     }
 
     public function testAddFailureWillIncrementCount()

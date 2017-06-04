@@ -2,7 +2,9 @@
 
 namespace Concise\Console\ResultPrinter\Utilities;
 
+use Concise\Console\Theme\NoColorTheme;
 use Concise\Console\Theme\ThemeColor;
+use Concise\Console\Theme\ThemeInterface;
 use Concise\Core\TestCase;
 use Exception;
 use PHPUnit_Framework_ExpectationFailedException;
@@ -94,10 +96,11 @@ class RenderIssueTest extends TestCase
     protected function render(
         $status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
         $issueNumber = 0,
-        $text = "foo\nbar"
+        $text = "foo\nbar",
+        ThemeInterface $theme = null
     ) {
         $simplifier = $this->getTraceSimplifier($text);
-        $issue = new RenderIssue($simplifier);
+        $issue = new RenderIssue($simplifier, $theme);
 
         return $issue->render(
             $status,
@@ -116,13 +119,13 @@ class RenderIssueTest extends TestCase
     public function testStackTraceShouldBeRenderedInGrey()
     {
         $result = $this->render();
-        $this->assertString($result)->contains("\033[90mfoo");
+        $this->assertString($result)->contains("\033[37mfoo");
     }
 
     public function testAllStackTraceLinesShouldBeRenderedInGrey()
     {
         $result = $this->render();
-        $this->assertString($result)->contains("\033[90mbar");
+        $this->assertString($result)->contains("\033[37mbar");
     }
 
     public function testClearFormattingAfterStackTraceToPreventUnwantedTextFromBeingColored(
@@ -262,5 +265,19 @@ class RenderIssueTest extends TestCase
             "foo\n\rbar"
         );
         $this->assertString($result)->doesNotContain("\r");
+    }
+
+    /**
+     * @group #339
+     */
+    public function testNoColorWillNotInsertEscapeCodes()
+    {
+        $result = $this->render(
+            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            0,
+            "foo\n\rbar",
+            new NoColorTheme()
+        );
+        $this->assertString($result)->doesNotContain("[");
     }
 }

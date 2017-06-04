@@ -28,9 +28,17 @@ class MockManager
      */
     protected $argumentsForCallKey = array();
 
-    public function __construct(TestCase $testCase)
-    {
+    /**
+     * @var ValueRenderer
+     */
+    protected $valueRenderer;
+
+    public function __construct(
+        TestCase $testCase,
+        ValueRenderer $valueRenderer
+    ) {
         $this->testCase = $testCase;
+        $this->valueRenderer = $valueRenderer;
     }
 
     /**
@@ -196,9 +204,7 @@ class MockManager
             return '';
         }
 
-        $valueRenderer = new ValueRenderer();
-
-        return $valueRenderer->renderAll($args);
+        return $this->valueRenderer->renderAll($args);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Concise\Console\ResultPrinter;
 
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Core\TestCase;
 
 class ResultPrinterProxyTest extends TestCase
@@ -20,24 +21,31 @@ class ResultPrinterProxyTest extends TestCase
     protected function getMuteResultPrinter()
     {
         return $this->niceMock(
-            'Concise\Console\ResultPrinter\DefaultResultPrinter'
-        )->stub('write')->get();
+            'Concise\Console\ResultPrinter\DefaultResultPrinter',
+            [new DefaultTheme()]
+        )
+            ->stub('write')
+            ->get();
     }
 
     public function testProxyExtendsPHPUnit()
     {
-        $this->assert($this->proxy)->isAnInstanceOf('PHPUnit_TextUI_ResultPrinter');
+        $this->assert($this->proxy)->isAnInstanceOf(
+            'PHPUnit_TextUI_ResultPrinter'
+        );
     }
 
     public function testGetResultPrinterReturnsAResultPrinterInterface()
     {
         $this->assert($this->proxy->getResultPrinter())
-            ->isAnInstanceOf('Concise\Console\TestRunner\TestResultDelegateInterface');
+            ->isAnInstanceOf(
+                'Concise\Console\TestRunner\TestResultDelegateInterface'
+            );
     }
 
     public function testResultPrinterIsSetViaConstructor()
     {
-        $printer = new DefaultResultPrinter();
+        $printer = new DefaultResultPrinter(new DefaultTheme());
         $proxy = new ResultPrinterProxy($printer);
         $this->assert($proxy->getResultPrinter())->isTheSameAs($printer);
     }

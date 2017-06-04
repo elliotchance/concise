@@ -3,6 +3,7 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
+use Concise\Mock\Invocation;
 use Exception;
 use PHPUnit_Runner_BaseTestRunner;
 
@@ -18,18 +19,8 @@ class DefaultResultPrinterEndTest extends TestCase
 
     protected function getTheme()
     {
-        return $this->mock('Concise\Console\Theme\DefaultTheme')->stub(
-            array(
-                'getTheme' => array(
-                    PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => 'success_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => 'failure_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => 'error_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => 'skipped_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_RISKY => 'risky_color',
-                )
-            )
-        )->get();
+        return $this->mock('Concise\Console\Theme\DefaultTheme')
+            ->get();
     }
 
     public function endTestColorData()

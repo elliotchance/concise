@@ -2,8 +2,6 @@
 
 namespace Concise\Core;
 
-use Exception;
-
 class TestCaseFailuresTest extends TestCase
 {
     protected static $failures = array();
@@ -20,7 +18,6 @@ class TestCaseFailuresTest extends TestCase
 
     public function testCustomMessageWithAssertionFailure()
     {
-        SyntaxRenderer::$color = false;
         $this->assert('Something', true)->equals(false);
     }
 

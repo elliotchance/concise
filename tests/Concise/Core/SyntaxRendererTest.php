@@ -3,6 +3,7 @@
 namespace Concise\Core;
 
 use Concise\Console\ResultPrinter\Utilities\ColorText;
+use Concise\Console\Theme\DefaultTheme;
 use Concise\Console\Theme\ThemeColor;
 
 class SyntaxRendererTest extends TestCase
@@ -15,7 +16,7 @@ class SyntaxRendererTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->renderer = new SyntaxRenderer();
+        $this->renderer = new SyntaxRenderer(new DefaultTheme());
     }
 
     public function testCanSubstituteValuesFromArrayIntoPlaceholders()
