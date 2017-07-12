@@ -6,6 +6,7 @@ use Concise\Core\ArgumentChecker;
 use Reflection;
 use ReflectionMethod;
 use ReflectionParameter;
+use ReflectionType;
 
 class PrototypeBuilder
 {
@@ -53,6 +54,20 @@ class PrototypeBuilder
         return $param;
     }
 
+    protected function getReturnType(ReflectionMethod $method)
+    {
+        if ($method->hasReturnType()) {
+            $returnType = $method->getReturnType();
+            if ($returnType->isBuiltin()) {
+                return ' : ' . $method->getReturnType();
+            } else {
+                return ' : \\' . $method->getReturnType();
+            }
+        }
+
+        return '';
+    }
+
     /**
      * Get the prototype for the method.
      *
@@ -74,8 +89,10 @@ class PrototypeBuilder
             $parameters[] = $param;
         }
 
+        $returnType = $this->getReturnType($method);
+
         return $modifiers . ' function ' . $method->getName() . "(" .
-        implode(', ', $parameters) . ")";
+        implode(', ', $parameters) . ")" . $returnType;
     }
 
     /**
