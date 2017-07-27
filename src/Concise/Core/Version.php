@@ -75,6 +75,14 @@ class Version
             return '';
         }
 
-        return $names[substr($version, 0, 1)][substr($version, 2, 1)];
+        $major = substr($version, 0, 1);
+        $minor = substr($version, 2, 1);
+
+        if (isset($names[$major]) && isset($names[$major][$minor])) {
+            return $names[$major][$minor];
+        }
+        else {
+            return '';
+        }
     }
 }
