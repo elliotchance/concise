@@ -99,7 +99,7 @@ class ClassCompiler
             throw new InvalidArgumentException($message);
         }
         $this->className = ltrim($className, '\\');
-        $this->mockUnique = '_' . substr(md5(rand()), 24);
+        $this->mockUnique = '_' . substr(md5(mt_rand()), 24);
         $this->niceMock = $niceMock;
         $this->constructorArgs = $constructorArgs;
         $this->disableConstructor = $disableConstructor;
