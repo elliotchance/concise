@@ -30,9 +30,6 @@
     "require-dev": {
         "satooshi/php-coveralls": "dev-master"
     },
-    "suggest": {
-        "danielstjules/pho": "BDD test framework for PHP"
-    },
     "autoload": {
         "psr-0": {
         	"": [ "tests/", "src/" ]

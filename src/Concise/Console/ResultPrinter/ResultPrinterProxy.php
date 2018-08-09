@@ -3,7 +3,6 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\VirtualTestSuiteInterface;
-use Concise\Extensions\Pho\PhoTestCase;
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
@@ -171,13 +170,6 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     {
         $resultPrinter = $this->getResultPrinter();
         if ($this->startedTestSuite === 0) {
-            // Some branches are excluded from code coverage because the tests
-            // that walk over these conditions come from the test suite in Pho
-            // (the vendor/ directory). We have a whole separate build job
-            // that checkes the CLI output of those tests and those outputs
-            // would fail if these branches weren't walked over.
-            //
-            // @codeCoverageIgnoreStart
             if ($suite instanceof VirtualTestSuiteInterface) {
                 // Custom test suite loaders may instantiate an instance of
                 // VirtualTestSuiteInterface for the test suite. This is to
@@ -189,15 +181,9 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
                 // Alternatively we may be forced to use the standard PHPUnit
                 // suite but we can wrap the virtual test case inside it.
 
-                /** @var PhoTestCase $test */
                 $test = $suite->testAt(0);
                 $resultPrinter->totalTestCount = $test->getRealCount();
             } else {
-                // For some reason the `else` above is not properly excluded
-                // unless we put the end marker in this branch.
-                //
-                // @codeCoverageIgnoreEnd
-
                 // Fall back to the default option which is relying on the
                 // native PHPUnit classes to report their count.
                 $resultPrinter->totalTestCount = count($suite);
