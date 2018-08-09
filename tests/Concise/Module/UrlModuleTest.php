@@ -2,6 +2,8 @@
 
 namespace Concise\Module;
 
+use Concise\Core\DidNotMatchException;
+
 /**
  * @group matcher
  */
@@ -99,7 +101,7 @@ class UrlModuleTest extends AbstractModuleTestCase
     public function testUrl($url, $test, $value, $passes)
     {
         if (!$passes) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
         $this->assertUrl($url)->$test($value);
     }

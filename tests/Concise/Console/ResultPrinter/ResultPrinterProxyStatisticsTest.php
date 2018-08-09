@@ -3,6 +3,7 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
+use PHPUnit\Framework\AssertionFailedError;
 
 class ResultPrinterProxyStatisticsTest extends TestCase
 {
@@ -20,7 +21,7 @@ class ResultPrinterProxyStatisticsTest extends TestCase
         parent::setUp();
         $this->proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
         $this->test =
-            $this->mock('PHPUnit_Framework_TestCase')->stub('getName')->get();
+            $this->mock(TestCase::class)->stub('getName')->get();
         $this->e = $this->mock('Exception')->get();
     }
 
@@ -33,7 +34,7 @@ class ResultPrinterProxyStatisticsTest extends TestCase
 
     public function testAddFailureWillIncrementCount()
     {
-        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->get();
+        $this->e = $this->mock(AssertionFailedError::class)->get();
         $this->proxy->addFailure($this->test, $this->e, 0);
         $this->assert($this->proxy->getResultPrinter()->getFailureCount())
             ->equals(1);

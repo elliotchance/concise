@@ -11,7 +11,7 @@ class TestCaseTest extends TestCase
     public function testExtendsTestCase()
     {
         $this->assert('\Concise\Core\TestCase')
-            ->isAnInstanceOf('\PHPUnit_Framework_TestCase');
+            ->isAnInstanceOf(TestCase::class);
     }
 
     public function testCanSetAttribute()

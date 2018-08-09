@@ -4,9 +4,13 @@ namespace Concise\Console\ResultPrinter\Utilities;
 
 use Colors\Color;
 use Concise\Core\TestCase;
+use DateTime;
 use Exception;
-use PHPUnit_Framework_ExpectationFailedException;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Runner\BaseTestRunner;
+use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * @group cli
@@ -29,7 +33,7 @@ class RenderIssueTest extends TestCase
     {
         parent::setUp();
         $this->issue = new RenderIssue();
-        $this->test = $this->mock('PHPUnit_Framework_TestCase')->stub(
+        $this->test = $this->mock(TestCase::class)->stub(
             array('getName' => 'foo')
         )->get();
         $this->exception = new Exception('foo bar');
@@ -39,7 +43,7 @@ class RenderIssueTest extends TestCase
     {
         $this->assertString(
             $this->issue->render(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
@@ -52,7 +56,7 @@ class RenderIssueTest extends TestCase
         $class = get_class($this->test);
         $this->assertString(
             $this->issue->render(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
@@ -64,7 +68,7 @@ class RenderIssueTest extends TestCase
     {
         $this->assertString(
             $this->issue->render(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
@@ -76,7 +80,7 @@ class RenderIssueTest extends TestCase
     {
         $this->assertString(
             $this->issue->render(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 123,
                 $this->test,
                 $this->exception
@@ -92,7 +96,7 @@ class RenderIssueTest extends TestCase
     }
 
     protected function render(
-        $status = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+        $status = BaseTestRunner::STATUS_FAILURE,
         $issueNumber = 0,
         $text = "foo\nbar"
     ) {
@@ -140,76 +144,64 @@ class RenderIssueTest extends TestCase
 
     public function testPrefixAllLinesWithTheSameColorAsTheTitle()
     {
-        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED);
+        $result = $this->render(BaseTestRunner::STATUS_SKIPPED);
         $this->assertString($result)->contains("\033[44m  \033[0m ");
     }
 
     public function testWhenIssueNumberGoesAbove10ExtraPaddingWillBeProvidedToKeepItAligned(
     )
     {
-        $result = $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+        $result = $this->render(BaseTestRunner::STATUS_FAILURE, 10);
         $this->assertString($result)->contains("\033[41m  \033[0m  ");
     }
 
     public function testTestTitilesAreColored()
     {
         $c = new Color();
-        $this->test =
-            $this->mock('PHPUnit_Framework_TestCase')->setCustomClassName(
-                'PHPUnit_Framework_TestCase_57c3cc10'
-            )->stub(array('getName' => 'foo'))->get();
+        $this->test = $this->mock(DateTime::class)->setCustomClassName(
+            'DateTime_57c3cc10'
+        )->stub(array('format' => 'foo'))->get();
         $result =
-            $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+            $this->render(BaseTestRunner::STATUS_FAILURE, 10);
         $this->assertString($result)->contains(
-            (string)$c("PHPUnit_Framework_TestCase_57c3cc10::foo")->red()
+            (string)$c("DateTime_57c3cc10::foo")->red()
         );
     }
 
     public function testCanAcceptATestSuite()
     {
-        $this->test = $this->mock('\PHPUnit_Framework_TestSuite')
+        $this->test = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('getName' => 'foo'))
             ->get();
         $result = $this->render(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            BaseTestRunner::STATUS_FAILURE,
             10
         );
         $this->assertString($result)->contains("foo");
     }
 
-    protected function getComparisonFailure()
-    {
-        // PHPUnit 4.0
-        if (class_exists('PHPUnit_Framework_ComparisonFailure')) {
-            return 'PHPUnit_Framework_ComparisonFailure';
-        }
-
-        // PHPUnit 4.1+
-        return 'SebastianBergmann\Comparator\ComparisonFailure';
-    }
-
     public function testPHPUnitDiffsAreShown()
     {
         $failure = $this->mock(
-            $this->getComparisonFailure(),
+            ComparisonFailure::class,
             array('foo', 'bar', 'foo', 'bar')
         )->expect('getDiff')->andReturn('foobar')->get();
         $this->exception =
-            new PHPUnit_Framework_ExpectationFailedException('', $failure);
+            new ExpectationFailedException('', $failure);
 
         $result =
-            $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+            $this->render(BaseTestRunner::STATUS_FAILURE, 10);
         $this->assertString($result)->contains("foobar");
     }
 
     public function testPHPUnitDiffsAreShownOnlyIfAvailable()
     {
         $this->exception =
-            new PHPUnit_Framework_ExpectationFailedException('', null);
+            new ExpectationFailedException('', null);
 
         $result =
-            $this->render(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE, 10);
+            $this->render(BaseTestRunner::STATUS_FAILURE, 10);
         $this->assertString($result)->contains("10.");
     }
 
@@ -220,7 +212,7 @@ class RenderIssueTest extends TestCase
     public function testIssueNumberMustBeAnInteger()
     {
         $this->issue->render(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            BaseTestRunner::STATUS_FAILURE,
             'foo',
             $this->test,
             $this->exception
@@ -233,11 +225,11 @@ class RenderIssueTest extends TestCase
             'Concise\Console\ResultPrinter\Utilities\RenderIssue'
         )->expose('getHeading')->get();
 
-        $test = $this->mock('PHPUnit_Framework_Test')->get();
+        $test = $this->mock(Test::class)->get();
 
         $this->assertString(
             $renderIssue->getHeading(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 1,
                 $test
             )
@@ -250,7 +242,7 @@ class RenderIssueTest extends TestCase
     public function testWillRemoveCarriageReturns()
     {
         $result = $this->render(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            BaseTestRunner::STATUS_FAILURE,
             0,
             "foo\n\rbar"
         );

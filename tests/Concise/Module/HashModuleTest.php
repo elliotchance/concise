@@ -59,6 +59,12 @@ class HashModuleTest extends AbstractModuleTestCase
         'snefru256' => '2050122072',
         'gost' => '791752798',
         'gost-crypto' => '791752798',
+        'sha512/224' => '226365258',
+        'sha512/256' => '811200320',
+        'sha3-224' => '1727935155',
+        'sha3-256' => '1983790551',
+        'sha3-384' => '1004765743',
+        'sha3-512' => '682570934',
         // The following are shorter than 16 characters and so it is
         // impossible for them to contain all characters. In this case we
         // just use random values.

@@ -3,6 +3,7 @@
 namespace Concise\Mock;
 
 use Concise\Core\TestCase;
+use PHPUnit\Framework\AssertionFailedError;
 
 class DummyMock implements MockInterface
 {
@@ -31,7 +32,7 @@ class MockVerifyTest extends TestCase
             function () use ($mock, $self) {
                 $self->assertMock($mock);
             }
-        )->throws('PHPUnit_Framework_AssertionFailedError');
+        )->throws(AssertionFailedError::class);
     }
 
     public function testAssertingASecondaryMock()
@@ -43,7 +44,7 @@ class MockVerifyTest extends TestCase
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
             }
-        )->throws('PHPUnit_Framework_AssertionFailedError');
+        )->throws(AssertionFailedError::class);
     }
 
     public function testAssertingAMockDoesNotRemoveItFromTheManager()
@@ -64,11 +65,11 @@ class MockVerifyTest extends TestCase
             function () use ($mock2, $self) {
                 $self->assertMock($mock2);
             }
-        )->throws('PHPUnit_Framework_AssertionFailedError');
+        )->throws(AssertionFailedError::class);
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_AssertionFailedError
+     * @expectedException \PHPUnit\Framework\AssertionFailedError
      * @expectedExceptionMessage You cannot assert a mock more than once.
      */
     public function testYouCannotAssertAMockTwice()
@@ -79,7 +80,7 @@ class MockVerifyTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_AssertionFailedError
+     * @expectedException \PHPUnit\Framework\AssertionFailedError
      * @expectedExceptionMessage No such mock in mock manager.
      */
     public function testWillThrowExceptionIfMockBeingVerifiedDoesNotExist()

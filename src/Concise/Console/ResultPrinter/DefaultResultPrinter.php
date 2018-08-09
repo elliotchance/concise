@@ -9,9 +9,9 @@ use Concise\Console\Terminal;
 use Concise\Console\Theme\DefaultTheme;
 use Concise\Console\TimeFormatter;
 use Exception;
-use PHPUnit_Framework_Test;
-use PHPUnit_Framework_TestSuite;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Runner\BaseTestRunner;
 
 class DefaultResultPrinter extends AbstractResultPrinter
 {
@@ -78,13 +78,9 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->update();
     }
 
-    public function endTest(
-        $status,
-        PHPUnit_Framework_Test $test,
-        $time,
-        Exception $e = null
-    ) {
-        if ($status !== PHPUnit_Runner_BaseTestRunner::STATUS_PASSED &&
+    public function endTest($status, Test $test, $time, Exception $e = null)
+    {
+        if ($status !== BaseTestRunner::STATUS_PASSED &&
             $e instanceof Exception
         ) {
             $this->add($status, $test, $e);
@@ -97,16 +93,16 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $progressBar = new ProportionalProgressBar();
 
         return $progressBar->renderProportional(
-            $this->width,
-            $this->getTotalTestCount(),
-            array(
-                'green' => $this->getSuccessCount(),
-                'yellow' => $this->getIncompleteCount() +
-                    $this->getRiskyCount(),
-                'blue' => $this->getSkippedCount(),
-                'red' => $this->getFailureCount() + $this->getErrorCount(),
-            )
-        ) . "\n";
+                $this->width,
+                $this->getTotalTestCount(),
+                array(
+                    'green' => $this->getSuccessCount(),
+                    'yellow' => $this->getIncompleteCount() +
+                        $this->getRiskyCount(),
+                    'blue' => $this->getSkippedCount(),
+                    'red' => $this->getFailureCount() + $this->getErrorCount(),
+                )
+            ) . "\n";
     }
 
     protected function getSecondsElapsed()
@@ -203,16 +199,16 @@ class DefaultResultPrinter extends AbstractResultPrinter
     }
 
     /**
-     * @param integer                $status
-     * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
+     * @param integer   $status
+     * @param Test      $test
+     * @param Exception $e
      */
-    protected function add($status, PHPUnit_Framework_Test $test, Exception $e)
+    protected function add($status, Test $test, Exception $e)
     {
         switch ($status) {
-            case PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED:
-            case PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE:
-            case PHPUnit_Runner_BaseTestRunner::STATUS_RISKY:
+            case BaseTestRunner::STATUS_SKIPPED:
+            case BaseTestRunner::STATUS_INCOMPLETE:
+            case BaseTestRunner::STATUS_RISKY:
                 if (!$this->isVerbose()) {
                     return;
                 }
@@ -231,7 +227,7 @@ class DefaultResultPrinter extends AbstractResultPrinter
         $this->update();
     }
 
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(TestSuite $suite)
     {
         parent::startTestSuite($suite);
         $this->counter = new ProgressCounter($this->getTotalTestCount(), true);

@@ -3,14 +3,16 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Test;
+use PHPUnit\Runner\BaseTestRunner;
 
 class ResultPrinterProxyTestDelegateTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->test = $this->mock('PHPUnit_Framework_Test')->get();
+        $this->test = $this->mock(Test::class)->get();
         $this->e = $this->mock('Exception')->get();
     }
 
@@ -27,9 +29,9 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
 
     public function testAddFailureWillCallResultPrinter()
     {
-        $this->e = $this->mock('PHPUnit_Framework_AssertionFailedError')->get();
+        $this->e = $this->mock(AssertionFailedError::class)->get();
         $proxy = $this->getProxyThatExpectsStatus(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE
+            BaseTestRunner::STATUS_FAILURE
         );
         $proxy->addFailure($this->test, $this->e, 0.1);
     }
@@ -37,7 +39,7 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
     public function testAddErrorWillCallResultPrinter()
     {
         $proxy = $this->getProxyThatExpectsStatus(
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR
+            BaseTestRunner::STATUS_ERROR
         );
         $proxy->addError($this->test, $this->e, 0.1);
     }
@@ -45,7 +47,7 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
     public function testAddIncompleteWillCallResultPrinter()
     {
         $proxy = $this->getProxyThatExpectsStatus(
-            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE
+            BaseTestRunner::STATUS_INCOMPLETE
         );
         $proxy->addIncompleteTest($this->test, $this->e, 0.1);
     }
@@ -53,7 +55,7 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
     public function testAddSkippedWillCallResultPrinter()
     {
         $proxy = $this->getProxyThatExpectsStatus(
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED
+            BaseTestRunner::STATUS_SKIPPED
         );
         $proxy->addSkippedTest($this->test, $this->e, 0.1);
     }
@@ -61,7 +63,7 @@ class ResultPrinterProxyTestDelegateTest extends TestCase
     public function testAddRiskyWillCallResultPrinter()
     {
         $proxy = $this->getProxyThatExpectsStatus(
-            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY
+            BaseTestRunner::STATUS_RISKY
         );
         $proxy->addRiskyTest($this->test, $this->e, 0.1);
     }

@@ -4,7 +4,7 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
 use Exception;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Runner\BaseTestRunner;
 
 class DefaultResultPrinterEndTest extends TestCase
 {
@@ -13,7 +13,7 @@ class DefaultResultPrinterEndTest extends TestCase
         parent::setUp();
         $this->e = new Exception();
         $this->test =
-            $this->mock('PHPUnit_Framework_TestCase')->stub('getName')->get();
+            $this->mock(TestCase::class)->stub('getName')->get();
     }
 
     protected function getTheme()
@@ -21,12 +21,12 @@ class DefaultResultPrinterEndTest extends TestCase
         return $this->mock('Concise\Console\Theme\DefaultTheme')->stub(
             array(
                 'getTheme' => array(
-                    PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => 'success_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => 'failure_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => 'error_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => 'skipped_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete_color',
-                    PHPUnit_Runner_BaseTestRunner::STATUS_RISKY => 'risky_color',
+                    BaseTestRunner::STATUS_PASSED => 'success_color',
+                    BaseTestRunner::STATUS_FAILURE => 'failure_color',
+                    BaseTestRunner::STATUS_ERROR => 'error_color',
+                    BaseTestRunner::STATUS_SKIPPED => 'skipped_color',
+                    BaseTestRunner::STATUS_INCOMPLETE => 'incomplete_color',
+                    BaseTestRunner::STATUS_RISKY => 'risky_color',
                 )
             )
         )->get();
@@ -36,23 +36,23 @@ class DefaultResultPrinterEndTest extends TestCase
     {
         return array(
             'failure' => array(
-                PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+                BaseTestRunner::STATUS_FAILURE,
                 'failure_color'
             ),
             'error' => array(
-                PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,
+                BaseTestRunner::STATUS_ERROR,
                 'error_color'
             ),
             'skipped' => array(
-                PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,
+                BaseTestRunner::STATUS_SKIPPED,
                 'skipped_color'
             ),
             'incomplete' => array(
-                PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE,
+                BaseTestRunner::STATUS_INCOMPLETE,
                 'incomplete_color'
             ),
             'risky' => array(
-                PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,
+                BaseTestRunner::STATUS_RISKY,
                 'risky_color'
             ),
         );
@@ -81,7 +81,7 @@ class DefaultResultPrinterEndTest extends TestCase
             array($this->getTheme())
         )->expects('add')->never()->stub('update')->get();
         $resultPrinter->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
+            BaseTestRunner::STATUS_PASSED,
             $this->test,
             1.23,
             $this->e

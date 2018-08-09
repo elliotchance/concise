@@ -2,6 +2,7 @@
 
 namespace Concise\Module;
 
+use Concise\Core\DidNotMatchException;
 use DateTime;
 
 /**
@@ -72,7 +73,7 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
     public function testDateIsAfter($left, $right, $shouldPass)
     {
         if (!$shouldPass) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
         $this->assertDate($left)->isAfter($right);
     }
@@ -134,7 +135,7 @@ class DateAndTimeModuleTest extends AbstractModuleTestCase
     public function testDateIsBefore($left, $right, $shouldPass)
     {
         if (!$shouldPass) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
         $this->assertDate($left)->isBefore($right);
     }

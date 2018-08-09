@@ -6,9 +6,8 @@ use Colors\Color;
 use Concise\Console\Theme\DefaultTheme;
 use Concise\Core\ArgumentChecker;
 use Exception;
-use PHPUnit_Framework_ExpectationFailedException;
-use PHPUnit_Framework_Test;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\Test;
 
 class RenderIssue
 {
@@ -54,7 +53,7 @@ class RenderIssue
      */
     protected function getPHPUnitDiff(Exception $e)
     {
-        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
+        if ($e instanceof ExpectationFailedException) {
             $comparisonFailure = $e->getComparisonFailure();
             if ($comparisonFailure) {
                 return $comparisonFailure->getDiff();
@@ -67,19 +66,19 @@ class RenderIssue
     /**
      * @param integer                $status
      * @param integer                $issueNumber
-     * @param PHPUnit_Framework_Test $test
+     * @param Test $test
      * @return string
      */
     protected function getHeading(
         $status,
         $issueNumber,
-        PHPUnit_Framework_Test $test
+        Test $test
     ) {
         $c = new Color();
         $color = $this->colors[$status];
 
         $message = get_class($test);
-        if ($test instanceof PHPUnit_Framework_TestCase) {
+        if ($test instanceof TestCase) {
             $message .= '::' . $test->getName();
         }
         return "$issueNumber. " . $c($message)->$color . "\n\n";
@@ -88,14 +87,14 @@ class RenderIssue
     /**
      * @param integer                $status
      * @param integer                $issueNumber
-     * @param PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param Exception              $e
      * @return string
      */
     public function render(
         $status,
         $issueNumber,
-        PHPUnit_Framework_Test $test,
+        Test $test,
         Exception $e
     ) {
         ArgumentChecker::check($issueNumber, 'integer');

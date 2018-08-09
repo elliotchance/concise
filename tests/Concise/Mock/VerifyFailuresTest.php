@@ -5,6 +5,7 @@ namespace Concise\Mock;
 use Colors\Color;
 use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
+use Throwable;
 
 class VerifyFailuresTest extends TestCase
 {
@@ -60,7 +61,7 @@ class VerifyFailuresTest extends TestCase
         $this->VerifySomething(123);
     }
 
-    protected function onNotSuccessfulTest(\Exception $e)
+    protected function onNotSuccessfulTest(Throwable $e)
     {
         $c = new Color();
         self::$failures[] = $this->getName();

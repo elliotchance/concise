@@ -20,7 +20,7 @@ use Concise\Module\TypeModule;
 use Concise\Module\UrlModule;
 use BadMethodCallException;
 use Exception;
-use PHPUnit_Framework_AssertionFailedError;
+use PHPUnit\Framework\AssertionFailedError;
 use ReflectionClass;
 use ReflectionException;
 
@@ -151,7 +151,7 @@ abstract class TestCase extends BaseAssertions
                 ($count === 1 ? '' : 's') .
                 ":";
             $message .= "\n\n" . implode("\n\n", $this->verifyFailures);
-            throw new PHPUnit_Framework_AssertionFailedError($message);
+            throw new AssertionFailedError($message);
         }
 
         SyntaxRenderer::$color = true;
@@ -162,6 +162,7 @@ abstract class TestCase extends BaseAssertions
      * @param  string $className
      * @param  array  $constructorArgs
      * @return MockBuilder
+     * @throws Exception
      */
     public function mock(
         $className = '\stdClass',
@@ -174,6 +175,7 @@ abstract class TestCase extends BaseAssertions
      * @param  string $className
      * @param  array  $constructorArgs
      * @return MockBuilder
+     * @throws Exception
      */
     public function niceMock(
         $className = '\stdClass',
@@ -185,6 +187,7 @@ abstract class TestCase extends BaseAssertions
     /**
      * @param object $instance
      * @return MockBuilder
+     * @throws Exception
      */
     public function partialMock($instance)
     {

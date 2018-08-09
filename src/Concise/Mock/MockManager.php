@@ -4,7 +4,7 @@ namespace Concise\Mock;
 
 use Concise\Core\TestCase;
 use Concise\Core\ValueRenderer;
-use PHPUnit_Framework_AssertionFailedError;
+use PHPUnit\Framework\AssertionFailedError;
 
 class MockManager
 {
@@ -82,7 +82,7 @@ class MockManager
             $converter->convert($actualTimes),
             $this->didReceive()
         );
-        throw new \PHPUnit_Framework_AssertionFailedError($msg);
+        throw new AssertionFailedError($msg);
     }
 
     protected function getKeyForCall(
@@ -214,7 +214,7 @@ class MockManager
         foreach (self::$mocks as &$m) {
             if ($mock === $m['instance']) {
                 if ($m['validated']) {
-                    throw new PHPUnit_Framework_AssertionFailedError(
+                    throw new AssertionFailedError(
                         'You cannot assert a mock more than once.'
                     );
                 }
@@ -222,7 +222,7 @@ class MockManager
             }
         }
 
-        throw new PHPUnit_Framework_AssertionFailedError(
+        throw new AssertionFailedError(
             'No such mock in mock manager.'
         );
     }

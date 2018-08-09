@@ -4,15 +4,15 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\VirtualTestSuiteInterface;
 use Exception;
-use PHPUnit_Framework_AssertionFailedError;
-use PHPUnit_Framework_Test;
-use PHPUnit_Framework_TestFailure;
-use PHPUnit_Framework_TestResult;
-use PHPUnit_Framework_TestSuite;
-use PHPUnit_Runner_BaseTestRunner;
-use PHPUnit_TextUI_ResultPrinter;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestFailure;
+use PHPUnit\Framework\TestResult;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Runner\BaseTestRunner;
+use PHPUnit\TextUI\ResultPrinter;
 
-class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
+class ResultPrinterProxy extends ResultPrinter
 {
     /**
      * @var AbstractResultPrinter
@@ -47,24 +47,24 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     }
 
     public function addFailure(
-        PHPUnit_Framework_Test $test,
-        PHPUnit_Framework_AssertionFailedError $e,
+        Test $test,
+        AssertionFailedError $e,
         $time
     ) {
         ++$this->getResultPrinter()->failureCount;
         $this->getResultPrinter()->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE,
+            BaseTestRunner::STATUS_FAILURE,
             $test,
             $time,
             $e
         );
     }
 
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addError(Test $test, Exception $e, $time)
     {
         ++$this->getResultPrinter()->errorCount;
         $this->getResultPrinter()->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR,
+            BaseTestRunner::STATUS_ERROR,
             $test,
             $time,
             $e
@@ -72,13 +72,13 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     }
 
     public function addIncompleteTest(
-        PHPUnit_Framework_Test $test,
+        Test $test,
         Exception $e,
         $time
     ) {
         ++$this->getResultPrinter()->incompleteCount;
         $this->getResultPrinter()->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE,
+            BaseTestRunner::STATUS_INCOMPLETE,
             $test,
             $time,
             $e
@@ -86,13 +86,13 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     }
 
     public function addSkippedTest(
-        PHPUnit_Framework_Test $test,
+        Test $test,
         Exception $e,
         $time
     ) {
         ++$this->getResultPrinter()->skippedCount;
         $this->getResultPrinter()->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED,
+            BaseTestRunner::STATUS_SKIPPED,
             $test,
             $time,
             $e
@@ -100,13 +100,13 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     }
 
     public function addRiskyTest(
-        PHPUnit_Framework_Test $test,
+        Test $test,
         Exception $e,
         $time
     ) {
         ++$this->getResultPrinter()->riskyCount;
         $this->getResultPrinter()->endTest(
-            PHPUnit_Runner_BaseTestRunner::STATUS_RISKY,
+            BaseTestRunner::STATUS_RISKY,
             $test,
             $time,
             $e
@@ -121,13 +121,11 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
     {
     }
 
-    protected function printDefect(
-        PHPUnit_Framework_TestFailure $defect,
-        $count
-    ) {
+    protected function printDefect(TestFailure $defect, $count)
+    {
     }
 
-    protected function printFooter(PHPUnit_Framework_TestResult $result)
+    protected function printFooter(TestResult $result)
     {
     }
 
@@ -139,15 +137,15 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
         echo $buffer;
     }
 
-    public function printResult(PHPUnit_Framework_TestResult $result)
+    public function printResult(TestResult $result)
     {
     }
 
-    public function endTest(PHPUnit_Framework_Test $test, $time)
+    public function endTest(Test $test, $time)
     {
         ++$this->getResultPrinter()->testCount;
-        if (is_subclass_of($test, "PHPUnit_Framework_TestCase")) {
-            /** @var $test \PHPUnit_Framework_TestCase */
+        if (is_subclass_of($test, "TestCase")) {
+            /** @var $test \TestCase */
             $this->getResultPrinter()->assertionCount +=
                 $test->getNumAssertions();
         } else {
@@ -158,7 +156,7 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
             $this->getResultPrinter()->getSuccessCount()
         ) {
             $this->getResultPrinter()->endTest(
-                PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
+                BaseTestRunner::STATUS_PASSED,
                 $test,
                 $time
             );
@@ -166,7 +164,7 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
         $this->totalSuccesses = $this->getResultPrinter()->getSuccessCount();
     }
 
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(TestSuite $suite)
     {
         $resultPrinter = $this->getResultPrinter();
         if ($this->startedTestSuite === 0) {
@@ -194,7 +192,7 @@ class ResultPrinterProxy extends PHPUnit_TextUI_ResultPrinter
         $resultPrinter->startTestSuite($suite);
     }
 
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function endTestSuite(TestSuite $suite)
     {
         $this->getResultPrinter()->endTestSuite($suite);
         --$this->startedTestSuite;

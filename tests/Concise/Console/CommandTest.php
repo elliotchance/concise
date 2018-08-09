@@ -21,7 +21,8 @@ class CommandTest extends TestCase
 {
     public function testCommandExtendsPHPUnit()
     {
-        $this->assert(new Command())->isAnInstanceOf('PHPUnit_TextUI_Command');
+        $this->assert(new Command())
+            ->isAnInstanceOf(\PHPUnit\TextUI\Command::class);
     }
 
     protected function getCommandMock()

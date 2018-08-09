@@ -1,30 +1,45 @@
 language: php
 sudo: false
-php:
-  - 5.4
-  - 5.5
 
 matrix:
+  # Only test the supported version outlined in the PHPUnit docs:
+  # https://phpunit.de
   include:
+    # PHPUnit 5
     - php: 5.6
-      env: PHPUNIT_OPTIONS="--coverage-clover build/logs/clover.xml"
-    - php: 5.6
-      env: COMPOSER=composer43.json
-    - php: 5.6
-      env: COMPOSER=composer42.json
-    - php: 5.6
-      env: COMPOSER=composer41.json
-    - php: 5.6
-      env: COMPOSER=composer40.json
+      env: PHPUNIT_VERSION=5
+    - php: 7.0
+      env: PHPUNIT_VERSION=5
+    - php: 7.1
+      env: PHPUNIT_VERSION=5
+
+    # PHPUnit 6
+    - php: 7.0
+      env: PHPUNIT_VERSION=6
+    - php: 7.1
+      env: PHPUNIT_VERSION=6
+    - php: 7.2
+      env: PHPUNIT_VERSION=6
+
+    # PHPUnit 7
+    - php: 7.1
+      env: PHPUNIT_VERSION=7
+    - php: 7.2
+      env: PHPUNIT_VERSION=7
+    - php: 7.3
+      env: PHPUNIT_VERSION=7
+
+    # PHPUnit 8
+    - php: 7.2
+      env: PHPUNIT_VERSION=8
+    - php: 7.3
+      env: PHPUNIT_VERSION=8
+    - php: 7.4
+      env: PHPUNIT_VERSION=8
 
 install:
-  - composer install
-  - $INSTALL
-script:
-  - $CUSTOM_SCRIPT
-  - if [ -z "$CUSTOM_SCRIPT" ]; then bin/concise --ci $PHPUNIT_OPTIONS; fi
+  # Require will perform the install.
+  - composer require phpunit/phpunit:^$PHPUNIT_VERSION
 
-after_script:
-  - "if [[ -f build/logs/clover.xml ]] ; then php vendor/bin/coveralls -v; fi"
-  - "if [[ -f build/logs/clover.xml ]] ; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - "if [[ -f build/logs/clover.xml ]] ; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi"
+script:
+  - bin/concise --ci

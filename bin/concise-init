@@ -98,7 +98,7 @@ function updateBuilders()
 
     $out =
         $header .
-        "\n */\nabstract class BaseAssertions extends PHPUnit_Framework_TestCase\n{" .
+        "\n */\nabstract class BaseAssertions extends \\PHPUnit\\Framework\\TestCase\n{" .
         "\n}\n\n";
     ksort($php);
     foreach ($php as $trait => $methods) {
@@ -127,7 +127,7 @@ function updateBuilders()
 
     file_put_contents(
         $assertionsFile,
-        "<?php\n\nnamespace Concise\\Core;\n\nuse PHPUnit_Framework_TestCase;\n\n" .
+        "<?php\n\nnamespace Concise\\Core;\n\nuse \\PHPUnit\\Framework\\TestCase;\n\n" .
         str_replace("\t", '    ', $out)
     );
 }

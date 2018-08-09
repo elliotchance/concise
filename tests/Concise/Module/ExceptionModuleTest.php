@@ -163,7 +163,7 @@ class ExceptionModuleTest extends AbstractModuleTestCase
         $expectToThrow
     ) {
         if (!$expectToThrow) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
         $this->assertClosure($method)->doesNotThrow($expectedException);
     }
@@ -322,7 +322,7 @@ class ExceptionModuleTest extends AbstractModuleTestCase
         $expectToThrow
     ) {
         if ($expectToThrow) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
 
         $this->assertClosure($method)->throwsExactly($expectedException);
@@ -447,7 +447,7 @@ class ExceptionModuleTest extends AbstractModuleTestCase
         $expectToThrow
     ) {
         if ($expectToThrow) {
-            $this->setExpectedException('\Concise\Core\DidNotMatchException');
+            $this->expectException(DidNotMatchException::class);
         }
         $this->assertClosure($method)->throws($expectedException);
     }

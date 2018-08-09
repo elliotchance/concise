@@ -4,7 +4,7 @@ namespace Concise\Console\Theme;
 
 use Colors\Color;
 use Concise\Core\TestCase;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Runner\BaseTestRunner;
 
 class ColorStub extends Color
 {
@@ -24,12 +24,12 @@ abstract class ThemeTestCase extends TestCase
     public function keysProvider()
     {
         return array(
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_PASSED),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_ERROR),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE),
-            array(PHPUnit_Runner_BaseTestRunner::STATUS_RISKY),
+            array(BaseTestRunner::STATUS_PASSED),
+            array(BaseTestRunner::STATUS_FAILURE),
+            array(BaseTestRunner::STATUS_ERROR),
+            array(BaseTestRunner::STATUS_SKIPPED),
+            array(BaseTestRunner::STATUS_INCOMPLETE),
+            array(BaseTestRunner::STATUS_RISKY),
             array('value.integer'),
             array('value.float'),
             array('value.string'),

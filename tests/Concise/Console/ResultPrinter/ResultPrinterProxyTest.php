@@ -3,6 +3,10 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestFailure;
+use PHPUnit\Framework\TestResult;
+use PHPUnit\TextUI\ResultPrinter;
 
 class ResultPrinterProxyTest extends TestCase
 {
@@ -26,7 +30,7 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testProxyExtendsPHPUnit()
     {
-        $this->assert($this->proxy)->isAnInstanceOf('PHPUnit_TextUI_ResultPrinter');
+        $this->assert($this->proxy)->isAnInstanceOf(ResultPrinter::class);
     }
 
     public function testGetResultPrinterReturnsAResultPrinterInterface()
@@ -44,7 +48,7 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testEndTestWillIncrementTestCount()
     {
-        $test = $this->mock('PHPUnit_Framework_Test')->get();
+        $test = $this->mock(Test::class)->get();
         $this->proxy->endTest($test, 0.1);
         $this->assert($this->proxy->getResultPrinter()->getTestCount())
             ->equals(1);
@@ -70,7 +74,7 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testPrintDefectReturnsNull()
     {
-        $failure = $this->mock('PHPUnit_Framework_TestFailure')
+        $failure = $this->mock(TestFailure::class)
             ->disableConstructor()
             ->get();
         $proxy = $this->niceMock(
@@ -82,7 +86,7 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testPrintFooterReturnsNull()
     {
-        $result = $this->mock('PHPUnit_Framework_TestResult')->get();
+        $result = $this->mock(TestResult::class)->get();
         $proxy = $this->niceMock(
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())
@@ -97,7 +101,7 @@ class ResultPrinterProxyTest extends TestCase
 
     public function testPrintResultReturnsNull()
     {
-        $result = $this->mock('PHPUnit_Framework_TestResult')->get();
+        $result = $this->mock(TestResult::class)->get();
         $proxy = $this->niceMock(
             'Concise\Console\ResultPrinter\ResultPrinterProxy',
             array($this->getMuteResultPrinter())

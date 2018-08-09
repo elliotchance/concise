@@ -4,7 +4,7 @@ namespace Concise\Mock;
 
 use Concise\Core\IndependentTestCase;
 use Concise\Core\TestCase;
-use Exception;
+use Throwable;
 
 /**
  * @group mocking
@@ -141,7 +141,8 @@ class MockBuilderFailuresTest extends TestCase
         $mock->myMethod(array('DateTime', 'getLastErrors'));
     }
 
-    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException()
+    public function testAbstractMethodOnANiceMockThatHasNoActionWillThrowException(
+    )
     {
         $mock = $this->niceMock('\Concise\Mock\AbstractMock1')->get();
         $mock->myMethod();
@@ -168,7 +169,7 @@ class MockBuilderFailuresTest extends TestCase
         $mock->myMethod('bar');
     }
 
-    protected function onNotSuccessfulTest(Exception $e)
+    protected function onNotSuccessfulTest(Throwable $e)
     {
         self::$failures[] = $this->getName();
         $this->assert(self::$expectedFailures[$this->getName()])

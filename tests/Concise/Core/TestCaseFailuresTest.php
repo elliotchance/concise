@@ -2,7 +2,7 @@
 
 namespace Concise\Core;
 
-use Exception;
+use Throwable;
 
 class TestCaseFailuresTest extends TestCase
 {
@@ -24,7 +24,7 @@ class TestCaseFailuresTest extends TestCase
         $this->assert('Something', true)->equals(false);
     }
 
-    protected function onNotSuccessfulTest(Exception $e)
+    protected function onNotSuccessfulTest(Throwable $e)
     {
         self::$failures[] = $this->getName();
         $this->assert(self::$expectedFailures[$this->getName()])

@@ -22,13 +22,12 @@
         }
     ],
     "bin": [ "bin/concise", "bin/concise-init" ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">= 5.4",
-        "phpunit/phpunit": ">= 4.0, < 6",
+        "php": ">= 5.5",
+        "phpunit/phpunit": "^6",
         "kevinlebrun/colors.php": ">= 0.3.0"
-    },
-    "require-dev": {
-        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-0": {

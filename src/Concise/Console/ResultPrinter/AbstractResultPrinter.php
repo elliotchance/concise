@@ -4,8 +4,8 @@ namespace Concise\Console\ResultPrinter;
 
 use Concise\Console\TestRunner\TestResultDelegateInterface;
 use Exception;
-use PHPUnit_Framework_Test;
-use PHPUnit_Framework_TestSuite;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
 
 abstract class AbstractResultPrinter
     implements TestResultDelegateInterface, StatisticsInterface
@@ -61,8 +61,8 @@ abstract class AbstractResultPrinter
     public function getSuccessCount()
     {
         return $this->getTestCount() - $this->getFailureCount() -
-        $this->getErrorCount() - $this->getSkippedCount() -
-        $this->getIncompleteCount() - $this->getRiskyCount();
+            $this->getErrorCount() - $this->getSkippedCount() -
+            $this->getIncompleteCount() - $this->getRiskyCount();
     }
 
     /**
@@ -129,19 +129,15 @@ abstract class AbstractResultPrinter
         return $this->assertionCount;
     }
 
-    public function endTest(
-        $status,
-        PHPUnit_Framework_Test $test,
-        $time,
-        Exception $e = null
-    ) {
-    }
-
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function endTest($status, Test $test, $time, Exception $e = null)
     {
     }
 
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(TestSuite $suite)
+    {
+    }
+
+    public function endTestSuite(TestSuite $suite)
     {
     }
 

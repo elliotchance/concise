@@ -314,7 +314,8 @@ abstract class AbstractBuilderTestCase extends TestCase
 
     protected function expectFailure($message, $exceptionClass = '\Exception')
     {
-        $this->setExpectedException($exceptionClass, $message);
+        $this->expectException($exceptionClass);
+        $this->expectExceptionMessage($message);
     }
 
     protected function notApplicable()

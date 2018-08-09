@@ -3,6 +3,8 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
 
 class AbstractResultPrinterTest extends TestCase
 {
@@ -107,13 +109,13 @@ class AbstractResultPrinterTest extends TestCase
 
     public function testEndTestReturnsNull()
     {
-        $test = $this->mock('PHPUnit_Framework_Test')->get();
+        $test = $this->mock(Test::class)->get();
         $this->assert($this->resultPrinter->endTest(0, $test, 0.0, null))->isNull;
     }
 
     public function testEndTestSuiteReturnsNull()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->get();
         $this->assert($this->resultPrinter->endTestSuite($suite))->isNull;

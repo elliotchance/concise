@@ -3,19 +3,22 @@
 namespace Concise\Console\ResultPrinter;
 
 use Concise\Core\TestCase;
-use PHPUnit_Runner_BaseTestRunner;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Runner\BaseTestRunner;
+use PHPUnit\Runner\PhptTestCase;
 
 class ResultPrinterProxyDelegateTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->mock('PHPUnit_Framework_Test')->get();
+        $this->mock(Test::class)->get();
     }
 
     public function testStartTestSuiteWillCallResultPrinter()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('count' => 0, 'testAt' => null))
             ->get();
@@ -31,7 +34,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testWillSetTotalTestCountWhenTheSuiteBegins()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->expect('count')
             ->andReturn(123)
@@ -52,7 +55,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testEndTestWillIncrementAssertionsByOneIfLegacyPhptIsUsed()
     {
-        $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')
+        $testCase = $this->mock(PhptTestCase::class)
             ->disableConstructor()
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
@@ -61,10 +64,9 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(1);
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase(
-    )
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingTestCase()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')->expect(
+        $testCase = $this->mock(TestCase::class)->expect(
             'getNumAssertions'
         )->andReturn(123)->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
@@ -73,10 +75,9 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(123);
     }
 
-    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed(
-    )
+    public function testEndTestWillIncrementAssertionsByOneMultipleTimesIfLegacyPhptIsUsed()
     {
-        $testCase = $this->mock('PHPUnit_Extensions_PhptTestCase')
+        $testCase = $this->mock(PhptTestCase::class)
             ->disableConstructor()
             ->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
@@ -86,10 +87,9 @@ class ResultPrinterProxyDelegateTest extends TestCase
             ->equals(2);
     }
 
-    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases(
-    )
+    public function testEndTestWillIncrementAssertionsRealAmountWhenUsingMultipleTestCases()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')->stub(
+        $testCase = $this->mock(TestCase::class)->stub(
             array('getNumAssertions' => 123)
         )->get();
         $proxy = new ResultPrinterProxy($this->getMuteResultPrinter());
@@ -101,7 +101,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testWillNotUpdateTheTotalTestIfMultipleTestSuitesStart()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub('count')->andReturn(123, 456)
             ->stub('testAt')
@@ -120,7 +120,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testStartTestSuiteWillCallResultPrinterMultipleTimes()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('count' => 0, 'testAt' => null))
             ->get();
@@ -142,7 +142,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testFinishWillBeCalledWithEndTestSuite()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('count' => 0, 'testAt' => null))
             ->get();
@@ -159,7 +159,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testEndTestSuiteWillBeCalledInResultPrinter()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('count' => 0, 'testAt' => null))
             ->get();
@@ -177,7 +177,7 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testFinishWillBeOnlyBeCalledOnce()
     {
-        $suite = $this->mock('PHPUnit_Framework_TestSuite')
+        $suite = $this->mock(TestSuite::class)
             ->disableConstructor()
             ->stub(array('count' => 0, 'testAt' => null))
             ->get();
@@ -196,13 +196,13 @@ class ResultPrinterProxyDelegateTest extends TestCase
 
     public function testProxyWillCallAddSuccess()
     {
-        $testCase = $this->mock('PHPUnit_Framework_TestCase')->stub(
+        $testCase = $this->mock(TestCase::class)->stub(
             array('getNumAssertions' => 1)
         )->get();
         $resultPrinter = $this->niceMock(
             'Concise\Console\ResultPrinter\DefaultResultPrinter'
         )->expect('endTest')->with(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED,
+            BaseTestRunner::STATUS_PASSED,
             $testCase,
             0.1
         )->get();

@@ -97,7 +97,7 @@ class PrototypeBuilderTest extends TestCase
     {
         $method = new \ReflectionMethod('\DateTime', 'setTime');
         $this->assert($this->builder->getPrototype($method))
-            ->equals('public function setTime($hour, $minute, $second = NULL)');
+            ->equals('public function setTime($hour, $minute, $second = NULL, $microseconds = NULL)');
     }
 
     public function testArrayHint()

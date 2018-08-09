@@ -2,7 +2,7 @@
 
 namespace Concise\Core;
 
-use PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 
 /**
  * @method A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R assertArray($valueOrFailureMessage, $value = null)
@@ -24,7 +24,7 @@ use PHPUnit_Framework_TestCase;
  * @method Mb|Mc|Md|Me|Mf|Mg|Mh|Mi|Mj assertUrl($valueOrFailureMessage, $value = null)
  * @method Mb|Mc|Md|Me|Mf|Mg|Mh|Mi|Mj verifyUrl($valueOrFailureMessage, $value = null)
  */
-abstract class BaseAssertions extends PHPUnit_Framework_TestCase
+abstract class BaseAssertions extends \PHPUnit\Framework\TestCase
 {
 }
 

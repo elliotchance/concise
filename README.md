@@ -2,7 +2,6 @@ concise
 =======
 
 [![Build Status](https://travis-ci.org/elliotchance/concise.svg?branch=master)](https://travis-ci.org/elliotchance/concise)
-[![Coverage Status](https://img.shields.io/coveralls/elliotchance/concise.svg)](https://coveralls.io/r/elliotchance/concise?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/elliotchance/concise/v/stable.svg)](https://packagist.org/packages/elliotchance/concise)
 [![Total Downloads](https://poser.pugx.org/elliotchance/concise/downloads.svg)](https://packagist.org/packages/elliotchance/concise)
 
